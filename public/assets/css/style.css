@@ -19412,8 +19412,7 @@ option {
     padding: 2px 24px !important;
     border: 13px !important;
     box-shadow: none !important;
-    border-bottom-right-radius: 10px !important;
-    border-bottom-left-radius: 10px !important;
+    border-radius: 10px !important;
     margin-bottom: 10px;
     cursor: pointer;
 }
@@ -19486,6 +19485,7 @@ option {
     background-color: #F3F3F3 !important;
     border-bottom-right-radius: 10px !important;
     border-bottom-left-radius: 10px !important;
+    cursor: pointer;
 }
 
 
@@ -21874,4 +21874,19 @@ div[role="circleprogressbar"]::before {
 .moverightside img{
     margin-bottom: 10px;
     margin-left: 30px;
+}
+.color-547AFF{
+    background: #547AFF;
+}
+.storyaddcard{
+    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.05);
+    border: none !important;
+}
+.statusofstory h4{
+    font-size: 14px;
+    margin-top: 2px;
+}
+.statusofstory .dropdown{
+    margin-left: 10px;
+    margin-top: 0px;
 }
