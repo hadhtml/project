@@ -87,7 +87,7 @@ Route::post('update-story-check', [App\Http\Controllers\ObjectiveController::cla
 Route::post('add-story-new', [App\Http\Controllers\ObjectiveController::class, 'AddNewStory']);
 Route::post('update-story', [App\Http\Controllers\ObjectiveController::class, 'UpdateStoryTitle']);
 Route::post('delete-story', [App\Http\Controllers\ObjectiveController::class, 'DeleteStory']);
-Route::post('save-story', [App\Http\Controllers\ObjectiveController::class, 'SaveNewStory']);
+
 Route::post('delete-story-new', [App\Http\Controllers\ObjectiveController::class, 'DeleteNewStory']);
 Route::post('update-story-new', [App\Http\Controllers\ObjectiveController::class, 'UpdateNewStory']);
 
@@ -247,9 +247,14 @@ Route::name('epics.')->namespace('App\Http\Controllers')->prefix('dashboard/epic
     Route::POST('updategeneral', 'EpicController@updategeneral');
     Route::POST('showepicinboard', 'EpicController@showepicinboard');
     Route::POST('showtab', 'EpicController@showtab');
-
-    
-
+    Route::POST('uploadattachment', 'EpicController@uploadattachment');
+    Route::POST('deleteattachment', 'EpicController@deleteattachment');
+    Route::post('createchilditem', 'EpicController@createchilditem');
+    Route::POST('savecomment', 'EpicController@savecomment');
+    Route::POST('deletecomment', 'EpicController@deletecomment');
+    Route::POST('updatecomment', 'EpicController@updatecomment');
+    Route::POST('orderbycomment', 'EpicController@orderbycomment');
+    Route::POST('savereply', 'EpicController@savereply');
 });
 
 

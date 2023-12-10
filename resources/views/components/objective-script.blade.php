@@ -2404,46 +2404,7 @@
 
 
 
-    function SaveNewStory() {
-
-
-        var title = $('#story_title').val();
-        var story_assign = $('#story_assign').val();
-        var story_type = $('#story_type').val();
-        var story_status = $('#story_status').val();
-        var unit_id = "{{ $organization->id }}";
-        var RID = $('#r_id').val();
-
-        $.ajax({
-            type: "POST",
-            url: "{{ url('save-story') }}",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: {
-                title: title,
-                story_assign: story_assign,
-                story_type: story_type,
-                story_status: story_status,
-                unit_id: unit_id,
-                RID: RID,
-
-            },
-            success: function(res) {
-
-                $('#story_title').val('');
-                $('#story_assign').val('');
-                $('#story_type').val('');
-                $('#story_status').val('');
-                // $('#AddStory').slideUp();    
-                $('.story-data').html(res);
-
-            }
-        });
-
-
-
-    }
+    
 
     function deletestorynew(id) {
 
