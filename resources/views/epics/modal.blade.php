@@ -78,6 +78,25 @@
     </div>
 </div>
 <script type="text/javascript">
+    function changeepicstatus(status , id) {
+        $.ajax({
+            type: "POST",
+            url: "{{ url('dashboard/epics/changeepicstatus') }}",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                id:id,
+                status:status,
+            },
+            success: function(res) {
+                $('.modalheaderforapend').html(res);
+            },
+            error: function(error) {
+                
+            }
+        });
+    }
     function showtabwithoutloader(id , tab) {
         $.ajax({
             type: "POST",

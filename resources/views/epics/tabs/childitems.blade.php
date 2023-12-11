@@ -8,7 +8,6 @@
     }else{
         $total = 0;
     }
-    
 @endphp
 <div class="row mb-3">
     <div class="col-md-1">
@@ -19,7 +18,7 @@
             <div class="progress-bar color-547AFF" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width:{{ $total }}%">
               <span class="sr-only">{{ $total }}% Complete</span>
             </div>
-          </div>
+        </div>
     </div>
 </div>
 <div class="row">

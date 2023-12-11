@@ -77,7 +77,6 @@ Route::post('update-key-initiative', [App\Http\Controllers\ObjectiveController::
 
 Route::post('save-epic', [App\Http\Controllers\ObjectiveController::class, 'SaveEpic']);
 Route::get('edit-epic', [App\Http\Controllers\ObjectiveController::class, 'EditEpic'])->middleware('auth');
-Route::post('update-epic', [App\Http\Controllers\ObjectiveController::class, 'UpdateEpic']);
 Route::post('delete-epic', [App\Http\Controllers\ObjectiveController::class, 'DeleteEpic']);
 Route::post('update-epic-flag', [App\Http\Controllers\ObjectiveController::class, 'UpdateEpicFlag']);
 
@@ -255,6 +254,8 @@ Route::name('epics.')->namespace('App\Http\Controllers')->prefix('dashboard/epic
     Route::POST('updatecomment', 'EpicController@updatecomment');
     Route::POST('orderbycomment', 'EpicController@orderbycomment');
     Route::POST('savereply', 'EpicController@savereply');
+    Route::POST('changeepicstatus', 'EpicController@changeepicstatus');
+    
 });
 
 

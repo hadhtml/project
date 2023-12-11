@@ -26,16 +26,16 @@
             </button>
             <div class="dropdown-menu">
                 @if($data->epic_status == 'To Do')
-                    <a class="dropdown-item" onclick="changeflagstatus('In progress',{{$data->id}})" href="javascript:void(0)">In Progress</a>
-                    <a class="dropdown-item" onclick="changeflagstatus('Done',{{$data->id}})" href="javascript:void(0)">Done</a>
+                    <a class="dropdown-item" onclick="changeepicstatus('In progress',{{$data->id}})" href="javascript:void(0)">In Progress</a>
+                    <a class="dropdown-item" onclick="changeepicstatus('Done',{{$data->id}})" href="javascript:void(0)">Done</a>
                 @endif
                 @if($data->epic_status == 'In progress')
-                    <a class="dropdown-item" onclick="changeflagstatus('To Do',{{$data->id}})" href="javascript:void(0)">To Do</a>
-                    <a class="dropdown-item" onclick="changeflagstatus('Done',{{$data->id}})" href="javascript:void(0)">Done</a>
+                    <a class="dropdown-item" onclick="changeepicstatus('To Do',{{$data->id}})" href="javascript:void(0)">To Do</a>
+                    <a class="dropdown-item" onclick="changeepicstatus('Done',{{$data->id}})" href="javascript:void(0)">Done</a>
                 @endif
                 @if($data->epic_status == 'Done')
-                    <a class="dropdown-item" onclick="changeflagstatus('To Do',{{$data->id}})" href="javascript:void(0)">To Do</a>
-                    <a class="dropdown-item" onclick="changeflagstatus('In progress',{{$data->id}})" href="javascript:void(0)">In Progress</a>
+                    <a class="dropdown-item" onclick="changeepicstatus('To Do',{{$data->id}})" href="javascript:void(0)">To Do</a>
+                    <a class="dropdown-item" onclick="changeepicstatus('In progress',{{$data->id}})" href="javascript:void(0)">In Progress</a>
                 @endif
             </div>
         </div>
