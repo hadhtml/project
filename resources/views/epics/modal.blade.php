@@ -78,6 +78,27 @@
     </div>
 </div>
 <script type="text/javascript">
+    function showtabwithoutloader(id , tab) {
+        $.ajax({
+            type: "POST",
+            url: "{{ url('dashboard/epics/showtab') }}",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                id:id,
+                tab:tab,
+            },
+            success: function(res) {
+                $('.secondportion').html(res);
+                $('.tabsclass').removeClass('active');
+                $('#'+tab).addClass('active');
+            },
+            error: function(error) {
+                
+            }
+        });
+    }
     function showtab(id , tab) {
         $('.secondportion').addClass('loaderdisplay');
         $('.secondportion').html('<i class="fa fa-spin fa-spinner"></i>');

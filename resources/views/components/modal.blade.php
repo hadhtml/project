@@ -398,7 +398,7 @@
                     <div class="col-md-12">
                         <p>Fill out the form, submit and hit the save button.</p>
                     </div>
-                    <div id="success-obj"  role="alert"></div>
+                    
                     <span id="obj-feild-error" class="ml-3 text-danger"></span>
     
                 </div>
@@ -408,6 +408,11 @@
                 </button>
             </div>
             <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="success-obj"  role="alert"></div>
+                    </div>
+                </div>
                 <form class="needs-validation" method="POST" >
                     @csrf
                     <div class="row">
@@ -681,7 +686,7 @@
                     <div class="col-md-12">
                         <p>Fill out the form, submit and hit the save button.</p>
                     </div>
-                    <div id="success-initiative"  role="alert"></div>
+                    
                     <span id="initiative-feild-error" class="ml-3 text-danger"></span>
 
                 </div>
@@ -696,6 +701,11 @@
              </div>
                 
             <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="success-initiative"  role="alert"></div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-12">
                         <label class="checkbox checkbox-lg mb-3 ml-4">

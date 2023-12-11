@@ -1,11 +1,17 @@
+@php
+    $epicstory = DB::table("epics_stroy")->where("epic_id", $epic->id)->get();
+    $epicprogress = DB::table("epics_stroy")->where("epic_id", $epic->id)->sum("progress");
+    $count = DB::table("epics_stroy")->where("epic_id", $epic->id)->count();
+    $total = round($epicprogress / $count, 0);
+@endphp
 <div class="row mb-3">
     <div class="col-md-1">
-        50%
+        {{ $total }}%
     </div>
     <div class="col-md-11 mt-2">
         <div class="progress">
-            <div class="progress-bar color-547AFF" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width:80%">
-              <span class="sr-only">20% Complete</span>
+            <div class="progress-bar color-547AFF" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width:{{ $total }}%">
+              <span class="sr-only">{{ $total }}% Complete</span>
             </div>
           </div>
     </div>
@@ -109,7 +115,7 @@
         </form>
     </div>
 </div>
-<div class="row">
+<div class="row mt-5">
     <div class="activity-feed  col-md-12">
         <div class="col-md-12 col-lg-12 col-xl-12" style="position: relative;">
             @if($epicstory->count() > 0)
@@ -118,7 +124,7 @@
                     <div class="child-item">
                         <div class="child-item-chekbox-portion">
                             <label class="form-checkbox">
-                                <input class="form-check-input"  type="checkbox" @if($s->progress > 0) checked onclick="updateprogress(this.value);" @else onclick="getprogress(this.value);" @endif  value="{{$s->id}}"  id="flexCheckDefault">
+                                <input class="form-check-input"  type="checkbox" @if($s->progress > 0) checked onclick="updateprogress({{ $s->id }} , 1)" @else onclick="updateprogress({{ $s->id }} , 2)" @endif  value="{{$s->id}}"  id="flexCheckDefault">
                                 <span class="checkbox-label"></span>
                             </label>
                             <div class="child-item-id">
@@ -141,7 +147,7 @@
                                 @endforeach
                             </div>
                             <div class="btn-group">
-                                <button type="button" class="btn btn-default status-change-button-item" id="showboardbutton">
+                                <button type="button" class="btn btn-default status-change-button-item @if($s->story_status == 'To Do') todo-button-color @endif @if($s->story_status == 'In progress') inprogress-button-color @endif @if($s->story_status == 'Done') done-button-color @endif " id="showboardbutton">
                                     @if($s->story_status == 'To Do')
                                         To Do
                                     @endif
@@ -152,66 +158,71 @@
                                         Done
                                     @endif
                                 </button>
-                                <button type="button" class="status-change-button-item-arrow btn btn-danger dropdown-toggle dropdown-toggle-split archivebeardcimbgbutton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <button type="button" class="@if($s->story_status == 'To Do') todo-button-color @endif @if($s->story_status == 'In progress') inprogress-button-color @endif @if($s->story_status == 'Done') done-button-color @endif status-change-button-item-arrow btn btn-danger dropdown-toggle dropdown-toggle-split archivebeardcimbgbutton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    @if($s->story_status == 'To Do') 
                                     <img src="{{url('public/assets/images/icons/angle-down.svg')}}" width="20">
+                                    @endif 
+                                    @if($s->story_status == 'In progress') 
+                                    <img src="{{url('public/assets/svg/arrow-down-white.svg')}}" width="20">
+                                    @endif 
+                                    @if($s->story_status == 'Done') 
+                                    <img src="{{url('public/assets/svg/arrow-down-white.svg')}}" width="20">
+                                    @endif                                    
                                     <span class="sr-only">Toggle Dropdown</span>
                                 </button>
                                 <div class="dropdown-menu">
                                     @if($s->story_status == 'To Do')
-                                        <a class="dropdown-item" onclick="changeflagstatus('In progress',{{$s->id}})" href="javascript:void(0)">In Progress</a>
-                                        <a class="dropdown-item" onclick="changeflagstatus('Done',{{$s->id}})" href="javascript:void(0)">Done</a>
+                                        <a class="dropdown-item" onclick="changeitemstatus('In progress',{{$s->id}})" href="javascript:void(0)">In Progress</a>
+                                        <a class="dropdown-item" onclick="changeitemstatus('Done',{{$s->id}})" href="javascript:void(0)">Done</a>
                                     @endif
                                     @if($s->story_status == 'In progress')
-                                        <a class="dropdown-item" onclick="changeflagstatus('To Do',{{$s->id}})" href="javascript:void(0)">To Do</a>
-                                        <a class="dropdown-item" onclick="changeflagstatus('Done',{{$s->id}})" href="javascript:void(0)">Done</a>
+                                        <a class="dropdown-item" onclick="changeitemstatus('To Do',{{$s->id}})" href="javascript:void(0)">To Do</a>
+                                        <a class="dropdown-item" onclick="changeitemstatus('Done',{{$s->id}})" href="javascript:void(0)">Done</a>
                                     @endif
                                     @if($s->story_status == 'Done')
-                                        <a class="dropdown-item" onclick="changeflagstatus('To Do',{{$s->id}})" href="javascript:void(0)">To Do</a>
-                                        <a class="dropdown-item" onclick="changeflagstatus('In progress',{{$s->id}})" href="javascript:void(0)">In Progress</a>
+                                        <a class="dropdown-item" onclick="changeitemstatus('To Do',{{$s->id}})" href="javascript:void(0)">To Do</a>
+                                        <a class="dropdown-item" onclick="changeitemstatus('In progress',{{$s->id}})" href="javascript:void(0)">In Progress</a>
                                     @endif
                                 </div>
                             </div>
-                            <img class="edit-item-image" data-toggle="collapse" data-target="#EditStory{{$s->id}}" type="button" onclick="editstorynew({{$s->id}});" src="{{ url('public/assets/svg/edit-2.svg') }}">
+                            <img class="edit-item-image" type="button" onclick="editstorynew({{$s->id}})" src="{{ url('public/assets/svg/edit-2.svg') }}">
                             <img class="delete-item-image" src="{{ url('public/assets/svg/trash.svg') }}">
                         </div>
                     </div>
-                    <div class="card collapse comment-card" id="EditStory{{$s->id}}">
+                    <div class="card comment-card storyaddcard editstorycard" id="editstory{{$s->id}}">
                         <div class="card-body"  >
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group mb-0">
-                                        <input type="text" class="form-control" value="{{$s->epic_story_name}}" id="edit_story_title{{$s->id}}" required>
                                         <label for="objective-name">Title</label>
+                                        <input type="text" class="form-control" value="{{$s->epic_story_name}}" id="edit_story_title{{$s->id}}" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group mb-0">
+                                        <label for="small-description">Assignee</label>
                                         <select class="form-control" id="edit_story_assign{{$s->id}}">
                                             <?php foreach(DB::table('members')->where('org_user',Auth::id())->get() as $r){ ?>
                                               <option @if($r->id == $s->story_assign) selected @endif value="{{ $r->id }}">{{ $r->name }}</option>
                                             <?php }  ?>
                                         </select>
-                                        <label for="small-description">Assignee</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group mb-0">
+                                       <label for="small-description">Status</label>
                                        <select class="form-control" id="edit_story_status{{$s->id}}">
                                         <option @if($s->story_status == 'To Do') selected @endif value="To Do">To Do</option>
                                         <option @if($s->story_status == 'In progress') selected @endif value="In progress">In Progress</option>
                                          <option @if($s->story_status == 'Done') selected @endif value="Done">Done</option>
                                        </select>
-                                        <label for="small-description">Status</label>
+                                        
                                     </div>
                                 </div>
                             </div>
                             <div>
-                                <button type="button" onclick="updatestory({{$s->id}});" class="btn btn-primary btn-sm">Update</button>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                        
-                                </div>
+                                <button type="button" onclick="editstorynew({{$s->id}})" class="btn btn-default btn-sm">Cancel</button>
+                                <button type="button" onclick="updatestory({{$s->id}});" id="updateitembutton{{ $s->id }}" class="btn btn-primary btn-sm">Update</button>
                             </div>
                         </div>
                     </div>
@@ -226,6 +237,72 @@
     </div>
 </div>
 <script type="text/javascript">
+function updatestory(s_id) {
+    $('#updateitembutton'+s_id).html('<i class="fa fa-spin fa-spinner"></i>');
+    // var title = $('#title'+s_id).val();
+    var title = $('#edit_story_title' + s_id).val();
+    var story_status = $('#edit_story_status' + s_id).val();
+    var story_assign = $('#edit_story_assign' + s_id).val();
+    var key = $('#edit_epic_key').val();
+    var obj = $('#edit_epic_obj').val();
+    if (title != '') {
+        $.ajax({
+            type: "POST",
+            url: "{{ url('update-story') }}",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                s_id: s_id,
+                title: title,
+                story_status: story_status,
+                story_assign: story_assign,
+                key: key,
+                obj: obj
+
+            },
+            success: function(res) {
+                showtabwithoutloader('{{$epic->id}}' , 'childitems');
+            }
+        });
+    }
+
+}
+function changeitemstatus(status , id) {
+    var title = $('#edit_story_title' + id).val();
+    var story_status = $('#edit_story_status' + id).val();
+    var story_assign = $('#edit_story_assign' + id).val();
+    $.ajax({
+        type: "POST",
+        url: "{{ url('update-story') }}",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+            s_id: id,
+            title: title,
+            story_status: status,
+            story_assign: story_assign
+
+        },
+        success: function(res) {
+            showtabwithoutloader('{{$epic->id}}' , 'childitems');
+        }
+    });
+}
+function updateprogress(id , type) {
+    if(type == 1)
+    {
+        changeitemstatus('To Do' , id);
+    }
+    if(type == 2)
+    {
+        changeitemstatus('Done' , id);
+    }
+}
+ function editstorynew(id) {
+    $('#editstory'+id).slideToggle();
+}
 function deleteattachmentshow(id) {
     $('#deleteattachmentshow'+id).slideToggle();
 }

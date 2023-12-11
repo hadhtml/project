@@ -52,6 +52,38 @@ $var_objective = "Org-Unit";
                 <!-- begin page Content -->
                 <div class="container-fluid py-5 w-96">
                     <div class="row">
+                        @foreach($Unit as $unit)
+                           @php
+                           $ValueCount = DB::table('value_stream')->where('unit_id',$unit->id)->count();
+                           $TeamCount = DB::table('unit_team')->where('org_id',$unit->id)->count();
+                           $member = DB::table('members')->where('org_user',Auth::id())->count();
+                           @endphp
+                        <!-- <div class="col-md-4">
+                            <div class="buisness-unit-card">
+                                <div class="dashboard-card-tittle-second row">
+                                    <div class="col-md-10">
+                                        <h4>{{ \Illuminate\Support\Str::limit($unit->business_name, 40 ) }}</h4>
+                                    </div>
+                                    <div class="col-md-2 text-right">
+                                        <div class="dashboard-card-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <img  src="{{url('public/assets/svg/more.svg')}}" width="20">
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="javascript:void(0)">Edit</a>
+                                                <a class="dropdown-item" href="javascript:void(0)">Delete</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="dashboard-card-subtittle">
+                                            <p>{{ \Illuminate\Support\Str::limit($unit->detail, 50 ) }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                        @endforeach
+
+
                         <div class="col-md-12 p-0">
                             <div class="row">
                            

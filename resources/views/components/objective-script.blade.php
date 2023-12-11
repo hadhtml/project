@@ -1628,66 +1628,6 @@
 
 
 
-    function getprogress(id) {
-
-        var epicid = $('#edit_epic_id').val();
-        var key = $('#edit_epic_key').val();
-        var obj = $('#edit_epic_obj').val();
-
-        $.ajax({
-            type: "POST",
-            url: "{{ url('story-check') }}",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: {
-                id: id,
-                key: key,
-                obj: obj
-
-            },
-            success: function(res) {
-
-                $('#epic_story_edit').html(res);
-                getalldata(epicid);
-
-
-
-            }
-        });
-
-    }
-
-    function updateprogress(id) {
-
-        var epicid = $('#edit_epic_id').val();
-        var key = $('#edit_epic_key').val();
-        var obj = $('#edit_epic_obj').val();
-
-        $.ajax({
-            type: "POST",
-            url: "{{ url('update-story-check') }}",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: {
-                id: id,
-                key: key,
-                obj: obj
-
-            },
-            success: function(res) {
-
-                $('#epic_story_edit').html(res);
-                getalldata(epicid);
-
-
-            }
-        });
-
-    }
-
-
     $(document).ready(function() {
         var maxField = 20; //Input fields increment limitation
         var addButton = $('.add_button'); //Add button selector
@@ -1801,46 +1741,7 @@
             story_id + ')" type="button">Update</button></div>');
     }
 
-    function updatestory(s_id) {
-
-        // var title = $('#title'+s_id).val();
-
-        var title = $('#edit_story_title' + s_id).val();
-        var story_status = $('#edit_story_status' + s_id).val();
-        var story_assign = $('#edit_story_assign' + s_id).val();
-
-        var key = $('#edit_epic_key').val();
-        var obj = $('#edit_epic_obj').val();
-
-        if (title != '') {
-            $.ajax({
-                type: "POST",
-                url: "{{ url('update-story') }}",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: {
-                    s_id: s_id,
-                    title: title,
-                    story_status: story_status,
-                    story_assign: story_assign,
-                    key: key,
-                    obj: obj
-
-                },
-                success: function(res) {
-
-                    $('#epic_story_edit').html(res);
-
-
-
-
-                }
-            });
-
-        }
-
-    }
+    
 
 
     function deletestory(id) {
@@ -2433,9 +2334,7 @@
 
     }
 
-    function editstorynew(id) {
-        $('#story_edit_id').val(id);
-    }
+   
 
     function UpdateNewStory(id) {
 
