@@ -258,6 +258,11 @@ Route::name('epics.')->namespace('App\Http\Controllers')->prefix('dashboard/epic
     
 });
 
+Route::name('linking.')->namespace('App\Http\Controllers')->prefix('dashboard/linking')->group(function () {
+    Route::get('{id}/{type}', 'LinkingController@index');
+    
+});
+
 
 //EpicComment
 Route::post('add-epic-comment', [App\Http\Controllers\ObjectiveController::class, 'SaveComment']);

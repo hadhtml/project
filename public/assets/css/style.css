@@ -22009,3 +22009,38 @@ div[role="circleprogressbar"]::before {
     background-color: #0069d9 !important;
     color: white !important;
 }
+
+.buisnessunit{
+    padding: 20px;
+    border-radius: 12px;
+    background: var(--white, #FFF);
+    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.05);
+    border: transparent !important;
+}
+.buisnessunit .mainheading h4{
+    font-size: 17px;
+    color: #547aff;
+}
+
+.buisnessunit .mainheading .buisnessunitheading{
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 4px;
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: clip;
+}
+.buisnessunit-badge{
+    background-color: red;
+    padding: 10px;
+}
+.buisnessunitbadge{
+    border-radius: 100px;
+    background-color: red;
+    color: white;
+}
+.buisnessunitlinkingtext{
+    font-size: 13px;
+    color: #787878;
+}
