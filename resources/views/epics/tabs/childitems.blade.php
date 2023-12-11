@@ -2,7 +2,13 @@
     $epicstory = DB::table("epics_stroy")->where("epic_id", $epic->id)->get();
     $epicprogress = DB::table("epics_stroy")->where("epic_id", $epic->id)->sum("progress");
     $count = DB::table("epics_stroy")->where("epic_id", $epic->id)->count();
-    $total = round($epicprogress / $count, 0);
+    if($count > 0)
+    {
+        $total = round($epicprogress / $count, 0);
+    }else{
+        $total = 0;
+    }
+    
 @endphp
 <div class="row mb-3">
     <div class="col-md-1">
