@@ -71,13 +71,44 @@
                                         "pos_x": 10,
                                         "pos_y": 150
                                     },
-                                    @foreach(DB::table('business_units')->limit(2)->get() as $key=>$r)
-                                    "{{ $key+$r->id }}": {
-                                        "id": {{ $key+$r->id }},
+                                    "2": {
+                                        "id": 2,
                                         "name": "slack",
                                         "data": {},
                                         "class": "buisnessunit-tab",
-                                        "html": '<div class="row"> <div class="col-md-4"> <div class="buisnessunit"> <div class="mainheading row mb-3"> <div class="col-md-12"> <h4>Business Unit</h4> </div> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingbuisnessunit.svg") }}"> </div> <div class="col-md-8"> <div class="buisnessunit-card-subtittle"> <p class="buisnessunitheading">{{ $r->business_name }}...</p> </div> </div> <div class="col-md-3 text-right"> <div class="badge buisnessunitbadge"> 10% </div> </div> </div> <div class="row"> <div class="col-md-12"> <div class="row mt-2"> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingkey.svg") }}"> </div> <div class="col-md-7"> <p class="buisnessunitlinkingtext">Streamline internal processes for greater efficiency.</p> </div> <div class="col-md-1"> <img src="{{ url("public/assets/svg/link.svg") }}"> </div> <div class="col-md-3 text-right"> <div class="badge buisnessunitbadge">10%</div> </div> </div> <div class="row mt-2"> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingkey.svg") }}"> </div> <div class="col-md-7"> <p class="buisnessunitlinkingtext">Streamline internal processes for greater efficiency.</p> </div> <div class="col-md-1"> <img src="{{ url("public/assets/svg/link.svg") }}"> </div> <div class="col-md-3 text-right"> <div class="badge buisnessunitbadge">10%</div> </div> </div> <div class="row mt-2"> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingkey.svg") }}"> </div> <div class="col-md-7"> <p class="buisnessunitlinkingtext">Streamline internal processes for greater efficiency.</p> </div> <div class="col-md-1"> <img src="{{ url("public/assets/svg/link.svg") }}"> </div> <div class="col-md-3 text-right"> <div class="badge buisnessunitbadge">10%</div> </div> </div> </div> </div> </div> </div> </div>',
+                                        "html": '<div class="row"> <div class="col-md-4"> <div class="buisnessunit"> <div class="mainheading row mb-3"> <div class="col-md-12"> <h4>Business Unit</h4> </div> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingbuisnessunit.svg") }}"> </div> <div class="col-md-8"> <div class="buisnessunit-card-subtittle"> <p class="buisnessunitheading">Buisness Unit Tittle...</p> </div> </div> <div class="col-md-3 text-right"> <div class="badge buisnessunitbadge"> 10% </div> </div> </div> <div class="row"> <div class="col-md-12"> <div class="row mt-2"> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingkey.svg") }}"> </div> <div class="col-md-7"> <p class="buisnessunitlinkingtext">Streamline internal processes for greater efficiency.</p> </div> <div class="col-md-1"> <img src="{{ url("public/assets/svg/link.svg") }}"> </div> <div class="col-md-3 text-right"> <div class="badge buisnessunitbadge">10%</div> </div> </div> <div class="row mt-2"> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingkey.svg") }}"> </div> <div class="col-md-7"> <p class="buisnessunitlinkingtext">Streamline internal processes for greater efficiency.</p> </div> <div class="col-md-1"> <img src="{{ url("public/assets/svg/link.svg") }}"> </div> <div class="col-md-3 text-right"> <div class="badge buisnessunitbadge">10%</div> </div> </div> <div class="row mt-2"> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingkey.svg") }}"> </div> <div class="col-md-7"> <p class="buisnessunitlinkingtext">Streamline internal processes for greater efficiency.</p> </div> <div class="col-md-1"> <img src="{{ url("public/assets/svg/link.svg") }}"> </div> <div class="col-md-3 text-right"> <div class="badge buisnessunitbadge">10%</div> </div> </div> </div> </div> </div> </div> </div>',
+                                        "typenode": false,
+                                        "inputs": {
+                                            "input_1": {
+                                                "connections": [{
+                                                    "node": "1",
+                                                    "input": "output_1"
+                                                }]
+                                            }
+                                        },
+                                        "outputs": {
+                                            "output_1": {
+                                                "connections": [{
+                                                    "node": "4",
+                                                    "output": "input_1"
+                                                }]
+                                            },
+                                            "output_2": {
+                                                "connections": [{
+                                                    "node": "5",
+                                                    "output": "input_1"
+                                                }]
+                                            },
+                                        },
+                                        "pos_x": 250,
+                                        "pos_y": 100
+                                    },
+                                    "3": {
+                                        "id": 3,
+                                        "name": "slack",
+                                        "data": {},
+                                        "class": "buisnessunit-tab",
+                                        "html": '<div class="row"> <div class="col-md-4"> <div class="buisnessunit"> <div class="mainheading row mb-3"> <div class="col-md-12"> <h4>Business Unit</h4> </div> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingbuisnessunit.svg") }}"> </div> <div class="col-md-8"> <div class="buisnessunit-card-subtittle"> <p class="buisnessunitheading">Buisness Unit Tittle Two...</p> </div> </div> <div class="col-md-3 text-right"> <div class="badge buisnessunitbadge"> 10% </div> </div> </div> <div class="row"> <div class="col-md-12"> <div class="row mt-2"> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingkey.svg") }}"> </div> <div class="col-md-7"> <p class="buisnessunitlinkingtext">Streamline internal processes for greater efficiency.</p> </div> <div class="col-md-1"> <img src="{{ url("public/assets/svg/link.svg") }}"> </div> <div class="col-md-3 text-right"> <div class="badge buisnessunitbadge">10%</div> </div> </div> <div class="row mt-2"> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingkey.svg") }}"> </div> <div class="col-md-7"> <p class="buisnessunitlinkingtext">Streamline internal processes for greater efficiency.</p> </div> <div class="col-md-1"> <img src="{{ url("public/assets/svg/link.svg") }}"> </div> <div class="col-md-3 text-right"> <div class="badge buisnessunitbadge">10%</div> </div> </div> <div class="row mt-2"> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingkey.svg") }}"> </div> <div class="col-md-7"> <p class="buisnessunitlinkingtext">Streamline internal processes for greater efficiency.</p> </div> <div class="col-md-1"> <img src="{{ url("public/assets/svg/link.svg") }}"> </div> <div class="col-md-3 text-right"> <div class="badge buisnessunitbadge">10%</div> </div> </div> </div> </div> </div> </div> </div>',
                                         "typenode": false,
                                         "inputs": {
                                             "input_1": {
@@ -89,13 +120,82 @@
                                         },
                                         "outputs": {},
                                         "pos_x": 250,
-                                        @if($key == 1)
-                                        "pos_y": 100
-                                        @else
-                                        "pos_y": 200
-                                        @endif
+                                        "pos_y": 400
                                     },
-                                    @endforeach
+                                    "4": {
+                                        "id": 4,
+                                        "name": "slack",
+                                        "data": {},
+                                        "class": "buisnessunit-tab",
+                                        "html": '<div class="row"> <div class="col-md-4"> <div class="buisnessunit"> <div class="mainheading row mb-3"> <div class="col-md-12"> <h4>Value stream</h4> </div> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingbuisnessunit.svg") }}"> </div> <div class="col-md-8"> <div class="buisnessunit-card-subtittle"> <p class="buisnessunitheading">Buisness Unit Tittle Two...</p> </div> </div> <div class="col-md-3 text-right"> <div class="badge buisnessunitbadge"> 10% </div> </div> <div class="col-md-12 border-bottom"></div> </div> <div class="row"> <div class="col-md-12"> <div class="row mt-2"> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingkey.svg") }}"> </div> <div class="col-md-7"> <p class="buisnessunitlinkingtext">Streamline internal processes for greater efficiency.</p> </div> <div class="col-md-1"> <img src="{{ url("public/assets/svg/link.svg") }}"> </div> <div class="col-md-3 text-right"> <div class="badge buisnessunitbadge">10%</div> </div> </div> <div class="row mt-2"> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingkey.svg") }}"> </div> <div class="col-md-7"> <p class="buisnessunitlinkingtext">Streamline internal processes for greater efficiency.</p> </div> <div class="col-md-1"> <img src="{{ url("public/assets/svg/link.svg") }}"> </div> <div class="col-md-3 text-right"> <div class="badge buisnessunitbadge">10%</div> </div> </div> <div class="row mt-2"> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingkey.svg") }}"> </div> <div class="col-md-7"> <p class="buisnessunitlinkingtext">Streamline internal processes for greater efficiency.</p> </div> <div class="col-md-1"> <img src="{{ url("public/assets/svg/link.svg") }}"> </div> <div class="col-md-3 text-right"> <div class="badge buisnessunitbadge">10%</div> </div> </div> </div> </div> <div class="mainheading row mb-3"> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingbuisnessunit.svg") }}"> </div> <div class="col-md-8"> <div class="buisnessunit-card-subtittle"> <p class="buisnessunitheading">Buisness Unit Tittle Two...</p> </div> </div> <div class="col-md-3 text-right"> <div class="badge buisnessunitbadge"> 10% </div> </div> <div class="col-md-12 border-bottom"></div> </div> <div class="row"> <div class="col-md-12"> <div class="row mt-2"> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingkey.svg") }}"> </div> <div class="col-md-7"> <p class="buisnessunitlinkingtext">Streamline internal processes for greater efficiency.</p> </div> <div class="col-md-1"> <img src="{{ url("public/assets/svg/link.svg") }}"> </div> <div class="col-md-3 text-right"> <div class="badge buisnessunitbadge">10%</div> </div> </div> <div class="row mt-2"> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingkey.svg") }}"> </div> <div class="col-md-7"> <p class="buisnessunitlinkingtext">Streamline internal processes for greater efficiency.</p> </div> <div class="col-md-1"> <img src="{{ url("public/assets/svg/link.svg") }}"> </div> <div class="col-md-3 text-right"> <div class="badge buisnessunitbadge">10%</div> </div> </div> <div class="row mt-2"> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingkey.svg") }}"> </div> <div class="col-md-7"> <p class="buisnessunitlinkingtext">Streamline internal processes for greater efficiency.</p> </div> <div class="col-md-1"> <img src="{{ url("public/assets/svg/link.svg") }}"> </div> <div class="col-md-3 text-right"> <div class="badge buisnessunitbadge">10%</div> </div> </div> </div> </div> </div> </div> </div>',
+                                        "typenode": false,
+                                        "inputs": {
+                                            "input_1": {
+                                                "connections": [{
+                                                    "node": "2",
+                                                    "input": "output_1"
+                                                }]
+                                            }
+                                        },
+                                        "outputs": {
+                                            "output_1": {
+                                                "connections": [{
+                                                    "node": "6",
+                                                    "output": "input_1"
+                                                }]
+                                            },
+                                            "output_2": {
+                                                
+                                            }
+                                        },
+                                        "pos_x": 550,
+                                        "pos_y": 400
+                                    },
+                                    "5": {
+                                        "id": 5,
+                                        "name": "slack",
+                                        "data": {},
+                                        "class": "buisnessunit-tab",
+                                        "html": '<div class="row"> <div class="col-md-4"> <div class="buisnessunit"> <div class="mainheading row mb-3"> <div class="col-md-12"> <h4>Value stream</h4> </div> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingbuisnessunit.svg") }}"> </div> <div class="col-md-8"> <div class="buisnessunit-card-subtittle"> <p class="buisnessunitheading">Buisness Unit Tittle Two...</p> </div> </div> <div class="col-md-3 text-right"> <div class="badge buisnessunitbadge"> 10% </div> </div> <div class="col-md-12 border-bottom"></div> </div> <div class="row"> <div class="col-md-12"> <div class="row mt-2"> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingkey.svg") }}"> </div> <div class="col-md-7"> <p class="buisnessunitlinkingtext">Streamline internal processes for greater efficiency.</p> </div> <div class="col-md-1"> <img src="{{ url("public/assets/svg/link.svg") }}"> </div> <div class="col-md-3 text-right"> <div class="badge buisnessunitbadge">10%</div> </div> </div> <div class="row mt-2"> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingkey.svg") }}"> </div> <div class="col-md-7"> <p class="buisnessunitlinkingtext">Streamline internal processes for greater efficiency.</p> </div> <div class="col-md-1"> <img src="{{ url("public/assets/svg/link.svg") }}"> </div> <div class="col-md-3 text-right"> <div class="badge buisnessunitbadge">10%</div> </div> </div> <div class="row mt-2"> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingkey.svg") }}"> </div> <div class="col-md-7"> <p class="buisnessunitlinkingtext">Streamline internal processes for greater efficiency.</p> </div> <div class="col-md-1"> <img src="{{ url("public/assets/svg/link.svg") }}"> </div> <div class="col-md-3 text-right"> <div class="badge buisnessunitbadge">10%</div> </div> </div> </div> </div> </div> </div> </div>',
+                                        "typenode": false,
+                                        "inputs": {
+                                            "input_1": {
+                                                "connections": [{
+                                                    "node": "2",
+                                                    "input": "output_2"
+                                                }]
+                                            }
+                                        },
+                                        "outputs": {
+                                            "output_1": {
+                                                
+                                            },
+                                            "output_2": {
+                                                
+                                            }
+                                        },
+                                        "pos_x": 550,
+                                        "pos_y": 800
+                                    },
+                                    "6": {
+                                        "id": 6,
+                                        "name": "slack",
+                                        "data": {},
+                                        "class": "buisnessunit-tab",
+                                        "html": '<div class="row"> <div class="col-md-4"> <div class="buisnessunit"> <div class="mainheading row mb-3"> <div class="col-md-12"> <h4>Value stream Team</h4> </div> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingbuisnessunit.svg") }}"> </div> <div class="col-md-8"> <div class="buisnessunit-card-subtittle"> <p class="buisnessunitheading">Value Stream Team tittle...</p> </div> </div> <div class="col-md-3 text-right"> <div class="badge buisnessunitbadge"> 10% </div> </div> <div class="col-md-12 border-bottom"></div> </div> <div class="row"> <div class="col-md-12"> <div class="row mt-2"> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingkey.svg") }}"> </div> <div class="col-md-7"> <p class="buisnessunitlinkingtext">Streamline internal processes for greater efficiency.</p> </div> <div class="col-md-1"> <img src="{{ url("public/assets/svg/link.svg") }}"> </div> <div class="col-md-3 text-right"> <div class="badge buisnessunitbadge">10%</div> </div> </div> <div class="row mt-2"> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingkey.svg") }}"> </div> <div class="col-md-7"> <p class="buisnessunitlinkingtext">Streamline internal processes for greater efficiency.</p> </div> <div class="col-md-1"> <img src="{{ url("public/assets/svg/link.svg") }}"> </div> <div class="col-md-3 text-right"> <div class="badge buisnessunitbadge">10%</div> </div> </div> </div> </div> </div> </div> </div>',
+                                        "typenode": false,
+                                        "inputs": {
+                                            "input_1": {
+                                                "connections": [{
+                                                    "node": "5",
+                                                    "input": "output_1"
+                                                }]
+                                            }
+                                        },
+                                        "outputs": {},
+                                        "pos_x": 850,
+                                        "pos_y": 50
+                                    },
                                 }
                             }
                         }
