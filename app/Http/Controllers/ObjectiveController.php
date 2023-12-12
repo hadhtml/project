@@ -307,7 +307,7 @@ class ObjectiveController extends Controller
         );
     }
 
-    public function SaveKeyObjective(Request $request)
+     public function SaveKeyObjective(Request $request)
     {
         $key_name = DB::table("key_result")
             ->where("key_name", $request->key_name)
@@ -359,6 +359,7 @@ class ObjectiveController extends Controller
                     "key_id" => $KEY,
                     "buisness_unit_id" => $request->unit_id,
                     "link_obj_id" => $request->teamObj[$key],
+                    'type' => $request->type,
                 ]);
             }
         }

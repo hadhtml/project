@@ -2516,12 +2516,29 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             data: {
-                unit_id: unit_id,
+                unit_id:unit_id,
                 type: type,
             },
             success: function(res) {
-
+                if(type == 'unit')
+                {
                 if (res) {
+
+                    $('#key-team').empty();
+                    $('#key-team').append('<option hidden value="">Select Value Stream</option>');
+                    $.each(res, function(key, course) {
+                        $('select[name="key-team"]').append('<option value="' + course.id + '">' +
+                            course.value_name + '</option>');
+                    });
+                } else {
+                    $('#key-team').empty();
+                }
+            }
+
+            if(type == 'stream')
+                {
+                if (res) {
+
                     $('#key-team').empty();
                     $('#key-team').append('<option hidden value="">Select Team</option>');
                     $.each(res, function(key, course) {
@@ -2531,6 +2548,7 @@
                 } else {
                     $('#key-team').empty();
                 }
+            }
 
             }
         });
@@ -2779,6 +2797,7 @@
             },
             success: function(res) {
                 $('.field_wrapper_bu_team').append(res);
+               
             }
         });
 
@@ -2786,6 +2805,7 @@
 
     function remove_div(div) {
         $('#remove_button' + div).remove();
+        x--;
     }
 
     var y = 1;
@@ -2815,6 +2835,7 @@
 
     function remove_div_unit(div) {
         $('#remove-unit' + div).remove();
+        y--;
     }
 
 
