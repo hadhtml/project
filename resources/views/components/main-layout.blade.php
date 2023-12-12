@@ -22,6 +22,10 @@
     
     <!-- Summernote -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-bs4.min.css" rel="stylesheet">
+
+    <!-- Icon family -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     
     <title>Dashboard</title>
     <style type="text/css">
@@ -199,10 +203,6 @@
             <!-- end Sidebar -->
             <div class="content d-flex flex-column flex-column-fluid">
                 <!-- begin breadcrums -->
-
-               
-                
-               
                 
                 @if ($var_objective == 'Org')
                  
@@ -359,9 +359,9 @@
                  
                 <!-- end breadcrums -->
                 <!-- begin page Content -->
-                <div class="container-fluid py-5 w-96">
-                @yield('content')
-            </div>
+                <div class="container-fluid body-content">
+                    @yield('content')
+                </div>
                 <!-- end page content -->
             </div>
         </div>

@@ -1,8 +1,8 @@
-<div class="container-fluid py-5 w-96">
+<div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12 p-0">
                             <div class="card">
-                                <div class="card-body p-10">
+                                <div class="card-body p-6">
                                     <table id="example" class="table">
                                         <thead>
                                             <tr>

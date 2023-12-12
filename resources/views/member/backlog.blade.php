@@ -19,11 +19,11 @@ $var_objective = "Backlog";
                 <!-- begin breadcrums -->
                 <!-- end breadcrums -->
                 <!-- begin page Content -->
-                <div class="container-fluid py-5 w-96" id="assign-epic">
+                <div class="container-fluid" id="assign-epic">
                     <div class="row">
                         <div class="col-md-12 p-0">
                             <div class="card">
-                                <div class="card-body p-10">
+                                <div class="card-body p-6">
                                 
                                    <table class="table data-table example" id="olddata">
                                                 <thead>

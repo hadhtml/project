@@ -1,4 +1,4 @@
-<div class="subheader py-2 py-lg-2 px-lg-8 subheader-solid breadcrums" id="kt_subheader">
+<div class="subheader subheader-solid breadcrums" id="kt_subheader">
     <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
         <!--begin::Info-->
         <div class="d-flex align-items-start flex-column flex-wrap mr-2">

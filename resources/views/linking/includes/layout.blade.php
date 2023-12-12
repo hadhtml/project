@@ -43,7 +43,7 @@
                 @if ($var_objective == 'linking')
                     @include('linking.includes.beardcumb')
                 @endif
-                <div class="container-fluid py-5 w-96">
+                <div class="container-fluid">
                 @yield('content')
             </div>
             </div>

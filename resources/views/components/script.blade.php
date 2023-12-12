@@ -12,16 +12,12 @@
 <script type="text/javascript" src="{{asset('public/assets/dist/jkanban.js')}}"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/dragula@3.7.3/dist/dragula.min.js"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.0.1"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 
 
@@ -374,3 +370,34 @@ drake.on('drop', function(el, target, source, sibling) {
         });
     });
 </script>
+
+
+<script>
+    $(document).ready(function(){
+      // Toggle expanded sidebar
+      $('.icon').on('click', function(){
+        // $('.aside').toggleClass('expanded-sidebar');
+        $('.content').toggleClass('content-expanded');
+      });
+    });
+  </script>
+
+
+  <script type="text/javascript">
+      document.addEventListener('DOMContentLoaded', function() {
+        const panelLink = document.querySelector('.buttonClick');
+        const sidePanel = document.getElementById('panel');
+        const closeBtn = document.getElementById('closeBtn');
+
+        panelLink.addEventListener('click', function(event) {
+            event.preventDefault();
+            sidePanel.classList.add('open');
+        });
+
+        closeBtn.addEventListener('click', function(event) {
+            event.preventDefault();
+            sidePanel.classList.remove('open');
+        });
+    });
+
+  </script>

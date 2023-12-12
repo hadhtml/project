@@ -19,7 +19,7 @@ $var_objective = "Backlog-Unit";
                 <!-- begin breadcrums -->
                 <!-- end breadcrums -->
                 <!-- begin page Content -->
-                <div class="container-fluid py-5 w-96" id="assign-epic-unit">
+                <div class="container-fluid" id="assign-epic-unit">
                     <div class="row">
                         <div class="col-md-12 p-0">
                             <div class="card">
