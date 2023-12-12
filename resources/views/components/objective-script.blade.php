@@ -1539,153 +1539,9 @@
 
 
 
-    function UpdateEpic() {
-
-        var edit_epic_name = $('#edit_epic_name').val();
-        var edit_epic_start_date = $('#edit_epic_start_date').val();
-        var edit_epic_end_date = $('#edit_epic_end_date').val();
-        var edit_epic_description = $('#edit_epic_description').val();
-        var org_id = "{{ $organization->org_id }}";
-        var slug = "{{ $organization->slug }}";
-        var unit_id = "{{ $organization->id }}";
-        var edit_epic_id = $('#edit_epic_id').val();
-        var edit_epic_status = $('#edit_epic_status').val();
-
-        var edit_ini_epic_id = $('#edit_ini_epic_id').val();
-        var edit_epic_key = $('#edit_epic_key').val();
-        var edit_epic_obj = $('#edit_epic_obj').val();
-        var type = "{{ $organization->type }}";
-
-        var selectedOptions = $('#edit-team').val();
+    
 
 
-
-        if ($('#edit_epic_name').val() != '') {
-            $.ajax({
-                type: "POST",
-                url: "{{ url('update-epic') }}",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: {
-                    edit_epic_name: edit_epic_name,
-                    edit_epic_start_date: edit_epic_start_date,
-                    edit_epic_end_date: edit_epic_end_date,
-                    edit_epic_description: edit_epic_description,
-                    org_id: org_id,
-                    slug: slug,
-                    edit_epic_id: edit_epic_id,
-                    edit_epic_status: edit_epic_status,
-                    edit_ini_epic_id: edit_ini_epic_id,
-                    unit_id: unit_id,
-                    type: type,
-                    edit_epic_key: edit_epic_key,
-                    edit_epic_obj: edit_epic_obj,
-                    selectedOptions: selectedOptions
-                },
-                success: function(res) {
-                    // if (res == 1) {
-
-                    //     $('#obj-key-name-error').html(
-                    //         '<strong class="text-danger">Key Name Already Taken</strong>');
-
-                    // } else {
-
-                    $('#edit_epic_name').val('');
-                    $('#edit_epic_start_date').val('');
-                    $('#edit_epic_end_date').val('');
-                    $('#edit_epic_description').val('');
-                    $('#success-epic-edit').html(
-                        '<div class="alert alert-success" role="alert"> Epic Updated successfully</div>'
-                    );
-                    $('#epic-feild-error-edit').html('');
-                    setTimeout(function() {
-                        $('#edit-epic').modal('hide');
-                        $('#success-epic-edit').html('');
-                    }, 3000);
-                    $('#parentCollapsible').html(res);
-
-                    $("#nestedCollapsible" + edit_epic_obj).collapse('toggle');
-                    $("#key-result" + edit_epic_key).collapse('toggle');
-                    $("#initiative" + edit_ini_epic_id).collapse('toggle');
-                    handleDivClick(edit_ini_epic_id);
-
-
-
-
-
-                    // }
-
-                }
-            });
-        } else {
-
-            $('#epic-feild-error-edit').html('Please fill out all required fields.');
-
-        }
-    }
-
-
-
-
-    function getprogress(id) {
-
-        var epicid = $('#edit_epic_id').val();
-        var key = $('#edit_epic_key').val();
-        var obj = $('#edit_epic_obj').val();
-
-        $.ajax({
-            type: "POST",
-            url: "{{ url('story-check') }}",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: {
-                id: id,
-                key: key,
-                obj: obj
-
-            },
-            success: function(res) {
-
-                $('#epic_story_edit').html(res);
-                getalldata(epicid);
-
-
-
-            }
-        });
-
-    }
-
-    function updateprogress(id) {
-
-        var epicid = $('#edit_epic_id').val();
-        var key = $('#edit_epic_key').val();
-        var obj = $('#edit_epic_obj').val();
-
-        $.ajax({
-            type: "POST",
-            url: "{{ url('update-story-check') }}",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: {
-                id: id,
-                key: key,
-                obj: obj
-
-            },
-            success: function(res) {
-
-                $('#epic_story_edit').html(res);
-                getalldata(epicid);
-
-
-            }
-        });
-
-    }
 
 
     $(document).ready(function() {
@@ -1801,46 +1657,7 @@
             story_id + ')" type="button">Update</button></div>');
     }
 
-    function updatestory(s_id) {
-
-        // var title = $('#title'+s_id).val();
-
-        var title = $('#edit_story_title' + s_id).val();
-        var story_status = $('#edit_story_status' + s_id).val();
-        var story_assign = $('#edit_story_assign' + s_id).val();
-
-        var key = $('#edit_epic_key').val();
-        var obj = $('#edit_epic_obj').val();
-
-        if (title != '') {
-            $.ajax({
-                type: "POST",
-                url: "{{ url('update-story') }}",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: {
-                    s_id: s_id,
-                    title: title,
-                    story_status: story_status,
-                    story_assign: story_assign,
-                    key: key,
-                    obj: obj
-
-                },
-                success: function(res) {
-
-                    $('#epic_story_edit').html(res);
-
-
-
-
-                }
-            });
-
-        }
-
-    }
+    
 
 
     function deletestory(id) {
@@ -2433,9 +2250,7 @@
 
     }
 
-    function editstorynew(id) {
-        $('#story_edit_id').val(id);
-    }
+   
 
     function UpdateNewStory(id) {
 
@@ -2701,12 +2516,29 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             data: {
-                unit_id: unit_id,
+                unit_id:unit_id,
                 type: type,
             },
             success: function(res) {
-
+                if(type == 'unit')
+                {
                 if (res) {
+
+                    $('#key-team').empty();
+                    $('#key-team').append('<option hidden value="">Select Value Stream</option>');
+                    $.each(res, function(key, course) {
+                        $('select[name="key-team"]').append('<option value="' + course.id + '">' +
+                            course.value_name + '</option>');
+                    });
+                } else {
+                    $('#key-team').empty();
+                }
+            }
+
+            if(type == 'stream')
+                {
+                if (res) {
+
                     $('#key-team').empty();
                     $('#key-team').append('<option hidden value="">Select Team</option>');
                     $.each(res, function(key, course) {
@@ -2716,6 +2548,7 @@
                 } else {
                     $('#key-team').empty();
                 }
+            }
 
             }
         });
@@ -2964,6 +2797,7 @@
             },
             success: function(res) {
                 $('.field_wrapper_bu_team').append(res);
+               
             }
         });
 
@@ -2971,6 +2805,7 @@
 
     function remove_div(div) {
         $('#remove_button' + div).remove();
+        x--;
     }
 
     var y = 1;
@@ -3000,6 +2835,7 @@
 
     function remove_div_unit(div) {
         $('#remove-unit' + div).remove();
+        y--;
     }
 
 
