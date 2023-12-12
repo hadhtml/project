@@ -6,7 +6,7 @@ $var_objective = "Org-Unit";
 @section('content')
 
 
-<div class="row">
+<!-- <div class="row">
     <div class="col-md-4">
         <div class="card">
             <div class="card-body">
@@ -35,7 +35,7 @@ $var_objective = "Org-Unit";
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 <div class="row">
     <div class="col-md-12">
