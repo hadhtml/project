@@ -107,6 +107,8 @@
                     $("#key-result" + flag_epic_key).collapse('toggle');
                     $("#initiative" + flag_ini_epic_id).collapse('toggle');
                     handleDivClick(flag_ini_epic_id);
+                    showheader(flag_epic_id);
+                    showtabwithoutloader(flag_epic_id , 'flags');
                 }
             });
         } else {

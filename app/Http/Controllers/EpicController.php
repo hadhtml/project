@@ -98,6 +98,13 @@ class EpicController extends Controller
             $html = view('epics.tabs.teams')->render();
             return $html;
         }
+        if($request->tab == 'flags')
+        {
+            $data = Epic::find($request->id);
+            $flags = flags::where('epic_id' , $data->id)->orderby('id' , 'desc')->get();
+            $html = view('epics.tabs.flags', compact('flags','data'))->render();
+            return $html;
+        }
         if($request->tab == 'checkins')
         {
             $html = view('epics.tabs.checkins')->render();
@@ -493,6 +500,12 @@ class EpicController extends Controller
 
        
         $data = Epic::find($request->edit_epic_id);
+        $html = view('epics.modalheader', compact('data'))->render();
+        return $html;
+    }
+    public function showheader(Request $request)
+    {
+        $data = Epic::find($request->id);
         $html = view('epics.modalheader', compact('data'))->render();
         return $html;
     }

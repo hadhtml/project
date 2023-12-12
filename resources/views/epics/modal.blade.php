@@ -7,6 +7,7 @@
         <div class="col-md-3">
             <div class="menuettitle">
                 <h4>Menu</h4>
+                <input type="hidden" id="modaltab" value="general">
                 <ul>
                     <li id="general" onclick="showtab({{$data->id}} , 'general')" class="tabsclass active"><img src="{{ url('public/assets/svg/edit-2.svg') }}"> Basic Details</li>
                     <li id="childitems" onclick="showtab({{$data->id}} , 'childitems')" class="tabsclass"><img src="{{ url('public/assets/svg/comment.svg') }}"> Child Items</li>
@@ -14,6 +15,7 @@
                     <li id="activites" onclick="showtab({{$data->id}} , 'activites')" class="tabsclass"><img src="{{ url('public/assets/svg/activites.svg') }}"> Activities</li>
                     <li id="checkins" onclick="showtab({{$data->id}} , 'checkins')" class="tabsclass"><img src="{{ url('public/assets/svg/activites.svg') }}"> Check-Ins</li>
                     <li id="attachment" onclick="showtab({{$data->id}} , 'attachment')" class="tabsclass"><img src="{{ url('public/assets/svg/activites.svg') }}"> Attachments</li>
+                    <li id="flags" onclick="showtab({{$data->id}} , 'flags')" class="tabsclass"><img src="{{ url('public/assets/svg/btnflagsvg.svg') }}"> Flags</li>
                     <li id="teams" onclick="showtab({{$data->id}} , 'teams')" class="tabsclass"><img src="{{ url('public/assets/svg/attachment.svg') }}"> Teams</li>
                 </ul>
                 <h4>Action</h4>
@@ -106,7 +108,26 @@
             }
         });
     }
+    function showheader(id) {
+        $.ajax({
+            type: "POST",
+            url: "{{ url('dashboard/epics/showheader') }}",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                id:id,
+            },
+            success: function(res) {
+                $('.modalheaderforapend').html(res);
+            },
+            error: function(error) {
+                
+            }
+        });
+    }
     function showtabwithoutloader(id , tab) {
+        $('#modaltab').val(tab);
         $.ajax({
             type: "POST",
             url: "{{ url('dashboard/epics/showtab') }}",
@@ -128,6 +149,7 @@
         });
     }
     function showtab(id , tab) {
+        $('#modaltab').val(tab);
         $('.secondportion').addClass('loaderdisplay');
         $('.secondportion').html('<i class="fa fa-spin fa-spinner"></i>');
         $.ajax({

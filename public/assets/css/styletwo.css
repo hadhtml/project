@@ -840,6 +840,7 @@ div[role="circleprogressbar"]::before {
 .epic-header-buttons img{
     width: 15px;
     height: 15px;
+    margin-right: 5px;
 }
 .moverightside img{
     margin-bottom: 10px;

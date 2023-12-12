@@ -59,9 +59,6 @@
                     <img src="{{url('public/assets/svg/profile-2user.svg')}}" width="20"> 1
                 </a>
             </div>
-            <div class="member-list-image memberlistposition">
-                <img onclick="showmemberbox()" src="{{url('public/assets/svg/plussmember.svg')}}">
-            </div>
         </div>
         @else
         <a href="javascript:vodi(0)" class="epic-header-buttons" id="showboardbutton">
@@ -70,8 +67,9 @@
         @endif
 
         <div class="epic-header-buttons raise-flag-button">
-             <a onclick="rasiseflag({{$data->id}})" href="javascript:void(0)"  id="showboardbutton">
-                <img src="{{url('public/assets/svg/btnflagsvg.svg')}}" width="20"> Raise Flag
+
+            <a onclick="rasiseflag({{$data->id}})" href="javascript:void(0)"  id="showboardbutton">
+                <img src="{{url('public/assets/svg/btnflagsvg.svg')}}" width="20"> Raise Flag @if(DB::table('flags')->where('epic_id'  ,$data->id)->count() > 0) ({{ DB::table('flags')->where('epic_id'  ,$data->id)->count() }}) @endif
             </a>
             <div class="raiseflag-box">
                 <div class="row">
@@ -92,9 +90,11 @@
                             <input type="hidden" value="{{ $data->key_id }}" id="flag_epic_key">
                             <input type="hidden" value="{{ $data->buisness_unit_id }}" id="buisness_unit_id">
                             <input type="hidden" value="{{ $data->epic_type }}" id="board_type">
+                            <input type="hidden" value="{{ $data->epic_status }}" id="epic_status">
                             <div class="row">        
                                   <div class="col-md-12 col-lg-12 col-xl-12">
                                     <div class="form-group mb-0">
+                                        <label for="small-description">Flag Type <small class="text-danger">*</small></label>
                                        <select class="form-control" id="flag_type" >
                                            <option value="">Select Flag Type</option>
                                            <option value="Risk">Risk</option>
@@ -102,29 +102,32 @@
                                            <option value="Blocker">Blocker</option>
                                            <option value="Action">Action</option>
                                        </select>
-                                        <label for="small-description">Flag Type <small class="text-danger">*</small></label>
+                                        
                                     </div>
                                 </div>
                                  <div class="col-md-12 col-lg-12 col-xl-12">
                                     <div class="form-group mb-0">
+                                        <label for="lead-manager">Flag Assignee <small class="text-danger">*</small></label>
                                         <select class="form-control" id="flag_assign">
                                             @foreach(DB::table('members')->where('org_user',Auth::id())->get() as $r)
                                               <option value="{{ $r->id }}">{{ $r->name }}</option>
                                             @endforeach
                                         </select>
-                                        <label for="lead-manager">Flag Assignee <small class="text-danger">*</small></label>
+                                        
                                     </div>
                                 </div>
                                  <div class="col-md-12 col-lg-12 col-xl-12">
                                     <div class="form-group mb-0">
-                                        <input type="text" class="form-control"  id="flag_title" >
                                         <label for="small-description">Title <small class="text-danger">*</small></label>
+                                        <input type="text" class="form-control"  id="flag_title" >
+                                        
                                     </div>
                                 </div>
                                 <div class="col-md-12 col-lg-12 col-xl-12">
                                     <div class="form-group mb-0">
-                                        <textarea id="flag_description" class="form-control"></textarea>
                                         <label for="small-description">Description <small class="text-danger">*</small></label>
+                                        <textarea id="flag_description" class="form-control"></textarea>
+                                        
                                     </div>
                                 </div>
                                 <div class="col-md-12">

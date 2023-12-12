@@ -255,6 +255,7 @@ Route::name('epics.')->namespace('App\Http\Controllers')->prefix('dashboard/epic
     Route::POST('orderbycomment', 'EpicController@orderbycomment');
     Route::POST('savereply', 'EpicController@savereply');
     Route::POST('changeepicstatus', 'EpicController@changeepicstatus');
+    Route::POST('showheader', 'EpicController@showheader');
     
 });
 
