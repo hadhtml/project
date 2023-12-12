@@ -340,7 +340,7 @@ $updateData = [
 
     if($request->type == 'unit')
     {
-    $Team = DB::table('unit_team')->where('org_id',$request->unit_id)->get();
+    $Team = DB::table('value_stream')->where('unit_id',$request->unit_id)->get();
     }
     if($request->type == 'stream')
     { 
@@ -355,7 +355,7 @@ $updateData = [
 
      if($request->type == 'unit')
      {
-      $Obj = DB::table('objectives')->where('unit_id',$request->id)->where('trash',NULL)->where('type','BU')->get();
+      $Obj = DB::table('objectives')->where('unit_id',$request->id)->where('trash',NULL)->where('type','stream')->get();
      }
 
      if($request->type == 'stream')
@@ -389,16 +389,17 @@ $updateData = [
     public function AppendTeam(Request $request)
     {
     $index = $request->x;
+    $type = $request->type;
     if($request->type == 'unit')
     {
-    $Team = DB::table('unit_team')->where('org_id',$request->unit_id)->get();
+    $Team = DB::table('value_stream')->where('unit_id',$request->unit_id)->get();
     }
     if($request->type == 'stream')
     { 
     $Team = DB::table('value_team')->where('org_id',$request->unit_id)->get();
     }
      
-    return view('Team.Apeend-Team',compact('Team','index'));  
+    return view('Team.Apeend-Team',compact('Team','index','type'));  
     }
 
     public function AppendBU(Request $request)
