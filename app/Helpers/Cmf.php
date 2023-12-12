@@ -43,6 +43,10 @@ class Cmf
     {
         return date('d M Y, h:s a ', strtotime($data));
     }
+    public static function date_format_new($data)
+    {
+        return date('d M Y', strtotime($data));
+    }
     public static function currenturl()
     {
        return $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";

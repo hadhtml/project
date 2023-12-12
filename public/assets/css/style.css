@@ -21319,6 +21319,34 @@ input[type="radio"]:checked {
     color: #000;
     font-weight: 400;
 }
+.raise-flag-button a{
+    text-decoration: none;
+    color: #787878 !important;
+}
+.raise-flag-button{
+    position: relative;
+}
+.raiseflag-box{
+    display: none;
+    width: 319px;
+    box-shadow: 0 10px 24px rgb(87 106 134 / 20%);
+    position: absolute;
+    z-index: 111111;
+    background-color: white;
+    border-radius: 10px;
+    left: 0;
+    padding: 15px;
+    top: 35px;
+}
+.raiseflag-box h4{
+    font-size: 16px;
+    font-weight: 500;
+}
+.raiseflag-box .memberclose{
+    cursor: pointer;
+    height: 12px;
+    width: 12px;
+}
 .memberadd-box{
     display: none;
     width: 319px;
@@ -21848,7 +21876,7 @@ div[role="circleprogressbar"]::before {
     background-color: #f3f3f3 !important;
     color: #787878;
     border-radius: 12px;
-    font-size: 13px !important;
+    font-size: 11px !important;
     border-radius: 100px;
     border: none;
     padding: 15px;
@@ -21866,10 +21894,14 @@ div[role="circleprogressbar"]::before {
     display: flex;
 }
 .epic-percentage{
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 2;
     color: #3F4254;
+}
+.epic-header-buttons img{
+    width: 15px;
+    height: 15px;
 }
 .moverightside img{
     margin-bottom: 10px;

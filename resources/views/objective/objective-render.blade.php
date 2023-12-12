@@ -14,10 +14,7 @@ $keyweightcounte = DB::table('key_result')->where('obj_id',$obj->id)->sum('weigh
                 <h5 data-toggle="tooltip" data-placement="top" data-original-title="Objective">
                     <div class="d-flex flex-row align-items-center">
                         <div>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
-                              <rect width="32" height="32" rx="16" fill="#3699FF"/>
-                              <path d="M25 16H21.4M10.6 16H7M16 10.6V7M16 25V21.4M23.2 16C23.2 19.9765 19.9765 23.2 16 23.2C12.0235 23.2 8.8 19.9765 8.8 16C8.8 12.0235 12.0235 8.8 16 8.8C19.9765 8.8 23.2 12.0235 23.2 16ZM18.7 16C18.7 17.4912 17.4912 18.7 16 18.7C14.5088 18.7 13.3 17.4912 13.3 16C13.3 14.5088 14.5088 13.3 16 13.3C17.4912 13.3 18.7 14.5088 18.7 16Z" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
+                            <img src="{{ url('public/assets/svg/objectives/one.svg') }}">
                         </div>
                         <div class="ml-2">
                             {{$obj->objective_name}}
@@ -48,16 +45,7 @@ $keyweightcounte = DB::table('key_result')->where('obj_id',$obj->id)->sum('weigh
                  
                 
                    <div class="content-item" style="width:10%">
-                        <div class="d-flex flex-row progress-section">
-                            <!-- <div class="d-flex justify-content-between">
-                                <span class="tasks"></span>
-                                @if($obj->q_obj_prog > 0)
-                                <span class="completion" id="obj_comp_q{{$obj->id}}">{{$obj->q_obj_prog}}% Completed</span>
-                                @else
-                                <span class="completion" id="obj_comp_q{{$obj->id}}">0% Completed</span>
-                                @endif
-                            </div> -->
-                            
+                        <div class="d-flex flex-row progress-section">                        
                             @if($obj->q_obj_prog > 0)
                             <div role="progressbar" id="obj_comp_q{{$obj->id}}" aria-valuenow="{{$obj->q_obj_prog}}" aria-valuemin="0" aria-valuemax="100" style="--value:{{round($obj->q_obj_prog,0)}}"></div>
                             @else
@@ -67,45 +55,12 @@ $keyweightcounte = DB::table('key_result')->where('obj_id',$obj->id)->sum('weigh
                         </div>
                     </div>
                 
-                <div class="content-item" style="width:10%">
-                    <!-- <div class="d-flex flex-row progress-section">
-                        <div class="d-flex justify-content-between">
-                            <span class="tasks"></span>
-                            <span class="completion" id="obj_comp{{$obj->id}}">{{round($obj->obj_prog,2)}}% Completed</span>
-                        </div>
-                    </div>
-                 
-                     <div class="progress">
-                        <div class="progress-bar bg-primay" id="obj_prog{{$obj->id}}"  role="progressbar" style="width:{{$obj->obj_prog}}%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-                        
-                        </div>
-                    </div> -->
-                    
-                           @if($obj->obj_prog > 0)
-                            <div role="progressbar" id="obj_prog{{$obj->id}}" aria-valuenow="{{$obj->obj_prog}}" aria-valuemin="0" aria-valuemax="100" style="--value:{{round($obj->obj_prog,0)}}"></div>
-                            @else
-                            <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="--value:0"></div>
-                            @endif
-
-                    <!--<div class="custom-progress"   id="obj_prog{{$obj->id}}"  data-percentage="{{$obj->obj_prog}}" >-->
-                    <!--    <span class="custom-progress-left">-->
-                    <!--        <span class="custom-progress-bar" style="border-color:#3fe1a7;"></span>-->
-                    <!--    </span>-->
-                    <!--    <span class="custom-progress-right">-->
-                    <!--        <span class="custom-progress-bar" style="border-color:#3fe1a7;"></span>-->
-                    <!--    </span>-->
-                    <!--    <div class="custom-progress-value" id="obj_comp{{$obj->id}}">-->
-                    <!--        <div>-->
-                              
-                    <!--             @if($obj->obj_prog > 0)-->
-                    <!--              <small>{{round($obj->obj_prog,2)}}%</small>-->
-                    <!--               @else-->
-                    <!--              <small >0%</small>-->
-                    <!--            @endif-->
-                    <!--        </div>-->
-                    <!--    </div>-->
-                    <!--</div>-->
-
+                <div class="content-item" style="width:10%">                
+                   @if($obj->obj_prog > 0)
+                    <div role="progressbar" id="obj_prog{{$obj->id}}" aria-valuenow="{{$obj->obj_prog}}" aria-valuemin="0" aria-valuemax="100" style="--value:{{round($obj->obj_prog,0)}}"></div>
+                    @else
+                    <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="--value:0"></div>
+                    @endif
                 </div>
                  
             </div>
@@ -166,10 +121,7 @@ $keyweightcounte = DB::table('key_result')->where('obj_id',$obj->id)->sum('weigh
                                         <h5 data-toggle="tooltip" data-placement="top" data-original-title="Key Result">
                                             <div class="d-flex flex-row align-items-center">
                                                 <div>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
-                                                      <rect width="32" height="32" rx="16" fill="#3699FF"/>
-                                                      <path d="M19.5 13.5C19.5 13.1161 19.3535 12.7322 19.0607 12.4393C18.7678 12.1464 18.3839 12 18 12M18 18C20.4853 18 22.5 15.9853 22.5 13.5C22.5 11.0147 20.4853 9 18 9C15.5147 9 13.5 11.0147 13.5 13.5C13.5 13.7053 13.5137 13.9073 13.5404 14.1053C13.5841 14.4309 13.606 14.5937 13.5913 14.6967C13.5759 14.804 13.5564 14.8618 13.5035 14.9564C13.4527 15.0473 13.3633 15.1367 13.1843 15.3157L9.35147 19.1485C9.22176 19.2782 9.1569 19.3431 9.11052 19.4188C9.0694 19.4859 9.0391 19.559 9.02072 19.6356C9 19.7219 9 19.8136 9 19.9971V21.3C9 21.72 9 21.9301 9.08175 22.0905C9.15365 22.2316 9.26839 22.3463 9.40951 22.4183C9.56994 22.5 9.77996 22.5 10.2 22.5H12V21H13.5V19.5H15L16.1843 18.3157C16.3633 18.1367 16.4527 18.0473 16.5436 17.9965C16.6382 17.9436 16.696 17.9241 16.8033 17.9087C16.9063 17.894 17.0691 17.9159 17.3947 17.9596C17.5927 17.9863 17.7947 18 18 18Z" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-                                                    </svg>
+                                                    <img src="{{ url('public/assets/svg/objectives/two.svg') }}">
                                                 </div>
                                                 <div class="ml-2">
                                                     {{$key->key_name}}
@@ -185,15 +137,7 @@ $keyweightcounte = DB::table('key_result')->where('obj_id',$obj->id)->sum('weigh
                                         <div class="content-item">
                                             <p>{{ \Carbon\Carbon::parse($key->key_start_date)->format('M d')}} - {{ \Carbon\Carbon::parse($key->key_end_date)->format('M d')}}</p>
                                         </div>
-                                        <div class="content-item">
-                                            <!--@if($key->key_status == 1)-->
-                                            <!--<span class="badge-cs success">Running</span>-->
-                                            <!--@else-->
-                                            <!--<span class="badge-cs warning">Paused</span>-->
-                                            <!--@endif-->
-                                            
-                                           
-                                            
+                                        <div class="content-item">                                        
                                               @if($key->key_status == 'In progress')
                                                 <span class="badge-cs warning " style="width:80%">In progress</span>
                                                 @endif
@@ -206,60 +150,16 @@ $keyweightcounte = DB::table('key_result')->where('obj_id',$obj->id)->sum('weigh
 
                                         </div>
                                         
-                                    <div class="content-item" style="width:10%">
-                                            <!--<div class="d-flex flex-row progress-section">-->
-                                                
-                                            <!--    <div class="d-flex justify-content-between">-->
-                                            <!--        <span class="tasks"></span>-->
-                                            <!--        @if($key->q_key_prog > 0)-->
-                                            <!--        <span class="completion" id="qkeycomp{{$key->id}}">{{$key->q_key_prog}}% Completed</span>-->
-                                            <!--        @else-->
-                                            <!--        <span class="completion" id="qkeycomp{{$key->id}}">0% Completed</span>-->
-                                            <!--        @endif-->
-                                            <!--    </div>-->
-                                            <!--</div>-->
-                                            
+                                    <div class="content-item" style="width:10%">                                            
                            @if($key->q_key_prog > 0)
                             <div role="progressbar" id="qkeycomp{{$key->id}}" aria-valuenow="{{$key->q_key_prog}}" aria-valuemin="0" aria-valuemax="100" style="--value:{{round($key->q_key_prog,0)}}"></div>
                             @else
                             <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="--value:0"></div>
                             @endif            
-                                            
-                            <!--    <div class="custom-progress" id="qkeycomp{{$key->id}}" data-percentage="{{$key->q_key_prog}}">-->
-                            <!--    <span class="custom-progress-left">-->
-                            <!--        <span class="custom-progress-bar" style="border-color:#3fe1a7;"></span>-->
-                            <!--    </span>-->
-                            <!--    <span class="custom-progress-right">-->
-                            <!--        <span class="custom-progress-bar" style="border-color:#3fe1a7;"></span>-->
-                            <!--    </span>-->
-                            <!--    <div class="custom-progress-value">-->
-                                    
-                            <!--        <div>-->
-                            <!--            @if($key->q_key_prog > 0)-->
-                            <!--            {{round($key->q_key_prog,2)}}%-->
-                            <!--            @else-->
-                            <!--            0%-->
-                            <!--            @endif-->
-                                        
-                                        <!--<span>completed</span>-->
-                            <!--        </div>-->
-                            <!--    </div>-->
-                            <!--</div>-->
                                            
                                 </div>
                                         
                                         <div class="content-item" style="width:10%">
-                                            <!-- <div class="d-flex flex-row progress-section">
-                                                <div class="d-flex justify-content-between">
-                                                    <span class="tasks"></span>
-                                                    <span class="completion mr-1" id="keycomp{{$key->id}}">{{round($key->key_prog,2)}}% Completed</span>
-                                                </div>
-                                            </div>
-                                             <div class="progress">
-                                                 <div class="progress-bar bg-primay" id="keyprog{{$key->id}}" role="progressbar" style="width:{{$key->key_prog}}%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-                                                     
-                                                 </div>
-                                            </div> -->
                                             
                                                               
                            @if($key->key_prog > 0)
@@ -268,23 +168,6 @@ $keyweightcounte = DB::table('key_result')->where('obj_id',$obj->id)->sum('weigh
                             <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="--value:0"></div>
                             @endif 
 
-                                            <!--<div class="custom-progress"   data-percentage="{{$key->key_prog}}"  id="keyprog{{$key->id}}" >-->
-                                            <!--    <span class="custom-progress-left" >-->
-                                            <!--        <span class="custom-progress-bar" style="border-color:#3fe1a7;"  ></span>-->
-                                            <!--    </span>-->
-                                            <!--    <span class="custom-progress-right">-->
-                                            <!--        <span class="custom-progress-bar" style="border-color:#3fe1a7;"></span>-->
-                                            <!--    </span>-->
-                                            <!--    <div class="custom-progress-value" id="keycomp{{$key->id}}">-->
-                                            <!--        <div >-->
-                                            <!--            @if($key->key_prog > 0)-->
-                                            <!--            <small>{{round($key->key_prog,2)}}%</small>-->
-                                            <!--            @else-->
-                                            <!--            <small>0%</small>-->
-                                            <!--            @endif-->
-                                            <!--        </div>-->
-                                            <!--    </div>-->
-                                            <!--</div>-->
 
                                 </div>
                                 
@@ -370,10 +253,7 @@ $keyweightcounte = DB::table('key_result')->where('obj_id',$obj->id)->sum('weigh
                                                                 <h5 data-toggle="tooltip" data-placement="top" data-original-title="initiative">
                                                                     <div class="d-flex flex-row align-items-center">
                                                                         <div>
-                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
-                                                                              <rect width="32" height="32" rx="16" fill="#3699FF"/>
-                                                                              <path d="M18.4 19.6V21.6C18.4 22.3455 18.4 22.7183 18.2782 23.0123C18.1158 23.4043 17.8043 23.7158 17.4123 23.8782C17.1183 24 16.7455 24 16 24C15.2545 24 14.8817 24 14.5877 23.8782C14.1957 23.7158 13.8842 23.4043 13.7218 23.0123C13.6 22.7183 13.6 22.3455 13.6 21.6V19.6M18.4 19.6C20.5191 18.6741 22 16.4604 22 14C22 10.6863 19.3137 8 16 8C12.6863 8 10 10.6863 10 14C10 16.4604 11.4809 18.6741 13.6 19.6M18.4 19.6H13.6" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-                                                                            </svg>
+                                                                            <img src="{{ url('public/assets/svg/objectives/three.svg') }}">
                                                                         </div>
                                                                         <div class="ml-2">
                                                                             {{$initiative->initiative_name}}

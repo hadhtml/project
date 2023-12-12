@@ -28,7 +28,6 @@
 	                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 	                           <a class="dropdown-item" href="javascript:void(0)" onclick="editepic({{$e->id}})">Edit</a>
 	                           <a class="dropdown-item" href="javascript:void(0)" onclick="DeleteEpic({{$e->id}},{{ $e->initiative_id }},{{ $e->key_id }},{{ $e->obj_id }})">Delete</a>
-	                           <a class="dropdown-item" href="javascript:void(0)" onclick="editepicflag({{$e->id}})">Flag A Risk</a>
 	                        </div>
 	                     </div>
 	                  </div>
