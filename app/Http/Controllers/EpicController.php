@@ -217,11 +217,6 @@ class EpicController extends Controller
             ->where("initiative_id", $request->edit_ini_epic_id)
             ->where("month", $monthName)
             ->first();
-        if ($request->has("selectedOptions")) {
-            $team = $request->selectedOptions;
-        } else {
-            $team = null;
-        }
         DB::table("epics")
             ->where("id", $request->edit_epic_id)
             ->update([
@@ -232,7 +227,6 @@ class EpicController extends Controller
                 "epic_end_date" => $request->edit_epic_end_date,
                 "user_id" => Auth::id(),
                 "month_id" => $month->id,
-                "team_id" => $team,
                 "buisness_unit_id" => $request->edit_buisness_unit_id,
             ]);
         if ($request->edit_epic_status == "Done") {
@@ -497,57 +491,9 @@ class EpicController extends Controller
             }
         }
 
-        if ($request->type == "unit") {
-            $organization = DB::table("business_units")
-                ->where("slug", $request->slug)
-                ->first();
-            $objective = DB::table("objectives")
-                ->where("org_id", $request->org_id)
-                ->where("unit_id", $request->unit_id)
-                ->where("trash", null)
-                ->where("type", "unit")
-                ->get();
-        }
-
-        if ($request->type == "stream") {
-            $organization = DB::table("value_stream")
-                ->where("slug", $request->slug)
-                ->first();
-            $objective = DB::table("objectives")
-                ->where("org_id", $request->org_id)
-                ->where("unit_id", $request->unit_id)
-                ->where("trash", null)
-                ->where("type", "stream")
-                ->get();
-        }
-
-        if ($request->type == "BU") {
-            $organization = DB::table("unit_team")
-                ->where("slug", $request->slug)
-                ->first();
-            $objective = DB::table("objectives")
-                ->where("org_id", $request->org_id)
-                ->where("unit_id", $request->unit_id)
-                ->where("trash", null)
-                ->where("type", "BU")
-                ->get();
-        }
-
-        if ($request->type == "VS") {
-            $organization = DB::table("value_team")
-                ->where("slug", $request->slug)
-                ->first();
-            $objective = DB::table("objectives")
-                ->where("org_id", $request->org_id)
-                ->where("unit_id", $request->unit_id)
-                ->where("trash", null)
-                ->where("type", "VS")
-                ->get();
-        }
-
-        return view(
-            "objective.objective-render",
-            compact("organization", "objective")
-        );
+       
+        $data = Epic::find($request->edit_epic_id);
+        $html = view('epics.modalheader', compact('data'))->render();
+        return $html;
     }
 }

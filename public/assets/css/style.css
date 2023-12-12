@@ -22000,6 +22000,7 @@ div[role="circleprogressbar"]::before {
 }
 .todo-button-color{
     background-color: #f3f3f3 !important;
+    color: black !important;
 }
 .inprogress-button-color{
     background-color: #924aef !important;

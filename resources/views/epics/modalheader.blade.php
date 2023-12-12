@@ -9,7 +9,7 @@
     </div>
     <div class="col-md-12 displayflex">
         <div class="btn-group epicheaderborderleft">
-            <button type="button" class="btn btn-default statuschangebutton" id="showboardbutton">
+            <button type="button" class="btn btn-default statuschangebutton @if($data->epic_status == 'To Do') todo-button-color @endif @if($data->epic_status == 'In progress') inprogress-button-color @endif @if($data->epic_status == 'Done') done-button-color @endif" id="showboardbutton">
                 @if($data->epic_status == 'To Do')
                     To Do
                 @endif
@@ -20,8 +20,16 @@
                     Done
                 @endif
             </button>
-            <button type="button" class="statuschangebuttonarrow btn btn-danger dropdown-toggle dropdown-toggle-split archivebeardcimbgbutton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button type="button" class="@if($data->epic_status == 'To Do') todo-button-color @endif @if($data->epic_status == 'In progress') inprogress-button-color @endif @if($data->epic_status == 'Done') done-button-color @endif statuschangebuttonarrow btn btn-danger dropdown-toggle dropdown-toggle-split archivebeardcimbgbutton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                @if($data->epic_status == 'To Do') 
+                <img src="{{url('public/assets/images/icons/angle-down.svg')}}" width="20">
+                @endif 
+                @if($data->epic_status == 'In progress') 
                 <img src="{{url('public/assets/svg/arrow-down-white.svg')}}" width="20">
+                @endif 
+                @if($data->epic_status == 'Done') 
+                <img src="{{url('public/assets/svg/arrow-down-white.svg')}}" width="20">
+                @endif          
                 <span class="sr-only">Toggle Dropdown</span>
             </button>
             <div class="dropdown-menu">

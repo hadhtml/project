@@ -86,8 +86,17 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             data: {
-                id:id,
-                status:status,
+                edit_epic_name: '{{ $data->epic_name }}',
+                edit_epic_start_date: '{{ $data->epic_start_date }}',
+                edit_epic_end_date: '{{ $data->epic_end_date }}',
+                edit_epic_description: '{{ $data->epic_detail }}',
+                edit_epic_id: id,
+                edit_epic_status: status,
+                edit_ini_epic_id: '{{ $data->initiative_id }}',
+                type: '{{ $data->type }}',
+                edit_epic_key: '{{ $data->key_id }}',
+                edit_epic_obj: '{{ $data->obj_id }}',
+                selectedOptions: '{{ $data->epic_name }}',
             },
             success: function(res) {
                 $('.modalheaderforapend').html(res);
