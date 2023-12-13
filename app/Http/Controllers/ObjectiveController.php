@@ -342,6 +342,8 @@ class ObjectiveController extends Controller
         ]);
 
         $counter = 0;
+        
+        if($request->has("Target")) {
         foreach ($request->Target as $key => $value) {
             $counter++;
             DB::table("key_chart")->insert([
@@ -351,6 +353,7 @@ class ObjectiveController extends Controller
                 "IndexCount" => $counter,
             ]);
         }
+    }
 
         if ($request->has("selectedOptionsteam")) {
             foreach ($request->selectedOptionsteam as $key => $value) {
