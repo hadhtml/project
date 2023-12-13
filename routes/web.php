@@ -77,7 +77,6 @@ Route::post('update-key-initiative', [App\Http\Controllers\ObjectiveController::
 
 Route::post('save-epic', [App\Http\Controllers\ObjectiveController::class, 'SaveEpic']);
 Route::get('edit-epic', [App\Http\Controllers\ObjectiveController::class, 'EditEpic'])->middleware('auth');
-Route::post('update-epic', [App\Http\Controllers\ObjectiveController::class, 'UpdateEpic']);
 Route::post('delete-epic', [App\Http\Controllers\ObjectiveController::class, 'DeleteEpic']);
 Route::post('update-epic-flag', [App\Http\Controllers\ObjectiveController::class, 'UpdateEpicFlag']);
 
@@ -255,6 +254,13 @@ Route::name('epics.')->namespace('App\Http\Controllers')->prefix('dashboard/epic
     Route::POST('updatecomment', 'EpicController@updatecomment');
     Route::POST('orderbycomment', 'EpicController@orderbycomment');
     Route::POST('savereply', 'EpicController@savereply');
+    Route::POST('changeepicstatus', 'EpicController@changeepicstatus');
+    
+});
+
+Route::name('linking.')->namespace('App\Http\Controllers')->prefix('dashboard/linking')->group(function () {
+    Route::get('{id}/{type}', 'LinkingController@index');
+    
 });
 
 
@@ -279,4 +285,8 @@ Route::get('get-unit-obj', [App\Http\Controllers\TeamController::class,'GetBUObj
 Route::get('get-BU-key', [App\Http\Controllers\TeamController::class,'GetBUKey']);
 Route::get('append-team', [App\Http\Controllers\TeamController::class,'AppendTeam']);
 Route::get('append-bu', [App\Http\Controllers\TeamController::class,'AppendBU']);
+Route::get('get-key-link', [App\Http\Controllers\TeamController::class,'GetTeamLink']);
+Route::post('delete-key-link', [App\Http\Controllers\TeamController::class,'DeleteTeamLink']);
+Route::get('get-obj-link', [App\Http\Controllers\TeamController::class,'GetValueLink']);
+Route::post('delete-obj-link', [App\Http\Controllers\TeamController::class,'DeleteTeamLinkObj']);
 
