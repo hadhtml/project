@@ -221,6 +221,8 @@
         $('#edit_end_date').val(obj_end_date);
         $('#edit_obj_small_description').val(obj_detail);
         $('#edit_obj_status').val(obj_status);
+
+        getobjlink(obj_id);
     }
 
     function UpdateObjective() {
@@ -367,6 +369,7 @@
         $('#obj-team1').val('');
         $('.field_wrapper_bu').html('');
         getteam();
+       
 
     }
 
@@ -564,6 +567,7 @@
                 $('#wieght-error').html('');
 
                 localStorage.removeItem('obj');
+                localStorage.removeItem("key-id");
                 // }
 
             }
@@ -591,7 +595,7 @@
 
         getkeyweight(key_id);
         getkeychart();
-        console.log(getkeychart());
+        getkeylink(key_id);
 
 
     }
@@ -2834,7 +2838,7 @@
     function appendBu() {
 
         y++;
-        var unit_id = '';
+ 
         var org_id = "{{ $organization->org_id }}";
         var type = "{{ $organization->type }}";
         var id = "{{ $organization->id }}";
@@ -2914,6 +2918,108 @@
         });
 
     }
+
+    function getkeylink(id) {
+
+        var type = "{{ $organization->type }}";
+        var unit_id = "{{ $organization->id }}";
+        $.ajax({
+        type: "GET",
+        url: "{{ url('get-key-link') }}",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+            id: id,
+            type:type,
+            unit_id:unit_id
+
+        },
+        success: function(res) {
+
+        $('.link-data').html(res);
+
+
+
+        }
+    });
+
+    }
+
+    function getobjlink(id) {
+
+    var type = "{{ $organization->type }}";
+    var unit_id = "{{ $organization->id }}";
+    $.ajax({
+    type: "GET",
+    url: "{{ url('get-obj-link') }}",
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    data: {
+        id:id,
+        type:type,
+        unit_id:unit_id
+
+    },
+    success: function(res) {
+
+    $('.link-data-obj').html(res);
+
+
+    }
+    });
+
+    }
+
+
+    function deletelinkvalue(id) {
+
+        $.ajax({
+        type: "POST",
+        url: "{{ url('delete-key-link') }}",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+            id: id,
+
+        },
+        success: function(res) {
+
+        $('#del-link'+id).remove();
+
+
+
+        }
+        });
+
+        }
+
+
+        
+    function deletelinkvalueObj(id) {
+
+        $.ajax({
+        type: "POST",
+        url: "{{ url('delete-obj-link') }}",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+            id: id,
+
+        },
+        success: function(res) {
+
+        $('#del-obj-link'+id).remove();
+
+
+
+        }
+        });
+
+        }
 
 
     function getRandomInt(min, max) {
