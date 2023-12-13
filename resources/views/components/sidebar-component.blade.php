@@ -3,29 +3,36 @@
         <ul class="mb-auto text-center sidebar align-items-center mx-auto text-center" id="navbarSupportedContent">
             <li>
                 <a href="{{url('/dashboard/organizations')}}" @if (url()->current() == url('dashboard/organizations')) class="active-link" @else class="nav-link"  @endif  aria-current="page" title="" data-toggle="tooltip" data-placement="right" data-original-title="Dashboard">
-                    <ion-icon name="home" size="medium"></ion-icon>
+                    <span class="material-symbols-outlined">home</span>
                 </a>
             </li>
             <li>
                 <a href="{{url('dashboard/organization/Business-Units')}}"  @if (url()->current() == url('dashboard/organization/Business-Units')) class="active-link" @else class="nav-link"  @endif  data-toggle="tooltip" data-placement="right" data-original-title=" Business Units">
-                    <ion-icon name="podium" size="medium"></ion-icon>
+                    <span class="material-symbols-outlined">domain</span>
                 </a>
             </li>
             <li class="buttonClick">
                 <a href="#" data-toggle="tooltip" data-placement="right" data-original-title="Search">
-                    <ion-icon name="search" size="medium"></ion-icon>
+                    <span class="material-symbols-outlined">search</span>
                 </a>
             </li>
             <li>
                 <a href="{{url('dashboard/organization/users')}}" @if (url()->current() == url('dashboard/organization/users')) class="active-link" @else class="nav-link"  @endif title="" data-toggle="tooltip" data-placement="right" data-original-title="Users">
-                    <ion-icon name="people" size="medium"></ion-icon>
+                    <span class="material-symbols-outlined">group</span>
                 </a>
             </li>
             <li>
                 <a href="{{url('dashboard/organization/contacts')}}" @if (url()->current() == url('dashboard/organization/contacts')) class="active-link" @else class="nav-link"  @endif  title="" data-toggle="tooltip" data-placement="right" data-original-title="Contacts">
-                    <ion-icon name="id-card" size="medium"></ion-icon>
+                    <span class="material-symbols-outlined">perm_contact_calendar</span>
                 </a>
             </li>
+
+            <li>
+                <a href="#" @if (url()->current() == url('dashboard/organization/users')) class="active-link" @else class="nav-link"  @endif title="" data-toggle="tooltip" data-placement="right" data-original-title="OKR Mapping">
+                    <span class="material-symbols-outlined">action_key</span>
+                </a>
+            </li>
+
 
 
         </ul>
@@ -33,19 +40,19 @@
             <ul class="bottom-bar">
                 <li>
                     <a href="#" data-toggle="tooltip" data-placement="right" data-original-title="Chat">
-                        <ion-icon name="chatbox-ellipses" size="medium"></ion-icon>
+                        <span class="material-symbols-outlined">chat_bubble</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{url('dashboard/organization/setting')}}" @if (url()->current() == url('dashboard/organization/setting')) class="active-link" @else class="nav-link"  @endif title="" data-toggle="tooltip" data-placement="right" data-original-title="Settings">
-                        <ion-icon name="settings" size="medium"></ion-icon>
+                        <span class="material-symbols-outlined">settings</span>
                     </a>
                 </li>
-                <li>
+                <!-- <li>
                     <a href="#" class="icon" data-toggle="tooltip" data-placement="right" data-original-title="Chooe Theme">
-                        <ion-icon name="brush" size="medium"></ion-icon>
+                        <span class="material-symbols-outlined">brush</span>
                     </a>
-                </li>
+                </li> -->
             </ul>
 
             <div class="mt-2 dropup">
@@ -80,7 +87,7 @@
             <button class="btn btn-toggle align-items-center rounded" data-toggle="collapse" data-target="#home-collapse" aria-expanded="true">
                 <div class="d-flex flex-row align-items-center">
                     <div class="mr-2">
-                        <ion-icon style="font-size: 20px;" name="podium-outline"></ion-icon>
+                        <span style="font-size:20px" class="material-symbols-outlined">storefront</span>
                     </div>
                     <div>
                         Business Units
@@ -102,7 +109,7 @@
         <li class="mb-1">
             <a href="#" class="d-flex flex-row align-items-center">
                 <div class="mr-2">
-                    <ion-icon style="font-size: 20px;" name="layers-outline"></ion-icon>
+                    <span style="font-size:20px" class="material-symbols-outlined">layers</span>
                 </div>
                 <div class="mr-2">
                     Value Streams
@@ -112,7 +119,7 @@
         <li class="mb-1">
             <a href="#" class="d-flex flex-row align-items-center">
                 <div class="mr-2">
-                    <ion-icon style="font-size: 20px;" name="warning-outline"></ion-icon>
+                    <span style="font-size:20px" class="material-symbols-outlined">warning_off</span>
                 </div>
                 <div class="mr-2">
                     Impediments
@@ -122,7 +129,7 @@
         <li class="mb-1">
             <a href="#" class="d-flex flex-row align-items-center">
                 <div class="mr-2">
-                    <ion-icon style="font-size: 20px;" name="map-outline"></ion-icon>
+                     <span style="font-size:20px" class="material-symbols-outlined">map</span>
                 </div>
                 <div class="mr-2">
                     OKR Mapper
@@ -133,7 +140,7 @@
         <li class="mb-1">
             <a href="#" class="d-flex flex-row align-items-center">
                 <div class="mr-2">
-                    <ion-icon style="font-size: 20px;" name="albums-outline"></ion-icon>
+                     <span style="font-size:20px" class="material-symbols-outlined">planner_review</span>
                 </div>
                 <div class="mr-2">
                     OKR Planner
@@ -143,7 +150,7 @@
         <li class="mb-1">
             <a href="#" class="d-flex flex-row align-items-center">
                 <div class="mr-2">
-                    <ion-icon style="font-size: 20px;" name="folder-outline"></ion-icon>
+                     <span style="font-size:20px" class="material-symbols-outlined">key_visualizer</span>
                 </div>
                 <div class="mr-2">
                     Epic Backlog
@@ -153,7 +160,7 @@
         <li class="mb-1">
             <a href="#" class="d-flex flex-row align-items-center">
                 <div class="mr-2">
-                    <ion-icon style="font-size: 20px;" name="hand-left-outline"></ion-icon>
+                     <span style="font-size:20px" class="material-symbols-outlined">escalator_warning</span>
                 </div>
                 <div class="mr-2">
                     Leadership Actions
@@ -163,7 +170,7 @@
         <li class="mb-1">
             <a href="#" class="d-flex flex-row align-items-center">
                 <div class="mr-2">
-                    <ion-icon style="font-size: 20px;" name="close-circle-outline"></ion-icon>
+                    <span style="font-size:20px" class="material-symbols-outlined">dangerous</span>
                 </div>
                 <div class="mr-2">
                     Blockers
