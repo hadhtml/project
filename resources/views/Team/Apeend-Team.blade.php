@@ -28,7 +28,7 @@
     
     <div class="col-md-5 col-lg-5 col-xl-5">
         <div class="form-group mb-0">
-         <select name="obj-team"  id="obj-team{{$index}}"  class="form-control obj-team"  required>
+         <select name="obj-team" onchange="getteamobjstore(this.value,'{{$index}}')" id="obj-team{{$index}}"  class="form-control obj-team"  required>
                                 
         </select>
             <label for="small-description" style="bottom:72px">Choose Objective</label>

@@ -1,5 +1,5 @@
 <div class="row" id="remove-unit{{$index}}">
-@if($type == 'BU')    
+@if($type == 'BU' || $type == 'stream')    
 <div class="col-md-6 col-lg-6 col-xl-6">
     <div class="form-group mb-0">
        <select class="form-control unitobj" onchange="getUnitObj(this.value,'{{$index}}')">
@@ -40,7 +40,7 @@
 
 <div class="col-md-6 col-lg-6 col-xl-6">
     <div class="form-group mb-0">
-     <select name="" id="key-BU{{$index}}"   class="form-control key-BU" value="" required>
+     <select name="" id="key-BU{{$index}}" onchange="getBUKeystore(this.value,'{{$index}}')"  class="form-control key-BU" value="" required>
                             
     </select>
         <label for="small-description" >Choose Key Result</label>
