@@ -15,30 +15,6 @@ $var_objective = "Org-Unit";
   </div>
 @endif
 
-<<<<<<< Updated upstream
-<!-- <div class="row">
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-body">
-                <div class="d-flex flex-row justify-content-between">
-                    <div>
-                        <h3>
-                            Retail Customers in Asia to protect the sales
-                        </h3>
-                    </div>
-                    <div>
-                        <ion-icon name="ellipsis-vertical-outline"></ion-icon>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="d-flex flex-row">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                20
-                            </div>
-                            <div>
-                                Objectives
-=======
 <div class="row">
 
     @if(count($Unit) > 0)
@@ -66,18 +42,10 @@ $var_objective = "Org-Unit";
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item"  data-toggle="modal" data-target="#edit{{$unit->id}}">Edit</a>
                                 <a class="dropdown-item" data-toggle="modal" data-target="#delete{{$unit->id}}">Delete</a>
->>>>>>> Stashed changes
                             </div>
                         </div>
                         </div>
                     </div>
-<<<<<<< Updated upstream
-                </div>
-            </div>
-        </div>
-    </div>
-</div> -->
-=======
                     <div class="content-section">
                         <div class="row">
                             <div class="col-md-12 mb-2">
@@ -109,7 +77,6 @@ $var_objective = "Org-Unit";
                         </div> -->
 
                         <div class="d-flex flex-row align-items-center leader-section">
->>>>>>> Stashed changes
 
                             @if($member > 0)
                             @if($unit->lead_id)
