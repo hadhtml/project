@@ -1016,3 +1016,66 @@ div[role="circleprogressbar"]::before {
     font-size: 13px;
     color: #787878;
 }
+.impediment-badge{
+    background-color: #ff8282;
+    border-radius: 100px;
+    color: white;
+}
+.risk-badge{
+    background-color: #ff2929;
+    border-radius: 100px;
+    color: white;
+}
+.blocker-badge{
+    background-color: red;
+    border-radius: 100px;
+}
+.action-badge{
+    background-color: #e1db3f;
+    border-radius: 100px;
+    color: black;
+    font-weight: 700;
+}
+.displaynone{
+    display: none;
+}
+.flag-tittle-new{
+    font-size: 14px;
+    color: #3F4254;
+}
+.child-item-flag{
+    padding-bottom: 0px !important;
+    border-radius: 5px !important;
+    cursor: pointer;
+}
+.child-item-flag .image-cont img {
+    width: 31px;
+    height: 31px;
+    object-fit: cover;
+    background-size: cover;
+    border-radius: 1000px;
+}
+.child-item-flag .image-cont {
+    font-size: 12px;
+}
+.flagstatusbadge{
+    padding: 6px !important;
+    border-radius: 100px;
+    text-align: center;
+    font-size: 14px !important;
+    height: 32px;
+}
+.flag-type-new{
+    height: 33px;
+    border-radius: 5px;
+    padding: 5px;
+    text-align: center;
+}
+.risk-color{
+    background-color: red;
+    color: white;
+}
+.impediment-color{
+    background-color: purple;
+    color: white;
+}

@@ -5,7 +5,7 @@
         </h5>
     </div>
     <div class="col-md-12 marginleftthirty newmodalsubtittle">
-        <p>Organization/Business Unit/Value Stream/Portfolio</p>
+        <p>{{ DB::table('objectives')->where('id' , $data->obj_id)->first()->objective_name }}/{{ DB::table('key_result')->where('id' , $data->key_id)->first()->key_name }}/{{ DB::table('initiative')->where('id' , $data->initiative_id)->first()->initiative_name }}</p>    
     </div>
     <div class="col-md-12 displayflex">
         <div class="btn-group epicheaderborderleft">
@@ -163,5 +163,9 @@
 <script type="text/javascript">
     function rasiseflag() {
         $('.raiseflag-box').slideToggle();
+    }
+    function maximizemodal() {
+        $('#modaldialog').toggleClass('modalfullscreen')
+        $('#edit-epic-modal-new').css('padding-right' , '0px')
     }
 </script>

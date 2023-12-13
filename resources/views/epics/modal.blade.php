@@ -9,20 +9,35 @@
                 <h4>Menu</h4>
                 <input type="hidden" id="modaltab" value="general">
                 <ul>
-                    <li id="general" onclick="showtab({{$data->id}} , 'general')" class="tabsclass active"><img src="{{ url('public/assets/svg/edit-2.svg') }}"> Basic Details</li>
-                    <li id="childitems" onclick="showtab({{$data->id}} , 'childitems')" class="tabsclass"><img src="{{ url('public/assets/svg/comment.svg') }}"> Child Items</li>
-                    <li id="comments" onclick="showtab({{$data->id}} , 'comments')" class="tabsclass"><img src="{{ url('public/assets/svg/comment.svg') }}"> Comments</li>
-                    <li id="activites" onclick="showtab({{$data->id}} , 'activites')" class="tabsclass"><img src="{{ url('public/assets/svg/activites.svg') }}"> Activities</li>
-                    <li id="checkins" onclick="showtab({{$data->id}} , 'checkins')" class="tabsclass"><img src="{{ url('public/assets/svg/activites.svg') }}"> Check-Ins</li>
-                    <li id="attachment" onclick="showtab({{$data->id}} , 'attachment')" class="tabsclass"><img src="{{ url('public/assets/svg/activites.svg') }}"> Attachments</li>
-                    <li id="flags" onclick="showtab({{$data->id}} , 'flags')" class="tabsclass"><img src="{{ url('public/assets/svg/btnflagsvg.svg') }}"> Flags</li>
-                    <li id="teams" onclick="showtab({{$data->id}} , 'teams')" class="tabsclass"><img src="{{ url('public/assets/svg/attachment.svg') }}"> Teams</li>
+                    <li id="general" onclick="showtab({{$data->id}} , 'general')" class="tabsclass active">
+                        <img src="{{ url('public/assets/svg/edit-2.svg') }}"> Basic Details
+                    </li>
+                    <li id="childitems" onclick="showtab({{$data->id}} , 'childitems')" class="tabsclass">
+                        <img src="{{ url('public/assets/svg/task.svg') }}"> Child Items
+                    </li>
+                    <li id="comments" onclick="showtab({{$data->id}} , 'comments')" class="tabsclass">
+                        <img src="{{ url('public/assets/svg/comment.svg') }}"> Comments
+                    </li>
+                    <li id="activites" onclick="showtab({{$data->id}} , 'activites')" class="tabsclass">
+                        <img src="{{ url('public/assets/svg/activites.svg') }}"> Activities
+                    </li>
+                    <li id="checkins" onclick="showtab({{$data->id}} , 'checkins')" class="tabsclass">
+                        <img src="{{ url('public/assets/svg/activites.svg') }}"> Check-Ins
+                    </li>
+                    <li id="attachment" onclick="showtab({{$data->id}} , 'attachment')" class="tabsclass">
+                        <img src="{{ url('public/assets/svg/attachment.svg') }}"> Attachments</li>
+                    <li id="flags" onclick="showtab({{$data->id}} , 'flags')" class="tabsclass">
+                        <img src="{{ url('public/assets/svg/btnflagsvg.svg') }}"> Flags
+                    </li>
+                    <li id="teams" onclick="showtab({{$data->id}} , 'teams')" class="tabsclass">
+                        <img src="{{ url('public/assets/svg/profile-2user.svg') }}"> Teams
+                    </li>
                 </ul>
                 <h4>Action</h4>
                 <ul class="positionrelative">
-                    <li><img src="{{ url('public/assets/svg/archive-action.svg') }}"> Archive</li>
+                    <!-- <li><img src="{{ url('public/assets/svg/archive-action.svg') }}"> Archive</li> -->
                     <li><img src="{{ url('public/assets/svg/share-action.svg') }}"> Share</li>
-                    <li><img src="{{ url('public/assets/svg/arrow-right-action.svg') }}"> Move</li>
+                    <!-- <li><img src="{{ url('public/assets/svg/arrow-right-action.svg') }}"> Move</li> -->
                     <li><img src="{{ url('public/assets/svg/trash-action.svg') }}"> Delete</li>
                 </ul>
             </div>

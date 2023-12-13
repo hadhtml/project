@@ -32,8 +32,8 @@
     </div>
 </div>
 <div class="row">
-    <div class="activity-feed @if($flags->count() == 0) col-md-12 @endif">
-        <div class="col-md-12 col-lg-12 col-xl-12 uploadattachment">
+    <div class="activity-feed @if($flags->count() == 0) col-md-12 @endif" id="list-container">
+        <div class="uploadattachment">
             <div class="card comment-card storyaddcard">
                 <div class="card-body">
                     <form class="needs-validation" action="#" method="POST" novalidate>
@@ -64,7 +64,7 @@
                                     <label for="lead-manager">Flag Assignee <small class="text-danger">*</small></label>
                                     <select class="form-control" id="flag_assign">
                                         @foreach(DB::table('members')->where('org_user',Auth::id())->get() as $r)
-                                          <option value="{{ $r->id }}">{{ $r->name }}</option>
+                                          <option value="{{ $r->id }}">{{ $r->name }} {{ $r->last_name }}</option>
                                         @endforeach
                                     </select>
                                     
@@ -114,46 +114,120 @@
         margin-left: 25px;
       }
     </style>
-    <div class="col-md-12 col-lg-12 col-xl-12" style="position: relative;">
+    <div id="list" type="1" class="col-md-12 col-lg-12 col-xl-12" style="position: relative;">
         @if($flags->count() > 0)
         @foreach($flags as $r)
-        <div class="card attachment-card-new">
-            <div class="deletecomment" id="deleteattachmentshow{{ $r->id }}">
-                <div class="row">
-                    <div class="col-md-10">
-                        <h4>Delete Flag</h4>
-                    </div>
-                    <div class="col-md-2">
-                        <img onclick="deleteattachmentshow({{$r->id}})" src="{{ url('public/assets/svg/crossdelete.svg') }}">
-                    </div>
-                </div>
-                <p>Do you want to delete this attachment ? You won’t be able to undo this action.</p>
-                <button onclick="deleteattachment({{ $r->id }})" class="btn btn-danger btn-block">Delete</button>
-            </div>
+        <div class="card child-item child-item-flag">
             <div class="card-body">
-              @php
-                  $imagename = $r->extension.'-attachment.svg';
-              @endphp
-              <div class="row">
-                <div class="col-md-9 filename">
-                    {{ $r->flag_title }}<br>
-                    <span class="datecolor">Flag Added On {{ Cmf::date_format_new($r->created_at) }}</span>
-                </div>
-                <div class="col-md-3">
-                    <div class="displayflexandmarginleft">
-                        <div class="pr-2">
-                            <a href="javscript:void(0)" class="commenticon">
-                                <img src="{{ url('public/assets/svg/editcommentsvg.svg') }}">
-                            </a>
+                <div class="row">
+                    <div class="col-md-1 text-left">
+                        <div class="child-item-chekbox-portion">
+                            <label class="form-checkbox">
+                                <input class="form-check-input"  type="checkbox" @if($r->progress > 0) checked onclick="updateprogress({{ $r->id }} , 1)" @else onclick="updateprogress({{ $r->id }} , 2)" @endif  value="{{$r->id}}"  id="flexCheckDefault">
+                                <span class="checkbox-label"></span>
+                            </label>
                         </div>
-                        <div>
-                            <span onclick="deleteattachmentshow({{$r->id}})" class="commenticon">
-                                <img src="{{ url('public/assets/svg/deleteattachmentsvg.svg') }}">
-                            </span>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="flag-tittle-new">{{ $r->flag_title }}</div>
+                    </div>
+                    <div class="col-md-2 text-right">
+                        <img class="edit-item-image" type="button" onclick="showupdatecard({{$r->id}})" src="{{ url('public/assets/svg/edit-2.svg') }}">
+                        <img class="delete-item-image" src="{{ url('public/assets/svg/trash.svg') }}">
+                    </div>
+                    <div class="col-md-3">
+                        @if($r->flag_status == 'todoflag')
+                        <div class="flagstatusbadge todo-button-color">To Do</div>
+                        @endif
+                        @if($r->flag_status == 'inprogress')
+                        <div class="flagstatusbadge inprogress-button-color">In Progress</div>
+                        @endif
+                        @if($r->flag_status == 'done')
+                        <div class="flagstatusbadge done-button-color">Done</div>
+                        @endif
+                        
+                    </div>
+                    @if(DB::table('flag_members')->where('flag_id' , $r->id)->first())
+                    <div class="col-md-4">
+                        <div class="d-flex flex-row align-items-center image-cont pr-3">
+                            <div class="pr-1">
+                                @php
+                                    $member_id = DB::table('flag_members')->where('flag_id' , $r->id)->first();
+                                    $user = DB::table('members')->where('id' , $member_id->member_id)->first();
+                                @endphp
+                                @if($user->image != NULL)
+                                <img class="user-image" src="{{asset('public/assets/images/'.$user->image)}}" alt="Example Image">
+                                @else
+                                <div class="namecountersmallforsimplecard">{{ substr($user->name, 0, 1); }}</div>
+                                @endif
+                            </div>
+                            <div>
+                                {{ $user->name }} {{ $user->last_name }}
+                            </div>
                         </div>
-                    </div>          
+                    </div>
+                    @endif
+                    <div class="col-md-4">
+                        <div class="flag-type-new @if($r->flag_type == 'Risk') risk-color @endif @if($r->flag_type == 'Impediment') impediment-color @endif">
+                            {{ $r->flag_type }}
+                        </div>
+                    </div>
                 </div>
-              </div>
+                
+            </div>
+        </div>
+        <div class="uploadattachment{{ $r->id }} displaynone">
+            <div class="card comment-card storyaddcard">
+                <div class="card-body">
+                    <form class="needs-validation" action="{{ url('dashboard/epics/flagupdate') }}" method="POST" novalidate>
+                        @csrf
+                        <input type="hidden" value="{{ $r->id }}" id="flag_id">
+                        <div class="row">        
+                            <div class="col-md-6 col-lg-6 col-xl-6">
+                                <div class="form-group mb-0">
+                                    <label for="small-description">Flag Type <small class="text-danger">*</small></label>
+                                   <select class="form-control" id="flag_type" >
+                                       <option value="">Select Flag Type</option>
+                                       <option @if($r->flag_type == 'Risk') selected @endif value="Risk">Risk</option>
+                                       <option @if($r->flag_type == 'Impediment') selected @endif value="Impediment">Impediment</option>
+                                       <option @if($r->flag_type == 'Blocker') selected @endif value="Blocker">Blocker</option>
+                                       <option @if($r->flag_type == 'Action') selected @endif value="Action">Action</option>
+                                   </select>
+                                    
+                                </div>
+                            </div>
+                             <div class="col-md-6 col-lg-6 col-xl-6">
+                                <div class="form-group mb-0">
+                                    <label for="lead-manager">Flag Assignee <small class="text-danger">*</small></label>
+                                    <select class="form-control" id="flag_assign">
+                                        @foreach(DB::table('members')->where('org_user',Auth::id())->get() as $m)
+                                          <option @if(DB::table('flag_members')->where('flag_id' , $r->id)->first())  @if(DB::table('flag_members')->where('flag_id' , $r->id)->first()->member_id == $m->id) selected @endif  @endif value="{{ $m->id }}">{{ $m->name }} {{ $m->last_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    
+                                </div>
+                            </div>
+                             <div class="col-md-12 col-lg-12 col-xl-12">
+                                <div class="form-group mb-0">
+                                    <label for="small-description">Title <small class="text-danger">*</small></label>
+                                    <input type="text" class="form-control" value="{{ $r->flag_title }}" id="flag_title" >
+                                    
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-12 col-xl-12">
+                                <div class="form-group mb-0">
+                                    <label for="small-description">Description <small class="text-danger">*</small></label>
+                                    <textarea id="flag_description" class="form-control">{{ $r->flag_description }}</textarea>
+                                    
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <span onclick="showupdatecard({{ $r->id }})" class="btn btn-default btn-sm">Cancel</span>
+                                <button id="updateflagmodalbuton" onclick="updateepicflag();" type="submit" class="btn btn-primary btn-sm">Save</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
         @endforeach
@@ -166,7 +240,24 @@
 
 </div>
 </div>
+<script src="https://unpkg.com/dragula@3.7.2/dist/dragula.js"></script>
+<script src="https://unpkg.com/dom-autoscroller@2.2.3/dist/dom-autoscroller.js"></script>
 <script type="text/javascript">
+
+  var drake = dragula([document.querySelector('#list')]);
+
+    var scroll = autoScroll([
+            window,
+            document.querySelector('#list-container')
+        ],{
+        margin: 20,
+        autoScroll: function(){
+            return this.down && drake.dragging;
+        }
+    });
+
+
+
   function deleteattachmentshow(id) {
     $('#deleteattachmentshow'+id).slideToggle();
   }
@@ -174,6 +265,9 @@
     $('.uploadattachment').slideToggle();
     $('.nodatafound').slideToggle();
 
+  }
+  function showupdatecard(id) {
+      $('.uploadattachment'+id).slideToggle();
   }
   function submitform() {
     $('#uploadattachementform').submit();

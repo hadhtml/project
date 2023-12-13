@@ -101,7 +101,7 @@ class EpicController extends Controller
         if($request->tab == 'flags')
         {
             $data = Epic::find($request->id);
-            $flags = flags::where('epic_id' , $data->id)->orderby('id' , 'desc')->get();
+            $flags = flags::where('epic_id' , $data->id)->orderby('flag_order' , 'asc')->get();
             $html = view('epics.tabs.flags', compact('flags','data'))->render();
             return $html;
         }
@@ -228,13 +228,6 @@ class EpicController extends Controller
             ->where("id", $request->edit_epic_id)
             ->update([
                 "epic_status" => $request->edit_epic_status,
-                "epic_name" => $request->edit_epic_name,
-                "epic_detail" => $request->edit_epic_description,
-                "epic_start_date" => $request->edit_epic_start_date,
-                "epic_end_date" => $request->edit_epic_end_date,
-                "user_id" => Auth::id(),
-                "month_id" => $month->id,
-                "buisness_unit_id" => $request->edit_buisness_unit_id,
             ]);
         if ($request->edit_epic_status == "Done") {
             DB::table("epics")
