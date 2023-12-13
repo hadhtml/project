@@ -103,7 +103,7 @@
                             <div class="col-md-12 col-lg-12 col-xl-12">
                                 <div class="d-flex flex-row align-items-center justify-content-between mt-4">
                                       <div>
-                                        Teams
+                                        Linking
                                       </div>
 
                                <a href="javascript:void(0);" onclick="appendteam();" class="add_team text-black" title="Add field"><i class="fa fa-plus" aria-hidden="true"></i></a> 
@@ -120,13 +120,18 @@
                                  <select name="key-team"  id="key-team" onchange="getteamobj(this.value,1)"  class="form-control key-team" value="" required>
                                                         
                                 </select>
-                                    <label for="small-description" style="bottom:72px">Choose Team</label>
+                                @if($type == 'unit')
+                                    <label for="small-description" style="bottom:72px">Choose Value Stream</label>
+                                @endif
+                                @if($type == 'stream')
+                                <label for="small-description" style="bottom:72px">Choose Team</label>
+                                @endif    
                                 </div>
                             </div>
 
                             <div class="col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group mb-0">
-                                 <select name="obj-team"  id="obj-team1"  class="form-control obj-team"  required>
+                                 <select name="obj-team"  id="obj-team1" onchange="getteamobjstore(this.value,1)"  class="form-control obj-team"  required>
                                                         
                                 </select>
                                     <label for="small-description" style="bottom:72px">Choose Objective</label>
@@ -461,7 +466,7 @@
                         </div>
                         
                   
-                        @if($type == 'BU')
+                        @if($type == 'BU' || $type == 'stream')
                         <div class="col-md-12 col-lg-12 col-xl-12">
                             <div class="d-flex flex-row align-items-center justify-content-between mt-4">
                                   <div>
@@ -476,6 +481,7 @@
                             </div>
                         <div class="col-md-6 col-lg-6 col-xl-6">
                           <div class="form-group mb-0">
+                            @if($type == 'BU')
                              <select class="form-control unitobj" onchange="getUnitObj(this.value,1)">
                               <option value="" >Select Business Unit</option>
                               <?php foreach(DB::table('business_units')->where('id',$organization->org_id)->get() as $r){ ?>
@@ -483,6 +489,16 @@
                                  <?php }  ?>
 
                              </select>
+                             @endif
+                             @if($type == 'stream')
+                             <select class="form-control unitobj" onchange="getUnitObj(this.value,1)">
+                              <option value="" >Select Business Unit</option>
+                              <?php foreach(DB::table('business_units')->where('id',$organization->unit_id)->get() as $r){ ?>
+                                <option value="{{ $r->id }}">{{ $r->business_name }}</option>
+                                 <?php }  ?>
+
+                             </select>
+                             @endif
                               <label for="small-description">Choose Business Unit</label>
                           </div>
                       </div>
@@ -498,7 +514,7 @@
 
                     <div class="col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group mb-0">
-                         <select name="" id="key-BU1"   class="form-control key-BU" value="" required>
+                         <select name="" id="key-BU1" onchange="getBUKeystore(this.value,1)"   class="form-control key-BU" value="" required>
                                                 
                         </select>
                             <label for="small-description" >Choose Key Result</label>
