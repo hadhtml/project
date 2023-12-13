@@ -291,6 +291,14 @@
                             </div>
                         </div>
 
+                        <div class="row ml-1">
+                            <div class="col-md-12 link-data">
+                         
+                                       
+                                  
+                            </div>
+                        </div>
+
                         <div class="col-md-12 col-lg-12 col-xl-12">
                             <div class="d-flex flex-row align-items-center justify-content-between mt-4">
                                   <div>
@@ -653,6 +661,15 @@
                                 <label for="small-description">Small Description</label>
                             </div>
                         </div>
+
+                        <div class="row ml-1">
+                            <div class="col-md-12 link-data-obj">
+                         
+                                       
+                                  
+                            </div>
+                        </div>
+
                         <div class="col-md-12">
                             <button onclick="UpdateObjective();" type="button" class="btn btn-primary btn-lg btn-theme btn-block ripple">Submit</button>
                         </div>

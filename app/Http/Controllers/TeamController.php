@@ -425,5 +425,64 @@ $updateData = [
     return view('Team.Append-Bu',compact('Team','index','type'));  
     }
 
+
+    public function GetTeamLink(Request $request)
+    {
+    $type = $request->type;
+    if($request->type == 'unit')
+    {    
+    $KeyLink = DB::table('team_link_parent')
+    ->join('value_stream','value_stream.id','=','team_link_parent.link_team_id')
+    ->join('objectives','objectives.id','=','team_link_parent.link_obj_id')
+    ->select('value_stream.*','team_link_parent.id AS ID','objectives.objective_name AS obj_name')
+    ->where('team_link_parent.key_id','=',$request->id)
+    ->where('team_link_parent.type',$request->type)->get();
+    }
+
+    if($request->type == 'stream')
+    {    
+    $KeyLink = DB::table('team_link_parent')
+    ->join('value_team','value_team.id','=','team_link_parent.link_team_id')
+    ->join('objectives','objectives.id','=','team_link_parent.link_obj_id')
+    ->select('value_team.*','team_link_parent.id AS ID','objectives.objective_name AS obj_name')
+    ->where('team_link_parent.key_id','=',$request->id)
+    ->where('team_link_parent.type',$request->type)->get();
+    }
+
+  
+    return view('Team.Get-Link',compact('KeyLink','type'));  
+    }
+
+    public function DeleteTeamLink(Request $request)
+    {
+    $KeyLink = DB::table('team_link_parent')->where('id',$request->id)->delete();
+     
+    }
+
+    public function GetValueLink(Request $request)
+    {
+    $type = $request->type;
+ 
+
+    if($request->type == 'stream')
+    {    
+    $KeyLink = DB::table('team_link_child')
+    ->join('business_units','business_units.id','=','team_link_child.bussiness_unit_id')
+    ->join('key_result','key_result.id','=','team_link_child.bussiness_key_id')
+    ->select('business_units.*','team_link_child.id AS ID','key_result.key_name AS obj_name')
+    ->where('team_link_child.team_obj_id','=',$request->id)
+    ->where('team_link_child.type',$request->type)->get();
+    }
+
+  
+    return view('Team.Get-Obj-link',compact('KeyLink','type'));  
+    }
+
+    public function DeleteTeamLinkObj(Request $request)
+    {
+    $KeyLink = DB::table('team_link_child')->where('id',$request->id)->delete();
+     
+    }
+
     
 }

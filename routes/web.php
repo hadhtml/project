@@ -257,8 +257,7 @@ Route::name('epics.')->namespace('App\Http\Controllers')->prefix('dashboard/epic
     Route::POST('changeepicstatus', 'EpicController@changeepicstatus');
     Route::POST('showheader', 'EpicController@showheader');
     Route::POST('updateflagstatus', 'EpicController@updateflagstatus');
-    Route::POST('flagupdate', 'EpicController@flagupdate');
-    
+    Route::POST('flagupdate', 'EpicController@flagupdate');    
 });
 
 Route::name('linking.')->namespace('App\Http\Controllers')->prefix('dashboard/linking')->group(function () {
@@ -288,4 +287,8 @@ Route::get('get-unit-obj', [App\Http\Controllers\TeamController::class,'GetBUObj
 Route::get('get-BU-key', [App\Http\Controllers\TeamController::class,'GetBUKey']);
 Route::get('append-team', [App\Http\Controllers\TeamController::class,'AppendTeam']);
 Route::get('append-bu', [App\Http\Controllers\TeamController::class,'AppendBU']);
+Route::get('get-key-link', [App\Http\Controllers\TeamController::class,'GetTeamLink']);
+Route::post('delete-key-link', [App\Http\Controllers\TeamController::class,'DeleteTeamLink']);
+Route::get('get-obj-link', [App\Http\Controllers\TeamController::class,'GetValueLink']);
+Route::post('delete-obj-link', [App\Http\Controllers\TeamController::class,'DeleteTeamLinkObj']);
 
