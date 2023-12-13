@@ -117,13 +117,13 @@
     <div id="list" type="1" class="col-md-12 col-lg-12 col-xl-12" style="position: relative;">
         @if($flags->count() > 0)
         @foreach($flags as $r)
-        <div class="card child-item child-item-flag">
+        <div id="drag{{ $r->id }}" class="card child-item child-item-flag">
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-1 text-left">
                         <div class="child-item-chekbox-portion">
                             <label class="form-checkbox">
-                                <input class="form-check-input"  type="checkbox" @if($r->progress > 0) checked onclick="updateprogress({{ $r->id }} , 1)" @else onclick="updateprogress({{ $r->id }} , 2)" @endif  value="{{$r->id}}"  id="flexCheckDefault">
+                                <input @if($r->flag_status == 'done') checked @endif class="form-check-input"  type="checkbox" @if($r->flag_status == 'done') onclick="updateflagstatus({{$r->id}} , 'todoflag')" @else onclick="updateflagstatus({{$r->id}} , 'done')" @endif value="{{$r->id}}"  id="flexCheckDefault">
                                 <span class="checkbox-label"></span>
                             </label>
                         </div>
@@ -179,14 +179,14 @@
         <div class="uploadattachment{{ $r->id }} displaynone">
             <div class="card comment-card storyaddcard">
                 <div class="card-body">
-                    <form class="needs-validation" action="{{ url('dashboard/epics/flagupdate') }}" method="POST" novalidate>
+                    <form id="updateflag{{ $r->id }}" class="needs-validation" action="{{ url('dashboard/epics/flagupdate') }}" method="POST" novalidate>
                         @csrf
-                        <input type="hidden" value="{{ $r->id }}" id="flag_id">
+                        <input type="hidden" value="{{ $r->id }}" name="flag_id">
                         <div class="row">        
                             <div class="col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group mb-0">
                                     <label for="small-description">Flag Type <small class="text-danger">*</small></label>
-                                   <select class="form-control" id="flag_type" >
+                                   <select class="form-control" name="flag_type" >
                                        <option value="">Select Flag Type</option>
                                        <option @if($r->flag_type == 'Risk') selected @endif value="Risk">Risk</option>
                                        <option @if($r->flag_type == 'Impediment') selected @endif value="Impediment">Impediment</option>
@@ -199,7 +199,7 @@
                              <div class="col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group mb-0">
                                     <label for="lead-manager">Flag Assignee <small class="text-danger">*</small></label>
-                                    <select class="form-control" id="flag_assign">
+                                    <select class="form-control" name="flag_assign">
                                         @foreach(DB::table('members')->where('org_user',Auth::id())->get() as $m)
                                           <option @if(DB::table('flag_members')->where('flag_id' , $r->id)->first())  @if(DB::table('flag_members')->where('flag_id' , $r->id)->first()->member_id == $m->id) selected @endif  @endif value="{{ $m->id }}">{{ $m->name }} {{ $m->last_name }}</option>
                                         @endforeach
@@ -210,26 +210,45 @@
                              <div class="col-md-12 col-lg-12 col-xl-12">
                                 <div class="form-group mb-0">
                                     <label for="small-description">Title <small class="text-danger">*</small></label>
-                                    <input type="text" class="form-control" value="{{ $r->flag_title }}" id="flag_title" >
+                                    <input type="text" class="form-control" value="{{ $r->flag_title }}" name="flag_title" >
                                     
                                 </div>
                             </div>
                             <div class="col-md-12 col-lg-12 col-xl-12">
                                 <div class="form-group mb-0">
                                     <label for="small-description">Description <small class="text-danger">*</small></label>
-                                    <textarea id="flag_description" class="form-control">{{ $r->flag_description }}</textarea>
+                                    <textarea name="flag_description" class="form-control">{{ $r->flag_description }}</textarea>
                                     
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <span onclick="showupdatecard({{ $r->id }})" class="btn btn-default btn-sm">Cancel</span>
-                                <button id="updateflagmodalbuton" onclick="updateepicflag();" type="submit" class="btn btn-primary btn-sm">Save</button>
+                                <button id="updateflagmodalbuton{{ $r->id }}" type="submit" class="btn btn-primary btn-sm">Save</button>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
+        <script type="text/javascript">
+            $('#updateflag{{ $r->id }}').on('submit',(function(e) {
+                $('#updateflagmodalbuton{{ $r->id }}').html('<i class="fa fa-spin fa-spinner"></i>');
+                e.preventDefault();
+                var formData = new FormData(this);
+                var cardid = $('#cardid').val();
+                $.ajax({
+                    type:'POST',
+                    url: $(this).attr('action'),
+                    data:formData,
+                    cache:false,
+                    contentType: false,
+                    processData: false,
+                    success: function(data){
+                        showtabwithoutloader('{{$data->id}}' , 'flags');
+                    }
+                });
+            }));
+        </script>
         @endforeach
         @else
             <div class="nodatafound">
@@ -243,70 +262,33 @@
 <script src="https://unpkg.com/dragula@3.7.2/dist/dragula.js"></script>
 <script src="https://unpkg.com/dom-autoscroller@2.2.3/dist/dom-autoscroller.js"></script>
 <script type="text/javascript">
-
-  var drake = dragula([document.querySelector('#list')]);
-
-    var scroll = autoScroll([
-            window,
-            document.querySelector('#list-container')
-        ],{
-        margin: 20,
-        autoScroll: function(){
-            return this.down && drake.dragging;
-        }
-    });
-
-
-
-  function deleteattachmentshow(id) {
-    $('#deleteattachmentshow'+id).slideToggle();
-  }
-  function uploadattachment() {
+function deleteattachmentshow(id) {
+$('#deleteattachmentshow'+id).slideToggle();
+}
+function uploadattachment() {
     $('.uploadattachment').slideToggle();
     $('.nodatafound').slideToggle();
-
-  }
-  function showupdatecard(id) {
-      $('.uploadattachment'+id).slideToggle();
-  }
-  function submitform() {
-    $('#uploadattachementform').submit();
-  }
-function deleteattachment(id) {
-  $.ajax({
-      type: "POST",
-      url: "{{ url('dashboard/epics/deleteattachment') }}",
-      headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      },
-      data: {
-          id:id,
-      },
-      success: function(data) {
-          $('.secondportion').html(data);
-      },
-      error: function(error) {
-          console.log('Error updating card position:', error);
-      }
-  });
 }
-$('#uploadattachementform').on('submit',(function(e) {
-    $('.secondportion').addClass('loaderdisplay');
-    $('.secondportion').html('<i class="fa fa-spin fa-spinner"></i>');
-    e.preventDefault();
-    var formData = new FormData(this);
-    var cardid = $('#cardid').val();
+function showupdatecard(id) {
+  $('.uploadattachment'+id).slideToggle();
+}
+function updateflagstatus(id,status) {
     $.ajax({
-        type:'POST',
-        url: $(this).attr('action'),
-        data:formData,
-        cache:false,
-        contentType: false,
-        processData: false,
-        success: function(data){
-            $('.secondportion').removeClass('loaderdisplay');
-            $('.secondportion').html(data);
+        type: "POST",
+        url: "{{ url('dashboard/epics/updateflagstatus') }}",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+            id:id,
+            status:status,
+        },
+        success: function(data) {
+            showtabwithoutloader('{{$data->id}}' , 'flags');
+        },
+        error: function(error) {
+          console.log('Error updating card position:', error);
         }
     });
-}));
+}
 </script>

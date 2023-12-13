@@ -496,10 +496,19 @@ class EpicController extends Controller
         $html = view('epics.modalheader', compact('data'))->render();
         return $html;
     }
-    public function showheader(Request $request)
+    public function updateflagstatus(Request $request)
     {
-        $data = Epic::find($request->id);
-        $html = view('epics.modalheader', compact('data'))->render();
-        return $html;
+        $flags = flags::find($request->id);
+        $flags->flag_status = $request->status;
+        $flags->save();
+    }
+
+    public function flagupdate(Request $request)
+    {
+        $update = flags::find($request->flag_id);
+        $update->flag_type = $request->flag_type;
+        $update->flag_title = $request->flag_title;
+        $update->flag_description = $request->flag_description;
+        $update->save();
     }
 }

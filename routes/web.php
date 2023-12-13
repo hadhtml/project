@@ -256,6 +256,8 @@ Route::name('epics.')->namespace('App\Http\Controllers')->prefix('dashboard/epic
     Route::POST('savereply', 'EpicController@savereply');
     Route::POST('changeepicstatus', 'EpicController@changeepicstatus');
     Route::POST('showheader', 'EpicController@showheader');
+    Route::POST('updateflagstatus', 'EpicController@updateflagstatus');
+    Route::POST('flagupdate', 'EpicController@flagupdate');
     
 });
 

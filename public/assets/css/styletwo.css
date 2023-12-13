@@ -1046,7 +1046,7 @@ div[role="circleprogressbar"]::before {
 .child-item-flag{
     padding-bottom: 0px !important;
     border-radius: 5px !important;
-    cursor: pointer;
+/*    cursor: pointer;*/
 }
 .child-item-flag .image-cont img {
     width: 31px;

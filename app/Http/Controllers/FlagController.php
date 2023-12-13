@@ -506,4 +506,10 @@ class FlagController extends Controller
         $flag->flag_status = $request->board;
         $flag->save();
     }
+    public function updateflagstatus(Request $request)
+    {
+        $flag = flags::find($request->flag_id);
+        $flag->flag_status = $request->board;
+        $flag->save();
+    }
 }
