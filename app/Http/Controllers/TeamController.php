@@ -352,22 +352,24 @@ $updateData = [
 
     public function GetTeamObj(Request $request)
     {
-
+    
      if($request->type == 'unit')
      {
-      $Obj = DB::table('objectives')->where('unit_id',$request->id)->where('trash',NULL)->where('type','stream')->get();
+      $Obj = DB::table('objectives')->where('unit_id',$request->id)->where('id','!=',$request->obj_id)->where('trash',NULL)->where('type','stream')->get();
      }
+
+    
 
      if($request->type == 'stream')
      {
-      $Obj = DB::table('objectives')->where('unit_id',$request->id)->where('trash',NULL)->where('type','VS')->get();
+      $Obj = DB::table('objectives')->where('unit_id',$request->id)->where('id','!=',$request->obj_id)->where('trash',NULL)->where('type','VS')->get();
      }
       return $Obj;
     }
     
     public function GetBUObj(Request $request)
     {
-    if($request->type == 'BU')
+    if($request->type == 'BU' || $request->type == 'stream')
     {   
     $objective = DB::table('objectives')->where('unit_id',$request->id)->where('type','unit')->where('trash',NULL)->get();
     }
@@ -382,7 +384,7 @@ $updateData = [
 
     public function GetBUKey(Request $request)
     {
-    $objective = DB::table('key_result')->where('obj_id',$request->id)->get();
+    $objective = DB::table('key_result')->where('id','!=',$request->key_id)->where('obj_id',$request->id)->get();
     return $objective;
     }
 
@@ -409,6 +411,11 @@ $updateData = [
     if($request->type == 'BU')
     {
     $Team = DB::table('business_units')->where('id',$request->org_id)->get();
+    }
+    if($request->type == 'stream')
+    {
+    $steam = DB::table('value_stream')->where('id',$request->id)->first();
+    $Team = DB::table('business_units')->where('id',$steam->unit_id)->get();
     }
     if($request->type == 'VS')
     { 

@@ -1,5 +1,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+    window.onload = window.localStorage.clear();
     // function Updated by Usama Start
     function editepic(epic_id) {
         $.ajax({
@@ -364,7 +365,9 @@
         $('.target_value').val('');
         $('.field_wrapper_key').html('');
 
-
+        $('.field_wrapper_bu_team').html('');
+        $('#obj-team1').val('');
+        $('.field_wrapper_bu').html('');
         getteam();
 
     }
@@ -562,7 +565,7 @@
                 $("#nestedCollapsible" + obj_id).collapse('toggle');
                 $('#wieght-error').html('');
 
-
+                localStorage.removeItem('obj');
                 // }
 
             }
@@ -2538,7 +2541,7 @@
             }
 
             if(type == 'stream')
-                {
+            {
                 if (res) {
 
                     $('#key-team').empty();
@@ -2557,8 +2560,10 @@
 
     }
 
-    function getteamobj(id, x) {
+    function getteamobj(id,x) {
 
+       
+        var obj_id = localStorage.getItem("obj");
         var unit_id = "{{ $organization->id }}";
         var type = "{{ $organization->type }}";
         $.ajax({
@@ -2568,9 +2573,10 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             data: {
-                unit_id: unit_id,
-                id: id,
+                unit_id:unit_id,
+                id:id,
                 type: type,
+                obj_id:obj_id,
             },
             success: function(res) {
 
@@ -2588,6 +2594,11 @@
             }
         });
 
+    }
+
+    function getteamobjstore(id,z)
+    {
+     localStorage.setItem("obj",id);
     }
 
     function getUnitObj(id, val) {
@@ -2625,6 +2636,7 @@
 
     function getBUKey(id, val) {
 
+        var key_id = localStorage.getItem("key-id");
         $.ajax({
             type: "GET",
             url: "{{ url('get-BU-key') }}",
@@ -2633,6 +2645,8 @@
             },
             data: {
                 id: id,
+                val:val,
+                key_id:key_id,
             },
             success: function(res) {
 
@@ -2650,6 +2664,11 @@
             }
         });
 
+    }
+
+    function getBUKeystore(id,z)
+    {
+    localStorage.setItem("key-id",id);
     }
 
     function editkeyqvalue(id, val) {
@@ -2783,7 +2802,8 @@
     function appendteam() {
 
         x++;
-
+   
+ 
         var unit_id = "{{ $organization->id }}";
         var type = "{{ $organization->type }}";
         $.ajax({
@@ -2796,6 +2816,7 @@
                 unit_id: unit_id,
                 type: type,
                 x: x,
+           
             },
             success: function(res) {
                 $('.field_wrapper_bu_team').append(res);
@@ -2815,8 +2836,11 @@
     function appendBu() {
 
         y++;
+        var unit_id = '';
         var org_id = "{{ $organization->org_id }}";
         var type = "{{ $organization->type }}";
+        var id = "{{ $organization->id }}";
+
         $.ajax({
             type: "GET",
             url: "{{ url('append-bu') }}",
@@ -2827,6 +2851,8 @@
                 org_id: org_id,
                 type: type,
                 y: y,
+                id:id,
+               
             },
             success: function(res) {
                 $('.field_wrapper_bu').append(res);
