@@ -16,21 +16,13 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/styletwo.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/kanban.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dragula@3.7.3/dist/dragula.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     
     <!-- Summernote -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-bs4.min.css" rel="stylesheet">
-
-    <!-- Icon family -->
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/4.0.0/font/MaterialIcons-Regular.ttf">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="{{url('public/assets/Random-Pixel/dist/gixi-min.js')}}"></script> 
     
     <title>Dashboard</title>
     <style type="text/css">
@@ -208,6 +200,10 @@
             <!-- end Sidebar -->
             <div class="content d-flex flex-column flex-column-fluid">
                 <!-- begin breadcrums -->
+
+               
+                
+               
                 
                 @if ($var_objective == 'Org')
                  
@@ -364,9 +360,9 @@
                  
                 <!-- end breadcrums -->
                 <!-- begin page Content -->
-                <div class="container-fluid body-content">
-                    @yield('content')
-                </div>
+                <div class="container-fluid py-5 w-96">
+                @yield('content')
+            </div>
                 <!-- end page content -->
             </div>
         </div>
