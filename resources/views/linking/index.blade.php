@@ -74,15 +74,22 @@
                                             }
                                         },
                                         "pos_x": 10,
-                                        "pos_y": 150
+                                        "pos_y": 450
                                     },
+
+                                    @php
+                                        $top = 0;
+                                    @endphp
                                     @foreach($business_units as $b)
+                                    @php
+                                        $top = $top+100;
+                                    @endphp
                                     "{{ $b->id+1 }}": {
                                         "id": {{ $b->id+1 }},
                                         "name": "slack",
                                         "data": {},
                                         "class": "buisnessunit-tab",
-                                        "html": '<div class="col-md-4"> <div class="buisnessunit"> <div class="mainheading row mb-3"> <div class="col-md-12"> <h4>{{$b->business_name}}</h4> </div> </div> @foreach(DB::table('objectives')->where('type' , 'unit')->where('unit_id'  ,$b->id)->get() as $o) <div class="row"> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingbuisnessunit.svg") }}"> </div> <div class="col-md-8"> <div class="buisnessunit-card-subtittle"> <p class="buisnessunitheading">{{ $o->objective_name }}</p> </div> </div> <div class="col-md-3 text-right"> <div class="badge bg-success buisnessunitbadge"> {{ $o->obj_prog }}% </div> </div> <div class="col-md-12"> @foreach(DB::table('key_result')->where('obj_id' , $o->id)->get() as $key_result) <div class="row mt-2"> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingkey.svg") }}"> </div> <div class="col-md-7"> <p class="buisnessunitlinkingtext">{{$key_result->key_name}}</p> </div> <div class="col-md-1"> <img src="{{ url("public/assets/svg/link.svg") }}"> </div> <div class="col-md-3 text-right"> <div class="badge buisnessunitbadge">{{$key_result->key_prog}}%</div> </div> </div> @endforeach </div> </div> @endforeach </div> </div>',
+                                        "html": '<div class="col-md-4"> <div class="buisnessunit"> <div class="mainheading row mb-3"> <div class="col-md-12"> <h4>{{$b->business_name}}</h4> </div> </div> @foreach(DB::table('objectives')->where('type' , 'unit')->where('unit_id'  ,$b->id)->get() as $o)@php $objective_count = DB::table('objectives')->where('type' , 'unit')->where('unit_id'  ,$b->id)->count();  @endphp <div class="row"> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingbuisnessunit.svg") }}"> </div> <div class="col-md-8"> <div class="buisnessunit-card-subtittle"> <p class="buisnessunitheading">{{ $o->objective_name }}</p> </div> </div> <div class="col-md-3 text-right"> <div class="badge bg-success buisnessunitbadge"> {{ $o->obj_prog }}% </div> </div> <div class="col-md-12"> @foreach(DB::table('key_result')->where('obj_id' , $o->id)->get() as $key_result) @php $key_result_count = DB::table('key_result')->where('obj_id' , $o->id)->count();  @endphp <div class="row mt-2"> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingkey.svg") }}"> </div> <div class="col-md-7"> <p class="buisnessunitlinkingtext">{{$key_result->key_name}}</p> </div> <div class="col-md-1"> <img src="{{ url("public/assets/svg/link.svg") }}"> </div> <div class="col-md-3 text-right"> <div class="badge buisnessunitbadge">{{$key_result->key_prog}}%</div> </div> </div> @endforeach </div> </div> @endforeach </div> </div>',
                                         "typenode": false,
                                         "inputs": {
                                             "input_1": {
@@ -106,8 +113,13 @@
                                                 }]
                                             },
                                         },
+
+                                        @php
+                                            $totalcount = $objective_count+$key_result_count;
+
+                                        @endphp
                                         "pos_x": 250,
-                                        "pos_y": {{$top}},
+                                        "pos_y": {{$totalcount*100}},
                                     },
                                         @foreach(DB::table('value_stream')->where('unit_id'  ,$b->id)->get() as $v)
                                         @php
