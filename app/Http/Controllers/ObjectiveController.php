@@ -185,6 +185,8 @@ class ObjectiveController extends Controller
                 "detail" => $request->edit_obj_small_description,
                 "user_id" => Auth::id(),
                 "status" => $request->status,
+                "type" => $request->type,
+                "unit_id" => $request->unit_id,
             ]);
 
         if ($request->type == "unit") {
@@ -339,6 +341,8 @@ class ObjectiveController extends Controller
             "key_unit" => $request->key_result_unit,
             "init_value" => $request->init_value,
             "target_number" => $request->target_number,
+            "type" => $request->type,
+            "unit_id" => $request->unit_id,
         ]);
 
         $counter = 0;
@@ -451,6 +455,8 @@ class ObjectiveController extends Controller
                 "key_unit" => $request->edit_key_result_unit,
                 "init_value" => $request->edit_init_value,
                 "target_number" => $request->edit_target_number,
+                "type" => $request->type,
+                "unit_id" => $request->unit_id,
             ]);
 
         if ($request->type == "unit") {

@@ -3,6 +3,10 @@
 <title>Linking </title>
 @endsection
 @section('content')
+@php
+    $business_units = DB::table('business_units')->where('user_id',Auth::id())->get();
+@endphp
+
 <div class="d-flex flex-column flex-root">
     <div class="page d-flex flex-row flex-column-fluid">
         <div class="content d-flex flex-column flex-column-fluid">
@@ -37,97 +41,17 @@
                     editor.reroute = true;
                     editor.reroute_fix_curvature = true;
                     editor.force_first_input = false;
-
-                  /*
-                    editor.createCurvature = function(start_pos_x, start_pos_y, end_pos_x, end_pos_y, curvature_value, type) {
-                      var center_x = ((end_pos_x - start_pos_x)/2)+start_pos_x;
-                      return ' M ' + start_pos_x + ' ' + start_pos_y + ' L '+ center_x +' ' +  start_pos_y  + ' L ' + center_x + ' ' +  end_pos_y  + ' L ' + end_pos_x + ' ' + end_pos_y;
-                    }*/
-    @php
-    $key = [];
-    $team = [];
-    $obj = [];
-    $AObj = [];
-    $AObjKey = [];
-    $VObj = [];
-    $VSObjKey = [];
-    $LinkVSkey = [];
-    $LinkVSID = [];
-    $VSObjteam = [];
-
-    $BU = DB::table('business_units')->where('user_id',Auth::id())->get();
-
-    foreach($BU as $bu)
-    {
-     
-        $AObj[] = $bu->id;
-    }
-    $AllObjective = DB::table('objectives')->whereIn('unit_id',$AObj)->where('type','unit')->where('trash',NULL)->get();
- 
-
-    foreach($AllObjective as $bukey)
-    {
-     
-        $AObjKey[] = $bukey->id;
-    }
-    $AllObjectiveKey = DB::table('key_result')->whereIn('obj_id',$AObjKey)->get();
-
-    $AllBUValue = DB::table('value_stream')->whereIn('unit_id',$AObj)->get();
-    foreach($AllBUValue as $vs)
-    {
-     
-        $VObj[] = $vs->id;
-    }
-    $AllObjectiveValue = DB::table('objectives')->whereIn('unit_id',$VObj)->where('type','stream')->where('trash',NULL)->get();
-    foreach($AllObjectiveValue as $vskey)
-    {
-     
-        $VSObjKey[] = $vskey->id;
-    }
-
-    $AllObjectivevsKey = DB::table('key_result')->whereIn('obj_id',$VSObjKey)->get();
-
-
-    $Data = DB::table('team_link_parent')->where('buisness_unit_id',$organization->id)->where('type','unit')->get();
-    foreach($Data as $k)
-    {
-        $key[] = $k->key_id;
-        $team[] = $k->link_team_id;
-        $obj[] = $k->link_obj_id;
-    }
-
-    $keyLink = DB::table('key_result')->whereIn('id',$key)->get();
-
-    $DataVS = DB::table('team_link_parent')->whereIn('buisness_unit_id',$VObj)->where('type','stream')->get();
-    foreach($DataVS as $VS)
-    {
-        $LinkVSkey[] = $VS->key_id;
-        
-    }
-
-    $VSTeam = DB::table('value_team')->whereIn('org_id',$VObj)->get();
-    $keyLinkVs = DB::table('key_result')->whereIn('id',$LinkVSkey)->get();
-
-    foreach($VSTeam as $VSt)
-    {
-        $LinkVSID[] = $VSt->id;
-        
-    }
-    $ObjectiveValueTeam = DB::table('objectives')->whereIn('unit_id',$LinkVSID)->where('type','VS')->where('trash',NULL)->get();
-    foreach($ObjectiveValueTeam  as $vteamobj)
-    {
-     
-        $VSObjteam[] = $vteamobj->id;
-    }
-
-    $keyVsTeam = DB::table('key_result')->whereIn('obj_id',$VSObjteam)->get();
-
-
-    @endphp
+                    editor.zoom = 1;
+                    editor.editor_mode = 'edit';
 
 
 
-                    
+                    // editor.createCurvature = function(start_pos_x, start_pos_y, end_pos_x, end_pos_y, curvature_value, type) {
+                    //   var center_x = ((end_pos_x - start_pos_x)/2)+start_pos_x;
+                    //   return ' M ' + start_pos_x + ' ' + start_pos_y + ' L '+ center_x +' ' +  start_pos_y  + ' L ' + center_x + ' ' +  end_pos_y  + ' L ' + end_pos_x + ' ' + end_pos_y;
+                    // }
+
+
 
                     const dataToImport = {
                         "drawflow": {
@@ -152,13 +76,13 @@
                                         "pos_x": 10,
                                         "pos_y": 150
                                     },
-                                    @foreach($BU as $key=>$r)
-                                    "{{ $key+$r->id }}": {
-                                        "id": {{ $key+$r->id }},
+                                    @foreach($business_units as $b)
+                                    "{{ $b->id+1 }}": {
+                                        "id": {{ $b->id+1 }},
                                         "name": "slack",
                                         "data": {},
                                         "class": "buisnessunit-tab",
-                                        "html": ' <div class="row"> @foreach($AllObjective as $OBJ) @if($OBJ->unit_id == $r->id) <div class="col-md-4">  <div class="buisnessunit">  <div class="mainheading row mb-3"> <div class="col-md-12"> <h4>{{$r->business_name}}</h4> </div><div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingbuisnessunit.svg") }}"> </div>   <div class="col-md-8"> <div class="buisnessunit-card-subtittle"> <p class="buisnessunitheading">{{$OBJ->objective_name}}</p> </div> </div> <div class="col-md-3 text-right"> <div @if($OBJ->status == 'To Do') class="badge bg-secondary buisnessunitbadge" @endif @if($OBJ->status == 'In progress') class="badge bg-warning buisnessunitbadge" @endif @if($OBJ->status == 'Done') class="badge bg-success buisnessunitbadge" @endif> {{$OBJ->obj_prog}}% </div>  </div> </div> <div class="row"> <div class="col-md-12"> @foreach($AllObjectiveKey as $KEY) @if($OBJ->id == $KEY->obj_id)  <div class="row mt-2">   <div class="col-md-1">  <img src="{{ url("public/assets/svg/linkingkey.svg") }}"> </div>   <div class="col-md-7"> <p class="buisnessunitlinkingtext">{{$KEY->key_name}}</p> </div> <div class="col-md-1"> @foreach($keyLink as $link) @if($link->id == $KEY->id) <img src="{{ url("public/assets/svg/link.svg") }}"> @endif @endforeach </div> <div class="col-md-3 text-right"> <div class="badge buisnessunitbadge">{{$KEY->key_prog}}%</div> </div> </div> @endif @endforeach </div> </div>  </div>  </div> @endif @endforeach  </div>',
+                                        "html": '<div class="col-md-4"> <div class="buisnessunit"> <div class="mainheading row mb-3"> <div class="col-md-12"> <h4>{{$b->business_name}}</h4> </div> </div> @foreach(DB::table('objectives')->where('type' , 'unit')->where('unit_id'  ,$b->id)->get() as $o) <div class="row"> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingbuisnessunit.svg") }}"> </div> <div class="col-md-8"> <div class="buisnessunit-card-subtittle"> <p class="buisnessunitheading">{{ $o->objective_name }}</p> </div> </div> <div class="col-md-3 text-right"> <div class="badge bg-success buisnessunitbadge"> {{ $o->obj_prog }}% </div> </div> <div class="col-md-12"> @foreach(DB::table('key_result')->where('obj_id' , $o->id)->get() as $key_result) <div class="row mt-2"> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingkey.svg") }}"> </div> <div class="col-md-7"> <p class="buisnessunitlinkingtext">{{$key_result->key_name}}</p> </div> <div class="col-md-1"> <img src="{{ url("public/assets/svg/link.svg") }}"> </div> <div class="col-md-3 text-right"> <div class="badge buisnessunitbadge">{{$key_result->key_prog}}%</div> </div> </div> @endforeach </div> </div> @endforeach </div> </div>',
                                         "typenode": false,
                                         "inputs": {
                                             "input_1": {
@@ -183,65 +107,31 @@
                                             },
                                         },
                                         "pos_x": 250,
-                                        "pos_y": 100,
-                                     
-                                       
+                                        "pos_y": {{$top}},
                                     },
-                                    @endforeach
-                                    @foreach($AllBUValue as $key=>$r)
-                                    "{{ $key+$r->id }}": {
-                                        "id": {{ $key+$r->id }},
-                                        "name": "slack",
-                                        "data": {},
-                                        "class": "buisnessunit-tab",
-                                        "html": '<div class="row">  <div class="col-md-4"> <div class="buisnessunit"> @foreach($AllObjectiveValue as $OBJK) @if($OBJK->unit_id == $r->id) <div class="mainheading row mb-3"> <div class="col-md-12"> <h4>{{$r->value_name}}</h4> </div> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingbuisnessunit.svg") }}"> </div> <div class="col-md-8"> <div class="buisnessunit-card-subtittle"> <p class="buisnessunitheading">{{$OBJK->objective_name}}</p> </div> </div> <div class="col-md-3 text-right"> <div @if($OBJK->status == 'To Do') class="badge bg-secondary buisnessunitbadge" @endif @if($OBJK->status == 'Done') class="badge bg-success buisnessunitbadge" @endif @if($OBJK->status == 'In progress') class="badge bg-warning buisnessunitbadge" @endif> {{$OBJK->obj_prog}}% </div> </div> <div class="col-md-12 border-bottom"></div> </div> <div class="row"> <div class="col-md-12">   @foreach($AllObjectivevsKey as $KEYVS) @if($OBJK->id == $KEYVS->obj_id)  <div class="row mt-2"> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingkey.svg") }}"> </div> <div class="col-md-7"> <p class="buisnessunitlinkingtext">{{$KEYVS->key_name}}</p> </div> <div class="col-md-1"> @foreach($keyLinkVs as $vlink) @if($vlink->id == $KEYVS->id ) <img src="{{ url("public/assets/svg/link.svg") }}"> @endif @endforeach </div> <div class="col-md-3 text-right"> <div class="badge buisnessunitbadge">{{$KEYVS->key_prog}}%</div> </div> </div> @endif @endforeach  </div> </div> @endif @endforeach </div> </div>  </div>',
-                                        "typenode": false,
-                                        "inputs": {
-                                            "input_1": {
-                                                "connections": [{
-                                                    "node": "2",
-                                                    "input": "output_2"
-                                                }]
-                                            }
+                                        @foreach(DB::table('value_stream')->where('unit_id'  ,$b->id)->get() as $v)
+                                        @php
+                                            $node = $top;
+                                        @endphp
+                                        "{{ $node+$v->id }}": {
+                                            "id": {{ $node }},
+                                            "name": "slack",
+                                            "data": {},
+                                            "class": "buisnessunit-tab-valuestrwea",
+                                            "html": '<div class="col-md-4"> <div class="buisnessunit"> <div class="mainheading row mb-3"> <div class="col-md-12"> <h4>{{$v->value_name}}</h4> </div> </div> @foreach(DB::table('objectives')->where('type' , 'stream')->where('unit_id'  ,$v->id)->get() as $v_o) <div class="row"> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingbuisnessunit.svg") }}"> </div> <div class="col-md-8"> <div class="buisnessunit-card-subtittle"> <p class="buisnessunitheading">{{ $v_o->objective_name }}</p> </div> </div> <div class="col-md-3 text-right"> <div class="badge bg-success buisnessunitbadge"> {{ $v_o->obj_prog }}% </div> </div> <div class="col-md-12"> @foreach(DB::table('key_result')->where('obj_id' , $v_o->id)->get() as $v_o_key_result) <div class="row mt-2"> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingkey.svg") }}"> </div> <div class="col-md-7"> <p class="buisnessunitlinkingtext">{{$v_o_key_result->key_name}}</p> </div> <div class="col-md-1"> <img src="{{ url("public/assets/svg/link.svg") }}"> </div> <div class="col-md-3 text-right"> <div class="badge buisnessunitbadge">{{$v_o_key_result->key_prog}}%</div> </div> </div> @endforeach </div> </div> @endforeach </div> </div>',
+                                            "typenode": false,
+                                            "inputs": {},
+                                            "outputs": {},
+                                            "pos_x": 650,
+                                            "pos_y": {{$top}},
                                         },
-                                        "outputs": {
-                                            "output_1": {
-                                                
-                                            },
-                                            "output_2": {
-                                                
-                                            }
-                                        },
-                                        "pos_x": 500,
-                                        "pos_y": 400
-                                      
-                                    },
-                                    @endforeach
-                                    @foreach($VSTeam as $key=>$r)
-                                    "{{ $key+$r->id }}": {
-                                        "id": {{ $key+$r->id }},
-                                        "name": "slack",
-                                        "data": {},
-                                        "class": "buisnessunit-tab",
-                                        "html": '<div class="row"> <div class="col-md-4"> <div class="buisnessunit"> @foreach($ObjectiveValueTeam as $obj_team) @if($obj_team->unit_id == $r->id) <div class="mainheading row mb-3"> <div class="col-md-12"> <h4>{{$r->team_title}}</h4> </div> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingbuisnessunit.svg") }}"> </div> <div class="col-md-8"> <div class="buisnessunit-card-subtittle"> <p class="buisnessunitheading">{{$obj_team->objective_name}}</p> </div> </div> <div class="col-md-3 text-right"> <div @if($obj_team->status == 'Done') class="badge bg-success" @endif  @if($obj_team->status == 'In progress') class="badge bg-warning" @endif  @if($obj_team->status == 'To Do') class="badge bg-secondary buisnessunitbadge" @endif> {{$obj_team->obj_prog}}% </div> </div> <div class="col-md-12 border-bottom"></div> </div> <div class="row"> <div class="col-md-12"> @foreach($keyVsTeam as $key_team) @if($obj_team->id == $key_team->obj_id)  <div class="row mt-2"> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingkey.svg") }}"> </div> <div class="col-md-7"> <p class="buisnessunitlinkingtext">{{$key_team->key_name}}</p> </div> <div class="col-md-1"> <img src="{{ url("public/assets/svg/link.svg") }}"> </div> <div class="col-md-3 text-right"> <div class="badge buisnessunitbadge">{{$key_team->key_prog}}%</div> </div> </div> @endif @endforeach </div> </div> @endif @endforeach </div> </div> </div>',
-                                        "typenode": false,
-                                        "inputs": {
-                                            "input_1": {
-                                                "connections": [{
-                                                    "node": "5",
-                                                    "input": "output_1"
-                                                }]
-                                            }
-                                        },
-                                        "outputs": {},
-                                        "pos_x": 850,
-                                        "pos_y": 50
-                                    },
+                                        @endforeach
                                     @endforeach
                                 }
                             }
                         }
                     }
+
                     editor.start();
                     editor.import(dataToImport);
 
