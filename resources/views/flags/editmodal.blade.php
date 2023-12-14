@@ -37,7 +37,7 @@
                     <div class="moveflag" id="moveflag{{ $data->id }}">
                         <div class="row">
                             <div class="col-md-10">
-                                <h4>Move Flag</h4>
+                                <h4>Move Impediment</h4>
                             </div>
                             <div class="col-md-2">
                                 <img onclick="moveflagshow({{$data->id}})" src="{{ url('public/assets/svg/crossdelete.svg') }}">
@@ -47,9 +47,9 @@
                             @csrf
                             <input type="hidden" value="{{ $data->id }}" name="flag_id">
                             <div class="form-group">
-                                <label>Select Board</label>
+                                <label>Select Status</label>
                                 <select class="form-control" name="board">
-                                    <option value="">Select Board</option>
+                                    <option value="">Select Status</option>
                                     <option @if($data->flag_status == 'todoflag') selected @endif value="todoflag">To Do @if($data->flag_status == 'todoflag') (Current) @endif</option>
                                     <option @if($data->flag_status == 'inprogress') selected @endif value="inprogress">In Progress @if($data->flag_status == 'inprogress') (Current) @endif</option>
                                     <option @if($data->flag_status == 'doneflag') selected @endif value="doneflag">Done @if($data->flag_status == 'doneflag') (Current) @endif</option>

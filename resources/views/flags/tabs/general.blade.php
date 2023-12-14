@@ -13,7 +13,7 @@
     <div class="row">
         <div class="col-md-12 col-lg-12 col-xl-12">
             <div class="form-group mb-0">
-                <label for="objective-name">Flag Title</label>
+                <label for="objective-name">Title</label>
                 <input type="text" value="{{ $data->flag_title }}" class="form-control" name="flag_title" id="flag_tittle" required>
             </div>
         </div>

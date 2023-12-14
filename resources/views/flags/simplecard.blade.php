@@ -1,4 +1,3 @@
-@if($r->flag_title)
 <div class="card-body">
     <div class="d-flex flex-column">
         <div class="d-flex flex-row" onclick="editflag({{$r->id}})">
@@ -136,4 +135,3 @@
         </div>
     </div>
 </div>
-@endif
