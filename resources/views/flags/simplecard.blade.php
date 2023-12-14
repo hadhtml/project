@@ -1,3 +1,4 @@
+@if($r->flag_title)
 <div class="card-body">
     <div class="d-flex flex-column">
         <div class="d-flex flex-row" onclick="editflag({{$r->id}})">
@@ -63,17 +64,18 @@
                 <div class="d-flex flex-row align-items-center image-cont pr-3">
                     <div class="pr-1">
                         @php
-                            $member_id = DB::table('flag_members')->where('flag_id' , $r->id)->first();
-                            $user = DB::table('members')->where('id' , $member_id->member_id)->first();
+                            $member_id = DB::table('flag_members')->where('flag_id' , $r->id)->get();
                         @endphp
-                        @if($user->image != NULL)
-                        <img class="user-image" src="{{asset('public/assets/images/'.$user->image)}}" alt="Example Image">
-                        @else
-                        <div class="namecountersmallforsimplecard">{{ substr($user->name, 0, 1); }}</div>
-                        @endif
-                    </div>
-                    <div>
-                        {{ $user->name }}
+                        @foreach($member_id as $m)
+                            @php
+                                $user = DB::table('members')->where('id' , $m->member_id)->first();
+                            @endphp
+                            @if($user->image != NULL)
+                            <img class="user-image" src="{{asset('public/assets/images/'.$user->image)}}" alt="{{ $user->name }}" title="{{ $user->name }} {{ $user->last_name }}">
+                            @else
+                            <div class="namecountersmallforsimplecard">{{ substr($user->name, 0, 1); }}</div>
+                            @endif
+                        @endforeach
                     </div>
                 </div>
                 @endif
@@ -134,3 +136,4 @@
         </div>
     </div>
 </div>
+@endif

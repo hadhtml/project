@@ -42,7 +42,7 @@
                     <div>
                         <div class="form-group mb-0">
                             <label for="objective-name">Write Comment</label>
-                            <input type="text" class="form-control" name="comment" id="objective-name" required>
+                            <textarea required class="form-control" name="comment"></textarea>
                         </div>
                     </div>
                     <div>
@@ -81,7 +81,7 @@
                             <div class="d-flex flex-column">
                                 <div>
                                     <div class="form-group mb-0">
-                                        <input value="{{ $r->comment }}" type="text" class="form-control" name="comment" id="objective-name" required>
+                                        <textarea required class="form-control" name="comment">{{ $r->comment }}</textarea>
                                     </div>
                                 </div>
                                 <div>
@@ -137,7 +137,7 @@
                                 <div>
                                     <div class="form-group mb-0">
                                         <label for="objective-name">Write Reply</label>
-                                        <input type="text" class="form-control" name="comment" id="objective-name" required>
+                                        <textarea required class="form-control" name="comment"></textarea>
                                     </div>
                                 </div>
                                 <div>
@@ -195,7 +195,7 @@
                                 <div class="d-flex flex-column">
                                     <div>
                                         <div class="form-group mb-0">
-                                            <input value="{{ $p->comment }}" type="text" class="form-control" name="comment" id="objective-name" required>
+                                            <textarea required class="form-control" name="comment">{{ $p->comment }}</textarea>
                                         </div>
                                     </div>
                                     <div>

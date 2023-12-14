@@ -13,6 +13,7 @@
         border-radius: 10px;
         padding: 12px;
         display: flex;
+        height: 150px;
     }
     .team-horizontal-card .team-title{
         font-size: 14px;
@@ -23,9 +24,9 @@
         font-size: 10px;
         color: black;
     }
-    .member-profile-team{
+    .member-profile-team-1{
         display: flex;
-        width: 25%;
+        width: 50%;
     }
     .member-profile-team-name{
         margin-left: 10px;
@@ -38,8 +39,20 @@
         font-size: 10px;
     }
     .tittlesection{
-        width: 20%;
+        width: 50%;
     }
+    .member-profile-team-2{
+        display: flex;
+        align-items: flex-start;
+    }
+    .member-profile-team-2 p{
+        background-color: #ccc;
+        border-radius: 50px;
+        padding: 8px;
+
+    }
+
+
     .member-profile-team-epics {
         display: flex;
         align-items: flex-start;
@@ -62,7 +75,7 @@
                     Subtitle goes here lorem ipsum
                 </div>
             </div>
-            <div class="member-profile-team">
+            <div class="member-profile-team-1">
                 <div class="member-profile-team-img">
                     <img src="{{ url('public/assets/svg/teamprofile.png') }}">    
                 </div>
@@ -72,17 +85,20 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="member-profile-team">
+                <div class="member-profile-team-2">
                     <img src="{{ url('public/assets/svg/teamprofile.png') }}">
                     <img src="{{ url('public/assets/svg/teamprofile.png') }}">
+                    <p>+4</p>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="member-profile-team-epics">
+                <div class="member-profile-team">
                     <img src="http://localhost/agileprolific/public/assets/svg/epicheaderheader.svg">
-                    <h5><strong>40</strong> total Epics</h5>
+                    <p>40 Total Epics</p>
                 </div>
             </div>
+
+
         </div>
     </div>
 </div>
