@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/styletwo.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/kanban.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dragula@3.7.3/dist/dragula.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
