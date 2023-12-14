@@ -14,6 +14,8 @@ use Carbon\Carbon;
 use Mail;
 use App\Models\OrganizationContacts;
 use App\Helpers\Jira;
+use Laravolt\Avatar\Avatar;
+use Illuminate\Support\Facades\Storage;
 
 class MemberController extends Controller
 {
@@ -54,7 +56,8 @@ class MemberController extends Controller
         $User->email_verified_at = Carbon::now();
         $User->save();
         
-        
+       
+
 
         $Member  = new Member();
         $Member->name = $request->member_name;
