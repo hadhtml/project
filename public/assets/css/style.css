@@ -22315,8 +22315,8 @@ div[role="circleprogressbar"]::before {
 }
 
 .leader-section img {
-    width: 40px;
-    height: 40px;
+    width: 46px;
+    height: 46px;
     object-fit: cover;
     background-size: cover;
     border-radius: 100px;
@@ -22331,4 +22331,31 @@ div[role="circleprogressbar"]::before {
   'opsz' 24
 }
 
+.counter-section
+{
+    margin-top: 15px;
+}
+.counter-card
+{
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 5px;
+    border:1px dashed #E2E2E2;
+}
 
+.counter-card small
+{
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.counter-card b
+{
+    font-size: 13px;
+font-style: normal;
+color: black;
+font-weight: 500;
+line-height: normal;
+}

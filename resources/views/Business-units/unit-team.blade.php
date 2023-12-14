@@ -27,32 +27,41 @@ $var_objective = "Org-Unit-team";
     $dataCount = count($dataArray);
     @endphp
 <div class="col-md-3">
-            <div class="card business-card">
-                <div class="card-body">
-                    <div class="d-flex flex-row justify-content-between">
-                        <div>
-                            <h3>
-                                <a href="{{url('dashboard/organization/'.$team->slug.'/portfolio/BU')}}">{{$team->team_title}}</a>
-                            </h3>
-                        </div>
-                        <div>
-                            <div class="dropdown d-flex">
-                            <button class="btn btn-circle dropdown-toggle btn-tolbar bg-transparent" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="{{ url('public/assets/svg/dropdowndots.svg') }}">
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item"  data-toggle="modal" data-target="#edit{{$team->id}}">Edit</a>
-                                <a class="dropdown-item" data-toggle="modal" data-target="#delete{{$team->id}}">Delete</a>
-                            </div>
-                        </div>
+    <div class="card business-card">
+        <div class="card-body">
+            <div class="d-flex flex-row justify-content-between">
+                <div class="d-flex flex-row">
+                    <div class="mr-2">
+                        <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/e2b28077-02b5-4e0f-8303-37e2672ea874/d5a1hdb-d15d5151-5a7b-4407-9eaa-99aa77863802.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2UyYjI4MDc3LTAyYjUtNGUwZi04MzAzLTM3ZTI2NzJlYTg3NFwvZDVhMWhkYi1kMTVkNTE1MS01YTdiLTQ0MDctOWVhYS05OWFhNzc4NjM4MDIucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.ITLY1myWdL4iAy1wu4qYRLCGPOEbVs4rxrlXt5uR3zg" style="width: 40px; object-fit: cover; border-radius: 10px; height: 40x;">
+                    </div>
+                    <div>
+                        <h3 class="mb-0">
+                            <a href="{{url('dashboard/organization/'.$team->slug.'/portfolio/BU')}}">{{$team->team_title}}</a>
+                        </h3>
+                        <small>
+                            30 total members
+                        </small>
+                    </div>
+                </div>
+                <div>
+                    <div class="dropdown d-flex">
+                        <button class="btn btn-circle dropdown-toggle btn-tolbar bg-transparent" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="{{ url('public/assets/svg/dropdowndots.svg') }}">
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item"  data-toggle="modal" data-target="#edit{{$team->id}}">Edit</a>
+                            <a class="dropdown-item" data-toggle="modal" data-target="#delete{{$team->id}}">Delete</a>
                         </div>
                     </div>
-                    
+                </div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center leader-section mt-4">
+                <div>
                     @if($team->lead_id)
                         @foreach(DB::table('members')->get() as $r)
                             @if($r->id == $team->lead_id)
 
-                                <div class="d-flex flex-row align-items-center leader-section">
+                                <div class="d-flex flex-row align-items-center">
                                     <div class="mr-2">
                                         @if($r->image != NULL)
                                         <img src="{{asset('public/assets/images/'.$r->image)}}" alt="Example Image">
@@ -63,7 +72,7 @@ $var_objective = "Org-Unit-team";
 
                                     <div class="d-flex flex-column">
                                         <div>
-                                            <span class="text-primary">Team Leader</span>
+                                            <span class="text-primary">Team Lead</span>
                                         </div>
                                         <div>
                                             <span>{{$r->name}} {{ $r->last_name }}</span>
@@ -73,11 +82,60 @@ $var_objective = "Org-Unit-team";
                             @endif
                         @endforeach
                     @endif
-
-                                                                                                                                                                                                                                                                                                                                                                    
+                </div>
+                <div>
+                    <div class="d-flex align-items-center flex-lg-fill my-1">
+                        <div class="symbol-group symbol-hover">
+                            <div class="symbol symbol-30 symbol-circle" data-toggle="tooltip" title="" data-original-title="Mark Stone">
+                                <img alt="Pic" src="https://img.freepik.com/premium-photo/young-handsome-man-with-beard-isolated-keeping-arms-crossed-frontal-position_1368-132662.jpg">
+                            </div>
+                            <div class="symbol symbol-30 symbol-circle" data-toggle="tooltip" title="" data-original-title="Charlie Stone">
+                                <img alt="Pic" src="https://img.freepik.com/premium-photo/young-man-smiling-cheerfully-feeling-happy-pointing-side-upwards-showing-object-copy-space_1194-211017.jpg">
+                            </div>
+                            <div style="width:42px; height:42px; padding: 10px; font-size: 12px;" class="symbol symbol-30  symbol-circle symbol-light" data-toggle="tooltip" title="" data-original-title="More users">
+                                <span class="symbol-label">5+</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <div class="row counter-section">
+                <div class="col-md-6 pr-2">
+                    <div class="counter-card d-flex flex-row align-items-center">
+                        <div class="mr-1">
+                            <span class="material-symbols-outlined text-secondary">bolt</span>
+                        </div>
+                        <div class="d-flex flex-column">
+                            <div>
+                                <b>40</b>
+                            </div>
+                            <div>
+                                <small class="text-secondary">Epics</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 pl-2">
+                    <div class="counter-card d-flex flex-row align-items-center">
+                        <div class="mr-1">
+                            <span class="material-symbols-outlined text-secondary">adjust</span>
+                        </div>
+                        <div class="d-flex flex-column">
+                            <div>
+                                <b>40</b>
+                            </div>
+                            <div>
+                                <small class="text-secondary">Objectives</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
+    </div>
+</div>
     <div class="modal fade" id="delete{{$team->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">

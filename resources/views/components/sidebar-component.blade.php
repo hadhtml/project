@@ -112,17 +112,17 @@
                     <span style="font-size:20px" class="material-symbols-outlined">layers</span>
                 </div>
                 <div class="mr-2">
-                    Value Streams
+                    About
                 </div>
             </a>
         </li>
         <li class="mb-1">
             <a href="#" class="d-flex flex-row align-items-center">
                 <div class="mr-2">
-                    <span style="font-size:20px" class="material-symbols-outlined">warning_off</span>
+                    <span style="font-size:20px" class="material-symbols-outlined">layers</span>
                 </div>
                 <div class="mr-2">
-                    Impediments
+                    Value Streams
                 </div>
             </a>
         </li>
@@ -154,6 +154,16 @@
                 </div>
                 <div class="mr-2">
                     Epic Backlog
+                </div>
+            </a>
+        </li>
+        <li class="mb-1">
+            <a href="#" class="d-flex flex-row align-items-center">
+                <div class="mr-2">
+                    <span style="font-size:20px" class="material-symbols-outlined">warning_off</span>
+                </div>
+                <div class="mr-2">
+                    Impediments
                 </div>
             </a>
         </li>
