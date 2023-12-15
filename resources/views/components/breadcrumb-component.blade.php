@@ -37,14 +37,54 @@ $sprint = DB::table('sprint')->where('user_id',Auth::id())->where('value_unit_id
         </div>
         <!--end::Info-->
         <!--begin::Toolbar-->
+     
         <div class="d-flex align-items-center toolbar">
             <div class="d-flex flex-row organization-drop align-items-center mr-3">
+                @if($type == 'unit')  
+                <div class="d-flex flex-column mr-3">
+                    <div style="padding:20px">
+                    Team
                   
+                    <select class="chkveg" multiple="multiple" >
+                        @foreach(DB::table('unit_team')->where('org_id',$organization->id)->get() as $r)
+                        <option value="{{$r->id}}">{{$r->team_title}}</option>
+                        @endforeach
+                    
+                     
+                    </select>
+                       <button class="btn-circle btn-tolbar bg-transparent" type="button" onclick="GetEpicTeamSearch();" >
+                       <img src="{{asset('public/assets/images/icons/filter.svg')}}" width="20" width="20">
+                       </button>
+                    </div>
+      
+                </div> 
+                @endif
+
+                @if($type == 'stream')  
+                <div class="d-flex flex-column mr-3">
+                    <div style="padding:20px">
+                    Team
+                  
+                    <select class="chkveg" multiple="multiple" >
+                        @foreach(DB::table('value_team')->where('org_id',$organization->id)->get() as $r)
+                        <option value="{{$r->id}}">{{$r->team_title}}</option>
+                        @endforeach
+                    
+                     
+                    </select>
+                       <button class="btn-circle btn-tolbar bg-transparent" type="button" onclick="GetEpicTeamSearch();" >
+                       <img src="{{asset('public/assets/images/icons/filter.svg')}}" width="20" width="20">
+                       </button>
+                    </div>
+      
+                </div> 
+                @endif
+ 
                 
                 <div class="d-flex flex-column mr-3">
                     <div style="padding:20px">
                           Flag
-                    <select id="chkveg" multiple="multiple" >
+                    <select class="chkveg" multiple="multiple" >
                        <option value="All">ALL</option>
                       <option value="Risk">Risk</option>
                       <option value="Impediment">Impediment</option>

@@ -2196,7 +2196,7 @@
         var slug = "{{ $organization->slug }}";
         var unit_id = "{{ $organization->id }}";
         var type = "{{ $organization->type }}";
-        var chartId = $('#chkveg').val();
+        var chartId = $('.chkveg').val();
         if (chartId != '') {
             $.ajax({
                 type: "GET",
@@ -2227,7 +2227,43 @@
         }
 
     }
+    function GetEpicTeamSearch() {
 
+        var org_id = "{{ $organization->org_id }}";
+        var slug = "{{ $organization->slug }}";
+        var unit_id = "{{ $organization->id }}";
+        var type = "{{ $organization->type }}";
+        var chartId = $('.chkveg').val();
+
+        if (chartId != '') {
+            $.ajax({
+                type: "GET",
+                url: "{{url('search-epic-team')}}",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    org_id: org_id,
+                    slug: slug,
+                    unit_id:unit_id,
+                    type: type,
+                    chartId:chartId,
+
+                },
+                success: function(res) {
+
+                    $('#parentCollapsible').html(res);
+
+
+
+
+
+
+                }
+            });
+        }
+
+        }
 
 
     
