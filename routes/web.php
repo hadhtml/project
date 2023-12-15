@@ -107,7 +107,6 @@ Route::get('check-init-weight-edit-first', [App\Http\Controllers\ObjectiveContro
 Route::get('get-epic-team', [App\Http\Controllers\ObjectiveController::class, 'EpicTeam']);
 Route::get('Get-Epic-Flag', [App\Http\Controllers\ObjectiveController::class, 'GetEpicFlag']);
 
-
 Route::get('chart', [App\Http\Controllers\ChartController::class, 'ChartData']);
 Route::post('save-chart-data', [App\Http\Controllers\ChartController::class,'fileImport']);
 Route::get('chart-data', [App\Http\Controllers\ChartController::class, 'ChartCsv']);
@@ -291,4 +290,8 @@ Route::get('get-key-link', [App\Http\Controllers\TeamController::class,'GetTeamL
 Route::post('delete-key-link', [App\Http\Controllers\TeamController::class,'DeleteTeamLink']);
 Route::get('get-obj-link', [App\Http\Controllers\TeamController::class,'GetValueLink']);
 Route::post('delete-obj-link', [App\Http\Controllers\TeamController::class,'DeleteTeamLinkObj']);
+Route::get('search-epic-team', [App\Http\Controllers\TeamController::class,'EpicTeamSearch']);
+Route::get('epic-clone/{id}/{type}', [App\Http\Controllers\MemberController::class,'clonEpic']);
+
+
 
