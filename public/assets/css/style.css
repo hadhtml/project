@@ -20307,7 +20307,7 @@ input[type="radio"]:checked {
 }
 
 .btn-primary {
-    border-radius: 54px;
+    border-radius: 54px !important;
     height: 43px;
     border: 1px solid #3661EC;
     background: var(--primary-color, #3661EC);
@@ -20802,11 +20802,30 @@ input[type="radio"]:checked {
 
 .kanban-header {
     cursor: pointer;
-    margin-bottom: 14px;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+    padding: 15px 30px;
+}
+.bg-todo
+{
+    background-color: #717171;
+    color: white;
+}
+
+.bg-inprogress
+{
+    background-color: #E1DB3F;
+    color: white;
+}
+
+.bg-done
+{
+    background-color: #3FE1A7;
+    color: white;
 }
 
 .kanban-header h4 {
-    color: var(--Black, #000);
+    color: var(--Black, #fff);
     font-size: 17px;
     font-style: normal;
     font-weight: 600;
@@ -20816,7 +20835,7 @@ input[type="radio"]:checked {
 }
 
 .kanban-header small {
-    color: var(--Ligh-text, #A7A7A7);
+    color: var(--Ligh-text, #fff);
     font-size: 12.552px;
     font-style: normal;
     font-weight: 400;
@@ -20839,6 +20858,12 @@ input[type="radio"]:checked {
 
 .kanban-content {
     min-height: 100px;
+}
+
+.imp-parent-card
+{
+    border-top-right-radius: 0px !important;
+    border-top-left-radius: 0px !important;
 }
 
 .kanban-card {
@@ -21122,7 +21147,8 @@ input[type="radio"]:checked {
 }
 
 .rightside span {
-    padding: 15px;
+    padding: 6px;
+    font-size: 21px;
     cursor: pointer;
 }
 
@@ -21165,6 +21191,7 @@ input[type="radio"]:checked {
 .statuschangebuttonarrow {
     height: 31px;
     padding-top: 5px !important;
+    padding-right: 8px !important;
     background-color: #924aef !important;
 }
 
@@ -21273,7 +21300,7 @@ input[type="radio"]:checked {
 }
 
 .textareaformcontrol .btn-sm {
-    font-size: 10px !important;
+    font-size: 13px !important;
     min-width: unset !important;
     border-radius: 2px !important;
     padding: 8px !important;
@@ -21282,12 +21309,19 @@ input[type="radio"]:checked {
 
 .note-editor .note-toolbar,
 .note-popover .popover-content {
-    padding: 3px !important;
+    padding: 11px !important;
+    border-bottom: 1px solid lightgray !important;
 }
 
 .note-editor .note-toolbar>.note-btn-group,
 .note-popover .popover-content>.note-btn-group {
     margin-top: 0px !important;
+}
+
+.note-btn-group .note-btn
+{
+    border:none !important;
+    background-color: #fff !important;
 }
 
 .note-toolbar {
@@ -21314,9 +21348,22 @@ input[type="radio"]:checked {
 
 .menuettitle ul li {
     color: #b2b2b2;
+    display: flex;
+    align-items: center;
     font-size: 14px;
     margin-bottom: 15px;
     cursor: pointer;
+}
+
+.menuettitle ul li span
+{
+    margin-right: 5px;
+    font-size: 21px;
+}
+
+.note-toolbar
+{
+    background-color: white !important;
 }
 
 .menuettitle ul .active {
@@ -21605,9 +21652,10 @@ input[type="radio"]:checked {
     width: 100%;
     font-size: 80%;
     text-align: center;
-    text-transform: uppercase;
+    text-transform: unset;
     border: 2px dashed #ccc;
     margin: 15px 1px 0px 0px;
+    border-radius: 10px;
     padding: 2rem;
 }
 
@@ -21703,15 +21751,15 @@ input[type="radio"]:checked {
 .moveflag {
     cursor: auto;
     position: absolute;
-    border-radius: 5px;
+    border-radius: 10px;
     display: none;
     width: 285px;
     z-index: 1111;
     top: 40;
     left: 80px;
-    padding: 10px;
+    padding: 15px;
     background-color: white;
-    box-shadow: 0px 2px 2px 4px rgb(87 106 134 / 20%);
+    box-shadow: 0px 2px 20px 4px rgb(87 106 134 / 20%);
 }
 
 .moveflag img {
