@@ -162,10 +162,12 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
+
         /*
          * Package Service Providers...
          */
          Maatwebsite\Excel\ExcelServiceProvider::class,
+         
 
         /*
          * Application Service Providers...
@@ -234,6 +236,7 @@ return [
         'Quarters' => App\Helpers\Quarters::class,
         'Jira' => App\Helpers\Jira::class,
         'Cmf' => App\Helpers\Cmf::class,
+        'Avatar'    => Laravolt\Avatar\Facade::class,
     ],
 
 ];
