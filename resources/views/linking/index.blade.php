@@ -126,7 +126,7 @@
                                             "typenode": false,
                                             "inputs": {},
                                             "outputs": {},
-                                            "pos_x": 650,
+                                            "pos_x": 680,
                                             "pos_y": 50,
                                         },
                                         @endforeach
