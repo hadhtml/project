@@ -236,6 +236,9 @@ $var_objective = "Backlog";
                                                             <button class="btn-circle btn-tolbar" data-toggle="modal" data-target="#delete{{$backlog->id}}">
                                                                 <img src="{{asset('public/assets/images/icons/delete.svg')}}" data-toggle="tooltip" data-placement="top" data-original-title="Delete">
                                                             </button>
+                                                            <a class="btn-circle btn-tolbar" href="{{url('epic-clone/'.$backlog->id.'/'.$organization->type)}}">
+                                                                <img src="{{asset('public/assets/images/icons/info-circle.svg')}}" data-toggle="tooltip" data-placement="top" data-original-title="Clone">
+                                                            </a>
                                                         </td>
                                                     </tr>
                                                     
