@@ -167,6 +167,7 @@ return [
          * Package Service Providers...
          */
          Maatwebsite\Excel\ExcelServiceProvider::class,
+         Laravolt\Avatar\ServiceProvider::class,
          
 
         /*
