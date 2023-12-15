@@ -57,7 +57,7 @@
                     @if($member->image)
                     <img src="{{ url('public/assets/images') }}/{{ $member->image }}">
                     @else
-                    <div class="namecountersmall">{{ substr($member->name, 0, 1); }}</div>
+                    <img src="{{ Avatar::create($member->name)->toBase64() }}" alt="{{ $member->name }}" title="{{ $member->name }} {{ $member->last_name }}">
                     @endif
                 </div>
                 @endforeach

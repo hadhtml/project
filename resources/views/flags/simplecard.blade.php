@@ -72,7 +72,7 @@
                             @if($user->image != NULL)
                             <img class="user-image" src="{{asset('public/assets/images/'.$user->image)}}" alt="{{ $user->name }}" title="{{ $user->name }} {{ $user->last_name }}">
                             @else
-                            <div class="namecountersmallforsimplecard">{{ substr($user->name, 0, 1); }}</div>
+                            <img class="user-image" src="{{ Avatar::create($user->name)->toBase64() }}" alt="{{ $user->name }}" title="{{ $user->name }} {{ $user->last_name }}">
                             @endif
                         @endforeach
                     </div>

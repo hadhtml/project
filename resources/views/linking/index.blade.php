@@ -4,7 +4,7 @@
 @endsection
 @section('content')
 @php
-    $business_units = DB::table('business_units')->where('user_id',Auth::id())->orderby('id' , 'asc')->get();
+    $business_units = DB::table('business_units')->where('user_id',Auth::id())->orderby('id' , 'asc')->limit(5)->get();
 @endphp
 
 <div class="d-flex flex-column flex-root">
@@ -90,7 +90,6 @@
                                                     }
                                                     
                                                 }
-                                                
                                             }
                                         @endphp
                                         "{{ $b->id+1 }}": {
@@ -114,7 +113,34 @@
                                                 $objectiveheight = $objective_count*80;
                                                 $key_resultheight = $i*50;
                                             @endphp
-                                            "pos_y": {{$objectiveheight+$key_resultheight+20}},
+                                            @if($loop->first)
+                                            @php
+                                                $firstloop = $objectiveheight+$key_resultheight+20;
+                                            @endphp
+                                            "pos_y": 20,
+                                            @endif
+                                            @if($loop->iteration == 2)
+                                            @php
+                                                $secondloop = $objectiveheight+$key_resultheight+20;
+                                            @endphp
+                                            "pos_y": {{$firstloop}},
+                                            @endif
+                                            @if($loop->iteration == 3)
+                                            @php
+                                                $thirdloop = $objectiveheight+$key_resultheight+20;
+                                            @endphp
+                                            "pos_y": {{$firstloop+$secondloop}},
+                                            @endif
+                                            @if($loop->iteration == 4)
+                                            @php
+                                                $fourthloop = $objectiveheight+$key_resultheight+20;
+                                            @endphp
+                                            "pos_y": {{$thirdloop+$firstloop+$secondloop}},
+                                            @endif
+                                            @if($loop->iteration == 5)
+                                            "pos_y": {{$fourthloop+$thirdloop+$firstloop+$secondloop}},
+                                            @endif
+                                            
                                         },
                                         @foreach(DB::table('value_stream')->where('unit_id'  ,$b->id)->get() as $v)
                                         "{{ 100+$v->id }}": {
@@ -129,6 +155,21 @@
                                             "pos_x": 680,
                                             "pos_y": 50,
                                         },
+
+                                        @foreach(DB::Table('value_team')->where('org_id' , $v->id)->get() as $value_team)
+                                        "{{ 1000+$value_team->id }}": {
+                                            "id": {{ 1000+$value_team->id }},
+                                            "name": "slack",
+                                            "data": {},
+                                            "class": "buisnessunit-tab-valuestrwea",
+                                            "html": '<div class="col-md-4"> <div class="buisnessunit"> <div class="mainheading row mb-3"> <div class="col-md-12"> <h4>{{$value_team->team_title}}</h4> </div> </div> @foreach(DB::table('objectives')->where('type' , 'VS')->where('unit_id'  ,$value_team->id)->get() as $v_o) <div class="row"> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingbuisnessunit.svg") }}"> </div> <div class="col-md-8"> <div class="buisnessunit-card-subtittle"> <p class="buisnessunitheading">{{ $v_o->objective_name }}</p> </div> </div> <div class="col-md-3 text-right"> <div class="badge bg-success buisnessunitbadge"> {{ $v_o->obj_prog }}% </div> </div> <div class="col-md-12"> @foreach(DB::table('key_result')->where('obj_id' , $v_o->id)->get() as $v_o_key_result) <div class="row mt-2"> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingkey.svg") }}"> </div> <div class="col-md-7"> <p class="buisnessunitlinkingtext">{{$v_o_key_result->key_name}}</p> </div> <div class="col-md-1"> <img src="{{ url("public/assets/svg/link.svg") }}"> </div> <div class="col-md-3 text-right"> <div class="badge buisnessunitbadge">{{$v_o_key_result->key_prog}}%</div> </div> </div> @endforeach </div> </div> @endforeach </div> </div>',
+                                            "typenode": false,
+                                            "inputs": {},
+                                            "outputs": {},
+                                            "pos_x": 1150,
+                                            "pos_y": 50,
+                                        },
+                                        @endforeach
                                         @endforeach
                                     @endforeach
                                 }
