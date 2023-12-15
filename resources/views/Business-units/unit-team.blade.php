@@ -14,17 +14,20 @@ $var_objective = "Org-Unit-team";
           </div>
       </div>
   </div>
-
+  @endif
 
 
 <div class="row">
-    @endif
+
    @if(count($Team) > 0)
    @foreach($Team as $team)
 
     @php
     $dataArray = explode(",", $team->member);
     $dataCount = count($dataArray);
+    $ObjResultcount  = DB::table('objectives')->where('unit_id',$team->id)->where('type','BU')->where('trash',NULL)->count();
+    $EpicResultcount  = DB::table('epics')->where('buisness_unit_id',$team->id)->where('trash',NULL)->count();
+
     @endphp
 <div class="col-md-3">
     <div class="card business-card">
@@ -32,14 +35,14 @@ $var_objective = "Org-Unit-team";
             <div class="d-flex flex-row justify-content-between">
                 <div class="d-flex flex-row">
                     <div class="mr-2">
-                        <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/e2b28077-02b5-4e0f-8303-37e2672ea874/d5a1hdb-d15d5151-5a7b-4407-9eaa-99aa77863802.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2UyYjI4MDc3LTAyYjUtNGUwZi04MzAzLTM3ZTI2NzJlYTg3NFwvZDVhMWhkYi1kMTVkNTE1MS01YTdiLTQ0MDctOWVhYS05OWFhNzc4NjM4MDIucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.ITLY1myWdL4iAy1wu4qYRLCGPOEbVs4rxrlXt5uR3zg" style="width: 40px; object-fit: cover; border-radius: 10px; height: 40x;">
+                        <img  class="gixie" data-item-id="{{ $team->id }}" style="width: 40px; object-fit: cover; border-radius: 10px; height: 40x;">
                     </div>
                     <div>
                         <h3 class="mb-0">
                             <a href="{{url('dashboard/organization/'.$team->slug.'/portfolio/BU')}}">{{$team->team_title}}</a>
                         </h3>
                         <small>
-                            30 total members
+                            {{$dataCount}} total members
                         </small>
                     </div>
                 </div>
@@ -66,7 +69,7 @@ $var_objective = "Org-Unit-team";
                                         @if($r->image != NULL)
                                         <img src="{{asset('public/assets/images/'.$r->image)}}" alt="Example Image">
                                         @else
-                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTv1Tt9_33HyVMm_ZakYQy-UgsLjE00biEArg&usqp=CAU" alt="Example Image">
+                                        <img src="{{ Avatar::create($r->name)->toBase64() }}" alt="Example Image">
                                         @endif
                                     </div>
 
@@ -108,7 +111,7 @@ $var_objective = "Org-Unit-team";
                         </div>
                         <div class="d-flex flex-column">
                             <div>
-                                <b>40</b>
+                                <b>{{$EpicResultcount}}</b>
                             </div>
                             <div>
                                 <small class="text-secondary">Epics</small>
@@ -123,7 +126,7 @@ $var_objective = "Org-Unit-team";
                         </div>
                         <div class="d-flex flex-column">
                             <div>
-                                <b>40</b>
+                                <b>{{$ObjResultcount}}</b>
                             </div>
                             <div>
                                 <small class="text-secondary">Objectives</small>
@@ -136,6 +139,7 @@ $var_objective = "Org-Unit-team";
         </div>
     </div>
 </div>
+
     <div class="modal fade" id="delete{{$team->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -248,9 +252,9 @@ $var_objective = "Org-Unit-team";
                 </div>
             </div>
         </div>
-
-    @endforeach
-    @endif
+        @endforeach
+        @endif
+    
 </div>
 
 
@@ -373,6 +377,15 @@ function search_member(val)
  $(document).ready(function() {
  setTimeout(function(){$('.alert-success').slideUp();},3000); 
 }); 
+
+var elements = document.querySelectorAll('.gixie');
+
+elements.forEach(function(element) {
+    var itemId = element.getAttribute('data-item-id');
+    var imageData = new GIXI(300).getImage(); 
+
+    element.setAttribute('src', imageData);
+});
 </script>                    
     
 @endsection
