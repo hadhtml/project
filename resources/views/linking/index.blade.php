@@ -4,7 +4,7 @@
 @endsection
 @section('content')
 @php
-    $business_units = DB::table('business_units')->where('user_id',Auth::id())->get();
+    $business_units = DB::table('business_units')->where('user_id',Auth::id())->orderby('id' , 'asc')->get();
 @endphp
 
 <div class="d-flex flex-column flex-root">
@@ -97,7 +97,7 @@
                                             "id": {{ $b->id+1 }},
                                             "name": "slack",
                                             "data": {},
-                                            "class": "buisnessunit-tab{{$i+$objective_count}}",
+                                            "class": "buisnessunit-tab",
                                             "html": '<div class="col-md-4"> <div class="buisnessunit"> <div class="mainheading row mb-3"> <div class="col-md-12"> <h4>{{$b->business_name}}</h4> </div> </div> @foreach(DB::table('objectives')->where('type' , 'unit')->where('unit_id'  ,$b->id)->get() as $o) <div class="row"> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingbuisnessunit.svg") }}"> </div> <div class="col-md-8"> <div class="buisnessunit-card-subtittle"> <p class="buisnessunitheading">{{ $o->objective_name }}</p> </div> </div> <div class="col-md-3 text-right"> <div class="badge bg-success buisnessunitbadge"> {{ $o->obj_prog }}% </div> </div> <div class="col-md-12"> @foreach(DB::table('key_result')->where('obj_id' , $o->id)->get() as $key_result)  <div class="row mt-2"> <div class="col-md-1"> <img src="{{ url("public/assets/svg/linkingkey.svg") }}"> </div> <div class="col-md-7"> <p class="buisnessunitlinkingtext">{{$key_result->key_name}}</p> </div> <div class="col-md-1"> <img src="{{ url("public/assets/svg/link.svg") }}"> </div> <div class="col-md-3 text-right"> <div class="badge buisnessunitbadge">{{$key_result->key_prog}}%</div> </div> </div> @endforeach </div> </div> @endforeach </div> </div>',
                                             "typenode": false,
                                             "inputs": {
@@ -110,7 +110,11 @@
                                             },
                                             "outputs": {},
                                             "pos_x": 250,
-                                            "pos_y": {{$objective_count}},
+                                            @php
+                                                $objectiveheight = $objective_count*80;
+                                                $key_resultheight = $i*50;
+                                            @endphp
+                                            "pos_y": {{$objectiveheight+$key_resultheight+20}},
                                         },
                                         @foreach(DB::table('value_stream')->where('unit_id'  ,$b->id)->get() as $v)
                                         "{{ 100+$v->id }}": {
