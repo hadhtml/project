@@ -58,47 +58,58 @@
         align-items: flex-start;
     }
     .member-profile-team-epics img{
-        width: 12px;
+        width: 15px;
     }
-    .member-profile-team-epics h5{
+    .member-profile-team-epics {
         font-size: 10px;
     }
 </style>
 <div class="row">
     <div class="col-md-12">
         <div class="team-horizontal-card">
-            <div class="tittlesection">
-                <div class="team-title">
-                    Web Design Team
+            <div class="row-1">
+                <div class="tittlesection">
+                    <div class="team-title">
+                        Web Design Team
                 </div>
-                <div class="team-sub-title">
-                    Subtitle goes here lorem ipsum
+                    <div class="team-sub-title">
+                        Subtitle goes here lorem ipsum
+                    </div>
+                </div>
+                <div class="member-profile-team-1">
+                    <div class="member-profile-team-img">
+                        <img src="{{ url('public/assets/svg/teamprofile.png') }}">    
+                    </div>
+                    <div class="member-profile-team-name">
+                        <h4>Jordan Stevenson</h4>
+                        <p>Team Leader</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="member-profile-team-2">
+                        <img src="{{ url('public/assets/svg/teamprofile.png') }}">
+                        <img src="{{ url('public/assets/svg/teamprofile.png') }}">
+                        <p>+4</p>
+                    </div>
                 </div>
             </div>
-            <div class="member-profile-team-1">
-                <div class="member-profile-team-img">
-                    <img src="{{ url('public/assets/svg/teamprofile.png') }}">    
+            <div class="row-2">
+                <div class="col-md-3">
+                    <div class="member-profile-team-epics">
+                        <img src="http://localhost/agileprolific/public/assets/svg/epicheaderheader.svg">
+                        <p><strong>40</strong> Total Epics</p>
+                    </div>
                 </div>
-                <div class="member-profile-team-name">
-                    <h4>Jordan Stevenson</h4>
-                    <p>Team Leader</p>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="member-profile-team-2">
-                    <img src="{{ url('public/assets/svg/teamprofile.png') }}">
-                    <img src="{{ url('public/assets/svg/teamprofile.png') }}">
-                    <p>+4</p>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="member-profile-team">
-                    <img src="http://localhost/agileprolific/public/assets/svg/epicheaderheader.svg">
-                    <p>40 Total Epics</p>
+                <div class="col-md-3">
+                    <div class="member-profile-team-epics">
+                        <img src="http://localhost/agileprolific/public/assets/svg/epicheaderheader.svg">
+                        <p><strong>50</strong> Objectives</p>
+                    </div>
                 </div>
             </div>
 
-
+            
+            
         </div>
     </div>
 </div>
