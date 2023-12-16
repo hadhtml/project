@@ -51,13 +51,11 @@
             
             @if ($var_objective == 'PageU-unit')
             @include('Business-units.unit-sidebar')
-            @include('Business-units.unit-subnav')
             
             @endif
             
             @if ($var_objective == 'PageV-stream')
             @include('member.navbar')
-            @include('member.sub-nav')
             @endif
 
             @if ($var_objective == 'PageT-BU')
@@ -73,7 +71,6 @@
             @if ($var_objective == 'Org')
                  
             @include('components.sidebar-component')
-            @include('components.subnav-component')
 
             @endif
                   
@@ -206,7 +203,11 @@
             
             <!-- end Sidebar -->
             <div class="content d-flex flex-column flex-column-fluid">
-                <!-- begin breadcrums -->
+                <!-- end breadcrums -->
+                <!-- begin page Content -->
+                <div class="container-fluid body-content">
+
+                    <!-- begin breadcrums -->
                 
                 @if ($var_objective == 'Org')
                  
@@ -358,13 +359,10 @@
                 @include('components.chart-breadcrumb')
                 @include('components.modal')    
                 @endif
-                 
-                  
-                 
-                <!-- end breadcrums -->
-                <!-- begin page Content -->
-                <div class="container-fluid body-content">
+
+                <div class="body-inner-content">
                     @yield('content')
+                </div>
                 </div>
                 <!-- end page content -->
             </div>

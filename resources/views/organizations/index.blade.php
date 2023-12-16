@@ -7,7 +7,7 @@ $var_objective = "Org";
 <div class="row">
     <div class="col-md-12">
         <div class="row">
-            <div class="col-md-2">
+            <div class="col-md-3 mb-4">
                 <div class="dashboard-card">
                     <div class="card-svg">
                         <img src="{{ url('public/assets/svg/portfoliosvg.svg') }}">
@@ -20,7 +20,7 @@ $var_objective = "Org";
                     </div>
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3 mb-4">
                 <div class="dashboard-card">
                     <div class="card-svg">
                         <img src="{{ url('public/assets/svg/epicsbacklogsvg.svg') }}">
@@ -33,7 +33,7 @@ $var_objective = "Org";
                     </div>
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3 mb-4">
                 <div class="dashboard-card">
                     <div class="card-svg">
                         <img src="{{ url('public/assets/svg/performancesvg.svg') }}">
@@ -46,7 +46,7 @@ $var_objective = "Org";
                     </div>
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3 mb-4">
                 <div class="dashboard-card">
                     <div class="card-svg">
                         <img src="{{ url('public/assets/svg/teamssvg.svg') }}">
@@ -59,7 +59,7 @@ $var_objective = "Org";
                     </div>
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3 mb-4">
                 <div class="dashboard-card">
                     <div class="card-svg">
                         <img src="{{ url('public/assets/svg/reportingsvg.svg') }}">
@@ -72,7 +72,7 @@ $var_objective = "Org";
                     </div>
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3 mb-4">
                 <div class="dashboard-card">
                     <div class="card-svg">
                         <img src="{{ url('public/assets/svg/impedimentssvg.svg') }}">
@@ -86,7 +86,7 @@ $var_objective = "Org";
                 </div>
             </div>
         </div>
-        <div class="row mt-7">
+        <!-- <div class="row mt-7">
             <div class="col-md-4">
                 <div class="dashboard-card-second">
                     <div class="dashboard-card-tittle-second row">
@@ -596,7 +596,7 @@ $var_objective = "Org";
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
 
