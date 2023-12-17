@@ -5,6 +5,93 @@ $var_objective = "Jira";
 <title>Setting</title>
 @section('content')
 
+
+<div class="row mb-2">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex flex-column">
+                    <div class="d-flex flex-column">
+                        <div>
+                            <img src="https://cdn.icon-icons.com/icons2/2699/PNG/512/atlassian_jira_logo_icon_170511.png" style="width:50px">
+                        </div>
+                        <div class="d-flex flex-column mt-2">
+                            <div>
+                                Jira Settings
+                            </div>
+                            <div class="mt-1">
+                                <small class="text-secondary">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</small>
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            <button class="btn btn-default btn-sm btn-block" data-toggle="modal" data-target="#create-jira">Connect Jira</button>
+                        </div>
+                    </div>
+                    <div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex flex-column">
+                    <div class="d-flex flex-column">
+                        <div>
+                            <img src="https://cdn.icon-icons.com/icons2/2699/PNG/512/atlassian_jira_logo_icon_170511.png" style="width:50px">
+                        </div>
+                        <div class="d-flex flex-column mt-2">
+                            <div>
+                                Financial Year Settings
+                            </div>
+                            <div class="mt-1">
+                                <small class="text-secondary">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</small>
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            <button class="btn btn-default btn-sm btn-block" data-toggle="modal" data-target="#create-financial">Update Settings</button>
+                        </div>
+                    </div>
+                    <div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex flex-column">
+                    <div class="d-flex flex-column">
+                        <div>
+                            <img src="https://cdn.icon-icons.com/icons2/2699/PNG/512/atlassian_jira_logo_icon_170511.png" style="width:50px">
+                        </div>
+                        <div class="d-flex flex-column mt-2">
+                            <div>
+                                Users
+                            </div>
+                            <div class="mt-1">
+                                <small class="text-secondary">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</small>
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            <button class="btn btn-default btn-sm btn-block" data-toggle="modal" data-target="#create-financial">Update Settings</button>
+                        </div>
+                    </div>
+                    <div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-md-12">
         <div class="card">
