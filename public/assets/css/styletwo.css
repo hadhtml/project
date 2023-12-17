@@ -1079,3 +1079,10 @@ div[role="circleprogressbar"]::before {
     background-color: purple;
     color: white;
 }
+.buisnessunit-tab-value-stream-objective{
+    position: relative;
+}
+.buisnessunit-tab-value-stream-objective .inputs{
+    position: absolute;
+    top: 25px;
+}
