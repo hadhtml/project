@@ -332,8 +332,7 @@ $var_objective = 'PageT-'.$type;
                                           $trimmedStringkey = trim($keyedit);
                                           @endphp
                                           <div class="action ml-0">
-                                             <button
-                                                class="btn btn-icon btn-circle bg-white btn-tolbar ml-auto" onclick="editobjectivekey({{$key->id}},'{{$key->key_name}}','{{$key->key_start_date}}','{{$key->key_end_date}}','{{$trimmedStringkey}}','{{$key->weight}}','{{$obj->id}}','{{$key->key_result_type}}','{{$key->key_unit}}','{{$key->init_value}}','{{$key->target_number}}')" data-toggle="modal" data-target="#edit-key-result">
+                                             <button class="btn btn-icon btn-circle bg-white btn-tolbar ml-auto" onclick="editobjectivekey({{$key->id}})">
                                              <img src="{{ asset('public/assets/images/icons/edit.svg') }}"
                                                 alt="Edit"
                                                 style="border-radius: 50%; width: 18px; height: 18px;">

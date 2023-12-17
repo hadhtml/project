@@ -220,7 +220,7 @@
 </div>
 
 
-<div class="modal fade" id="edit-key-result" tabindex="-1" role="dialog" aria-labelledby="edit-key-result" aria-hidden="true">
+<div class="modal fade" id="edit-key-result-backup" tabindex="-1" role="dialog" aria-labelledby="edit-key-result" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="width: 550px !important;">
             <div class="modal-header">
