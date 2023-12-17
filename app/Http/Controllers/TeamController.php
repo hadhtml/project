@@ -484,5 +484,44 @@ $updateData = [
      
     }
 
+    function EpicTeamSearch(Request $request)
+    {
+        $FladId = $request->input("chartId");
+
+        if ($request->type == "unit") {
+            $organization = DB::table("business_units")
+                ->where("slug", $request->slug)
+                ->first();
+            $objective = DB::table("objectives")
+                ->where("org_id", $request->org_id)
+                ->where("unit_id", $request->unit_id)
+                ->where("trash", null)
+                ->where("type", "unit")
+                ->get();
+            return view(
+                "objective.epicTeamsearch",
+                compact("organization", "objective", "FladId")
+            );
+        }
+
+        if ($request->type == "stream") {
+            $organization = DB::table("value_stream")
+                ->where("slug", $request->slug)
+                ->first();
+            $objective = DB::table("objectives")
+                ->where("org_id", $request->org_id)
+                ->where("unit_id", $request->unit_id)
+                ->where("trash", null)
+                ->where("type", "stream")
+                ->get();
+            return view(
+                "objective.epicTeamsearch",
+                compact("organization", "objective", "FladId")
+            );
+        }
+
+      
+    }
+
     
 }

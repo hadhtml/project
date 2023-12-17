@@ -1413,7 +1413,92 @@ $updateData = [
 
     }
     
-  
+  public function clonEpic($id,$type)
+  {
+          
+   if($type == 'unit')
+   {    
+   $log = DB::table('backlog_unit')->where('id',$id)->first();
+   $EpicId = DB::table('epic_clone')->where('backlog_id',$id)->first();
+   if($EpicId)
+   {
+    DB::table('epic_clone')
+    ->where('backlog_id',$id)
+    ->update([
+        'epic_status' => $log->epic_status,
+        'epic_title' => $log->epic_title,
+        'epic_detail' => $log->epic_detail,
+        'epic_start_date' => $log->epic_start_date,
+        'epic_end_date' => $log->epic_end_date,
+        'backlog_id' => $log->id,
+         'type' => $type,
+         'stream_id' => $log->unit_id,
+    
+    
+        ]);
+   }else
+   {
+    DB::table('epic_clone')->insertGetId([
+ 
+        'epic_status' => $log->epic_status,
+        'epic_title' => $log->epic_title,
+        'epic_detail' => $log->epic_detail,
+        'epic_start_date' => $log->epic_start_date,
+        'epic_end_date' => $log->epic_end_date,
+        'backlog_id' => $log->id,
+         'type' => $type,
+         'stream_id' => $log->unit_id,
+    
+    
+        ]);
+   }
+ 
+   }
+
+   if($type == 'stream')
+   {    
+   $log = DB::table('backlog')->where('id',$id)->first();
+   $EpicId = DB::table('epic_clone')->where('backlog_id',$id)->first();
+   if($EpicId)
+   {
+    DB::table('epic_clone')
+    ->where('backlog_id',$id)
+    ->update([
+        'epic_status' => $log->epic_status,
+        'epic_title' => $log->epic_title,
+        'epic_detail' => $log->epic_detail,
+        'epic_start_date' => $log->epic_start_date,
+        'epic_end_date' => $log->epic_end_date,
+        'backlog_id' => $log->id,
+         'type' => $type,
+         'stream_id' => $log->unit_id,
+    
+    
+        ]);
+   }else
+   {
+    DB::table('epic_clone')->insertGetId([
+ 
+        'epic_status' => $log->epic_status,
+        'epic_title' => $log->epic_title,
+        'epic_detail' => $log->epic_detail,
+        'epic_start_date' => $log->epic_start_date,
+        'epic_end_date' => $log->epic_end_date,
+        'backlog_id' => $log->id,
+         'type' => $type,
+         'stream_id' => $log->unit_id,
+    
+    
+        ]);
+   }
+   }
+
+
+    
+
+         return redirect()->back()->with('message', 'Epic Clone Successfully');
+
+  }
 
 
 }

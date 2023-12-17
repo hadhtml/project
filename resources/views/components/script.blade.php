@@ -309,9 +309,9 @@ drake.on("drop", function (el, target, source, sibling) {
   
   $(function() {
 
- $('#chkveg').val('');
-  $('#chkveg').multiselect({
-    includeSelectAllOption:false,
+ $('.chkveg').val('');
+  $('.chkveg').multiselect({
+    includeSelectAllOption:true,
   });
 
 
