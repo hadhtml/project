@@ -1,39 +1,166 @@
-            @php
-            $Stream = DB::table('business_units')->where('user_id',Auth::id())->get();
-            @endphp  
-            <div class="flex-shrink-0 p-3 bg-white sub-nav" id="panel-unit" style="width: 280px; margin-top: 5%;">
-                <button id="closeBtn" class="close-button">
-                    <img src="{{asset('public/assets/images/icons/collaps.svg')}}">
-                </button>
-                <h6 class="title">Menu</h6>
-                <ul class="list-unstyled ps-0">
-                    <li class="mb-1">
-                        <a href="{{url('dashboard/organization/Business-Units')}}" style="text-decoration: none;" class="" >
-                        <button class="btn btn-toggle align-items-center rounded" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
-                         All Business Units  
-                        </button>
-                        </a>
-                        <div class="collapse show" id="home-collapse" style="">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small px-3 py-2 nav-root-item">
-                                @if(count($Stream) > 0)
-                                @foreach($Stream as $value)
-                                <li class="py-2"><a href="{{url('dashboard/organization/'.$value->slug.'/portfolio/'.$value->type)}}" class="link-dark rounded">{{$value->business_name}}</a></li>
-                                @endforeach
-                                @endif
-                            </ul>
+<div class="flex-shrink-0 p-3 bg-white sub-nav open" id="panel">
+        <!-- <button id="closeBtn" class="close-button">
+            <img src="https://dev.agileprolific.com/public/assets/images/icons/collaps.svg">
+        </button> -->
+        <h6 class="title">Business Units</h6>
+        <ul class="list-unstyled ps-0 expanded-navbar mb-0">
+            <li class="mb-1">
+                <button class="btn btn-toggle align-items-center rounded" data-toggle="collapse" data-target="#home-collapse" aria-expanded="true">
+                    <div class="d-flex flex-row align-items-center">
+                        <div class="mr-2">
+                            <span style="font-size:22px" class="material-symbols-outlined">domain</span>
                         </div>
-                    </li>
-                    <!--<li class="mb-1">-->
-                    <!--    <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">-->
-                    <!--        Departments-->
-                    <!--    </button>-->
-                    <!--    <div class="collapse" id="dashboard-collapse">-->
-                    <!--        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small px-3 py-2">-->
-                    <!--            <li class="py-2"><a href="#" class="link-dark rounded">Sales & Finance</a></li>-->
-                    <!--            <li class="py-2"><a href="#" class="link-dark rounded">Human Resources</a></li>-->
-                    <!--            <li class="py-2"><a href="#" class="link-dark rounded">IT Departments</a></li>-->
-                    <!--        </ul>-->
-                    <!--    </div>-->
-                    <!--</li>-->
-                </ul>
-            </div>
+                        <div>
+                            Business Units
+                        </div>
+                    </div>
+                </button>
+
+                @php
+                $Stream = DB::table('business_units')->where('user_id',Auth::id())->get();
+                @endphp  
+
+                <div class="collapse" id="home-collapse" style="">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small px-1 py-2 nav-root-item">
+                        @if(count($Stream) > 0)
+                        @foreach($Stream as $value)
+                            <li><a href="{{url('dashboard/organization/'.$value->slug.'/portfolio/'.$value->type)}}" class="link-dark rounded">{{$value->business_name}}</a></li>
+                        @endforeach
+                        @endif
+                    </ul>
+                </div>
+            </li>
+        </ul>
+
+        <ul class="list-unstyled ps-0 expanded-navbar-options">
+            @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/Value-Streams'))
+            <li class="mb-1">
+                <a href="{{url('dashboard/organization/'.$organization->slug.'/Value-Streams/dashboard')}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/Value-Streams/dashboard')) class="d-flex flex-row align-items-center nav-active" @else   @endif class="d-flex flex-row align-items-center">
+                    <div class="mr-2">
+                        <span style="font-size:22px" class="material-symbols-outlined">auto_stories</span>
+                    </div>
+                    <div class="mr-2">
+                        Dashboard
+                    </div>
+                </a>
+            </li>
+            @endif
+
+            @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/BU-TEAMS'))
+            <li class="mb-1">
+                <a href="{{url('dashboard/organization/'.$organization->slug.'/Unit-Team/dashboard')}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/Value-Streams/dashboard')) class="d-flex flex-row align-items-center nav-active" @else   @endif class="d-flex flex-row align-items-center">
+                    <div class="mr-2">
+                        <span style="font-size:22px" class="material-symbols-outlined">auto_stories</span>
+                    </div>
+                    <div class="mr-2">
+                        Dashboard
+                    </div>
+                </a>
+            </li>
+            @endif
+          
+            <li class="mb-1">
+                <a href="{{url('dashboard/organization/'.$organization->slug.'/Value-Streams')}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/Value-Streams')) class="d-flex flex-row align-items-center nav-active" @else   @endif  class="d-flex flex-row align-items-center">
+                    <div class="mr-2">
+                        <span style="font-size:22px" class="material-symbols-outlined">layers</span>
+                    </div>
+                    <div class="mr-2">
+                        Value Streams
+                    </div>
+                </a>
+            </li>
+            <li class="mb-1">
+                <a href="{{url('dashboard/linking/'.$organization->slug.'/'.$organization->type)}}" @if (url()->current() == url('dashboard/linking/'.$organization->slug.'/'.$organization->type)) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
+                    <div class="mr-2">
+                         <span style="font-size:22px" class="material-symbols-outlined">map</span>
+                    </div>
+                    <div class="mr-2">
+                        OKR Mapper
+                    </div>
+                </a>
+            </li>
+            <!-- Portfolio -->
+
+            <li class="mb-1">
+                <a href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
+                    <div class="mr-2">
+                         <span style="font-size:22px" class="material-symbols-outlined">folder_supervised</span>
+                    </div>
+                    <div class="mr-2">
+                        OKR Planner
+                    </div>
+                </a>
+            </li>
+
+            <li class="mb-1">
+                <a href="{{url('dashboard/organization/'.$organization->slug.'/BU-Backlog')}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/BU-Backlog')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
+                    <div class="mr-2">
+                         <span style="font-size:22px" class="material-symbols-outlined">key_visualizer</span>
+                    </div>
+                    <div class="mr-2">
+                        Epic Backlog
+                    </div>
+                </a>
+            </li>
+            <li class="mb-1">
+                <a href="{{url('dashboard/organization/'.$organization->slug.'/performance-dashboard/'.$organization->type)}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/performance-dashboard/'.$organization->type)) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
+                    <div class="mr-2">
+                        <span style="font-size:22px" class="material-symbols-outlined">team_dashboard</span>
+                    </div>
+                    <div class="mr-2">
+                        Performance Dash.
+                    </div>
+                </a>
+            </li>
+            <li class="mb-1">
+                <a href="{{url('dashboard/organization/'.$organization->slug.'/BU-Report/'.$organization->type)}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/BU-Report')) class="d-flex flex-row align-items-center nav-active" @else   @endif  class="d-flex flex-row align-items-center" >
+                    <div class="mr-2">
+                         <span style="font-size:22px" class="material-symbols-outlined">Summarize</span>
+                    </div>
+                    <div class="mr-2">
+                        Reports
+                    </div>
+                </a>
+            </li>
+            <li class="mb-1">
+                <a href="{{url('dashboard/flags/'.$organization->slug.'/impediments/unit')}}" @if (url()->current() == url('dashboard/flags/'.$organization->slug.'/impediments/unit')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
+                    <div class="mr-2">
+                        <span style="font-size:22px" class="material-symbols-outlined">warning_off</span>
+                    </div>
+                    <div class="mr-2">
+                        Impediments
+                    </div>
+                </a>
+            </li>
+            <li class="mb-1">
+                <a href="{{url('dashboard/organization/'.$organization->slug.'/BU-TEAMS')}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/BU-TEAMS')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
+                    <div class="mr-2">
+                         <span style="font-size:22px" class="material-symbols-outlined">groups</span>
+                    </div>
+                    <div class="mr-2">
+                        Teams
+                    </div>
+                </a>
+            </li>
+            <!-- <li class="mb-1">
+                <a href="#" class="d-flex flex-row align-items-center">
+                    <div class="mr-2">
+                         <span style="font-size:22px" class="material-symbols-outlined">sprint</span>
+                    </div>
+                    <div class="mr-2">
+                        Leadership Actions
+                    </div>
+                </a>
+            </li>
+            <li class="mb-1">
+                <a href="#" class="d-flex flex-row align-items-center">
+                    <div class="mr-2">
+                        <span style="font-size:22px" class="material-symbols-outlined">dangerous</span>
+                    </div>
+                    <div class="mr-2">
+                        Blockers
+                    </div>
+                </a>
+            </li> -->
+        </ul>
+    </div>
