@@ -54,6 +54,5 @@
             </div>
         </div>
     </div>
-       @include('linking.includes.scripts')
 </body>
 </html>
