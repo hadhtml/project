@@ -192,7 +192,7 @@ $keyweightcounte = DB::table('key_result')->where('obj_id',$obj->id)->sum('weigh
                                         @endphp
                                     <div class="action ml-0">
                                         <button
-                                            class="btn btn-icon btn-circle bg-white btn-tolbar ml-auto" onclick="editobjectivekey({{$key->id}}" data-toggle="modal" data-target="#edit-key-result">
+                                            class="btn btn-icon btn-circle bg-white btn-tolbar ml-auto" onclick="editobjectivekey({{$key->id}})">
                                             <img src="{{ asset('public/assets/images/icons/edit.svg') }}"
                                                 alt="Edit"
                                                 style="border-radius: 50%; width: 18px; height: 18px;">

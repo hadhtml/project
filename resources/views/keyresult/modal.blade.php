@@ -10,33 +10,33 @@
                 <input type="hidden" id="modaltab" value="general">
                 <ul>
                     <li id="general" onclick="showtab({{$data->id}} , 'general')" class="tabsclass active">
-                        <img src="{{ url('public/assets/svg/edit-2.svg') }}"> General
+                        <span class="material-symbols-outlined"> edit_square </span> General
                     </li>
                     <li id="targets" onclick="showtab({{$data->id}} , 'targets')" class="tabsclass">
-                        <img src="{{ url('public/assets/svg/task.svg') }}"> Targets
+                        <span class="material-symbols-outlined"> target </span> Targets
                     </li>
                     <li id="values" onclick="showtab({{$data->id}} , 'values')" class="tabsclass">
-                        <img src="{{ url('public/assets/svg/comment.svg') }}"> Values
+                        <span class="material-symbols-outlined"> database </span> Values
                     </li>
-                    <li id="weight" onclick="showtab({{$data->id}} , 'weight')" class="tabsclass">
-                        <img src="{{ url('public/assets/svg/activites.svg') }}"> Weight
+                    <li id="weighttab" onclick="showtab({{$data->id}} , 'weighttab')" class="tabsclass">
+                        <span class="material-symbols-outlined"> weight </span> Weight
                     </li>
                     <li id="charts" onclick="showtab({{$data->id}} , 'charts')" class="tabsclass">
-                        <img src="{{ url('public/assets/svg/activites.svg') }}"> Charts
+                        <span class="material-symbols-outlined">monitoring</span> Charts
                     </li>
                     
                     <li id="teams" onclick="showtab({{$data->id}} , 'teams')" class="tabsclass">
-                        <img src="{{ url('public/assets/svg/profile-2user.svg') }}"> Teams
+                        <span class="material-symbols-outlined"> group </span> Teams
                     </li>
                     <li id="okrmapper" onclick="showtab({{$data->id}} , 'okrmapper')" class="tabsclass">
-                        <img src="{{ url('public/assets/svg/attachment.svg') }}"> OKR Mapper</li>
+                        <span class="material-symbols-outlined"> link </span> OKR Mapper</li>
                 </ul>
                 <h4>Action</h4>
                 <ul class="positionrelative">
                     <!-- <li><img src="{{ url('public/assets/svg/archive-action.svg') }}"> Archive</li> -->
-                    <li><img src="{{ url('public/assets/svg/share-action.svg') }}"> Share</li>
+                    <li><span class="material-symbols-outlined">share</span> Share</li>
                     <!-- <li><img src="{{ url('public/assets/svg/arrow-right-action.svg') }}"> Move</li> -->
-                    <li><img src="{{ url('public/assets/svg/trash-action.svg') }}"> Delete</li>
+                    <li><span class="material-symbols-outlined">delete</span> Delete</li>
                 </ul>
             </div>
         </div>
@@ -167,7 +167,7 @@
         $('.secondportion').html('<i class="fa fa-spin fa-spinner"></i>');
         $.ajax({
             type: "POST",
-            url: "{{ url('dashboard/epics/showtab') }}",
+            url: "{{ url('dashboard/keyresult/showtab') }}",
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },

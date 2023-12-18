@@ -264,7 +264,10 @@ Route::name('keyresult.')->namespace('App\Http\Controllers')->prefix('dashboard/
     Route::POST('updategeneral', 'KeyresultController@updategeneral');
     Route::POST('showheader', 'KeyresultController@showheader');
     Route::POST('showtab', 'KeyresultController@showtab');
+    Route::POST('updatetarget', 'KeyresultController@updatetarget');
 
+
+    
 });
 
 

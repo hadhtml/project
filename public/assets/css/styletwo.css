@@ -1086,3 +1086,36 @@ div[role="circleprogressbar"]::before {
     position: absolute;
     top: 25px;
 }
+.define-quarterly-targets{
+    font-size: 16px;
+}
+.deletequarter{
+    position: absolute;
+    top: 17px;
+    right: 0;
+    font-size: 13px !important;
+    background-color: white;
+    border-radius: 100px;
+    padding: 1px;
+    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+}
+.target-error{
+    color: red;
+    display: none;
+    font-size: 12px;
+}
+.value-table thead th {
+    border-top: none !important;
+    border-bottom: none !important;
+    font-size: 12px;
+}
+.value-table thead {
+    background-color: #f3f3f3;
+}
+.valueiconeditdelete{
+    background-color: #f3f3f3;
+    padding: 5px;
+    border-radius: 100px;
+    margin-right: 10px;
+}

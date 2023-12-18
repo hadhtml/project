@@ -13,6 +13,7 @@ use App\Models\flags;
 use App\Models\flag_comments;
 use App\Models\escalate_cards;
 use App\Models\key_result;
+use App\Models\key_chart;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use DB;
@@ -46,53 +47,49 @@ class KeyresultController extends Controller
         if($request->tab == 'general')
         {
             $data = key_result::find($request->id);
-            $html = view('keyresult.modalheader', compact('data'))->render();
+
+            $html = view('keyresult.tabs.general', compact('data'))->render();
             return $html;
         }
-        if($request->tab == 'childitems')
+        if($request->tab == 'targets')
         {
-            $epic = Epic::find($request->id);
-            $epicstory = DB::table('epics_stroy')->where('epic_id',$epic->id)->orderby('id' , 'desc')->get();
-            $html = view('epics.tabs.childitems', compact('epic','epicstory'))->render();
+            $data = key_result::find($request->id);
+            $html = view('keyresult.tabs.target', compact('data'))->render();
             return $html;
         }
-        if($request->tab == 'comments')
+        if($request->tab == 'values')
         {
-            $comments = flag_comments::where('flag_id' , $request->id)->wherenull('comment_id')->orderby('id' , 'desc')->get();
-            $data = Epic::find($request->id);
-            $html = view('epics.tabs.comments', compact('comments','data'))->render();
+            $data = key_result::find($request->id);
+            $html = view('keyresult.tabs.values', compact('data'))->render();
             return $html;
         }
-        if($request->tab == 'activites')
+        if($request->tab == 'weighttab')
         {
-            $activity = activities::where('value_id' , $request->id)->where('type' , 'epics')->orderby('id' , 'desc')->get();
-            $data = Epic::find($request->id);
-            $html = view('epics.tabs.activities', compact('activity','data'))->render();
+            $data = key_result::find($request->id);
+            $html = view('keyresult.tabs.weight', compact('data'))->render();
             return $html;
         }
-        if($request->tab == 'attachment')
+        if($request->tab == 'charts')
         {
-            $attachments = attachments::where('value_id' , $request->id)->where('type' , 'epics')->orderby('id' , 'desc')->get();
-            $data = Epic::find($request->id);
-            $html = view('epics.tabs.attachments', compact('attachments','data'))->render();
+            $data = key_result::find($request->id);
+            $html = view('keyresult.tabs.charts', compact('data'))->render();
             return $html;
         }
         if($request->tab == 'teams')
         {
-            $html = view('epics.tabs.teams')->render();
+            $data = key_result::find($request->id);
+            $html = view('keyresult.tabs.teams', compact('data'))->render();
             return $html;
         }
-        if($request->tab == 'flags')
+        if($request->tab == 'okrmapper')
         {
-            $data = Epic::find($request->id);
-            $flags = flags::where('epic_id' , $data->id)->orderby('flag_order' , 'asc')->get();
-            $html = view('epics.tabs.flags', compact('flags','data'))->render();
+            $data = key_result::find($request->id);
+            $html = view('keyresult.tabs.okrmapper', compact('data'))->render();
             return $html;
         }
-        if($request->tab == 'checkins')
-        {
-            $html = view('epics.tabs.checkins')->render();
-            return $html;
-        }
+    }
+    public function updatetarget(Request $request)
+    {
+        
     }
 }

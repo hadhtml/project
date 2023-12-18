@@ -32,7 +32,7 @@
                 id: epic_id,
             },
             success: function(res) {
-                $('#newmodalcontent').html(res);
+                $('#epic-modal-content').html(res);
                 $('#edit-epic-modal-new').modal('show');
                 // showtab(id , 'general');
             }
@@ -501,7 +501,6 @@
 
 
         if (key_result_type == 'Should Increase to') {
-
             if (target_number <= init_value) {
                 $('#target-error').html('The target value should be greater than the initial value');
                 return false;

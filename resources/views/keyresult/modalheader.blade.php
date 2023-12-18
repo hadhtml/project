@@ -1,7 +1,7 @@
 <div class="row positionrelative">
     <div class="col-md-12">
         <h5 class="modal-title newmodaltittle marginleftthirty" id="create-epic">
-            <img src="{{ url('public/assets/svg/epicheaderheader.svg') }}">{{ $data->key_name }}
+            <img src="{{ url('public/assets/svg/keyresult.svg') }}">{{ $data->key_name }}
         </h5>
     </div>
     <div class="col-md-12 marginleftthirty newmodalsubtittle">
@@ -32,6 +32,20 @@
                 @endif          
                 <span class="sr-only">Toggle Dropdown</span>
             </button>
+            <div class="dropdown-menu">
+                @if($data->key_status == 'To Do')
+                    <a class="dropdown-item" onclick="changeflagstatus('In progress',{{$data->id}})" href="javascript:void(0)">In Progress</a>
+                    <a class="dropdown-item" onclick="changeflagstatus('Done',{{$data->id}})" href="javascript:void(0)">Done</a>
+                @endif
+                @if($data->key_status == 'In progress')
+                    <a class="dropdown-item" onclick="changeflagstatus('To Do',{{$data->id}})" href="javascript:void(0)">To Do</a>
+                    <a class="dropdown-item" onclick="changeflagstatus('Done',{{$data->id}})" href="javascript:void(0)">Done</a>
+                @endif
+                @if($data->key_status == 'Done')
+                    <a class="dropdown-item" onclick="changeflagstatus('To Do',{{$data->id}})" href="javascript:void(0)">To Do</a>
+                    <a class="dropdown-item" onclick="changeflagstatus('In progress',{{$data->id}})" href="javascript:void(0)">In Progress</a>
+                @endif
+            </div>
         </div>
         <div class="epic-header-buttons raise-flag-button">
             <a onclick="rasiseflag({{$data->id}})" href="javascript:void(0)"  id="showboardbutton">
