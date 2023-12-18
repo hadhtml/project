@@ -523,5 +523,14 @@ $updateData = [
       
     }
 
+    public function BUTeamDashboard($slug)
+    {
+    $organization = DB::table('business_units')->where('slug',$slug)->first();
+    $BUTeam = DB::table('unit_team')->where('org_id',$organization->id)->get();   
+   
+    return view('Business-units.team-dashboard',compact('organization','BUTeam'));  
+        
+    }
+
     
 }

@@ -1500,5 +1500,19 @@ $updateData = [
 
   }
 
+    public function BUDashboard()
+    {
+    
+    return view('Business-units.dashboard');  
+        
+    }
+    public function VUDashboard($slug)
+    {
+    $organization = DB::table('business_units')->where('slug',$slug)->first();
+    $value_stream = DB::table('value_stream')->where('unit_id',$organization->id)->get();   
+   
+    return view('member.dashboard',compact('organization','value_stream'));  
+        
+    }
 
 }
