@@ -13,6 +13,7 @@
                 id: id,
             },
             success: function(res) {
+                $('#newmodalcontent').html(res);
                 $('#edit-key-result-new').modal('show');
             }
         });

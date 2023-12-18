@@ -32,42 +32,8 @@
                 @endif          
                 <span class="sr-only">Toggle Dropdown</span>
             </button>
-            <div class="dropdown-menu">
-                @if($data->epic_status == 'To Do')
-                    <a class="dropdown-item" onclick="changeepicstatus('In progress',{{$data->id}})" href="javascript:void(0)">In Progress</a>
-                    <a class="dropdown-item" onclick="changeepicstatus('Done',{{$data->id}})" href="javascript:void(0)">Done</a>
-                @endif
-                @if($data->epic_status == 'In progress')
-                    <a class="dropdown-item" onclick="changeepicstatus('To Do',{{$data->id}})" href="javascript:void(0)">To Do</a>
-                    <a class="dropdown-item" onclick="changeepicstatus('Done',{{$data->id}})" href="javascript:void(0)">Done</a>
-                @endif
-                @if($data->epic_status == 'Done')
-                    <a class="dropdown-item" onclick="changeepicstatus('To Do',{{$data->id}})" href="javascript:void(0)">To Do</a>
-                    <a class="dropdown-item" onclick="changeepicstatus('In progress',{{$data->id}})" href="javascript:void(0)">In Progress</a>
-                @endif
-            </div>
         </div>
-        @if($data->epic_start_date)
-        <a href="javascript:vodi(0)" class="epic-header-buttons" id="showboardbutton">
-            <img src="{{url('public/assets/svg/note-text.svg')}}" width="20"> <span>{{ Cmf::date_format_new($data->epic_start_date) }} - {{ Cmf::date_format_new($data->epic_end_date) }}</span>
-        </a>
-        @endif
-        @if($data->team_id)
-        <div class="members-list">
-            <div id="members">
-                <a href="javascript:vodi(0)" class="epic-header-buttons" id="showboardbutton">
-                    <img src="{{url('public/assets/svg/profile-2user.svg')}}" width="20"> 1
-                </a>
-            </div>
-        </div>
-        @else
-        <a href="javascript:vodi(0)" class="epic-header-buttons" id="showboardbutton">
-            <img src="{{url('public/assets/svg/btnteamsvg.svg')}}" width="20"> Add Team
-        </a>
-        @endif
-
         <div class="epic-header-buttons raise-flag-button">
-
             <a onclick="rasiseflag({{$data->id}})" href="javascript:void(0)"  id="showboardbutton">
                 <img src="{{url('public/assets/svg/btnflagsvg.svg')}}" width="20"> Raise Flag @if(DB::table('flags')->where('epic_id'  ,$data->id)->count() > 0) ({{ DB::table('flags')->where('epic_id'  ,$data->id)->count() }}) @endif
             </a>
@@ -142,7 +108,7 @@
        
 
         <div class="moverightside">
-            <h1 class="epic-percentage">80 % Completed</h1>
+            <h1 class="epic-percentage">{{ $data->key_prog }} % Completed</h1>
             <div class="dashboard-card-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <img  src="{{url('public/assets/svg/more.svg')}}" width="20">
                 <div class="dropdown-menu">

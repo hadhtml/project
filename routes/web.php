@@ -261,7 +261,10 @@ Route::name('epics.')->namespace('App\Http\Controllers')->prefix('dashboard/epic
 
 Route::name('keyresult.')->namespace('App\Http\Controllers')->prefix('dashboard/keyresult')->group(function () {
     Route::POST('getkeyresult', 'KeyresultController@getkeyresult');
-    
+    Route::POST('updategeneral', 'KeyresultController@updategeneral');
+    Route::POST('showheader', 'KeyresultController@showheader');
+    Route::POST('showtab', 'KeyresultController@showtab');
+
 });
 
 

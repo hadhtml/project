@@ -1,5 +1,5 @@
 <div class="modal-header modalheaderforapend">
-    @include('epics.modalheader')
+    @include('keyresult.modalheader')
 </div>
 <div class="modal-body" id="showformforedit">
     <div class="row"><div class="col-md-12"><div class="border-top"></div></div></div>
@@ -10,28 +10,26 @@
                 <input type="hidden" id="modaltab" value="general">
                 <ul>
                     <li id="general" onclick="showtab({{$data->id}} , 'general')" class="tabsclass active">
-                        <img src="{{ url('public/assets/svg/edit-2.svg') }}"> Basic Details
+                        <img src="{{ url('public/assets/svg/edit-2.svg') }}"> General
                     </li>
-                    <li id="childitems" onclick="showtab({{$data->id}} , 'childitems')" class="tabsclass">
-                        <img src="{{ url('public/assets/svg/task.svg') }}"> Child Items
+                    <li id="targets" onclick="showtab({{$data->id}} , 'targets')" class="tabsclass">
+                        <img src="{{ url('public/assets/svg/task.svg') }}"> Targets
                     </li>
-                    <li id="comments" onclick="showtab({{$data->id}} , 'comments')" class="tabsclass">
-                        <img src="{{ url('public/assets/svg/comment.svg') }}"> Comments
+                    <li id="values" onclick="showtab({{$data->id}} , 'values')" class="tabsclass">
+                        <img src="{{ url('public/assets/svg/comment.svg') }}"> Values
                     </li>
-                    <li id="activites" onclick="showtab({{$data->id}} , 'activites')" class="tabsclass">
-                        <img src="{{ url('public/assets/svg/activites.svg') }}"> Activities
+                    <li id="weight" onclick="showtab({{$data->id}} , 'weight')" class="tabsclass">
+                        <img src="{{ url('public/assets/svg/activites.svg') }}"> Weight
                     </li>
-                    <li id="checkins" onclick="showtab({{$data->id}} , 'checkins')" class="tabsclass">
-                        <img src="{{ url('public/assets/svg/activites.svg') }}"> Check-Ins
+                    <li id="charts" onclick="showtab({{$data->id}} , 'charts')" class="tabsclass">
+                        <img src="{{ url('public/assets/svg/activites.svg') }}"> Charts
                     </li>
-                    <li id="attachment" onclick="showtab({{$data->id}} , 'attachment')" class="tabsclass">
-                        <img src="{{ url('public/assets/svg/attachment.svg') }}"> Attachments</li>
-                    <li id="flags" onclick="showtab({{$data->id}} , 'flags')" class="tabsclass">
-                        <img src="{{ url('public/assets/svg/btnflagsvg.svg') }}"> Flags
-                    </li>
+                    
                     <li id="teams" onclick="showtab({{$data->id}} , 'teams')" class="tabsclass">
                         <img src="{{ url('public/assets/svg/profile-2user.svg') }}"> Teams
                     </li>
+                    <li id="okrmapper" onclick="showtab({{$data->id}} , 'okrmapper')" class="tabsclass">
+                        <img src="{{ url('public/assets/svg/attachment.svg') }}"> OKR Mapper</li>
                 </ul>
                 <h4>Action</h4>
                 <ul class="positionrelative">
@@ -47,32 +45,32 @@
                 <div class="col-md-12 col-lg-12 col-xl-12">
                     <div class="d-flex flex-row align-items-center justify-content-between block-header">
                         <div>
-                            <h4><img src="{{ url('public/assets/svg/editsvg.svg') }}"> Basic Details</h4>
+                            <h4><img src="{{ url('public/assets/svg/editsvg.svg') }}"> General</h4>
                         </div>
                     </div>
                 </div>
             </div>
-            <form id="updategeneral" class="needs-validation" action="{{ url('dashboard/epics/updategeneral') }}" method="POST" novalidate>
+            <form id="updategeneral" class="needs-validation" action="{{ url('dashboard/keyresult/updategeneral') }}" method="POST" novalidate>
                 @csrf
-                <input type="hidden" value="{{ $data->id }}" name="epic_id">
+                <input type="hidden" id="key_result_id" value="{{ $data->id }}" name="id">
                 <div class="row">
                     <div class="col-md-12 col-lg-12 col-xl-12">
                         <div class="form-group mb-0">
-                            <label for="epic_name">Epic Title</label>
-                            <input type="text" required='true' value="{{ $data->epic_name }}" class="form-control" name="epic_name" id="epic_name">
+                            <label for="key_name">Key Result title</label>
+                            <input type="text" required='true' value="{{ $data->key_name }}" class="form-control" name="key_name" id="key_name">
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group mb-0">
-                            <label for="epic_start_date">Start Date</label>
-                            <input id="epic_start_date" type="date" class="form-control" value="{{ date('Y-m-d',strtotime($data->epic_start_date)) }}" name="epic_start_date"  required>
+                            <label for="key_start_date">Start Date</label>
+                            <input id="key_start_date" type="date" class="form-control" value="{{ date('Y-m-d',strtotime($data->key_start_date)) }}" name="key_start_date"  required>
                             
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group mb-0">
-                            <label for="epic_end_date">End Date</label>
-                            <input type="date" class="form-control" value="{{ date('Y-m-d',strtotime($data->epic_end_date)) }}" name="epic_end_date" name="edit_epic_end_date" required>
+                            <label for="key_end_date">End Date</label>
+                            <input id="key_end_date" type="date" class="form-control" value="{{ date('Y-m-d',strtotime($data->key_end_date)) }}" name="key_end_date" required>
                             
                         </div>
                     </div>
@@ -80,7 +78,7 @@
                         <div class="form-group mb-0">
                             <label for="editor{{ $data->id }}">Description</label>
                             <div class="textareaformcontrol">
-                                <textarea name="epic_detail" id="editor{{ $data->id }}">{{ $data->epic_detail }}</textarea> 
+                                <textarea name="key_detail" id="editor{{ $data->id }}">{{ $data->key_detail }}</textarea> 
                             </div>
                         </div>
                     </div>
@@ -126,7 +124,7 @@
     function showheader(id) {
         $.ajax({
             type: "POST",
-            url: "{{ url('dashboard/epics/showheader') }}",
+            url: "{{ url('dashboard/keyresult/showheader') }}",
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
@@ -212,9 +210,8 @@
             contentType: false,
             processData: false,
             success: function(data){
-                showepicinboard('{{ $data->id }}');
-                editepic('{{ $data->id }}');
                 $('#updatebutton').html('Save Changes');
+                showheader($('#key_result_id').val());
             }
         });
     }));
