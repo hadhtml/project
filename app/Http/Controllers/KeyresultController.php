@@ -60,7 +60,11 @@ class KeyresultController extends Controller
         if($request->tab == 'values')
         {
             $data = key_result::find($request->id);
-            $html = view('keyresult.tabs.values', compact('data'))->render();
+            $report = DB::table('sprint')->where('user_id',Auth::id())->where('status',NULL)->where('value_unit_id',$data->unit_id)->first();
+            $KEYChart =  DB::table('key_chart')->where('key_id',$request->id)->where('IndexCount',$report->IndexCount)->first();
+            $key = key_result::find($request->id);
+            $keyQAll = DB::table('key_chart')->where('key_id',$request->id)->get();    
+            $html = view('keyresult.tabs.values',compact('data','KEYChart','key','report','keyQAll'));
             return $html;
         }
         if($request->tab == 'weighttab')
