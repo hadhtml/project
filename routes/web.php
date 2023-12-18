@@ -259,6 +259,12 @@ Route::name('epics.')->namespace('App\Http\Controllers')->prefix('dashboard/epic
     Route::POST('flagupdate', 'EpicController@flagupdate');    
 });
 
+Route::name('keyresult.')->namespace('App\Http\Controllers')->prefix('dashboard/keyresult')->group(function () {
+    Route::POST('getkeyresult', 'KeyresultController@getkeyresult');
+    
+});
+
+
 Route::name('linking.')->namespace('App\Http\Controllers')->prefix('dashboard/linking')->group(function () {
     Route::get('{id}/{type}', 'LinkingController@index');
     

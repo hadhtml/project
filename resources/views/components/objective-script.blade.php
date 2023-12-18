@@ -2,6 +2,24 @@
 <script>
     window.onload = window.localStorage.clear();
     // function Updated by Usama Start
+     function editobjectivekey(id) {
+        $.ajax({
+            type: "POST",
+            url: "{{ url('dashboard/keyresult/getkeyresult') }}",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                id: id,
+            },
+            success: function(res) {
+                $('#edit-key-result-new').modal('show');
+            }
+        });
+        // getkeyweight(key_id);
+        // getkeychart();
+        // getkeylink(key_id);
+    }
     function editepic(epic_id) {
         $.ajax({
             type: "POST",
@@ -600,28 +618,7 @@
     }
 
 
-    function editobjectivekey(key_id, key_name, key_start_date, key_end_date, key_detail, key_weight, obj_id, key_type,
-        key_unit, key_init_value, key_target) {
-        $('#edit_key_obj_id').val(key_id);
-        $('#edit_key_name').val(key_name);
-        $('#edit_key_start_date').val(key_start_date);
-        $('#edit_key_end_date').val(key_end_date);
-        $('#edit_key_detail').val(key_detail);
-        $('#edit_key_obj').val(obj_id);
-        $('#weight-edit').html('');
-        $('#wieght-error-edit').html('');
 
-        $('#edit_key_result_type').val(key_type);
-        $('#edit_key_result_unit').val(key_unit);
-        $('#edit_init_value').val(key_init_value);
-        $('#edit_target_number').val(key_target);
-
-        getkeyweight(key_id);
-        getkeychart();
-        getkeylink(key_id);
-
-
-    }
 
 
     function getkeychart() {
