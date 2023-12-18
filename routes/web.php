@@ -138,6 +138,7 @@ Route::post('save-org-contact', [App\Http\Controllers\MemberController::class,'S
 Route::post('update-org-contact', [App\Http\Controllers\MemberController::class,'UpdateOrganizationMember']);
 Route::post('delete-org-contact', [App\Http\Controllers\MemberController::class,'DeleteOrganizationMember']);
 Route::post('delete-mutiple-organization-contact', [App\Http\Controllers\MemberController::class,'MultipleDeleteOrganizationMember']);
+Route::get('dashboard/organization/{slug}/Value-Streams/dashboard', [App\Http\Controllers\MemberController::class,'VUDashboard']);
 
 //BusinessUnits
 Route::get('dashboard/organization/Business-Units', [App\Http\Controllers\MemberController::class,'ObjectivesUnit']);
@@ -184,6 +185,7 @@ Route::get('dashboard/organization/{id}/VS-TEAMS', [App\Http\Controllers\MemberC
 Route::get('get-assign-epic', [App\Http\Controllers\MemberController::class,'AssignEpic']);
 
 Route::post('change-backlog-pos', [App\Http\Controllers\MemberController::class,'UpdatePosBacklogEpic']);
+Route::get('dashboard/organization/Bu/dashboard', [App\Http\Controllers\MemberController::class,'BUDashboard']);
 
 
 Route::get('get-jira-epic', [App\Http\Controllers\JiraController::class,'jira']);
@@ -259,6 +261,12 @@ Route::name('epics.')->namespace('App\Http\Controllers')->prefix('dashboard/epic
     Route::POST('flagupdate', 'EpicController@flagupdate');    
 });
 
+Route::name('keyresult.')->namespace('App\Http\Controllers')->prefix('dashboard/keyresult')->group(function () {
+    Route::POST('getkeyresult', 'KeyresultController@getkeyresult');
+    
+});
+
+
 Route::name('linking.')->namespace('App\Http\Controllers')->prefix('dashboard/linking')->group(function () {
     Route::get('{id}/{type}', 'LinkingController@index');
     
@@ -292,6 +300,8 @@ Route::get('get-obj-link', [App\Http\Controllers\TeamController::class,'GetValue
 Route::post('delete-obj-link', [App\Http\Controllers\TeamController::class,'DeleteTeamLinkObj']);
 Route::get('search-epic-team', [App\Http\Controllers\TeamController::class,'EpicTeamSearch']);
 Route::get('epic-clone/{id}/{type}', [App\Http\Controllers\MemberController::class,'clonEpic']);
+Route::get('dashboard/organization/{slug}/Unit-Team/dashboard', [App\Http\Controllers\TeamController::class,'BUTeamDashboard']);
+
 
 
 
