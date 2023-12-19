@@ -58,10 +58,6 @@
         $("#edit-key-result-new").on('hidden.bs.modal', function(){
            if($('#key_title').val() == '')
            {
-                $('.delete-key-alert-tittle').html('Key Result Title is Blank');
-                $('.closebuttondeletekeyresult').hide();
-                $('.delete-key-alert-body').html('If Key Result Title is Blank. This Key Result will be Deleted aotomaticaly from your Organization');
-                $('#delete-objective-key').modal('show');
                 // $('#key_delete_id').val("$_GET['keyresult']");
                 // $('#key_delete_obj_id').val(obj);
                 // DeleteObjectivekey()
