@@ -267,6 +267,9 @@ Route::name('keyresult.')->namespace('App\Http\Controllers')->prefix('dashboard/
     Route::POST('showheader', 'KeyresultController@showheader');
     Route::POST('showtab', 'KeyresultController@showtab');
     Route::POST('updatetarget', 'KeyresultController@updatetarget');
+    Route::POST('addquartervalue', 'KeyresultController@addquartervalue')->name('addquartervalue');
+    Route::POST('deletequartervalue', 'KeyresultController@deletequartervalue')->name('deletequartervalue');
+    
 });
 
 

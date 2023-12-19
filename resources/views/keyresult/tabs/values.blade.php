@@ -36,7 +36,8 @@ $keyqvalue = $keyqfirst->value;
 @endif
 <div class="row field_wrapper_key">
   <div class="col-md-12">
-      <table class="table value-table">
+    <div class="activity-feed">
+        <table class="table value-table">
           <thead>
               <tr>
                   <th>Updated On</th>
@@ -66,6 +67,8 @@ $keyqvalue = $keyqfirst->value;
             @endif
           </tbody>
       </table>
+    </div>
+      
   </div>
 </div>
 <div class="row margintopfourtypixel">

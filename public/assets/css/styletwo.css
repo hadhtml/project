@@ -1105,6 +1105,13 @@ div[role="circleprogressbar"]::before {
     display: none;
     font-size: 12px;
 }
+.value-table .btn-circle.btn-tolbar{
+    width: 32px;
+    height: 32px;
+}
+.value-table .table td, .table th{
+    padding: 0.55rem;
+}
 .value-table thead th {
     border-top: none !important;
     border-bottom: none !important;
@@ -1123,3 +1130,16 @@ div[role="circleprogressbar"]::before {
     color: var(--Light-Gray, #787878);
     font-size: 13px;
 }
+#edit-key-result-new .modal-body{
+    min-height: 500px;
+}
+.add-weight-heading{
+    font-size: 16px;
+    color: #b2b2b2;
+}
+
+/*#edit-key-result-new input[type="checkbox"]
+{
+    border: none !important;
+    background-color: #f3f3f3 !important;
+}*/

@@ -48,7 +48,7 @@
             </div>
         </div>
         <div class="epic-header-buttons raise-flag-button">
-            <a onclick="rasiseflag({{$data->id}})" href="javascript:void(0)"  id="showboardbutton">
+            <a href="javascript:void(0)"  id="showboardbutton">
                 <img src="{{url('public/assets/svg/btnflagsvg.svg')}}" width="20"> Raise Flag @if(DB::table('flags')->where('epic_id'  ,$data->id)->count() > 0) ({{ DB::table('flags')->where('epic_id'  ,$data->id)->count() }}) @endif
             </a>
             <div class="raiseflag-box">

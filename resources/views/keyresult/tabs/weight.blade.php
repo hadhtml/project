@@ -6,19 +6,21 @@
                     <span class="material-symbols-outlined">weight</span>
                 </div>
                 <div>
-                    <h4>Weight</h4>
+                    <h4>Set Weight (Optional)</h4>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="row">
-    <div class="col-md-12">
-        <label class="checkbox checkbox-lg mb-3">
+<div class="row mt-5">
+    <div class="col-md-1">
+        <label class="checkbox checkbox-lg">
             <input class="check" type="checkbox" />
-            <span class="mr-3">Add Weight</span>
         </label>
+    </div>
+    <div class="col-md-5">
+        <h6 class="add-weight-heading">Add Weight</h6>
     </div>
 </div>
 <div id="wieght-error"></div>
@@ -35,7 +37,7 @@
                         // Show the weight div
                         $('#weightappend').html('');
                         $('#weightappend').append(
-                            '<div class="col-md-8"><input style="margin-top:10px;" class="range-slider__range-two  ml-4"  type="range" value="1" min="1" max="100"></div><div class="col-md-4"><input id="sliderValue" class="w-25 mt-2 range-slider__range-two"  type="text" min="1" value="1"></div>'
+                            '<div class="col-md-6"><input class="range-slider__range-two form-control"  type="range" value="1" min="1" max="100"></div><div class="col-md-6"><input id="sliderValue" class="form-control range-slider__range-two"  type="text" min="1" value="1"></div>'
                             ); // Add field html
 
 

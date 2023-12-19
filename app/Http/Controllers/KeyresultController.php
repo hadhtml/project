@@ -92,8 +92,33 @@ class KeyresultController extends Controller
             return $html;
         }
     }
-    public function updatetarget(Request $request)
+    public function addquartervalue(Request $request)
     {
+        DB::table('key_quarter_value')->insert([
+          'key_chart_id' => $request->key_chart_id,
+          'key_id' => $request->id,
+          'sprint_id' => $request->sprint_id,
+          'value' => $request->value,
         
+        ]);
+        $data = key_result::find($request->id);
+        $report = DB::table('sprint')->where('user_id',Auth::id())->where('status',NULL)->where('value_unit_id',$data->unit_id)->first();
+        $KEYChart =  DB::table('key_chart')->where('key_id',$request->id)->where('IndexCount',$report->IndexCount)->first();
+        $key = key_result::find($request->id);
+        $keyQAll = DB::table('key_chart')->where('key_id',$request->id)->get();    
+        $html = view('keyresult.tabs.values',compact('data','KEYChart','key','report','keyQAll'));
+        return $html;
+    }
+    public function deletequartervalue(Request $request)
+    {
+        $key_quarter_value = DB::table('key_quarter_value')->where('id',$request->id)->first();
+        $data = key_result::find($key_quarter_value->key_id);
+        $report = DB::table('sprint')->where('user_id',Auth::id())->where('status',NULL)->where('value_unit_id',$data->unit_id)->first();
+        $KEYChart =  DB::table('key_chart')->where('key_id',$key_quarter_value->key_id)->where('IndexCount',$report->IndexCount)->first();
+        $key = key_result::find($key_quarter_value->key_id);
+        $keyQAll = DB::table('key_chart')->where('key_id',$key_quarter_value->key_id)->get();
+        DB::table('key_quarter_value')->where('id',$request->id)->delete(); 
+        $html = view('keyresult.tabs.values',compact('data','KEYChart','key','report','keyQAll'));
+        return $html;
     }
 }

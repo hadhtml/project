@@ -57,7 +57,7 @@
                     <div class="col-md-12 col-lg-12 col-xl-12">
                         <div class="form-group mb-0">
                             <label for="key_name">Key Result title</label>
-                            <input type="text" required='true' value="{{ $data->key_name }}" class="form-control" name="key_name" id="key_name">
+                            <input type="text" required='true' value="{{ $data->key_name }}" class="form-control" name="key_name" id="key_title">
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-6 col-xl-6">
