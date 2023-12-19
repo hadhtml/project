@@ -23,7 +23,11 @@
     
     <!-- Summernote -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-bs4.min.css" rel="stylesheet">
-    <script src="{{url('public/assets/Random-Pixel/dist/gixi-min.js')}}"></script> 
+
+    <!-- Icon family -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/4.0.0/font/MaterialIcons-Regular.ttf">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -48,13 +52,11 @@
             
             @if ($var_objective == 'PageU-unit')
             @include('Business-units.unit-sidebar')
-            @include('Business-units.unit-subnav')
             
             @endif
             
             @if ($var_objective == 'PageV-stream')
             @include('member.navbar')
-            @include('member.sub-nav')
             @endif
 
             @if ($var_objective == 'PageT-BU')
@@ -70,7 +72,6 @@
             @if ($var_objective == 'Org')
                  
             @include('components.sidebar-component')
-            @include('components.subnav-component')
 
             @endif
                   
@@ -203,11 +204,11 @@
             
             <!-- end Sidebar -->
             <div class="content d-flex flex-column flex-column-fluid">
-                <!-- begin breadcrums -->
+                <!-- end breadcrums -->
+                <!-- begin page Content -->
+                <div class="container-fluid body-content">
 
-               
-                
-               
+                    <!-- begin breadcrums -->
                 
                 @if ($var_objective == 'Org')
                  
@@ -359,14 +360,11 @@
                 @include('components.chart-breadcrumb')
                 @include('components.modal')    
                 @endif
-                 
-                  
-                 
-                <!-- end breadcrums -->
-                <!-- begin page Content -->
-                <div class="container-fluid py-5 w-96">
-                @yield('content')
-            </div>
+
+                <div class="body-inner-content">
+                    @yield('content')
+                </div>
+                </div>
                 <!-- end page content -->
             </div>
         </div>

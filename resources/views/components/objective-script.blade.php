@@ -2,6 +2,25 @@
 <script>
     window.onload = window.localStorage.clear();
     // function Updated by Usama Start
+     function editobjectivekey(id) {
+        $.ajax({
+            type: "POST",
+            url: "{{ url('dashboard/keyresult/getkeyresult') }}",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                id: id,
+            },
+            success: function(res) {
+                $('#newmodalcontent').html(res);
+                $('#edit-key-result-new').modal('show');
+            }
+        });
+        // getkeyweight(key_id);
+        // getkeychart();
+        // getkeylink(key_id);
+    }
     function editepic(epic_id) {
         $.ajax({
             type: "POST",
@@ -13,7 +32,7 @@
                 id: epic_id,
             },
             success: function(res) {
-                $('#newmodalcontent').html(res);
+                $('#epic-modal-content').html(res);
                 $('#edit-epic-modal-new').modal('show');
                 // showtab(id , 'general');
             }
@@ -482,7 +501,6 @@
 
 
         if (key_result_type == 'Should Increase to') {
-
             if (target_number <= init_value) {
                 $('#target-error').html('The target value should be greater than the initial value');
                 return false;
@@ -577,10 +595,7 @@
 
     }
 
-
-
-    function editobjectivekey(key_id, key_name, key_start_date, key_end_date, key_detail, key_weight, obj_id, key_type,
-        key_unit, key_init_value, key_target) {
+    function editobjectivekey_backup(key_id) {
         $('#edit_key_obj_id').val(key_id);
         $('#edit_key_name').val(key_name);
         $('#edit_key_start_date').val(key_start_date);
@@ -601,6 +616,9 @@
 
 
     }
+
+
+
 
 
     function getkeychart() {
