@@ -12,109 +12,105 @@
         </div>
     </div>
 </div>
-<style type="text/css">
-    .team-horizontal-card{
-        box-shadow: 0px 2px 2px 4px rgb(87 106 134 / 20%);
-        border-radius: 10px;
-        padding: 12px;
-        display: flex;
-        height: 150px;
-    }
-    .team-horizontal-card .team-title{
-        font-size: 14px;
-        color: black;
-        font-weight: 600;
-    }
-    .team-horizontal-card .team-sub-title{
-        font-size: 10px;
-        color: black;
-    }
-    .member-profile-team-1{
-        display: flex;
-        width: 50%;
-    }
-    .member-profile-team-name{
-        margin-left: 10px;
-    }
-    .member-profile-team-name h4{
-        font-size: 12px;
-        margin: 3px 0px;
-    }
-    .member-profile-team-name p{
-        font-size: 10px;
-    }
-    .tittlesection{
-        width: 50%;
-    }
-    .member-profile-team-2{
-        display: flex;
-        align-items: flex-start;
-    }
-    .member-profile-team-2 p{
-        background-color: #ccc;
-        border-radius: 50px;
-        padding: 8px;
-
-    }
-
-
-    .member-profile-team-epics {
-        display: flex;
-        align-items: flex-start;
-    }
-    .member-profile-team-epics img{
-        width: 15px;
-    }
-    .member-profile-team-epics {
-        font-size: 10px;
-    }
-</style>
 <div class="row">
     <div class="col-md-12">
-        <div class="team-horizontal-card">
-            <div class="row-1">
-                <div class="tittlesection">
-                    <div class="team-title">
-                        Web Design Team
-                </div>
-                    <div class="team-sub-title">
-                        Subtitle goes here lorem ipsum
+        <div class="card business-card">
+            <div class="card-body">
+                <div class="d-flex flex-row justify-content-between">
+                    <div class="d-flex flex-row">
+                        <div class="mr-2">
+                            <img class="gixie" data-item-id="1" style="width: 40px; object-fit: cover; border-radius: 10px; height: 40x;">
+                        </div>
+                        <div>
+                            <h3 class="mb-0">
+                                <a href="http://localhost/agileprolific/dashboard/organization/marketing-team-38/portfolio/BU">Marketing Team</a>
+                            </h3>
+                            <small>
+                                3 total members
+                            </small>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="dropdown d-flex">
+                            <button class="btn btn-circle dropdown-toggle btn-tolbar bg-transparent" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img src="http://localhost/agileprolific/public/assets/svg/dropdowndots.svg">
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" data-toggle="modal" data-target="#edit1">Edit</a>
+                                <a class="dropdown-item" data-toggle="modal" data-target="#delete1">Delete</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="member-profile-team-1">
-                    <div class="member-profile-team-img">
-                        <img src="{{ url('public/assets/svg/teamprofile.png') }}">    
-                    </div>
-                    <div class="member-profile-team-name">
-                        <h4>Jordan Stevenson</h4>
-                        <p>Team Leader</p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="member-profile-team-2">
-                        <img src="{{ url('public/assets/svg/teamprofile.png') }}">
-                        <img src="{{ url('public/assets/svg/teamprofile.png') }}">
-                        <p>+4</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row-2">
-                <div class="col-md-3">
-                    <div class="member-profile-team-epics">
-                        <img src="http://localhost/agileprolific/public/assets/svg/epicheaderheader.svg">
-                        <p><strong>40</strong> Total Epics</p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="member-profile-team-epics">
-                        <img src="http://localhost/agileprolific/public/assets/svg/epicheaderheader.svg">
-                        <p><strong>50</strong> Objectives</p>
-                    </div>
-                </div>
-            </div>
+                <div class="d-flex justify-content-between align-items-center leader-section mt-4">
+                    <div>
+                                                                            
+                                    <div class="d-flex flex-row align-items-center">
+                                        <div class="mr-2">
+                                                                                    <img src="http://localhost/agileprolific/public/assets/images/1876807345.jpeg" alt="Example Image">
+                                                                                </div>
 
-            
-            
+                                        <div class="d-flex flex-column">
+                                            <div>
+                                                <span class="text-primary">Team Lead</span>
+                                            </div>
+                                            <div>
+                                                <span>Blue Sky</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                                                                                                                                                                                                                                                                                            </div>
+                    <div>
+                        <div class="d-flex align-items-center flex-lg-fill my-1">
+                            <div class="symbol-group symbol-hover">
+                                <div class="symbol symbol-30 symbol-circle" data-toggle="tooltip" title="" data-original-title="Mark Stone">
+                                    <img alt="Pic" src="https://img.freepik.com/premium-photo/young-handsome-man-with-beard-isolated-keeping-arms-crossed-frontal-position_1368-132662.jpg">
+                                </div>
+                                <div class="symbol symbol-30 symbol-circle" data-toggle="tooltip" title="" data-original-title="Charlie Stone">
+                                    <img alt="Pic" src="https://img.freepik.com/premium-photo/young-man-smiling-cheerfully-feeling-happy-pointing-side-upwards-showing-object-copy-space_1194-211017.jpg">
+                                </div>
+                                <div style="width:42px; height:42px; padding: 10px; font-size: 12px;" class="symbol symbol-30  symbol-circle symbol-light" data-toggle="tooltip" title="" data-original-title="More users">
+                                    <span class="symbol-label">5+</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row counter-section">
+                    <div class="col-md-6 pr-2">
+                        <div class="counter-card d-flex flex-row align-items-center">
+                            <div class="mr-1">
+                                <span class="material-symbols-outlined text-secondary">bolt</span>
+                            </div>
+                            <div class="d-flex flex-column">
+                                <div>
+                                    <b>18</b>
+                                </div>
+                                <div>
+                                    <small class="text-secondary">Epics</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 pl-2">
+                        <div class="counter-card d-flex flex-row align-items-center">
+                            <div class="mr-1">
+                                <span class="material-symbols-outlined text-secondary">adjust</span>
+                            </div>
+                            <div class="d-flex flex-column">
+                                <div>
+                                    <b>0</b>
+                                </div>
+                                <div>
+                                    <small class="text-secondary">Objectives</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
 </div>

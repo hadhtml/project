@@ -67,7 +67,7 @@
         </div>
         @else
         <a href="javascript:vodi(0)" class="epic-header-buttons" id="showboardbutton">
-            <img src="{{url('public/assets/svg/btnteamsvg.svg')}}" width="20"> Add Team
+            <img src="{{url('public/assets/svg/btnteamsvg.svg')}}" width="20">Team
         </a>
         @endif
 
@@ -148,14 +148,6 @@
 
         <div class="moverightside">
             <h1 class="epic-percentage">{{ $data->epic_progress }} % Completed</h1>
-            <div class="dashboard-card-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img  src="{{url('public/assets/svg/more.svg')}}" width="20">
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="javascript:void(0)">Action One</a>
-                    <a class="dropdown-item" href="javascript:void(0)">Action Two</a>
-                    <a class="dropdown-item" href="javascript:void(0)">Action Three</a>
-                </div>
-            </div>
         </div>
     </div>
 </div>

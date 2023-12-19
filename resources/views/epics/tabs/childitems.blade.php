@@ -50,8 +50,9 @@
                     </svg> 
                   </span>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" onclick="showorderby('desc',{{ $epic->id }},'attachments')" href="javascript:void(0)">Latest</a>
-                    <a class="dropdown-item" onclick="showorderby('asc',{{ $epic->id }},'attachments')" href="javascript:void(0)">Older</a>
+                    <a class="dropdown-item" onclick="showorderby('desc',{{ $epic->id }},'attachments')" href="javascript:void(0)">To Do</a>
+                    <a class="dropdown-item" onclick="showorderby('asc',{{ $epic->id }},'attachments')" href="javascript:void(0)">In Progress</a>
+                    <a class="dropdown-item" onclick="showorderby('asc',{{ $epic->id }},'attachments')" href="javascript:void(0)">Done</a>
                   </div>
                 </div>
                 <span onclick="additem()" class="btn btn-primary btn-sm">Add</span>
@@ -82,17 +83,6 @@
                                       <option value="{{ $r->id }}">{{ $r->name }} {{ $r->last_name }}</option>
                                     @endforeach
                                 </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group mb-0">
-                               <label for="story_status">Status</label>
-                               <select name="story_status" id="story_status" class="form-control">
-                                <option value="">Select Type</option>
-                                <option value="To Do">To Do</option>
-                                <option value="In progress">In Progress</option>
-                                 <option value="Done">Done</option>
-                               </select>
                             </div>
                         </div>
                     </div>
@@ -128,6 +118,65 @@
 <div class="row mt-5">
     <div class="activity-feed  col-md-12">
         <div class="col-md-12 col-lg-12 col-xl-12" style="position: relative;">
+
+
+
+
+            <style type="text/css">
+                .rows {
+                    display: flex;
+                    flex-wrap: wrap;
+                    margin-right: -15px;
+                    margin-left: -15px;
+                }
+                .child-items {
+                    display: flex;
+                    width: 100%;
+                    margin-top: 10px;
+                    margin-bottom: 3px;
+                    padding-bottom: 10px;
+                    border-bottom: 1px dotted #ddd;
+                }
+                .child-item-chekbox-portions {
+                    width: 25%;
+                    display: flex;
+                }
+                .form-checkboxs{
+                display: flex;
+                margin-bottom: 0.5rem;
+                }
+                input[type="checkbox"]:checked {
+                    background-color: #3661EC;
+                }
+                .child-items-id {
+                    margin-right: 45px;
+                    margin-left: 20px;
+                }
+                .child-items-tittle {
+                    width: 40%;
+                    text-align: center;
+                }
+                .child-items-actions {
+                    width: 35%;
+                    text-align: center;
+                }
+
+            </style>
+
+
+            <div class="rows">
+                <div class="child-items">
+                    <div class="child-item-chekbox-portions">
+                        <label class="form-checkboxs">
+                            <input class="form-check-inputs" type="checkbox"  value="1" id="flexCheckDefault">
+                            <span class="checkbox-labels"></span>
+                        </label>
+                    </div>
+                    <div class="child-items-id">ID</div>
+                    <div class="child-items-tittle">Tittle</div>
+                    <div class="child-items-actions">Action</div>
+                </div>                
+            </div>
             @if($epicstory->count() > 0)
                 @foreach($epicstory as $s)
                 <div class="row">
