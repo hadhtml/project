@@ -66,6 +66,11 @@
             @if ($var_objective == 'PageT-VS')
             @include('Business-units.Team-sidebar')
             @endif
+
+            @if ($var_objective == 'PageT-org')
+            @include('organizations.navbar')
+            @include('organizations.sub-nav')
+            @endif
             
             
             
@@ -79,6 +84,13 @@
                  
             @include('member.navbar')
             @include('member.sub-nav')
+            @endif
+
+            @if ($var_objective == 'Page-org')
+                 
+            @include('organizations.navbar')
+            @include('organizations.sub-nav')
+
             @endif
                   
             @if ($var_objective == 'Member')
@@ -193,12 +205,31 @@
             @include('Business-units.Team-sidebar')
             @endif
 
+            @if ($var_objective == 'Page-org')
+            @include('Business-units.Team-sidebar')
+            @endif
+
             @if ($var_objective == 'Report-BU')
             @include('Business-units.Team-sidebar')
             @endif
 
             @if ($var_objective == 'Report-VS')
             @include('Business-units.Team-sidebar')
+            @endif
+
+            @if ($var_objective == 'Org-team')
+            @include('organizations.navbar')
+            @include('organizations.sub-nav')
+            @endif
+
+            @if ($var_objective == 'Report-org')
+            @include('organizations.navbar')
+            @include('organizations.sub-nav')
+            @endif
+
+            @if ($var_objective == 'TBaclog-org')
+            @include('organizations.navbar')
+            @include('organizations.sub-nav')
             @endif
             
             
@@ -225,6 +256,14 @@
                  @endif
                  
                  @if ($var_objective == 'Page-stream')
+                 
+                 @include('components.chart-breadcrumb')
+                 @include('components.modal')
+
+       
+                 @endif
+
+                 @if ($var_objective == 'Page-org')
                  
                  @include('components.chart-breadcrumb')
                  @include('components.modal')
@@ -318,6 +357,10 @@
                  @if ($var_objective == 'Report-VS')
                  @include('Report.report-breadcrum')
                  @endif
+
+                 @if ($var_objective == 'Report-org')
+                 @include('Report.report-breadcrum')
+                 @endif
                  
                 @if ($var_objective == 'PageV-stream')
                 @include('components.objective-script')
@@ -343,11 +386,21 @@
                 @include('components.modal')
                 @endif
 
+                @if ($var_objective == 'PageT-org')
+                @include('components.breadcrumb-component')
+                @include('components.objective-script')
+                @include('components.modal')
+                @endif
+
                 @if ($var_objective == 'TBaclog-BU')
                 @include('Team.Team-breadcrumb')
                 @endif
 
                 @if ($var_objective == 'TBaclog-VS')
+                @include('Team.Team-breadcrumb')
+                @endif
+
+                @if ($var_objective == 'TBaclog-org')
                 @include('Team.Team-breadcrumb')
                 @endif
 
@@ -359,6 +412,10 @@
                 @if ($var_objective == 'Page-VS')
                 @include('components.chart-breadcrumb')
                 @include('components.modal')    
+                @endif
+
+                @if ($var_objective == 'Org-team')
+                @include('organizations.org-team-breadcrumb')
                 @endif
 
                 <div class="body-inner-content">

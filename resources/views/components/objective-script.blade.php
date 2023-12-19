@@ -2,6 +2,71 @@
 <script>
     window.onload = window.localStorage.clear();
     // function Updated by Usama Start
+    function addnewquartervalue(id, key_chart_id, sprint_id) {
+        var value = $('#new-chart-value' + id).val();
+        var unit_id = "{{ $organization->id }}";
+        if (value == '') {
+             return false;
+        }
+        $.ajax({
+            type: "POST",
+            url: "{{ route('keyresult.addquartervalue') }}",
+            headers: {
+                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                 id: id,
+                 value: value,
+                 key_chart_id: key_chart_id,
+                 unit_id: unit_id,
+                 sprint_id: sprint_id,
+
+            },
+            success: function(res) {
+                 $('#new-chart-value' + id).val('');
+                 $('.secondportion').html(res);
+            }
+         });
+    }
+    function deletequartervalue(id) {
+        var unit_id = "{{ $organization->id }}";
+        $.ajax({
+            type: "POST",
+            url: "{{ url('delete-new-quarter-value') }}",
+            url: "{{ route('keyresult.deletequartervalue') }}",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                id: id,
+                unit_id: unit_id,
+
+            },
+            success: function(res) {
+                $('.secondportion').html(res);
+            }
+        });
+    }
+    $(document).ready(function() {
+        @if(isset($_GET['keyresult']))
+            editobjectivekey("{{ $_GET['keyresult'] }}");
+            @php
+                $objective_id = DB::table('key_result')->where('id' , $_GET['keyresult'])->first()->obj_id;
+            @endphp
+            $("#nestedCollapsible{{ $objective_id }}").collapse('toggle');
+        @endif
+        $("#edit-key-result-new").on('hidden.bs.modal', function(){
+           if($('#key_title').val() == '')
+           {
+                // $('#key_delete_id').val("$_GET['keyresult']");
+                // $('#key_delete_obj_id').val(obj);
+                // DeleteObjectivekey()
+                // deletekeyresult($('#cardid').val())
+           }
+           var new_url="{{ url()->current() }}";
+           window.history.pushState("data","Title",new_url);
+        });
+    });
      function editobjectivekey(id) {
         $.ajax({
             type: "POST",
@@ -13,6 +78,8 @@
                 id: id,
             },
             success: function(res) {
+                var new_url="{{ url()->current() }}?keyresult="+id;
+                window.history.pushState("data","Title",new_url);
                 $('#newmodalcontent').html(res);
                 $('#edit-key-result-new').modal('show');
             }
@@ -35,6 +102,7 @@
                 $('#epic-modal-content').html(res);
                 $('#edit-epic-modal-new').modal('show');
                 // showtab(id , 'general');
+                showheader(epic_id);
             }
         });
     }
@@ -2000,22 +2068,22 @@
     }
 
     // $(document).ready(function(){
-    // 	var maxLength = 240;
-    // 	$(".show-read-more").each(function(){
-    // 		var myStr = $(this).text();
-    // 		if($.trim(myStr).length > maxLength){
-    // 			var newStr = myStr.substring(0, maxLength);
-    // 			var removedStr = myStr.substring(maxLength, $.trim(myStr).length);
-    // 			$(this).empty().html(newStr);
-    // 			$(this).append(' <a href="javascript:void(0);" class="read-more" style="color:black;">Read More...</a>');
-    // 			$(this).append('<span class="more-text">' + removedStr + '</span>');
+    //  var maxLength = 240;
+    //  $(".show-read-more").each(function(){
+    //      var myStr = $(this).text();
+    //      if($.trim(myStr).length > maxLength){
+    //          var newStr = myStr.substring(0, maxLength);
+    //          var removedStr = myStr.substring(maxLength, $.trim(myStr).length);
+    //          $(this).empty().html(newStr);
+    //          $(this).append(' <a href="javascript:void(0);" class="read-more" style="color:black;">Read More...</a>');
+    //          $(this).append('<span class="more-text">' + removedStr + '</span>');
 
-    // 		}
-    // 	});
-    // 	$(".read-more").click(function(){
-    // 		$(this).siblings(".more-text").contents().unwrap();
-    // 		$(this).remove();
-    // 	});
+    //      }
+    //  });
+    //  $(".read-more").click(function(){
+    //      $(this).siblings(".more-text").contents().unwrap();
+    //      $(this).remove();
+    //  });
     // });
 
     function loadmore(x) {

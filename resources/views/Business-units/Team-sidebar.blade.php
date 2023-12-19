@@ -9,6 +9,11 @@ if($organization->type == 'VS')
 $team  = DB::table('value_stream')->where('id',$organization->org_id)->first();  
 }
 
+if($organization->type == 'org')
+{
+$team  = DB::table('organization')->where('id',$organization->id)->first();  
+}
+
 @endphp
 
 
@@ -105,6 +110,19 @@ $team  = DB::table('value_stream')->where('id',$organization->org_id)->first();
             </li>
 
             @endif
+            @if($organization->type == 'org')
+            <li class="mb-1">
+                <a href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/org')}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/portfolio/org')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
+                    <div class="mr-2">
+                         <span style="font-size:22px" class="material-symbols-outlined">folder_supervised</span>
+                    </div>
+                    <div class="mr-2">
+                        OKR Planner
+                    </div>
+                </a>
+            </li>
+
+            @endif
             @if($organization->type == 'VS')
             <li class="mb-1">
                 <a href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/VS')}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/portfolio/VS')) class="d-flex flex-row align-items-center nav-link" @else class="d-flex flex-row align-items-center"  @endif>
@@ -159,6 +177,8 @@ $team  = DB::table('value_stream')->where('id',$organization->org_id)->first();
             </li>
 
             @endif
+
+  
             @if($organization->type == 'VS')
             <li class="mb-1">
                 <a href="{{url('dashboard/organization/'.$organization->slug.'/performance-dashboard/'.$organization->type)}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/performance-dashboard/'.$organization->type)) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>

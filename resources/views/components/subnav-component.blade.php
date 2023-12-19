@@ -34,6 +34,34 @@
                 <h6 class="title">Organization</h6>
                 <ul class="list-unstyled ps-0 expanded-navbar mb-0">
                     <li class="mb-1">
+                        <button class="btn btn-toggle align-items-center rounded" data-toggle="collapse" data-target="#home-collapse1" aria-expanded="true">
+                            <div class="d-flex flex-row align-items-center">
+                                <div class="mr-2">
+                                    <span style="font-size:22px" class="material-symbols-outlined">domain</span>
+                                </div>
+                                <div>
+                                    Organization
+                                </div>
+                            </div>
+                        </button>
+
+                        @php
+                        $Stream = DB::table('organization')->where('user_id',Auth::id())->get();
+                        @endphp  
+
+                        <div class="collapse" id="home-collapse1" style="">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small px-1 py-2 nav-root-item">
+                                @if(count($Stream) > 0)
+                                @foreach($Stream as $value)
+                                    <li><a href="{{url('dashboard/organization/'.$value->slug.'/portfolio/'.$value->type)}}" class="link-dark rounded">{{$value->organization_name}}</a></li>
+                                @endforeach
+                                @endif
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="list-unstyled ps-0 expanded-navbar mb-0">
+                    <li class="mb-1">
                         <button class="btn btn-toggle align-items-center rounded" data-toggle="collapse" data-target="#home-collapse" aria-expanded="true">
                             <div class="d-flex flex-row align-items-center">
                                 <div class="mr-2">
