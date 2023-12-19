@@ -33,16 +33,32 @@
         </ul>
 
         <ul class="list-unstyled ps-0 expanded-navbar-options">
-            <!-- <li class="mb-1">
-                <a href="#" class="d-flex flex-row align-items-center">
+            @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/Value-Streams'))
+            <li class="mb-1">
+                <a href="{{url('dashboard/organization/'.$organization->slug.'/Value-Streams/dashboard')}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/Value-Streams/dashboard')) class="d-flex flex-row align-items-center nav-active" @else   @endif class="d-flex flex-row align-items-center">
                     <div class="mr-2">
                         <span style="font-size:22px" class="material-symbols-outlined">auto_stories</span>
                     </div>
                     <div class="mr-2">
-                        Welcome
+                        Dashboard
                     </div>
                 </a>
-            </li> -->
+            </li>
+            @endif
+
+            @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/BU-TEAMS'))
+            <li class="mb-1">
+                <a href="{{url('dashboard/organization/'.$organization->slug.'/Unit-Team/dashboard')}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/Value-Streams/dashboard')) class="d-flex flex-row align-items-center nav-active" @else   @endif class="d-flex flex-row align-items-center">
+                    <div class="mr-2">
+                        <span style="font-size:22px" class="material-symbols-outlined">auto_stories</span>
+                    </div>
+                    <div class="mr-2">
+                        Dashboard
+                    </div>
+                </a>
+            </li>
+            @endif
+          
             <li class="mb-1">
                 <a href="{{url('dashboard/organization/'.$organization->slug.'/Value-Streams')}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/Value-Streams')) class="d-flex flex-row align-items-center nav-active" @else   @endif  class="d-flex flex-row align-items-center">
                     <div class="mr-2">
