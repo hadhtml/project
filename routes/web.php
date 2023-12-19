@@ -53,7 +53,7 @@ Route::get('auth/google/callback', [App\Http\Controllers\GoogleController::class
 Route::get('auth/facebook', [App\Http\Controllers\GoogleController::class, 'redirectToFacebook']);
 Route::get('auth/facebook/callback', [App\Http\Controllers\GoogleController::class, 'handleFacebookCallback']);
 
-Route::get('organization', [App\Http\Controllers\OrganizationController::class,'Organization']);
+Route::get('dashboard/organization/all-organization', [App\Http\Controllers\OrganizationController::class,'Organization']);
 Route::post('save-organization', [App\Http\Controllers\OrganizationController::class, 'SaveOrganization']);
 Route::post('delete-org', [App\Http\Controllers\OrganizationController::class, 'DeleteOrganization']);
 Route::post('update-organization', [App\Http\Controllers\OrganizationController::class, 'UpdateOrganization']);
@@ -263,6 +263,12 @@ Route::name('epics.')->namespace('App\Http\Controllers')->prefix('dashboard/epic
 
 Route::name('keyresult.')->namespace('App\Http\Controllers')->prefix('dashboard/keyresult')->group(function () {
     Route::POST('getkeyresult', 'KeyresultController@getkeyresult');
+    Route::POST('updategeneral', 'KeyresultController@updategeneral');
+    Route::POST('showheader', 'KeyresultController@showheader');
+    Route::POST('showtab', 'KeyresultController@showtab');
+    Route::POST('updatetarget', 'KeyresultController@updatetarget');
+    Route::POST('addquartervalue', 'KeyresultController@addquartervalue')->name('addquartervalue');
+    Route::POST('deletequartervalue', 'KeyresultController@deletequartervalue')->name('deletequartervalue');
     
 });
 
@@ -302,6 +308,7 @@ Route::get('search-epic-team', [App\Http\Controllers\TeamController::class,'Epic
 Route::get('epic-clone/{id}/{type}', [App\Http\Controllers\MemberController::class,'clonEpic']);
 Route::get('dashboard/organization/{slug}/Unit-Team/dashboard', [App\Http\Controllers\TeamController::class,'BUTeamDashboard']);
 
-
-
-
+Route::get('dashboard/organization/{id}/Org-TEAMS', [App\Http\Controllers\OrganizationController::class,'OrgTeam']);
+Route::post('add-team-org', [App\Http\Controllers\OrganizationController::class,'SaveOrgTeam']);
+Route::post('update-team-org', [App\Http\Controllers\OrganizationController::class,'UpdateOrgTeam']);
+Route::post('delete-org-team', [App\Http\Controllers\OrganizationController::class,'DeleteOrgTeam']);
