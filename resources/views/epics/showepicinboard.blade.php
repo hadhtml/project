@@ -1,4 +1,4 @@
-<div class="card" style="width:102.7%">
+<a href="javscript:void(0)" onclick="editepic({{$e->id}})" class="card" style="width:102.7%">
        <div class="card card-epic border-radius" style="margin-bottom:0px !important">
             <div class="card-header bg-white border-bottom-radius pt-2 pl-4 pr-4 pb-2">
 	            <div>
@@ -45,7 +45,7 @@
                      <img src="{{ url('public/assets/svg/svgrisk.svg') }}">
                   </div>
                   <div>
-                     <span style="color:#fa9bcf !important; font-size:12px">{{$flag->flag_type}}</span>
+                     <span onclick="editepic({{$e->id}})" style="color:#fa9bcf !important; font-size:12px">{{$flag->flag_type}}</span>
                   </div>
                </div>
                @endif
@@ -55,7 +55,7 @@
                      <img src="{{ url('public/assets/svg/svgeight.svg') }}">
                   </div>
                   <div>
-                     <span style="color:#fa9bcf !important; font-size:12px">{{$flag->flag_type}}</span>
+                     <span onclick="editepic({{$e->id}})" style="color:#fa9bcf !important; font-size:12px">{{$flag->flag_type}}</span>
                   </div>
                </div>
                @endif 
@@ -65,7 +65,7 @@
                      <img src="{{ url('public/assets/svg/svgnine.svg') }}">
                   </div>
                   <div>
-                     <span style="color:#fa9bcf !important; font-size:12px">{{$flag->flag_type}}</span>
+                     <span onclick="editepic({{$e->id}})" style="color:#fa9bcf !important; font-size:12px">{{$flag->flag_type}}</span>
                   </div>
                </div>
                @endif 
@@ -75,7 +75,7 @@
                      <img src="{{ url('public/assets/svg/svgten.svg') }}">
                   </div>
                   <div>
-                     <span style="color:#fa9bcf !important; font-size:12px">{{$flag->flag_type}}</span>
+                     <span onclick="editepic({{$e->id}})" style="color:#fa9bcf !important; font-size:12px">{{$flag->flag_type}}</span>
                   </div>
                </div>
                @endif 
@@ -93,7 +93,7 @@
                class="title load-more" id="load-more{{$e->id}}"  style="line-height:15px">
                {{ \Illuminate\Support\Str::limit($e->epic_name,40, $end='') }}
                @if($str > 40)
-               <a href="javascript:void(0);" onclick="loadmore({{$e->id}});" id="toggle-button{{$e->id}}" class="" style="font-size:10px;">More</a>
+               <a onclick="editepic({{$e->id}})" href="javascript:void(0);" onclick="loadmore({{$e->id}});" id="toggle-button{{$e->id}}" class="" style="font-size:10px;">More</a>
                @endif
             </h6>
             <h6
@@ -103,9 +103,9 @@
             </h6>
             <p
                class="content show-read-more" id="show-read{{$e->id}}">
-               {{ \Illuminate\Support\Str::limit($e->epic_detail,122, $end='') }}
+               {!! \Illuminate\Support\Str::limit($e->epic_detail,122, $end='') !!}
                @if($strl > 122 )
-               <a href="javascript:void(0);" onclick="loadmoretext({{$e->id}});" id="toggle-button-text{{$e->id}}" class="" style="font-size:10px;">More</a>
+               <a onclick="editepic({{$e->id}})" href="javascript:void(0);" onclick="loadmoretext({{$e->id}});" id="toggle-button-text{{$e->id}}" class="" style="font-size:10px;">More</a>
                @endif
             </p>
             <p
@@ -188,4 +188,4 @@
          </div>
       </div>
    </div>
-	</div>
+</a>

@@ -970,15 +970,15 @@ div[role="circleprogressbar"]::before {
     padding-left: 35px;
 }
 .todo-button-color{
-    background-color: #f3f3f3 !important;
-    color: black !important;
+    background-color: #6c757d !important;
+    color: white !important;
 }
 .inprogress-button-color{
-    background-color: #924aef !important;
+    background-color: #E1DB3F !important;
     color: white !important;
 }
 .done-button-color{
-    background-color: #0069d9 !important;
+    background-color: #3fe1a7 !important;
     color: white !important;
 }
 
@@ -1143,3 +1143,30 @@ div[role="circleprogressbar"]::before {
     border: none !important;
     background-color: #f3f3f3 !important;
 }*/
+.epic-datepicker{
+    position: relative;
+}
+.epic-datepicker img{
+    position: absolute;
+    top: 4px;
+    left: 18px;
+}
+.epic-datepicker input{
+    height: 31px;
+    background-color: #f3f3f3 !important;
+    color: #787878;
+    border-radius: 12px;
+    font-size: 11px !important;
+    border-radius: 100px;
+    border: none;
+    padding: 10px;
+    margin-left: 10px;
+    padding-left: 30px;
+    cursor: pointer;
+}
+.epic-datepicker input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none !important;
+}

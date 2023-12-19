@@ -1,8 +1,13 @@
 <div class="row">
     <div class="col-md-12 col-lg-12 col-xl-12 @if($comments->count() > 1) paddingrightzero @endif">
         <div class="d-flex flex-row align-items-center justify-content-between block-header">
-            <div>
-                <h4><img src="{{ url('public/assets/svg/commentsmain.svg') }}"> Comments</h4>
+            <div class="d-flex flex-row align-items-center">
+                <div class="mr-2">
+                    <span class="material-symbols-outlined">comment</span>
+                </div>
+                <div>
+                    <h4>Comments</h4>
+                </div>
             </div>
             <div class="displayflex">
                 <div class="dropdown firstdropdownofcomments">
@@ -95,8 +100,11 @@
                 <div class="card-body">
                     <div class="d-flex flex-column">
                         <div class="d-flex justify-content-between align-items-center mb-2">
-                            <div class="d-flex flex-row align-items-center">
-                                <div class="d-flex flex-column">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <img width="36" height="36" src="{{ Avatar::create($user->name)->toBase64() }}">
+                                </div>
+                                <div class="col-md-9">
                                     <div>
                                         <h5>{{ $user->name }} {{ $user->last_name }}</h5>
                                         <small>{{ Cmf::date_format($r->created_at) }}</small>
@@ -208,8 +216,11 @@
                     <div class="card-body">
                         <div class="d-flex flex-column">
                             <div class="d-flex justify-content-between align-items-center mb-2">
-                                <div class="d-flex flex-row align-items-center">
-                                    <div class="d-flex flex-column">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <img width="36" height="36" src="{{ Avatar::create($user->name)->toBase64() }}">
+                                    </div>
+                                    <div class="col-md-9">
                                         <div>
                                             <h5>{{ $puser->name }} {{ $puser->last_name }}</h5>
                                             <small>{{ Cmf::date_format($p->created_at) }}</small>

@@ -21,15 +21,7 @@
                 @endif
             </button>
             <button type="button" class="@if($data->epic_status == 'To Do') todo-button-color @endif @if($data->epic_status == 'In progress') inprogress-button-color @endif @if($data->epic_status == 'Done') done-button-color @endif statuschangebuttonarrow btn btn-danger dropdown-toggle dropdown-toggle-split archivebeardcimbgbutton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                @if($data->epic_status == 'To Do') 
-                <img src="{{url('public/assets/images/icons/angle-down.svg')}}" width="20">
-                @endif 
-                @if($data->epic_status == 'In progress') 
-                <img src="{{url('public/assets/svg/arrow-down-white.svg')}}" width="20">
-                @endif 
-                @if($data->epic_status == 'Done') 
-                <img src="{{url('public/assets/svg/arrow-down-white.svg')}}" width="20">
-                @endif          
+                <img src="{{url('public/assets/svg/arrow-down-white.svg')}}" width="20">         
                 <span class="sr-only">Toggle Dropdown</span>
             </button>
             <div class="dropdown-menu">
@@ -48,9 +40,22 @@
             </div>
         </div>
         @if($data->epic_start_date)
-        <a href="javascript:vodi(0)" class="epic-header-buttons" id="showboardbutton">
-            <img src="{{url('public/assets/svg/note-text.svg')}}" width="20"> <span>{{ Cmf::date_format_new($data->epic_start_date) }} - {{ Cmf::date_format_new($data->epic_end_date) }}</span>
+        <a href="javascript:void(0)" class="epic-datepicker" id="showboardbutton">
+            <img src="{{url('public/assets/svg/note-text.svg')}}" width="20">
+            <input readonly type="text" name="daterange" value="{{ date('m/d/Y', strtotime($data->epic_start_date)) }} - {{ date('m/d/Y', strtotime($data->epic_end_date)) }}" />
         </a>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+        <script>
+        $(function() {
+          $('input[name="daterange"]').daterangepicker({
+            opens: 'right'
+          }, function(start, end, label) {
+            console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+          });
+        });
+        </script>
         @endif
         @if($data->team_id)
         <div class="members-list">
@@ -69,12 +74,12 @@
         <div class="epic-header-buttons raise-flag-button">
 
             <a onclick="rasiseflag({{$data->id}})" href="javascript:void(0)"  id="showboardbutton">
-                <img src="{{url('public/assets/svg/btnflagsvg.svg')}}" width="20"> Raise Flag @if(DB::table('flags')->where('epic_id'  ,$data->id)->count() > 0) ({{ DB::table('flags')->where('epic_id'  ,$data->id)->count() }}) @endif
+                <img src="{{url('public/assets/svg/btnflagsvg.svg')}}" width="20"> Flag @if(DB::table('flags')->where('epic_id'  ,$data->id)->count() > 0) ({{ DB::table('flags')->where('epic_id'  ,$data->id)->count() }}) @endif
             </a>
             <div class="raiseflag-box">
                 <div class="row">
                     <div class="col-md-6">
-                        <h4>Raise Flag</h4>
+                        <h4>Flag</h4>
                     </div>
                     <div class="col-md-6 text-right">
                         <img onclick="rasiseflag()" class="memberclose" src="{{url('public/assets/svg/memberclose.svg')}}">
@@ -142,7 +147,7 @@
        
 
         <div class="moverightside">
-            <h1 class="epic-percentage">80 % Completed</h1>
+            <h1 class="epic-percentage">{{ $data->epic_progress }} % Completed</h1>
             <div class="dashboard-card-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <img  src="{{url('public/assets/svg/more.svg')}}" width="20">
                 <div class="dropdown-menu">
