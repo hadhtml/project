@@ -8,7 +8,8 @@ use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
-
+use Exception;
+use Psr\Log\InvalidArgumentException;
 class ChartController extends Controller
 {
     
@@ -66,8 +67,23 @@ class ChartController extends Controller
         ]);
         
         $data = DB::table('kpi_setting')->orderby('id', 'DESC')->first();
+        try {
         Excel::import(new UsersImport($request->title, $request->subtitle, $data->id), $request->file('file'));
-        
+            } catch (\InvalidArgumentException $ex) {
+
+                dd($ex->getMessage());
+
+            } catch (\Exception $ex) {
+
+                dd($ex->getMessage());
+            } catch (\Error $ex) {
+
+                dd($ex->getMessage());
+
+
+            }
+            
+            
         if($request->hasFile('file')){
         
         $filename ="";

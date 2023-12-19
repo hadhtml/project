@@ -2067,22 +2067,22 @@
     }
 
     // $(document).ready(function(){
-    // 	var maxLength = 240;
-    // 	$(".show-read-more").each(function(){
-    // 		var myStr = $(this).text();
-    // 		if($.trim(myStr).length > maxLength){
-    // 			var newStr = myStr.substring(0, maxLength);
-    // 			var removedStr = myStr.substring(maxLength, $.trim(myStr).length);
-    // 			$(this).empty().html(newStr);
-    // 			$(this).append(' <a href="javascript:void(0);" class="read-more" style="color:black;">Read More...</a>');
-    // 			$(this).append('<span class="more-text">' + removedStr + '</span>');
+    //  var maxLength = 240;
+    //  $(".show-read-more").each(function(){
+    //      var myStr = $(this).text();
+    //      if($.trim(myStr).length > maxLength){
+    //          var newStr = myStr.substring(0, maxLength);
+    //          var removedStr = myStr.substring(maxLength, $.trim(myStr).length);
+    //          $(this).empty().html(newStr);
+    //          $(this).append(' <a href="javascript:void(0);" class="read-more" style="color:black;">Read More...</a>');
+    //          $(this).append('<span class="more-text">' + removedStr + '</span>');
 
-    // 		}
-    // 	});
-    // 	$(".read-more").click(function(){
-    // 		$(this).siblings(".more-text").contents().unwrap();
-    // 		$(this).remove();
-    // 	});
+    //      }
+    //  });
+    //  $(".read-more").click(function(){
+    //      $(this).siblings(".more-text").contents().unwrap();
+    //      $(this).remove();
+    //  });
     // });
 
     function loadmore(x) {
@@ -2537,7 +2537,41 @@
     }
 
 
-   
+    function addnewquartervalue(id, key_chart_id, sprint_id) {
+
+        var value = $('#new-chart-value' + id).val();
+
+        var unit_id = "{{ $organization->id }}";
+
+        if (value == '') {
+            return false;
+        }
+        $.ajax({
+            type: "POST",
+            url: "{{ url('add-new-quarter-value') }}",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                id: id,
+                value: value,
+                key_chart_id: key_chart_id,
+                unit_id: unit_id,
+                sprint_id: sprint_id,
+
+            },
+            success: function(res) {
+
+
+
+                $('#new-chart-value' + id).val('');
+                $('.key-chart-data').html(res);
+
+
+            }
+        });
+
+    }
 
     function editquartervalue(id, val) {
         $('#edit-val' + id).html('<input type="text" class="form-control w-50" style="font-size:12px" id="value' + id +
@@ -2576,7 +2610,31 @@
 
     }
 
-    
+    function deletequartervalue(id) {
+
+
+        var unit_id = "{{ $organization->id }}";
+
+        $.ajax({
+            type: "POST",
+            url: "{{ url('delete-new-quarter-value') }}",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                id: id,
+                unit_id: unit_id,
+
+            },
+            success: function(res) {
+
+                $('#delete-val' + id).remove();
+
+
+            }
+        });
+
+    }
 
     function getteam() {
         var unit_id = "{{ $organization->id }}";

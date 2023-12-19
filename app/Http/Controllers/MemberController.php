@@ -16,6 +16,7 @@ use App\Models\OrganizationContacts;
 use App\Helpers\Jira;
 use Laravolt\Avatar\Avatar;
 use Illuminate\Support\Facades\Storage;
+use Exception;
 
 class MemberController extends Controller
 {
@@ -73,6 +74,8 @@ class MemberController extends Controller
         $Member->last_name = $request->last_member_name;
         $Member->save();
         
+        try {
+
         $Password = "11223344";
         $email =  $request['email'];
         $Name = $request['member_name'];
@@ -88,6 +91,12 @@ class MemberController extends Controller
         $message->to($email, env('MAIL_FROM_NAME'))->subject('Login Credentials');
         $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
         });
+    } catch (\Error $ex) {
+
+        return redirect()->back()->with('message', 'Member Added Successfully');
+
+
+    }
         
        
         return redirect()->back()->with('message', 'Member Added Successfully');
