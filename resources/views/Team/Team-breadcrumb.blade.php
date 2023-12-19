@@ -14,9 +14,11 @@
                 <div class="mr-2">
                     <a href="{{url('dashboard/organization/contacts')}}" style="text-decoration: none;"></a>
                 </div>
-                <div class="mr-2">
+                @if($organization->type == 'BU' || $organization->type == 'VS')
+                <div class="mr-2">                   
                     <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->team_title}}</a>
                 </div>
+                @endif
                 <div class="mr-2">
                     <p>Backlog</p>
                 </div>
