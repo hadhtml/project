@@ -4,6 +4,15 @@ $var_objective = "Org";
 @extends('components.main-layout')
 <title>Dashboard</title>
 @section('content')
+
+@php
+$Portfolio = DB::table('objectives')->where('type','org')->where('trash',NULL)->count();
+$Performance = DB::table('kpi_setting')->where('type','org')->count();
+$Teams = DB::table('org_team')->count();
+$Reporting = DB::table('sprint')->where('type','org')->count();
+$EpicsBacklog = DB::table('team_backlog')->where('type','org')->count();
+
+@endphp
 <div class="row">
     <div class="col-md-12">
         <div class="row">
@@ -16,7 +25,7 @@ $var_objective = "Org";
                         <h4>Portfolio</h4>
                     </div>
                     <div class="dashboard-card-number">
-                        <h3>25</h3>
+                        <h3>{{$Portfolio}}</h3>
                     </div>
                 </div>
             </div>
@@ -29,7 +38,7 @@ $var_objective = "Org";
                         <h4>Epics Backlog</h4>
                     </div>
                     <div class="dashboard-card-number">
-                        <h3>25</h3>
+                        <h3>{{$EpicsBacklog}}</h3>
                     </div>
                 </div>
             </div>
@@ -42,7 +51,7 @@ $var_objective = "Org";
                         <h4>Performance</h4>
                     </div>
                     <div class="dashboard-card-number">
-                        <h3>25</h3>
+                        <h3>{{$Performance}}</h3>
                     </div>
                 </div>
             </div>
@@ -55,7 +64,7 @@ $var_objective = "Org";
                         <h4>Teams</h4>
                     </div>
                     <div class="dashboard-card-number">
-                        <h3>25</h3>
+                        <h3>{{$Teams}}</h3>
                     </div>
                 </div>
             </div>
@@ -68,7 +77,7 @@ $var_objective = "Org";
                         <h4>Reporting</h4>
                     </div>
                     <div class="dashboard-card-number">
-                        <h3>25</h3>
+                        <h3>{{$Reporting}}</h3>
                     </div>
                 </div>
             </div>
