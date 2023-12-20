@@ -15,6 +15,10 @@ if($type == 'VS')
 {
 $var_objective = 'PageT-'.$type;
 }
+if($type == 'org')
+{
+$var_objective = 'PageT-'.$type;
+}
 @endphp
 @extends('components.main-layout')
 <style>
@@ -593,7 +597,7 @@ $var_objective = 'PageT-'.$type;
                                        </div>
                                        @php
                                        $initiativeweightcounte = DB::table('initiative')->where('key_id',$key->id)->sum('initiative_weight');
-                                       $monthnumber = DB::table('organization')->where('user_id',Auth::id())->first();
+                                       $monthnumber = DB::table('settings')->where('user_id',Auth::id())->first();
                                        $number = 0;
                                        if($monthnumber)
                                        {

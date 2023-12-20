@@ -7,6 +7,11 @@
                 </a>
             </li>
             <li>
+                <a href="{{url('dashboard/organization/all-organization')}}"  @if (url()->current() == url('dashboard/organization/all-organization')) class="active-link" @else class="nav-link"  @endif  data-toggle="tooltip" data-placement="right" data-original-title="Organization">
+                    <span class="material-symbols-outlined">domain</span>
+                </a>
+            </li>
+            <li>
                 <a href="{{url('dashboard/organization/Business-Units')}}"  @if (url()->current() == url('dashboard/organization/Business-Units')) class="active-link" @else class="nav-link"  @endif  data-toggle="tooltip" data-placement="right" data-original-title=" Business Units">
                     <span class="material-symbols-outlined">domain</span>
                 </a>

@@ -9,9 +9,17 @@ if($type == 'VS')
 $var_objective = 'TBaclog-'.$type;
 }
 
+if($type == 'org')
+{
+$var_objective = 'TBaclog-'.$type;
+}
+
+
 @endphp
 @extends('components.main-layout')
+@if($type == 'BU' || $type == 'VS')
 <title>Backlog-{{$organization->team_title}}</title>
+@endif
 @section('content')
 <style>
 

@@ -72,6 +72,17 @@ class ObjectiveController extends Controller
                 ->get();
         }
 
+        if ($type == "org") {
+            $organization = DB::table("organization")
+                ->where("slug", $id)
+                ->first();
+            $objective = DB::table("objectives")
+                ->where("unit_id", $organization->id)
+                ->where("trash", null)
+                ->where("type", "org")
+                ->get();
+        }
+
         Jira::UpdateEpicjira();
 
         return view(
@@ -166,6 +177,17 @@ class ObjectiveController extends Controller
                 ->get();
         }
 
+        if ($request->type == "org") {
+            $organization = DB::table("organization")
+                ->where("slug", $request->slug)
+                ->first();
+            $objective = DB::table("objectives")
+                ->where("unit_id", $request->unit_id)
+                ->where("trash", null)
+                ->where("type", "org")
+                ->get();
+        }
+
         return view(
             "objective.objective-render",
             compact("organization", "objective")
@@ -237,6 +259,17 @@ class ObjectiveController extends Controller
                 ->get();
         }
 
+        if ($request->type == "org") {
+            $organization = DB::table("organization")
+                ->where("slug", $request->slug)
+                ->first();
+            $objective = DB::table("objectives")
+                ->where("unit_id", $request->unit_id)
+                ->where("trash", null)
+                ->where("type", "org")
+                ->get();
+        }
+
         return view(
             "objective.objective-render",
             compact("organization", "objective")
@@ -300,6 +333,17 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "VS")
+                ->get();
+        }
+
+        if ($request->type == "org") {
+            $organization = DB::table("organization")
+                ->where("slug", $request->slug)
+                ->first();
+            $objective = DB::table("objectives")
+                ->where("unit_id", $request->unit_id)
+                ->where("trash", null)
+                ->where("type", "org")
                 ->get();
         }
 
@@ -419,6 +463,17 @@ class ObjectiveController extends Controller
                 ->get();
         }
 
+        if ($request->type == "org") {
+            $organization = DB::table("organization")
+                ->where("slug", $request->slug)
+                ->first();
+            $objective = DB::table("objectives")
+                ->where("unit_id", $request->unit_id)
+                ->where("trash", null)
+                ->where("type", "org")
+                ->get();
+        }
+
         return view(
             "objective.objective-render",
             compact("organization", "objective")
@@ -506,6 +561,17 @@ class ObjectiveController extends Controller
                 ->get();
         }
 
+        if ($request->type == "org") {
+            $organization = DB::table("organization")
+                ->where("slug", $request->slug)
+                ->first();
+            $objective = DB::table("objectives")
+                ->where("unit_id", $request->unit_id)
+                ->where("trash", null)
+                ->where("type", "org")
+                ->get();
+        }
+
         return view(
             "objective.objective-render",
             compact("organization", "objective")
@@ -576,6 +642,17 @@ class ObjectiveController extends Controller
                 ->get();
         }
 
+        if ($request->type == "org") {
+            $organization = DB::table("organization")
+                ->where("slug", $request->slug)
+                ->first();
+            $objective = DB::table("objectives")
+                ->where("unit_id", $request->unit_id)
+                ->where("trash", null)
+                ->where("type", "org")
+                ->get();
+        }
+
         return view(
             "objective.objective-render",
             compact("organization", "objective")
@@ -606,7 +683,7 @@ class ObjectiveController extends Controller
             "initiative_status" => $request->init_status,
         ]);
 
-        $month = DB::table("organization")
+        $month = DB::table("settings")
             ->where("user_id", Auth::id())
             ->first();
         $monthIndex = 1;
@@ -743,6 +820,17 @@ class ObjectiveController extends Controller
                 ->get();
         }
 
+        if ($request->type == "org") {
+            $organization = DB::table("organization")
+                ->where("slug", $request->slug)
+                ->first();
+            $objective = DB::table("objectives")
+                ->where("unit_id", $request->unit_id)
+                ->where("trash", null)
+                ->where("type", "org")
+                ->get();
+        }
+
         return view(
             "objective.objective-render",
             compact("organization", "objective")
@@ -814,6 +902,17 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "VS")
+                ->get();
+        }
+
+        if ($request->type == "org") {
+            $organization = DB::table("organization")
+                ->where("slug", $request->slug)
+                ->first();
+            $objective = DB::table("objectives")
+                ->where("unit_id", $request->unit_id)
+                ->where("trash", null)
+                ->where("type", "org")
                 ->get();
         }
 
@@ -917,6 +1016,17 @@ class ObjectiveController extends Controller
                     ->get();
             }
 
+            if ($request->type == "org") {
+                $organization = DB::table("organization")
+                    ->where("slug", $request->slug)
+                    ->first();
+                $objective = DB::table("objectives")
+                    ->where("unit_id", $request->unit_id)
+                    ->where("trash", null)
+                    ->where("type", "org")
+                    ->get();
+            }
+
             return view(
                 "objective.objective-render",
                 compact("organization", "objective")
@@ -934,7 +1044,7 @@ class ObjectiveController extends Controller
                 })
                 ->toArray();
 
-            $month = DB::table("organization")
+            $month = DB::table("settings")
                 ->where("user_id", Auth::id())
                 ->first();
             $monthIndex = 1;
@@ -1096,6 +1206,17 @@ class ObjectiveController extends Controller
                     ->get();
             }
 
+            if ($request->type == "org") {
+                $organization = DB::table("organization")
+                    ->where("slug", $request->slug)
+                    ->first();
+                $objective = DB::table("objectives")
+                    ->where("unit_id", $request->unit_id)
+                    ->where("trash", null)
+                    ->where("type", "org")
+                    ->get();
+            }
+
             return view(
                 "objective.objective-render",
                 compact("organization", "objective")
@@ -1207,6 +1328,17 @@ class ObjectiveController extends Controller
                     ->get();
             }
 
+            if ($request->type == "org") {
+                $organization = DB::table("organization")
+                    ->where("slug", $request->slug)
+                    ->first();
+                $objective = DB::table("objectives")
+                    ->where("unit_id", $request->unit_id)
+                    ->where("trash", null)
+                    ->where("type", "org")
+                    ->get();
+            }
+
             return view(
                 "objective.objective-render",
                 compact("organization", "objective")
@@ -1282,6 +1414,17 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "VS")
+                ->get();
+        }
+
+        if ($request->type == "org") {
+            $organization = DB::table("organization")
+                ->where("slug", $request->slug)
+                ->first();
+            $objective = DB::table("objectives")
+                ->where("unit_id", $request->unit_id)
+                ->where("trash", null)
+                ->where("type", "org")
                 ->get();
         }
 
@@ -1629,6 +1772,17 @@ class ObjectiveController extends Controller
                 ->get();
         }
 
+        if ($request->type == "org") {
+            $organization = DB::table("organization")
+                ->where("slug", $request->slug)
+                ->first();
+            $objective = DB::table("objectives")
+                ->where("unit_id", $request->unit_id)
+                ->where("trash", null)
+                ->where("type", "org")
+                ->get();
+        }
+
         return view(
             "objective.objective-render",
             compact("organization", "objective")
@@ -1870,6 +2024,17 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "VS")
+                ->get();
+        }
+
+        if ($request->type == "org") {
+            $organization = DB::table("organization")
+                ->where("slug", $request->slug)
+                ->first();
+            $objective = DB::table("objectives")
+                ->where("unit_id", $request->unit_id)
+                ->where("trash", null)
+                ->where("type", "org")
                 ->get();
         }
 
@@ -2680,6 +2845,17 @@ class ObjectiveController extends Controller
                 ->get();
         }
 
+        if ($request->type == "org") {
+            $organization = DB::table("organization")
+                ->where("slug", $request->slug)
+                ->first();
+            $objective = DB::table("objectives")
+                ->where("unit_id", $request->unit_id)
+                ->where("trash", null)
+                ->where("type", "org")
+                ->get();
+        }
+
         return view(
             "objective.objective-render",
             compact("organization", "objective")
@@ -2756,6 +2932,17 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "VS")
+                ->get();
+        }
+
+        if ($request->type == "org") {
+            $organization = DB::table("organization")
+                ->where("slug", $request->slug)
+                ->first();
+            $objective = DB::table("objectives")
+                ->where("unit_id", $request->unit_id)
+                ->where("trash", null)
+                ->where("type", "org")
                 ->get();
         }
 
@@ -2876,6 +3063,22 @@ class ObjectiveController extends Controller
                 "objective.epicFlag",
                 compact("organization", "objective", "FladId")
             );
+        }
+
+        if ($request->type == "org") {
+            $organization = DB::table("organization")
+                ->where("slug", $request->slug)
+                ->first();
+            $objective = DB::table("objectives")
+                ->where("unit_id", $request->unit_id)
+                ->where("trash", null)
+                ->where("type", "org")
+                ->get();
+            
+                return view(
+                    "objective.epicFlag",
+                    compact("organization", "objective", "FladId")
+                );
         }
     }
 

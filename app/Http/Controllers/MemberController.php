@@ -796,6 +796,14 @@ class MemberController extends Controller
 
             
      }
+
+     if($type == 'org')
+     {
+     $organization  = DB::table('organization')->where('slug',$id)->first();
+     $data = DB::table('kpi_setting')->where('user_id',Auth::id())->where('stream_id',$organization->id)->where('type','org')->get();  
+
+            
+     }
      
      return view('Chart.chart',compact('data','organization','type'));
     }

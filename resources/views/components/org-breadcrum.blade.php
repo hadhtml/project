@@ -18,9 +18,9 @@
                         <!--end::Info-->
                         <!--begin::Toolbar-->
                         <div class="d-flex align-items-center toolbar">
-                            <!--<div>-->
-                            <!--    <button class="button" data-toggle="modal" data-target="#create-org">Add Organization</button>-->
-                            <!--</div>-->
+                            <div>
+                                <button class="button" data-toggle="modal" data-target="#create-org">Add Organization</button>
+                            </div>
                         </div>
                         <!--end::Toolbar-->
                     </div>

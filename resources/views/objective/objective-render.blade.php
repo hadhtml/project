@@ -834,7 +834,7 @@ $keyweightcounte = DB::table('key_result')->where('obj_id',$obj->id)->sum('weigh
                                         </div>
                                               @php
                                               $initiativeweightcounte = DB::table('initiative')->where('key_id',$key->id)->sum('initiative_weight');
-                                              $monthnumber = DB::table('organization')->where('user_id',Auth::id())->first();
+                                              $monthnumber = DB::table('settings')->where('user_id',Auth::id())->first();
                                               $number = 0;
                                               if($monthnumber)
                                               {

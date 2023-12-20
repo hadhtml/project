@@ -102,6 +102,7 @@
                 $('#epic-modal-content').html(res);
                 $('#edit-epic-modal-new').modal('show');
                 // showtab(id , 'general');
+                showheader(epic_id);
             }
         });
     }

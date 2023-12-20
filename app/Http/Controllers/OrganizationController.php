@@ -16,12 +16,70 @@ class OrganizationController extends Controller
   {
       $this->middleware('auth');
   }
-    // public function Organization()
-    // {
-    //     $organization  = Organization::where('user_id',Auth::id())->where('trash',NULL)->Paginate(10);
-    //     return view('organizations.index',compact('organization'));
+    public function Organization()
+    {
+        $organization  = Organization::where('user_id',Auth::id())->where('trash',NULL)->Paginate(10);
+        return view('organizations.AllOrg',compact('organization'));
 
-    // }
+    }
+
+    public function OrgTeam($id)
+    {
+    $organization = DB::table('organization')->where('slug',$id)->first();
+    $Team = DB::table('org_team')->where('org_id',$organization->id)->get();
+    return view('organizations.Team',compact('organization','Team'));  
+        
+    }
+
+    public function SaveOrgTeam(Request $request)
+    {
+
+        DB::table('org_team')
+        ->insert([
+            'org_id' => $request->team_unit_id,
+            'member' => implode(',',$request->member),
+            'lead_id' => $request->lead_manager_team,
+            'team_title' => $request->team_title,
+            'slug' => Str::slug($request->team_title.'-'.rand(10, 99)),
+            
+            
+            ]);
+      
+       
+        return redirect()->back()->with('message', 'Team Added Successfully');
+
+    }
+
+    public function UpdateOrgTeam(Request $request)
+    {
+
+     
+        DB::table('org_team')
+        ->where('id',$request->id)
+        ->update([
+            'member' => implode(',',$request->member),
+            'lead_id' => $request->lead_manager_team,
+            'team_title' => $request->team_title,
+            'slug' => Str::slug($request->team_title.'-'.rand(10, 99)),
+            
+            ]);
+      
+       
+        return redirect()->back()->with('message', 'Team Updated Successfully');
+
+    }
+
+    public function DeleteOrgTeam(Request $request)
+    {
+
+     
+        DB::table('org_team')->where('id',$request->delete_id)->delete();
+      
+       
+        return redirect()->back()->with('message', 'Team Deleted Successfully');
+
+    }
+    
     
     // public function getdata()
     // {
@@ -411,6 +469,12 @@ class OrganizationController extends Controller
           $organization = DB::table('value_team')->where('slug',$id)->first();        
           $report  =  DB::table('sprint')->where('value_unit_id',$organization->id)->where('type','VS')->get();
           }
+
+          if($type == 'org')
+          {
+          $organization = DB::table('organization')->where('slug',$id)->first();        
+          $report  =  DB::table('sprint')->where('value_unit_id',$organization->id)->where('type','VS')->get();
+          }
           
           return view('Report.Bu-report',compact('report','organization','type'));
 
@@ -441,6 +505,11 @@ class OrganizationController extends Controller
       if($type == 'VS')
       {
       $organization = DB::table('value_team')->where('id',$report->value_unit_id)->first();        
+      }
+
+      if($type == 'org')
+      {
+      $organization = DB::table('organization')->where('id',$report->value_unit_id)->first();        
       }
       if($sprint)
       {
@@ -478,6 +547,10 @@ class OrganizationController extends Controller
           if($type == 'VS')
           {
           $organization = DB::table('value_team')->where('id',$report->value_unit_id)->first();        
+          }
+          if($type == 'org')
+          {
+          $organization = DB::table('organization')->where('id',$report->value_unit_id)->first();        
           }
           if($sprint)
           {

@@ -73,13 +73,13 @@ class RegisterController extends Controller
             'last_name' => $data['last_name'],
         ]);
         
-            $organization  = new Organization();
-            $organization->organization_name = $user->name;
-            $organization->email = $user->email;
-            $organization->slug = Str::slug($user->name.'-'.rand(10, 99));
-            $organization->user_id = $user->id;
-            $organization->code =  '#OR' . rand(1000, 9999);
-            $organization->save();
+            // $organization  = new Organization();
+            // $organization->organization_name = $user->name;
+            // $organization->email = $user->email;
+            // $organization->slug = Str::slug($user->name.'-'.rand(10, 99));
+            // $organization->user_id = $user->id;
+            // $organization->code =  '#OR' . rand(1000, 9999);
+            // $organization->save();
             
             return $user;
     }
