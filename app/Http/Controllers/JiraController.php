@@ -326,12 +326,26 @@ class JiraController extends Controller
     public function AddFinancialYear(Request $request)
     {
 
-      DB::table('organization')
-      ->where('user_id',Auth::id())
-      ->update([
-        'month' => $request->month,  
-        ]);
-
+      $setting = DB::table('settings')
+      ->where('user_id',Auth::id())->first();
+      if($setting)
+      {
+        DB::table('settings')
+        ->where('user_id',Auth::id())
+        ->update([
+          'month' => $request->month,  
+          ]);
+  
+      }else
+      {
+        DB::table('settings')
+        ->insert([
+          'month' => $request->month,
+          'user_id' => Auth::id(),  
+          ]);
+  
+      }
+     
       return redirect()->back();
 
     
