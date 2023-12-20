@@ -68,7 +68,7 @@
                     var modaltab = $('#modaltab').val();
                     if(modaltab == 'general')
                     {
-                        
+                        editepic('{{ $data->id }}');
                     }
                 },
                 error: function(error) {
@@ -88,9 +88,61 @@
             </div>
         </div>
         @else
-        <a href="javascript:vodi(0)" class="epic-header-buttons" id="showboardbutton">
+        <a href="javascript:void(0)" onclick="showmemberbox()" class="epic-header-buttons" id="showboardbutton">
             <img src="{{url('public/assets/svg/btnteamsvg.svg')}}" width="20">Team
         </a>
+        <div class="members-list">
+            <div class="member-list-image memberlistposition">
+                <div class="memberadd-box">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4>Select Team</h4>
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <img onclick="showmemberbox()" class="memberclose" src="{{url('public/assets/svg/memberclose.svg')}}">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="mb-2 positionrelative">
+                                <input onkeyup="searchteam(this.value)" type="text" placeholder="Search Team" class="form-control" name="flag_title" id="objective-name" required>
+                                <div class="membersearchiconforinput">
+                                    <img src="{{ url('public/assets/images/searchiconsvg.svg') }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" id="memberstoshow">
+                        @if($data->type == 'unit')
+                            @foreach(DB::table('unit_team')->where('org_id',$data->buisness_unit_id)->get() as $r)
+                                <div class="col-md-12 memberprofile" onclick="savemember({{$r->id}} , {{$data->id}})">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="memberprofileimage">
+                                                @if($r->image)
+                                                <img src="{{ url('public/assets/images') }}/{{ $r->image }}">
+                                                @else
+                                                <div class="namecounter">{{ substr($r->name, 0, 1); }}</div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="membername">{{ $r->team_title }}</div>
+                                            <div class="memberdetail">Team Leader: {{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
+                                        </div>
+                                        <div class="col-md-2 text-center mt-3">
+                                            @if($data->team_id == $r->id)
+                                            <img class="tickimage" src="{{ url('public/assets/svg/smalltick.svg') }}">
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
         @endif
 
         <div class="epic-header-buttons raise-flag-button">
@@ -180,6 +232,9 @@
     <img data-dismiss="modal" class="closeimage" aria-label="Close" src="{{url('public/assets/svg/cross.svg')}}">
 </div>
 <script type="text/javascript">
+    function showmemberbox() {
+        $('.memberadd-box').slideToggle();
+    }
     function rasiseflag() {
         $('.raiseflag-box').slideToggle();
     }
