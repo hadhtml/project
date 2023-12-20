@@ -18,7 +18,7 @@ class OrganizationController extends Controller
   }
     public function Organization()
     {
-        $organization  = Organization::where('user_id',Auth::id())->where('trash',NULL)->Paginate(10);
+        $organization  = Organization::where('user_id',Auth::id())->where('type','org')->where('trash',NULL)->Paginate(10);
         return view('organizations.AllOrg',compact('organization'));
 
     }

@@ -482,7 +482,7 @@ $keyweightcounte = DB::table('key_result')->where('obj_id',$obj->id)->sum('weigh
                                                                                             @php
                                                                                             $epic  = DB::table('epics')->where('month_id',$month->id)->where('trash',NULL)->get();
                                                                                             @endphp
-                                                                                            <div  @if($CurrentQuarter) @if($q->id < $CurrentQuarter->quarter_id) class="board-flex" @else class="board" @endif @endif   style="width:280px"
+                                                                                            <div  @if($CurrentQuarter) @if($q->id < $CurrentQuarter->quarter_id) class="board-flex" @else class="board" @endif @endif   style="width:236px"
                                                                                                 id="{{$month->id}}">
                                                                                                 <header
                                                                                                     class="noselect">

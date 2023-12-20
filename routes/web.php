@@ -119,7 +119,7 @@ Route::post('update-chart-basic', [App\Http\Controllers\ChartController::class, 
 Route::post('delete-graph-val', [App\Http\Controllers\ChartController::class, 'Deletegraphval']);
 Route::get('download/{file_name}', [App\Http\Controllers\ChartController::class, 'getDownload']);
 Route::get('get-chart-status', [App\Http\Controllers\ChartController::class, 'ChartFilter']);
-
+Route::get('chart-status', [App\Http\Controllers\ChartController::class, 'GetChartStatus']);
 Route::post('save-epic-month', [App\Http\Controllers\ObjectiveController::class,'SaveEpicMonth']);
 
 // Members

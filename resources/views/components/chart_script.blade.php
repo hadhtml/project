@@ -880,6 +880,34 @@ $.ajax({
         });
 
         }
+
+        function chart_status()
+        {
+        
+        var chartId = $('.chkveg').val();
+        var stream_id = "{{$organization->id}}";
+
+        $.ajax({
+        type: "GET",
+        url: "{{ url('chart-status') }}",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+        chartId:chartId,
+        stream_id:stream_id
+        },
+        success: function(res) {
+            
+     
+        $('#chart-update').html(res);   
+
+
+        }
+        });
+
+        }
+        
         
         
  

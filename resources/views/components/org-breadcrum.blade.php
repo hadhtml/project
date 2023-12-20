@@ -1,10 +1,19 @@
 <!-- begin breadcrums -->
+@php
+$organization  = DB::table('organization')->where('user_id',Auth::id())->where('type','sign-up')->first();
+@endphp
                 <div class="subheader subheader-solid breadcrums" id="kt_subheader">
                     <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
                         <!--begin::Info-->
                         <div class="d-flex align-items-start flex-column flex-wrap mr-2">
                             <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
-                                Organizations
+                               @if($organization) 
+                               {{$organization->organization_name.'-'.$organization->code}}
+                               @else
+                               organization
+                               @endif
+
+                               
                             </h5>
                             <!-- Breadcrum Items -->
                             <div class="d-flex flex-row page-sub-titles">

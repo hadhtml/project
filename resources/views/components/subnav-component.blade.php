@@ -47,7 +47,7 @@
                         </button>
 
                         @php
-                        $Stream = DB::table('organization')->where('user_id',Auth::id())->get();
+                        $Stream = DB::table('organization')->where('type','org')->where('user_id',Auth::id())->get();
                         @endphp  
 
                         <div class="collapse" id="home-collapse1" style="">

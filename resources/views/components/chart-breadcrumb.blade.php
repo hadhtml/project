@@ -35,17 +35,23 @@
                         <div class="d-flex align-items-center toolbar">
                             
                             <div class="dropdown dropleft mr-2">
-                                    <button class="button dropdown-toggle bg-secondary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                       Status
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="javascript:void(0)" onclick="get_chart_status('all');">All</a>
-                                        <a class="dropdown-item" href="javascript:void(0)" onclick="get_chart_status('Green');">Green</a>
-                                        <a class="dropdown-item" href="javascript:void(0)" onclick="get_chart_status('Amber');">Amber</a>
-                                        <a class="dropdown-item" href="javascript:void(0)" onclick="get_chart_status('Red');">Red</a>
-                                        <a class="dropdown-item" href="javascript:void(0)" onclick="get_chart_status('N');">No Status</a>
-
+                                <div class="d-flex flex-column mr-3">
+                                    <div style="padding:20px">
+                                          Filter
+                                    <select class="chkveg" multiple="multiple" >
+                                      <option value="Green">Green</option>
+                                      <option value="Amber">Amber</option>
+                                       <option value="Red">Red</option>
+                                      <option value="N">N</option>
+                                     
+                                    </select>
+                                       <button class="btn-circle btn-tolbar bg-transparent" type="button" onclick="chart_status();" >
+                                       <img src="{{asset('public/assets/images/icons/filter.svg')}}" width="20" width="20">
+                                       </button>
                                     </div>
+                      
+                                </div>
+                                 
                                 </div>
                             <div>
                                 
