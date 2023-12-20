@@ -85,27 +85,19 @@
                                 </select>
                             </div>
                         </div>
-                    </div>
-                    <div class="row mt-3">
                         <div class="col-md-6">
-                            <div class="d-flex statusofstory">
-                                <h4>Status</h4>
-                                <div class="dropdown firstdropdownofcomments">
-                                  <span class="dropdown-toggle orderbybutton" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Done
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="11" height="7" viewBox="0 0 11 7" fill="none">
-                                      <path d="M10.8339 0.644857C10.6453 0.456252 10.3502 0.439106 10.1422 0.593419L10.0826 0.644857L5.49992 5.2273L0.917236 0.644857C0.72863 0.456252 0.433494 0.439106 0.225519 0.593419L0.165935 0.644857C-0.0226701 0.833463 -0.0398163 1.1286 0.114497 1.33657L0.165935 1.39616L5.12427 6.35449C5.31287 6.5431 5.60801 6.56024 5.81599 6.40593L5.87557 6.35449L10.8339 1.39616C11.0414 1.18869 11.0414 0.852323 10.8339 0.644857Z" fill="#787878"/>
-                                    </svg>
-                                  </span>
-                                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="javascript:void(0)">To Do</a>
-                                    <a class="dropdown-item" href="javascript:void(0)">In Progress</a>
-                                    <a class="dropdown-item" href="javascript:void(0)">Done</a>
-                                  </div>
-                                </div>
+                            <div class="form-group mb-0">
+                               <label for="small-description">Status</label>
+                               <select name="story_status" class="form-control">
+                                <option  value="To Do">To Do</option>
+                                <option  value="In progress">In Progress</option>
+                                 <option value="Done">Done</option>
+                               </select>
                             </div>
                         </div>
-                        <div class="col-md-6 text-right">
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12 text-right">
                             <span onclick="additem()" class="btn btn-default btn-sm">Cancel</span>
                             <button id="createchilditembutton" type="submit" class="btn btn-primary btn-sm">Save</button>
                         </div>
@@ -138,8 +130,9 @@
                     border-bottom: 1px dotted #ddd;
                 }
                 .child-item-chekbox-portions {
-                    width: 25%;
+                    width: 7%;
                     display: flex;
+                    margin-top: 5px;
                 }
                 .form-checkboxs{
                 display: flex;
@@ -168,13 +161,21 @@
                 <div class="child-items">
                     <div class="child-item-chekbox-portions">
                         <label class="form-checkboxs">
-                            <input class="form-check-inputs" type="checkbox"  value="1" id="flexCheckDefault">
+                            <input class="form-check-inputs" id="bulkeditcheckbox" type="checkbox" onclick="bulkeditcheckbox()">
                             <span class="checkbox-labels"></span>
                         </label>
                     </div>
-                    <div class="child-items-id">ID</div>
-                    <div class="child-items-tittle">Tittle</div>
-                    <div class="child-items-actions">Action</div>
+                    <div class="dropdown firstdropdownofcomments">
+                          <span class="dropdown-toggle orderbybutton" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Bulk Edit
+                            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="7" viewBox="0 0 11 7" fill="none">
+                              <path d="M10.8339 0.644857C10.6453 0.456252 10.3502 0.439106 10.1422 0.593419L10.0826 0.644857L5.49992 5.2273L0.917236 0.644857C0.72863 0.456252 0.433494 0.439106 0.225519 0.593419L0.165935 0.644857C-0.0226701 0.833463 -0.0398163 1.1286 0.114497 1.33657L0.165935 1.39616L5.12427 6.35449C5.31287 6.5431 5.60801 6.56024 5.81599 6.40593L5.87557 6.35449L10.8339 1.39616C11.0414 1.18869 11.0414 0.852323 10.8339 0.644857Z" fill="#787878"/>
+                            </svg> 
+                          </span>
+                          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" onclick="deletechilditemsbulk()" href="javascript:void(0)">Delete</a>
+                          </div>
+                        </div>
                 </div>                
             </div>
             @if($epicstory->count() > 0)
@@ -183,7 +184,7 @@
                     <div class="child-item">
                         <div class="child-item-chekbox-portion">
                             <label class="form-checkbox">
-                                <input class="form-check-input"  type="checkbox" @if($s->progress > 0) checked onclick="updateprogress({{ $s->id }} , 1)" @else onclick="updateprogress({{ $s->id }} , 2)" @endif  value="{{$s->id}}"  id="flexCheckDefault">
+                                <input class="form-check-input allchilditem"  type="checkbox" @if($s->progress > 0) checked onclick="updateprogress({{ $s->id }} , 1)" @else onclick="updateprogress({{ $s->id }} , 2)" @endif  value="{{$s->id}}"  id="flexCheckDefault">
                                 <span class="checkbox-label"></span>
                             </label>
                             <div class="child-item-id">
@@ -218,15 +219,7 @@
                                     @endif
                                 </button>
                                 <button type="button" class="@if($s->story_status == 'To Do') todo-button-color @endif @if($s->story_status == 'In progress') inprogress-button-color @endif @if($s->story_status == 'Done') done-button-color @endif status-change-button-item-arrow btn btn-danger dropdown-toggle dropdown-toggle-split archivebeardcimbgbutton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    @if($s->story_status == 'To Do') 
-                                    <img src="{{url('public/assets/images/icons/angle-down.svg')}}" width="20">
-                                    @endif 
-                                    @if($s->story_status == 'In progress') 
                                     <img src="{{url('public/assets/svg/arrow-down-white.svg')}}" width="20">
-                                    @endif 
-                                    @if($s->story_status == 'Done') 
-                                    <img src="{{url('public/assets/svg/arrow-down-white.svg')}}" width="20">
-                                    @endif                                    
                                     <span class="sr-only">Toggle Dropdown</span>
                                 </button>
                                 <div class="dropdown-menu">
@@ -245,7 +238,19 @@
                                 </div>
                             </div>
                             <img class="edit-item-image" type="button" onclick="editstorynew({{$s->id}})" src="{{ url('public/assets/svg/edit-2.svg') }}">
-                            <img class="delete-item-image" src="{{ url('public/assets/svg/trash.svg') }}">
+                            <img onclick="deletechilditemshow({{$s->id}})" class="delete-item-image" src="{{ url('public/assets/svg/trash.svg') }}">
+                            <div class="deletechildstory" id="deleteattachmentshow{{ $s->id }}">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <h4>Delete Child Item</h4>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <img onclick="deletechilditemshow({{$s->id}})" src="{{ url('public/assets/svg/crossdelete.svg') }}">
+                                    </div>
+                                </div>
+                                <p>Do you want to delete this Child Item? You won’t be able to undo this action.</p>
+                                <button onclick="deletechilditem({{ $s->id }})" class="btn btn-danger btn-block">Delete</button>
+                            </div>
                         </div>
                     </div>
                     <div class="card comment-card storyaddcard editstorycard" id="editstory{{$s->id}}">
@@ -296,6 +301,16 @@
     </div>
 </div>
 <script type="text/javascript">
+function deletechilditemshow(id) {
+    $('#deleteattachmentshow'+id).slideToggle();
+}
+function bulkeditcheckbox() {
+    if ($('#bulkeditcheckbox').is(':checked')) {
+        $('.allchilditem').prop("checked", true);
+    }else{
+        $('.allchilditem').prop("checked", false);
+    }
+}
 function updatestory(s_id) {
     $('#updateitembutton'+s_id).html('<i class="fa fa-spin fa-spinner"></i>');
     // var title = $('#title'+s_id).val();
@@ -325,7 +340,21 @@ function updatestory(s_id) {
             }
         });
     }
-
+}
+function deletechilditem(id) {
+    $.ajax({
+        type: "POST",
+        url: "{{ url('dashboard/epics/deletechilditem') }}",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+            id: id
+        },
+        success: function(res) {
+            showtabwithoutloader('{{$epic->id}}' , 'childitems');
+        }
+    });
 }
 function changeitemstatus(status , id) {
     var title = $('#edit_story_title' + id).val();

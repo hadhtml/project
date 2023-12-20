@@ -887,6 +887,7 @@ div[role="circleprogressbar"]::before {
 .child-item-actions{
     width: 35%;
     display: flex;
+    position: relative;
 }
 
 .child-item-actions .btn-group
@@ -1169,4 +1170,39 @@ select:focus,
 textarea:focus,
 button:focus {
     outline: none !important;
+}
+.deletechildstory{
+    position: absolute;
+    border-radius: 12px;
+    display: none;
+    width: 285px;
+    height: 145px;
+    z-index: 1111;
+    right: 0px;
+    top: 125%;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0px 2px 2px 4px rgb(87 106 134 / 20%);
+}
+.deletechildstory img {
+    cursor: pointer;
+}
+
+.deletechildstory h4 {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.deletechildstory button {
+    height: 41px;
+    border-radius: 5px !important;
+}
+
+.deletechildstory p {
+    font-size: 12px !important;
+
+}
+
+.delete-item-image{
+    cursor: pointer;
 }
