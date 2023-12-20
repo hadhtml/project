@@ -139,6 +139,13 @@ class ChartController extends Controller
         }
         
         }
+
+        if ($request->collapseGroup == 'null')
+        {
+        DB::table('kpi_setting')->where('id',$data->id)->update(['c_status' => 'null']);
+        }
+
+        
         return back();
         
         
@@ -222,6 +229,11 @@ class ChartController extends Controller
         DB::table('kpi_setting')->where('id',$request->kpi)->update(['c_status' => 'Amber']);
         }
         
+        }
+
+        if ($chart_data->target_option == 'null')
+        {
+        DB::table('kpi_setting')->where('id',$request->kpi)->update(['c_status' => 'null']);
         }
        
        if($request->filter == 'N')
@@ -468,5 +480,24 @@ class ChartController extends Controller
       
 
     }
+
+    public function GetChartStatus(Request $request)
+    {
+      
+        $FladId = $request->input("chartId");
+        if ($FladId[0] == "N") 
+        {
+            $data = DB::table('kpi_setting')->where('user_id',Auth::id())->where('stream_id',$request->stream_id)->where('target_option','null')->get();
+            return view('Chart.chart-rendor',compact('data'));
+        }else
+        {
+            $data = DB::table('kpi_setting')->where('user_id',Auth::id())->where('stream_id',$request->stream_id)->whereIn('c_status',$FladId)->get();
+            return view('Chart.chart-rendor',compact('data'));
+        }   
+       
+        
+
+    }
+
 
 }
