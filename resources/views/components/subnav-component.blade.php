@@ -32,6 +32,7 @@
                     <img src="https://dev.agileprolific.com/public/assets/images/icons/collaps.svg">
                 </button>
                 <h6 class="title">Organization</h6>
+                @if (url()->current() == url('dashboard/organization/all-organization'))
                 <ul class="list-unstyled ps-0 expanded-navbar mb-0">
                     <li class="mb-1">
                         <button class="btn btn-toggle align-items-center rounded" data-toggle="collapse" data-target="#home-collapse1" aria-expanded="true">
@@ -60,6 +61,9 @@
                         </div>
                     </li>
                 </ul>
+                @endif
+
+                @if (url()->current() == url('dashboard/organization/Business-Units'))
                 <ul class="list-unstyled ps-0 expanded-navbar mb-0">
                     <li class="mb-1">
                         <button class="btn btn-toggle align-items-center rounded" data-toggle="collapse" data-target="#home-collapse" aria-expanded="true">
@@ -88,8 +92,10 @@
                         </div>
                     </li>
                 </ul>
+                @endif
 
                 <ul class="list-unstyled ps-0 expanded-navbar-options">
+                    @if (url()->current() == url('dashboard/organization/Business-Units'))
                     <li class="mb-1">
                         <a href="{{url('dashboard/organization/Bu/dashboard')}}" class="d-flex flex-row align-items-center">
                             <div class="mr-2">
@@ -100,6 +106,7 @@
                             </div>
                         </a>
                     </li>
+                    @endif
                     <li class="mb-1">
                         <a href="#" class="d-flex flex-row align-items-center">
                             <div class="mr-2">

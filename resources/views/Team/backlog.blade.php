@@ -157,6 +157,21 @@ $var_objective = 'TBaclog-'.$type;
                                                   </div>
                                                   @endif
 
+                                                  @if($organization->type == 'org')
+                                                  <div class="col-md-12 col-lg-12 col-xl-12">
+                                                    <div class="form-group mb-0">
+                                                       <select class="form-control category" id="" name="stream_obj" required>
+                                                        <option value="" >Select Organization</option>
+                                                        <?php foreach(DB::table('organization')->where('id',$organization->id)->get() as $r){ ?>
+                                                          <option value="{{ $r->id }}">{{ $r->organization_name }}</option>
+                                                           <?php }  ?>
+                        
+                                                       </select>
+                                                        <label for="small-description">Choose Organization</label>
+                                                    </div>
+                                                </div>
+                                                @endif
+
                                                          
             
                                                     

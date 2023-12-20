@@ -542,7 +542,13 @@ class MemberController extends Controller
     if($request->type == 'stream')
     {
     $objective = DB::table('objectives')->where('unit_id',$request->id)->where('type','stream')->where('trash',NULL)->get();
+    }
+    
+    if($request->type == 'org')
+    {
+    $objective = DB::table('objectives')->where('unit_id',$request->id)->where('type','org')->where('trash',NULL)->get();
     }       
+    
     
     return $objective;
     }
