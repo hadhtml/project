@@ -1,3 +1,33 @@
+<script>
+$(function() {
+    $(".sortable").sortable({
+        update: function(event, ui) { 
+            getOrder()
+        }
+    });
+});
+function getOrder(){
+    var order= $(".sortable .ui-state-default").map(function() {        
+        return this.id;        
+    }).get();
+    var epic_id = '{{ $epic->id }}';
+    $.ajax({
+        type: "POST",
+        url: "{{ url('dashboard/epics/sortchilditem') }}",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+            order: order,
+            epic_id:epic_id,
+        },
+        success: function(res) {
+            
+        }
+    });
+    return order;
+}
+</script>
 @php
     $epicstory = DB::table("epics_stroy")->where("epic_id", $epic->id)->get();
     $epicprogress = DB::table("epics_stroy")->where("epic_id", $epic->id)->sum("progress");
@@ -178,9 +208,9 @@
                         </div>
                 </div>                
             </div>
-            
+            <div class="sortable">
                 @foreach($epicstory as $s)
-                <div class="row">
+                <div class="row ui-state-default" style="cursor: pointer;" id="{{ $s->id }}">
                     <div class="child-item">
                         <div class="child-item-chekbox-portion">
                             <label class="form-checkbox">
@@ -292,6 +322,7 @@
                     </div>
                 </div>
                 @endforeach
+            </div>
             @else
                 <div class="nodatafound">
                     <h4>No Child Items</h4>    
@@ -302,7 +333,6 @@
 </div>
 <script type="text/javascript">
 function orderbychilditem(order,epic_id) {
-    console.log(order)
     $.ajax({
         type: "POST",
         url: "{{ url('dashboard/epics/orderbychilditem') }}",

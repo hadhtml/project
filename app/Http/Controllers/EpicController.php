@@ -68,7 +68,7 @@ class EpicController extends Controller
         if($request->tab == 'childitems')
         {
             $epic = Epic::find($request->id);
-            $epicstory = DB::table('epics_stroy')->where('epic_id',$epic->id)->orderby('id' , 'desc')->get();
+            $epicstory = DB::table('epics_stroy')->where('epic_id',$epic->id)->orderby('epics_stroy.order' , 'ASC')->get();
             $html = view('epics.tabs.childitems', compact('epic','epicstory'))->render();
             return $html;
         }
@@ -95,7 +95,8 @@ class EpicController extends Controller
         }
         if($request->tab == 'teams')
         {
-            $html = view('epics.tabs.teams')->render();
+            $data = Epic::find($request->id);
+            $html = view('epics.tabs.teams', compact('data'))->render();
             return $html;
         }
         if($request->tab == 'flags')
@@ -530,5 +531,13 @@ class EpicController extends Controller
         $data->epic_start_date = $request->start;
         $data->epic_end_date = $request->end;
         $data->save();
+    }
+    public function sortchilditem(Request $request)
+    {
+        foreach ($request->order as $key=>$r) {
+            $item = epics_stroy::find($r);
+            $item->order = $key+1;
+            $item->save();
+        }
     }
 }
