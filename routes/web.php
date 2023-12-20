@@ -258,7 +258,10 @@ Route::name('epics.')->namespace('App\Http\Controllers')->prefix('dashboard/epic
     Route::POST('changeepicstatus', 'EpicController@changeepicstatus');
     Route::POST('showheader', 'EpicController@showheader');
     Route::POST('updateflagstatus', 'EpicController@updateflagstatus');
-    Route::POST('flagupdate', 'EpicController@flagupdate');    
+    Route::POST('flagupdate', 'EpicController@flagupdate');   
+    Route::POST('deletechilditem', 'EpicController@deletechilditem');
+    Route::POST('orderbychilditem', 'EpicController@orderbychilditem');
+    Route::POST('changeepicdate', 'EpicController@changeepicdate');  
 });
 
 Route::name('keyresult.')->namespace('App\Http\Controllers')->prefix('dashboard/keyresult')->group(function () {

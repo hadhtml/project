@@ -53,6 +53,28 @@
             opens: 'right'
           }, function(start, end, label) {
             console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+            $.ajax({
+                type: "POST",
+                url: "{{ url('dashboard/epics/changeepicdate') }}",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    epic_id:'{{ $data->id }}',
+                    start:start.format('YYYY-MM-DD'),
+                    end:end.format('YYYY-MM-DD'),
+                },
+                success: function(res) {
+                    var modaltab = $('#modaltab').val();
+                    if(modaltab == 'general')
+                    {
+                        
+                    }
+                },
+                error: function(error) {
+                    
+                }
+            });
           });
         });
         </script>

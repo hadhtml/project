@@ -502,7 +502,6 @@ class EpicController extends Controller
         $flags->flag_status = $request->status;
         $flags->save();
     }
-
     public function flagupdate(Request $request)
     {
         $update = flags::find($request->flag_id);
@@ -510,5 +509,26 @@ class EpicController extends Controller
         $update->flag_title = $request->flag_title;
         $update->flag_description = $request->flag_description;
         $update->save();
+    }
+    public function orderbychilditem(Request $request)
+    {
+        $orderby = $request->order;
+        $epic = Epic::find($request->epic_id);
+        $epicstory = DB::table('epics_stroy')->where('epic_id',$epic->epic_id)->orderByRaw(DB::raw("FIELD(story_status, 'To Do', 'In progress', 'Done')"))->get();
+        $html = view('epics.tabs.childitems', compact('orderby','epic','epicstory'))->render();
+        return $html;   
+    }
+    public function showheader(Request $request)
+    {
+        $data = Epic::find($request->id);
+        $html = view('epics.modalheader', compact('data'))->render();
+        return $html;
+    }
+    public function changeepicdate(Request $request)
+    {
+        $data = Epic::find($request->epic_id);
+        $data->epic_start_date = $request->start;
+        $data->epic_end_date = $request->end;
+        $data->save();
     }
 }

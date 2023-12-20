@@ -1,4 +1,4 @@
-<a href="javscript:void(0)" onclick="editepic({{$e->id}})" class="card" style="width:102.7%">
+<div onclick="editepic({{$e->id}})" class="card" style="width:102.7%">
        <div class="card card-epic border-radius" style="margin-bottom:0px !important">
             <div class="card-header bg-white border-bottom-radius pt-2 pl-4 pr-4 pb-2">
 	            <div>
@@ -188,4 +188,4 @@
          </div>
       </div>
    </div>
-</a>
+</div>
