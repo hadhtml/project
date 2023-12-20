@@ -294,7 +294,7 @@ $var_objective = 'Org';
                                                 <img src="{{ asset('public/assets/images/icons/logo.svg') }}" alt="Example Image">
                                             @endif
                                             <div>
-                                                <a href="{{ url('dashboard/organization/' . $org->slug) }}" style="text-decoration: none;">
+                                                <a href="{{ url('dashboard/organization/'.$org->slug.'/portfolio/'.$org->type) }}" style="text-decoration: none;">
                                                     <div class="title">{{ $org->organization_name }}</div>
                                                 </a>
                                                 <div class="small-tag">#OR1234</div>

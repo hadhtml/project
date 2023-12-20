@@ -79,6 +79,27 @@ $sprint = DB::table('sprint')->where('user_id',Auth::id())->where('value_unit_id
       
                 </div> 
                 @endif
+
+                @if($type == 'org')  
+                <div class="d-flex flex-column mr-3">
+                    <div style="padding:20px">
+                    Team
+                  
+                    <select class="chkveg" multiple="multiple" >
+                        @foreach(DB::table('org_team')->where('org_id',$organization->id)->get() as $r)
+                        <option value="{{$r->id}}">{{$r->team_title}}</option>
+                        @endforeach
+                    
+                     
+                    </select>
+                       <button class="btn-circle btn-tolbar bg-transparent" type="button" onclick="GetEpicTeamSearch();" >
+                       <img src="{{asset('public/assets/images/icons/filter.svg')}}" width="20" width="20">
+                       </button>
+                    </div>
+      
+                </div> 
+                @endif
+ 
  
                 
                 <div class="d-flex flex-column mr-3">
