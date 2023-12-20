@@ -312,7 +312,7 @@ $var_objective = "Jira";
                 <form class="needs-validation" action="{{url('add-financial-year')}}" method="POST">
                     @csrf
                     @php
-                    $month = DB::table('organization')->where('user_id',Auth::id())->first();
+                    $month = DB::table('settings')->where('user_id',Auth::id())->first();
                     $monthNumber = 0;
                     if($month)
                     {
