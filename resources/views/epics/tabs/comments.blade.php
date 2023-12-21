@@ -1,3 +1,5 @@
+<script src="{{ url('public/assets/bootstrap-typeahead.min.js') }}"></script>
+<script src="{{ url('public/assets/mention.js') }}"></script>
 <div class="row">
     <div class="col-md-12 col-lg-12 col-xl-12 @if($comments->count() > 1) paddingrightzero @endif">
         <div class="d-flex flex-row align-items-center justify-content-between block-header">
@@ -36,6 +38,27 @@
         </div>
     </div>
 </div>
+<style type='text/css'>
+ .mention_name{
+    font-size:12px;
+ }
+ .mention_username{
+    font-size:12px;
+    color:#999;
+ }
+ .mention_image{
+    float: left;
+    margin-right: 5px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    width: 20px;
+    height: 20px;
+    }
+ .active .mention_username{
+    color:#fff;
+ }
+</style>
 <div class="row">
     <div class="activity-feed @if($comments->count() == 0) col-md-12 @endif">
         <div class="col-md-12 col-lg-12 col-xl-12 writecomment">
@@ -44,19 +67,36 @@
                 @csrf
                 <input type="hidden" value="{{ $data->id }}" name="flag_id">
                 <input type="hidden" value="{{ Auth::user()->id }}" name="user_id">
-                    <div>
-                        <div class="form-group mb-0">
-                            <label for="objective-name">Write Comment</label>
-                            <input type="text" class="form-control" name="comment" id="objective-name" required>
-                        </div>
+                    <div class="form-group mb-8">
+                        <label for="objective-name">Write Comment</label>
+                        <textarea id="textarea" style="height:100% !important;" class="form-control mention" name="comment" rows="5"></textarea>
                     </div>
-                    <div>
-                        <span onclick="writecomment()" class="btn btn-default btn-sm">Cancel</span>
-                        <button type="submit" id="savecommentbutton{{ $data->id }}" class="btn btn-primary btn-sm">Save</button>
-                    </div>
+                    <span onclick="writecomment()" class="btn btn-default btn-sm">Cancel</span>
+                    <button type="submit" id="savecommentbutton{{ $data->id }}" class="btn btn-primary btn-sm">Save</button>
                 </form>
             </div>
         </div>
+        <script type="text/javascript">
+            $("#textarea").keypress(function (e) {
+                if(e.which === 13 && !e.shiftKey) {
+                    e.preventDefault();
+                    $(this).closest("form").submit();
+                }
+            });
+            $(document).ready(function(){
+             $(".mention").mention({
+                users: [
+                    @foreach(DB::table('members')->where('org_user',Auth::id())->get() as $r)
+                    {
+                       name: '{{ $r->name }} {{ $r->last_name }}',
+                       username: 'LindsayM',
+                       image: '{{ Avatar::create($r->name)->toBase64() }}'
+                    }@if($loop->last) @else ,@endif 
+                    @endforeach
+                ]
+             });
+          });
+        </script>
         <div class="col-md-12 col-lg-12 col-xl-12">
             @if($comments->count() > 0)
             @foreach($comments as $r)

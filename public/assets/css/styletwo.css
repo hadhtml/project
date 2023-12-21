@@ -1209,3 +1209,6 @@ button:focus {
 .deletealert{
     display: none;
 }
+.card-epic .content{
+    margin: 0 !important;
+}

@@ -217,7 +217,136 @@ class EpicController extends Controller
     }
     public function bulkupdate(Request $request)
     {
-        print_r($request->checkbox);
+        foreach ($request->checkbox as $r) {
+            $total = 0;
+            $epicid = DB::table("epics_stroy")->where("id", $r)->first();
+            DB::table("epics_stroy")->where("id", $r)->delete();
+            $epicstory = DB::table("epics_stroy")->where("epic_id", $epicid->epic_id)->get();
+            $epicprogress = DB::table("epics_stroy")->where("epic_id", $epicid->epic_id)->sum("progress");
+            $count = DB::table("epics_stroy")->where("epic_id", $epicid->epic_id)->count();
+            if ($count > 0) {
+                $total = round($epicprogress / $count, 2);
+            }
+
+            DB::table("epics")->where("id", $epicid->epic_id)->update(["epic_progress" => $total,"updated_at" => Carbon::now(),]);
+
+            $backlog = DB::table("epics")->where("id", $epicid->epic_id)->where("trash", null)->first();
+
+            if ($backlog->backlog_id != "" && $backlog->type == "stream") {
+                DB::table("backlog")->where("id", $backlog->backlog_id)->update(["progress" => $total]);
+            }
+
+            if ($backlog->backlog_id != "" && $backlog->type == "unit") {
+                DB::table("backlog_unit")->where("id", $backlog->backlog_id)->update(["progress" => $total]);
+            }
+
+            $Quarter = DB::table("epics")->where("id", $epicid->epic_id)->first();
+
+            $currentDate = Carbon::now();
+            $currentYear = $currentDate->year;
+            $currentMonth = $currentDate->month;
+            $yearMonthString = $currentDate->format("Y");
+            $yearMonth = $currentDate->format("F");
+            $CurrentQuarter = "";
+            $QuarterCount = "";
+            $CurrentQuarter = DB::table("quarter_month")->where("initiative_id", $Quarter->initiative_id)->where("month", $yearMonth)->where("year", $yearMonthString)->first();
+
+            if ($CurrentQuarter) {
+                $QuarterCount = DB::table("epics")->where("quarter_id", $Quarter->quarter_id)->where("trash", null)->count();
+                $Quarterprogress = DB::table("epics")->where("quarter_id", $Quarter->quarter_id)->where("epic_progress", "=", 100)->where("trash", null)->count();
+            }
+            if ($QuarterCount > 0) {
+                $Quartertotal = round(($Quarterprogress / $QuarterCount) * 100, 2);
+                DB::table("quarter")->where("id", $Quarter->quarter_id)->update(["quarter_progress" => $Quartertotal]);
+                DB::table("initiative")->where("id", $Quarter->initiative_id)->update(["q_initiative_prog" => $Quartertotal]);
+            }
+
+            $initcount = DB::table("initiative")->where("key_id", $request->key)->sum("initiative_weight");
+
+            if ($initcount == 100) {
+                $epic = DB::table("epics")->where("id", $epicid->epic_id)->where("trash", null)->first();
+                $epicinitiativecount = DB::table("epics")->where("initiative_id", $epic->initiative_id)->where("trash", null)->count();
+                $initiativeprogress = DB::table("epics")->where("initiative_id", $epic->initiative_id)->where("epic_progress", "=", 100)->where("trash", null)->count();
+                $totalinitiative = $initiativeprogress / $epicinitiativecount;
+                $finaltotal = round($totalinitiative * 100, 2);
+                $intw = DB::table("initiative")->where("id", $epic->initiative_id)->first();
+                $resultinit = $intw->initiative_weight / 100;
+                $newresultinit = round($resultinit * $finaltotal, 2);
+                DB::table("initiative")->where("id", $epic->initiative_id)->update(["initiative_prog" => $newresultinit]);
+            } else {
+                $epic = DB::table("epics")
+                    ->where("id", $epicid->epic_id)
+                    ->where("trash", null)
+                    ->first();
+
+                $epicinitiativecount = DB::table("epics")
+                    ->where("initiative_id", $epic->initiative_id)
+                    ->where("trash", null)
+                    ->count();
+                $initiativeprogress = DB::table("epics")
+                    ->where("initiative_id", $epic->initiative_id)
+                    ->where("epic_progress", "=", 100)
+                    ->where("trash", null)
+                    ->count();
+                $totalinitiative = $initiativeprogress / $epicinitiativecount;
+                $finaltotal = round($totalinitiative * 100, 2);
+
+                DB::table("initiative")
+                    ->where("id", $epic->initiative_id)
+                    ->update(["initiative_prog" => $finaltotal]);
+            }
+
+            $objwcount = DB::table("key_result")
+                ->where("obj_id", $request->obj)
+                ->sum("weight");
+
+            if ($objwcount == 100) {
+                $keycount = DB::table("initiative")
+                    ->where("key_id", $request->key)
+                    ->count();
+                $keyprogress = DB::table("initiative")
+                    ->where("key_id", $request->key)
+                    ->where("initiative_prog", "=", 100)
+                    ->count();
+                $totalkey = $keyprogress / $keycount;
+                $finaltotalkey = $totalkey * 100;
+
+                $keyw = DB::table("key_result")
+                    ->where("id", $request->key)
+                    ->first();
+                $result = $keyw->weight / 100;
+                $newresult = intval($result * $finaltotalkey);
+
+                DB::table("key_result")
+                    ->where("id", $request->key)
+                    ->update(["key_prog" => $newresult]);
+            } else {
+                $keycount = DB::table("initiative")->where("key_id", $request->key)->count();
+                if($keycount > 0)
+                {
+                    $keyprogress = DB::table("initiative")->where("key_id", $request->key)->where("initiative_prog", "=", 100)->count();
+                    $totalkey = $keyprogress / $keycount;
+                    $finaltotalkey = $totalkey * 100;
+                    DB::table("key_result")->where("id", $request->key)->update(["key_prog" => $finaltotalkey]);
+
+                    $QuarterprogressKey = DB::table("initiative")->where("key_id", $request->key)->where("q_initiative_prog", "=", 100)->count();
+                    $QuartertotalKey = round(($QuarterprogressKey / $keycount) * 100,2);
+                    DB::table("key_result")->where("id", $request->key)->update(["q_key_prog" => $QuartertotalKey]);
+                }
+            }
+
+            $objcount = DB::table("key_result")->where("obj_id", $request->obj)->count();
+            if($objcount > 0)
+            {
+                $objprogress = DB::table("key_result")->where("obj_id", $request->obj)->where("key_prog", "=", 100)->count();
+                $totalobj = $objprogress / $objcount;
+                $finaltotalobj = $totalobj * 100;
+                DB::table("objectives")->where("id", $request->obj)->update(["obj_prog" => $finaltotalobj]);
+                $QuarterprogressObj = DB::table("key_result")->where("obj_id", $request->obj)->where("q_key_prog", "=", 100)->count();
+                $QuartertotalObj = round(($QuarterprogressObj / $objcount) * 100, 2);
+                DB::table("objectives")->where("id", $request->obj)->update(["q_obj_prog" => $QuartertotalObj]);
+            }
+        }
     }
     public function changeepicstatus(Request $request)
     {

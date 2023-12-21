@@ -132,7 +132,7 @@ function getOrder(){
                     <div class="row mt-3">
                         <div class="col-md-12 text-right">
                             <span onclick="additem()" class="btn btn-default btn-sm">Cancel</span>
-                            <span id="createchilditembutton" type="submit" class="btn btn-primary btn-sm">Save</span>
+                            <button id="createchilditembutton" type="submit" class="btn btn-primary btn-sm">Save</button>
                         </div>
                     </div>
                 </div>
@@ -203,7 +203,7 @@ function getOrder(){
                       </span>
                       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" onclick="deletechilditemsbulk()" href="javascript:void(0)">Delete</a>
-                        <a class="dropdown-item" onclick="deletechilditemsbulk()" href="javascript:void(0)">Bulk Edit</a>
+                        <!-- <a class="dropdown-item" onclick="deletechilditemsbulk()" href="javascript:void(0)">Bulk Edit</a> -->
                       </div>
                     </div>
                 </div>                
@@ -211,12 +211,14 @@ function getOrder(){
             
             <form method="POST" action="{{ url('dashboard/epics/bulkupdate') }}" id="bulkupdateform" class="sortable">
                 @csrf
+                <input type="hidden" value="{{ $epic->key_id }}" name="key_id">
+                <input type="hidden" value="{{ $epic->obj_id }}" name="obj_id">
                 <div class="rows deletealert" style="display:none;">
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <strong>Attention!</strong> Do you want to delete these Child Item? You won’t be able to undo this action.
                     <div class="mt-3">
-                          <button type="submit" class="btn btn-danger mr-2" id="submitBtn">Yes! Delete It</button>
-                          <button type="button" class="btn btn-secondary" data-dismiss="alert">Cancel</button>
+                          <button type="submit" class="btn btn-primary btn-sm mr-2" id="submitBtn">Yes! Delete It</button>
+                          <button type="button" class="btn btn-default btn-sm" data-dismiss="alert">Cancel</button>
                         </div>
                     </div>         
                 </div>
@@ -391,7 +393,7 @@ function bulkeditcheckbox() {
     }
 }
 $('.sortable').on('submit',(function(e) {
-    $('.submitBtn').html('<i class="fa fa-spin fa-spinner"></i>');
+    $('#submitBtn').html('<i class="fa fa-spin fa-spinner"></i>');
     e.preventDefault();
     var formData = new FormData(this);
     $.ajax({
@@ -402,7 +404,7 @@ $('.sortable').on('submit',(function(e) {
         contentType: false,
         processData: false,
         success: function(data){
-            // showtabwithoutloader('{{$epic->id}}' , 'childitems');
+            showtabwithoutloader('{{$epic->id}}' , 'childitems');
         }
     });
 }));
