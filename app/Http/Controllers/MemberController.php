@@ -810,6 +810,14 @@ class MemberController extends Controller
 
             
      }
+
+     if($type == 'orgT')
+     {
+     $organization  = DB::table('org_team')->where('slug',$id)->first();
+     $data = DB::table('kpi_setting')->where('user_id',Auth::id())->where('stream_id',$organization->id)->where('type','orgT')->get();  
+
+            
+     }
      
      return view('Chart.chart',compact('data','organization','type'));
     }

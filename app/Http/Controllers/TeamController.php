@@ -43,6 +43,12 @@ class TeamController extends Controller
         $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->where('assign_status',NULL)->get();
     }
 
+    if($type == 'orgT')
+    {
+        $organization = DB::table('org_team')->where('slug',$id)->first();        
+        $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->where('assign_status',NULL)->get();
+    }
+
     
    
     return view('Team.backlog',compact('Backlog','organization','type'));  
