@@ -10,10 +10,10 @@ function getOrder(){
     var order= $(".sortable .ui-state-default").map(function() {        
         return this.id;        
     }).get();
-    var epic_id = '{{ $epic->id }}';
+    var epic_id = '{{ $data->id }}';
     $.ajax({
         type: "POST",
-        url: "{{ url('dashboard/epics/sortchilditem') }}",
+        url: "{{ url('dashboard/epics/sortflags') }}",
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
@@ -193,7 +193,7 @@ function getOrder(){
                                 @if($user->image != NULL)
                                 <img class="user-image" src="{{asset('public/assets/images/'.$user->image)}}" alt="Example Image">
                                 @else
-                                <div class="namecountersmallforsimplecard">{{ substr($user->name, 0, 1); }}</div>
+                                <img class="user-image" src="{{ Avatar::create($user->name)->toBase64() }}" alt="Example Image">
                                 @endif
                             </div>
                             <div>

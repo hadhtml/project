@@ -56,7 +56,7 @@
     height: 20px;
     }
  .active .mention_username{
-    color:#fff;
+    color:black;
  }
 </style>
 <div class="row">
@@ -88,8 +88,7 @@
                 users: [
                     @foreach(DB::table('members')->where('org_user',Auth::id())->get() as $r)
                     {
-                       name: '{{ $r->name }} {{ $r->last_name }}',
-                       username: 'LindsayM',
+                       username: '{{ $r->name }}',
                        image: '{{ Avatar::create($r->name)->toBase64() }}'
                     }@if($loop->last) @else ,@endif 
                     @endforeach
