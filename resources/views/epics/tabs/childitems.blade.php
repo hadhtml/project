@@ -29,7 +29,7 @@ function getOrder(){
 }
 </script>
 @php
-    $epicstory = DB::table("epics_stroy")->where("epic_id", $epic->id)->get();
+    $epicstory = DB::table("epics_stroy")->where("epic_id", $epic->id)->orderby('sort_order' , 'asc')->get();
     $epicprogress = DB::table("epics_stroy")->where("epic_id", $epic->id)->sum("progress");
     $count = DB::table("epics_stroy")->where("epic_id", $epic->id)->count();
     if($count > 0)
@@ -214,7 +214,7 @@ function getOrder(){
                     <div class="child-item">
                         <div class="child-item-chekbox-portion">
                             <label class="form-checkbox">
-                                <input class="form-check-input allchilditem"  type="checkbox" @if($s->story_status == 'Done') checked onclick="updateprogress({{ $s->id }} , 1)" @else onclick="updateprogress({{ $s->id }} , 2)" @endif  value="{{$s->id}}"  id="flexCheckDefault">
+                                <input class="form-check-input allchilditem" name="checkbox[]" value="{{ $s->id }}" onclick="childcheckbox()" type="checkbox" id="flexCheckDefault">
                                 <span class="checkbox-label"></span>
                             </label>
                             <div class="child-item-id">
@@ -279,7 +279,7 @@ function getOrder(){
                                     </div>
                                 </div>
                                 <p>Do you want to delete this Child Item? You won’t be able to undo this action.</p>
-                                <button onclick="deletechilditem({{ $s->id }})" class="btn btn-danger btn-block">Delete</button>
+                                <button onclick="deletechilditem({{ $s->id }})" id="deletebutton{{ $s->id }}" class="btn btn-danger btn-block">Delete</button>
                             </div>
                         </div>
                     </div>
@@ -363,6 +363,43 @@ function bulkeditcheckbox() {
 
     }
 }
+function deletechilditemsbulk() {
+    var totalCheckboxes = $('.allchilditem:checkbox:checked').length;
+    if(totalCheckboxes == 0)
+    {
+
+    }else
+    {
+        var data = { 'user_ids[]' : []};
+        $(":checked").each(function() {
+          data['user_ids[]'].push($(this).val());
+        });
+    }
+}
+function childcheckbox() {
+    var numberOfChecked = $('.allchilditem:checkbox:checked').length;
+    var totalCheckboxes = $('.allchilditem:checkbox').length;
+    var numberNotChecked = totalCheckboxes - numberOfChecked;
+    $('.bulkedit').css('color' , 'black');
+    $('.bulkedit').css('font-weight' , '600');
+    if(numberOfChecked > 0)
+    {
+        $('.bulkedit').css('color' , 'black');
+        $('.bulkedit').css('font-weight' , '600');
+    }else{
+        $('.bulkedit').css('color' , '#b2b2b2');
+        $('.bulkedit').css('font-weight' , '400');
+    }
+
+    if(numberNotChecked == 0)
+    {
+        $('#bulkeditcheckbox').prop("checked", true);
+    }else{
+        $('#bulkeditcheckbox').prop("checked", false);
+    }
+}
+
+
 function updatestory(s_id) {
     $('#updateitembutton'+s_id).html('<i class="fa fa-spin fa-spinner"></i>');
     // var title = $('#title'+s_id).val();
@@ -394,6 +431,9 @@ function updatestory(s_id) {
     }
 }
 function deletechilditem(id) {
+    $('#deletebutton'+id).html('<i class="fa fa-spin fa-spinner"></i>');
+    var key = '{{ $epic->key_id }}';
+    var obj = '{{ $epic->obj_id }}';
     $.ajax({
         type: "POST",
         url: "{{ url('dashboard/epics/deletechilditem') }}",
@@ -401,10 +441,13 @@ function deletechilditem(id) {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         data: {
-            id: id
+            id: id,
+            key: key,
+            obj: obj
         },
         success: function(res) {
             showtabwithoutloader('{{$epic->id}}' , 'childitems');
+            $('#deletebutton'+id).html('Delete');
         }
     });
 }

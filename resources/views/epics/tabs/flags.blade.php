@@ -1,3 +1,33 @@
+<script>
+$(function() {
+    $(".sortable").sortable({
+        update: function(event, ui) { 
+            getOrder()
+        }
+    });
+});
+function getOrder(){
+    var order= $(".sortable .ui-state-default").map(function() {        
+        return this.id;        
+    }).get();
+    var epic_id = '{{ $epic->id }}';
+    $.ajax({
+        type: "POST",
+        url: "{{ url('dashboard/epics/sortchilditem') }}",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+            order: order,
+            epic_id:epic_id,
+        },
+        success: function(res) {
+            
+        }
+    });
+    return order;
+}
+</script>
 <div class="row">
     <div class="col-md-12 col-lg-12 col-xl-12 @if($flags->count() > 4) paddingrightzero @endif">
         <div class="d-flex flex-row align-items-center justify-content-between block-header">
