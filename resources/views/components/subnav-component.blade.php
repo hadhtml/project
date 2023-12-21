@@ -32,7 +32,7 @@
               
 
             
-                <ul class="list-unstyled ps-0 expanded-navbar mb-0">
+                {{-- <ul class="list-unstyled ps-0 expanded-navbar mb-0">
                     <li class="mb-1">
                         <button class="btn btn-toggle align-items-center rounded" data-toggle="collapse" data-target="#home-collapse" aria-expanded="true">
                             <div class="d-flex flex-row align-items-center">
@@ -59,9 +59,10 @@
                             </ul>
                         </div>
                     </li>
-                </ul>
+                </ul> --}}
                 
                 <ul class="list-unstyled ps-0 expanded-navbar-options">
+                   
                     @if (url()->current() == url('dashboard/organizations'))
                     <li class="mb-1">
                         <a href="{{url('dashboard/organizations')}}" @if (url()->current() == url('dashboard/organizations')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
@@ -87,6 +88,17 @@
                         </a>
                     </li>
                     @endif
+
+                    <li class="mb-1">
+                        <a href="{{url('dashboard/organization/Business-Units')}}"  @if (url()->current() == url('dashboard/organization/Business-Units'))  class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center" @endif >
+                            <div class="mr-2">
+                                <span style="font-size:22px" class="material-symbols-outlined">domain</span>
+                            </div>
+                            <div class="mr-2">
+                                Business Units
+                            </div>
+                        </a>
+                    </li>
                     <li class="mb-1">
                         <a href="{{url('dashboard/organization/'.$organization->slug.'/performance-dashboard/'.$organization->type)}}" class="d-flex flex-row align-items-center">
                             <div class="mr-2">
@@ -129,7 +141,17 @@
                         </a>
                     </li>
                     <li class="mb-1">
-                        <a href="#" class="d-flex flex-row align-items-center">
+                        <a href="{{url('dashboard/organization/'.$organization->slug.'/BU-Report/'.$organization->type)}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/BU-Report/'.$organization->type)) class="d-flex flex-row align-items-center nav-active" @else   @endif  class="d-flex flex-row align-items-center" >
+                            <div class="mr-2">
+                                 <span style="font-size:22px" class="material-symbols-outlined">Summarize</span>
+                            </div>
+                            <div class="mr-2">
+                                Reports
+                            </div>
+                        </a>
+                    </li>
+                    <li class="mb-1">
+                        <a href="{{url('dashboard/flags/'.$organization->slug.'/impediments/org')}}" class="d-flex flex-row align-items-center">
                             <div class="mr-2">
                                 <span style="font-size:22px" class="material-symbols-outlined">warning_off</span>
                             </div>
