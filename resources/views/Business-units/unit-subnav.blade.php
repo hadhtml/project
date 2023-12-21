@@ -1,9 +1,8 @@
 <div class="flex-shrink-0 p-3 bg-white sub-nav open" id="panel">
-        <!-- <button id="closeBtn" class="close-button">
-            <img src="https://dev.agileprolific.com/public/assets/images/icons/collaps.svg">
-        </button> -->
+  
         <h6 class="title">Business Units</h6>
         <ul class="list-unstyled ps-0 expanded-navbar mb-0">
+            
             <li class="mb-1">
                 <button class="btn btn-toggle align-items-center rounded" data-toggle="collapse" data-target="#home-collapse" aria-expanded="true">
                     <div class="d-flex flex-row align-items-center">

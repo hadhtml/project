@@ -475,6 +475,13 @@ class OrganizationController extends Controller
           $organization = DB::table('organization')->where('slug',$id)->first();        
           $report  =  DB::table('sprint')->where('value_unit_id',$organization->id)->where('type','VS')->get();
           }
+
+          if($type == 'orgT')
+          {
+          $organization = DB::table('org_team')->where('slug',$id)->first();        
+          $report  =  DB::table('sprint')->where('value_unit_id',$organization->id)->where('type','orgT')->get();
+          }
+          
           
           return view('Report.Bu-report',compact('report','organization','type'));
 
@@ -510,6 +517,10 @@ class OrganizationController extends Controller
       if($type == 'org')
       {
       $organization = DB::table('organization')->where('id',$report->value_unit_id)->first();        
+      }
+      if($type == 'orgT')
+      {
+      $organization = DB::table('org_team')->where('id',$report->value_unit_id)->first();        
       }
       if($sprint)
       {

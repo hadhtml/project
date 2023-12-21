@@ -19,6 +19,11 @@ if($type == 'org')
 {
 $var_objective = 'PageT-'.$type;
 }
+
+if($type == 'orgT')
+{
+$var_objective = 'PageT-'.$type;
+}
 @endphp
 @extends('components.main-layout')
 <style>

@@ -90,9 +90,7 @@ $team  = DB::table('organization')->where('id',$organization->id)->first();
     <!-- Include -->
 
     <div class="flex-shrink-0 p-3 bg-white sub-nav open" id="panel">
-        <!-- <button id="closeBtn" class="close-button">
-            <img src="https://dev.agileprolific.com/public/assets/images/icons/collaps.svg">
-        </button> -->
+
         <h6 class="title">Team</h6>
 
 
@@ -136,6 +134,20 @@ $team  = DB::table('organization')->where('id',$organization->id)->first();
             </li>
             @endif
 
+            @if($organization->type == 'orgT')
+            <li class="mb-1">
+                <a href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/orgT')}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/portfolio/orgT')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
+                    <div class="mr-2">
+                         <span style="font-size:22px" class="material-symbols-outlined">folder_supervised</span>
+                    </div>
+                    <div class="mr-2">
+                        OKR Planner
+                    </div>
+                </a>
+            </li>
+
+            @endif
+
 
             @if($organization->type == 'BU')
             <li class="mb-1">
@@ -163,10 +175,23 @@ $team  = DB::table('organization')->where('id',$organization->id)->first();
             </li>
             @endif
 
+            @if($organization->type == 'orgT')
+            <li class="mb-1">
+                <a href="{{url('dashboard/organization/'.$organization->slug.'/BT-Backlog/orgT')}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/BT-Backlog/orgT')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
+                    <div class="mr-2">
+                         <span style="font-size:22px" class="material-symbols-outlined">key_visualizer</span>
+                    </div>
+                    <div class="mr-2">
+                        Epic Backlog
+                    </div>
+                </a>
+            </li>
+            @endif
+
 
             @if($organization->type == 'BU')
             <li class="mb-1">
-                <a href="{{url('dashboard/organization/'.$organization->slug.'/performance-dashboard/'.$organization->type)}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/performance-dashboard/'.$organization->type)) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center nav-active"  @endif >
+                <a href="{{url('dashboard/organization/'.$organization->slug.'/performance-dashboard/'.$organization->type)}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/performance-dashboard/'.$organization->type)) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
                     <div class="mr-2">
                          <span style="font-size:22px" class="material-symbols-outlined">team_dashboard</span>
                     </div>
@@ -190,6 +215,20 @@ $team  = DB::table('organization')->where('id',$organization->id)->first();
                     </div>
                 </a>
             </li>
+            @endif
+
+            @if($organization->type == 'orgT')
+            <li class="mb-1">
+                <a href="{{url('dashboard/organization/'.$organization->slug.'/performance-dashboard/'.$organization->type)}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/performance-dashboard/'.$organization->type)) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
+                    <div class="mr-2">
+                         <span style="font-size:22px" class="material-symbols-outlined">team_dashboard</span>
+                    </div>
+                    <div class="mr-2">
+                        Performance Dash.
+                    </div>
+                </a>
+            </li>
+
             @endif
             
             <li class="mb-1">

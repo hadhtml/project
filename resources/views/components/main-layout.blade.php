@@ -31,6 +31,9 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/4.0.0/font/MaterialIcons-Regular.ttf">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <script src="{{url('public/assets/Random-Pixel/dist/gixi-min.js')}}"></script> 
+
     
     <title>Dashboard</title>
     <style type="text/css">
@@ -69,7 +72,10 @@
 
             @if ($var_objective == 'PageT-org')
             @include('organizations.navbar')
-            @include('organizations.sub-nav')
+            @endif
+
+            @if ($var_objective == 'PageT-orgT')
+            @include('Business-units.Team-sidebar')
             @endif
             
             
@@ -89,7 +95,7 @@
             @if ($var_objective == 'Page-org')
                  
             @include('organizations.navbar')
-            @include('organizations.sub-nav')
+        
 
             @endif
                   
@@ -110,7 +116,6 @@
             @if ($var_objective == 'Org-Unit')
                  
             @include('components.sidebar-component')
-            @include('components.subnav-component')
 
             @endif
                  
@@ -205,11 +210,17 @@
             @include('Business-units.Team-sidebar')
             @endif
 
-            @if ($var_objective == 'Page-org')
+            @if ($var_objective == 'Page-orgT')
             @include('Business-units.Team-sidebar')
             @endif
 
+        
+
             @if ($var_objective == 'Report-BU')
+            @include('Business-units.Team-sidebar')
+            @endif
+
+            @if ($var_objective == 'Report-orgT')
             @include('Business-units.Team-sidebar')
             @endif
 
@@ -219,17 +230,19 @@
 
             @if ($var_objective == 'Org-team')
             @include('organizations.navbar')
-            @include('organizations.sub-nav')
             @endif
 
             @if ($var_objective == 'Report-org')
             @include('organizations.navbar')
-            @include('organizations.sub-nav')
             @endif
 
             @if ($var_objective == 'TBaclog-org')
             @include('organizations.navbar')
-            @include('organizations.sub-nav')
+          
+            @endif
+
+            @if ($var_objective == 'TBaclog-orgT')
+            @include('Business-units.Team-sidebar')
             @endif
             
             
@@ -264,6 +277,14 @@
                  @endif
 
                  @if ($var_objective == 'Page-org')
+                 
+                 @include('components.chart-breadcrumb')
+                 @include('components.modal')
+
+       
+                 @endif
+
+                 @if ($var_objective == 'Page-orgT')
                  
                  @include('components.chart-breadcrumb')
                  @include('components.modal')
@@ -358,6 +379,10 @@
                  @include('Report.report-breadcrum')
                  @endif
 
+                 @if ($var_objective == 'Report-orgT')
+                 @include('Report.report-breadcrum')
+                 @endif
+
                  @if ($var_objective == 'Report-org')
                  @include('Report.report-breadcrum')
                  @endif
@@ -392,6 +417,12 @@
                 @include('components.modal')
                 @endif
 
+                @if ($var_objective == 'PageT-orgT')
+                @include('components.breadcrumb-component')
+                @include('components.objective-script')
+                @include('components.modal')
+                @endif
+
                 @if ($var_objective == 'TBaclog-BU')
                 @include('Team.Team-breadcrumb')
                 @endif
@@ -404,6 +435,11 @@
                 @include('Team.Team-breadcrumb')
                 @endif
 
+                @if ($var_objective == 'TBaclog-orgT')
+                @include('Team.Team-breadcrumb')
+                @endif
+                
+
                 @if ($var_objective == 'Page-BU')
                 @include('components.chart-breadcrumb')
                 @include('components.modal')    
@@ -413,6 +449,8 @@
                 @include('components.chart-breadcrumb')
                 @include('components.modal')    
                 @endif
+
+           
 
                 @if ($var_objective == 'Org-team')
                 @include('organizations.org-team-breadcrumb')
