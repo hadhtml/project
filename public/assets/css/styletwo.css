@@ -1212,3 +1212,9 @@ button:focus {
 .card-epic .content{
     margin: 0 !important;
 }
+.epic-tittle-header img{
+    top: 3px !important;
+}
+.team-select-box{
+    left: -55px !important;
+}

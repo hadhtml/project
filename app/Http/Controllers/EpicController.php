@@ -16,6 +16,7 @@ use App\Models\epics_stroy;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use DB;
+use Avatar;
 use Carbon\Carbon;
 
 class EpicController extends Controller
@@ -803,5 +804,41 @@ class EpicController extends Controller
             $QuartertotalObj = round(($QuarterprogressObj / $objcount) * 100, 2);
             DB::table("objectives")->where("id", $request->obj)->update(["q_obj_prog" => $QuartertotalObj]);
         }
+    }
+
+
+    public function selectteamforepic(Request $request)
+    {
+        $update = Epic::find($request->epic_id);
+        $update->team_id = $request->id;
+        $update->save();
+
+        if($update->epic_type == 'unit')
+        {
+            foreach(DB::table('unit_team')->where('org_id',$update->buisness_unit_id)->where('type' , 'BU')->get() as $r)
+            {
+                echo '<div class="col-md-12 memberprofile" onclick="selectteamforepic('.$r->id.','.$update->id.')">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="memberprofileimage">
+                                    <img src="'.Avatar::create($r->team_title)->toBase64().'">
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="membername">'.$r->team_title.'</div>
+                                <div class="memberdetail">Team Leader: '.DB::table('members')->where('id' , $r->lead_id)->first()->name.' '.DB::table('members')->where('id' , $r->lead_id)->first()->last_name.'</div>
+                            </div>
+                            <div class="col-md-2 text-center mt-3">';
+                                if($update->team_id == $r->id)
+                                {
+                                    echo '<img class="tickimage" src="'.url('public/assets/svg/smalltick.svg').'">';
+                                }
+                            echo '</div>
+                        </div>
+                    </div>';
+            }
+        }
+        
+                        
     }
 }

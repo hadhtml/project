@@ -21,9 +21,9 @@
                     <li id="activites" onclick="showtab({{$data->id}} , 'activites')" class="tabsclass">
                        <span class="material-symbols-outlined">browse_activity</span> Activities
                     </li>
-                    <li id="checkins" onclick="showtab({{$data->id}} , 'checkins')" class="tabsclass">
+                    <!-- <li id="checkins" onclick="showtab({{$data->id}} , 'checkins')" class="tabsclass">
                         <span class="material-symbols-outlined">checklist</span> Check-Ins
-                    </li>
+                    </li> -->
                     <li id="attachment" onclick="showtab({{$data->id}} , 'attachment')" class="tabsclass">
                         <span class="material-symbols-outlined"> attachment </span> Attachments</li>
                     <li id="flags" onclick="showtab({{$data->id}} , 'flags')" class="tabsclass">
@@ -219,6 +219,7 @@
             success: function(data){
                 showepicinboard('{{ $data->id }}');
                 editepic('{{ $data->id }}');
+                showheader('{{ $data->id }}')
                 $('#updatebutton').html('Save Changes');
             }
         });

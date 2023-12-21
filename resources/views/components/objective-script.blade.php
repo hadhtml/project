@@ -180,23 +180,19 @@
                     board_type: board_type
                 },
                 success: function(res) {
-                    $('#success-flag').html(
-                        '<div class="alert alert-success" role="alert">Epic Flag Updated successfully</div>'
-                    );
                     $('#updateflagmodalbuton').html('<i class="fa fa-check"></i> Success');
                     $('#updateflagmodalbuton').css('background-color', 'green');
-                    $('#success-flag-error').html('');
-                    setTimeout(function() {
-                        $('#edit-epic-flag').modal('hide');
-                        $('#success-flag').html('');
-                    }, 3000);
                     $('#parentCollapsible').html(res);
                     $("#nestedCollapsible" + flag_epic_obj).collapse('toggle');
                     $("#key-result" + flag_epic_key).collapse('toggle');
                     $("#initiative" + flag_ini_epic_id).collapse('toggle');
+                    rasiseflag()
                     handleDivClick(flag_ini_epic_id);
                     showheader(flag_epic_id);
-                    showtabwithoutloader(flag_epic_id , 'flags');
+                    if($('#modaltab').val() == 'flags')
+                    {
+                        showtabwithoutloader(flag_epic_id , 'flags');
+                    }
                 }
             });
         } else {

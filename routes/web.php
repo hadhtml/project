@@ -264,7 +264,7 @@ Route::name('epics.')->namespace('App\Http\Controllers')->prefix('dashboard/epic
     Route::POST('changeepicdate', 'EpicController@changeepicdate');  
     Route::POST('sortchilditem', 'EpicController@sortchilditem'); 
     Route::POST('bulkupdate', 'EpicController@bulkupdate'); 
-
+    Route::POST('selectteamforepic', 'EpicController@selectteamforepic'); 
     
 });
 

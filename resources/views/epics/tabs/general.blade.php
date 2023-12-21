@@ -102,6 +102,7 @@
             success: function(data){
                 showepicinboard('{{ $data->id }}');
                 editepic('{{ $data->id }}');
+                showheader('{{ $data->id }}')
                 $('#updatebutton').html('Save Changes');
             }
         });
