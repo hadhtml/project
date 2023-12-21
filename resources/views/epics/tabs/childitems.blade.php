@@ -211,7 +211,7 @@ function getOrder(){
             
             <form method="POST" action="{{ url('dashboard/epics/bulkupdate') }}" id="bulkupdateform" class="sortable">
                 @csrf
-                <div class="rows deletealert">
+                <div class="rows deletealert" style="display:none;">
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <strong>Attention!</strong> Do you want to delete these Child Item? You won’t be able to undo this action.
                     <div class="mt-3">
@@ -373,6 +373,22 @@ function bulkeditcheckbox() {
         $('.bulkedit').css('font-weight' , '400');
 
     }
+
+
+    var numberOfChecked = $('.allchilditem:checkbox:checked').length;
+    var totalCheckboxes = $('.allchilditem:checkbox').length;
+    var numberNotChecked = totalCheckboxes - numberOfChecked;
+    $('.bulkedit').css('color' , 'black');
+    $('.bulkedit').css('font-weight' , '600');
+    if(numberOfChecked > 0)
+    {
+        $('.bulkedit').css('color' , 'black');
+        $('.bulkedit').css('font-weight' , '600');
+    }else{
+        $('.deletealert').hide();
+        $('.bulkedit').css('color' , '#b2b2b2');
+        $('.bulkedit').css('font-weight' , '400');
+    }
 }
 $('.sortable').on('submit',(function(e) {
     $('.submitBtn').html('<i class="fa fa-spin fa-spinner"></i>');
@@ -386,7 +402,7 @@ $('.sortable').on('submit',(function(e) {
         contentType: false,
         processData: false,
         success: function(data){
-            showtabwithoutloader('{{$epic->id}}' , 'childitems');
+            // showtabwithoutloader('{{$epic->id}}' , 'childitems');
         }
     });
 }));
@@ -397,7 +413,7 @@ function deletechilditemsbulk() {
         
     }else
     {
-        
+        $('.deletealert').slideToggle();
     }
 }
 function childcheckbox() {
@@ -411,6 +427,7 @@ function childcheckbox() {
         $('.bulkedit').css('color' , 'black');
         $('.bulkedit').css('font-weight' , '600');
     }else{
+        $('.deletealert').hide();
         $('.bulkedit').css('color' , '#b2b2b2');
         $('.bulkedit').css('font-weight' , '400');
     }

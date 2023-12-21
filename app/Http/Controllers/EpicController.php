@@ -217,7 +217,7 @@ class EpicController extends Controller
     }
     public function bulkupdate(Request $request)
     {
-        print_r($request->data);
+        print_r($request->checkbox);
     }
     public function changeepicstatus(Request $request)
     {

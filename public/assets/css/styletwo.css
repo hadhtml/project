@@ -1206,3 +1206,6 @@ button:focus {
 .delete-item-image{
     cursor: pointer;
 }
+.deletealert{
+    display: none;
+}
