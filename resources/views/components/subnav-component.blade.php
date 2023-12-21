@@ -1,5 +1,4 @@
             <!-- @php
-            $organization = DB::table('organization')->where('user_id',Auth::id())->where('trash',NULL)->limit(2)->get();    
             @endphp  
             <div class="flex-shrink-0 p-3 bg-white sub-nav" id="panel" style="width: 280px; margin-top: 5%;">
                 <button id="closeBtn" class="close-button">
@@ -15,55 +14,24 @@
                         </a>
                         <div class="collapse show" id="home-collapse" style="">
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small px-3 py-2 nav-root-item">
-                                @if(count($organization) > 0)
-                                @foreach($organization as $org_nav)
-                                <li class="py-2"><a href="#" class="link-dark rounded">{{$org_nav->organization_name}}</a></li>
-                                @endforeach
-                                @endif
+                               
                             </ul>
                         </div>
                     </li>
                 </ul>
             </div> -->
 
-
+            @php
+            $organization = DB::table('organization')->where('user_id',Auth::id())->where('trash',NULL)->first();    
+            @endphp
             <div class="flex-shrink-0 p-3 bg-white sub-nav open" id="panel">
                 <button id="closeBtn" class="close-button">
                     <img src="https://dev.agileprolific.com/public/assets/images/icons/collaps.svg">
                 </button>
                 <h6 class="title">Organization</h6>
-                @if (url()->current() == url('dashboard/organization/all-organization'))
-                <ul class="list-unstyled ps-0 expanded-navbar mb-0">
-                    <li class="mb-1">
-                        <button class="btn btn-toggle align-items-center rounded" data-toggle="collapse" data-target="#home-collapse1" aria-expanded="true">
-                            <div class="d-flex flex-row align-items-center">
-                                <div class="mr-2">
-                                    <span style="font-size:22px" class="material-symbols-outlined">domain</span>
-                                </div>
-                                <div>
-                                    Organization
-                                </div>
-                            </div>
-                        </button>
+              
 
-                        @php
-                        $Stream = DB::table('organization')->where('type','org')->where('user_id',Auth::id())->get();
-                        @endphp  
-
-                        <div class="collapse" id="home-collapse1" style="">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small px-1 py-2 nav-root-item">
-                                @if(count($Stream) > 0)
-                                @foreach($Stream as $value)
-                                    <li><a href="{{url('dashboard/organization/'.$value->slug.'/portfolio/'.$value->type)}}" class="link-dark rounded">{{$value->organization_name}}</a></li>
-                                @endforeach
-                                @endif
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-                @endif
-
-                @if (url()->current() == url('dashboard/organization/Business-Units'))
+            
                 <ul class="list-unstyled ps-0 expanded-navbar mb-0">
                     <li class="mb-1">
                         <button class="btn btn-toggle align-items-center rounded" data-toggle="collapse" data-target="#home-collapse" aria-expanded="true">
@@ -92,12 +60,24 @@
                         </div>
                     </li>
                 </ul>
-                @endif
-
+                
                 <ul class="list-unstyled ps-0 expanded-navbar-options">
-                    @if (url()->current() == url('dashboard/organization/Business-Units'))
+                    @if (url()->current() == url('dashboard/organizations'))
                     <li class="mb-1">
-                        <a href="{{url('dashboard/organization/Bu/dashboard')}}" class="d-flex flex-row align-items-center">
+                        <a href="{{url('dashboard/organizations')}}" @if (url()->current() == url('dashboard/organizations')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
+                            <div class="mr-2">
+                                <span style="font-size:22px" class="material-symbols-outlined">auto_stories</span>
+                            </div>
+                            <div class="mr-2">
+                               Dashboard
+                            </div>
+                        </a>
+                    </li>
+                    @endif
+
+                    @if (url()->current() == url('dashboard/organization/Business-Units') || url()->current() == url('dashboard/organization/Bu/dashboard') )
+                    <li class="mb-1">
+                        <a href="{{url('dashboard/organization/Bu/dashboard')}}" @if (url()->current() == url('dashboard/organization/Bu/dashboard')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center" @endif>
                             <div class="mr-2">
                                 <span style="font-size:22px" class="material-symbols-outlined">auto_stories</span>
                             </div>
@@ -108,7 +88,7 @@
                     </li>
                     @endif
                     <li class="mb-1">
-                        <a href="#" class="d-flex flex-row align-items-center">
+                        <a href="{{url('dashboard/organization/'.$organization->slug.'/performance-dashboard/'.$organization->type)}}" class="d-flex flex-row align-items-center">
                             <div class="mr-2">
                                 <span style="font-size:22px" class="material-symbols-outlined">team_dashboard</span>
                             </div>
@@ -129,7 +109,7 @@
                     </li>
                     <!-- Portfolio -->
                     <li class="mb-1">
-                        <a href="#" class="d-flex flex-row align-items-center">
+                        <a href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" class="d-flex flex-row align-items-center">
                             <div class="mr-2">
                                  <span style="font-size:22px" class="material-symbols-outlined">folder_supervised</span>
                             </div>
@@ -139,7 +119,7 @@
                         </a>
                     </li>
                     <li class="mb-1">
-                        <a href="#" class="d-flex flex-row align-items-center">
+                        <a href="{{url('dashboard/organization/'.$organization->slug.'/BT-Backlog/org')}}" class="d-flex flex-row align-items-center">
                             <div class="mr-2">
                                  <span style="font-size:22px" class="material-symbols-outlined">key_visualizer</span>
                             </div>
@@ -163,7 +143,7 @@
                     </li>
 
                     <li class="mb-1">
-                        <a href="#" class="d-flex flex-row align-items-center">
+                        <a href="{{url('dashboard/organization/'.$organization->slug.'/Org-TEAMS')}}" class="d-flex flex-row align-items-center">
                             <div class="mr-2">
                                  <span style="font-size:22px" class="material-symbols-outlined">groups</span>
                             </div>

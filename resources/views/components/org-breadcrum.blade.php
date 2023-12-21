@@ -1,6 +1,6 @@
 <!-- begin breadcrums -->
 @php
-$organization  = DB::table('organization')->where('user_id',Auth::id())->where('type','sign-up')->first();
+$organization  = DB::table('organization')->where('user_id',Auth::id())->first();
 @endphp
                 <div class="subheader subheader-solid breadcrums" id="kt_subheader">
                     <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
@@ -26,11 +26,11 @@ $organization  = DB::table('organization')->where('user_id',Auth::id())->where('
                         </div>
                         <!--end::Info-->
                         <!--begin::Toolbar-->
-                        <div class="d-flex align-items-center toolbar">
+                        {{-- <div class="d-flex align-items-center toolbar">
                             <div>
                                 <button class="button" data-toggle="modal" data-target="#create-org">Add Organization</button>
                             </div>
-                        </div>
+                        </div> --}}
                         <!--end::Toolbar-->
                     </div>
                 </div>

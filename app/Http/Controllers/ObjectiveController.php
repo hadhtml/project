@@ -687,7 +687,7 @@ class ObjectiveController extends Controller
             ->where("user_id", Auth::id())
             ->first();
         $monthIndex = 1;
-        if ($month->month) {
+        if ($month) {
             $monthIndex = $month->month + 1;
         }
         $startDate = now()
@@ -1048,7 +1048,7 @@ class ObjectiveController extends Controller
                 ->where("user_id", Auth::id())
                 ->first();
             $monthIndex = 1;
-            if ($month->month) {
+            if ($month) {
                 $monthIndex = $month->month + 1;
             }
             $startD = now()
