@@ -208,18 +208,18 @@ function getOrder(){
                     </div>
                 </div>                
             </div>
-            <div class="rows">
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <strong>Attention!</strong> Do you want to delete these Child Item? You won’t be able to undo this action.
-                        <div class="mt-3">
-                          <button onclick="document.getElementById('bulkupdateform').submit();" type="button" class="btn btn-danger mr-2" id="submitBtn">Yes! Delete It</button>
-                          <button type="button" class="btn btn-secondary" data-dismiss="alert">Cancel</button>
-                        </div>
-                      </div>         
-            </div>
+            
             <form method="POST" action="{{ url('dashboard/epics/bulkupdate') }}" id="bulkupdateform" class="sortable">
                 @csrf
-                
+                <div class="rows deletealert">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Attention!</strong> Do you want to delete these Child Item? You won’t be able to undo this action.
+                    <div class="mt-3">
+                          <button type="submit" class="btn btn-danger mr-2" id="submitBtn">Yes! Delete It</button>
+                          <button type="button" class="btn btn-secondary" data-dismiss="alert">Cancel</button>
+                        </div>
+                    </div>         
+                </div>
                 @foreach($epicstory as $s)
                 <div class="row ui-state-default" style="cursor: pointer;" id="{{ $s->id }}">
                     <div class="child-item">
