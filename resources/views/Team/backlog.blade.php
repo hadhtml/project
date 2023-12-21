@@ -15,6 +15,12 @@ $var_objective = 'TBaclog-'.$type;
 }
 
 
+if($type == 'orgT')
+{
+$var_objective = 'TBaclog-'.$type;
+}
+
+
 @endphp
 @extends('components.main-layout')
 @if($type == 'BU' || $type == 'VS')

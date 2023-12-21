@@ -87,7 +87,7 @@ $var_objective = "Org-Unit";
                                 @if($r->image != NULL)
                                 <img src="{{asset('public/assets/images/'.$r->image)}}" alt="lead">
                                 @else
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTv1Tt9_33HyVMm_ZakYQy-UgsLjE00biEArg&usqp=CAU" alt="lead">
+                                <img src="{{ Avatar::create($r->name)->toBase64() }}" alt="lead">
                                 @endif
                             </div>
 

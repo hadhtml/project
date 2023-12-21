@@ -45,7 +45,7 @@
                                     <div>
                                         <h3 class="mb-0">
                                             <a
-                                                href="{{ url('dashboard/organization/' . $team->slug . '/portfolio/BU') }}">{{ $team->team_title }}</a>
+                                                href="{{ url('dashboard/organization/' . $team->slug . '/portfolio/orgT') }}">{{ $team->team_title }}</a>
                                         </h3>
                                         <small>
                                             {{ $dataCount }} total members
@@ -100,22 +100,28 @@
                                 <div>
                                     <div class="d-flex align-items-center flex-lg-fill my-1">
                                         <div class="symbol-group symbol-hover">
-                                            <div class="symbol symbol-30 symbol-circle" data-toggle="tooltip" title=""
-                                                data-original-title="Mark Stone">
-                                                <img alt="Pic"
-                                                    src="https://img.freepik.com/premium-photo/young-handsome-man-with-beard-isolated-keeping-arms-crossed-frontal-position_1368-132662.jpg">
-                                            </div>
-                                            <div class="symbol symbol-30 symbol-circle" data-toggle="tooltip" title=""
-                                                data-original-title="Charlie Stone">
-                                                <img alt="Pic"
-                                                    src="https://img.freepik.com/premium-photo/young-man-smiling-cheerfully-feeling-happy-pointing-side-upwards-showing-object-copy-space_1194-211017.jpg">
-                                            </div>
-                                            <div style="width:42px; height:42px; padding: 10px; font-size: 12px;"
-                                                class="symbol symbol-30  symbol-circle symbol-light" data-toggle="tooltip"
-                                                title="" data-original-title="More users">
-                                                <span class="symbol-label">5+</span>
-                                            </div>
-                                        </div>
+                                            @foreach($dataArray as $member)
+                                            @foreach(DB::table('members')->get() as $r)
+                                            @if($r->id == $member)
+                                            @php
+                                            $name = $r->name.' '.$r->last_name;
+                                            @endphp
+                 
+                                             <div class="symbol symbol-30 symbol-circle" data-toggle="tooltip" title="" data-original-title="Charlie Stone">
+                                                 @if($r->image != NULL)
+                                                         <img src="{{asset('public/assets/images/'.$r->image)}}" alt="Example Image">
+                                                         @else
+                                                         <img src="{{ Avatar::create($name)->toBase64() }}" alt="Example Image">
+                                                         @endif
+                                             </div>
+                                             
+                                             @endif
+                                             @endforeach
+                                             @endforeach
+                                             <div style="width:42px; height:42px; padding: 10px; font-size: 12px;" class="symbol symbol-30  symbol-circle symbol-light" data-toggle="tooltip" title="" data-original-title="More users">
+                                                 <span class="symbol-label">5+</span>
+                                             </div>
+                                         </div>
                                     </div>
                                 </div>
                             </div>

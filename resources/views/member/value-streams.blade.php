@@ -52,11 +52,14 @@ $var_objective = "V-Stream";
                             @if($stream->Lead_id)
                             @foreach(DB::table('members')->get() as $r)
                             @if($r->id == $stream->Lead_id)
+                            @php
+                            $name = $r->name.' '.$r->last_name;
+                            @endphp
                             <td class="image-cell">
                                 @if($r->image != NULL)
                                 <img src="{{asset('public/assets/images/'.$r->image)}}" alt="Example Image">
                                 @else
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTv1Tt9_33HyVMm_ZakYQy-UgsLjE00biEArg&usqp=CAU" alt="Example Image">
+                                <img src="{{ Avatar::create($name)->toBase64() }}" alt="Example Image">
                                 @endif
                                 <div>
                                     <div class="title">{{$r->name}} {{$r->last_name}}</div>
