@@ -132,7 +132,7 @@ function getOrder(){
                     <div class="row mt-3">
                         <div class="col-md-12 text-right">
                             <span onclick="additem()" class="btn btn-default btn-sm">Cancel</span>
-                            <button id="createchilditembutton" type="submit" class="btn btn-primary btn-sm">Save</button>
+                            <span id="createchilditembutton" type="submit" class="btn btn-primary btn-sm">Save</span>
                         </div>
                     </div>
                 </div>
@@ -195,20 +195,31 @@ function getOrder(){
                         </label>
                     </div>
                     <div class="dropdown firstdropdownofcomments">
-                          <span class="dropdown-toggle orderbybutton bulkedit" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Bulk Actions
-                            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="7" viewBox="0 0 11 7" fill="none">
-                              <path d="M10.8339 0.644857C10.6453 0.456252 10.3502 0.439106 10.1422 0.593419L10.0826 0.644857L5.49992 5.2273L0.917236 0.644857C0.72863 0.456252 0.433494 0.439106 0.225519 0.593419L0.165935 0.644857C-0.0226701 0.833463 -0.0398163 1.1286 0.114497 1.33657L0.165935 1.39616L5.12427 6.35449C5.31287 6.5431 5.60801 6.56024 5.81599 6.40593L5.87557 6.35449L10.8339 1.39616C11.0414 1.18869 11.0414 0.852323 10.8339 0.644857Z" fill="#787878"/>
-                            </svg> 
-                          </span>
-                          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" onclick="deletechilditemsbulk()" href="javascript:void(0)">Delete</a>
-                            <a class="dropdown-item" onclick="deletechilditemsbulk()" href="javascript:void(0)">Bulk Edit</a>
-                          </div>
-                        </div>
+                      <span class="dropdown-toggle orderbybutton bulkedit" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Bulk Actions
+                        <svg xmlns="http://www.w3.org/2000/svg" width="11" height="7" viewBox="0 0 11 7" fill="none">
+                          <path d="M10.8339 0.644857C10.6453 0.456252 10.3502 0.439106 10.1422 0.593419L10.0826 0.644857L5.49992 5.2273L0.917236 0.644857C0.72863 0.456252 0.433494 0.439106 0.225519 0.593419L0.165935 0.644857C-0.0226701 0.833463 -0.0398163 1.1286 0.114497 1.33657L0.165935 1.39616L5.12427 6.35449C5.31287 6.5431 5.60801 6.56024 5.81599 6.40593L5.87557 6.35449L10.8339 1.39616C11.0414 1.18869 11.0414 0.852323 10.8339 0.644857Z" fill="#787878"/>
+                        </svg> 
+                      </span>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" onclick="deletechilditemsbulk()" href="javascript:void(0)">Delete</a>
+                        <a class="dropdown-item" onclick="deletechilditemsbulk()" href="javascript:void(0)">Bulk Edit</a>
+                      </div>
+                    </div>
                 </div>                
             </div>
-            <div class="sortable">
+            <div class="rows">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Attention!</strong> Do you want to delete these Child Item? You won’t be able to undo this action.
+                        <div class="mt-3">
+                          <button onclick="document.getElementById('bulkupdateform').submit();" type="button" class="btn btn-danger mr-2" id="submitBtn">Yes! Delete It</button>
+                          <button type="button" class="btn btn-secondary" data-dismiss="alert">Cancel</button>
+                        </div>
+                      </div>         
+            </div>
+            <form method="POST" action="{{ url('dashboard/epics/bulkupdate') }}" id="bulkupdateform" class="sortable">
+                @csrf
+                
                 @foreach($epicstory as $s)
                 <div class="row ui-state-default" style="cursor: pointer;" id="{{ $s->id }}">
                     <div class="child-item">
@@ -279,7 +290,7 @@ function getOrder(){
                                     </div>
                                 </div>
                                 <p>Do you want to delete this Child Item? You won’t be able to undo this action.</p>
-                                <button onclick="deletechilditem({{ $s->id }})" id="deletebutton{{ $s->id }}" class="btn btn-danger btn-block">Delete</button>
+                                <span onclick="deletechilditem({{ $s->id }})" id="deletebutton{{ $s->id }}" class="btn btn-danger btn-block">Delete</span>
                             </div>
                         </div>
                     </div>
@@ -315,14 +326,14 @@ function getOrder(){
                                 </div>
                             </div>
                             <div>
-                                <button type="button" onclick="editstorynew({{$s->id}})" class="btn btn-default btn-sm">Cancel</button>
-                                <button type="button" onclick="updatestory({{$s->id}});" id="updateitembutton{{ $s->id }}" class="btn btn-primary btn-sm">Update</button>
+                                <span type="button" onclick="editstorynew({{$s->id}})" class="btn btn-default btn-sm">Cancel</span>
+                                <span type="button" onclick="updatestory({{$s->id}});" id="updateitembutton{{ $s->id }}" class="btn btn-primary btn-sm">Update</span>
                             </div>
                         </div>
                     </div>
                 </div>
                 @endforeach
-            </div>
+            </form>
             @else
                 <div class="nodatafound">
                     <h4>No Child Items</h4>    
@@ -363,17 +374,30 @@ function bulkeditcheckbox() {
 
     }
 }
+$('.sortable').on('submit',(function(e) {
+    $('.submitBtn').html('<i class="fa fa-spin fa-spinner"></i>');
+    e.preventDefault();
+    var formData = new FormData(this);
+    $.ajax({
+        type:'POST',
+        url: $(this).attr('action'),
+        data:formData,
+        cache:false,
+        contentType: false,
+        processData: false,
+        success: function(data){
+            showtabwithoutloader('{{$epic->id}}' , 'childitems');
+        }
+    });
+}));
 function deletechilditemsbulk() {
     var totalCheckboxes = $('.allchilditem:checkbox:checked').length;
     if(totalCheckboxes == 0)
     {
-
+        
     }else
     {
-        var data = { 'user_ids[]' : []};
-        $(":checked").each(function() {
-          data['user_ids[]'].push($(this).val());
-        });
+        
     }
 }
 function childcheckbox() {
