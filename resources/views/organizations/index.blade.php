@@ -12,6 +12,7 @@ $Performance = DB::table('kpi_setting')->where('stream_id',$organization->id)->w
 $Teams = DB::table('org_team')->where('org_id',$organization->id)->count();
 $Reporting = DB::table('sprint')->where('value_unit_id',$organization->id)->where('type','org')->count();
 $EpicsBacklog = DB::table('team_backlog')->where('unit_id',$organization->id)->where('type','org')->count();
+$Impediments = DB::table('flags')->where('flag_type','Impediment')->where('board_type','org')->count();
 
 @endphp
 <div class="row">
@@ -20,7 +21,7 @@ $EpicsBacklog = DB::table('team_backlog')->where('unit_id',$organization->id)->w
             <div class="col-md-3 mb-4">
                 <div class="dashboard-card">
                     <div class="card-svg">
-                        <img src="{{ url('public/assets/svg/portfoliosvg.svg') }}">
+                       <a href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}"> <img src="{{ url('public/assets/svg/portfoliosvg.svg') }}"></a>
                     </div>
                     <div class="dashboard-card-tittle">
                         <h4>Portfolio</h4>
@@ -33,7 +34,7 @@ $EpicsBacklog = DB::table('team_backlog')->where('unit_id',$organization->id)->w
             <div class="col-md-3 mb-4">
                 <div class="dashboard-card">
                     <div class="card-svg">
-                        <img src="{{ url('public/assets/svg/epicsbacklogsvg.svg') }}">
+                        <a href="{{url('dashboard/organization/'.$organization->slug.'/BT-Backlog/org')}}"> <img src="{{ url('public/assets/svg/epicsbacklogsvg.svg') }}"></a>
                     </div>
                     <div class="dashboard-card-tittle">
                         <h4>Epics Backlog</h4>
@@ -46,7 +47,9 @@ $EpicsBacklog = DB::table('team_backlog')->where('unit_id',$organization->id)->w
             <div class="col-md-3 mb-4">
                 <div class="dashboard-card">
                     <div class="card-svg">
-                        <img src="{{ url('public/assets/svg/performancesvg.svg') }}">
+                        <a href="{{url('dashboard/organization/'.$organization->slug.'/performance-dashboard/'.$organization->type)}}"> 
+                            <img src="{{ url('public/assets/svg/performancesvg.svg') }}">
+                        </a>    
                     </div>
                     <div class="dashboard-card-tittle">
                         <h4>Performance</h4>
@@ -59,7 +62,7 @@ $EpicsBacklog = DB::table('team_backlog')->where('unit_id',$organization->id)->w
             <div class="col-md-3 mb-4">
                 <div class="dashboard-card">
                     <div class="card-svg">
-                        <img src="{{ url('public/assets/svg/teamssvg.svg') }}">
+                        <a href="{{url('dashboard/organization/'.$organization->slug.'/Org-TEAMS')}}"> <img src="{{ url('public/assets/svg/teamssvg.svg') }}"></a>
                     </div>
                     <div class="dashboard-card-tittle">
                         <h4>Teams</h4>
@@ -72,7 +75,7 @@ $EpicsBacklog = DB::table('team_backlog')->where('unit_id',$organization->id)->w
             <div class="col-md-3 mb-4">
                 <div class="dashboard-card">
                     <div class="card-svg">
-                        <img src="{{ url('public/assets/svg/reportingsvg.svg') }}">
+                        <a href="{{url('dashboard/organization/'.$organization->slug.'/BU-Report/'.$organization->type)}}">   <img src="{{ url('public/assets/svg/reportingsvg.svg') }}"></a>
                     </div>
                     <div class="dashboard-card-tittle">
                         <h4>Reporting</h4>
@@ -85,13 +88,15 @@ $EpicsBacklog = DB::table('team_backlog')->where('unit_id',$organization->id)->w
             <div class="col-md-3 mb-4">
                 <div class="dashboard-card">
                     <div class="card-svg">
-                        <img src="{{ url('public/assets/svg/impedimentssvg.svg') }}">
+                        <a href="{{url('dashboard/flags/'.$organization->slug.'/impediments/org')}}" > 
+                            <img src="{{ url('public/assets/svg/impedimentssvg.svg') }}">
+                        </a>   
                     </div>
                     <div class="dashboard-card-tittle">
                         <h4>Impediments</h4>
                     </div>
                     <div class="dashboard-card-number">
-                        <h3>25</h3>
+                        <h3>{{$Impediments}}</h3>
                     </div>
                 </div>
             </div>
