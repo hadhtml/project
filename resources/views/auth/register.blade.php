@@ -70,6 +70,13 @@
                                             <label for="LastName">Work industry</label>
                                         </div>
                                     </div>
+
+                                    <div class="col-md-12 col-lg-12 col-xl-12">
+                                        <div class="form-group mb-0">
+                                            <input type="text" class="form-control" name="org_name" id="LastName" required>
+                                            <label for="LastName">Organization Name</label>
+                                        </div>
+                                    </div>
                                     <div class="col-md-12 col-lg-12 col-xl-12">
                                         <div class="form-group mb-0">
                                             <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" id="email" required>
