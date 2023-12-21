@@ -6,11 +6,12 @@ $var_objective = "Org";
 @section('content')
 
 @php
-$Portfolio = DB::table('objectives')->where('type','org')->where('trash',NULL)->count();
-$Performance = DB::table('kpi_setting')->where('type','org')->count();
-$Teams = DB::table('org_team')->count();
-$Reporting = DB::table('sprint')->where('type','org')->count();
-$EpicsBacklog = DB::table('team_backlog')->where('type','org')->count();
+
+$Portfolio = DB::table('objectives')->where('type','org')->where('unit_id',$organization->id)->where('trash',NULL)->count();
+$Performance = DB::table('kpi_setting')->where('stream_id',$organization->id)->where('type','org')->count();
+$Teams = DB::table('org_team')->where('org_id',$organization->id)->count();
+$Reporting = DB::table('sprint')->where('value_unit_id',$organization->id)->where('type','org')->count();
+$EpicsBacklog = DB::table('team_backlog')->where('unit_id',$organization->id)->where('type','org')->count();
 
 @endphp
 <div class="row">

@@ -16,19 +16,7 @@
                 </div>
             </button>
 
-            @php
-            $Stream = DB::table('organization')->where('user_id',Auth::id())->get();
-            @endphp  
-
-            <div class="collapse" id="home-collapse" style="">
-                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small px-1 py-2 nav-root-item">
-                    @if(count($Stream) > 0)
-                    @foreach($Stream as $value)
-                        <li><a href="{{url('dashboard/organization/'.$value->slug.'/portfolio/'.$value->type)}}" class="link-dark rounded">{{$value->organization_name}}</a></li>
-                    @endforeach
-                    @endif
-                </ul>
-            </div>
+           
         </li>
     </ul>
 
