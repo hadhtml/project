@@ -4,6 +4,18 @@
     // function Updated by Usama Start
 
     $(document).ready(function() {
+        $('#epic_description_month').summernote({
+            height: 180,
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['height', ['height']],
+                ['view', ['fullscreen', 'codeview']],
+            ],
+        });
         @if(isset($_GET['epic']))
             editepic("{{ $_GET['epic'] }}");
             @php
@@ -2013,43 +2025,29 @@
 
                 },
                 success: function(res) {
-                    // if (res == 1) {
-
-                    //     $('#obj-key-name-error').html(
-                    //         '<strong class="text-danger">Key Name Already Taken</strong>');
-
-                    // } else {
-
                     $('#epic_name_month').val('');
                     $('#epic_start_date_month').val('');
                     $('#epic_end_date_month').val('');
                     $('#epic_description_month').val('');
-
-
-
-                    $('#success-epic-month').html(
-                        '<div class="alert alert-success" role="alert"> Epic Created successfully</div>'
-                    );
                     $('#epic-feild-error-month').html('');
-                    setTimeout(function() {
-                        $('#create-epic-month').modal('hide');
-                        $('#success-epic-month').html('');
-                    }, 3000);
                     $('#parentCollapsible').html(res);
-
                     $("#nestedCollapsible" + epic_obj).collapse('toggle');
                     $("#key-result" + epic_key).collapse('toggle');
                     $("#initiative" + ini_epic_id).collapse('toggle');
                     $("#AddStory").collapse('toggle');
                     handleDivClick(ini_epic_id);
-
-                    // }
-
+                    $('#create-epic-month').modal('hide');
+                    @php
+                        $lastepicid = DB::table('epics')->latest('id')->first();
+                        print_r($lastepicid);
+                    @endphp
+                    editepic("{{ $lastepicid }}");
                 }
             });
         } else {
 
-            $('#epic-feild-error-month').html('Please fill out all required fields.');
+            $('#epic_name_month').focus()
+            // $('#epic-feild-error-month').html('Please fill out all required fields.');
 
         }
     }

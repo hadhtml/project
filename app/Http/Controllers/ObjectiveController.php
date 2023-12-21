@@ -3035,7 +3035,7 @@ class ObjectiveController extends Controller
                 ->get();
         }
 
-        if ($type == "orgT") {
+        if ($request->type == "orgT") {
             $organization = DB::table("org_team")
                 ->where("slug", $request->slug)
                 ->first();
