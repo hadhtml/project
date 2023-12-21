@@ -849,4 +849,12 @@ class EpicController extends Controller
         
                         
     }
+    public function showorderbyactivity(Request $request)
+    {
+        $activity = activities::where('value_id' , $request->flag_id)->where('type' , 'epics')->orderby('id' , $request->id)->get();
+        $orderby = $request->id;
+        $data = Epic::find($request->flag_id);
+        $html = view('epics.tabs.activities', compact('activity','data','orderby'))->render();
+        return $html;
+    }
 }

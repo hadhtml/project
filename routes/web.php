@@ -265,8 +265,8 @@ Route::name('epics.')->namespace('App\Http\Controllers')->prefix('dashboard/epic
     Route::POST('sortchilditem', 'EpicController@sortchilditem'); 
     Route::POST('bulkupdate', 'EpicController@bulkupdate'); 
     Route::POST('selectteamforepic', 'EpicController@selectteamforepic'); 
-    
-    Route::POST('sortflags', 'EpicController@sortflags'); 
+    Route::POST('sortflags', 'EpicController@sortflags');
+    Route::POST('showorderbyactivity', 'EpicController@showorderbyactivity'); 
 
     
 });

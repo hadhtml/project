@@ -27,7 +27,7 @@
                     </svg> 
                   </span>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" onclick="showorderby('desc',{{ $data->id }},'attachments')" href="javascript:void(0)">Latest</a>
+                    <a class="dropdown-item" onclick="showorderbyattachment('desc',{{ $data->id }},'attachments')" href="javascript:void(0)">Latest</a>
                     <a class="dropdown-item" onclick="showorderby('asc',{{ $data->id }},'attachments')" href="javascript:void(0)">Older</a>
                   </div>
                 </div>

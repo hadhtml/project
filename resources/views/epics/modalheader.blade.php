@@ -225,37 +225,37 @@
     <img data-dismiss="modal" class="closeimage" aria-label="Close" src="{{url('public/assets/svg/cross.svg')}}">
 </div>
 <script type="text/javascript">
-    function showmemberbox() {
-        $('.memberadd-box').slideToggle();
-    }
-    function rasiseflag() {
-        $('.raiseflag-box').slideToggle();
-    }
-    function maximizemodal() {
-        $('#modaldialog').toggleClass('modalfullscreen')
-        $('#edit-epic-modal-new').css('padding-right' , '0px')
-    }
-    function selectteamforepic(id , epic_id) {
-        $.ajax({
-            type: "POST",
-            url: "{{ url('dashboard/epics/selectteamforepic') }}",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: {
-                id:id,
-                epic_id:epic_id,
-            },
-            success: function(res) {
-                $('#memberstoshow').html(res);
-                if($('#modaltab').val() == 'teams')
-                {
-                    showtabwithoutloader(epic_id , 'teams');    
-                }
-            },
-            error: function(error) {
-                
+function showmemberbox() {
+    $('.memberadd-box').slideToggle();
+}
+function rasiseflag() {
+    $('.raiseflag-box').slideToggle();
+}
+function maximizemodal() {
+    $('#modaldialog').toggleClass('modalfullscreen')
+    $('#edit-epic-modal-new').css('padding-right' , '0px')
+}
+function selectteamforepic(id , epic_id) {
+    $.ajax({
+        type: "POST",
+        url: "{{ url('dashboard/epics/selectteamforepic') }}",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+            id:id,
+            epic_id:epic_id,
+        },
+        success: function(res) {
+            $('#memberstoshow').html(res);
+            if($('#modaltab').val() == 'teams')
+            {
+                showtabwithoutloader(epic_id , 'teams');    
             }
-        });
-    }
+        },
+        error: function(error) {
+            
+        }
+    });
+}
 </script>
