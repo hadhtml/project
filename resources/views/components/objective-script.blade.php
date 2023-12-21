@@ -2,6 +2,30 @@
 <script>
     window.onload = window.localStorage.clear();
     // function Updated by Usama Start
+
+    $(document).ready(function() {
+        @if(isset($_GET['epic']))
+            editepic("{{ $_GET['epic'] }}");
+            @php
+                $epicforcollapse = DB::table('epics')->where('id'  ,$_GET['epic'])->first();
+            @endphp
+            $("#nestedCollapsible{{ $epicforcollapse->obj_id }}").collapse('toggle');
+            $("#key-result{{ $epicforcollapse->key_id }}").collapse('toggle');
+            $("#initiative{{ $epicforcollapse->initiative_id }}").collapse('toggle');
+            handleDivClick('{{ $epicforcollapse->initiative_id }}');
+        @endif
+        $("#edit-epic-modal-new").on('hidden.bs.modal', function(){
+           // if($('#flag_tittle').val() == '')
+           // {
+           //      var cardid = $('#cardid').val();
+           //      $('#'+cardid).remove();
+           //      deleteflag($('#cardid').val())
+           // }
+           var new_url="{{ url()->current() }}";
+           window.history.pushState("data","Title",new_url);
+        });
+    });
+
     function addnewquartervalue(id, key_chart_id, sprint_id) {
         var value = $('#new-chart-value' + id).val();
         var unit_id = "{{ $organization->id }}";
@@ -89,6 +113,8 @@
         // getkeylink(key_id);
     }
     function editepic(epic_id) {
+        var new_url="{{ url()->current() }}?epic="+epic_id;
+        window.history.pushState("data","Title",new_url);
         $.ajax({
             type: "POST",
             url: "{{ url('dashboard/epics/getepic') }}",
