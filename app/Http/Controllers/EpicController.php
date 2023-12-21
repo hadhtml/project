@@ -674,6 +674,14 @@ class EpicController extends Controller
             $item->save();
         }
     }
+    public function sortflags(Request $request)
+    {
+        foreach ($request->order as $key=>$r) {
+            $item = flags::find($r);
+            $item->flag_order = $key+1;
+            $item->save();
+        }
+    }
     public function deletechilditem(Request $request)
     {
         $total = 0;

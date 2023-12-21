@@ -266,6 +266,9 @@ Route::name('epics.')->namespace('App\Http\Controllers')->prefix('dashboard/epic
     Route::POST('bulkupdate', 'EpicController@bulkupdate'); 
     Route::POST('selectteamforepic', 'EpicController@selectteamforepic'); 
     
+    Route::POST('sortflags', 'EpicController@sortflags'); 
+
+    
 });
 
 Route::name('keyresult.')->namespace('App\Http\Controllers')->prefix('dashboard/keyresult')->group(function () {

@@ -1,13 +1,13 @@
 <script>
 $(function() {
-    $(".sortable").sortable({
+    $("#sortable").sortable({
         update: function(event, ui) { 
             getOrder()
         }
     });
 });
 function getOrder(){
-    var order= $(".sortable .ui-state-default").map(function() {        
+    var order= $("#sortable .ui-state-default").map(function() {        
         return this.id;        
     }).get();
     var epic_id = '{{ $data->id }}';
@@ -61,7 +61,7 @@ function getOrder(){
                     <a class="dropdown-item" onclick="showorderby('asc',{{ $data->id }},'attachments')" href="javascript:void(0)">Older</a>
                   </div>
                 </div>
-                <span onclick="uploadattachment()" class="btn btn-default btn-sm">Raise Flag</span>
+                <!-- <span  class="btn btn-default btn-sm">Raise Flag</span> -->
             </div>
         </div>
     </div>
@@ -149,10 +149,10 @@ function getOrder(){
         margin-left: 25px;
       }
     </style>
-    <div id="list" type="1" class="col-md-12 col-lg-12 col-xl-12" style="position: relative;">
+    <div id="sortable" type="1" class="col-md-12 col-lg-12 col-xl-12" style="position: relative;">
         @if($flags->count() > 0)
         @foreach($flags as $r)
-        <div id="drag{{ $r->id }}" class="card child-item child-item-flag">
+        <div  id="{{ $r->id }}" class="ui-state-default card child-item child-item-flag">
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-1 text-left">
