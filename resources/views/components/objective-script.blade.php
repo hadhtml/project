@@ -2039,9 +2039,8 @@
                     $('#create-epic-month').modal('hide');
                     @php
                         $lastepicid = DB::table('epics')->latest('id')->first();
-                        print_r($lastepicid);
                     @endphp
-                    editepic("{{ $lastepicid }}");
+                    editepic("{{ $lastepicid->id }}");
                 }
             });
         } else {
