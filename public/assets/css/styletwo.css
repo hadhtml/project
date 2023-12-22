@@ -1218,3 +1218,7 @@ button:focus {
 .team-select-box{
     left: -55px !important;
 }
+.deleteepiccard{
+    top: 5px !important;
+    left: 90px !important;
+}

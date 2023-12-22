@@ -120,7 +120,6 @@ Route::post('delete-graph-val', [App\Http\Controllers\ChartController::class, 'D
 Route::get('download/{file_name}', [App\Http\Controllers\ChartController::class, 'getDownload']);
 Route::get('get-chart-status', [App\Http\Controllers\ChartController::class, 'ChartFilter']);
 Route::get('chart-status', [App\Http\Controllers\ChartController::class, 'GetChartStatus']);
-Route::post('save-epic-month', [App\Http\Controllers\ObjectiveController::class,'SaveEpicMonth']);
 
 // Members
 
@@ -266,8 +265,9 @@ Route::name('epics.')->namespace('App\Http\Controllers')->prefix('dashboard/epic
     Route::POST('bulkupdate', 'EpicController@bulkupdate'); 
     Route::POST('selectteamforepic', 'EpicController@selectteamforepic'); 
     Route::POST('sortflags', 'EpicController@sortflags');
-    Route::POST('showorderbyactivity', 'EpicController@showorderbyactivity'); 
-
+    Route::POST('showorderbyactivity', 'EpicController@showorderbyactivity');
+    Route::POST('savenewepic', 'EpicController@savenewepic');
+    Route::POST('showlatestepicdatainmodal', 'EpicController@showlatestepicdatainmodal');
     
 });
 

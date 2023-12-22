@@ -663,16 +663,16 @@ $var_objective = 'PageT-'.$type;
 </div>
 <div class="modal" id="create-epic-month" tabindex="-1" role="dialog" aria-labelledby="create-epic-month" aria-hidden="true">
    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content newmodalcontent">
+      <div class="modal-content newmodalcontent modalcontentfornewepiccreate">
          <div class="modal-header">
             <div class="row positionrelative">
                 <div class="col-md-12 mb-5">
-                    <h5 class="modal-title newmodaltittle epic-tittle-header marginleftthirty" id="create-epic">
+                    <h5 onclick="epicgeneraldetails()" class="modal-title newmodaltittle epic-tittle-header marginleftthirty" id="create-epic">
                         <img src="{{ url('public/assets/svg/epicheaderheader.svg') }}">Enter Epic Tittle
                     </h5>
                 </div>
                 <div class="col-md-12 displayflex">
-                    <div class="btn-group epicheaderborderleft">
+                    <div onclick="epicgeneraldetails()" class="btn-group epicheaderborderleft">
                         <button type="button" class="btn btn-default statuschangebutton todo-button-color" id="showboardbutton">
                            To Do
                         </button>
@@ -681,25 +681,13 @@ $var_objective = 'PageT-'.$type;
                            <span class="sr-only">Toggle Dropdown</span>
                         </button>
                     </div>
-                    <a href="javascript:void(0)" class="epic-datepicker" id="showboardbutton">
+                    <a onclick="epicgeneraldetails()" href="javascript:void(0)" class="epic-datepicker" id="showboardbutton">
                         <img src="{{url('public/assets/svg/note-text.svg')}}" width="20">
                         <input readonly type="text" name="daterange" value="Start Date - End Date" />
                     </a>
-                    <a href="javascript:void(0)" class="epic-header-buttons" id="showboardbutton">
+                    <a onclick="epicgeneraldetails()" href="javascript:void(0)" class="epic-header-buttons" id="showboardbutton">
                         <img src="{{url('public/assets/svg/btnteamsvg.svg')}}" width="20">Team
                     </a>
-                    <div class="memberlistposition">
-                        <div class="memberadd-box team-select-box">
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <h4>Select Team</h4>
-                                </div>
-                                <div class="col-md-6 text-right">
-                                    <img onclick="showmemberbox()" class="memberclose" src="{{url('public/assets/svg/memberclose.svg')}}">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="epic-header-buttons raise-flag-button">
                         <a href="javascript:void(0)"  id="showboardbutton">
                            <img src="{{url('public/assets/svg/btnflagsvg.svg')}}" width="20"> Flag 
@@ -711,7 +699,7 @@ $var_objective = 'PageT-'.$type;
                 </div>
             </div>
             <div class="rightside" >
-                <span onclick="maximizemodal()">
+                <span onclick="epicgeneraldetails()">
                     <img  src="{{url('public/assets/svg/maximize.svg')}}">
                 </span>
                 <img data-dismiss="modal" class="closeimage" aria-label="Close" src="{{url('public/assets/svg/cross.svg')}}">
@@ -725,36 +713,36 @@ $var_objective = 'PageT-'.$type;
                          <h4>Menu</h4>
                          <input type="hidden" id="modaltab" value="general">
                          <ul>
-                             <li id="general" class="tabsclass active">
+                             <li id="general" onclick="epicgeneraldetails()" class="tabsclass active">
                                  <span class="material-symbols-outlined"> edit_square </span> General
                              </li>
-                             <li id="childitems" class="tabsclass">
+                             <li id="childitems" onclick="epicgeneraldetails()" class="tabsclass">
                                  <span class="material-symbols-outlined">toc</span> Child Items
                              </li>
-                             <li id="comments" class="tabsclass">
+                             <li id="comments" onclick="epicgeneraldetails()" class="tabsclass">
                                  <span class="material-symbols-outlined">comment</span> Comments
                              </li>
-                             <li id="activites" class="tabsclass">
+                             <li id="activites" onclick="epicgeneraldetails()" class="tabsclass">
                                 <span class="material-symbols-outlined">browse_activity</span> Activities
                              </li>
                              <!-- <li id="checkins" class="tabsclass">
                                  <span class="material-symbols-outlined">checklist</span> Check-Ins
                              </li> -->
-                             <li id="attachment" class="tabsclass">
+                             <li id="attachment" onclick="epicgeneraldetails()" class="tabsclass">
                                  <span class="material-symbols-outlined"> attachment </span> Attachments</li>
                              <li id="flags" class="tabsclass">
                                  <span class="material-symbols-outlined">flag</span> Flags
                              </li>
-                             <li id="teams" class="tabsclass">
+                             <li id="teams" onclick="epicgeneraldetails()" class="tabsclass">
                                  <span class="material-symbols-outlined"> group </span> Teams
                              </li>
                          </ul>
                          <h4>Action</h4>
                          <ul class="positionrelative">
                              <!-- <li><img src="{{ url('public/assets/svg/archive-action.svg') }}"> Archive</li> -->
-                             <li><span class="material-symbols-outlined">share</span> Share</li>
+                             <li onclick="epicgeneraldetails()"><span class="material-symbols-outlined">share</span> Share</li>
                              <!-- <li><img src="{{ url('public/assets/svg/arrow-right-action.svg') }}"> Move</li> -->
-                             <li><span class="material-symbols-outlined">delete</span> Delete</li>
+                             <li onclick="epicgeneraldetails()"><span class="material-symbols-outlined">delete</span> Delete</li>
                          </ul>
                      </div>
                  </div>
@@ -766,8 +754,8 @@ $var_objective = 'PageT-'.$type;
                                      <div class="mr-2">
                                          <span class="material-symbols-outlined">edit_square</span>
                                      </div>
-                                     <div>
-                                         <h4>General</h4>
+                                     <div style="display: contents;">
+                                         <h4>General</h4> <p style="margin-bottom: 0; margin-left: 18px; font-size: 10px; color: red;display: none;" id="generaltaberror">Save General Details to Unlock This Feature</p>
                                      </div>
                                  </div>
                              </div>
@@ -815,7 +803,7 @@ $var_objective = 'PageT-'.$type;
                       <input type="hidden" id="r_id">
                       <div class="row margintopfourtypixel">
                           <div class="col-md-12 text-right">
-                              <button class="btn btn-primary btn-theme ripple savechangebutton" onclick="saveEpicMonth();"  type="button">Save Epic</button>
+                              <button class="btn btn-primary btn-theme ripple savechangebutton" id="firsttimeepiccreate" onclick="saveEpicMonth();"  type="button">Save Epic</button>
                           </div>
                       </div>
                      </form>
