@@ -661,259 +661,166 @@ $var_objective = 'PageT-'.$type;
 </div>
 </div>
 </div>
-<div class="modal fade" id="create-epic-month" tabindex="-1" role="dialog" aria-labelledby="create-epic-month" aria-hidden="true">
-   <div class="modal-dialog" role="document">
-      <div class="modal-content" style="width: 626px !important;">
+<div class="modal" id="create-epic-month" tabindex="-1" role="dialog" aria-labelledby="create-epic-month" aria-hidden="true">
+   <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content newmodalcontent">
          <div class="modal-header">
-            <div class="row">
-               <div class="col-md-12">
-                  <h5 class="modal-title" id="create-epic">Create Epic</h5>
-               </div>
-               <div class="col-md-12">
-                  <p>Fill out the form, submit and hit the save button.</p>
-               </div>
-               <div class="col-md-12">
-                  <div id="success-epic-month"  role="alert"></div>
-                  <span id="epic-feild-error-month" class="ml-3 text-danger"></span>
-               </div>
+            <div class="row positionrelative">
+                <div class="col-md-12 mb-5">
+                    <h5 class="modal-title newmodaltittle epic-tittle-header marginleftthirty" id="create-epic">
+                        <img src="{{ url('public/assets/svg/epicheaderheader.svg') }}">Enter Epic Tittle
+                    </h5>
+                </div>
+                <div class="col-md-12 displayflex">
+                    <div class="btn-group epicheaderborderleft">
+                        <button type="button" class="btn btn-default statuschangebutton todo-button-color" id="showboardbutton">
+                           To Do
+                        </button>
+                        <button type="button" class="todo-button-color statuschangebuttonarrow btn btn-danger dropdown-toggle dropdown-toggle-split archivebeardcimbgbutton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                           <img src="{{url('public/assets/svg/arrow-down-white.svg')}}" width="20">         
+                           <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                    </div>
+                    <a href="javascript:void(0)" class="epic-datepicker" id="showboardbutton">
+                        <img src="{{url('public/assets/svg/note-text.svg')}}" width="20">
+                        <input readonly type="text" name="daterange" value="Start Date - End Date" />
+                    </a>
+                    <a href="javascript:void(0)" class="epic-header-buttons" id="showboardbutton">
+                        <img src="{{url('public/assets/svg/btnteamsvg.svg')}}" width="20">Team
+                    </a>
+                    <div class="memberlistposition">
+                        <div class="memberadd-box team-select-box">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <h4>Select Team</h4>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <img onclick="showmemberbox()" class="memberclose" src="{{url('public/assets/svg/memberclose.svg')}}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="epic-header-buttons raise-flag-button">
+                        <a href="javascript:void(0)"  id="showboardbutton">
+                           <img src="{{url('public/assets/svg/btnflagsvg.svg')}}" width="20"> Flag 
+                        </a>
+                    </div>
+                    <div class="moverightside">
+                        <h1 class="epic-percentage">0 % Completed</h1>
+                    </div>
+                </div>
             </div>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <img src="{{asset('public/assets/images/icons/minus.svg')}}">
-            </button>
+            <div class="rightside" >
+                <span onclick="maximizemodal()">
+                    <img  src="{{url('public/assets/svg/maximize.svg')}}">
+                </span>
+                <img data-dismiss="modal" class="closeimage" aria-label="Close" src="{{url('public/assets/svg/cross.svg')}}">
+            </div>
          </div>
-         <div class="modal-body">
-            <form class="needs-validation" action="#" method="POST" novalidate>
-               @csrf
-               <input type="hidden" id="ini_epic_id_month">
-               <input type="hidden" id="epic_obj_month">
-               <input type="hidden" id="epic_key_month">
-               <input type="hidden" id="month_id">
-               <input type="hidden" id="q_id">
-               <input type="hidden" id="buisness_unit_id" value="{{ $organization->id }}">
-               <input type="hidden" id="epic_type" value="{{ $organization->type }}">
-               <div class="row">
-                  <div class="col-md-12 col-lg-12 col-xl-12">
-                     <div class="form-group mb-0">
-                        <input type="text" class="form-control" id="epic_name_month" required>
-                        <label for="objective-name">Epic Title</label>
+         <div class="modal-body" id="showformforedit">
+             <div class="row"><div class="col-md-12"><div class="border-top"></div></div></div>
+             <div class="row mt-3">
+                 <div class="col-md-3">
+                     <div class="menuettitle">
+                         <h4>Menu</h4>
+                         <input type="hidden" id="modaltab" value="general">
+                         <ul>
+                             <li id="general" class="tabsclass active">
+                                 <span class="material-symbols-outlined"> edit_square </span> General
+                             </li>
+                             <li id="childitems" class="tabsclass">
+                                 <span class="material-symbols-outlined">toc</span> Child Items
+                             </li>
+                             <li id="comments" class="tabsclass">
+                                 <span class="material-symbols-outlined">comment</span> Comments
+                             </li>
+                             <li id="activites" class="tabsclass">
+                                <span class="material-symbols-outlined">browse_activity</span> Activities
+                             </li>
+                             <!-- <li id="checkins" class="tabsclass">
+                                 <span class="material-symbols-outlined">checklist</span> Check-Ins
+                             </li> -->
+                             <li id="attachment" class="tabsclass">
+                                 <span class="material-symbols-outlined"> attachment </span> Attachments</li>
+                             <li id="flags" class="tabsclass">
+                                 <span class="material-symbols-outlined">flag</span> Flags
+                             </li>
+                             <li id="teams" class="tabsclass">
+                                 <span class="material-symbols-outlined"> group </span> Teams
+                             </li>
+                         </ul>
+                         <h4>Action</h4>
+                         <ul class="positionrelative">
+                             <!-- <li><img src="{{ url('public/assets/svg/archive-action.svg') }}"> Archive</li> -->
+                             <li><span class="material-symbols-outlined">share</span> Share</li>
+                             <!-- <li><img src="{{ url('public/assets/svg/arrow-right-action.svg') }}"> Move</li> -->
+                             <li><span class="material-symbols-outlined">delete</span> Delete</li>
+                         </ul>
                      </div>
-                  </div>
-                  <div class="col-md-6 col-lg-6 col-xl-6">
-                     <div class="form-group mb-0">
-                        <input type="date" class="form-control"   id="epic_start_date_month"  required>
-                        <label for="start-date">Start Date</label>
-                     </div>
-                  </div>
-                  <div class="col-md-6 col-lg-6 col-xl-6">
-                     <div class="form-group mb-0">
-                        <input type="date" class="form-control"  id="epic_end_date_month" required>
-                        <label for="end-date" class="lable-bottom-imp">End Date</label>
-                     </div>
-                  </div>
-                  <div class="col-md-12 col-lg-12 col-xl-12">
-                     <div class="form-group mb-0">
-                        <select class="form-control" id="epic_status_month">
-                           <option value="To Do">To Do</option>
-                           <option value="In progress">In Progress</option>
-                           <option value="Done">Done</option>
-                        </select>
-                        <label for="small-description">Status</label>
-                     </div>
-                  </div>
-                  <div class="col-md-12 col-lg-12 col-xl-12">
-                     <div class="form-group mb-0">
-                        <input type="text" class="form-control" name="" id="epic_description_month" required>
-                        <label for="small-description">Small Description</label>
-                     </div>
-                  </div>
-                  @if($organization->type == 'unit')
-                  <div class="col-md-12 col-lg-12 col-xl-12">
-                     <div class="form-group mb-0">
-                        <select class="form-control" id="team" >
-                           @foreach(DB::table('unit_team')->where('org_id',$organization->id)->get() as $r)
-                           <option value="{{$r->id}}">{{$r->team_title}}</option>
-                           @endforeach
-                        </select>
-                        <label for="small-description" class="lable-bottom-imp" >Assign Team</label>
-                     </div>
-                  </div>
-                  @endif
-                  @if($organization->type == 'stream')   
-                  <div class="col-md-12 col-lg-12 col-xl-12">
-                     <div class="form-group mb-0">
-                        <select class="form-control" id="team"  >
-                           @foreach(DB::table('value_team')->where('org_id',$organization->id)->get() as $r)
-                           <option value="{{$r->id}}">{{$r->team_title}}</option>
-                           @endforeach
-                        </select>
-                        <label for="small-description">Assign Team</label>
-                     </div>
-                  </div>
-                  @endif
-               </div>
-               <div class="row">
-                  <div class="col-md-12 col-lg-12 col-xl-12">
-                     <div class="d-flex flex-row align-items-center justify-content-between comment-header">
-                        <div>
-                           <h4>Stories</h4>
-                        </div>
-                        <div>
-                           <div class="d-flex flex-row align-items-center">
-                              <div class="dropdown">
-                                 <button class="btn btn-default btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="11" height="7" viewBox="0 0 11 7" fill="none">
-                                       <path d="M10.8339 0.644857C10.6453 0.456252 10.3502 0.439106 10.1422 0.593419L10.0826 0.644857L5.49992 5.2273L0.917236 0.644857C0.72863 0.456252 0.433494 0.439106 0.225519 0.593419L0.165935 0.644857C-0.0226701 0.833463 -0.0398163 1.1286 0.114497 1.33657L0.165935 1.39616L5.12427 6.35449C5.31287 6.5431 5.60801 6.56024 5.81599 6.40593L5.87557 6.35449L10.8339 1.39616C11.0414 1.18869 11.0414 0.852323 10.8339 0.644857Z" fill="#787878"/>
-                                    </svg>
-                                    Order By
-                                 </button>
-                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#">Status</a>
-                                    <a class="dropdown-item" href="#">Type</a>
-                                    <a class="dropdown-item" href="#">Created</a>
-                                    <a class="dropdown-item" href="#">Assignee</a>
+                 </div>
+                 <div class="col-md-9 secondportion">
+                     <div class="row">
+                         <div class="col-md-12 col-lg-12 col-xl-12">
+                             <div class="d-flex flex-row align-items-center justify-content-between block-header">
+                                 <div class="d-flex flex-row align-items-center">
+                                     <div class="mr-2">
+                                         <span class="material-symbols-outlined">edit_square</span>
+                                     </div>
+                                     <div>
+                                         <h4>General</h4>
+                                     </div>
                                  </div>
-                              </div>
-                              <button class="btn btn-primary btn-sm" id="ButtonCollaps" type="button" data-toggle="collapse" data-target="#AddStory" aria-expanded="false" aria-controls="AddStory">
-                              Add Story
-                              </button>
-                           </div>
-                        </div>
+                             </div>
+                         </div>
                      </div>
-                  </div>
-               </div>
-               <!-- Stories Module -->
-               <input type="hidden" id="r_id">
-               <div class="row mt-4 collapse" id="AddStory">
-                  <div class="col-md-12 col-lg-12 col-xl-12">
-                     <div class="card comment-card">
-                        <div class="card-body">
-                           <div class="row">
-                              <div class="col-md-12">
-                                 <div class="form-group mb-0">
-                                    <input type="text" class="form-control" id="story_title" required>
-                                    <label for="objective-name">Title</label>
-                                 </div>
+                     <form class="needs-validation" action="#" method="POST" novalidate>
+                        @csrf
+                        <input type="hidden" id="ini_epic_id_month">
+                        <input type="hidden" id="epic_obj_month">
+                        <input type="hidden" id="epic_key_month">
+                        <input type="hidden" id="month_id">
+                        <input type="hidden" id="q_id">
+                        <input type="hidden" id="buisness_unit_id" value="{{ $organization->id }}">
+                        <input type="hidden" id="epic_type" value="{{ $organization->type }}">
+                        <input type="hidden" value="To Do" id="epic_status_month">
+                        <div class="row">
+                          <div class="col-md-12 col-lg-12 col-xl-12">
+                              <div class="form-group mb-0">
+                                  <label for="epic_name">Epic Title</label>
+                                  <input type="text" class="form-control" id="epic_name_month" required>
                               </div>
-                              <div class="col-md-6">
-                                 <div class="form-group mb-0">
-                                    <select class="form-control" id="story_assign">
-                                       <option value="">Select Assignee</option>
-                                       <?php foreach(DB::table('members')->where('org_user',Auth::id())->get() as $r){ ?>
-                                       <option value="{{ $r->id }}">{{ $r->name }}</option>
-                                       <?php }  ?>
-                                    </select>
-                                    <label for="small-description">Assignee</label>
-                                 </div>
+                          </div>
+                          <div class="col-md-6 col-lg-6 col-xl-6">
+                              <div class="form-group mb-0">
+                                  <label for="epic_start_date">Start Date</label>
+                                  <input type="date" class="form-control"   id="epic_start_date_month"  required>
+                                  
                               </div>
-                              {{-- 
-                              <div class="col-md-6">
-                                 <div class="form-group mb-0">
-                                    <select class="form-control" id="story_type">
-                                       <option value="Story">Story</option>
-                                       <option value="Task">Task</option>
-                                       <option value="Defect">Defect</option>
-                                    </select>
-                                    <label for="small-description">Type</label>
-                                 </div>
+                          </div>
+                          <div class="col-md-6 col-lg-6 col-xl-6">
+                              <div class="form-group mb-0">
+                                  <label for="epic_end_date">End Date</label>
+                                  <input type="date" class="form-control"  id="epic_end_date_month" required>                                  
                               </div>
-                              --}}
-                              <div class="col-md-6">
-                                 <div class="form-group mb-0">
-                                    <select class="form-control" id="story_status">
-                                       <option value="">Select Status</option>
-                                       <option value="To Do">To Do</option>
-                                       <option value="In progress">In Progress</option>
-                                       <option value="Done">Done</option>
-                                    </select>
-                                    <label for="small-description">Status</label>
-                                 </div>
+                          </div>
+                          <div class="col-md-12 col-lg-12 col-xl-12">
+                              <div class="form-group mb-0">
+                                  <label for="newepicdescription">Description</label>
+                                  <div class="textareaformcontrol">
+                                      <textarea id="epic_description_month"></textarea> 
+                                  </div>
                               </div>
-                           </div>
-                           <div>
-                              <button type="button" onclick="SaveNewStory();" class="btn btn-primary btn-sm">Save</button>
-                           </div>
-                           <div class="row">
-                              <div class="col-md-12">
-                                 {{-- 
-                                 <div class="d-flex flex-row justify-content-between">
-                                    <div class="dropdown">
-                                       <button class="btn btn-default btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                          <svg xmlns="http://www.w3.org/2000/svg" width="11" height="7" viewBox="0 0 11 7" fill="none">
-                                             <path d="M10.8339 0.644857C10.6453 0.456252 10.3502 0.439106 10.1422 0.593419L10.0826 0.644857L5.49992 5.2273L0.917236 0.644857C0.72863 0.456252 0.433494 0.439106 0.225519 0.593419L0.165935 0.644857C-0.0226701 0.833463 -0.0398163 1.1286 0.114497 1.33657L0.165935 1.39616L5.12427 6.35449C5.31287 6.5431 5.60801 6.56024 5.81599 6.40593L5.87557 6.35449L10.8339 1.39616C11.0414 1.18869 11.0414 0.852323 10.8339 0.644857Z" fill="#787878"/>
-                                          </svg>
-                                          Order By
-                                       </button>
-                                       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                          <a class="dropdown-item" href="#">To Do</a>
-                                          <a class="dropdown-item" href="#">In Progress</a>
-                                          <a class="dropdown-item" href="#">Done</a>
-                                       </div>
-                                    </div>
-                                    <div>
-                                       <button class="btn btn-default btn-sm">Cancel</button>
-                                       <button class="btn btn-primary btn-sm">Save Story</button>
-                                    </div>
-                                 </div>
-                                 --}}
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <div class="row">
-                  <div class="col-md-12">
-                     <!-- Basil Put the progress bar here kindly -->
-                  </div>
-               </div>
-               <div class="row ">
-                  <div class="col-md-12 story-data">
-                  </div>
-               </div>
-               <!-- Comments, Basil This module been already created on the impediment board so you may simply copy and paste it here -->
-               <div class="row">
-                  <div class="col-md-12 col-lg-12 col-xl-12">
-                     <div class="d-flex flex-row align-items-center justify-content-between comment-header">
-                        <div>
-                           <h4>Comments</h4>
-                        </div>
-                        <div class="dropdown">
-                           <button class="btn btn-default btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="11" height="7" viewBox="0 0 11 7" fill="none">
-                                 <path d="M10.8339 0.644857C10.6453 0.456252 10.3502 0.439106 10.1422 0.593419L10.0826 0.644857L5.49992 5.2273L0.917236 0.644857C0.72863 0.456252 0.433494 0.439106 0.225519 0.593419L0.165935 0.644857C-0.0226701 0.833463 -0.0398163 1.1286 0.114497 1.33657L0.165935 1.39616L5.12427 6.35449C5.31287 6.5431 5.60801 6.56024 5.81599 6.40593L5.87557 6.35449L10.8339 1.39616C11.0414 1.18869 11.0414 0.852323 10.8339 0.644857Z" fill="#787878"/>
-                              </svg>
-                              Order By
-                           </button>
-                           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                              <a class="dropdown-item" href="#">Latest</a>
-                              <a class="dropdown-item" href="#">Older</a>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="col-md-12 col-lg-12 col-xl-12">
-                     <div class="d-flex flex-column">
-                        <div>
-                           <div class="form-group mb-0">
-                              <input type="text" class="form-control" id="epic-comment" required>
-                              <label for="objective-name">Write Comment</label>
-                           </div>
-                        </div>
-                        <div>
-                           <button type="button" class="btn btn-default btn-sm">Cancel</button>
-                           <button type="button" onclick="SaveComment();" class="btn btn-primary btn-sm">Save</button>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <div class="row mt-4 comment-area" id="comment_area">
-               </div>
-               <div class="row">
-                  <div class="col-md-12">
-                     <button class="btn btn-primary btn-lg btn-theme btn-block ripple mt-3" onclick="saveEpicMonth();"  type="button">Save Epic</button>
-                  </div>
-               </div>
-            </form>
+                          </div>
+                      </div>
+                      <input type="hidden" id="r_id">
+                      <div class="row margintopfourtypixel">
+                          <div class="col-md-12 text-right">
+                              <button class="btn btn-primary btn-theme ripple savechangebutton" onclick="saveEpicMonth();"  type="button">Save Epic</button>
+                          </div>
+                      </div>
+                     </form>
+                 </div>
+             </div>
          </div>
       </div>
    </div>

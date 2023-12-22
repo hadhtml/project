@@ -35,7 +35,7 @@ $var_objective = "Org-Unit-team";
             <div class="d-flex flex-row justify-content-between">
                 <div class="d-flex flex-row">
                     <div class="mr-2">
-                        <img  class="gixie" data-item-id="{{ $team->id }}" style="width: 40px; object-fit: cover; border-radius: 10px; height: 40x;">
+                        <img  class="gixie" data-item-id="{{ $team->id }}" style="width: 40px; object-fit: cover; border-radius: 10px; height: 40px;">
                     </div>
                     <div>
                         <h3 class="mb-0">
