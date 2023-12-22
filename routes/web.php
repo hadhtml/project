@@ -258,7 +258,17 @@ Route::name('epics.')->namespace('App\Http\Controllers')->prefix('dashboard/epic
     Route::POST('changeepicstatus', 'EpicController@changeepicstatus');
     Route::POST('showheader', 'EpicController@showheader');
     Route::POST('updateflagstatus', 'EpicController@updateflagstatus');
-    Route::POST('flagupdate', 'EpicController@flagupdate');    
+    Route::POST('flagupdate', 'EpicController@flagupdate');   
+    Route::POST('deletechilditem', 'EpicController@deletechilditem');
+    Route::POST('orderbychilditem', 'EpicController@orderbychilditem');
+    Route::POST('changeepicdate', 'EpicController@changeepicdate');  
+    Route::POST('sortchilditem', 'EpicController@sortchilditem'); 
+    Route::POST('bulkupdate', 'EpicController@bulkupdate'); 
+    Route::POST('selectteamforepic', 'EpicController@selectteamforepic'); 
+    Route::POST('sortflags', 'EpicController@sortflags');
+    Route::POST('showorderbyactivity', 'EpicController@showorderbyactivity'); 
+
+    
 });
 
 Route::name('keyresult.')->namespace('App\Http\Controllers')->prefix('dashboard/keyresult')->group(function () {
@@ -306,6 +316,7 @@ Route::get('get-obj-link', [App\Http\Controllers\TeamController::class,'GetValue
 Route::post('delete-obj-link', [App\Http\Controllers\TeamController::class,'DeleteTeamLinkObj']);
 Route::get('search-epic-team', [App\Http\Controllers\TeamController::class,'EpicTeamSearch']);
 Route::get('epic-clone/{id}/{type}', [App\Http\Controllers\MemberController::class,'clonEpic']);
+Route::get('dashboard/organization/{slug}/Unit-Team/dashboard', [App\Http\Controllers\TeamController::class,'BUTeamDashboard']);
 Route::get('dashboard/organization/{slug}/Unit-Team/dashboard', [App\Http\Controllers\TeamController::class,'BUTeamDashboard']);
 
 Route::get('dashboard/organization/{id}/Org-TEAMS', [App\Http\Controllers\OrganizationController::class,'OrgTeam']);
