@@ -83,7 +83,7 @@ class ObjectiveController extends Controller
                 ->get();
         }
 
-        if ($request->type == "orgT") {
+        if ($type == "orgT") {
             $organization = DB::table("org_team")
                 ->where("slug", $id)
                 ->first();
@@ -631,7 +631,7 @@ class ObjectiveController extends Controller
                 ->get();
         }
 
-        if ($request->type == "orgT") {
+        if ($type == "orgT") {
             $organization = DB::table("org_team")
                 ->where("slug", $request->slug)
                 ->first();
@@ -724,7 +724,7 @@ class ObjectiveController extends Controller
                 ->get();
         }
 
-        if ($request->type == "orgT") {
+        if ($type == "orgT") {
             $organization = DB::table("org_team")
                 ->where("slug", $request->slug)
                 ->first();
@@ -1011,7 +1011,7 @@ class ObjectiveController extends Controller
                 ->get();
         }
 
-        if ($request->type == "orgT") {
+        if ($type == "orgT") {
             $organization = DB::table("org_team")
                 ->where("slug", $request->slug)
                 ->first();
@@ -1134,7 +1134,7 @@ class ObjectiveController extends Controller
                     ->get();
             }
 
-            if ($request->type == "orgT") {
+            if ($type == "orgT") {
                 $organization = DB::table("org_team")
                     ->where("slug", $request->slug)
                     ->first();
@@ -1336,7 +1336,7 @@ class ObjectiveController extends Controller
                     ->get();
             }
 
-            if ($request->type == "orgT") {
+            if ($type == "orgT") {
                 $organization = DB::table("org_team")
                     ->where("slug", $request->slug)
                     ->first();
@@ -1470,7 +1470,7 @@ class ObjectiveController extends Controller
                     ->get();
             }
 
-            if ($request->type == "orgT") {
+            if ($type == "orgT") {
                 $organization = DB::table("org_team")
                     ->where("slug", $request->slug)
                     ->first();
@@ -1571,7 +1571,7 @@ class ObjectiveController extends Controller
                 ->get();
         }
 
-        if ($request->type == "orgT") {
+        if ($type == "orgT") {
             $organization = DB::table("org_team")
                 ->where("slug", $request->slug)
                 ->first();
@@ -1938,7 +1938,7 @@ class ObjectiveController extends Controller
                 ->get();
         }
 
-        if ($request->type == "orgT") {
+        if ($type == "orgT") {
             $organization = DB::table("org_team")
                 ->where("slug", $request->slug)
                 ->first();
@@ -2834,7 +2834,7 @@ class ObjectiveController extends Controller
                 ->get();
         }
 
-        if ($request->type == "orgT") {
+        if ($type == "orgT") {
             $organization = DB::table("org_team")
                 ->where("slug", $request->slug)
                 ->first();
@@ -2981,7 +2981,7 @@ class ObjectiveController extends Controller
                 );
         }
 
-        if ($request->type == "orgT") {
+        if ($type == "orgT") {
             $organization = DB::table("org_team")
                 ->where("slug", $request->slug)
                 ->first();
