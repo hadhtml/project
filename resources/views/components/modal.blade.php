@@ -1131,7 +1131,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6 col-lg-6 col-xl-6">
+                        <div class="col-md-12 col-lg-12 col-xl-12">
                             <div class="form-group mb-0">
                                 <select class="form-control" id="edit_t_line">
                                     <option value="Yes">Yes</option>
@@ -1141,7 +1141,7 @@
                                 <label for="objective-name">Trend Line</label>
                             </div>
                         </div>
-                        <div class="col-md-6 col-lg-6 col-xl-6">
+                        {{-- <div class="col-md-6 col-lg-6 col-xl-6">
                             <div class="form-group mb-0">
                                 <select class="form-control" id="edit_t_bar">
                                     <option value="Bar">Vertical Bar</option>
@@ -1150,7 +1150,7 @@
                                 </select>
                                 <label for="objective-name">Chart Type</label>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="col-md-12 mb-5">
                             <span><input name="collapseGroupedit"  id="edit_target_option_1" type="radio" value="yes"
                                     class="yes_edit collapseGroup mr-2 editcollapseGroup"  data-toggle="collapse"

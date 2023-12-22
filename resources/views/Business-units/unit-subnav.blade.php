@@ -4,7 +4,7 @@
         <ul class="list-unstyled ps-0 expanded-navbar mb-0">
             
             <li class="mb-1">
-                <button class="btn btn-toggle align-items-center rounded" data-toggle="collapse" data-target="#home-collapse" aria-expanded="true">
+                <button class="btn  align-items-center rounded"  aria-expanded="true">
                     <div class="d-flex flex-row align-items-center">
                         <div class="mr-2">
                             <span style="font-size:22px" class="material-symbols-outlined">domain</span>
@@ -15,26 +15,13 @@
                     </div>
                 </button>
 
-                @php
-                $Stream = DB::table('business_units')->where('user_id',Auth::id())->get();
-                @endphp  
-
-                <div class="collapse" id="home-collapse" style="">
-                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small px-1 py-2 nav-root-item">
-                        @if(count($Stream) > 0)
-                        @foreach($Stream as $value)
-                            <li><a href="{{url('dashboard/organization/'.$value->slug.'/portfolio/'.$value->type)}}" class="link-dark rounded">{{$value->business_name}}</a></li>
-                        @endforeach
-                        @endif
-                    </ul>
-                </div>
+           
             </li>
         </ul>
 
         <ul class="list-unstyled ps-0 expanded-navbar-options">
-            @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/Value-Streams'))
             <li class="mb-1">
-                <a href="{{url('dashboard/organization/'.$organization->slug.'/Value-Streams/dashboard')}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/Value-Streams/dashboard')) class="d-flex flex-row align-items-center nav-active" @else   @endif class="d-flex flex-row align-items-center">
+                <a href="{{url('dashboard/organization/'.$organization->slug.'/dashboard/'.$organization->type)}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/dashboard/'.$organization->type)) class="d-flex flex-row align-items-center nav-active" @else   @endif class="d-flex flex-row align-items-center">
                     <div class="mr-2">
                         <span style="font-size:22px" class="material-symbols-outlined">auto_stories</span>
                     </div>
@@ -43,20 +30,8 @@
                     </div>
                 </a>
             </li>
-            @endif
+       
 
-            @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/BU-TEAMS'))
-            <li class="mb-1">
-                <a href="{{url('dashboard/organization/'.$organization->slug.'/Unit-Team/dashboard')}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/Value-Streams/dashboard')) class="d-flex flex-row align-items-center nav-active" @else   @endif class="d-flex flex-row align-items-center">
-                    <div class="mr-2">
-                        <span style="font-size:22px" class="material-symbols-outlined">auto_stories</span>
-                    </div>
-                    <div class="mr-2">
-                        Dashboard
-                    </div>
-                </a>
-            </li>
-            @endif
           
             <li class="mb-1">
                 <a href="{{url('dashboard/organization/'.$organization->slug.'/Value-Streams')}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/Value-Streams')) class="d-flex flex-row align-items-center nav-active" @else   @endif  class="d-flex flex-row align-items-center">

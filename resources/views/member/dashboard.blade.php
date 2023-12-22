@@ -1,21 +1,16 @@
 @php
-$var_objective = "V-Stream";
+$var_objective = "V-Stream-dashboard";
 @endphp
 @extends('components.main-layout')
 <title>Value Streams</title>
 @section('content')
 @php
-$stream_id = [];
-foreach($value_stream as $stream)
-{
-$stream_id[] = $stream->id;
-}
-$Portfolio = DB::table('objectives')->where('type','stream')->whereIn('unit_id',$stream_id)->where('trash',NULL)->count();
-$Performance = DB::table('kpi_setting')->whereIn('stream_id',$stream_id)->where('type','stream')->count();
-$Teams = DB::table('value_team')->whereIn('org_id',$stream_id)->count();
-$Reporting = DB::table('sprint')->whereIn('value_unit_id',$stream_id)->where('type','stream')->count();
-$EpicsBacklog = DB::table('backlog')->whereIn('stream_id',$stream_id)->count();
-$Impediments = DB::table('flags')->where('flag_type','Impediment')->where('board_type','stream')->count();
+$Portfolio = DB::table('objectives')->where('type','unit')->where('unit_id',$organization->id)->where('trash',NULL)->count();
+$Performance = DB::table('kpi_setting')->where('stream_id',$organization->id)->where('type','stream')->count();
+$Teams = DB::table('unit_team')->where('org_id',$organization->id)->count();
+$Reporting = DB::table('sprint')->where('value_unit_id',$organization->id)->where('type','stream')->count();
+$EpicsBacklog = DB::table('backlog')->where('stream_id',$organization->id)->count();
+$Impediments = DB::table('flags')->where('business_units',$organization->id)->where('flag_type','Impediment')->where('board_type','stream')->count();
 
 @endphp
 <div class="row">

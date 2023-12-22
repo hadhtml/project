@@ -4,6 +4,7 @@ $var_objective = 'Report-'.$type;
 @extends('components.main-layout')
 <title>Report</title>
 @section('content')
+@if(count($report) > 0)
 <div class="row">
     <div class="col-md-12">
         <div class="card">
@@ -20,6 +21,7 @@ $var_objective = 'Report-'.$type;
                         </tr>
                     </thead>
                     <tbody>
+                        
                         @foreach($report as $r )
                         @php
                         $sprint = DB::table('sprint_report')->where('q_id',$r->id)->first();
@@ -33,7 +35,11 @@ $var_objective = 'Report-'.$type;
                             <td>
                                 {{$r->title}}
                             </td>
+                            @if($type ==  'org')
+                            <td>{{$organization->organization_name}}</td>
+                            @else
                             <td>{{$organization->business_name}}</td>
+                            @endif
                             <td>{{ \Carbon\Carbon::parse($r->start_data)->format('M d Y')}}</td>
                             <td>{{ \Carbon\Carbon::parse($r->end_date)->format('M d Y')}}</td>
                             <td class="text-center">
@@ -303,11 +309,83 @@ $var_objective = 'Report-'.$type;
                           </div>
                         @endforeach
 
+                     
+
                        
                         
                         <!-- Add more rows as needed -->
                     </tbody>
                 </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@else
+<div style="position:absolute;right:30%;top:40%;" class="text-center">
+    <img src="{{asset('public/reports.svg')}}"  width="120" height="120">
+    <div><h6 class="text-center">No Records Found</h6></div>
+    <div><p class="text-center">You don’t have a running quarter/sprint yet..</p></div>
+    <button class="btn btn-primary btn-lg btn-theme btn-block ripple ml-20" style="width:50%" type="button" data-toggle="modal" data-target="#create-report">
+        Start a Quarter
+    </button>
+    </div>
+@endif
+
+<div class="modal fade" id="create-report" tabindex="-1" role="dialog" aria-labelledby="create-report" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="width: 526px !important;">
+            <div class="modal-header">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h5 class="modal-title" id="create-epic">Create Quarter/Sprint </h5>
+                    </div>
+                    <div class="col-md-12">
+                        <p>Fill out the form, submit and hit the save button.</p>
+                    </div>
+                      <div id="success-sprint"  role="alert"></div>
+                    <span id="sprint-error" class="ml-3 text-danger"></span>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <img src="{{asset('public/assets/images/icons/minus.svg')}}">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="needs-validation" action="#" method="POST" novalidate>
+                @csrf
+            
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            <div class="form-group mb-0">
+                                <input type="text" class="form-control" id="q_title" required>
+                                <label for="objective-name">Quarter Title</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-xl-6">
+                            <div class="form-group mb-0">
+                                <input type="date" class="form-control" value="{{ date('Y-m-d') }}" id="q_start_date"  required>
+                                <label for="start-date">Start Date</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-xl-6">
+                            <div class="form-group mb-0">
+                                <input type="date" class="form-control" value="{{ date('Y-m-d') }}" id="q_end_date" required>
+                                <label for="end-date">End Date</label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            <div class="form-group mb-0">
+                                <input type="text" class="form-control"  id="q_description" >
+                                <label for="small-description">Description</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <button class="btn btn-primary btn-lg btn-theme btn-block ripple mt-3" onclick="saveQuarter();"  type="button">Start</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -343,5 +421,67 @@ $var_objective = 'Report-'.$type;
         
 
         }
+
+        
+function saveQuarter() 
+{
+
+
+var org_id = "{{ $organization->org_id }}";
+var slug = "{{ $organization->slug }}";
+var unit_id = "{{ $organization->id }}";
+var type = "{{ $organization->type }}";
+
+var startdate = $('#q_start_date').val();
+var enddate = $('#q_end_date').val();
+var title = $('#q_title').val();
+var detail = $('#q_description').val();
+
+if ($('#q_title').val() == '' || $('#q_start_date').val() == '') {
+    $('#sprint-error').html('Please fill out all required fields.');
+    return false;
+}
+
+
+$.ajax({
+    type: "POST",
+    url: "{{ url('save-sprint') }}",
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    data: {
+        startdate: startdate,
+        enddate: enddate,
+        title: title,
+        detail: detail,
+        org_id: org_id,
+        slug: slug,
+        unit_id: unit_id,
+        type: type,
+
+    },
+    success: function(res) {
+
+        $('#success-sprint').html(
+            '<div class="alert alert-success" role="alert">Sprint Added successfully</div>'
+        );
+        setTimeout(function() {
+            $('#create-report').modal('hide');
+            $('#success-sprint').html('');
+            $('#sprint-error').html('');
+        }, 3000);
+
+      
+      location.reload();
+
+
+
+
+
+    }
+});
+
+}
+
 </script>                
    @endsection                

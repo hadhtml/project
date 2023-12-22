@@ -8,6 +8,7 @@ $var_objective = "Backlog-Unit";
 
 </style>
 
+
  <div class="d-flex flex-column flex-root">
         <!-- begin topbar -->
         <!--begin::Page-->
@@ -19,7 +20,9 @@ $var_objective = "Backlog-Unit";
                 <!-- begin breadcrums -->
                 <!-- end breadcrums -->
                 <!-- begin page Content -->
+       
                 <div class="container-fluid" id="assign-epic-unit">
+                    @if(count($Backlog) > 0)
                     <div class="row">
                         <div class="col-md-12 p-0">
                             <div class="card">
@@ -361,6 +364,16 @@ $var_objective = "Backlog-Unit";
                             </div>
                         </div>
                     </div>
+                    @else
+                <div style="position:absolute;right:30%;top:40%;" class="text-center">
+                    <img src="{{asset('public/epic-backlog.svg')}}"  width="120" height="120">
+                    <div><h6 class="text-center">No Records Found</h6></div>
+                    <div><p class="text-center">You may create your first Epic by clicking the bellow button</p></div>
+                    <button class="btn btn-primary btn-lg btn-theme btn-block ripple ml-25" style="width:50%"  data-toggle="modal" data-target="#create-unitbacklog-epic">
+                        Add an Epic
+                    </button>
+                    </div>
+                @endif
                 </div>
                 <!-- end page content -->
             </div>
@@ -606,6 +619,8 @@ $var_objective = "Backlog-Unit";
         </div>
     </div>
 </div>
+
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 

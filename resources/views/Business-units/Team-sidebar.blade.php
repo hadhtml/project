@@ -95,7 +95,21 @@ $team  = DB::table('organization')->where('id',$organization->id)->first();
 
 
         <ul class="list-unstyled ps-0 expanded-navbar-options">
+
+
             @if($organization->type == 'BU')
+
+            <li class="mb-1">
+                <a href="{{url('dashboard/organization/'.$organization->slug.'/dashboard/BU')}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/dashboard/BU')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
+                    <div class="mr-2">
+                         <span style="font-size:22px" class="material-symbols-outlined">folder_supervised</span>
+                    </div>
+                    <div class="mr-2">
+                        Dashboard
+                    </div>
+                </a>
+            </li>
+
             <li class="mb-1">
                 <a href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/BU')}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/portfolio/BU')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
                     <div class="mr-2">
@@ -122,6 +136,18 @@ $team  = DB::table('organization')->where('id',$organization->id)->first();
 
             @endif
             @if($organization->type == 'VS')
+
+            <li class="mb-1">
+                <a href="{{url('dashboard/organization/'.$organization->slug.'/dashboard/VS')}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/dashboard/VS')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
+                    <div class="mr-2">
+                         <span style="font-size:22px" class="material-symbols-outlined">folder_supervised</span>
+                    </div>
+                    <div class="mr-2">
+                        Dashboard
+                    </div>
+                </a>
+            </li>
+
             <li class="mb-1">
                 <a href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/VS')}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/portfolio/VS')) class="d-flex flex-row align-items-center nav-link" @else class="d-flex flex-row align-items-center"  @endif>
                     <div class="mr-2">
@@ -135,6 +161,17 @@ $team  = DB::table('organization')->where('id',$organization->id)->first();
             @endif
 
             @if($organization->type == 'orgT')
+            <li class="mb-1">
+                <a href="{{url('dashboard/organization/'.$organization->slug.'/dashboard/orgT')}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/dashboard/orgT')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
+                    <div class="mr-2">
+                         <span style="font-size:22px" class="material-symbols-outlined">folder_supervised</span>
+                    </div>
+                    <div class="mr-2">
+                        Dashboard
+                    </div>
+                </a>
+            </li>
+            
             <li class="mb-1">
                 <a href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/orgT')}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/portfolio/orgT')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
                     <div class="mr-2">
@@ -176,6 +213,8 @@ $team  = DB::table('organization')->where('id',$organization->id)->first();
             @endif
 
             @if($organization->type == 'orgT')
+       
+
             <li class="mb-1">
                 <a href="{{url('dashboard/organization/'.$organization->slug.'/BT-Backlog/orgT')}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/BT-Backlog/orgT')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
                     <div class="mr-2">
