@@ -102,7 +102,7 @@
             @if ($var_objective == 'Member')
                  
             @include('components.sidebar-component')
-            @include('components.subnav-component')
+            
 
             @endif
                  
@@ -159,7 +159,14 @@
                 @include('member.navbar')
                 @include('member.sub-nav')
             @endif
+
             
+            @if ($var_objective == 'flag-impediments-org')
+            @include('components.sidebar-component')
+
+
+
+            @endif
             
             @if ($var_objective == 'Backlog-Unit')
             @include('Business-units.unit-sidebar')
@@ -175,7 +182,6 @@
             @if ($var_objective == 'Jira')
                  
             @include('components.sidebar-component')
-            @include('components.subnav-component')
 
             @endif
             
@@ -350,6 +356,10 @@
                  
                  @if ($var_objective == 'flag-impediments-stream')
                     @include('flags.breadcrum')
+                 @endif
+
+                 @if ($var_objective == 'flag-impediments-org')
+                 @include('flags.breadcrum')
                  @endif
 
                  @if ($var_objective == 'Backlog-Unit')

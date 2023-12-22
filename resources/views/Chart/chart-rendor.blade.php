@@ -1,4 +1,5 @@
-                @foreach ($data as $chart_data)
+             @if (count($data) > 0)
+               @foreach ($data as $chart_data)
                 @php
                       $chart = DB::table('chart_data')
                         ->where('kpi_setting_id', $chart_data->id)
@@ -309,6 +310,11 @@
                             </div>
                         </div>
                     </div>
+
+
               
             @endforeach
+            @else
+            No Result Found   
+            @endif
 

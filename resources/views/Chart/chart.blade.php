@@ -336,6 +336,8 @@ $var_objective = 'Page-'.$type;
         
 
         </div>
+    @else
+    No Result Found   
     @endif
 
     <div class="modal fade" id="create-chart" tabindex="-1" role="dialog" aria-labelledby="create-chart"
@@ -462,7 +464,7 @@ $var_objective = 'Page-'.$type;
                                     </div>
                                 </div>
 
-                                <div class="col-md-6 col-lg-6 mb-2 col-xl-6">
+                                <div class="col-md-12 col-lg-12 mb-2 col-xl-12">
                                     <div class="form-group mb-0">
                                         <select class="form-control" name="t_line" id="t_line">
                                             <option value="Yes">Yes</option>
@@ -472,7 +474,7 @@ $var_objective = 'Page-'.$type;
                                         <label for="objective-name">Trend Line</label>
                                     </div>
                                 </div>
-                                <div class="col-md-6 col-lg-6 mb-2 col-xl-6">
+                                {{-- <div class="col-md-6 col-lg-6 mb-2 col-xl-6">
                                     <div class="form-group mb-0">
                                         <select class="form-control" name="t_bar" id="t_bar">
                                             <option value="Bar">Vertical Bar</option>
@@ -481,7 +483,7 @@ $var_objective = 'Page-'.$type;
                                         </select>
                                         <label for="objective-name">Chart Type</label>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-md-12 mb-5">
                                     <div class="form-check">
                                         <input name="collapseGroup" type="radio" value="yes" class="yes collapseGroup mr-2 form-check-input" data-toggle="collapse" id="option1" checked data-target="#collapseOne" />
