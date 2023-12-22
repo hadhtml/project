@@ -142,6 +142,8 @@ Route::get('dashboard/organization/{slug}/Value-Streams/dashboard', [App\Http\Co
 
 //BusinessUnits
 Route::get('dashboard/organization/Business-Units', [App\Http\Controllers\MemberController::class,'ObjectivesUnit']);
+Route::get('dashboard/organization/{id}/dashboard/{type}', [App\Http\Controllers\MemberController::class,'BUDashboard']);
+
 Route::post('add-business-unit', [App\Http\Controllers\MemberController::class,'SaveBusinessUnits']);
 Route::post('add-team-unit', [App\Http\Controllers\MemberController::class,'SaveBusinessTeam']);
 Route::get('dashboard/organization/{id}/BU-TEAMS', [App\Http\Controllers\MemberController::class,'ObjectivesUnitTeam']);
