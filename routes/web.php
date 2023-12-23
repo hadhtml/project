@@ -325,3 +325,13 @@ Route::get('dashboard/organization/{id}/Org-TEAMS', [App\Http\Controllers\Organi
 Route::post('add-team-org', [App\Http\Controllers\OrganizationController::class,'SaveOrgTeam']);
 Route::post('update-team-org', [App\Http\Controllers\OrganizationController::class,'UpdateOrgTeam']);
 Route::post('delete-org-team', [App\Http\Controllers\OrganizationController::class,'DeleteOrgTeam']);
+
+// PROFILE
+Route::get('change-password', [App\Http\Controllers\OrganizationController::class,'change_password']);
+Route::post('update-password', [App\Http\Controllers\OrganizationController::class,'update_password']);
+Route::get('profile-setting', [App\Http\Controllers\OrganizationController::class,'profile']);
+Route::post('update-profile', [App\Http\Controllers\OrganizationController::class,'UpdateProfile']);
+
+
+
+
