@@ -336,9 +336,16 @@ $var_objective = 'Page-'.$type;
         
 
         </div>
-    @else
-    No Result Found   
-    @endif
+        @else
+        <div style="position:absolute;right:27%;top:40%;" class="text-center">
+        <img src="{{asset('public/performance-dashboard.svg')}}"  width="120" height="120">
+        <div><h6 class="text-center">No Records Found</h6></div>
+        <div><p class="text-center">You may create a chart by clicking the button below.</p></div>
+        <button class="btn btn-primary btn-lg btn-theme btn-block ripple ml-25" style="width:50%" type="button" data-toggle="modal" data-target="#create-chart">
+            Add Performance Chart
+        </button>
+        </div>
+        @endif
 
     <div class="modal fade" id="create-chart" tabindex="-1" role="dialog" aria-labelledby="create-chart"
         aria-hidden="true">

@@ -1,20 +1,36 @@
 @php
-$var_objective = "Org-Unit-team";
+$var_objective = "Unit-team-dashboard";
 @endphp
 @extends('components.main-layout')
-<title>Teams-{{$organization->business_name}}</title>
+<title>Teams-</title>
 @section('content')
 @php
-$stream_id = [];
-foreach($BUTeam as $stream)
+if($type == 'BU')
 {
-$stream_id[] = $stream->id;
+$Portfolio = DB::table('objectives')->where('type','BU')->where('unit_id',$organization->id)->where('trash',NULL)->count();
+$Performance = DB::table('kpi_setting')->where('stream_id',$organization->id)->where('type','BU')->count();
+$Reporting = DB::table('sprint')->where('value_unit_id',$organization->id)->where('type','BU')->count();
+$EpicsBacklog = DB::table('team_backlog')->where('unit_id',$organization->id)->where('type','BU')->count();
+$Impediments = DB::table('flags')->where('business_units',$organization->id)->where('flag_type','Impediment')->where('board_type','BU')->count();
 }
-$Portfolio = DB::table('objectives')->where('type','stream')->whereIn('unit_id',$stream_id)->where('trash',NULL)->count();
-$Performance = DB::table('kpi_setting')->whereIn('stream_id',$stream_id)->where('type','BU')->count();
-$Reporting = DB::table('sprint')->whereIn('value_unit_id',$stream_id)->where('type','BU')->count();
-$EpicsBacklog = DB::table('team_backlog')->whereIn('unit_id',$stream_id)->count();
-$Impediments = DB::table('flags')->where('flag_type','Impediment')->where('board_type','BU')->count();
+
+if($type == 'VS')
+{
+$Portfolio = DB::table('objectives')->where('type','VS')->where('unit_id',$organization->id)->where('trash',NULL)->count();
+$Performance = DB::table('kpi_setting')->where('stream_id',$organization->id)->where('type','VS')->count();
+$Reporting = DB::table('sprint')->where('value_unit_id',$organization->id)->where('type','VS')->count();
+$EpicsBacklog = DB::table('team_backlog')->where('unit_id',$organization->id)->where('type','VS')->count();
+$Impediments = DB::table('flags')->where('business_units',$organization->id)->where('flag_type','Impediment')->where('board_type','VS')->count();
+}
+
+if($type == 'orgT')
+{
+$Portfolio = DB::table('objectives')->where('type','orgT')->where('unit_id',$organization->id)->where('trash',NULL)->count();
+$Performance = DB::table('kpi_setting')->where('stream_id',$organization->id)->where('type','orgT')->count();
+$Reporting = DB::table('sprint')->where('value_unit_id',$organization->id)->where('type','orgT')->count();
+$EpicsBacklog = DB::table('team_backlog')->where('unit_id',$organization->id)->where('type','orgT')->count();
+$Impediments = DB::table('flags')->where('business_units',$organization->id)->where('flag_type','Impediment')->where('board_type','orgT')->count();
+}
 
 @endphp
 <div class="row">

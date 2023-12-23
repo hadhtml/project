@@ -47,7 +47,7 @@ $var_objective = "V-Stream";
                                     <span class="checkbox-label"></span>
                                 </label>
                             </td>
-                            <td> <a  href="{{url('dashboard/organization/'.$stream->slug.'/portfolio/'.$stream->type)}}" class="nav-link text-black">{{$stream->value_name}}</a></td>
+                            <td> <a  href="{{url('dashboard/organization/'.$stream->slug.'/dashboard/'.$stream->type)}}" class="nav-link text-black">{{$stream->value_name}}</a></td>
                             <td>{{$stream->business_name}}</td>
                             @if($stream->Lead_id)
                             @foreach(DB::table('members')->get() as $r)

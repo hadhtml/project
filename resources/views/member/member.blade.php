@@ -53,6 +53,9 @@ $var_objective = "Member";
                                                @endif
                                                
                                            @foreach($Member as $member)
+                                           @php
+                                           $name = $member->name.' '.$member->LastName;
+                                           @endphp
                                             <tr>
                                                 <td>
                                                     <label class="form-checkbox">
@@ -64,7 +67,7 @@ $var_objective = "Member";
                                                     @if($member->image != NULL)
                                                     <img src="{{asset('public/assets/images/'.$member->image)}}" alt="Example Image">
                                                     @else
-                                                    <img src="{{ Avatar::create($member->name)->toBase64() }}" alt="Example Image">
+                                                    <img src="{{ Avatar::create($name)->toBase64() }}" alt="Example Image">
                                                     @endif
                                                     <div>
                                                         <div class="title">{{$member->name}} {{$member->LastName}}</div>
@@ -239,7 +242,7 @@ $var_objective = "Member";
                         </div>
                         <div class="col-md-12 col-lg-12 col-xl-12">
                             <div class="form-group mb-0">
-                                <input type="text" class="form-control" name="phone" onchange="return onlyNumberKey(event)" id="phone_number" required>
+                                <input type="text" class="form-control" name="phone" onkeypress="return onlyNumberKey(event)" id="phone_number" required>
                                 <label for="phone-number">Phone number</label>
                             </div>
                         </div>

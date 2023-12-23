@@ -20,6 +20,7 @@ $var_objective = "Backlog";
                 <!-- end breadcrums -->
                 <!-- begin page Content -->
                 <div class="container-fluid" id="assign-epic">
+                    @if(count($Backlog) > 0)
                     <div class="row">
                         <div class="col-md-12 p-0">
                             <div class="card">
@@ -367,6 +368,16 @@ $var_objective = "Backlog";
                             </div>
                         </div>
                     </div>
+                    @else
+                    <div style="position:absolute;right:30%;top:40%;" class="text-center">
+                        <img src="{{asset('public/epic-backlog.svg')}}"  width="120" height="120">
+                        <div><h6 class="text-center">No Records Found</h6></div>
+                        <div><p class="text-center">You may create your first Epic by clicking the bellow button</p></div>
+                        <button class="btn btn-primary btn-lg btn-theme btn-block ripple ml-25" style="width:50%"  data-toggle="modal" data-target="#create-backlog-epic">
+                            Add an Epic
+                        </button>
+                        </div>
+                    @endif
                 </div>
                 <!-- end page content -->
             </div>

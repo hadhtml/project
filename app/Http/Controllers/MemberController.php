@@ -1537,19 +1537,46 @@ $updateData = [
 
   }
 
-    public function BUDashboard()
+    public function BUDashboard($id,$type)
     {
     
-    return view('Business-units.dashboard');  
-        
-    }
-    public function VUDashboard($slug)
+    if($type == 'unit')
     {
-    $organization = DB::table('business_units')->where('slug',$slug)->first();
-    $value_stream = DB::table('value_stream')->where('unit_id',$organization->id)->get();   
-   
-    return view('member.dashboard',compact('organization','value_stream'));  
+    $organization = DB::table('business_units')->where('slug',$id)->first();
+    return view('Business-units.dashboard',compact('organization'));  
         
     }
+
+    if($type == 'stream')
+    {
+    $organization = DB::table('value_stream')->where('slug',$id)->first();
+    return view('member.dashboard',compact('organization'));  
+      
+    }
+
+    if($type == 'BU')
+    {
+        $organization = DB::table('unit_team')->where('slug',$id)->first();
+        return view('Business-units.team-dashboard',compact('organization','type'));  
+      
+    }
+
+    if($type == 'VS')
+    {
+    $organization = DB::table('value_team')->where('slug',$id)->first();
+    return view('Business-units.team-dashboard',compact('organization','type'));  
+      
+    }
+
+    if($type == 'orgT')
+    {
+    $organization = DB::table('org_team')->where('slug',$id)->first();
+    return view('Business-units.team-dashboard',compact('organization','type'));  
+      
+    }
+    
+        
+    }
+
 
 }

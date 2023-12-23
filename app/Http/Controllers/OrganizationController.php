@@ -277,7 +277,7 @@ class OrganizationController extends Controller
         }
 
 
-         return view('objective.objective-render',compact('organization','objective'));  
+        //  return view('objective.objective-render',compact('organization','objective'));  
 
 
 
@@ -473,7 +473,7 @@ class OrganizationController extends Controller
           if($type == 'org')
           {
           $organization = DB::table('organization')->where('slug',$id)->first();        
-          $report  =  DB::table('sprint')->where('value_unit_id',$organization->id)->where('type','VS')->get();
+          $report  =  DB::table('sprint')->where('value_unit_id',$organization->id)->where('type','org')->get();
           }
 
           if($type == 'orgT')

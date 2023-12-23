@@ -15,12 +15,11 @@
                                 <div class="mr-2">
                                     <p>Organization</p>
                                 </div>
-                                <div class="mr-2">
-                                    <a href="{{url('dashboard/organization/contacts')}}" style="text-decoration: none;"></a>
-                                </div>
+                               @if($organization->type == 'unit')
                                 <div class="mr-2">
                                     <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->business_name}}</a>
                                 </div>
+                                @endif
                                 <div class="mr-2">
                                     <p>Teams</p>
                                 </div>

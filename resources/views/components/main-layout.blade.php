@@ -50,7 +50,6 @@
 
             @if ($var_objective == 'Backlog')
             @include('member.navbar')
-            @include('member.sub-nav')
             @endif
             
             @if ($var_objective == 'PageU-unit')
@@ -89,7 +88,7 @@
             @if ($var_objective == 'Page-stream')
                  
             @include('member.navbar')
-            @include('member.sub-nav')
+            
             @endif
 
             @if ($var_objective == 'Page-org')
@@ -135,12 +134,10 @@
             
             @if ($var_objective == 'Stream-team')
                 @include('member.navbar')
-                @include('member.sub-nav')
             @endif
             
             @if ($var_objective == 'Org-Unit-team')
                 @include('Business-units.unit-sidebar')
-                @include('Business-units.unit-subnav')
             @endif
 
             @if ($var_objective == 'flag-impediments-unit')
@@ -157,7 +154,6 @@
             
             @if ($var_objective == 'flag-impediments-stream')
                 @include('member.navbar')
-                @include('member.sub-nav')
             @endif
 
             
@@ -195,7 +191,6 @@
             @if ($var_objective == 'Report-stream')
                  
             @include('member.navbar')
-            @include('member.sub-nav')
 
             @endif
 
@@ -250,6 +245,22 @@
             @if ($var_objective == 'TBaclog-orgT')
             @include('Business-units.Team-sidebar')
             @endif
+
+            @if ($var_objective == 'Org-Unit-dashboard')
+                 
+            @include('Business-units.unit-sidebar')
+            @include('Business-units.unit-subnav')
+
+            @endif
+
+            @if ($var_objective == 'V-Stream-dashboard')
+            @include('member.navbar')
+            @endif
+
+            @if ($var_objective == 'Unit-team-dashboard')
+            @include('Business-units.Team-sidebar')
+            @endif
+            
             
             
             <!-- end Sidebar -->
@@ -314,6 +325,12 @@
                  
                  @include('components.org-breadcrums.unit-breadcrum')
 
+                 @endif
+
+                 @if ($var_objective == 'Org-Unit-dashboard')
+                 
+                 @include('components.org-breadcrums.unit-breadcrum')
+     
                  @endif
                  
                  @if ($var_objective == 'V-Stream')
@@ -464,6 +481,16 @@
 
                 @if ($var_objective == 'Org-team')
                 @include('organizations.org-team-breadcrumb')
+                @endif
+
+                @if ($var_objective == 'V-Stream-dashboard')                
+                @include('member.stream-breadcrum')
+
+                @endif
+
+                @if ($var_objective == 'Unit-team-dashboard')
+                @include('Business-units.unit-team-breadcrum')
+
                 @endif
 
                 <div class="body-inner-content">

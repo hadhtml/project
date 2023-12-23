@@ -14,10 +14,10 @@ $var_objective = "Org-Unit";
       </div>
   </div>
 @endif
-
+@if(count($Unit) > 0)
 <div class="row">
 
-    @if(count($Unit) > 0)
+   
        @foreach($Unit as $unit)
        @php
        $ValueCount = DB::table('value_stream')->where('unit_id',$unit->id)->count();
@@ -31,7 +31,7 @@ $var_objective = "Org-Unit";
                     <div class="d-flex flex-row justify-content-between">
                         <div>
                             <h3>
-                                <a href="{{url('dashboard/organization/'.$unit->slug.'/portfolio/'.$unit->type)}}">{{$unit->business_name}}</a>
+                                <a href="{{url('dashboard/organization/'.$unit->slug.'/dashboard/'.$unit->type)}}">{{$unit->business_name}}</a>
                             </h3>
                         </div>
                         <div>
@@ -216,9 +216,20 @@ $var_objective = "Org-Unit";
     </div>
 
 
-        @endforeach
-    @endif
+   
 </div>
+
+@endforeach
+@else
+<div style="position:absolute;right:27%;top:40%;" class="text-center">
+<img src="{{asset('public/business-unit.svg')}}"  width="120" height="120">
+<div><h6 class="text-center">No Records Found</h6></div>
+<div><p class="text-center">You may create a business unit by clicking the button below.</p></div>
+<button class="btn btn-primary btn-lg btn-theme btn-block ripple ml-32" style="width:40%" type="button" data-toggle="modal" data-target="#add-business-unit">
+    Add Business Unit
+</button>
+</div>
+@endif
 
 
 <!-- Create Business Unit -->

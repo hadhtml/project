@@ -14,14 +14,15 @@
         </div>
     @endif
 
-
+    @if (count($Team) > 0)
     <div class="row">
 
-        @if (count($Team) > 0)
+        
             @foreach ($Team as $team)
                 @php
                     $dataArray = explode(',', $team->member);
                     $dataCount = count($dataArray);
+                    $firstTwoIds = array_slice($dataArray, 0, 2);
                     $ObjResultcount = DB::table('objectives')
                         ->where('unit_id', $team->id)
                         ->where('type', 'orgT')
@@ -45,7 +46,7 @@
                                     <div>
                                         <h3 class="mb-0">
                                             <a
-                                                href="{{ url('dashboard/organization/' . $team->slug . '/portfolio/orgT') }}">{{ $team->team_title }}</a>
+                                                href="{{ url('dashboard/organization/' . $team->slug . '/dashboard/orgT') }}">{{ $team->team_title }}</a>
                                         </h3>
                                         <small>
                                             {{ $dataCount }} total members
@@ -100,27 +101,29 @@
                                 <div>
                                     <div class="d-flex align-items-center flex-lg-fill my-1">
                                         <div class="symbol-group symbol-hover">
-                                            @foreach($dataArray as $member)
+                                            @foreach($firstTwoIds as $member)
                                             @foreach(DB::table('members')->get() as $r)
                                             @if($r->id == $member)
                                             @php
                                             $name = $r->name.' '.$r->last_name;
                                             @endphp
-                 
-                                             <div class="symbol symbol-30 symbol-circle" data-toggle="tooltip" title="" data-original-title="Charlie Stone">
+                                            
+                                             <div class="symbol symbol-30 symbol-circle" data-toggle="tooltip" title="" data-original-title="{{$name}}">
                                                  @if($r->image != NULL)
                                                          <img src="{{asset('public/assets/images/'.$r->image)}}" alt="Example Image">
                                                          @else
                                                          <img src="{{ Avatar::create($name)->toBase64() }}" alt="Example Image">
                                                          @endif
                                              </div>
-                                             
                                              @endif
                                              @endforeach
                                              @endforeach
+                                             @if($dataCount > 3)
                                              <div style="width:42px; height:42px; padding: 10px; font-size: 12px;" class="symbol symbol-30  symbol-circle symbol-light" data-toggle="tooltip" title="" data-original-title="More users">
-                                                 <span class="symbol-label">5+</span>
+                                                 <span class="symbol-label">{{$dataCount}}+</span>
                                              </div>
+                                             @endif
+                                           
                                          </div>
                                     </div>
                                 </div>
@@ -260,9 +263,8 @@
                                                                     src="{{ asset('public/assets/images/' . $r->image) }}"
                                                                     alt="Example Image">
                                                             @else
-                                                                <img width="45px" height="45px"
-                                                                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTv1Tt9_33HyVMm_ZakYQy-UgsLjE00biEArg&usqp=CAU"
-                                                                    alt="Example Image">
+                                                            <img width="45px" height="45px" src="{{ Avatar::create($r->name.' '.$r->last_name)->toBase64() }}" alt="Example Image">
+
                                                             @endif
 
                                                         </div>
@@ -291,9 +293,19 @@
                     </div>
                 </div>
             @endforeach
-        @endif
-
+    
     </div>
+
+@else
+<div style="position:absolute;right:27%;top:40%;" class="text-center">
+<img src="{{asset('public/team.svg')}}"  width="120" height="120">
+<div><h6 class="text-center">No Records Found</h6></div>
+<div><p class="text-center">You may create your first Team by clicking the bellow button.</p></div>
+<button class="btn btn-primary btn-lg btn-theme btn-block ripple ml-32" style="width:40%" type="button" data-toggle="modal" data-target="#add-team">
+    Add a Team
+</button>
+</div>
+@endif
 
 
 
@@ -377,9 +389,7 @@
                                                         src="{{ asset('public/assets/images/' . $r->image) }}"
                                                         alt="Example Image">
                                                 @else
-                                                    <img width="45px" height="45px"
-                                                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTv1Tt9_33HyVMm_ZakYQy-UgsLjE00biEArg&usqp=CAU"
-                                                        alt="Example Image">
+                                                <img width="45px" height="45px" src="{{ Avatar::create($r->name.' '.$r->last_name)->toBase64() }}" alt="Example Image">
                                                 @endif
 
                                             </div>
