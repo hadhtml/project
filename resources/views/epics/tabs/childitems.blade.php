@@ -242,9 +242,9 @@ function getOrder(){
                                 @foreach(DB::table('members')->get() as $r)
                                     @if($r->id == $s->story_assign)
                                         @if($r->image != NULL)
-                                        <img src="{{asset('public/assets/images/'.$r->image)}}" alt="Example Image">
+                                        <img data-toggle="tooltip" title="" data-original-title="{{$r->name}}" src="{{asset('public/assets/images/'.$r->image)}}" alt="Example Image">
                                         @else
-                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTv1Tt9_33HyVMm_ZakYQy-UgsLjE00biEArg&usqp=CAU" alt="Example Image">
+                                        <img data-toggle="tooltip" title="" data-original-title="{{$r->name}}" src="{{ Avatar::create($r->name)->toBase64() }}" alt="{{$r->name}} {{$r->last_name}}">
                                         @endif
                                     @endif
                                 @endforeach

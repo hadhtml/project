@@ -27,8 +27,10 @@
                     </svg> 
                   </span>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" onclick="showorderbyattachment('desc',{{ $data->id }},'attachments')" href="javascript:void(0)">Latest</a>
-                    <a class="dropdown-item" onclick="showorderby('asc',{{ $data->id }},'attachments')" href="javascript:void(0)">Older</a>
+                    @foreach(DB::table('attachments')->where('value_id' , $data->id)->where('type' , 'epics')->groupBy('extension')->get() as $e)
+                    <a class="dropdown-item" onclick="showorderbyattachment('pdf',{{ $data->id }},'attachments')" href="javascript:void(0)">Order By {{ $r->extension }}</a>
+                    @endforeach
+                    <a class="dropdown-item" onclick="showorderbyattachment('asc',{{ $data->id }},'attachments')" href="javascript:void(0)">Older</a>
                   </div>
                 </div>
                 <span onclick="uploadattachment()" class="btn btn-default btn-sm">Upload</span>
