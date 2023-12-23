@@ -8,10 +8,10 @@
             <div class="menuettitle">
                 <h4>Menu</h4>
                 <ul>
-                    <li id="general" onclick="showtab({{$data->id}} , 'general')" class="tabsclass active"><img src="{{ url('public/assets/svg/edit-2.svg') }}"> General</li>
-                    <li id="comment" onclick="showtab({{$data->id}} , 'comment')" class="tabsclass"><img src="{{ url('public/assets/svg/comment.svg') }}"> Comments</li>
-                    <li id="activites" onclick="showtab({{$data->id}} , 'activites')" class="tabsclass"><img src="{{ url('public/assets/svg/activites.svg') }}"> Activities</li>
-                    <li id="attachment" onclick="showtab({{$data->id}} , 'attachment')" class="tabsclass"><img src="{{ url('public/assets/svg/attachment.svg') }}"> Attachments</li>
+                    <li id="general" onclick="showtab({{$data->id}} , 'general')" class="tabsclass active"> <span class="material-symbols-outlined"> edit_square </span> General</li>
+                    <li id="comment" onclick="showtab({{$data->id}} , 'comment')" class="tabsclass"><span class="material-symbols-outlined"> comment </span> Comments</li>
+                    <li id="activites" onclick="showtab({{$data->id}} , 'activites')" class="tabsclass"><span class="material-symbols-outlined"> browse_activity </span> Activities</li>
+                    <li id="attachment" onclick="showtab({{$data->id}} , 'attachment')" class="tabsclass"><span class="material-symbols-outlined"> attachment </span> Attachments</li>
                 </ul>
                 <h4>Action</h4>
                 <ul class="positionrelative">
@@ -25,19 +25,19 @@
                             <li onclick="escalateflag({{$data->id}})"><img src="{{ url('public/assets/svg/escalate-action.svg') }}"> Escalate</li>
                         @endif
                     @endif
-                    <li><img src="{{ url('public/assets/svg/share-action.svg') }}"> Share</li>
-                    <li onclick="moveflagshow({{$data->id}})"><img src="{{ url('public/assets/svg/arrow-right-action.svg') }}"> Move</li>
+                    <li><span class="material-symbols-outlined">share</span> Share</li>
+                    <li onclick="moveflagshow({{$data->id}})"><span class="material-symbols-outlined">east</span> Move</li>
                     @if($data->archived == 1)
-                    <li onclick="unarchiveflag({{$data->id}})"><img src="{{ url('public/assets/svg/archive-action.svg') }}"> Un Archive</li>
+                    <li onclick="unarchiveflag({{$data->id}})"><span class="material-symbols-outlined">archive</span> Un Archive</li>
                     @else
-                    <li onclick="archiveflag({{$data->id}})"><img src="{{ url('public/assets/svg/archive-action.svg') }}"> Archive</li>
+                    <li onclick="archiveflag({{$data->id}})"><span class="material-symbols-outlined">archive</span> Archive</li>
                     @endif
-                    <li onclick="deleteflagshow({{$data->id}})"><img src="{{ url('public/assets/svg/trash-action.svg') }}"> Delete
+                    <li onclick="deleteflagshow({{$data->id}})"><span class="material-symbols-outlined">delete</span> Delete
                     </li>
                     <div class="moveflag" id="moveflag{{ $data->id }}">
                         <div class="row">
                             <div class="col-md-10">
-                                <h4>Move Flag</h4>
+                                <h4>Move Impediment</h4>
                             </div>
                             <div class="col-md-2">
                                 <img onclick="moveflagshow({{$data->id}})" src="{{ url('public/assets/svg/crossdelete.svg') }}">
@@ -47,9 +47,9 @@
                             @csrf
                             <input type="hidden" value="{{ $data->id }}" name="flag_id">
                             <div class="form-group">
-                                <label>Select Board</label>
+                                <label>Select Status</label>
                                 <select class="form-control" name="board">
-                                    <option value="">Select Board</option>
+                                    <option value="">Select Status</option>
                                     <option @if($data->flag_status == 'todoflag') selected @endif value="todoflag">To Do @if($data->flag_status == 'todoflag') (Current) @endif</option>
                                     <option @if($data->flag_status == 'inprogress') selected @endif value="inprogress">In Progress @if($data->flag_status == 'inprogress') (Current) @endif</option>
                                     <option @if($data->flag_status == 'doneflag') selected @endif value="doneflag">Done @if($data->flag_status == 'doneflag') (Current) @endif</option>

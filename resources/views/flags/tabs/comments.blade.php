@@ -1,8 +1,13 @@
 <div class="row">
     <div class="col-md-12 col-lg-12 col-xl-12 @if($comments->count() > 1) paddingrightzero @endif">
         <div class="d-flex flex-row align-items-center justify-content-between block-header">
-            <div>
-                <h4><img src="{{ url('public/assets/svg/commentsmain.svg') }}"> Comments</h4>
+            <div class="d-flex flex-row align-items-center">
+                <div class="mr-2">
+                    <span class="material-symbols-outlined">comment</span>
+                </div>
+                <div>
+                    <h4>Comments</h4>
+                </div>
             </div>
             <div class="displayflex">
                 <div class="dropdown firstdropdownofcomments">
@@ -42,7 +47,7 @@
                     <div>
                         <div class="form-group mb-0">
                             <label for="objective-name">Write Comment</label>
-                            <input type="text" class="form-control" name="comment" id="objective-name" required>
+                            <textarea required class="form-control" name="comment"></textarea>
                         </div>
                     </div>
                     <div>
@@ -81,7 +86,7 @@
                             <div class="d-flex flex-column">
                                 <div>
                                     <div class="form-group mb-0">
-                                        <input value="{{ $r->comment }}" type="text" class="form-control" name="comment" id="objective-name" required>
+                                        <textarea required class="form-control" name="comment">{{ $r->comment }}</textarea>
                                     </div>
                                 </div>
                                 <div>
@@ -137,7 +142,7 @@
                                 <div>
                                     <div class="form-group mb-0">
                                         <label for="objective-name">Write Reply</label>
-                                        <input type="text" class="form-control" name="comment" id="objective-name" required>
+                                        <textarea required class="form-control" name="comment"></textarea>
                                     </div>
                                 </div>
                                 <div>
@@ -195,7 +200,7 @@
                                 <div class="d-flex flex-column">
                                     <div>
                                         <div class="form-group mb-0">
-                                            <input value="{{ $p->comment }}" type="text" class="form-control" name="comment" id="objective-name" required>
+                                            <textarea required class="form-control" name="comment">{{ $p->comment }}</textarea>
                                         </div>
                                     </div>
                                     <div>

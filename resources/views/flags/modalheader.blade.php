@@ -9,7 +9,7 @@
     </div>
     <div class="col-md-12 displayflex">
         <div class="btn-group">
-            <button type="button" class="btn btn-default statuschangebutton" id="showboardbutton">
+            <button type="button" class="btn btn-default statuschangebutton @if($data->flag_status == 'todoflag') todo-button-color @endif @if($data->flag_status == 'inprogress') inprogress-button-color @endif @if($data->flag_status == 'doneflag') done-button-color @endif" id="showboardbutton">
                 @if($data->flag_status == 'todoflag')
                     To Do
                 @endif
@@ -20,8 +20,16 @@
                     Done
                 @endif
             </button>
-            <button type="button" class="statuschangebuttonarrow btn btn-danger dropdown-toggle dropdown-toggle-split archivebeardcimbgbutton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button type="button" class="@if($data->flag_status == 'todoflag') todo-button-color @endif @if($data->flag_status == 'inprogress') inprogress-button-color @endif @if($data->flag_status == 'doneflag') done-button-color @endif statuschangebuttonarrow btn btn-danger dropdown-toggle dropdown-toggle-split archivebeardcimbgbutton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                @if($data->flag_status == 'todoflag') 
+                <img src="{{url('public/assets/images/icons/angle-down.svg')}}" width="20">
+                @endif 
+                @if($data->flag_status == 'inprogress') 
                 <img src="{{url('public/assets/svg/arrow-down-white.svg')}}" width="20">
+                @endif 
+                @if($data->flag_status == 'doneflag') 
+                <img src="{{url('public/assets/svg/arrow-down-white.svg')}}" width="20">
+                @endif
                 <span class="sr-only">Toggle Dropdown</span>
             </button>
             <div class="dropdown-menu">
@@ -49,7 +57,7 @@
                     @if($member->image)
                     <img src="{{ url('public/assets/images') }}/{{ $member->image }}">
                     @else
-                    <div class="namecountersmall">{{ substr($member->name, 0, 1); }}</div>
+                    <img src="{{ Avatar::create($member->name)->toBase64() }}" alt="{{ $member->name }}" title="{{ $member->name }} {{ $member->last_name }}">
                     @endif
                 </div>
                 @endforeach
@@ -59,7 +67,7 @@
                 <div class="memberadd-box">
                     <div class="row">
                         <div class="col-md-6">
-                            <h4>Members</h4>
+                            <h4>Assignee</h4>
                         </div>
                         <div class="col-md-6 text-right">
                             <img onclick="showmemberbox()" class="memberclose" src="{{url('public/assets/svg/memberclose.svg')}}">
@@ -68,7 +76,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="mb-2 positionrelative">
-                                <input onkeyup="searchmember(this.value)" type="text" placeholder="Search Member" class="form-control" name="flag_title" id="objective-name" required>
+                                <input onkeyup="searchmember(this.value)" type="text" placeholder="Search Assignee" class="form-control" name="flag_title" id="objective-name" required>
                                 <div class="membersearchiconforinput">
                                     <img src="{{ url('public/assets/images/searchiconsvg.svg') }}">
                                 </div>
@@ -108,7 +116,7 @@
 </div>
 <div class="rightside" >
     <span onclick="maximizemodal()">
-        <img  src="{{url('public/assets/svg/maximize.svg')}}">
+        <span class="material-symbols-outlined">open_in_full</span>
     </span>
     <img data-dismiss="modal" class="closeimage" aria-label="Close" src="{{url('public/assets/svg/cross.svg')}}">
 </div>

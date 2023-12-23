@@ -70,7 +70,7 @@
             @endif
 
             @if ($var_objective == 'PageT-org')
-            @include('organizations.navbar')
+            @include('components.sidebar-component')
             @endif
 
             @if ($var_objective == 'PageT-orgT')
@@ -93,7 +93,8 @@
 
             @if ($var_objective == 'Page-org')
                  
-            @include('organizations.navbar')
+            @include('components.sidebar-component')
+
         
 
             @endif
@@ -108,7 +109,6 @@
             @if ($var_objective == 'Org-Contact')
                  
             @include('components.sidebar-component')
-            @include('components.subnav-component')
 
             @endif
                   
@@ -121,14 +121,12 @@
             @if ($var_objective == 'V-Stream')
         
             @include('Business-units.unit-sidebar')
-            @include('Business-units.unit-subnav')
             
             @endif
                  
             @if ($var_objective == 'Team')
                  
             @include('components.sidebar-component')
-            @include('components.subnav-component')
 
             @endif
             
@@ -142,7 +140,6 @@
 
             @if ($var_objective == 'flag-impediments-unit')
                 @include('Business-units.unit-sidebar')
-                @include('Business-units.unit-subnav')
             @endif
 
             @if ($var_objective == 'flag-impediments-BU')
@@ -150,6 +147,10 @@
             @endif
             @if ($var_objective == 'flag-impediments-VS')
                 @include('Business-units.Team-sidebar')
+            @endif
+
+            @if ($var_objective == 'flag-impediments-orgT')
+            @include('Business-units.Team-sidebar')
             @endif
             
             @if ($var_objective == 'flag-impediments-stream')
@@ -160,19 +161,17 @@
             @if ($var_objective == 'flag-impediments-org')
             @include('components.sidebar-component')
 
-
-
             @endif
+
+            
             
             @if ($var_objective == 'Backlog-Unit')
             @include('Business-units.unit-sidebar')
-            @include('Business-units.unit-subnav')
 
             @endif
             
             @if ($var_objective == 'Page-unit')
             @include('Business-units.unit-sidebar')
-            @include('Business-units.unit-subnav')
             @endif
             
             @if ($var_objective == 'Jira')
@@ -184,7 +183,6 @@
             @if ($var_objective == 'Report-unit')
                  
             @include('Business-units.unit-sidebar')
-            @include('Business-units.unit-subnav')
 
             @endif
             
@@ -230,15 +228,15 @@
             @endif
 
             @if ($var_objective == 'Org-team')
-            @include('organizations.navbar')
+            @include('components.sidebar-component')
             @endif
 
             @if ($var_objective == 'Report-org')
-            @include('organizations.navbar')
+            @include('components.sidebar-component')
             @endif
 
             @if ($var_objective == 'TBaclog-org')
-            @include('organizations.navbar')
+            @include('components.sidebar-component')
           
             @endif
 
@@ -249,7 +247,7 @@
             @if ($var_objective == 'Org-Unit-dashboard')
                  
             @include('Business-units.unit-sidebar')
-            @include('Business-units.unit-subnav')
+           
 
             @endif
 
@@ -260,6 +258,21 @@
             @if ($var_objective == 'Unit-team-dashboard')
             @include('Business-units.Team-sidebar')
             @endif
+
+            @if ($var_objective == 'security')
+            @include('profile.navbar')
+            @include('profile.sidebar')
+          
+            @endif
+
+            @if ($var_objective == 'linking')     
+            @include('Business-units.Team-sidebar')
+            @endif
+
+            @if ($var_objective == 'linking')     
+            @include('member.navbar')
+            @endif
+            
             
             
             
@@ -374,6 +387,10 @@
                  @if ($var_objective == 'flag-impediments-stream')
                     @include('flags.breadcrum')
                  @endif
+
+                 @if ($var_objective == 'flag-impediments-orgT')
+                 @include('flags.breadcrum')
+              @endif
 
                  @if ($var_objective == 'flag-impediments-org')
                  @include('flags.breadcrum')
@@ -492,6 +509,12 @@
                 @include('Business-units.unit-team-breadcrum')
 
                 @endif
+
+                @if ($var_objective == 'security')
+                @include('profile.breadcrum')
+              
+                @endif
+                
 
                 <div class="body-inner-content">
                     @yield('content')

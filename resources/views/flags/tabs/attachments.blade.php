@@ -1,8 +1,13 @@
 <div class="row">
     <div class="col-md-12 col-lg-12 col-xl-12 @if($attachments->count() > 4) paddingrightzero @endif">
         <div class="d-flex flex-row align-items-center justify-content-between block-header">
-            <div>
-                <h4><img src="{{ url('public/assets/svg/attachmentmainsvg.svg') }}"> Attachments</h4>
+            <div class="d-flex flex-row align-items-center">
+                <div class="mr-2">
+                    <span class="material-symbols-outlined">attachment</span>
+                </div>
+                <div>
+                    <h4>Attachments</h4>
+                </div>
             </div>
             <div class="displayflex">
                 <div class="dropdown firstdropdownofcomments">

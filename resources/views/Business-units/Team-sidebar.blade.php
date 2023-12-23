@@ -271,7 +271,7 @@ $team  = DB::table('organization')->where('id',$organization->id)->first();
             @endif
             
             <li class="mb-1">
-                <a href="{{url('dashboard/organization/'.$organization->slug.'/BU-Report/'.$organization->type)}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/BU-Report')) class="d-flex flex-row align-items-center nav-active" @else   @endif  class="d-flex flex-row align-items-center" >
+                <a href="{{url('dashboard/organization/'.$organization->slug.'/BU-Report/'.$organization->type)}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/BU-Report/'.$organization->type)) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"   @endif   >
                     <div class="mr-2">
                          <span style="font-size:22px" class="material-symbols-outlined">summarize</span>
                     </div>
@@ -304,6 +304,20 @@ $team  = DB::table('organization')->where('id',$organization->id)->first();
                     </div>
                 </a>
             </li>
+            @endif
+
+            @if($organization->type == 'orgT')
+            <li class="mb-1">
+                <a href="{{url('dashboard/flags/'.$organization->slug.'/impediments/orgT')}}" @if (url()->current() == url('dashboard/flags/'.$organization->slug.'/impediments/orgT')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
+                    <div class="mr-2">
+                         <span style="font-size:22px" class="material-symbols-outlined">team_dashboard</span>
+                    </div>
+                    <div class="mr-2">
+                        Impediments
+                    </div>
+                </a>
+            </li>
+
             @endif
             
         </ul>

@@ -1,4 +1,3 @@
-
 <div class="aside">
     <div class="d-flex flex-column flex-shrink-0" style="width: 100%; height: 89vh;">
         <ul class="mb-auto text-center sidebar align-items-center mx-auto text-center" id="navbarSupportedContent">

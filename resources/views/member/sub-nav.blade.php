@@ -23,7 +23,7 @@
                         </a>
                     </li>
                
-                    <li class="mb-1">
+                    {{-- <li class="mb-1">
                         <button class="btn  align-items-center rounded" data-toggle="collapse" data-target="#home-collapse" aria-expanded="true">
                             <div class="d-flex flex-row align-items-center">
                                 <div class="mr-2">
@@ -36,7 +36,7 @@
                         </button>
 
                       
-                    </li>
+                    </li> --}}
                 </ul>
 
                 <ul class="list-unstyled ps-0 expanded-navbar-options">
@@ -84,7 +84,7 @@
                     </li>
 
                     <li class="mb-1">
-                        <a href="{{url('dashboard/organization/'.$organization->slug.'/BU-Report/'.$organization->type)}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/BU-Report')) class="d-flex flex-row align-items-center nav-active" @else   @endif  class="d-flex flex-row align-items-center" >
+                        <a href="{{url('dashboard/organization/'.$organization->slug.'/BU-Report/'.$organization->type)}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/BU-Report/'.$organization->type)) class="d-flex flex-row align-items-center nav-active" @else   @endif  class="d-flex flex-row align-items-center" >
                             <div class="mr-2">
                                  <span style="font-size:22px" class="material-symbols-outlined">Summarize</span>
                             </div>
