@@ -42,6 +42,10 @@ class FlagController extends Controller
         {
             $organization = DB::table('organization')->where('slug',$organizationid)->first();
         }
+        if($type == 'orgT')
+        {
+            $organization = DB::table('org_team')->where('slug',$organizationid)->first();
+        }
         $doneflag = flags::where('business_units' , $organization->id)->where('archived' , 2)->where('flag_status' , 'doneflag')->orderby('id' , 'desc')->get();
         $inprogress = flags::where('business_units' , $organization->id)->where('archived' , 2)->where('flag_status' , 'inprogress')->orderby('id' , 'desc')->get();
         $todoflag = flags::where('business_units' , $organization->id)->where('archived' , 2)->where('flag_status' , 'todoflag')->orderby('id' , 'desc')->get();

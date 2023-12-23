@@ -18,7 +18,7 @@ class LinkingController extends Controller
 {
     public function index($organizationid,$type)
     {
-    	$var_objective = 'linking';
+    
         if($type == 'unit')
         {
         $organization = DB::table('business_units')->where('slug',$organizationid)->first();
@@ -27,6 +27,6 @@ class LinkingController extends Controller
         {
         $organization = DB::table('value_stream')->where('slug',$organizationid)->first();
         }
-	    return view('linking.index',compact('organization','var_objective')); 
+	    return view('linking.index',compact('organization','type')); 
     }
 }
