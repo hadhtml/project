@@ -4,7 +4,7 @@
                         <div class="d-flex align-items-start flex-column flex-wrap mr-2">
                             <!--begin::Page Title-->
                             <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
-                                Objectives
+                                Report
                             </h5>
                             <div class="d-flex flex-row page-sub-titles">
                                 <div class="mr-2">
@@ -20,7 +20,7 @@
                                     <span>/</span>
                                 </div>
                                 <div class="mr-2">
-                                    <p>Objectives</p>
+                                    <p>Report</p>
                                 </div>
                             </div>
                         </div>
