@@ -60,7 +60,7 @@
                                             <label for="LastName">Last Name</label>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 col-lg-12 col-xl-12">
+                                    {{-- <div class="col-md-12 col-lg-12 col-xl-12">
                                         <div class="form-group mb-0">
                                             <select class="form-select form-control shadow-effect" aria-label="Default select example">
                                                 <option value="1">Sales </option>
@@ -69,7 +69,7 @@
                                             </select>
                                             <label for="LastName">Work industry</label>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                     <div class="col-md-12 col-lg-12 col-xl-12">
                                         <div class="form-group mb-0">

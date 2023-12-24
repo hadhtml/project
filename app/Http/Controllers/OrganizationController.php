@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 
 class OrganizationController extends Controller
 {
@@ -743,7 +744,71 @@ class OrganizationController extends Controller
     return view('objective.key-chart',compact('KEYChart','key','report','keyQAll'));
 
     }
+
+    public function change_password()
+    {
+        $user = DB::table('users')->where('id',Auth::id())->first();
+        return view('profile.change-password',compact('user'));
+
+    }
+
+    public function update_password(Request $request)
+{
+    $request->validate([
+        'old_password' => 'required|min:8',
+        'password' => 'required|min:8',
+        'password_confirmation' => 'required|same:password|min:8',
+    ]);
+    $data = $request->all();
+    $id = auth()->user();
+    if(Hash::check($data['old_password'], $id->password) == true)
+    {
+        $id->password = Hash::make($data['password']);
+        $id->save();
+        return redirect()->back()->with('msg','Password Update Successfully...!!');
+    }
+    else
+    {
+        return redirect()->back()->with('msg','Old password does not match');
+    }
+}
+
+
+public function profile()
+{
+    $user = DB::table('users')->where('id',Auth::id())->first();
+    return view('profile.profile-setting',compact('user'));
+
+}
+ 
+public function UpdateProfile(Request $request)
+{
+
+        $user  = User::find($request->id);
+
+        if($request->has('image'))
+        {
+          $user->image = $this->sendimagetodirectory($request->image);
+        }else{
+
+          $user->image = $request->old_image;
+
+        }
+       
+
+        $user->name = $request->name;
+        $user->last_name = $request->last_name;
+        $user->save();
+
+        $organization  = Organization::where('user_id',Auth::id())->update(['organization_name' => $request->org_name]);
+
     
+
+        return redirect()->back()->with('message', 'Profile Updated Successfully');
+
+
+
+}
     
     
 

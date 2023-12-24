@@ -20,6 +20,17 @@ if($type == 'VS')
 {
     $var_objective = "flag-impediments-VS";
 }
+
+if($type == 'org')
+{
+    $var_objective = "flag-impediments-org";
+}
+
+if($type == 'orgT')
+{
+    $var_objective = "flag-impediments-orgT";
+}
+
 @endphp
 @extends('components.main-layout')
 @if($type == 'stream')

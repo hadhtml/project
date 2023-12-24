@@ -857,7 +857,6 @@ class EpicController extends Controller
         $html = view('epics.tabs.activities', compact('activity','data','orderby'))->render();
         return $html;
     }
-
     public function savenewepic(Request $request)
     {
         $EpicId = DB::table("epics")->insertGetId([

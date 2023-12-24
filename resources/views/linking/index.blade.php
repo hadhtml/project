@@ -1,3 +1,6 @@
+@php
+$var_objective = 'linking';
+@endphp
 @extends('linking.includes.layout')
 @section('metta_tittle')
 <title>Linking </title>

@@ -60,8 +60,8 @@
                 <img src="https://t4.ftcdn.net/jpg/02/14/74/61/360_F_214746128_31JkeaP6rU0NzzzdFC4khGkmqc8noe6h.jpg" class="dropdown-toggle fixbar-user" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
                 <div class="dropdown-menu mb-5">
-                    <a class="dropdown-item" href="#">Profile</a>
-                    <a class="dropdown-item" href="#">Security</a>
+                    <a class="dropdown-item" href="{{url('profile-setting')}}">Profile</a>
+                    <a class="dropdown-item" href="{{url('change-password')}}">Security</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item bg-primary text-white" href="{{ route('logout') }}"  onclick="event.preventDefault();
                 document.getElementById('logout-form').submit();" class="nav-link">Logout</a>

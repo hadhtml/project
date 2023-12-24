@@ -14,6 +14,7 @@
                 
                 <ul class="list-unstyled ps-0 expanded-navbar-options">
                    
+             
                     <li class="mb-1">
                         <a href="{{url('dashboard/organizations')}}" @if (url()->current() == url('dashboard/organizations')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
                             <div class="mr-2">
@@ -24,20 +25,8 @@
                             </div>
                         </a>
                     </li>
-              
+                    
 
-                    {{-- @if (url()->current() == url('dashboard/organization/Business-Units') || url()->current() == url('dashboard/organization/Bu/dashboard') )
-                    <li class="mb-1">
-                        <a href="{{url('dashboard/organization/Bu/dashboard')}}" @if (url()->current() == url('dashboard/organization/Bu/dashboard')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center" @endif>
-                            <div class="mr-2">
-                                <span style="font-size:22px" class="material-symbols-outlined">auto_stories</span>
-                            </div>
-                            <div class="mr-2">
-                               Dashboard
-                            </div>
-                        </a>
-                    </li>
-                    @endif --}}
 
                     <li class="mb-1">
                         <a href="{{url('dashboard/organization/Business-Units')}}"  @if (url()->current() == url('dashboard/organization/Business-Units'))  class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center" @endif >
@@ -50,7 +39,7 @@
                         </a>
                     </li>
                     <li class="mb-1">
-                        <a href="{{url('dashboard/organization/'.$organization->slug.'/performance-dashboard/'.$organization->type)}}" class="d-flex flex-row align-items-center">
+                        <a href="{{url('dashboard/organization/'.$organization->slug.'/performance-dashboard/'.$organization->type)}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/performance-dashboard/'.$organization->type)) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
                             <div class="mr-2">
                                 <span style="font-size:22px" class="material-symbols-outlined">team_dashboard</span>
                             </div>
@@ -71,7 +60,7 @@
                     </li>
                     <!-- Portfolio -->
                     <li class="mb-1">
-                        <a href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" class="d-flex flex-row align-items-center">
+                        <a href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
                             <div class="mr-2">
                                  <span style="font-size:22px" class="material-symbols-outlined">folder_supervised</span>
                             </div>
@@ -81,7 +70,7 @@
                         </a>
                     </li>
                     <li class="mb-1">
-                        <a href="{{url('dashboard/organization/'.$organization->slug.'/BT-Backlog/org')}}" class="d-flex flex-row align-items-center">
+                        <a href="{{url('dashboard/organization/'.$organization->slug.'/BT-Backlog/org')}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/BT-Backlog/org')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
                             <div class="mr-2">
                                  <span style="font-size:22px" class="material-symbols-outlined">key_visualizer</span>
                             </div>
@@ -101,21 +90,19 @@
                         </a>
                     </li>
                     <li class="mb-1">
-                        <a href="{{url('dashboard/flags/'.$organization->slug.'/impediments/org')}}" class="d-flex flex-row align-items-center">
+                        <a href="{{url('dashboard/flags/'.$organization->slug.'/impediments/org')}}" @if (url()->current() == url('dashboard/flags/'.$organization->slug.'/impediments/org')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
                             <div class="mr-2">
                                 <span style="font-size:22px" class="material-symbols-outlined">warning_off</span>
                             </div>
                             <div class="mr-2">
                                 Impediments
                             </div>
-                            <!-- <div>
-                                <span class="badge btn-circle-xs badge-warning text-sm">2</span>
-                            </div> -->
+                         
                         </a>
                     </li>
 
                     <li class="mb-1">
-                        <a href="{{url('dashboard/organization/'.$organization->slug.'/Org-TEAMS')}}" class="d-flex flex-row align-items-center">
+                        <a href="{{url('dashboard/organization/'.$organization->slug.'/Org-TEAMS')}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/Org-TEAMS')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
                             <div class="mr-2">
                                  <span style="font-size:22px" class="material-symbols-outlined">groups</span>
                             </div>

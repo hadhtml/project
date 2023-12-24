@@ -1,5 +1,5 @@
 <div class="flex-shrink-0 p-3 bg-white sub-nav open" id="panel">
-  
+   
         <h6 class="title">Business Units</h6>
         <ul class="list-unstyled ps-0 expanded-navbar mb-0">
             
@@ -87,7 +87,7 @@
                 </a>
             </li>
             <li class="mb-1">
-                <a href="{{url('dashboard/organization/'.$organization->slug.'/BU-Report/'.$organization->type)}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/BU-Report')) class="d-flex flex-row align-items-center nav-active" @else   @endif  class="d-flex flex-row align-items-center" >
+                <a href="{{url('dashboard/organization/'.$organization->slug.'/BU-Report/'.$organization->type)}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/BU-Report/'.$organization->type)) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif   >
                     <div class="mr-2">
                          <span style="font-size:22px" class="material-symbols-outlined">Summarize</span>
                     </div>
