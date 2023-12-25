@@ -163,6 +163,25 @@
             }
         });
     }
+    function modalheader() {
+        var id = '{{ $data->id }}';
+        $.ajax({
+            type: "POST",
+            url: "{{ url('dashboard/flags/modalheader') }}",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                id:id,
+            },
+            success: function(res) {
+                $('.modalheaderforapend').html(res);
+            },
+            error: function(error) {
+                console.log('Error updating card position:', error);
+            }
+        });
+    }
     function changeflagstatus(status,id) {
         $.ajax({
             type: "POST",

@@ -237,6 +237,8 @@ Route::name('flags.')->namespace('App\Http\Controllers')->prefix('dashboard/flag
     Route::POST('searchepic', 'FlagController@searchepic');
     Route::POST('selectepic', 'FlagController@selectepic');
     Route::POST('moveflag', 'FlagController@moveflag');
+    Route::POST('modalheader', 'FlagController@modalheader');
+    
 });
 Route::name('linking.')->namespace('App\Http\Controllers')->prefix('dashboard/linking')->group(function () {
     Route::get('{organizationid}/{type}', 'LinkingController@index');

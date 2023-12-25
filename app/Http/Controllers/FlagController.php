@@ -101,6 +101,12 @@ class FlagController extends Controller
         $html = view('flags.modalheader', compact('data'))->render();
         return $html;
     }
+    public function modalheader(Request $request)
+    {
+        $data = flags::find($request->id);
+        $html = view('flags.modalheader', compact('data'))->render();
+        return $html;
+    }
     public function savemember(Request $request)
     {
         $check = flag_members::where('flag_id' , $request->dataid)->where('member_id' , $request->id)->count();

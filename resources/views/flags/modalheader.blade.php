@@ -1,12 +1,21 @@
 <div class="row positionrelative">
+
+    @if($data->archived == 1)
     <div class="col-md-12">
         <h5 class="modal-title newmodaltittle marginleftthirty" id="create-epic">
             <img src="{{ url('public/assets/svg/traffic-cone-svgrepo-com.svg') }}">
-        Impediment</h5>
+        @if($data->flag_title) {{ $data->flag_title }} @else Enter Tittle @endif</h5>
     </div>
     <div class="col-md-12 marginleftthirty newmodalsubtittle">
-        <p>Fill out the form, submit and hit the save button.</p>
+        <p class="text-danger">This card has been archived, to un archive <a onclick="unarchiveflag({{$data->id}})" href="javascript:void(0)">Click here</a>.</p>
     </div>
+    @else
+    <div class="col-md-12 mb-5">
+        <h5 class="modal-title newmodaltittle epic-tittle-header marginleftthirty" id="create-epic">
+            <img src="{{ url('public/assets/svg/traffic-cone-svgrepo-com.svg') }}">@if($data->flag_title) {{ $data->flag_title }} @else Enter Tittle @endif
+        </h5>
+    </div>
+    @endif
     <div class="col-md-12 displayflex">
         <div class="btn-group">
             <button type="button" class="btn btn-default statuschangebutton @if($data->flag_status == 'todoflag') todo-button-color @endif @if($data->flag_status == 'inprogress') inprogress-button-color @endif @if($data->flag_status == 'doneflag') done-button-color @endif" id="showboardbutton">
