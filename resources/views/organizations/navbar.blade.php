@@ -6,11 +6,18 @@
                     <span class="material-symbols-outlined">home</span>
                 </a>
             </li>
+        
             <li>
                 <a href="{{url('dashboard/organization/Business-Units')}}"  @if (url()->current() == url('dashboard/organization/Business-Units')) class="active-link" @else class="nav-link"  @endif  data-toggle="tooltip" data-placement="right" data-original-title=" Business Units">
                     <span class="material-symbols-outlined">domain</span>
                 </a>
             </li>
+            <!-- <li class="buttonClick">
+                <a href="#" data-toggle="tooltip" data-placement="right" data-original-title="Search">
+                    <span class="material-symbols-outlined">search</span>
+                </a>
+            </li> -->
+            
             <!-- <li>
                 <a href="{{url('dashboard/organization/contacts')}}" @if (url()->current() == url('dashboard/organization/contacts')) class="active-link" @else class="nav-link"  @endif  title="" data-toggle="tooltip" data-placement="right" data-original-title="Contacts">
                     <span class="material-symbols-outlined">perm_contact_calendar</span>
@@ -18,7 +25,7 @@
             </li> -->
 
             <li>
-                <a href="#" @if (url()->current() == url('dashboard/organization/users')) class="active-link" @else class="nav-link"  @endif title="" data-toggle="tooltip" data-placement="right" data-original-title="OKR Mapper">
+                <a href="#"  class="nav-link"  title="" data-toggle="tooltip" data-placement="right" data-original-title="OKR Mapper">
                     <span class="material-symbols-outlined">action_key</span>
                 </a>
             </li>
@@ -28,7 +35,6 @@
                     <span class="material-symbols-outlined">group</span>
                 </a>
             </li>
-
 
         </ul>
         <div class="align-items-center mx-auto mb-3 text-center">
@@ -54,8 +60,8 @@
                 <img src="https://t4.ftcdn.net/jpg/02/14/74/61/360_F_214746128_31JkeaP6rU0NzzzdFC4khGkmqc8noe6h.jpg" class="dropdown-toggle fixbar-user" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
                 <div class="dropdown-menu mb-5">
-                    <a class="dropdown-item" href="#">Profile</a>
-                    <a class="dropdown-item" href="#">Security</a>
+                    <a class="dropdown-item" href="{{url('profile-setting')}}">Profile</a>
+                    <a class="dropdown-item" href="{{url('change-password')}}">Security</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item bg-primary text-white" href="{{ route('logout') }}"  onclick="event.preventDefault();
                 document.getElementById('logout-form').submit();" class="nav-link">Logout</a>

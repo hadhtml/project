@@ -11,6 +11,23 @@
                 </button>
                 <h6 class="title">Value Streams</h6>
                 <ul class="list-unstyled ps-0 expanded-navbar mb-0">
+            
+                    <li class="mb-1">
+                        <a href="{{url('dashboard/organization/'.$Unit->slug.'/Value-Streams')}}" class="btn  align-items-center rounded"  aria-expanded="true">
+                            <div class="d-flex flex-row align-items-center">
+                                <div class="mr-2">
+                                    <span style="font-size:22px" class="material-symbols-outlined">domain</span>
+                                </div>
+                                <div>
+                                    Value Stream
+                                </div>
+                            </div>
+                        </a>
+        
+                   
+                    </li>
+                </ul>
+                <ul class="list-unstyled ps-0 expanded-navbar mb-0">
 
                     <li class="mb-1">
                         <a href="{{url('dashboard/organization/'.$organization->slug.'/dashboard/'.$organization->type)}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/dashboard/'.$organization->type)) class="d-flex flex-row align-items-center nav-active" @else   @endif class="d-flex flex-row align-items-center">

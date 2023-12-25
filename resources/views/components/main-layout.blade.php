@@ -260,7 +260,7 @@
             @endif
 
             @if ($var_objective == 'security')
-            @include('profile.navbar')
+          
             @include('profile.sidebar')
           
             @endif

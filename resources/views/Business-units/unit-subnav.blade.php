@@ -4,7 +4,7 @@
         <ul class="list-unstyled ps-0 expanded-navbar mb-0">
             
             <li class="mb-1">
-                <button class="btn  align-items-center rounded"  aria-expanded="true">
+                <a href="{{url('dashboard/organization/Business-Units')}}" class="btn  align-items-center rounded"  aria-expanded="true">
                     <div class="d-flex flex-row align-items-center">
                         <div class="mr-2">
                             <span style="font-size:22px" class="material-symbols-outlined">domain</span>
@@ -13,7 +13,7 @@
                             Business Units
                         </div>
                     </div>
-                </button>
+                </a>
 
            
             </li>

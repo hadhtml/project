@@ -401,7 +401,7 @@
         var objective_status = $('#obj_status').val();
 
 
-        if ($('#objective_name').val() == '') {
+        if ($('#objective_name').val() == '' ||  $('#end_date').val() == '') {
             $('#obj-feild-error').html('Please fill out all required fields.');
             return false;
         }
@@ -733,7 +733,7 @@
 
 
 
-        if ($('#key_name').val() == '') {
+        if ($('#key_name').val() == '' || $('#key_end_date').val() == '') {
             $('#key-feild-error').html('Please fill out all required fields.');
             return false;
         }
