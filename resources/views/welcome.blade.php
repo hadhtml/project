@@ -114,12 +114,12 @@
                                         </button>
                                         </a>
                                 </div>
-                                <div class="col-xl-4 col-lg-4 col-md-4 p-2">
+                                {{-- <div class="col-xl-4 col-lg-4 col-md-4 p-2">
                                     <button class="btn btn-white btn-block">
                                         <img src="{{asset('public/assets/images/icons/apple.svg')}}">
                                         Apple
                                     </button>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>

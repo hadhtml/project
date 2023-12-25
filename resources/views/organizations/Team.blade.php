@@ -23,6 +23,9 @@
                     $dataArray = explode(',', $team->member);
                     $dataCount = count($dataArray);
                     $firstTwoIds = array_slice($dataArray, 0, 2);
+                    $remainingIds = array_slice($dataArray, 2);
+                    $remainingCount = count($remainingIds);
+
                     $ObjResultcount = DB::table('objectives')
                         ->where('unit_id', $team->id)
                         ->where('type', 'orgT')
@@ -118,9 +121,9 @@
                                              @endif
                                              @endforeach
                                              @endforeach
-                                             @if($dataCount > 3)
+                                             @if($dataCount > 2)
                                              <div style="width:42px; height:42px; padding: 10px; font-size: 12px;" class="symbol symbol-30  symbol-circle symbol-light" data-toggle="tooltip" title="" data-original-title="More users">
-                                                 <span class="symbol-label">{{$dataCount}}+</span>
+                                                 <span class="symbol-label">{{$remainingCount}}+</span>
                                              </div>
                                              @endif
                                            
