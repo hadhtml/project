@@ -25,11 +25,18 @@ $team  = DB::table('organization')->where('id',$organization->id)->first();
                     <span class="material-symbols-outlined">home</span>
                 </a>
             </li>
+        
             <li>
                 <a href="{{url('dashboard/organization/Business-Units')}}"  @if (url()->current() == url('dashboard/organization/Business-Units')) class="active-link" @else class="nav-link"  @endif  data-toggle="tooltip" data-placement="right" data-original-title=" Business Units">
                     <span class="material-symbols-outlined">domain</span>
                 </a>
             </li>
+            <!-- <li class="buttonClick">
+                <a href="#" data-toggle="tooltip" data-placement="right" data-original-title="Search">
+                    <span class="material-symbols-outlined">search</span>
+                </a>
+            </li> -->
+            
             <!-- <li>
                 <a href="{{url('dashboard/organization/contacts')}}" @if (url()->current() == url('dashboard/organization/contacts')) class="active-link" @else class="nav-link"  @endif  title="" data-toggle="tooltip" data-placement="right" data-original-title="Contacts">
                     <span class="material-symbols-outlined">perm_contact_calendar</span>
@@ -37,7 +44,7 @@ $team  = DB::table('organization')->where('id',$organization->id)->first();
             </li> -->
 
             <li>
-                <a href="#" @if (url()->current() == url('dashboard/organization/users')) class="active-link" @else class="nav-link"  @endif title="" data-toggle="tooltip" data-placement="right" data-original-title="OKR Mapper">
+                <a href="#"  class="nav-link"  title="" data-toggle="tooltip" data-placement="right" data-original-title="OKR Mapper">
                     <span class="material-symbols-outlined">action_key</span>
                 </a>
             </li>
@@ -47,7 +54,6 @@ $team  = DB::table('organization')->where('id',$organization->id)->first();
                     <span class="material-symbols-outlined">group</span>
                 </a>
             </li>
-
 
         </ul>
         <div class="align-items-center mx-auto mb-3 text-center">
@@ -73,8 +79,8 @@ $team  = DB::table('organization')->where('id',$organization->id)->first();
                 <img src="https://t4.ftcdn.net/jpg/02/14/74/61/360_F_214746128_31JkeaP6rU0NzzzdFC4khGkmqc8noe6h.jpg" class="dropdown-toggle fixbar-user" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
                 <div class="dropdown-menu mb-5">
-                    <a class="dropdown-item" href="#">Profile</a>
-                    <a class="dropdown-item" href="#">Security</a>
+                    <a class="dropdown-item" href="{{url('profile-setting')}}">Profile</a>
+                    <a class="dropdown-item" href="{{url('change-password')}}">Security</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item bg-primary text-white" href="{{ route('logout') }}"  onclick="event.preventDefault();
                 document.getElementById('logout-form').submit();" class="nav-link">Logout</a>
@@ -92,7 +98,45 @@ $team  = DB::table('organization')->where('id',$organization->id)->first();
     <div class="flex-shrink-0 p-3 bg-white sub-nav open" id="panel">
 
         <h6 class="title">Team</h6>
+        @if($organization->type == 'BU')
+        <ul class="list-unstyled ps-0 expanded-navbar mb-0">
+            
+            <li class="mb-1">
+                <a href="{{url('dashboard/organization/'.$team->slug.'/BU-TEAMS')}}" class="btn  align-items-center rounded"  aria-expanded="true">
+                    <div class="d-flex flex-row align-items-center">
+                        <div class="mr-2">
+                            <span style="font-size:22px" class="material-symbols-outlined">domain</span>
+                        </div>
+                        <div>
+                            Business Unit Team
+                        </div>
+                    </div>
+                </a>
 
+           
+            </li>
+        </ul>
+        @endif
+
+        @if($organization->type == 'VS')
+        <ul class="list-unstyled ps-0 expanded-navbar mb-0">
+            
+            <li class="mb-1">
+                <a href="{{url('dashboard/organization/'.$team->slug.'/VS-TEAMS')}}" class="btn  align-items-center rounded"  aria-expanded="true">
+                    <div class="d-flex flex-row align-items-center">
+                        <div class="mr-2">
+                            <span style="font-size:22px" class="material-symbols-outlined">domain</span>
+                        </div>
+                        <div>
+                            Value Stream Team
+                        </div>
+                    </div>
+                </a>
+
+           
+            </li>
+        </ul>
+        @endif
 
         <ul class="list-unstyled ps-0 expanded-navbar-options">
 
