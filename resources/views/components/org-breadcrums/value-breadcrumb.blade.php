@@ -1,3 +1,4 @@
+ 
  <div class="subheader subheader-solid breadcrums" id="kt_subheader">
                     <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
                         <!--begin::Info-->
@@ -9,7 +10,8 @@
                             <!-- Breadcrum Items -->
                             <div class="d-flex flex-row page-sub-titles">
                                 <div class="mr-2">
-                                    <a href="{{route('home')}}">Dashboard</a>
+                                    <a  href="{{url('dashboard/organization/'.$organization->slug.'/dashboard/'.$organization->type)}}" style="text-decoration: none;" >Dashboard</a>
+
                                 </div>
                                 
                                 <div class="mr-2">

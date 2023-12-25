@@ -9,7 +9,10 @@
                             </h5>
                             <div class="d-flex flex-row page-sub-titles">
                                 <div class="mr-2">
-                                    <p>Dashboard</p>
+                                    @if($organization->type == 'stream')
+                                    <a  href="{{url('dashboard/organization/'.$organization->slug.'/dashboard/'.$organization->type)}}" style="text-decoration: none;" >Dashboard</a>
+                                    @endif
+                               
                                 </div>
                                 
                          
