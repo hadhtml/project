@@ -1,4 +1,4 @@
-<div class="card-body">
+<div class="card-body ui-state-default" id="{{ $r->id }}">
     <div class="d-flex flex-column">
         <div class="d-flex flex-row" onclick="editflag({{$r->id}})">
             <div class="d-flex flex-row mb-2">

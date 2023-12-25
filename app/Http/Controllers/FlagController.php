@@ -46,9 +46,9 @@ class FlagController extends Controller
         {
             $organization = DB::table('org_team')->where('slug',$organizationid)->first();
         }
-        $doneflag = flags::where('business_units' , $organization->id)->where('archived' , 2)->where('flag_status' , 'doneflag')->orderby('id' , 'desc')->get();
-        $inprogress = flags::where('business_units' , $organization->id)->where('archived' , 2)->where('flag_status' , 'inprogress')->orderby('id' , 'desc')->get();
-        $todoflag = flags::where('business_units' , $organization->id)->where('archived' , 2)->where('flag_status' , 'todoflag')->orderby('id' , 'desc')->get();
+        $doneflag = flags::where('business_units' , $organization->id)->where('archived',2)->where('flag_status' , 'doneflag')->orderby('flags.board_order' , 'asc')->get();
+        $inprogress = flags::where('business_units' , $organization->id)->where('archived',2)->where('flag_status' , 'inprogress')->orderby('flags.board_order' , 'asc')->get();
+        $todoflag = flags::where('business_units' , $organization->id)->where('archived',2)->where('flag_status' , 'todoflag')->orderby('flags.board_order' , 'asc')->get();
         $epics = DB::table('epics')->where('buisness_unit_id' , $organization->id)->where('trash' , Null)->get();
     	return view('flags.index',compact('organization','doneflag','inprogress','todoflag','type','epics')); 
     }
@@ -72,15 +72,15 @@ class FlagController extends Controller
         }
         if($request->id == 'all')
         {
-            $doneflag = flags::where('business_units' , $organization->id)->where('archived',2)->where('flag_status' , 'doneflag')->orderby('id' , 'desc')->get();
-            $inprogress = flags::where('business_units' , $organization->id)->where('archived',2)->where('flag_status' , 'inprogress')->orderby('id' , 'desc')->get();
-            $todoflag = flags::where('business_units' , $organization->id)->where('archived',2)->where('flag_status' , 'todoflag')->orderby('id' , 'desc')->get();
+            $doneflag = flags::where('business_units' , $organization->id)->where('archived',2)->where('flag_status' , 'doneflag')->orderby('flags.board_order' , 'asc')->get();
+            $inprogress = flags::where('business_units' , $organization->id)->where('archived',2)->where('flag_status' , 'inprogress')->orderby('flags.board_order' , 'asc')->get();
+            $todoflag = flags::where('business_units' , $organization->id)->where('archived',2)->where('flag_status' , 'todoflag')->orderby('flags.board_order' , 'asc')->get();
         }
         if($request->id == 'archived')
         {
-            $doneflag = flags::where('business_units' , $organization->id)->where('archived' , 1)->where('flag_status' , 'doneflag')->orderby('id' , 'desc')->get();
-            $inprogress = flags::where('business_units' , $organization->id)->where('archived' , 1)->where('flag_status' , 'inprogress')->orderby('id' , 'desc')->get();
-            $todoflag = flags::where('business_units' , $organization->id)->where('archived' , 1)->where('flag_status' , 'todoflag')->orderby('id' , 'desc')->get();
+            $doneflag = flags::where('business_units' , $organization->id)->where('archived' , 1)->where('flag_status' , 'doneflag')->orderby('flags.board_order' , 'asc')->get();
+            $inprogress = flags::where('business_units' , $organization->id)->where('archived' , 1)->where('flag_status' , 'inprogress')->orderby('flags.board_order' , 'asc')->get();
+            $todoflag = flags::where('business_units' , $organization->id)->where('archived' , 1)->where('flag_status' , 'todoflag')->orderby('flags.board_order' , 'asc')->get();
         }
         $epics = DB::table('epics')->where('buisness_unit_id' , $organization->id)->where('trash' , Null)->get();
         $type = $request->type;
@@ -527,5 +527,26 @@ class FlagController extends Controller
         $flag = flags::find($request->flag_id);
         $flag->flag_status = $request->board;
         $flag->save();
+    }
+    public function sortflags(Request $request)
+    {
+        $todo = 1;
+        foreach ($request->ordertodo as $r) {
+            $item = flags::find($r);
+            $item->board_order = $todo++;
+            $item->save();        
+        }
+        $inprogress = 1;
+        foreach ($request->orderinprogress as $r) {
+            $item = flags::find($r);
+            $item->board_order = $inprogress++;
+            $item->save();        
+        }
+        $done = 1;
+        foreach ($request->orderdone as $r) {
+            $item = flags::find($r);
+            $item->board_order = $done++;
+            $item->save();        
+        }
     }
 }

@@ -1222,28 +1222,3 @@ button:focus {
     top: 5px !important;
     left: 90px !important;
 }
-.imp-parent-card{
-    height: calc(100vh - 25%) !important; 
-    overflow-y: auto;
-}
-
-/* width */
-.imp-parent-card::-webkit-scrollbar {
-  width: 10px;
-}
-
-/* Track */
-.imp-parent-card::-webkit-scrollbar-track {
-  background: #f1f1f1; 
-}
- 
-/* Handle */
-.imp-parent-card::-webkit-scrollbar-thumb {
-  background: #c5c9d1;
-  border-radius: 1px;
-}
-
-/* Handle on hover */
-.imp-parent-card::-webkit-scrollbar-thumb:hover {
-  background: #555; 
-}
