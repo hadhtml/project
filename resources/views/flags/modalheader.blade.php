@@ -20,16 +20,8 @@
                     Done
                 @endif
             </button>
-            <button type="button" class="@if($data->flag_status == 'todoflag') todo-button-color @endif @if($data->flag_status == 'inprogress') inprogress-button-color @endif @if($data->flag_status == 'doneflag') done-button-color @endif statuschangebuttonarrow btn btn-danger dropdown-toggle dropdown-toggle-split archivebeardcimbgbutton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                @if($data->flag_status == 'todoflag') 
-                <img src="{{url('public/assets/images/icons/angle-down.svg')}}" width="20">
-                @endif 
-                @if($data->flag_status == 'inprogress') 
+            <button type="button" class="@if($data->flag_status == 'todoflag') todo-button-color @endif @if($data->flag_status == 'inprogress') inprogress-button-color @endif @if($data->flag_status == 'doneflag') done-button-color @endif statuschangebuttonarrow btn btn-danger dropdown-toggle dropdown-toggle-split archivebeardcimbgbutton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
                 <img src="{{url('public/assets/svg/arrow-down-white.svg')}}" width="20">
-                @endif 
-                @if($data->flag_status == 'doneflag') 
-                <img src="{{url('public/assets/svg/arrow-down-white.svg')}}" width="20">
-                @endif
                 <span class="sr-only">Toggle Dropdown</span>
             </button>
             <div class="dropdown-menu">

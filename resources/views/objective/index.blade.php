@@ -740,7 +740,7 @@ $var_objective = 'PageT-'.$type;
                          <h4>Action</h4>
                          <ul class="positionrelative">
                              <!-- <li><img src="{{ url('public/assets/svg/archive-action.svg') }}"> Archive</li> -->
-                             <li onclick="epicgeneraldetails()"><span class="material-symbols-outlined">share</span> Share</li>
+                             <!-- <li onclick="epicgeneraldetails()"><span class="material-symbols-outlined">share</span> Share</li> -->
                              <!-- <li><img src="{{ url('public/assets/svg/arrow-right-action.svg') }}"> Move</li> -->
                              <li onclick="epicgeneraldetails()"><span class="material-symbols-outlined">delete</span> Delete</li>
                          </ul>

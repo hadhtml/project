@@ -7,9 +7,10 @@ $(function() {
     });
 });
 function getOrder(){
-    var order= $("#sortable .ui-state-default").map(function() {        
+    var order= $("#sortable .ui-state-default").map(function() {
         return this.id;        
     }).get();
+    console.log(order)
     var epic_id = '{{ $data->id }}';
     $.ajax({
         type: "POST",
@@ -61,73 +62,72 @@ function getOrder(){
                     <a class="dropdown-item" onclick="showorderby('asc',{{ $data->id }},'attachments')" href="javascript:void(0)">Older</a>
                   </div>
                 </div>
-                <!-- <span  class="btn btn-default btn-sm">Raise Flag</span> -->
+                <span onclick="uploadattachment()" class="btn btn-default btn-sm">Raise Flag</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row uploadattachment">
+    <div class="col-md-12">
+        <div class="card comment-card storyaddcard">
+            <div class="card-body">
+                <form id="saveepicflag" class="needs-validation" action="{{ url('dashboard/epics/saveepicflag') }}" method="POST" novalidate>
+                    @csrf
+                    <input type="hidden" value="{{ $data->id }}" name="flag_epic_id">
+                    <input type="hidden" value="{{ $data->buisness_unit_id }}" name="business_units">
+                    <input type="hidden" value="{{ $data->epic_type }}" name="board_type">
+                    <div class="row">        
+                        <div class="col-md-6 col-lg-6 col-xl-6">
+                            <div class="form-group mb-0">
+                                <label for="flag_type">Flag Type <small class="text-danger">*</small></label>
+                               <select class="form-control" name="flag_type" id="flag_type" >
+                                   <option value="">Select Flag Type</option>
+                                   <option value="Risk">Risk</option>
+                                   <option value="Impediment">Impediment</option>
+                                   <option value="Blocker">Blocker</option>
+                                   <option value="Action">Action</option>
+                               </select>
+                                
+                            </div>
+                        </div>
+                         <div class="col-md-6 col-lg-6 col-xl-6">
+                            <div class="form-group mb-0">
+                                <label for="flag_assignee">Flag Assignee <small class="text-danger">*</small></label>
+                                <select class="form-control" id="flag_assignee" name="flag_assign">
+                                    @foreach(DB::table('members')->where('org_user',Auth::id())->get() as $r)
+                                      <option value="{{ $r->id }}">{{ $r->name }} {{ $r->last_name }}</option>
+                                    @endforeach
+                                </select>
+                                
+                            </div>
+                        </div>
+                         <div class="col-md-12 col-lg-12 col-xl-12">
+                            <div class="form-group mb-0">
+                                <label for="small-description">Title <small class="text-danger">*</small></label>
+                                <input type="text" class="form-control"  name="flag_title" >
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            <div class="form-group mb-0">
+                                <label for="small-description">Description <small class="text-danger">*</small></label>
+                                <textarea name="flag_description" class="form-control"></textarea>
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <span onclick="uploadattachment()" class="btn btn-default btn-sm">Cancel</span>
+                            <button id="saveepicflagbutton" type="submit" class="btn btn-primary btn-sm">Save</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
 <div class="row">
     <div class="activity-feed @if($flags->count() == 0) col-md-12 @endif" id="list-container">
-        <div class="uploadattachment">
-            <div class="card comment-card storyaddcard">
-                <div class="card-body">
-                    <form class="needs-validation" action="#" method="POST" novalidate>
-                        @csrf
-                        <input type="hidden" value="{{ $data->id }}" id="flag_epic_id">
-                        <input type="hidden" value="{{ $data->initiative_id }}" id="flag_ini_epic_id">
-                        <input type="hidden" value="{{ $data->obj_id }}" id="flag_epic_obj">
-                        <input type="hidden" value="{{ $data->key_id }}" id="flag_epic_key">
-                        <input type="hidden" value="{{ $data->buisness_unit_id }}" id="buisness_unit_id">
-                        <input type="hidden" value="{{ $data->epic_type }}" id="board_type">
-                        <input type="hidden" value="{{ $data->epic_status }}" id="epic_status">
-                        <div class="row">        
-                            <div class="col-md-6 col-lg-6 col-xl-6">
-                                <div class="form-group mb-0">
-                                    <label for="small-description">Flag Type <small class="text-danger">*</small></label>
-                                   <select class="form-control" id="flag_type" >
-                                       <option value="">Select Flag Type</option>
-                                       <option value="Risk">Risk</option>
-                                       <option value="Impediment">Impediment</option>
-                                       <option value="Blocker">Blocker</option>
-                                       <option value="Action">Action</option>
-                                   </select>
-                                    
-                                </div>
-                            </div>
-                             <div class="col-md-6 col-lg-6 col-xl-6">
-                                <div class="form-group mb-0">
-                                    <label for="lead-manager">Flag Assignee <small class="text-danger">*</small></label>
-                                    <select class="form-control" id="flag_assign">
-                                        @foreach(DB::table('members')->where('org_user',Auth::id())->get() as $r)
-                                          <option value="{{ $r->id }}">{{ $r->name }} {{ $r->last_name }}</option>
-                                        @endforeach
-                                    </select>
-                                    
-                                </div>
-                            </div>
-                             <div class="col-md-12 col-lg-12 col-xl-12">
-                                <div class="form-group mb-0">
-                                    <label for="small-description">Title <small class="text-danger">*</small></label>
-                                    <input type="text" class="form-control"  id="flag_title" >
-                                    
-                                </div>
-                            </div>
-                            <div class="col-md-12 col-lg-12 col-xl-12">
-                                <div class="form-group mb-0">
-                                    <label for="small-description">Description <small class="text-danger">*</small></label>
-                                    <textarea id="flag_description" class="form-control"></textarea>
-                                    
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <span onclick="uploadattachment()" class="btn btn-default btn-sm">Cancel</span>
-                                <button id="updateflagmodalbuton" onclick="updateepicflag();" type="submit" class="btn btn-primary btn-sm">Save</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+        
     <style type="text/css">
       .attachment-card-new{
         margin-top: 10px;
@@ -297,6 +297,25 @@ function getOrder(){
 <script src="https://unpkg.com/dragula@3.7.2/dist/dragula.js"></script>
 <script src="https://unpkg.com/dom-autoscroller@2.2.3/dist/dom-autoscroller.js"></script>
 <script type="text/javascript">
+$('#saveepicflag').on('submit',(function(e) {
+    $('#saveepicflagbutton').html('<i class="fa fa-spin fa-spinner"></i>');
+    e.preventDefault();
+    var formData = new FormData(this);
+    var cardid = $('#cardid').val();
+    $.ajax({
+        type:'POST',
+        url: $(this).attr('action'),
+        data:formData,
+        cache:false,
+        contentType: false,
+        processData: false,
+        success: function(data){
+            showtabwithoutloader('{{$data->id}}' , 'flags');
+        }
+    });
+}));
+
+
 function deleteattachmentshow(id) {
 $('#deleteattachmentshow'+id).slideToggle();
 }

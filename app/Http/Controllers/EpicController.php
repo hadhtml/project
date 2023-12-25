@@ -103,7 +103,7 @@ class EpicController extends Controller
         if($request->tab == 'flags')
         {
             $data = Epic::find($request->id);
-            $flags = flags::where('epic_id' , $data->id)->orderby('flag_order' , 'asc')->get();
+            $flags = flags::where('epic_id' , $data->id)->orderby('flags.flag_order' , 'asc')->get();
             $html = view('epics.tabs.flags', compact('flags','data'))->render();
             return $html;
         }
@@ -668,18 +668,26 @@ class EpicController extends Controller
     }
     public function sortchilditem(Request $request)
     {
+        $flagcount = epics_stroy::where('epic_id' , $request->epic_id)->count();
+        $i = 0;
         foreach ($request->order as $key=>$r) {
+            $test = $key+1;
+            if ($i++ > $flagcount) break;
             $item = epics_stroy::find($r);
-            $item->sort_order = $key+1;
-            $item->save();
+            $item->sort_order = $i;
+            $item->save();       
         }
     }
     public function sortflags(Request $request)
     {
+        $flagcount = flags::where('epic_id' , $request->epic_id)->count();
+        $i = 0;
         foreach ($request->order as $key=>$r) {
+            $test = $key+1;
+            if ($i++ > $flagcount) break;
             $item = flags::find($r);
-            $item->flag_order = $key+1;
-            $item->save();
+            $item->flag_order = $i;
+            $item->save();        
         }
     }
     public function deletechilditem(Request $request)
@@ -1109,5 +1117,22 @@ class EpicController extends Controller
         $data = Epic::find($latest->id);
         $html = view('epics.modal', compact('data'))->render();
         return $html;
+    }
+    public function saveepicflag(Request $request)
+    {
+        $flag = new flags();
+        $flag->business_units = $request->buisness_unit_id;
+        $flag->epic_id = $request->flag_epic_id;
+        $flag->flag_type = $request->flag_type;
+        $flag->flag_title = $request->flag_title;
+        $flag->flag_description = $request->flag_description;
+        $flag->archived = 2;
+        $flag->flag_status = 'todoflag';
+        $flag->board_type = $request->board_type;
+        $flag->save();
+        $member = new flag_members();
+        $member->member_id = $request->flag_assign;
+        $member->flag_id = $flag->id;
+        $member->save();
     }
 }

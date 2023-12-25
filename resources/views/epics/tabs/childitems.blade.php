@@ -7,7 +7,7 @@ $(function() {
     });
 });
 function getOrder(){
-    var order= $(".sortable .ui-state-default").map(function() {        
+    var order= $(".sortable .ui-state-default").map(function() {
         return this.id;        
     }).get();
     var epic_id = '{{ $epic->id }}';

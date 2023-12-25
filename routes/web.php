@@ -270,6 +270,7 @@ Route::name('epics.')->namespace('App\Http\Controllers')->prefix('dashboard/epic
     Route::POST('showorderbyactivity', 'EpicController@showorderbyactivity');
     Route::POST('savenewepic', 'EpicController@savenewepic');
     Route::POST('showlatestepicdatainmodal', 'EpicController@showlatestepicdatainmodal');
+    Route::POST('saveepicflag', 'EpicController@saveepicflag');    
     
 });
 

@@ -10,6 +10,7 @@
                 </div>
             </div>
             <div class="displayflex">
+                @if($attachments->count() > 0)
                 <div class="dropdown firstdropdownofcomments">
                   <span class="dropdown-toggle orderbybutton" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     @if(isset($orderby))
@@ -27,12 +28,12 @@
                     </svg> 
                   </span>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    @foreach(DB::table('attachments')->where('value_id' , $data->id)->where('type' , 'epics')->groupBy('extension')->get() as $e)
-                    <a class="dropdown-item" onclick="showorderbyattachment('pdf',{{ $data->id }},'attachments')" href="javascript:void(0)">Order By {{ $r->extension }}</a>
+                    @foreach(DB::table('attachments')->where('value_id' , $data->id)->where('type' , 'epics')->orderby('id' , 'desc')->groupBy('attachments.extension')->get() as $e)
+                    <a class="dropdown-item" onclick="showorderbyattachment('pdf',{{ $data->id }},'attachments')" href="javascript:void(0)">Order By {{ $e->extension }}</a>
                     @endforeach
-                    <a class="dropdown-item" onclick="showorderbyattachment('asc',{{ $data->id }},'attachments')" href="javascript:void(0)">Older</a>
                   </div>
                 </div>
+                @endif
                 <span onclick="uploadattachment()" class="btn btn-default btn-sm">Upload</span>
             </div>
         </div>
