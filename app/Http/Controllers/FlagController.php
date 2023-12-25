@@ -116,7 +116,8 @@ class FlagController extends Controller
             $member->save();
         }
         $data = flags::find($request->dataid);
-        $html = view('flags.modalheader', compact('data'))->render();
+        $memberopen = 'memberopen';
+        $html = view('flags.modalheader', compact('data','memberopen'))->render();
         return $html;
     }
     public function getflagmodal(Request $request)

@@ -56,7 +56,7 @@
             </div>
             <div class="member-list-image memberlistposition">
                 <img onclick="showmemberbox()" src="{{url('public/assets/svg/plussmember.svg')}}">
-                <div class="memberadd-box">
+                <div class="memberadd-box" @if(isset($memberopen)) style="display:block;" @endif>
                     <div class="row">
                         <div class="col-md-6">
                             <h4>Assignee</h4>
