@@ -2,7 +2,15 @@
 $var_objective = "Unit-team-dashboard";
 @endphp
 @extends('components.main-layout')
-<title>Teams-</title>
+@if($type == 'BU')
+<title>Team-{{$organization->team_title}}-Dashboard</title>
+@endif
+@if($type == 'VS')
+<title>Team-{{$organization->team_title}}-Dashboard</title>
+@endif
+@if($type == 'orgT')
+<title>Team-{{$organization->team_title}}-Dashboard</title>
+@endif
 @section('content')
 @php
 if($type == 'BU')

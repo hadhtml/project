@@ -59,6 +59,7 @@ $sprint = DB::table('sprint')->where('user_id',Auth::id())->where('value_unit_id
                                     @if($organization->type == 'orgT')
                                     <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->team_title}}</a>
                                     @endif
+                                  
                                 </div>
                                 <div class="mr-2">
                                     <p>OKR Planner</p>

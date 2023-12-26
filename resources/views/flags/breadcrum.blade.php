@@ -4,7 +4,7 @@
         <div class="d-flex align-items-start flex-column flex-wrap mr-2">
             <!--begin::Page Title-->
             <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
-                Impediments Flags
+                Impediments
             </h5>
             <!-- Breadcrum Items -->
            <div class="d-flex flex-row page-sub-titles">
@@ -21,7 +21,7 @@
                     <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->business_name}}</a>
                 </div>
                 <div class="mr-2">
-                    <p>Impediments Flags</p>
+                    <p>Impediments </p>
                 </div>
                 @endif
                 @if($type == 'stream')
@@ -35,7 +35,7 @@
                     <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->value_name}}</a>
                 </div>
                 <div class="mr-2">
-                    <p>Impediments Flags</p>
+                    <p>Impediments </p>
                 </div>
                 @endif
                 @if($type == 'BU')
@@ -43,7 +43,7 @@
                     <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->team_title}}</a>
                 </div>
                 <div class="mr-2">
-                    <p>Impediments Flags</p>
+                    <p>Impediments </p>
                 </div>
                 @endif
 
@@ -52,7 +52,7 @@
                     <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->team_title}}</a>
                 </div>
                 <div class="mr-2">
-                    <p>Impediments Flags</p>
+                    <p>Impediments </p>
                 </div>
                 @endif
 
@@ -61,16 +61,14 @@
                     <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->team_title}}</a>
                 </div>
                 <div class="mr-2">
-                    <p>Impediments Flags</p>
+                    <p>Impediments</p>
                 </div>
                 @endif
 
                 @if($type == 'org')
+            
                 <div class="mr-2">
-                    <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->organization_name}}</a>
-                </div>
-                <div class="mr-2">
-                    <p>Impediments Flags</p>
+                    <p>Impediments</p>
                 </div>
                 @endif
             </div>

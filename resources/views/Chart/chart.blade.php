@@ -8,6 +8,20 @@ $var_objective = 'Page-'.$type;
 @if($organization->type == 'stream')
 <title>Performance Dashboard-{{$organization->value_name}}</title>
 @endif
+@if($organization->type == 'org')
+<title>Org-Performance Dashboard</title>
+@endif
+@if($organization->type == 'BU')
+<title>Performance Dashboard-{{$organization->team_title}}</title>
+@endif
+
+@if($organization->type == 'VS')
+<title>Performance Dashboard-{{$organization->team_title}}</title>
+@endif
+
+@if($organization->type == 'orgT')
+<title>Performance Dashboard-{{$organization->team_title}}</title>
+@endif
 @section('content')
     <style>
         .tab {

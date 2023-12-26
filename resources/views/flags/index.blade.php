@@ -34,17 +34,23 @@ if($type == 'orgT')
 @endphp
 @extends('components.main-layout')
 @if($type == 'stream')
-<title>Impediments Flags-{{$organization->value_name}}</title>
+<title>Impediments-{{$organization->value_name}}</title>
 @endif
 @if($type == 'unit')
-<title>Impediments Flags-{{$organization->business_name}}</title>
+<title>Impediments-{{$organization->business_name}}</title>
 @endif
 
 @if($type == 'BU')
-<title>Impediments Flags-{{$organization->team_title}}</title>
+<title>Impediments-{{$organization->team_title}}</title>
 @endif
 @if($type == 'VS')
-<title>Impediments Flags-{{$organization->team_title}}</title>
+<title>Impediments-{{$organization->team_title}}</title>
+@endif
+@if($type == 'orgT')
+<title>Impediments-{{$organization->team_title}}</title>
+@endif
+@if($type == 'org')
+<title>Org-Impediments</title>
 @endif
 @section('content')
 <div id="showboards">

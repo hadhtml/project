@@ -2,7 +2,7 @@
 $var_objective = "Org-Unit-dashboard";
 @endphp
 @extends('components.main-layout')
-<title>Business Units</title>
+<title>Business Units-Dashboard</title>
 @section('content')
 @php
 $Portfolio = DB::table('objectives')->where('type','unit')->where('unit_id',$organization->id)->where('trash',NULL)->count();
