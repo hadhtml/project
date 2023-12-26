@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\Organization;
+use Illuminate\Support\Str;
 
 class GoogleController extends Controller
 {
