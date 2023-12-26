@@ -2298,12 +2298,13 @@
     });
 
     function GetFagEpic() {
-
+       
         var org_id = "{{ $organization->org_id }}";
         var slug = "{{ $organization->slug }}";
         var unit_id = "{{ $organization->id }}";
         var type = "{{ $organization->type }}";
-        var chartId = $('.chkveg').val();
+        var chartId = $('.flag-search').val();
+             
         if (chartId != '') {
             $.ajax({
                 type: "GET",

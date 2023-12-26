@@ -136,7 +136,7 @@ $sprint = DB::table('sprint')->where('user_id',Auth::id())->where('value_unit_id
                 <div class="d-flex flex-column mr-3">
                     <div style="padding:20px">
                           Flag
-                    <select class="chkveg" multiple="multiple" >
+                    <select class="flag-search" multiple="multiple" >
                       <option value="Risk">Risk</option>
                       <option value="Impediment">Impediment</option>
                        <option value="Blocker">Blocker</option>
