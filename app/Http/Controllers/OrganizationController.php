@@ -575,10 +575,29 @@ class OrganizationController extends Controller
 
     }
     
-    public function SecondReport($id,$sprint)
+    public function SecondReport($id,$sprint,$type)
     {
         $report = DB::table('sprint')->where('id',$sprint)->first();
-        $organization = DB::table('business_units')->where('id',$report->value_unit_id)->first();        
+        if($type == 'unit')
+        {
+        $organization = DB::table('business_units')->where('id',$report->value_unit_id)->first();
+        }
+        if($type == 'stream')
+        {
+        $organization = DB::table('value_stream')->where('id',$report->value_unit_id)->first();
+        }
+        if($type == 'BU')
+        {
+        $organization = DB::table('unit_team')->where('id',$report->value_unit_id)->first();        
+        }
+        if($type == 'VS')
+        {
+        $organization = DB::table('value_team')->where('id',$report->value_unit_id)->first();        
+        }
+        if($type == 'org')
+        {
+        $organization = DB::table('organization')->where('id',$report->value_unit_id)->first();        
+        }   
         $SprintInit = DB::table('sprint_report')->where('initiative_key_id',$id)->where('q_id',$sprint)->get();
         $SprintObj = DB::table('sprint_report')->where('q_id',$sprint)->first();
         $obj =   json_decode($SprintObj->objective);
@@ -592,17 +611,57 @@ class OrganizationController extends Controller
     public function AllEpicReport($sprint,$type)
     {
         $report = DB::table('sprint')->where('id',$sprint)->first();
-        $organization = DB::table('business_units')->where('id',$report->value_unit_id)->first();        
+        
+        if($type == 'unit')
+        {
+        $organization = DB::table('business_units')->where('id',$report->value_unit_id)->first();
+        }
+        if($type == 'stream')
+        {
+        $organization = DB::table('value_stream')->where('id',$report->value_unit_id)->first();
+        }
+        if($type == 'BU')
+        {
+        $organization = DB::table('unit_team')->where('id',$report->value_unit_id)->first();        
+        }
+        if($type == 'VS')
+        {
+        $organization = DB::table('value_team')->where('id',$report->value_unit_id)->first();        
+        }
+        if($type == 'org')
+        {
+        $organization = DB::table('organization')->where('id',$report->value_unit_id)->first();        
+        }
 
         return view('Report.allreportepic',compact('report','sprint','type','organization'));
 
     
     }
 
-    public function AllInitReport($init,$sprint)
+    public function AllInitReport($init,$sprint,$type)
     {
         $report = DB::table('sprint')->where('id',$sprint)->first();
+        if($type == 'unit')
+        {
         $organization = DB::table('business_units')->where('id',$report->value_unit_id)->first();
+        }
+        if($type == 'stream')
+        {
+        $organization = DB::table('value_stream')->where('id',$report->value_unit_id)->first();
+        }
+        if($type == 'BU')
+        {
+        $organization = DB::table('unit_team')->where('id',$report->value_unit_id)->first();        
+        }
+        if($type == 'VS')
+        {
+        $organization = DB::table('value_team')->where('id',$report->value_unit_id)->first();        
+        }
+        if($type == 'org')
+        {
+        $organization = DB::table('organization')->where('id',$report->value_unit_id)->first();        
+        }
+
         $InitName = DB::table('sprint_report')->where('initiative_id',$init)->where('q_id',$sprint)->first();        
         $type = $organization->type;
         return view('Report.init-report',compact('report','sprint','type','organization','init','InitName'));
