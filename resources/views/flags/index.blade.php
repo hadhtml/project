@@ -34,10 +34,10 @@ if($type == 'orgT')
 @endphp
 @extends('components.main-layout')
 @if($type == 'stream')
-<title>Impediments-{{$organization->value_name}}</title>
+<title>VS-Impediments</title>
 @endif
 @if($type == 'unit')
-<title>Impediments-{{$organization->business_name}}</title>
+<title>BU-Impediments</title>
 @endif
 
 @if($type == 'BU')

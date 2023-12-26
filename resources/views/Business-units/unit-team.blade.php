@@ -2,7 +2,7 @@
 $var_objective = "Org-Unit-team";
 @endphp
 @extends('components.main-layout')
-<title>Teams-{{$organization->business_name}}</title>
+<title>BU-Teams</title>
 @section('content')
 
 

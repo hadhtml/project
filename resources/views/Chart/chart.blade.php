@@ -3,10 +3,10 @@ $var_objective = 'Page-'.$type;
 @endphp
 @extends('components.main-layout')
 @if($organization->type == 'unit')
-<title>Performance Dashboard-{{$organization->business_name}}</title>
+<title>BU-Performance Dashboard</title>
 @endif
 @if($organization->type == 'stream')
-<title>Performance Dashboard-{{$organization->value_name}}</title>
+<title>VS-Performance Dashboard</title>
 @endif
 @if($organization->type == 'org')
 <title>Org-Performance Dashboard</title>
