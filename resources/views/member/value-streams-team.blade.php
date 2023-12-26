@@ -21,7 +21,7 @@ $var_objective = "Stream-team";
 
                                
      $ObjResultcount  = DB::table('objectives')->where('unit_id',$team->id)->where('type','VS')->where('trash',NULL)->count();
-     $EpicResultcount  = DB::table('epics')->where('buisness_unit_id',$team->id)->where('trash',NULL)->count();
+     $EpicResultcount  = DB::table('epics')->where('buisness_unit_id',$team->id)->where('epic_type','VS')->where('trash',NULL)->count();
  
      @endphp
  <div class="col-md-3">

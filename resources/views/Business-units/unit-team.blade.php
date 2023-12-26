@@ -30,7 +30,7 @@ $var_objective = "Org-Unit-team";
                     $remainingCount = count($remainingIds);
 
     $ObjResultcount  = DB::table('objectives')->where('unit_id',$team->id)->where('type','BU')->where('trash',NULL)->count();
-    $EpicResultcount  = DB::table('epics')->where('buisness_unit_id',$team->id)->where('trash',NULL)->count();
+    $EpicResultcount  = DB::table('epics')->where('buisness_unit_id',$team->id)->where('epic_type','BU')->where('trash',NULL)->count();
 
     @endphp
 <div class="col-md-3">

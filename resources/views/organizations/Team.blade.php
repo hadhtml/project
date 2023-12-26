@@ -29,11 +29,12 @@
                     $ObjResultcount = DB::table('objectives')
                         ->where('unit_id', $team->id)
                         ->where('type', 'orgT')
-                        ->where('trash', null)
+                        ->where('trash',NULL)
                         ->count();
                     $EpicResultcount = DB::table('epics')
-                        ->where('buisness_unit_id', $team->id)
-                        ->where('trash', null)
+                        ->where('buisness_unit_id',$team->id)
+                        ->where('trash',NULL)
+                        ->where('epic_type','orgT')
                         ->count();
 
                 @endphp
