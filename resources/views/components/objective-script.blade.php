@@ -179,27 +179,28 @@
         var value = $('#new-chart-value' + id).val();
         var unit_id = "{{ $organization->id }}";
         if (value == '') {
-             return false;
+            return false;
         }
         $.ajax({
             type: "POST",
-            url: "{{ route('keyresult.addquartervalue') }}",
+            url: "{{ url('add-new-quarter-value') }}",
             headers: {
-                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             data: {
-                 id: id,
-                 value: value,
-                 key_chart_id: key_chart_id,
-                 unit_id: unit_id,
-                 sprint_id: sprint_id,
+                id: id,
+                value: value,
+                key_chart_id: key_chart_id,
+                unit_id: unit_id,
+                sprint_id: sprint_id,
 
             },
             success: function(res) {
-                 $('#new-chart-value' + id).val('');
-                 $('.secondportion').html(res);
+                $('#new-chart-value' + id).val('');
+                showtab(id , 'values');
             }
-         });
+        });
+
     }
     function deletequartervalue(id) {
         var unit_id = "{{ $organization->id }}";
@@ -2554,41 +2555,7 @@
     }
 
 
-    function addnewquartervalue(id, key_chart_id, sprint_id) {
-
-        var value = $('#new-chart-value' + id).val();
-
-        var unit_id = "{{ $organization->id }}";
-
-        if (value == '') {
-            return false;
-        }
-        $.ajax({
-            type: "POST",
-            url: "{{ url('add-new-quarter-value') }}",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: {
-                id: id,
-                value: value,
-                key_chart_id: key_chart_id,
-                unit_id: unit_id,
-                sprint_id: sprint_id,
-
-            },
-            success: function(res) {
-
-
-
-                $('#new-chart-value' + id).val('');
-                $('.key-chart-data').html(res);
-
-
-            }
-        });
-
-    }
+    
 
     function editquartervalue(id, val) {
         $('#edit-val' + id).html('<input type="text" class="form-control w-50" style="font-size:12px" id="value' + id +
