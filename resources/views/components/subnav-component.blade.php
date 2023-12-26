@@ -4,9 +4,9 @@
             $organization = DB::table('organization')->where('user_id',Auth::id())->where('trash',NULL)->first();    
             @endphp
             <div class="flex-shrink-0 p-3 bg-white sub-nav open" id="panel">
-                <button id="closeBtn" class="close-button">
+                {{-- <button id="closeBtn" class="close-button">
                     <img src="https://dev.agileprolific.com/public/assets/images/icons/collaps.svg">
-                </button>
+                </button> --}}
                 <h6 class="title">Organization</h6>
               
 
