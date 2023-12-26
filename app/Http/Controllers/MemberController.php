@@ -586,7 +586,8 @@ class MemberController extends Controller
           foreach($request->end_date  as $key => $value)
           {
            $monthName = Carbon::parse($request->end_date[$key])->format('F');
-           $month = DB::table('quarter_month')->where('initiative_id',$request->locinit)->where('month',$monthName)->first();
+           $Year = Carbon::parse($request->end_date[$key])->format('Y');
+           $month = DB::table('quarter_month')->where('initiative_id',$request->locinit)->where('month',$monthName)->where('year',$Year)->first();
            
            if(!$month)
            {
@@ -1028,7 +1029,9 @@ $updateData = [
           {
         
          $monthName = Carbon::parse($request->end_date[$key])->format('F');
-           $month = DB::table('quarter_month')->where('initiative_id',$request->locinit)->where('month',$monthName)->first();
+         $Year = Carbon::parse($request->end_date[$key])->format('Y');
+
+           $month = DB::table('quarter_month')->where('initiative_id',$request->locinit)->where('month',$monthName)->where('year',$Year)->first();
            if(!$month)
            {
             return redirect()->back()->with('message', 'initiative Quarter Month Not Found');
