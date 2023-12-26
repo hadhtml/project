@@ -9,9 +9,9 @@ if($organization->type == 'VS')
 $team  = DB::table('value_stream')->where('id',$organization->org_id)->first();  
 }
 
-if($organization->type == 'org')
+if($organization->type == 'orgT')
 {
-$team  = DB::table('organization')->where('id',$organization->id)->first();  
+$team  = DB::table('organization')->where('id',$organization->org_id)->first();  
 }
 
 @endphp
@@ -117,6 +117,27 @@ $team  = DB::table('organization')->where('id',$organization->id)->first();
             </li>
         </ul>
         @endif
+
+        @if($organization->type == 'orgT')
+        <ul class="list-unstyled ps-0 expanded-navbar mb-0">
+            
+            <li class="mb-1">
+                <a href="{{url('dashboard/organization/'.$team->slug.'/Org-TEAMS')}}" class="btn  align-items-center rounded"  aria-expanded="true">
+                    <div class="d-flex flex-row align-items-center">
+                        <div class="mr-2">
+                            <span style="font-size:22px" class="material-symbols-outlined">domain</span>
+                        </div>
+                        <div>
+                            Organization  Team
+                        </div>
+                    </div>
+                </a>
+
+           
+            </li>
+        </ul>
+        @endif
+
 
         @if($organization->type == 'VS')
         <ul class="list-unstyled ps-0 expanded-navbar mb-0">

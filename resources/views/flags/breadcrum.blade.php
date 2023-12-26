@@ -46,6 +46,33 @@
                     <p>Impediments Flags</p>
                 </div>
                 @endif
+
+                @if($type == 'VS')
+                <div class="mr-2">
+                    <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->team_title}}</a>
+                </div>
+                <div class="mr-2">
+                    <p>Impediments Flags</p>
+                </div>
+                @endif
+
+                @if($type == 'orgT')
+                <div class="mr-2">
+                    <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->team_title}}</a>
+                </div>
+                <div class="mr-2">
+                    <p>Impediments Flags</p>
+                </div>
+                @endif
+
+                @if($type == 'org')
+                <div class="mr-2">
+                    <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->organization_name}}</a>
+                </div>
+                <div class="mr-2">
+                    <p>Impediments Flags</p>
+                </div>
+                @endif
             </div>
             <!--End Breadcrum Items -->
         </div>

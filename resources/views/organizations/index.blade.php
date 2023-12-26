@@ -2,7 +2,7 @@
 $var_objective = "Org";
 @endphp
 @extends('components.main-layout')
-<title>Dashboard</title>
+<title>Org-Dashboard</title>
 @section('content')
 
 @php

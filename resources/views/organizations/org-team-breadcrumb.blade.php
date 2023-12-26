@@ -10,17 +10,10 @@
             <!-- Breadcrum Items -->
            <div class="d-flex flex-row page-sub-titles">
                 <div class="mr-2">
-                    <p>Dashboard</p>
+                    <a  href="{{url('dashboard/organizations')}}" style="text-decoration: none;" >Dashboard</a>
+
                 </div>
-                <div class="mr-2">
-                    <p>Organization</p>
-                </div>
-                <div class="mr-2">
-                    <a href="{{url('dashboard/organization/contacts')}}" style="text-decoration: none;"></a>
-                </div>
-                <div class="mr-2">
-                    <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->organization_name}}</a>
-                </div>
+             
                 <div class="mr-2">
                     <p>Teams</p>
                 </div>

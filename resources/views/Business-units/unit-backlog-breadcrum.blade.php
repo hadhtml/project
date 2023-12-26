@@ -5,21 +5,21 @@
                         <div class="d-flex align-items-start flex-column flex-wrap mr-2">
                             <!--begin::Page Title-->
                             <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
-                                Backlog
+                                Epic Backlog
                             </h5>
                             <!-- Breadcrum Items -->
                             <div class="d-flex flex-row page-sub-titles">
                                 <div class="mr-2">
-                                    <p>Dashboard</p>
+                                    @if($organization->type == 'unit')
+                                    <a  href="{{url('dashboard/organization/'.$organization->slug.'/dashboard/'.$organization->type)}}" style="text-decoration: none;" >Dashboard</a>
+                                    @endif
                                 </div>
-                                <div class="mr-2">
-                                    <a href="{{url('dashboard/organization/contacts')}}" style="text-decoration: none;"></a>
-                                </div>
+                               
                                 <div class="mr-2">
                                     <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->business_name}}</a>
                                 </div>
                                 <div class="mr-2">
-                                    <p>Backlog</p>
+                                    <p>Epic Backlog</p>
                                 </div>
                             </div>
                             <!--End Breadcrum Items -->

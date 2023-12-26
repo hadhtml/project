@@ -8,6 +8,7 @@ use Exception;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use App\Models\Organization;
 
 class GoogleController extends Controller
 {
@@ -43,7 +44,7 @@ class GoogleController extends Controller
 
     
 
-                return redirect('/home');
+                return redirect('dashboard/organizations');
 
      
 
@@ -61,13 +62,21 @@ class GoogleController extends Controller
 
                 ]);
 
-    
+                $organization  = new Organization();
+                $organization->organization_name = $user->name;
+                $organization->email = $user->email;
+                $organization->slug = Str::slug($user->name.'-'.rand(10, 99));
+                $organization->user_id = $newUser->id;
+                $organization->code =  '#OR' . rand(1000, 9999);
+                $organization->type =  'org';
+                $organization->save();
+
 
                 Auth::login($newUser);
 
      
 
-                return redirect('/home');
+                return redirect('dashboard/organizations');
 
             }
 
@@ -127,7 +136,7 @@ class GoogleController extends Controller
 
        
 
-                return redirect()->intended('/home');
+                return redirect()->intended('dashboard/organizations');
 
          
 
@@ -142,13 +151,22 @@ class GoogleController extends Controller
 
                     ]);
 
+                    $organization  = new Organization();
+                    $organization->organization_name = $user->name;
+                    $organization->email = $user->email;
+                    $organization->slug = Str::slug($user->name.'-'.rand(10, 99));
+                    $organization->user_id = $newUser->id;
+                    $organization->code =  '#OR' . rand(1000, 9999);
+                    $organization->type =  'org';
+                    $organization->save();
+
         
 
                 Auth::login($newUser);
 
         
 
-                return redirect()->intended('/home');
+                return redirect()->intended('dashboard/organizations');
 
             }
 
