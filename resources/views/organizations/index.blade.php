@@ -12,7 +12,7 @@ $Performance = DB::table('kpi_setting')->where('stream_id',$organization->id)->w
 $Teams = DB::table('org_team')->where('org_id',$organization->id)->count();
 $Reporting = DB::table('sprint')->where('value_unit_id',$organization->id)->where('type','org')->count();
 $EpicsBacklog = DB::table('team_backlog')->where('unit_id',$organization->id)->where('type','org')->count();
-$Impediments = DB::table('flags')->where('flag_type','Impediment')->where('board_type','org')->count();
+$Impediments = DB::table('flags')->where('flag_type','Impediment')->where('business_units',$organization->id)->where('board_type','org')->count();
 
 @endphp
 <div class="row">
