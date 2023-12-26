@@ -6,7 +6,7 @@ $var_objective = "Jira";
 @section('content')
 
 
-<div class="row mb-2">
+<!-- <div class="row mb-2">
     <div class="col-md-3">
         <div class="card">
             <div class="card-body">
@@ -90,7 +90,7 @@ $var_objective = "Jira";
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 <div class="row">
     <div class="col-md-12">
