@@ -29,7 +29,7 @@ Route::get('/', function () {
 
 
 Route::get('dashboard/organization/report', [App\Http\Controllers\OrganizationController::class,'AllReport']);
-Route::get('dashboard/organization/report-2/{id}/{sprint}', [App\Http\Controllers\OrganizationController::class, 'SecondReport']);
+Route::get('dashboard/organization/report-2/{id}/{sprint}/{type}', [App\Http\Controllers\OrganizationController::class, 'SecondReport']);
 
 
 
@@ -40,7 +40,7 @@ Route::get('dashboard/organization/{id}/BU-Report/{type}', [App\Http\Controllers
 Route::get('Okr-report/{id}/{type}', [App\Http\Controllers\OrganizationController::class,'AllReport']);
 Route::get('Okr-report-3/{id}/{type}', [App\Http\Controllers\OrganizationController::class,'ThirdReport']);
 Route::get('dashboard/organization/Okr-report-all/{sprint}/{type}', [App\Http\Controllers\OrganizationController::class,'AllEpicReport']);
-Route::get('dashboard/organization/report-init/{init}/{sprint}', [App\Http\Controllers\OrganizationController::class,'AllInitReport']);
+Route::get('dashboard/organization/report-init/{init}/{sprint}/{type}', [App\Http\Controllers\OrganizationController::class,'AllInitReport']);
 
 Route::post('update-sprint', [App\Http\Controllers\OrganizationController::class,'UpdateSprintQuarter']);
 Route::post('delete-report', [App\Http\Controllers\OrganizationController::class,'DeleteSprintQuarter']);
