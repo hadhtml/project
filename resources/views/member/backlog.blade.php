@@ -8,19 +8,7 @@ $var_objective = "Backlog";
 
 </style>
 
- <div class="d-flex flex-column flex-root">
-        <!-- begin topbar -->
-        <!--begin::Page-->
-        <div class="page d-flex flex-row flex-column-fluid body-cont">
-            <!-- begin Sidebar -->
-   
-            <!-- end Sidebar -->
-            <div class="content d-flex flex-column flex-column-fluid">
-                <!-- begin breadcrums -->
-                <!-- end breadcrums -->
-                <!-- begin page Content -->
-                <div class="container-fluid" id="assign-epic">
-                    @if(count($Backlog) > 0)
+@if(count($Backlog) > 0)
                     <div class="row">
                         <div class="col-md-12 p-0">
                             <div class="card">
@@ -378,11 +366,6 @@ $var_objective = "Backlog";
                         </button>
                         </div>
                     @endif
-                </div>
-                <!-- end page content -->
-            </div>
-        </div>
-    </div>
     
   <div class="modal fade" id="create-backlog-epic" tabindex="-1" role="dialog" aria-labelledby="create-epic" aria-hidden="true">
     <div class="modal-dialog" role="document">
