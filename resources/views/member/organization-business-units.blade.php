@@ -216,10 +216,10 @@ $var_objective = "Org-Unit";
     </div>
 
 
+    @endforeach
    
 </div>
 
-@endforeach
 @else
 <div style="position:absolute;right:27%;top:40%;" class="text-center">
 <img src="{{asset('public/business-unit.svg')}}"  width="120" height="120">
