@@ -2,7 +2,24 @@
 $var_objective = 'Report-'.$type;
 @endphp
 @extends('components.main-layout')
-<title>Report</title>
+@if($type == 'unit')
+<title>Reports-{{$organization->business_name}}</title>
+@endif
+@if($type == 'stream')
+<title>Reports-{{$organization->value_name}}</title>
+@endif
+@if($type == 'VS')
+<title>Reports-{{$organization->team_title}}</title>
+@endif
+@if($type == 'BU')
+<title>Reports-{{$organization->team_title}}</title>
+@endif
+@if($type == 'orgT')
+<title>Reports-{{$organization->team_title}}</title>
+@endif
+@if($type == 'org')
+<title>Org-Reports</title>
+@endif
 @section('content')
 @if(count($report) > 0)
 <div class="row">

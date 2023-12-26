@@ -4,7 +4,7 @@
                         <div class="d-flex align-items-start flex-column flex-wrap mr-2">
                             <!--begin::Page Title-->
                             <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
-                                Report
+                                Reports
                             </h5>
                             <div class="d-flex flex-row page-sub-titles">
                                 <div class="mr-2">
@@ -51,16 +51,16 @@
                                                    @endif
                                                </div>
                                                <div class="mr-2">
-                                                   <p>Report</p>
+                                                   <p>Reports</p>
                                                </div>
                            </div>
                         </div>
                         <!--end::Info-->
                         <!--begin::Toolbar-->
                         <div class="d-flex align-items-center toolbar">
-                            <div>
+                            {{-- <div>
                                 <button class="btn btn-primary" data-toggle="modal" data-target="#create-objective">Export Report</button>
-                            </div>
+                            </div> --}}
                         </div>
                         <!--end::Toolbar-->
                     </div>

@@ -2,7 +2,7 @@
 $var_objective = "Backlog";
 @endphp
 @extends('components.main-layout')
-<title>Backlog-{{$organization->value_name}}</title>
+<title>Epic Backlog-{{$organization->value_name}}</title>
 @section('content')
 <style>
 

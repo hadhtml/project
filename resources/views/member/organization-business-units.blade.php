@@ -2,7 +2,7 @@
 $var_objective = "Org-Unit";
 @endphp
 @extends('components.main-layout')
-<title>Business Units</title>
+<title>Org-Business Units</title>
 @section('content')
 
 @if (session('message'))

@@ -57,8 +57,12 @@
             </ul>
 
             <div class="mt-2 dropup">
-                <img src="https://t4.ftcdn.net/jpg/02/14/74/61/360_F_214746128_31JkeaP6rU0NzzzdFC4khGkmqc8noe6h.jpg" class="dropdown-toggle fixbar-user" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                @if(auth()->user()->image)
+                <img src="{{asset('public/assets/images/'.auth()->user()->image)}}" class="dropdown-toggle fixbar-user" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                @else
+                <img src="{{ Avatar::create(auth()->user()->name)->toBase64() }}" class="dropdown-toggle fixbar-user" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
+                @endif
                 <div class="dropdown-menu mb-5">
                     <a class="dropdown-item" href="{{url('profile-setting')}}">Profile</a>
                     <a class="dropdown-item" href="{{url('change-password')}}">Security</a>

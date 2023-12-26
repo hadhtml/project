@@ -17,8 +17,11 @@
 
 @endphp
 @extends('components.main-layout')
-@if ($type == 'BU' || $type == 'VS')
-    <title>Backlog-{{ $organization->team_title }}</title>
+@if ($type == 'BU' || $type == 'VS' || $type == 'orgT')
+    <title>Epic Backlog-{{ $organization->team_title }}</title>
+@endif
+@if ($type == 'org')
+    <title>Org-Epic Backlog</title>
 @endif
 @section('content')
     <style>
