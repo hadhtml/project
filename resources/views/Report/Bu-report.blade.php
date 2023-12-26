@@ -3,10 +3,10 @@ $var_objective = 'Report-'.$type;
 @endphp
 @extends('components.main-layout')
 @if($type == 'unit')
-<title>Reports-{{$organization->business_name}}</title>
+<title>BU-Reports</title>
 @endif
 @if($type == 'stream')
-<title>Reports-{{$organization->value_name}}</title>
+<title>VS-Reports</title>
 @endif
 @if($type == 'VS')
 <title>Reports-{{$organization->team_title}}</title>

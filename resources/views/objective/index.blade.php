@@ -161,10 +161,10 @@ $var_objective = 'PageT-'.$type;
    }
 </style>
 @if($type == 'unit')
-<title>OKR Planner-{{$organization->business_name}}</title>
+<title>BU-OKR Planner</title>
 @endif
 @if($type == 'stream')
-<title>OKR Planner-{{$organization->value_name}}</title>
+<title>VS-OKR Planner</title>
 @endif
 @if($type == 'VS')
 <title>OKR Planner-{{$organization->team_title}}</title>

@@ -2,7 +2,7 @@
 $var_objective = "Stream-team";
 @endphp
 @extends('components.main-layout')
-<title>Teams-{{$organization->value_name}}</title>
+<title>VS-Teams</title>
 @section('content')
 
 

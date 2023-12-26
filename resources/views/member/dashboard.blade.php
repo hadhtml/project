@@ -2,7 +2,7 @@
 $var_objective = "V-Stream-dashboard";
 @endphp
 @extends('components.main-layout')
-<title>Value Streams-Dashboard</title>
+<title>VS-Dashboard</title>
 @section('content')
 @php
 $Portfolio = DB::table('objectives')->where('type','unit')->where('unit_id',$organization->id)->where('trash',NULL)->count();
