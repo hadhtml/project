@@ -99,7 +99,6 @@ class KeyresultController extends Controller
           'key_id' => $request->id,
           'sprint_id' => $request->sprint_id,
           'value' => $request->value,
-        
         ]);
         $data = key_result::find($request->id);
         $report = DB::table('sprint')->where('user_id',Auth::id())->where('status',NULL)->where('value_unit_id',$data->unit_id)->first();

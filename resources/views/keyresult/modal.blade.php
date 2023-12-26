@@ -21,20 +21,20 @@
                     <li id="weighttab" onclick="showtab({{$data->id}} , 'weighttab')" class="tabsclass">
                         <span class="material-symbols-outlined"> weight </span> Weight
                     </li>
-                    <li id="charts" onclick="showtab({{$data->id}} , 'charts')" class="tabsclass">
+                    <!-- <li id="charts" onclick="showtab({{$data->id}} , 'charts')" class="tabsclass">
                         <span class="material-symbols-outlined">monitoring</span> Charts
-                    </li>
+                    </li> -->
                     
-                    <li id="teams" onclick="showtab({{$data->id}} , 'teams')" class="tabsclass">
+                    <!-- <li id="teams" onclick="showtab({{$data->id}} , 'teams')" class="tabsclass">
                         <span class="material-symbols-outlined"> group </span> Teams
-                    </li>
-                    <li id="okrmapper" onclick="showtab({{$data->id}} , 'okrmapper')" class="tabsclass">
-                        <span class="material-symbols-outlined"> link </span> OKR Mapper</li>
+                    </li> -->
+                    <!-- <li id="okrmapper" onclick="showtab({{$data->id}} , 'okrmapper')" class="tabsclass">
+                        <span class="material-symbols-outlined"> link </span> OKR Mapper</li> -->
                 </ul>
                 <h4>Action</h4>
                 <ul class="positionrelative">
                     <!-- <li><img src="{{ url('public/assets/svg/archive-action.svg') }}"> Archive</li> -->
-                    <li><span class="material-symbols-outlined">share</span> Share</li>
+                    <!-- <li><span class="material-symbols-outlined">share</span> Share</li> -->
                     <!-- <li><img src="{{ url('public/assets/svg/arrow-right-action.svg') }}"> Move</li> -->
                     <li><span class="material-symbols-outlined">delete</span> Delete</li>
                 </ul>

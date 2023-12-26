@@ -19,18 +19,6 @@
 	                        @endif 
 	                     </div>
 	                  </div>
-	                  <div>
-	                     <div
-	                        class="dropdown">
-	                        <button class="btn-circle btn-tolbar dropdown-toggle bg-white" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-	                        	<img src="{{ asset('public/assets/images/icons/dots.svg') }}">
-	                        </button>
-	                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-	                           <a class="dropdown-item" href="javascript:void(0)" onclick="editepic({{$e->id}})">Edit</a>
-	                           <a class="dropdown-item" href="javascript:void(0)" onclick="DeleteEpic({{$e->id}},{{ $e->initiative_id }},{{ $e->key_id }},{{ $e->obj_id }})">Delete</a>
-	                        </div>
-	                     </div>
-	                  </div>
 	               </div>
 	            </div>
             @php
