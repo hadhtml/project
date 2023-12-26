@@ -2,17 +2,16 @@
 $var_objective = 'Report-'.$type;
 @endphp
 @extends('components.main-layout')
-<title>Report 3</title>
+<title>OKR Epics</title>
 @section('content')
-    <div class="content d-flex flex-column flex-column-fluid">
                 <!-- begin breadcrums -->
                 <!-- end breadcrums -->
                 <!-- begin page Content -->
-                <div class="container-fluid py-7" style="width: 96%; margin: 0px auto;">
+                @if(count($obj) > 0)
                     <div class="row">
                        
                         @foreach($obj as $o)
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="card report-card mb-3">
                                 <div class="card-body">
                                     <div class="row">
@@ -82,7 +81,7 @@ $var_objective = 'Report-'.$type;
                                                                     </clipPath>
                                                                   </defs>
                                                                 </svg>
-                                                                <span class="ml-2"><a href="{{url('dashboard/organization/report-2/'.$k->id.'/'.$report->id)}}"> {{ $id }}.{{$k->key_name}}</span></a>
+                                                                <span class="ml-2"><a href="{{url('dashboard/organization/report-2/'.$k->id.'/'.$report->id.'/'.$type)}}"> {{ $id }}.{{$k->key_name}}</span></a>
                                                             </td>
                                                             <td class="text-center">@if($KEYChart){{$KEYChart->quarter_value}}@endif</td>
                                                             <td class="center">@if($key){{$key->target_number}}@endif</td>
@@ -112,7 +111,9 @@ $var_objective = 'Report-'.$type;
 
                  
                     </div>
-                </div>
+                @else
+                No Data Found
+                @endif
+                
                 <!-- end page content -->
-            </div>
     @endsection
