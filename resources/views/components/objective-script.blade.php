@@ -576,6 +576,7 @@
 
 
 
+
         var Target = [];
 
         $('.target_value').each(function() {
@@ -690,6 +691,7 @@
 
                 localStorage.removeItem('obj');
                 localStorage.removeItem("key-id");
+                
                 // }
 
             }
@@ -2279,9 +2281,9 @@
             if (x < maxField) {
                 x++; //Increment field counter
                 var fieldHTML =
-                    '<div class="d-flex w-75 mb-3">  <div class="form-group mb-0"><input type="text" placeholder="" onkeypress="return onlyNumberKey(event)"  id="customFile" class="form-control target_value"/><label for="objective-name">Quarter ' +
-                    x +
-                    ' Target Value</label></div><a href="javascript:void(0);"  class="remove_button btn btn-light-danger"><i class="fa fa-minus"></i></a></div>';
+                    '<div class="d-flex w-75 mb-3">  <div class="form-group mb-0"><input type="text" placeholder="" onkeypress="return onlyNumberKey(event)"  id="customFile" class="form-control target_value"/><label for="objective-name">Quarter Target Value'
+                    
+                    ' </label></div><a href="javascript:void(0);"  class="remove_button btn btn-light-danger"><i class="fa fa-minus"></i></a></div>';
 
                 $(wrapper).append(fieldHTML); //Add field html
             }
