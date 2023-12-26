@@ -89,16 +89,19 @@
                {{$e->epic_name}}
                <a href="javascript:void(0);" onclick="seeless({{$e->id}});" id="toggle-button-less{{$e->id}}" class="" style="font-size:10px;">Less</a>
             </h6>
+            @php
+               $epic_detail  = strip_tags($e->epic_detail);
+            @endphp
             <p
                class="content show-read-more" id="show-read{{$e->id}}">
-               {!! \Illuminate\Support\Str::limit($e->epic_detail,122, $end='') !!}
+               {!! \Illuminate\Support\Str::limit($epic_detail,122, $end='') !!}
                @if($strl > 122 )
                <a onclick="editepic({{$e->id}})" href="javascript:void(0);" onclick="loadmoretext({{$e->id}});" id="toggle-button-text{{$e->id}}" class="" style="font-size:10px;">More</a>
                @endif
             </p>
             <p
                class="content show-read-more-text" id="show-read-more{{$e->id}}" style="display:none">
-               {{$e->epic_detail}}
+               {{$epic_detail}}
                <a href="javascript:void(0);" onclick="seelesstext({{$e->id}});" id="toggle-button-less-text{{$e->id}}" class="" style="font-size:10px">Less</a>
             </p>
             <div
