@@ -317,6 +317,16 @@ drake.on("drop", function (el, target, source, sibling) {
 
 });
 
+$(function() {
+
+$('.flag-search').val('');
+ $('.flag-search').multiselect({
+   includeSelectAllOption:true,
+ });
+
+
+});
+
     $(".js-select2").select2({
 			closeOnSelect : false,
 			placeholder : "Placeholder",
