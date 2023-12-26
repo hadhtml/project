@@ -202,7 +202,7 @@ $var_objective = "Backlog-Unit";
                                                           </td>
                                                         <td>
                                                           <div class="text-center">
-                                                                                          
+                                                       @if ($backlog->epic_status != NULL)                                 
                                                         @if($backlog->epic_status == 'In progress')
                                                         <span class="badge-cs warning w-100">{{$backlog->epic_status}}</span>
                                                         @endif
@@ -211,6 +211,9 @@ $var_objective = "Backlog-Unit";
                                                         @endif
                                                         @if($backlog->epic_status == 'To Do')
                                                         <span class="badge-cs bg-primary">{{$backlog->epic_status}}</span>
+                                                        @endif
+                                                        @else
+                                                        N/A
                                                         @endif
                                                         </div>
                                                         </td>
