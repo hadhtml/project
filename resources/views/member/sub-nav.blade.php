@@ -89,7 +89,7 @@
                         </a>
                     </li>
 
-                    <li class="mb-1">
+                    {{-- <li class="mb-1">
                         <a href="{{url('dashboard/linking/'.$organization->slug.'/'.$organization->type)}}" @if (url()->current() == url('dashboard/linking/'.$organization->slug.'/'.$organization->type)) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
                             <div class="mr-2">
                                  <span style="font-size:22px" class="material-symbols-outlined">map</span>
@@ -98,7 +98,7 @@
                                 OKR Mapper
                             </div>
                         </a>
-                    </li>
+                    </li> --}}
 
                     <li class="mb-1">
                         <a href="{{url('dashboard/organization/'.$organization->slug.'/BU-Report/'.$organization->type)}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/BU-Report/'.$organization->type)) class="d-flex flex-row align-items-center nav-active" @else   @endif  class="d-flex flex-row align-items-center" >

@@ -180,7 +180,7 @@ class JiraController extends Controller
            }
            }
 
-           if($request->type == 'BU' || $request->type == 'VS')
+           if($request->type == 'BU' || $request->type == 'VS' || $request->type == 'orgT' || $request->type == 'org' )
            {
            $data = DB::table('team_backlog')->orderby('id','DESC')->where('user_id',Auth::id())->first();
             if($data)
@@ -233,7 +233,7 @@ class JiraController extends Controller
                 ]);
                 }
 
-                if($request->type == 'BU' || $request->type == 'VS')
+                if($request->type == 'BU' || $request->type == 'VS' || $request->type == 'orgT' || $request->type == 'org')
                 {
                  DB::table('team_backlog')->insert([
                 'epic_status' => $log->E_Status,

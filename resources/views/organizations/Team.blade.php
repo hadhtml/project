@@ -2,7 +2,7 @@
     $var_objective = 'Org-team';
 @endphp
 @extends('components.main-layout')
-<title>Teams-</title>
+<title>Org-Teams</title>
 @section('content')
     @if (session('message'))
         <div class="row">
