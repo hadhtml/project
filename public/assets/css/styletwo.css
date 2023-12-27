@@ -1222,3 +1222,9 @@ button:focus {
     top: 5px !important;
     left: 90px !important;
 }
+.dropup{
+    z-index: 1111;
+}
+.business-card{
+    margin-bottom: 30px;
+}

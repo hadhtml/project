@@ -1,3 +1,4 @@
+@if(!isset($noreport))
 @if($KEYChart)
 @php
 $keyqvalue = '';
@@ -76,3 +77,28 @@ $keyqvalue = $keyqfirst->value;
      <button class="btn btn-primary" @if($KEYChart) onclick="addnewquartervalue({{$key->id}},'{{$KEYChart->id}}','{{$report->id}}')" @endif type="button">Add</button>
   </div>
 </div>
+@else
+<div class="row">
+    <div class="col-md-12 col-lg-12 col-xl-12">
+        <div class="d-flex flex-row align-items-center justify-content-between block-header">
+            <div class="d-flex flex-row align-items-center">
+                <div class="mr-2">
+                    <span class="material-symbols-outlined">database</span>
+                </div>
+                <div>
+                    <h4>Values</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="activity-feed">
+        <div class="col-md-12 col-lg-12 col-xl-12" style="position: relative;">
+            <div class="nodatafound">
+                <h4>Please Start Quarter First for Add Values in Key Result</h4>    
+            </div>
+        </div>
+    </div>
+</div>
+@endif

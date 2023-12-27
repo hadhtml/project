@@ -513,6 +513,7 @@ function changeitemstatus(status , id) {
         },
         success: function(res) {
             showtabwithoutloader('{{$epic->id}}' , 'childitems');
+            showheader('{{$epic->id}}')
         }
     });
 }
@@ -537,7 +538,7 @@ function additem() {
     $('.nodatafound').slideToggle();
 }
 $('#createchilditem').on('submit',(function(e) {
-    $('.createchilditembutton').html('<i class="fa fa-spin fa-spinner"></i>');
+    $('#createchilditembutton').html('<i class="fa fa-spin fa-spinner"></i>');
     e.preventDefault();
     var formData = new FormData(this);
     var cardid = $('#cardid').val();
@@ -549,8 +550,8 @@ $('#createchilditem').on('submit',(function(e) {
         contentType: false,
         processData: false,
         success: function(data){
-            $('.createchilditembutton').html('loaderdisplay');
             $('.secondportion').html(data);
+            showheader('{{$epic->id}}')
         }
     });
 }));

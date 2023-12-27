@@ -71,7 +71,6 @@ class KeyresultController extends Controller
                 $noreport = 'no';
                 $html = view('keyresult.tabs.values',compact('data','noreport'));
             }  
-            
             return $html;
         }
         if($request->tab == 'weighttab')
