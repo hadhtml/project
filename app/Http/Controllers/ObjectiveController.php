@@ -753,6 +753,12 @@ class ObjectiveController extends Controller
         // echo 1;
         // }else
         // {
+        $counter = 1;
+        $pos = DB::table('initiative')->orderby('id','DESC')->where('key_id',$request->key_id_initiative)->first();
+        if($pos)
+        {
+        $counter = $pos->IndexCount + 1; 
+        }
 
         DB::table("initiative")->insert([
             "initiative_name" => $request->initiative_name,
@@ -764,6 +770,7 @@ class ObjectiveController extends Controller
             "user_id" => Auth::id(),
             "initiative_weight" => $request->slider,
             "initiative_status" => $request->init_status,
+            "IndexCount" => $counter,
         ]);
 
         $month = DB::table("settings")
@@ -3159,5 +3166,20 @@ class ObjectiveController extends Controller
                 ->get();
             return view("objective.epic-comment", compact("Comment"));
         }
+    }
+
+    public function UpdatePosInit(Request $request)
+    {
+
+      $existsInModelA = DB::table('initiative')->where('id',$request->backlogId)->first();
+
+      if($existsInModelA)
+      { 
+        $existsOldE = DB::table('initiative')->where('IndexCount',$request->newPosition)->first();
+        DB::table('initiative')->where('id',$existsOldE->id)->update(['IndexCount' => $existsInModelA->IndexCount,]);
+        DB::table('initiative')->where('id',$request->backlogId)->update(['IndexCount' => $request->newPosition,]);
+      }
+      
+
     }
 }

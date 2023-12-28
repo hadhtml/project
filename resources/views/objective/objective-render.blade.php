@@ -182,7 +182,7 @@ $keyweightcounte = DB::table('key_result')->where('obj_id',$obj->id)->sum('weigh
                         </div>
                      </div>
                      @php
-                     $initiativeResult  = DB::table('initiative')->where('key_id',$key->id)->get();
+                     $initiativeResult  = DB::table('initiative')->where('key_id',$key->id)->orderby('IndexCount')->get();
                      @endphp
                      <div id="key-result{{$key->id}}" class="collapse">
                         <div class="card-body p-0">
@@ -211,9 +211,9 @@ $keyweightcounte = DB::table('key_result')->where('obj_id',$obj->id)->sum('weigh
                                     $InitiativeProgress = 0;
                                     }
                                     @endphp
-                                    <div class="card bg-transparent shadow-none">
+                                    <div class="card bg-transparent shadow-none boardI">
                                        <div class="card-header initiative-header"
-                                          style="background: #f9   f9f9 !important;">
+                                          style="background: #f9   f9f9 !important;" id="backlog-{{$initiative->id}}">
                                           <div class="d-flex flex-row justify-content-between header-objective align-items-center"
                                              data-toggle="collapse"
                                              data-target="#initiative{{$initiative->id}}" onclick="handleDivClick({{$initiative->id}})">
@@ -347,7 +347,7 @@ $keyweightcounte = DB::table('key_result')->where('obj_id',$obj->id)->sum('weigh
                                                                         <div class="board-body"
                                                                            style="height:80vh">
                                                                            <div
-                                                                              class="board-cards p-5" id="">
+                                                                              class="board-cards{{$q->id}} p-5" id="">
                                                                               <div
                                                                                  id="scroller">
                                                                                  @if(count($quarterMonth) > 0)    
@@ -379,7 +379,7 @@ $keyweightcounte = DB::table('key_result')->where('obj_id',$obj->id)->sum('weigh
                                                                            class="d-flex flex-row-reverse zoom-btn-section">
                                                                            <div>
                                                                               <button
-                                                                                 class="btn-circle btn-zoom-buttons zoom">
+                                                                                 class="btn-circle btn-zoom-buttons zoom" onclick="zoom_in({{$q->id}})">
                                                                               <img width="20px"
                                                                                  height="20px"
                                                                                  src="{{asset('public/assets/images/icons/search-zoom-in.svg')}}"
@@ -389,7 +389,7 @@ $keyweightcounte = DB::table('key_result')->where('obj_id',$obj->id)->sum('weigh
                                                                            <div
                                                                               class="mr-2">
                                                                               <button
-                                                                                 class="btn-circle btn-zoom-buttons zoom-out">
+                                                                                 class="btn-circle btn-zoom-buttons zoom-out" onclick="zoom_out({{$q->id}})">
                                                                               <img width="20px"
                                                                                  height="20px"
                                                                                  src="{{asset('public/assets/images/icons/search-zoom-out.svg')}}"
@@ -399,7 +399,7 @@ $keyweightcounte = DB::table('key_result')->where('obj_id',$obj->id)->sum('weigh
                                                                            <div
                                                                               class="mr-2">
                                                                               <button
-                                                                                 class="btn-circle btn-zoom-buttons zoom-init">
+                                                                                 class="btn-circle btn-zoom-buttons zoom-init" onclick="zoom_init({{$q->id}})">
                                                                               <img width="20px"
                                                                                  height="20px"
                                                                                  src="{{asset('public/assets/images/icons/maximize.svg')}}"
@@ -508,3 +508,37 @@ No objective found.
        });
    });
 </script>
+
+<script type="text/javascript">
+   var containers = Array.from(document.getElementsByClassName("boardI"));
+       var drake = dragula(containers);
+   
+       // Save position on drop
+       drake.on("drop", function (el, target, source, sibling) {
+           var backlogId = el.id.split("-")[1];
+           
+           var newPosition = Array.from(target.children).indexOf(el) + 1;
+         
+        
+           $.ajax({
+           type: "POST",
+           url: "{{ url('change-init-pos') }}",
+           headers: {
+               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+           },
+           data: {
+           backlogId:backlogId,
+           newPosition:newPosition,
+           
+         
+   
+           },
+           success: function(response) {
+               console.log('Card position updated successfully.');
+           },
+           error: function(error) {
+               console.log('Error updating card position:', error);
+           }
+       });
+       });
+   </script>
