@@ -332,6 +332,9 @@ Route::post('update-password', [App\Http\Controllers\OrganizationController::cla
 Route::get('profile-setting', [App\Http\Controllers\OrganizationController::class,'profile']);
 Route::post('update-profile', [App\Http\Controllers\OrganizationController::class,'UpdateProfile']);
 
+Route::post('change-init-pos', [App\Http\Controllers\ObjectiveController::class,'UpdatePosInit']);
+
+
 
 
 
