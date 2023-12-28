@@ -31,11 +31,11 @@
                 </a>
             </li>
 
-            <li>
+            {{-- <li>
                 <a href="{{url('dashboard/organization/users')}}" @if (url()->current() == url('dashboard/organization/users')) class="active-link" @else class="nav-link"  @endif title="" data-toggle="tooltip" data-placement="right" data-original-title="Users">
                     <span class="material-symbols-outlined">group</span>
                 </a>
-            </li>
+            </li> --}}
 
         </ul>
         <div class="align-items-center mx-auto mb-3 text-center">

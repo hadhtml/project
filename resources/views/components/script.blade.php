@@ -75,18 +75,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <script type="text/javascript">
     var zoom = 1;
-    $('.zoom').on('click', function() {
+
+    function zoom_in(id) {
+        
         zoom += 0.1;
-        $('.board-cards').css('transform', 'scale(' + zoom + ')');
-    });
-    $('.zoom-init').on('click', function() {
+        $('.board-cards' +id).css('transform', 'scale(' + zoom + ')');
+    }
+    function zoom_init(id) {
         zoom = 1;
-        $('.board-cards').css('transform', 'scale(' + zoom + ')');
-    });
-    $('.zoom-out').on('click', function() {
+        $('.board-cards'+id).css('transform', 'scale(' + zoom + ')');
+    }
+    function zoom_out(id) {
         zoom -= 0.1;
-        $('.board-cards').css('transform', 'scale(' + zoom + ')');
-    });
+        $('.board-cards'+id).css('transform', 'scale(' + zoom + ')');
+    }
 </script>
 <!-- Scrolable -->
 <script>
@@ -264,6 +266,39 @@ drake.on("drop", function (el, target, source, sibling) {
         $.ajax({
         type: "POST",
         url: "{{ url('change-backlog-pos') }}",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+        backlogId:backlogId,
+        newPosition:newPosition,
+        
+      
+
+        },
+        success: function(response) {
+            console.log('Card position updated successfully.');
+        },
+        error: function(error) {
+            console.log('Error updating card position:', error);
+        }
+    });
+    });
+
+
+    var containers = Array.from(document.getElementsByClassName("boardI"));
+    var drake = dragula(containers);
+
+    // Save position on drop
+    drake.on("drop", function (el, target, source, sibling) {
+        var backlogId = el.id.split("-")[1];
+        
+        var newPosition = Array.from(target.children).indexOf(el) + 1;
+      
+     
+        $.ajax({
+        type: "POST",
+        url: "{{ url('change-init-pos') }}",
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },

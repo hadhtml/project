@@ -24,6 +24,12 @@
                         <!--begin::Toolbar-->
                         <div class="d-flex align-items-center toolbar">
                             <div>
+                        
+                                <a href="{{url('dashboard/organization/users')}}"  class="button mr-2" style="text-decoration: none;"    data-toggle="tooltip" data-placement="right" data-original-title="Users">
+                                Users
+                                </a>
+                          
+
                                 <button class="button" type="button" data-toggle="modal" data-target="#create-jira">
                                     Connect Jira
                                 </button>
