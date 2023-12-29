@@ -70,6 +70,10 @@ class FlagController extends Controller
         {
             $organization = DB::table('value_team')->where('slug',$request->slug)->first();
         }
+        if($request->type == 'org')
+        {
+            $organization = DB::table('organization')->where('slug',$request->slug)->first();
+        }
         if($request->id == 'all')
         {
             $doneflag = flags::where('business_units' , $organization->id)->where('archived',2)->where('flag_status' , 'doneflag')->orderby('id' , 'desc')->get();
@@ -204,6 +208,12 @@ class FlagController extends Controller
         {
             $organization  = DB::table('value_team')->where('slug',$request->slug)->first();
             $objective =     DB::table('objectives')->where('unit_id',$organization->id)->where('trash',NULL)->where('type','VS')->get();
+        }
+        if($request->type == 'org')
+        {
+            $organization = DB::table('organization')->where('slug',$request->slug)->first();
+            $objective =     DB::table('objectives')->where('unit_id',$organization->id)->where('trash',NULL)->where('type','org')->get();
+
         }
         return view('objective.objective-render',compact('organization','objective')); 
     }
@@ -485,6 +495,11 @@ class FlagController extends Controller
         if($request->type == 'VS')
         {
             $organization = DB::table('value_team')->where('slug',$request->organizationid)->first();
+        }
+
+        if($request->type == 'org')
+        {
+            $organization = DB::table('organization')->where('slug',$request->organizationid)->first();
         }
         $epics = DB::table('epics')->where('epic_name', 'LIKE', "%$request->id%")->where('buisness_unit_id' , $organization->id)->where('trash' , Null)->get();
 
