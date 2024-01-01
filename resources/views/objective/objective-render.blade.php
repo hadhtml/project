@@ -355,7 +355,7 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
                                                                                  @php
                                                                                  $epic  = DB::table('epics')->where('month_id',$month->id)->where('trash',NULL)->get();
                                                                                  @endphp
-                                                                                 <div  @if($CurrentQuarter) @if($q->id < $CurrentQuarter->quarter_id) class="board-flex" @else class="board" @endif @endif   style="width:236px"
+                                                                                 <div  @if($CurrentQuarter) @if($q->id < $CurrentQuarter->quarter_id) class="board-flex" @endif @endif class="board"  style="width:236px"
                                                                                  id="{{$month->id}}">
                                                                                  <header
                                                                                     class="noselect">
@@ -367,9 +367,9 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
                                                                                  @endforeach
                                                                                  @endif
                                                                                  <button
-                                                                                 class="btn  btn-primary border-1 ml-3 no-drag" @if($CurrentQuarter) @if($q->id < $CurrentQuarter->quarter_id) disabled @endif @endif onclick="addepicmonth({{$month->id}},'{{$month->month}}','{{$q->id}}','{{$initiative->id}}','{{$key->id}}','{{$obj->id}}')" data-toggle="modal" data-target="#create-epic-month" draggable="false">
-                                                                                 Add Epics
-                                                                                 </button>
+                                                                               class="btn  btn-primary border-1 ml-3 no-drag" @if($CurrentQuarter) @if($q->id < $CurrentQuarter->quarter_id) disabled @endif @else disabled @endif onclick="addepicmonth({{$month->id}},'{{$month->month}}','{{$q->id}}','{{$initiative->id}}','{{$key->id}}','{{$obj->id}}')" data-toggle="modal" data-target="#create-epic-month" draggable="false">
+                                                                               Add Epics
+                                                                               </button>
                                                                               </div>
                                                                               @endforeach
                                                                               @endif

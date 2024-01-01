@@ -325,12 +325,12 @@ $var_objective = "Org-Unit-team";
                       <div class="col-md-12 col-lg-12 col-xl-12">
                             <div class="form-group mb-0">
                                 <select class="form-control" name="lead_manager_team" required>
-                                    <option value="NULL">Select Lead</option>
+                                    <option value="">Select Lead</option>
                                     <?php foreach(DB::table('members')->where('org_user',Auth::id())->get() as $r){ ?>
                                       <option value="{{ $r->id }}">{{ $r->name }} {{ $r->last_name }}</option>
                                     <?php }  ?>
                                 </select>
-                                <label for="lead-manager">Lead</label>
+                                <label for="lead-manager" style="bottom:72px">Lead</label>
                             </div>
                         </div>
                         
@@ -369,7 +369,7 @@ $var_objective = "Org-Unit-team";
                                     </div>
                                 </div>
                                 <div>
-                                    <input type="checkbox" value="{{$r->id}}" name="member[]">
+                                    <input type="checkbox"  value="{{$r->id}}" name="member[]">
                                 </div>
                             </div>
                             @endforeach
