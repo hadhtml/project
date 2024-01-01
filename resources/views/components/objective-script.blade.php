@@ -221,7 +221,6 @@
         var unit_id = "{{ $organization->id }}";
         $.ajax({
             type: "POST",
-            url: "{{ url('delete-new-quarter-value') }}",
             url: "{{ route('keyresult.deletequartervalue') }}",
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -2574,32 +2573,6 @@
                     id + ')"><img src="{{ url('public/assets/images/icons/delete.svg') }}"></button>');
 
                 $('#q-value' + res.key_chart_id).html(res.value);
-
-            }
-        });
-
-    }
-
-    function deletequartervalue(id) {
-
-
-        var unit_id = "{{ $organization->id }}";
-
-        $.ajax({
-            type: "POST",
-            url: "{{ url('delete-new-quarter-value') }}",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: {
-                id: id,
-                unit_id: unit_id,
-
-            },
-            success: function(res) {
-
-                $('#delete-val' + id).remove();
-
 
             }
         });

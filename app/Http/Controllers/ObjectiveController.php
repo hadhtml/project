@@ -439,16 +439,16 @@ class ObjectiveController extends Controller
         $counter = 0;
         
         if($request->has("Target")) {
-        foreach ($request->Target as $key => $value) {
-            $counter++;
-            DB::table("key_chart")->insert([
-                "quarter_value" => $request->Target[$key],
-                "key_id" => $KEY,
-                "buisness_unit_id" => $request->unit_id,
-                "IndexCount" => $counter,
-            ]);
+            foreach ($request->Target as $key => $value) {
+                $counter++;
+                DB::table("key_chart")->insert([
+                    "quarter_value" => $request->Target[$key],
+                    "key_id" => $KEY,
+                    "buisness_unit_id" => $request->unit_id,
+                    "IndexCount" => $counter,
+                ]);
+            }
         }
-    }
 
         if ($request->has("selectedOptionsteam")) {
             foreach ($request->selectedOptionsteam as $key => $value) {

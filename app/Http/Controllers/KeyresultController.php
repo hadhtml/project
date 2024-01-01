@@ -150,6 +150,10 @@ class KeyresultController extends Controller
             if($report)
             {
                 $KEYChart =  DB::table('key_chart')->where('key_id',$request->id)->where('IndexCount',$report->IndexCount)->first();
+                if(!$KEYChart)
+                {
+
+                }
                 $key = key_result::find($request->id);
                 $keyQAll = DB::table('key_chart')->where('key_id',$request->id)->get();    
                 $html = view('keyresult.tabs.values',compact('data','KEYChart','key','report','keyQAll'));
@@ -236,6 +240,32 @@ class KeyresultController extends Controller
         $update->save();
         $data = key_result::find($request->id);
         $html = view('keyresult.modalheader', compact('data'))->render();
+        return $html;
+    }
+    public function updatetarget(Request $request)
+    {
+        $update = key_result::find($request->id);
+        $update->key_result_type = $request->key_result_type;
+        $update->key_unit = $request->key_unit;
+        $update->init_value = $request->init_value;
+        $update->target_number = $request->target_number;
+        $update->save();
+
+        $objective = DB::Table('objectives')->where('id' , $update->obj_id)->first();
+        $counter = 0;
+        if($request->has("Target")) {
+            foreach ($request->Target as $key => $value) {
+                $counter++;
+                DB::table("key_chart")->insert([
+                    "quarter_value" => $request->Target[$key],
+                    "key_id" => $request->id,
+                    "buisness_unit_id" => $objective->unit_id,
+                    "IndexCount" => $counter,
+                ]);
+            }
+        }
+        $data = key_result::find($request->id);
+        $html = view('keyresult.tabs.target', compact('data'))->render();
         return $html;
     }
 }

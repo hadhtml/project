@@ -12,48 +12,52 @@
       </div>
    </div>
 </div>
-<form id="updatetarget" class="needs-validation" action="{{ url('dashboard/keyresult/updatetarget') }}" method="POST" novalidate>
+<form id="updatetarget" class="needs-validation" action="{{ url('dashboard/keyresult/updatetarget') }}" method="POST">
    @csrf
    <input type="hidden" id="key_result_id" value="{{ $data->id }}" name="id">
    <div class="row">
       <div class="col-md-12 col-lg-12 col-xl-6">
          <div class="form-group mb-0">
             <label for="small-description">Key Result Type</label>
-            <select required class="form-control" name="key_result_type" id="key_result_type">
+            <select onchange="selectkeyresult(this.value)" required class="form-control" name="key_result_type" id="key_result_type">
                <option value="">Select Key Result Type</option>
-               <option value="Should Increase to">Should Increase To</option>
-               <option value="Should decrease to">Should decrease To</option>
-               <option value="Should stay above">Should stay above</option>
-               <option value="Should stay below">Should stay below</option>
-               <option value="Achieved">Achieved or not(100% / 0%)</option>
+               <option @if($data->key_result_type == 'Should Increase to') selected @endif value="Should Increase to">Should Increase To</option>
+               <option @if($data->key_result_type == 'Should decrease to') selected @endif value="Should decrease to">Should decrease To</option>
+               <option @if($data->key_result_type == 'Should stay above') selected @endif value="Should stay above">Should stay above</option>
+               <option @if($data->key_result_type == 'Should stay below') selected @endif value="Should stay below">Should stay below</option>
+               <option @if($data->key_result_type == 'Achieved') selected @endif value="Achieved">Achieved or not(100% / 0%)</option>
             </select>
          </div>
       </div>
       <div class="col-md-12 col-lg-12 col-xl-6">
          <div class="form-group mb-0">
             <label for="small-description">Unit</label>
-            <select class="form-control" name="key_result_unit" id="key_result_unit" >
-               <option value="number">Number</option>
-               <option value="pound £">pound £</option>
-               <option value="Euro €">Euro €</option>
-               <option value="Dollar $">Dollar $</option>
+            <select onchange="selectunitresult(this.value)" class="form-control" required name="key_unit" id="key_result_unit">
+               <option value="">Select Unit</option>
+               <option @if($data->key_unit == 'number') selected @endif value="number">Number</option>
+               <option @if($data->key_unit == 'pound £') selected @endif value="pound £">Pound £</option>
+               <option @if($data->key_unit == 'Euro €') selected @endif value="Euro €">Euro €</option>
+               <option @if($data->key_unit == 'Dollar $') selected @endif value="Dollar $">Dollar $</option>
             </select>
          </div>
       </div>
       <div class="col-md-12 col-lg-12 col-xl-6">
          <div class="form-group mb-0">
             <label for="objective-name">Initial Number</label>
-            <input type="text" name="init_value" onkeyup="checktarget()" onkeypress="return onlyNumberKey(event)" class="form-control" id="init_value" required>
+            <input type="text" value="{{ $data->init_value }}" name="init_value" onkeyup="checktarget()" onkeypress="return onlyNumberKey(event)" class="form-control" id="init_value" required>
          </div>
       </div>
       <div class="col-md-12 col-lg-12 col-xl-6">
          <div class="form-group mb-0">
             <label for="objective-name">Final Target</label>
-            <input type="text" name="target_number" onkeyup="checktarget()" onkeypress="return onlyNumberKey(event)" class="form-control" id="target_number" required>
+            <input type="text" value="{{ $data->target_number }}" name="target_number" onkeyup="checktarget()" onkeypress="return onlyNumberKey(event)" class="form-control" id="target_number" required>
          </div>
       </div>
+      <div class="col-md-12">
+         <span class="target-error"></span>
+      </div>
       <div class="col-md-12 col-lg-12 col-xl-12 mt-2 mb-2">
-         <h6 class="define-quarterly-targets">Define Quarterly Targets <span class="target-error"></span></h6>
+         <h6 class="define-quarterly-targets">Define Quarterly Targets </h6>
       </div>
    </div>
    <div class="row field_wrapper_key">
@@ -79,6 +83,12 @@
    </div>
 </form>
 <script type="text/javascript">
+   function selectkeyresult(id) {
+      checktarget();
+   }
+   function selectunitresult(id) {
+      checktarget();
+   }
     $(document).ready(function() {
         var maxField = 10;
         var addButton = $('.add_value');
@@ -114,10 +124,11 @@
         if (key_result_type == 'Should Increase to') {
             console.log('ok');
             if (target_number <= init_value) {
-                $('#target-error').html('The target value should be greater than the initial value');
+               console.log('asdasdsad');
+                $('.target-error').html('The target value should be greater than the initial value');
                 return false;
             } else if (target_number >= init_value) {
-                $('#target-error').html('');
+                $('.target-error').html('');
 
             } else {}
         }
@@ -125,12 +136,29 @@
         if (key_result_type == 'Should decrease to') {
 
             if (target_number >= init_value) {
-                $('#target-error').html('The target value should be less than the initial value');
+                $('.target-error').html('The target value should be less than the initial value');
                 return false;
             } else if (target_number <= init_value) {
-                $('#target-error').html('');
+                $('.target-error').html('');
 
             } else {}
         }
     }
+    $('#updatetarget').on('submit',(function(e) {
+        $('#updatebutton').html('<i class="fa fa-spin fa-spinner"></i>');
+        e.preventDefault();
+        var formData = new FormData(this);
+        $.ajax({
+            type:'POST',
+            url: $(this).attr('action'),
+            data:formData,
+            cache:false,
+            contentType: false,
+            processData: false,
+            success: function(res){
+                $('#updatebutton').html('Save Changes');
+                $('.secondportion').html(res);
+            }
+        });
+    }));
 </script>

@@ -37,7 +37,11 @@ $keyqvalue = $keyqfirst->value;
 @endif
 <div class="row field_wrapper_key">
   <div class="col-md-12">
-    <div class="activity-feed">
+    @if($KEYChart)
+    @php
+     $keyqvalue =  DB::table('key_quarter_value')->where('key_chart_id', $KEYChart->id)->orderby('id','DESC')->get();
+    @endphp
+    <div @if($keyqvalue->count() > 4) class="activity-feed" @endif>
         <table class="table value-table">
           <thead>
               <tr>
@@ -47,10 +51,7 @@ $keyqvalue = $keyqfirst->value;
               </tr>
           </thead>
           <tbody>
-            @if($KEYChart)
-            @php
-             $keyqvalue =  DB::table('key_quarter_value')->where('key_chart_id', $KEYChart->id)->orderby('id','DESC')->get();
-            @endphp
+            
                 @foreach($keyqvalue as $val)
                 <tr>
                     <td>{{ \Carbon\Carbon::parse($val->created_at)->format('d M Y') }}</td>
@@ -65,11 +66,11 @@ $keyqvalue = $keyqfirst->value;
                     </td>
                 </tr>
                 @endforeach
-            @endif
+            
           </tbody>
       </table>
     </div>
-      
+      @endif
   </div>
 </div>
 <div class="row margintopfourtypixel">
