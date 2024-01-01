@@ -1099,8 +1099,6 @@
         var unit_id = "{{ $organization->id }}";
         var obj = objec_id;
         var type = "{{ $organization->type }}";
-
-
         $.ajax({
             type: "POST",
             url: "{{ url('Delete-objective-key') }}",
