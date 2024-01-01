@@ -875,6 +875,35 @@ public function UpdateProfile(Request $request)
 
 }
     
+public function AllsprintEpicReport($sprint,$type)
+{
+    $report = DB::table('sprint')->where('id',$sprint)->first();
+    
+    if($type == 'unit')
+    {
+    $organization = DB::table('business_units')->where('id',$report->value_unit_id)->first();
+    }
+    if($type == 'stream')
+    {
+    $organization = DB::table('value_stream')->where('id',$report->value_unit_id)->first();
+    }
+    if($type == 'BU')
+    {
+    $organization = DB::table('unit_team')->where('id',$report->value_unit_id)->first();        
+    }
+    if($type == 'VS')
+    {
+    $organization = DB::table('value_team')->where('id',$report->value_unit_id)->first();        
+    }
+    if($type == 'org')
+    {
+    $organization = DB::table('organization')->where('id',$report->value_unit_id)->first();        
+    }
+
+    return view('Report.allepicsprint',compact('report','sprint','type','organization'));
+
+
+}
     
 
 

@@ -27,26 +27,26 @@ class TeamController extends Controller
     if($type == 'BU')
     {
         $organization = DB::table('unit_team')->where('slug',$id)->first();        
-        $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->where('assign_status',NULL)->get();
+        $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
     }
 
     if($type == 'VS')
     {
         $organization = DB::table('value_team')->where('slug',$id)->first();        
-        $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->where('assign_status',NULL)->get();
+        $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
     }
 
     
     if($type == 'org')
     {
         $organization = DB::table('organization')->where('slug',$id)->first();        
-        $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->where('assign_status',NULL)->get();
+        $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
     }
 
     if($type == 'orgT')
     {
         $organization = DB::table('org_team')->where('slug',$id)->first();        
-        $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->where('assign_status',NULL)->get();
+        $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
     }
 
     
@@ -58,7 +58,13 @@ class TeamController extends Controller
     public function SaveTeamBacklogEpic(Request $request)
     {
 
-     
+        $counter = 0;
+        $data = DB::table('team_backlog')->orderby('id','DESC')->where('user_id',Auth::id())->first();
+        if($data)
+        {
+        $counter = $data->position + 1; 
+        }
+
         DB::table('team_backlog')
         ->insert([
             'epic_title' => $request->epic_name,
@@ -68,6 +74,8 @@ class TeamController extends Controller
             'epic_detail' => $request->epic_description,
             'unit_id' => $request->unit_id,
             'type' => $request->type,
+            'position' => $counter,
+            'user_id' => Auth::id(),
             
             ]);
       

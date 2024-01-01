@@ -47,7 +47,7 @@ $Impediments = DB::table('flags')->where('business_units',$organization->id)->wh
             <div class="col-md-3 mb-4">
                 <div class="dashboard-card">
                     <div class="card-svg">
-                        <img src="{{ url('public/assets/svg/portfoliosvg.svg') }}">
+                        <a href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}"> <img src="{{ url('public/assets/svg/portfoliosvg.svg') }}"></a>
                     </div>
                     <div class="dashboard-card-tittle">
                         <h4>Portfolio</h4>
@@ -60,7 +60,7 @@ $Impediments = DB::table('flags')->where('business_units',$organization->id)->wh
             <div class="col-md-3 mb-4">
                 <div class="dashboard-card">
                     <div class="card-svg">
-                        <img src="{{ url('public/assets/svg/epicsbacklogsvg.svg') }}">
+                        <a href="{{url('dashboard/organization/'.$organization->slug.'/BT-Backlog/'.$organization->type)}}"> <img src="{{ url('public/assets/svg/epicsbacklogsvg.svg') }}"></a>
                     </div>
                     <div class="dashboard-card-tittle">
                         <h4>Epics Backlog</h4>
@@ -73,7 +73,9 @@ $Impediments = DB::table('flags')->where('business_units',$organization->id)->wh
             <div class="col-md-3 mb-4">
                 <div class="dashboard-card">
                     <div class="card-svg">
-                        <img src="{{ url('public/assets/svg/performancesvg.svg') }}">
+                        <a href="{{url('dashboard/organization/'.$organization->slug.'/performance-dashboard/'.$organization->type)}}"> 
+                            <img src="{{ url('public/assets/svg/performancesvg.svg') }}">
+                        </a> 
                     </div>
                     <div class="dashboard-card-tittle">
                         <h4>Performance</h4>
@@ -87,7 +89,7 @@ $Impediments = DB::table('flags')->where('business_units',$organization->id)->wh
             <div class="col-md-3 mb-4">
                 <div class="dashboard-card">
                     <div class="card-svg">
-                        <img src="{{ url('public/assets/svg/reportingsvg.svg') }}">
+                        <a href="{{url('dashboard/organization/'.$organization->slug.'/BU-Report/'.$organization->type)}}">   <img src="{{ url('public/assets/svg/reportingsvg.svg') }}"></a>
                     </div>
                     <div class="dashboard-card-tittle">
                         <h4>Reporting</h4>
@@ -100,7 +102,9 @@ $Impediments = DB::table('flags')->where('business_units',$organization->id)->wh
             <div class="col-md-3 mb-4">
                 <div class="dashboard-card">
                     <div class="card-svg">
-                        <img src="{{ url('public/assets/svg/impedimentssvg.svg') }}">
+                        <a href="{{url('dashboard/flags/'.$organization->slug.'/impediments/'.$organization->type)}}" > 
+                            <img src="{{ url('public/assets/svg/impedimentssvg.svg') }}">
+                        </a>   
                     </div>
                     <div class="dashboard-card-tittle">
                         <h4>Impediments</h4>

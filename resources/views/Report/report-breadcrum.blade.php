@@ -53,6 +53,10 @@
                                                <div class="mr-2">
                                                    <p>Reports</p>
                                                </div>
+
+                                               <div class="mr-2">
+                                                <p>OKR Epics</p>
+                                            </div>
                            </div>
                         </div>
                         <!--end::Info-->
