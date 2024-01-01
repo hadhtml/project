@@ -36,7 +36,19 @@
                     <!-- <li><img src="{{ url('public/assets/svg/archive-action.svg') }}"> Archive</li> -->
                     <!-- <li><span class="material-symbols-outlined">share</span> Share</li> -->
                     <!-- <li><img src="{{ url('public/assets/svg/arrow-right-action.svg') }}"> Move</li> -->
-                    <li><span class="material-symbols-outlined">delete</span> Delete</li>
+                    <li onclick="deleteflagshow({{$data->id}})"><span class="material-symbols-outlined">delete</span> Delete</li>
+                    <div class="deleteflag deleteepiccard" id="flagdelete{{ $data->id }}">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <h4>Delete Key Result</h4>
+                            </div>
+                            <div class="col-md-2">
+                                <img onclick="deleteflagshow({{$data->id}})" src="{{ url('public/assets/svg/crossdelete.svg') }}">
+                            </div>
+                        </div>
+                        <p>All actions will be removed from the activity feed and you won’t be able to re-open the card. There is no undo.</p>
+                        <button onclick="deletekeyresult({{$data->id}},{{$data->obj_id}})" class="btn btn-danger btn-block">Delete</button>
+                    </div>
                 </ul>
             </div>
         </div>
@@ -94,6 +106,10 @@
     </div>
 </div>
 <script type="text/javascript">
+    
+    function deleteflagshow(id) {
+        $('#flagdelete'+id).slideToggle();
+    }
     function changeepicstatus(status , id) {
         $.ajax({
             type: "POST",

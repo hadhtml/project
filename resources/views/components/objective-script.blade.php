@@ -1092,7 +1092,35 @@
         $('#key_delete_obj_id').val(obj);
 
     }
+    function deletekeyresult(delete_id , objec_id) {
+        var key_delete_id = delete_id;
+        var org_id = "{{ $organization->org_id }}";
+        var slug = "{{ $organization->slug }}";
+        var unit_id = "{{ $organization->id }}";
+        var obj = objec_id;
+        var type = "{{ $organization->type }}";
 
+
+        $.ajax({
+            type: "POST",
+            url: "{{ url('Delete-objective-key') }}",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                key_delete_id: key_delete_id,
+                org_id: org_id,
+                slug: slug,
+                unit_id: unit_id,
+                type: type
+            },
+            success: function(res) {
+                $('#edit-key-result-new').modal('hide');
+                $('#parentCollapsible').html(res);
+                $("#nestedCollapsible" + obj).collapse('toggle');
+            }
+        });
+    }
     function DeleteObjectivekey() {
 
         var key_delete_id = $('#key_delete_id').val();
