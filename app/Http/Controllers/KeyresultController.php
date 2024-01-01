@@ -35,6 +35,92 @@ class KeyresultController extends Controller
         $data->key_end_date = $request->key_end_date;
         $data->key_detail = $request->key_detail;
         $data->save();
+
+        if(!$request->key_name)
+        {
+            $update = key_result::find($request->id);
+            $update->trash = $data->created_at;
+            $update->save(); 
+        }else{
+            $update = key_result::find($request->id);
+            $update->trash = Null;
+            $update->save(); 
+        }
+
+
+        if ($data->type == "unit") {
+            $organization = DB::table("business_units")
+                ->where("id", $data->unit_id)
+                ->first();
+            $objective = DB::table("objectives")
+                ->where("unit_id", $data->unit_id)
+                ->where("trash", null)
+                ->where("type", "unit")
+                ->get();
+        }
+
+        if ($data->type == "stream") {
+            $organization = DB::table("value_stream")
+                ->where("id", $data->unit_id)
+                ->first();
+            $objective = DB::table("objectives")
+                ->where("unit_id", $data->unit_id)
+                ->where("trash", null)
+                ->where("type", "stream")
+                ->get();
+        }
+
+        if ($data->type == "BU") {
+            $organization = DB::table("unit_team")
+                ->where("id", $data->unit_id)
+                ->first();
+            $objective = DB::table("objectives")
+                ->where("unit_id", $data->unit_id)
+                ->where("trash", null)
+                ->where("type", "BU")
+                ->get();
+        }
+
+        if ($data->type == "VS") {
+            $organization = DB::table("value_team")
+                ->where("id", $data->unit_id)
+                ->first();
+            $objective = DB::table("objectives")
+                ->where("unit_id", $data->unit_id)
+                ->where("trash", null)
+                ->where("type", "VS")
+                ->get();
+        }
+
+        if ($data->type == "org") {
+            $organization = DB::table("organization")
+                ->where("id", $data->unit_id)
+                ->first();
+            $objective = DB::table("objectives")
+                ->where("unit_id", $data->unit_id)
+                ->where("trash", null)
+                ->where("type", "org")
+                ->get();
+        }
+
+        if ($data->type == "orgT") {
+            $organization = DB::table("org_team")
+                ->where("id", $data->unit_id)
+                ->first();
+            $objective = DB::table("objectives")
+                ->where("unit_id", $data->unit_id)
+                ->where("trash", null)
+                ->where("type", "orgT")
+                ->get();
+        }
+
+
+        return view(
+            "objective.objective-render",
+            compact("organization", "objective")
+        );
+
+
     }
     public function showheader(Request $request)
     {
@@ -124,6 +210,32 @@ class KeyresultController extends Controller
         $keyQAll = DB::table('key_chart')->where('key_id',$key_quarter_value->key_id)->get();
         DB::table('key_quarter_value')->where('id',$request->id)->delete(); 
         $html = view('keyresult.tabs.values',compact('data','KEYChart','key','report','keyQAll'));
+        return $html;
+    }
+    public function createkeyresult(Request $request)
+    {
+        $objective = DB::Table('objectives')->where('id' , $request->obj_id)->first();
+        $create = new key_result();
+        $create->user_id = Auth::id();
+        $create->obj_id = $request->obj_id;
+        $create->key_status = 'To Do';
+        $create->unit_id = $objective->unit_id;
+        $create->type = $objective->type;
+        $create->save();        
+        $update = key_result::find($create->id);
+        $update->trash = $create->created_at;
+        $update->key_start_date = $create->created_at;
+        $update->key_end_date = $create->created_at;
+        $update->save(); 
+        return $create->id;
+    }
+    public function changekeyresultstatus(Request $request)
+    {
+        $update = key_result::find($request->id);
+        $update->key_status = $request->status;
+        $update->save();
+        $data = key_result::find($request->id);
+        $html = view('keyresult.modalheader', compact('data'))->render();
         return $html;
     }
 }

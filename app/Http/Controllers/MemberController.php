@@ -313,11 +313,17 @@ class MemberController extends Controller
     public function SaveBusinessTeam(Request $request)
     {
 
-     
+       if($request->has('member'))
+       {
+       $member = implode(',',$request->member);
+       }else
+       {
+        $member = NULL;
+       }
         DB::table('unit_team')
         ->insert([
             'org_id' => $request->team_unit_id,
-            'member' => implode(',',$request->member),
+            'member' => $member,
             'lead_id' => $request->lead_manager_team,
             'team_title' => $request->team_title,
             'slug' => Str::slug($request->team_title.'-'.rand(10, 99)),
@@ -334,10 +340,18 @@ class MemberController extends Controller
        public function SaveStreamTeam(Request $request)
     {
 
+        if($request->has('member'))
+        {
+        $member = implode(',',$request->member);
+        }else
+        {
+         $member = NULL;
+        }
+
         DB::table('value_team')
         ->insert([
             'org_id' => $request->org_stream_id,
-            'member' => implode(',',$request->member),
+            'member' => $member,
             'lead_id' => $request->lead_manager_team,
             'team_title' => $request->team_title,
             'slug' => Str::slug($request->team_title.'-'.rand(10, 99)),
@@ -393,10 +407,18 @@ class MemberController extends Controller
           public function SaveGlobTeam(Request $request)
     {
 
+        if($request->has('member'))
+        {
+        $member = implode(',',$request->member);
+        }else
+        {
+         $member = NULL;
+        }
+
         DB::table('teams')
         ->insert([
             'org_id' => $request->org_id,
-            'member' => implode(',',$request->member),
+            'member' => $member,
             'lead_id' => $request->lead_manager_team,
             'team_title' => $request->team_title,
             

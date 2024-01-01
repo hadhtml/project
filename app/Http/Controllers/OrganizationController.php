@@ -34,11 +34,17 @@ class OrganizationController extends Controller
 
     public function SaveOrgTeam(Request $request)
     {
-
+      if($request->has('member'))
+      {
+      $member = implode(',',$request->member);
+      }else
+      {
+       $member = NULL;
+      }
         DB::table('org_team')
         ->insert([
             'org_id' => $request->team_unit_id,
-            'member' => implode(',',$request->member),
+            'member' => $member,
             'lead_id' => $request->lead_manager_team,
             'team_title' => $request->team_title,
             'slug' => Str::slug($request->team_title.'-'.rand(10, 99)),
