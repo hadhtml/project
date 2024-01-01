@@ -2,11 +2,7 @@
 <script>
     window.onload = window.localStorage.clear();
     // function Updated by Usama Start
-    function objective(key_obj_id, w_count, start_date, end_date) {
-        $('#key_obj_id').val(key_obj_id);
-        $('#key_start_date').attr('min', start_date);
-        $('#key_start_date').attr('max', end_date);
-        $('#key_end_date').attr('max', end_date);
+    function objective(obj_id) {
         $.ajax({
             type: "POST",
             url: "{{ url('dashboard/keyresult/createkeyresult') }}",
@@ -14,25 +10,10 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             data: {
-                epicid: epicid,
-                org_id: org_id,
-                slug: slug,
-                unit_id: unit_id,
-                type: type,
-                edit_epic_key: edit_epic_key,
-                edit_epic_obj: edit_epic_obj,
-                ini_epic: ini_epic
-
+                obj_id: obj_id,
             },
             success: function(res) {
-                $('#parentCollapsible').html(res);
-                $("#nestedCollapsible" + edit_epic_obj).collapse('toggle');
-                $("#key-result" + edit_epic_key).collapse('toggle');
-                $("#initiative" + ini_epic).collapse('toggle');
-                handleDivClick(ini_epic);
-                var new_url="{{ url()->current() }}";
-                window.history.pushState("data","Title",new_url);
-                $('#edit-epic-modal-new').modal('hide');
+                editobjectivekey(res);
             }
         });
     }

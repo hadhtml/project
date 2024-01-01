@@ -15,10 +15,11 @@
 <form id="updategeneral" class="needs-validation" action="{{ url('dashboard/keyresult/updategeneral') }}" method="POST" novalidate>
     @csrf
     <input type="hidden" id="key_result_id" value="{{ $data->id }}" name="id">
+    <input type="hidden" value="{{ $data->obj_id }}" id="objective_id_for_nested">
     <div class="row">
         <div class="col-md-12 col-lg-12 col-xl-12">
             <div class="form-group mb-0">
-                <label for="key_name">Key Result title</label>
+                <label for="key_name">Key Result Title</label>
                 <input type="text" required='true' value="{{ $data->key_name }}" class="form-control" name="key_name" id="key_name">
             </div>
         </div>
@@ -168,9 +169,14 @@
             cache:false,
             contentType: false,
             processData: false,
-            success: function(data){
+            success: function(res){
                 $('#updatebutton').html('Save Changes');
                 showheader($('#key_result_id').val());
+
+
+                var objective_id_for_nested =  $('#objective_id_for_nested').val();
+                $('#parentCollapsible').html(res);
+                $("#nestedCollapsible" + objective_id_for_nested).collapse('toggle');
             }
         });
     }));

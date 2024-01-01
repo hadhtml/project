@@ -2,8 +2,8 @@
 @if(count($objective) > 0)
 @foreach($objective as $obj)
 @php
-$keyResultcount  = DB::table('key_result')->where('obj_id',$obj->id)->count();
-$keyweightcounte = DB::table('key_result')->where('obj_id',$obj->id)->sum('weight');
+$keyResultcount  = DB::table('key_result')->wherenull('trash')->where('obj_id',$obj->id)->count();
+$keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$obj->id)->sum('weight');
 @endphp
 <div class="card bg-transparent shadow-none">
    <div class="card-header objective-header active-header bg-white border-bottom" id="parentHeading">
@@ -90,7 +90,7 @@ $keyweightcounte = DB::table('key_result')->where('obj_id',$obj->id)->sum('weigh
          <div>
             <!-- begin Item -->
             @php
-            $keyResult  = DB::table('key_result')->where('obj_id',$obj->id)->get();
+            $keyResult  = DB::table('key_result')->wherenull('trash')->where('obj_id',$obj->id)->get();
             @endphp
             <div class="row">
                <div class="col-md-12">
@@ -467,8 +467,7 @@ $keyweightcounte = DB::table('key_result')->where('obj_id',$obj->id)->sum('weigh
          @endphp
          <div class="row py-2">
             <div class="col-md-12">
-               <a href="" onclick="objective({{$obj->id}},'{{$keyweightcount}}','{{$obj->start_date}}','{{$obj->end_date}}')" data-toggle="modal" data-target="#create-key-result"
-                  class="col-action key_obj"><img
+               <a href="javascript:void(0)" onclick="objective({{$obj->id}})" class="col-action key_obj"><img
                   src="{{ asset('public/assets/images/icons/add-circle.svg') }}"
                   class="mr-1"> Add Key Result</a>
             </div>

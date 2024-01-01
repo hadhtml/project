@@ -285,7 +285,7 @@ Route::name('keyresult.')->namespace('App\Http\Controllers')->prefix('dashboard/
     Route::POST('addquartervalue', 'KeyresultController@addquartervalue')->name('addquartervalue');
     Route::POST('deletequartervalue', 'KeyresultController@deletequartervalue')->name('deletequartervalue');
     Route::POST('createkeyresult', 'KeyresultController@createkeyresult');
-
+    Route::POST('changekeyresultstatus', 'KeyresultController@changekeyresultstatus');
 
 });
 
