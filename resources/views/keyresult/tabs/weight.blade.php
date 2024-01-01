@@ -16,7 +16,7 @@
 <div class="row mt-5">
     <div class="col-md-1">
         <label class="checkbox checkbox-lg">
-            <input class="check" type="checkbox" />
+            <input class="check" checked type="checkbox" />
         </label>
     </div>
     <div class="col-md-5">
