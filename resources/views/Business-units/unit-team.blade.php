@@ -308,7 +308,7 @@ $var_objective = "Org-Unit-team";
                 </button>
             </div>
             <div class="modal-body">
-                <form class="needs-validation" action="{{url('add-team-unit')}}" method="POST">
+                <form class="needs-validation simpleform" action="{{url('add-team-unit')}}" method="POST" >
                     @csrf
                     <input type="hidden" name="team_unit_id" value="{{$organization->id}}">
                     <div class="row">
@@ -368,7 +368,7 @@ $var_objective = "Org-Unit-team";
                                         <small>{{$r->email}}</small>
                                     </div>
                                 </div>
-                                <div>
+                                <div class="checkbox-group required">
                                     <input type="checkbox"  value="{{$r->id}}" name="member[]">
                                 </div>
                             </div>
@@ -415,6 +415,17 @@ elements.forEach(function(element) {
 
     element.setAttribute('src', imageData);
 });
+
+$('.simpleform').on('submit', function(e) {
+
+if($('div.checkbox-group.required :checkbox:checked').length > 0)
+{
+this.submit(); 
+}else{
+ return false;  
+}
+});
+
 </script>                    
     
 @endsection

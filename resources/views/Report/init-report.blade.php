@@ -2,7 +2,7 @@
 $var_objective = 'Report-'.$type;
 @endphp
 @extends('components.main-layout')
-<title>Okr-Report</title>
+<title>OKR Epics</title>
 @section('content')
 <div class="row mb-3">
     <div class="col-md-12">
