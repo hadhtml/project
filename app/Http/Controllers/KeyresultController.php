@@ -126,4 +126,17 @@ class KeyresultController extends Controller
         $html = view('keyresult.tabs.values',compact('data','KEYChart','key','report','keyQAll'));
         return $html;
     }
+    public function createkeyresult(Request $request)
+    {
+        $create = new key_result();
+        $create->obj_id = $request->obj_id;
+        $create->key_start_date = $request->key_start_date;
+        $create->key_end_date = $request->key_end_date;
+        $create->user_id = Auth::id();
+        $create->key_status = $request->obj_id;
+        $create->unit_id = $request->unit_id;
+        $create->key_status = $request->k_status;
+        $create->type = $request->type;
+        $create->save();        
+    }
 }

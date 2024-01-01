@@ -22,14 +22,6 @@
     </div>
 </div>
 <!-- Updated By Usama End -->
-<div class="modal fade" id="create-key-result" tabindex="-1" role="dialog" aria-labelledby="create-key-result" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            
-        </div>
-    </div>
-</div>
-
 <div class="modal" id="edit-key-result-new" tabindex="-1" role="dialog" aria-labelledby="edit-epic" aria-hidden="true">
     <div class="modal-dialog modal-lg" id="modaldialog" role="document">
         <div class="modal-content newmodalcontent" id="newmodalcontent">
