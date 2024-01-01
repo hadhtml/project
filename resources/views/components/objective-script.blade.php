@@ -2,6 +2,40 @@
 <script>
     window.onload = window.localStorage.clear();
     // function Updated by Usama Start
+    function objective(key_obj_id, w_count, start_date, end_date) {
+        $('#key_obj_id').val(key_obj_id);
+        $('#key_start_date').attr('min', start_date);
+        $('#key_start_date').attr('max', end_date);
+        $('#key_end_date').attr('max', end_date);
+        $.ajax({
+            type: "POST",
+            url: "{{ url('dashboard/keyresult/createkeyresult') }}",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                epicid: epicid,
+                org_id: org_id,
+                slug: slug,
+                unit_id: unit_id,
+                type: type,
+                edit_epic_key: edit_epic_key,
+                edit_epic_obj: edit_epic_obj,
+                ini_epic: ini_epic
+
+            },
+            success: function(res) {
+                $('#parentCollapsible').html(res);
+                $("#nestedCollapsible" + edit_epic_obj).collapse('toggle');
+                $("#key-result" + edit_epic_key).collapse('toggle');
+                $("#initiative" + ini_epic).collapse('toggle');
+                handleDivClick(ini_epic);
+                var new_url="{{ url()->current() }}";
+                window.history.pushState("data","Title",new_url);
+                $('#edit-epic-modal-new').modal('hide');
+            }
+        });
+    }
     function DeleteEpic(epicid, ini_epic, edit_epic_key, edit_epic_obj) {
         var org_id = "{{ $organization->org_id }}";
         var slug = "{{ $organization->slug }}";
@@ -600,39 +634,7 @@
 
 
 
-    function objective(key_obj_id, w_count, start_date, end_date) {
-        $('#key_obj_id').val(key_obj_id);
-        $('#key_start_date').attr('min', start_date);
-        $('#key_start_date').attr('max', end_date);
-        $('#key_end_date').attr('max', end_date);
-
-        $('#weight').html('');
-        if (w_count == 0) {
-            $(".check").prop("checked", false);
-
-        } else {
-            $('#weight').append(
-                '<div class="col-md-8"><input style="margin-top:10px;" class="range-slider__range-two  ml-4"  type="range" value="0" min="1" max="100"></div><div class="col-md-4"><input id="sliderValue" class="w-25 mt-2" readonly type="text" min="1" value="1"></div>'
-                ); // Add field html
-            $(".check").hide();
-
-
-        }
-
-        $('#key_result_unit').val('');
-        $('#key_result_type').val('');
-        $('#init_value').val('');
-        $('#target_number').val('');
-        $('.target_value').val('');
-        $('.field_wrapper_key').html('');
-
-        $('.field_wrapper_bu_team').html('');
-        $('#obj-team1').val('');
-        $('.field_wrapper_bu').html('');
-        getteam();
-       
-
-    }
+    
 
     $(document).ready(function() {
         $('.check').on('click', function() {

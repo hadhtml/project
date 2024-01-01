@@ -18,15 +18,17 @@ $Impediments = DB::table('flags')->where('business_units',$organization->id)->wh
         <div class="row">
             <div class="col-md-3 mb-4">
                 <div class="dashboard-card">
-                    <div class="card-svg">
-                        <img src="{{ url('public/assets/svg/portfoliosvg.svg') }}">
-                    </div>
-                    <div class="dashboard-card-tittle">
-                        <h4>Portfolio</h4>
-                    </div>
-                    <div class="dashboard-card-number">
-                        <h3>{{$Portfolio}}</h3>
-                    </div>
+                    <a class="dashbaord-card-link" href="{{  url('dashboard/organization') }}/{{ $organization->slug }}/portfolio/{{ $organization->type }}">
+                        <div class="card-svg">
+                            <img src="{{ url('public/assets/svg/portfoliosvg.svg') }}">
+                        </div>
+                        <div class="dashboard-card-tittle">
+                            <h4>Portfolio</h4>
+                        </div>
+                        <div class="dashboard-card-number">
+                            <h3>{{$Portfolio}}</h3>
+                        </div>
+                    </a>
                 </div>
             </div>
             <div class="col-md-3 mb-4">

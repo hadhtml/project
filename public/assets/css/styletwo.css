@@ -619,6 +619,9 @@
 .dashboard-card-tittle{
     margin-top: 10px;
 }
+.dashbaord-card-link:hover{
+    text-decoration: none;
+}
 .dashboard-card-tittle h4{
     font-size: 14px;
     color: #999999;
@@ -628,6 +631,7 @@
 }
 .dashboard-card-number h3{
     font-size: 20px;
+    color: #121212;
     font-weight: 700;
 }
 .dashboard-card-tittle-second{
@@ -1227,4 +1231,7 @@ button:focus {
 }
 .business-card{
     margin-bottom: 30px;
+}
+.col-action:hover{
+    text-decoration: none;
 }

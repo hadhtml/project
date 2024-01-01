@@ -652,7 +652,7 @@ $var_objective = 'PageT-'.$type;
                      @endphp
                      <div class="row py-2">
                         <div class="col-md-12">
-                           <a href="" onclick="objective({{$obj->id}},'{{$keyweightcount}}','{{$obj->start_date}}','{{$obj->end_date}}')" data-toggle="modal" data-target="#create-key-result"
+                           <a href="" onclick="objective({{$obj->id}},'{{$keyweightcount}}','{{$obj->start_date}}','{{$obj->end_date}}')"
                               class="col-action key_obj"><img
                               src="{{ asset('public/assets/images/icons/add-circle.svg') }}"
                               class="mr-1"> Add Key Result</a>
