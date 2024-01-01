@@ -442,7 +442,13 @@ class MemberController extends Controller
        public function SaveBacklogEpic(Request $request)
     {
 
-     
+        $counter = 0;
+        $data = DB::table('backlog')->orderby('id','DESC')->where('user_id',Auth::id())->first();
+        if($data)
+        {
+            $counter = $data->position + 1; 
+        }
+
         DB::table('backlog')
         ->insert([
             'epic_title' => $request->epic_name,
@@ -451,6 +457,8 @@ class MemberController extends Controller
             'epic_status' => $request->epic_status,
             'epic_detail' => $request->epic_description,
             'stream_id' => $request->Stream_id,
+            'position' => $counter,
+            'user_id' => Auth::id(),
             
             ]);
       
@@ -471,6 +479,7 @@ class MemberController extends Controller
             'epic_status' => $request->epic_status,
             'epic_detail' => $request->epic_description,
             'team_id' => $request->team,
+
             
             ]);
             
@@ -927,7 +936,12 @@ class MemberController extends Controller
     public function SaveUnitBacklogEpic(Request $request)
     {
 
-     
+        $counter = 0;
+        $data = DB::table('backlog_unit')->orderby('id','DESC')->where('user_id',Auth::id())->first();
+        if($data)
+        {
+            $counter = $data->position + 1; 
+        }
         DB::table('backlog_unit')
         ->insert([
             'epic_title' => $request->epic_name,
@@ -936,6 +950,8 @@ class MemberController extends Controller
             'epic_status' => $request->epic_status,
             'epic_detail' => $request->epic_description,
             'unit_id' => $request->unit_id,
+            'position' => $counter,
+            'user_id' => Auth::id(),
             
             ]);
       
@@ -1438,6 +1454,15 @@ $updateData = [
         $existsOld = DB::table('backlog')->where('position',$request->newPosition)->where('assign_status',NULL)->first();
         DB::table('backlog')->where('id',$existsOld->id)->update(['position' => $existsInModelB->position,]);
         DB::table('backlog')->where('id',$request->backlogId)->update(['position' => $request->newPosition,]);
+      }
+
+      $existsInModelC = DB::table('team_backlog')->where('id',$request->backlogId)->where('assign_status',NULL)->first();
+      
+      if($existsInModelC)
+      { 
+        $existsOld = DB::table('team_backlog')->where('position',$request->newPosition)->where('assign_status',NULL)->first();
+        DB::table('team_backlog')->where('id',$existsOld->id)->update(['position' => $existsInModelC->position,]);
+        DB::table('team_backlog')->where('id',$request->backlogId)->update(['position' => $request->newPosition,]);
       }
 
        
