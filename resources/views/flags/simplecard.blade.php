@@ -90,7 +90,7 @@
                 </div>
             </div>
             <div class="d-flex flex-row">
-                @if($r->board_type != 'unit')
+                @if($r->board_type != 'org')
                     @php
                         $checkescalate = DB::table('escalate_cards')->where('flag_id' , $r->id)->count();
                     @endphp
@@ -121,7 +121,7 @@
                             @endif
                             <a class="dropdown-item" onclick="editflag({{$r->id}})" href="javascript:void(0)">Edit</a>
                             <a class="dropdown-item" onclick="deleteflag({{$r->id}})" href="javascript:void(0)">Delete</a>
-                            @if($r->board_type != 'unit')
+                            @if($r->board_type != 'org')
                                 @if($checkescalate > 0)
                                     <a class="dropdown-item" href="javascript:void(0)">Escalated</a>
                                 @else

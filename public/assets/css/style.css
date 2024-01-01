@@ -21509,34 +21509,6 @@ input[type="radio"]:checked {
     cursor: pointer;
 }
 
-
-.activity-feed {
-    overflow: auto;
-    height: 50vh;
-    width: 100%;
-}
-
-/* width */
-.activity-feed::-webkit-scrollbar {
-    width: 10px;
-}
-
-/* Track */
-.activity-feed::-webkit-scrollbar-track {
-    background: #f1f1f1;
-}
-
-/* Handle */
-.activity-feed::-webkit-scrollbar-thumb {
-    background: #c5c9d1;
-    border-radius: 10px;
-}
-
-/* Handle on hover */
-.activity-feed::-webkit-scrollbar-thumb:hover {
-    background: #555;
-}
-
 .activity {
     position: relative;
     margin-bottom: 10px;

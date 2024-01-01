@@ -339,7 +339,8 @@
 
 
 .activity-feed {
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
     height: 50vh;
     width: 100%;
 }
@@ -1241,4 +1242,8 @@ button:focus {
 .value-table tbody td {
     padding-bottom: 5px;
     padding-top: 5px;
+}
+
+.padding-right-ten{
+    padding-right: 10px;
 }

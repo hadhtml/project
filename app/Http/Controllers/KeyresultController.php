@@ -250,20 +250,38 @@ class KeyresultController extends Controller
         $update->init_value = $request->init_value;
         $update->target_number = $request->target_number;
         $update->save();
-
+        if($request->IndexCount)
+        {
+            foreach ($request->IndexCount as $indkey => $r) {
+                
+                $keychart = key_chart::where('key_id' , $request->id)->where('IndexCount' , $r)->first();
+                $updatekeychart = key_chart::find($keychart->id);
+                $updatekeychart->quarter_value = $request->Target[$indkey];
+                $updatekeychart->save();
+            }
+        }
         $objective = DB::Table('objectives')->where('id' , $update->obj_id)->first();
-        $counter = 0;
-        if($request->has("Target")) {
-            foreach ($request->Target as $key => $value) {
+        $check = key_chart::where('key_id' , $request->id)->count();
+        if($check > 0)
+        {
+            $counter = $check;    
+        }else{
+            $counter = 0;    
+        }
+        if($request->has("newtarget")) {
+            foreach ($request->newtarget as $key => $value) {
                 $counter++;
                 DB::table("key_chart")->insert([
-                    "quarter_value" => $request->Target[$key],
+                    "quarter_value" => $request->newtarget[$key],
                     "key_id" => $request->id,
                     "buisness_unit_id" => $objective->unit_id,
                     "IndexCount" => $counter,
                 ]);
             }
         }
+
+
+
         $data = key_result::find($request->id);
         $html = view('keyresult.tabs.target', compact('data'))->render();
         return $html;
