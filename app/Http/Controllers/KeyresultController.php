@@ -279,11 +279,16 @@ class KeyresultController extends Controller
                 ]);
             }
         }
-
-
-
         $data = key_result::find($request->id);
         $html = view('keyresult.tabs.target', compact('data'))->render();
         return $html;
+    }
+    public function removeweight(Request $request)
+    {
+        DB::table('key_result')->where('id' , $request->id)->update(array('weight' => 0));
+    }
+    public function addweight(Request $request)
+    {
+        DB::table('key_result')->where('id' , $request->id)->update(array('weight' => $request->weight));   
     }
 }

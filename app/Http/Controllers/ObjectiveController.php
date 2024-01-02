@@ -2632,7 +2632,11 @@ class ObjectiveController extends Controller
     public function checkkeyweight(Request $request)
     {
         $key = DB::table("key_result")->where("obj_id", $request->obj)->sum("weight");
-        $value = $key + $request->slider;
+        echo $value = $key + $request->slider;
+        if($value < 100)
+        {
+            DB::table('key_result')->where('id' , $request->key_id)->update(array('weight' => $request->slider));
+        }
         return response()->json(["key" => $value]);
     }
     public function checkkeyweightedit(Request $request)

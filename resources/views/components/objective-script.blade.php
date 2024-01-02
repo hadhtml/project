@@ -592,8 +592,8 @@
             $('.range-slider__range-two').val($(this).val());
             $('#sliderValue').val($(this).val());
             var slider = $('#sliderValue').val();
-
             var obj = $('#key_obj_id').val();
+            var key_id = $('#key_id_weight_tab').val();
             $.ajax({
                 type: "GET",
                 url: "{{ url('check-key-weight') }}",
@@ -603,12 +603,12 @@
                 data: {
                     obj: obj,
                     slider: slider,
-
+                    key_id: key_id,
                 },
                 success: function(res) {
                     if (res.key > 100) {
-                        $('#wieght-error').css('display' , 'bloack');
-                        $('#wieght-error').html('<small class="text-danger ml-2">Combined weight percentage must not be greater than 100</small>');
+                        var setvalue  = parseInt(res.key)-100;
+                        $('#wieght-error').html('<small class="text-danger ml-2">Combined weight Percentage not be greater than 100%. You Can Set Weight Value of This Key Result is <b>'+setvalue+'</b></small>');
                     } else {
                         $('#wieght-error').html('');
                     }
