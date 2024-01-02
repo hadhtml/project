@@ -1273,3 +1273,19 @@ button:focus {
 .padding-right-ten{
     padding-right: 10px;
 }
+.membermorethenthree{
+    width: 30px;
+    height: 30px;
+    padding: 7px;
+    font-size: 13px;
+    background-color: #f3f3f3;
+    cursor: pointer;
+    margin-left: -6px;
+}
+.membermargenles{
+    margin-left: -6px;
+}
+
+.membermargenles:first-child{
+    margin-left: 6px;
+}

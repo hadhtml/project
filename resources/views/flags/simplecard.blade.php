@@ -70,9 +70,9 @@
                                 $user = DB::table('members')->where('id' , $m->member_id)->first();
                             @endphp
                             @if($user->image != NULL)
-                            <img class="user-image" src="{{asset('public/assets/images/'.$user->image)}}" alt="{{ $user->name }}" title="{{ $user->name }} {{ $user->last_name }}">
+                            <img class="user-image" src="{{asset('public/assets/images/'.$user->image)}}" alt="{{ $user->name }}" data-toggle="tooltip" title="" data-original-title="{{ $user->name }} {{ $user->last_name }}">
                             @else
-                            <img class="user-image" src="{{ Avatar::create($user->name)->toBase64() }}" alt="{{ $user->name }}" title="{{ $user->name }} {{ $user->last_name }}">
+                            <img class="user-image" src="{{ Avatar::create($user->name)->toBase64() }}" alt="{{ $user->name }}" data-toggle="tooltip" title="" data-original-title="{{ $user->name }} {{ $user->last_name }}">
                             @endif
                         @endforeach
                     </div>

@@ -57,22 +57,22 @@
                 @php
                     $member = DB::table('members')->where('id' , $r->member_id)->first();
                 @endphp
-                <div class="member-list-image">
+                <div class="member-list-image membermargenles">
                     @if($member->image)
-                    <img src="{{ url('public/assets/images') }}/{{ $member->image }}">
+                    <img data-toggle="tooltip" title="" data-original-title="{{ $member->name }} {{ $member->last_name }}" src="{{ url('public/assets/images') }}/{{ $member->image }}">
                     @else
-                    <img src="{{ Avatar::create($member->name)->toBase64() }}" alt="{{ $member->name }}" title="{{ $member->name }} {{ $member->last_name }}">
+                    <img data-toggle="tooltip" title="" data-original-title="{{ $member->name }} {{ $member->last_name }}" src="{{ Avatar::create($member->name)->toBase64() }}" alt="{{ $member->name }}" title="{{ $member->name }} {{ $member->last_name }}">
                     @endif
                 </div>
                 @endforeach
                 @if($totalmember > 3)
-                 <div style="width:42px; height:42px; padding: 10px; font-size: 12px;" class="symbol symbol-30  symbol-circle symbol-light" data-toggle="tooltip" title="" data-original-title="More users">
+                 <div onclick="showmemberbox()" class="symbol symbol-30  symbol-circle symbol-light membermorethenthree" data-toggle="tooltip" title="" data-original-title="More Assignee">
                      <span class="symbol-label">{{$totalmember}}+</span>
                  </div>
                  @endif
             </div>
             <div class="member-list-image memberlistposition">
-                <img onclick="showmemberbox()" src="{{url('public/assets/svg/plussmember.svg')}}">
+                <img data-toggle="tooltip" title="" data-original-title="Add New Assignee" onclick="showmemberbox()" src="{{url('public/assets/svg/plussmember.svg')}}">
                 <div class="memberadd-box" @if(isset($memberopen)) style="display:block;" @endif>
                     <div class="row">
                         <div class="col-md-6">
