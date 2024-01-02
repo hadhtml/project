@@ -60,10 +60,13 @@
         <div class="d-flex flex-row justify-content-between align-items-center">
             <div class="d-flex flex-row align-items-center">
                 @if(DB::table('flag_members')->where('flag_id' , $r->id)->first())
-                <div class="d-flex flex-row align-items-center image-cont pr-3">
-                    <div class="pr-1">
+                <div onclick="editflag({{$r->id}})" class="d-flex flex-row align-items-center image-cont pr-3">
+                    <div class="pr-1 d-flex">
                         @php
-                            $member_id = DB::table('flag_members')->where('flag_id' , $r->id)->get();
+                            $member_id = DB::table('flag_members')->where('flag_id' , $r->id)->orderby('id' , 'desc')->limit(3)->get();
+                        @endphp
+                        @php
+                            $totalmember = DB::table('flag_members')->where('flag_id' , $r->id)->count();
                         @endphp
                         @foreach($member_id as $m)
                             @php
@@ -75,12 +78,16 @@
                             <img class="user-image" src="{{ Avatar::create($user->name)->toBase64() }}" alt="{{ $user->name }}" data-toggle="tooltip" title="" data-original-title="{{ $user->name }} {{ $user->last_name }}">
                             @endif
                         @endforeach
+                        @if($totalmember > 3)
+                         <div onclick="showmemberbox()" class="membermorethenthree simplecardmoreusers" data-toggle="tooltip" title="" data-original-title="More Assignee">
+                             {{$totalmember}}+
+                         </div>
+                         @endif
                     </div>
                 </div>
                 @endif
-                <div class="vertical-line pr-2">
-                </div>
-                <div class="d-flex flex-row align-items-center">
+                <div class="vertical-line pr-2"></div>
+                <div onclick="editflag({{$r->id}})" data-toggle="tooltip" title="" data-original-title="Flag Comments" class="d-flex flex-row align-items-center">
                     <div class="pr-1">
                         <small>{{ DB::Table('flag_comments')->where('flag_id' , $r->id)->where('type' , 'comment')->count() }}</small>
                     </div>
@@ -95,13 +102,13 @@
                         $checkescalate = DB::table('escalate_cards')->where('flag_id' , $r->id)->count();
                     @endphp
                     @if($checkescalate > 0)
-                    <div>
+                    <div data-toggle="tooltip" title="" data-original-title="Escalate Flag">
                         <button style="background-color: #3661ec !important;" class="btn btn-circle btn-tolbar bg-transparent">
                             <img src="{{ url('public/assets/svg/uparrow-white.svg') }}">
                         </button>
                     </div>
                     @else
-                    <div>
+                    <div data-toggle="tooltip" title="" data-original-title="Escalate Flag">
                         <button onclick="escalateflag({{$r->id}})" class="btn btn-circle btn-tolbar bg-transparent">
                             <img src="{{ url('public/assets/svg/uparrow.svg') }}">
                         </button>

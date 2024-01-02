@@ -20925,11 +20925,16 @@ input[type="radio"]:checked {
 }
 
 .impediment-card .image-cont img {
-    width: 31px;
-    height: 31px;
+    width: 30px;
+    height: 30px;
     object-fit: cover;
     background-size: cover;
     border-radius: 1000px;
+    margin-left: -6px;
+}
+
+.impediment-card .image-cont img:first-child {
+    margin-left: 0px;
 }
 
 .un-blocked {

@@ -38,27 +38,6 @@
         </div>
     </div>
 </div>
-<style type='text/css'>
- .mention_name{
-    font-size:12px;
- }
- .mention_username{
-    font-size:12px;
-    color:#999;
- }
- .mention_image{
-    float: left;
-    margin-right: 5px;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    width: 20px;
-    height: 20px;
-    }
- .active .mention_username{
-    color:black;
- }
-</style>
 <div class="row">
     <div class="activity-feed @if($comments->count() == 0) col-md-12 @endif">
         <div class="col-md-12 col-lg-12 col-xl-12 writecomment">
