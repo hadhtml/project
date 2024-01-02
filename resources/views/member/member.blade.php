@@ -8,20 +8,7 @@ $var_objective = "Member";
 
 </style>
 
- <div class="d-flex flex-column flex-root">
-        <!-- begin topbar -->
-     
-        <!--begin::Page-->
-        <div class="page d-flex flex-row flex-column-fluid body-cont">
-            <!-- begin Sidebar -->
-       
-            <!-- end Sidebar -->
-            <div class="content d-flex flex-column flex-column-fluid">
-                <!-- begin breadcrums -->
-                <!-- end breadcrums -->
-                <!-- begin page Content -->
-                <div class="container-fluid py-5 w-96">
-                    <div class="row">
+<div class="row">
                         <div class="col-md-12 p-0">
                             <div class="card">
                                 <div class="card-body p-10">
@@ -193,11 +180,6 @@ $var_objective = "Member";
                             </div>
                         </div>
                     </div>
-                </div>
-                <!-- end page content -->
-            </div>
-        </div>
-    </div>
     
     <div class="modal fade" id="create-member" tabindex="-1" role="dialog" aria-labelledby="create-member" aria-hidden="true">
     <div class="modal-dialog" role="document">

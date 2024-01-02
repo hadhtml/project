@@ -2,7 +2,159 @@
 <script>
     window.onload = window.localStorage.clear();
     // function Updated by Usama Start
+    function objective(obj_id) {
+        $.ajax({
+            type: "POST",
+            url: "{{ url('dashboard/keyresult/createkeyresult') }}",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                obj_id: obj_id,
+            },
+            success: function(res) {
+                editobjectivekey(res);
+            }
+        });
+    }
+    function DeleteEpic(epicid, ini_epic, edit_epic_key, edit_epic_obj) {
+        var org_id = "{{ $organization->org_id }}";
+        var slug = "{{ $organization->slug }}";
+        var unit_id = "{{ $organization->id }}";
+        var type = "{{ $organization->type }}";
+        $.ajax({
+            type: "POST",
+            url: "{{ url('delete-epic') }}",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                epicid: epicid,
+                org_id: org_id,
+                slug: slug,
+                unit_id: unit_id,
+                type: type,
+                edit_epic_key: edit_epic_key,
+                edit_epic_obj: edit_epic_obj,
+                ini_epic: ini_epic
 
+            },
+            success: function(res) {
+                $('#parentCollapsible').html(res);
+                $("#nestedCollapsible" + edit_epic_obj).collapse('toggle');
+                $("#key-result" + edit_epic_key).collapse('toggle');
+                $("#initiative" + ini_epic).collapse('toggle');
+                handleDivClick(ini_epic);
+                var new_url="{{ url()->current() }}";
+                window.history.pushState("data","Title",new_url);
+                $('#edit-epic-modal-new').modal('hide');
+            }
+        });
+    }
+    function epicgeneraldetails() {
+        if ($('#epic_name_month').val() != '') {
+        }else{
+            $('#generaltaberror').show();
+            $('#epic_name_month').focus();
+        }
+    }
+    function showlatestepicdatainmodal() {
+        var type = 'latest';
+        $.ajax({
+            type: "POST",
+            url: "{{ url('dashboard/epics/showlatestepicdatainmodal') }}",
+            headers: {
+                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                type: type,
+            },
+            success: function(res) {
+                $('.modalcontentfornewepiccreate').html(res);
+            }
+         });
+    }
+    function saveEpicMonth() {
+        $('#firsttimeepiccreate').html('<i class="fa fa-spin fa-spinner"><i>')
+        var epic_name = $('#epic_name_month').val();
+        var epic_start_date = $('#epic_start_date_month').val();
+        var epic_end_date = $('#epic_end_date_month').val();
+        var epic_description = $('#epic_description_month').val();
+        var org_id = "{{ $organization->org_id }}";
+        var slug = "{{ $organization->slug }}";
+        var unit_id = "{{ $organization->id }}";
+        var ini_epic_id = $('#ini_epic_id_month').val();
+        var epic_status = $('#epic_status_month').val();
+        var epic_key = $('#epic_key_month').val();
+        var epic_obj = $('#epic_obj_month').val();
+        var buisness_unit_id = $('#buisness_unit_id').val();
+        var epic_type = $('#epic_type').val();
+        var epic_month = $('#month_id').val();
+        var epic_quartar = $('#q_id').val();
+        var type = "{{ $organization->type }}";
+        var selectedOptions = $('#team').val();
+        var epicData = [];
+        $('.epic-input').each(function() {
+            epicData.push($(this).val());
+        });
+        var epicStory = [];
+        $('.story_id').each(function() {
+            epicStory.push($(this).val());
+        });
+        var epicComment = [];
+        $('.comment_id').each(function() {
+            epicComment.push($(this).val());
+        });
+        if ($('#epic_name_month').val() != '') {
+            $.ajax({
+                type: "POST",
+                url: "{{ url('dashboard/epics/savenewepic') }}",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    epic_name: epic_name,
+                    epic_start_date: epic_start_date,
+                    epic_end_date: epic_end_date,
+                    epic_description: epic_description,
+                    org_id: org_id,
+                    slug: slug,
+                    ini_epic_id: ini_epic_id,
+                    epicData: epicData,
+                    epic_status: epic_status,
+                    epic_month: epic_month,
+                    epic_quartar: epic_quartar,
+                    unit_id: unit_id,
+                    type: type,
+                    epic_obj: epic_obj,
+                    selectedOptions: selectedOptions,
+                    epic_key: epic_key,
+                    epicStory: epicStory,
+                    epicComment: epicComment,
+                    buisness_unit_id: buisness_unit_id,
+                    epic_type: epic_type
+
+                },
+                success: function(res) {
+                    $('#epic_name_month').val('');
+                    $('#epic_start_date_month').val('');
+                    $('#epic_end_date_month').val('');
+                    $('#epic_description_month').val('');
+                    $('#epic-feild-error-month').html('');
+                    $('#parentCollapsible').html(res);
+                    $("#nestedCollapsible" + epic_obj).collapse('toggle');
+                    $("#key-result" + epic_key).collapse('toggle');
+                    $("#initiative" + ini_epic_id).collapse('toggle');
+                    $("#AddStory").collapse('toggle');
+                    handleDivClick(ini_epic_id);
+                    showlatestepicdatainmodal();
+                }
+            });
+        } else {
+            $('#firsttimeepiccreate').html('Save Changes')
+            $('#epic_name_month').focus()
+        }
+    }
     $(document).ready(function() {
         $('#epic_description_month').summernote({
             height: 180,
@@ -42,33 +194,33 @@
         var value = $('#new-chart-value' + id).val();
         var unit_id = "{{ $organization->id }}";
         if (value == '') {
-             return false;
+            return false;
         }
         $.ajax({
             type: "POST",
-            url: "{{ route('keyresult.addquartervalue') }}",
+            url: "{{ url('add-new-quarter-value') }}",
             headers: {
-                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             data: {
-                 id: id,
-                 value: value,
-                 key_chart_id: key_chart_id,
-                 unit_id: unit_id,
-                 sprint_id: sprint_id,
+                id: id,
+                value: value,
+                key_chart_id: key_chart_id,
+                unit_id: unit_id,
+                sprint_id: sprint_id,
 
             },
             success: function(res) {
-                 $('#new-chart-value' + id).val('');
-                 $('.secondportion').html(res);
+                $('#new-chart-value' + id).val('');
+                showtab(id , 'values');
             }
-         });
+        });
+
     }
     function deletequartervalue(id) {
         var unit_id = "{{ $organization->id }}";
         $.ajax({
             type: "POST",
-            url: "{{ url('delete-new-quarter-value') }}",
             url: "{{ route('keyresult.deletequartervalue') }}",
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -462,39 +614,7 @@
 
 
 
-    function objective(key_obj_id, w_count, start_date, end_date) {
-        $('#key_obj_id').val(key_obj_id);
-        $('#key_start_date').attr('min', start_date);
-        $('#key_start_date').attr('max', end_date);
-        $('#key_end_date').attr('max', end_date);
-
-        $('#weight').html('');
-        if (w_count == 0) {
-            $(".check").prop("checked", false);
-
-        } else {
-            $('#weight').append(
-                '<div class="col-md-8"><input style="margin-top:10px;" class="range-slider__range-two  ml-4"  type="range" value="0" min="1" max="100"></div><div class="col-md-4"><input id="sliderValue" class="w-25 mt-2" readonly type="text" min="1" value="1"></div>'
-                ); // Add field html
-            $(".check").hide();
-
-
-        }
-
-        $('#key_result_unit').val('');
-        $('#key_result_type').val('');
-        $('#init_value').val('');
-        $('#target_number').val('');
-        $('.target_value').val('');
-        $('.field_wrapper_key').html('');
-
-        $('.field_wrapper_bu_team').html('');
-        $('#obj-team1').val('');
-        $('.field_wrapper_bu').html('');
-        getteam();
-       
-
-    }
+    
 
     $(document).ready(function() {
         $('.check').on('click', function() {
@@ -972,7 +1092,33 @@
         $('#key_delete_obj_id').val(obj);
 
     }
-
+    function deletekeyresult(delete_id , objec_id) {
+        var key_delete_id = delete_id;
+        var org_id = "{{ $organization->org_id }}";
+        var slug = "{{ $organization->slug }}";
+        var unit_id = "{{ $organization->id }}";
+        var obj = objec_id;
+        var type = "{{ $organization->type }}";
+        $.ajax({
+            type: "POST",
+            url: "{{ url('Delete-objective-key') }}",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                key_delete_id: key_delete_id,
+                org_id: org_id,
+                slug: slug,
+                unit_id: unit_id,
+                type: type
+            },
+            success: function(res) {
+                $('#edit-key-result-new').modal('hide');
+                $('#parentCollapsible').html(res);
+                $("#nestedCollapsible" + obj).collapse('toggle');
+            }
+        });
+    }
     function DeleteObjectivekey() {
 
         var key_delete_id = $('#key_delete_id').val();
@@ -1567,48 +1713,7 @@
     }
 
 
-    function DeleteEpic(epicid, ini_epic, edit_epic_key, edit_epic_obj) {
-
-
-        var org_id = "{{ $organization->org_id }}";
-        var slug = "{{ $organization->slug }}";
-        var unit_id = "{{ $organization->id }}";
-        var type = "{{ $organization->type }}";
-
-        $.ajax({
-            type: "POST",
-            url: "{{ url('delete-epic') }}",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: {
-                epicid: epicid,
-                org_id: org_id,
-                slug: slug,
-                unit_id: unit_id,
-                type: type,
-                edit_epic_key: edit_epic_key,
-                edit_epic_obj: edit_epic_obj,
-                ini_epic: ini_epic
-
-            },
-            success: function(res) {
-
-
-
-                $('#parentCollapsible').html(res);
-                $("#nestedCollapsible" + edit_epic_obj).collapse('toggle');
-                $("#key-result" + edit_epic_key).collapse('toggle');
-                $("#initiative" + ini_epic).collapse('toggle');
-                handleDivClick(ini_epic);
-
-
-
-
-            }
-        });
-
-    }
+    
 
 
 
@@ -1952,106 +2057,7 @@
 
 
 
-    function saveEpicMonth() {
-
-
-
-        var epic_name = $('#epic_name_month').val();
-        var epic_start_date = $('#epic_start_date_month').val();
-        var epic_end_date = $('#epic_end_date_month').val();
-        var epic_description = $('#epic_description_month').val();
-        var org_id = "{{ $organization->org_id }}";
-        var slug = "{{ $organization->slug }}";
-        var unit_id = "{{ $organization->id }}";
-        var ini_epic_id = $('#ini_epic_id_month').val();
-        var epic_status = $('#epic_status_month').val();
-
-        var epic_key = $('#epic_key_month').val();
-        var epic_obj = $('#epic_obj_month').val();
-
-
-        var buisness_unit_id = $('#buisness_unit_id').val();
-        var epic_type = $('#epic_type').val();
-
-        var epic_month = $('#month_id').val();
-        var epic_quartar = $('#q_id').val();
-        var type = "{{ $organization->type }}";
-
-        var selectedOptions = $('#team').val();
-
-        var epicData = [];
-        $('.epic-input').each(function() {
-            epicData.push($(this).val());
-        });
-        var epicStory = [];
-        $('.story_id').each(function() {
-            epicStory.push($(this).val());
-        });
-
-        var epicComment = [];
-        $('.comment_id').each(function() {
-            epicComment.push($(this).val());
-        });
-
-
-
-
-        if ($('#epic_name_month').val() != '') {
-            $.ajax({
-                type: "POST",
-                url: "{{ url('save-epic-month') }}",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: {
-                    epic_name: epic_name,
-                    epic_start_date: epic_start_date,
-                    epic_end_date: epic_end_date,
-                    epic_description: epic_description,
-                    org_id: org_id,
-                    slug: slug,
-                    ini_epic_id: ini_epic_id,
-                    epicData: epicData,
-                    epic_status: epic_status,
-                    epic_month: epic_month,
-                    epic_quartar: epic_quartar,
-                    unit_id: unit_id,
-                    type: type,
-                    epic_obj: epic_obj,
-                    selectedOptions: selectedOptions,
-                    epic_key: epic_key,
-                    epicStory: epicStory,
-                    epicComment: epicComment,
-                    buisness_unit_id: buisness_unit_id,
-                    epic_type: epic_type
-
-                },
-                success: function(res) {
-                    $('#epic_name_month').val('');
-                    $('#epic_start_date_month').val('');
-                    $('#epic_end_date_month').val('');
-                    $('#epic_description_month').val('');
-                    $('#epic-feild-error-month').html('');
-                    $('#parentCollapsible').html(res);
-                    $("#nestedCollapsible" + epic_obj).collapse('toggle');
-                    $("#key-result" + epic_key).collapse('toggle');
-                    $("#initiative" + ini_epic_id).collapse('toggle');
-                    $("#AddStory").collapse('toggle');
-                    handleDivClick(ini_epic_id);
-                    $('#create-epic-month').modal('hide');
-                    @php
-                        $lastepicid = DB::table('epics')->latest('id')->first();
-                    @endphp
-                    editepic("{{ $lastepicid->id }}");
-                }
-            });
-        } else {
-
-            $('#epic_name_month').focus()
-            // $('#epic-feild-error-month').html('Please fill out all required fields.');
-
-        }
-    }
+    
 
 
 
@@ -2560,41 +2566,7 @@
     }
 
 
-    function addnewquartervalue(id, key_chart_id, sprint_id) {
-
-        var value = $('#new-chart-value' + id).val();
-
-        var unit_id = "{{ $organization->id }}";
-
-        if (value == '') {
-            return false;
-        }
-        $.ajax({
-            type: "POST",
-            url: "{{ url('add-new-quarter-value') }}",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: {
-                id: id,
-                value: value,
-                key_chart_id: key_chart_id,
-                unit_id: unit_id,
-                sprint_id: sprint_id,
-
-            },
-            success: function(res) {
-
-
-
-                $('#new-chart-value' + id).val('');
-                $('.key-chart-data').html(res);
-
-
-            }
-        });
-
-    }
+    
 
     function editquartervalue(id, val) {
         $('#edit-val' + id).html('<input type="text" class="form-control w-50" style="font-size:12px" id="value' + id +
@@ -2627,32 +2599,6 @@
                     id + ')"><img src="{{ url('public/assets/images/icons/delete.svg') }}"></button>');
 
                 $('#q-value' + res.key_chart_id).html(res.value);
-
-            }
-        });
-
-    }
-
-    function deletequartervalue(id) {
-
-
-        var unit_id = "{{ $organization->id }}";
-
-        $.ajax({
-            type: "POST",
-            url: "{{ url('delete-new-quarter-value') }}",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: {
-                id: id,
-                unit_id: unit_id,
-
-            },
-            success: function(res) {
-
-                $('#delete-val' + id).remove();
-
 
             }
         });
