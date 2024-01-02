@@ -344,6 +344,32 @@
     height: 50vh;
     width: 100%;
 }
+#memberstoshow{
+    height: 100px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* width */
+#memberstoshow::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+#memberstoshow::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+#memberstoshow::-webkit-scrollbar-thumb {
+  background: #c5c9d1;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+#memberstoshow::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
 
 /* width */
 .activity-feed::-webkit-scrollbar {

@@ -75,7 +75,7 @@ class EpicController extends Controller
         }
         if($request->tab == 'comments')
         {
-            $comments = flag_comments::where('flag_id' , $request->id)->wherenull('comment_id')->orderby('id' , 'desc')->get();
+            $comments = flag_comments::where('flag_id' , $request->id)->where('comment_type' , 'epics')->wherenull('comment_id')->orderby('id' , 'desc')->get();
             $data = Epic::find($request->id);
             $html = view('epics.tabs.comments', compact('comments','data'))->render();
             return $html;
@@ -1134,5 +1134,16 @@ class EpicController extends Controller
         $member->member_id = $request->flag_assign;
         $member->flag_id = $flag->id;
         $member->save();
+    }
+    public function showorderby(Request $request)
+    {
+        if($request->table == 'flag_comments')
+        {
+            $comments = flag_comments::where('flag_id' , $request->flag_id)->wherenull('comment_id')->where('comment_type' , 'epics')->orderby('id' , $request->id)->get();
+            $orderby = $request->id;
+            $data = Epic::find($request->flag_id);
+            $html = view('epics.tabs.comments', compact('comments','data','orderby'))->render();
+            return $html;
+        }
     }
 }

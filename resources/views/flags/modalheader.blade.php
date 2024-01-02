@@ -50,7 +50,10 @@
         </div>
         <div class="members-list">
             <div id="members">
-                @foreach(DB::table('flag_members')->where('flag_id' , $data->id)->get() as $r)
+                @php
+                    $totalmember = DB::table('flag_members')->where('flag_id' , $data->id)->count();
+                @endphp
+                @foreach(DB::table('flag_members')->where('flag_id' , $data->id)->orderby('id' , 'desc')->limit(3)->get() as $r)
                 @php
                     $member = DB::table('members')->where('id' , $r->member_id)->first();
                 @endphp
@@ -62,6 +65,11 @@
                     @endif
                 </div>
                 @endforeach
+                @if($totalmember > 3)
+                 <div style="width:42px; height:42px; padding: 10px; font-size: 12px;" class="symbol symbol-30  symbol-circle symbol-light" data-toggle="tooltip" title="" data-original-title="More users">
+                     <span class="symbol-label">{{$totalmember}}+</span>
+                 </div>
+                 @endif
             </div>
             <div class="member-list-image memberlistposition">
                 <img onclick="showmemberbox()" src="{{url('public/assets/svg/plussmember.svg')}}">
@@ -85,7 +93,7 @@
                         </div>
                     </div>
                     <div class="row" id="memberstoshow">
-                        @foreach(DB::table('members')->where('org_user' , Auth::id())->limit(2)->get() as $r)
+                        @foreach(DB::table('members')->where('org_user' , Auth::id())->limit(8)->get() as $r)
                         <div class="col-md-12 memberprofile" onclick="savemember({{$r->id}} , {{$data->id}})">
                             <div class="row">
                                 <div class="col-md-2">
@@ -93,7 +101,7 @@
                                         @if($r->image)
                                         <img src="{{ url('public/assets/images') }}/{{ $r->image }}">
                                         @else
-                                        <div class="namecounter">{{ substr($r->name, 0, 1); }}</div>
+                                        <img src="{{ Avatar::create($r->name)->toBase64() }}">
                                         @endif
                                     </div>
                                 </div>
@@ -121,3 +129,8 @@
     </span>
     <img data-dismiss="modal" class="closeimage" aria-label="Close" src="{{url('public/assets/svg/cross.svg')}}">
 </div>
+<script type="text/javascript">
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
