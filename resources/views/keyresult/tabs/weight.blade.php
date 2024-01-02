@@ -12,38 +12,45 @@
         </div>
     </div>
 </div>
-
+<input type="hidden" value="{{ $data->obj_id }}" id="key_obj_id">
 <div class="row mt-5">
     <div class="col-md-1">
         <label class="checkbox checkbox-lg">
-            <input class="check" checked type="checkbox" />
+            <input class="check" type="checkbox" />
         </label>
     </div>
     <div class="col-md-5">
         <h6 class="add-weight-heading">Add Weight</h6>
     </div>
 </div>
-<div id="wieght-error"></div>
-    <div class="row" id="weightappend">
-      
-     </div>
-      
-        <script type="text/javascript">
-            $(document).ready(function() {
-                $('.check').on('click', function() {
-                    console.log('ok');
-                    var isChecked = $(this).is(':checked');
-                    if (isChecked) {
-                        // Show the weight div
-                        $('#weightappend').html('');
-                        $('#weightappend').append(
-                            '<div class="col-md-6"><input class="range-slider__range-two form-control"  type="range" value="1" min="1" max="100"></div><div class="col-md-6"><input id="sliderValue" class="form-control range-slider__range-two"  type="text" min="1" value="1"></div>'
-                            ); // Add field html
+<div class="row">
+    <div class="col-md-12">
+        <div style="padding: 0.75rem 1.25rem;">
+            <div id="wieght-error"></div>
+        </div>
+        
+    </div>
+</div>
+<div class="row" id="weightappend">
+  
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.check').on('click', function() {
+            console.log('ok');
+            var isChecked = $(this).is(':checked');
+            if (isChecked) {
+                // Show the weight div
+                $('#weightappend').html('');
+                $('#weightappend').append(
+                    '<div class="col-md-6"><input class="range-slider__range-two form-control"  type="range" value="1" min="1" max="100"></div><div class="col-md-6"><input id="sliderValue" class="form-control range-slider__range-two"  type="text" min="1" value="1"></div>'
+                    ); // Add field html
 
 
-                    } else {
-                        $('#weightappend').html(''); // Hide the weight div
-                    }
-                });
-            });
-        </script>
+            } else {
+                $('#weightappend').html(''); // Hide the weight div
+            }
+        });
+    });
+</script>

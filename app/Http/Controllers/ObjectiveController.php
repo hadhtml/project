@@ -2629,60 +2629,34 @@ class ObjectiveController extends Controller
             "obj" => $obj,
         ]);
     }
-
     public function checkkeyweight(Request $request)
     {
-        $key = DB::table("key_result")
-            ->where("obj_id", $request->obj)
-            ->sum("weight");
-
+        $key = DB::table("key_result")->where("obj_id", $request->obj)->sum("weight");
         $value = $key + $request->slider;
-
         return response()->json(["key" => $value]);
     }
-
     public function checkkeyweightedit(Request $request)
     {
-        $key = DB::table("key_result")
-            ->where("obj_id", $request->obj)
-            ->sum("weight");
-        $keyid = DB::table("key_result")
-            ->where("id", $request->key)
-            ->first();
-
+        $key = DB::table("key_result")->where("obj_id", $request->obj)->sum("weight");
+        $keyid = DB::table("key_result")->where("id", $request->key)->first();
         $oldsum = $key - $keyid->weight;
         $newvalue = $oldsum + $request->value;
-
         return response()->json(["key" => $newvalue, "keyid" => $keyid]);
     }
-
     public function checkkeyweighteditfirst(Request $request)
     {
-        $key = DB::table("key_result")
-            ->where("obj_id", $request->obj)
-            ->sum("weight");
-        $keyid = DB::table("key_result")
-            ->where("id", $request->key)
-            ->first();
-
+        $key = DB::table("key_result")->where("obj_id", $request->obj)->sum("weight");
+        $keyid = DB::table("key_result")->where("id", $request->key)->first();
         $oldsum = $key - $keyid->weight;
         $newvalue = $oldsum + $request->weightedit;
-
         return response()->json(["key" => $newvalue, "keyid" => $keyid]);
     }
-
     public function WeightCheckEdit(Request $request)
     {
-        $key = DB::table("key_result")
-            ->where("obj_id", $request->obj)
-            ->sum("weight");
-        $keyid = DB::table("key_result")
-            ->where("id", $request->id)
-            ->first();
-
+        $key = DB::table("key_result")->where("obj_id", $request->obj)->sum("weight");
+        $keyid = DB::table("key_result")->where("id", $request->id)->first();
         return view("objective.key-weight-render", compact("key", "keyid"));
     }
-
     public function ChangeEpic(Request $request)
     {
         $quarterMonth = DB::table("epics")

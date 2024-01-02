@@ -588,6 +588,7 @@
 
     $(document).ready(function() {
         $(document).on('input', '.range-slider__range-two', function() {
+            console.log($(this).val());
             $('.range-slider__range-two').val($(this).val());
             $('#sliderValue').val($(this).val());
             var slider = $('#sliderValue').val();
@@ -605,18 +606,12 @@
 
                 },
                 success: function(res) {
-
                     if (res.key > 100) {
-                        $('#wieght-error').html(
-                            '<small class="text-danger ml-2">Combined weight percentage must not be greater than 100</small>'
-                            );
-
+                        $('#wieght-error').css('display' , 'bloack');
+                        $('#wieght-error').html('<small class="text-danger ml-2">Combined weight percentage must not be greater than 100</small>');
                     } else {
                         $('#wieght-error').html('');
                     }
-
-
-
                 }
             });
 
