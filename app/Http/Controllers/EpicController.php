@@ -933,34 +933,36 @@ class EpicController extends Controller
         $update = Epic::find($request->epic_id);
         $update->team_id = $request->id;
         $update->save();
-
         if($update->epic_type == 'unit')
         {
-            foreach(DB::table('unit_team')->where('org_id',$update->buisness_unit_id)->where('type' , 'BU')->get() as $r)
-            {
-                echo '<div class="col-md-12 memberprofile" onclick="selectteamforepic('.$r->id.','.$update->id.')">
-                        <div class="row">
-                            <div class="col-md-2">
-                                <div class="memberprofileimage">
-                                    <img src="'.Avatar::create($r->team_title)->toBase64().'">
-                                </div>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="membername">'.$r->team_title.'</div>
-                                <div class="memberdetail">Team Leader: '.DB::table('members')->where('id' , $r->lead_id)->first()->name.' '.DB::table('members')->where('id' , $r->lead_id)->first()->last_name.'</div>
-                            </div>
-                            <div class="col-md-2 text-center mt-3">';
-                                if($update->team_id == $r->id)
-                                {
-                                    echo '<img class="tickimage" src="'.url('public/assets/svg/smalltick.svg').'">';
-                                }
-                            echo '</div>
-                        </div>
-                    </div>';
-            }
+            $teams = DB::table('unit_team')->where('org_id',$update->buisness_unit_id)->where('type' , 'BU')->get();
         }
-        
-                        
+        if($update->epic_type == 'org')
+        {
+            $teams = DB::table('org_team')->where('org_id',$update->buisness_unit_id)->where('type' , 'orgT')->get();
+        }
+        foreach($teams as $r)
+        {
+            echo '<div class="col-md-12 memberprofile" onclick="selectteamforepic('.$r->id.','.$update->id.')">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="memberprofileimage">
+                                <img src="'.Avatar::create($r->team_title)->toBase64().'">
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="membername">'.$r->team_title.'</div>
+                            <div class="memberdetail">Team Leader: '.DB::table('members')->where('id' , $r->lead_id)->first()->name.' '.DB::table('members')->where('id' , $r->lead_id)->first()->last_name.'</div>
+                        </div>
+                        <div class="col-md-2 text-center mt-3">';
+                            if($update->team_id == $r->id)
+                            {
+                                echo '<img class="tickimage" src="'.url('public/assets/svg/smalltick.svg').'">';
+                            }
+                        echo '</div>
+                    </div>
+                </div>';
+        }                        
     }
     public function showorderbyactivity(Request $request)
     {

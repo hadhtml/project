@@ -17,6 +17,9 @@
     if($data->epic_type == 'unit'){
         $team = DB::table('unit_team')->where('id'  ,$data->team_id)->first();
     }
+    if($data->epic_type == 'org'){
+        $team = DB::table('org_team')->where('id'  ,$data->team_id)->first();
+    }
     $dataArray = explode(',', $team->member);
     $dataCount = count($dataArray);
     $firstTwoIds = array_slice($dataArray, 0, 2);

@@ -135,6 +135,28 @@
                             </div>
                         @endforeach
                     @endif
+                    @if($data->epic_type == 'org')
+                        @foreach(DB::table('org_team')->where('org_id',$data->buisness_unit_id)->where('type' , 'orgT')->get() as $r)
+                            <div class="col-md-12 memberprofile" onclick="selectteamforepic({{$r->id}} , {{$data->id}})">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="memberprofileimage">
+                                            <img src="{{ Avatar::create($r->team_title)->toBase64() }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="membername">{{ $r->team_title }}</div>
+                                        <div class="memberdetail">Team Leader: {{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
+                                    </div>
+                                    <div class="col-md-2 text-center mt-3">
+                                        @if($data->team_id == $r->id)
+                                        <img class="tickimage" src="{{ url('public/assets/svg/smalltick.svg') }}">
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
                 </div>
             </div>
         </div>
