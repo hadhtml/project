@@ -1,7 +1,7 @@
 <div class="row positionrelative">
     <div class="col-md-12 mb-5">
         <h5 class="modal-title newmodaltittle epic-tittle-header marginleftthirty" id="create-epic">
-            <img src="{{ url('public/assets/svg/epicheaderheader.svg') }}">{{ $data->epic_name }}
+            <img src="{{ url('public/assets/svg/epicheaderheader.svg') }}">@if($data->epic_name) {{ $data->epic_name }} @else Enter Epic Tittle @endif
         </h5>
     </div>
     <!-- <div class="col-md-12 marginleftthirty newmodalsubtittle">

@@ -231,9 +231,11 @@
             cache:false,
             contentType: false,
             processData: false,
-            success: function(data){
-                showepicinboard('{{ $data->id }}');
-                editepic('{{ $data->id }}');
+            success: function(res){
+                $('#parentCollapsible').html(res);
+                $("#nestedCollapsible{{ $data->obj_id }}").collapse('toggle');
+                $("#key-result{{ $data->key_id }}").collapse('toggle');
+                $("#initiative{{ $data->initiative_id }}").collapse('toggle');                
                 showheader('{{ $data->id }}')
                 $('#updatebutton').html('Save Changes');
             }
