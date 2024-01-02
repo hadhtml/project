@@ -186,7 +186,7 @@ function getOrder(){
             </style>
 
             @if($epicstory->count() > 0)
-            <div class="rows">
+            <!-- <div class="rows">
                 <div class="child-items">
                     <div class="child-item-chekbox-portions">
                         <label class="form-checkboxs">
@@ -203,11 +203,11 @@ function getOrder(){
                       </span>
                       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" onclick="deletechilditemsbulk()" href="javascript:void(0)">Delete</a>
-                        <!-- <a class="dropdown-item" onclick="deletechilditemsbulk()" href="javascript:void(0)">Bulk Edit</a> -->
+                        <a class="dropdown-item" onclick="deletechilditemsbulk()" href="javascript:void(0)">Bulk Edit</a>
                       </div>
                     </div>
                 </div>                
-            </div>
+            </div> -->
             
             <form method="POST" action="{{ url('dashboard/epics/bulkupdate') }}" id="bulkupdateform" class="sortable">
                 @csrf
@@ -227,7 +227,7 @@ function getOrder(){
                     <div class="child-item">
                         <div class="child-item-chekbox-portion">
                             <label class="form-checkbox">
-                                <input class="form-check-input allchilditem" name="checkbox[]" value="{{ $s->id }}" onclick="childcheckbox()" type="checkbox" id="flexCheckDefault">
+                                <input @if($s->story_status == 'Done') checked @endif class="form-check-input allchilditem" @if($s->story_status != 'Done') onclick="changeitemstatus('Done',{{$s->id}})" @else onclick="changeitemstatus('To Do',{{$s->id}})" @endif name="checkbox[]" value="{{ $s->id }}" onclick="childcheckbox()" type="checkbox" id="flexCheckDefault">
                                 <span class="checkbox-label"></span>
                             </label>
                             <div class="child-item-id">
