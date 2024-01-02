@@ -7,7 +7,7 @@
                 {{-- <button id="closeBtn" class="close-button">
                     <img src="https://dev.agileprolific.com/public/assets/images/icons/collaps.svg">
                 </button> --}}
-                <h6 class="title">Organization</h6>
+                <h6 class="title">Settings</h6>
               
 
             

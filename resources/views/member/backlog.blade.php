@@ -633,6 +633,15 @@ $var_objective = "Backlog";
       // Check All checkbox functionality
       $('#checkAll').change(function() {
         $(':checkbox', 'tbody').prop('checked', this.checked);
+        if(this.checked)
+                {
+                    $("#backlog-assign").show();
+
+                }else
+                {
+                    $("#backlog-assign").hide();
+  
+                }
       });
     });
     
