@@ -48,7 +48,7 @@
                     </div>
                 </div>
             <div>
-                <button class="button" data-toggle="modal" onclick="get_epic();" data-target="#">Assign</button>
+                <button class="button" id="backlog-assign" data-toggle="modal" style="display:none" onclick="get_epic();" data-target="#">Assign</button>
                 <button class="button" data-toggle="modal" data-target="#create-backlog-team">Add New</button>
                 <button class="button" data-toggle="modal"  data-target="#create-jira-epic">Connect Jira</button>
             </div>

@@ -28,19 +28,7 @@
 
     </style>
 
-<div class="d-flex flex-column flex-root">
-    <!-- begin topbar -->
-    <!--begin::Page-->
-    <div class="page d-flex flex-row flex-column-fluid body-cont">
-        <!-- begin Sidebar -->
-
-        <!-- end Sidebar -->
-        <div class="content d-flex flex-column flex-column-fluid">
-            <!-- begin breadcrums -->
-            <!-- end breadcrums -->
-            <!-- begin page Content -->
-            <div class="container-fluid" id="assign-epic">
-                @if (count($Backlog) > 0)
+    @if (count($Backlog) > 0)
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card">
@@ -530,10 +518,7 @@
                         Add an Epic
                     </button>
                 </div>
-            @endif  
-            </div>
-            </div>
-            </div>
+            @endif 
 
     <div class="modal fade" id="create-backlog-team" tabindex="-1" role="dialog" aria-labelledby="create-epic"
         aria-hidden="true">
@@ -844,6 +829,16 @@
             // Check All checkbox functionality
             $('#checkAll').change(function() {
                 $(':checkbox', 'tbody').prop('checked', this.checked);
+                if(this.checked)
+                {
+                    $("#backlog-assign").show();
+
+                }else
+                {
+                    $("#backlog-assign").hide();
+  
+                }
+
             });
 
 
@@ -858,6 +853,7 @@
             var selectedOption = [];
             $('.checkbox:checked').each(function() {
                 selectedOption.push($(this).val());
+
 
             });
 
