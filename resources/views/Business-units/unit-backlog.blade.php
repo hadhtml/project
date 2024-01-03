@@ -58,7 +58,7 @@ $var_objective = "Backlog-Unit";
                                                     <tr id="backlog-{{$backlog->id}}">
                                                     <td>
                                                     <label class="form-checkbox">
-                                                    <input type="checkbox" class="checkbox" value="{{$backlog->id}}">
+                                                    <input type="checkbox" class="checkbox check" value="{{$backlog->id}}">
                                                     <span class="checkbox-label"></span>
                                                   </label>
                                                         </td>
@@ -585,24 +585,35 @@ $var_objective = "Backlog-Unit";
                     <img src="{{asset('public/assets/images/icons/minus.svg')}}">
                 </button>
             </div>
+            @php
+            $jira = DB::table('jira_setting')->where('user_id',Auth::id())->count();
+            @endphp
             <div class="modal-body">
             <form class="needs-validation" action="{{url('assign-jira-epic')}}" method="POST">
             @csrf   
                
                 <input type="hidden" name="backlog_id" value="{{$organization->id}}">
                 <input type="hidden" name="type" value="{{$organization->type}}">
-                    <div class="col-md-12 col-lg-12 col-xl-12">
-                            <div class="form-group mb-0">
-                               <select class="form-control" onchange="get_jira_project(this.value)"  id="JIRA" name="jira_name" required>
-                                <option value="" >Select Jira Connect</option>
-                                <?php foreach(DB::table('jira_setting')->where('user_id',Auth::id())->get() as $r){ ?>
-                                  <option value="{{ $r->id }}">{{ $r->jira_name }}</option>-->
-                                   <?php }  ?>
+                
+                @if($jira > 0)
+                <div class="col-md-12 col-lg-12 col-xl-12">
+                    <div class="form-group mb-0">
+                        <select class="form-control" onchange="get_jira_project(this.value)" id="JIRA"
+                            name="jira_name" required>
+                            <option value="">Select Jira Connect</option>
+                            <?php foreach(DB::table('jira_setting')->where('user_id',Auth::id())->get() as $r){ ?>
+                            <option value="{{ $r->id }}">{{ $r->jira_name }}</option>-->
+                            <?php }  ?>
 
-                               </select>
-                                <label for="small-description">Choose Jira Connect</label>
-                            </div>
-                        </div>
+                        </select>
+                        <label for="small-description">Choose Jira Connect</label>
+                    </div>
+                </div>
+                @else
+                <div class="alert alert-danger mt-1 ml-3" role="alert">
+                    Connect your Jira account in the settings. <a href="{{url('dashboard/organization/setting')}}" class="alert-link">Click here</a>.
+                    </div>
+                @endif
                         
                           <div class="col-md-12 col-lg-12 col-xl-12">
                             <div class="form-group mb-0">
@@ -658,6 +669,14 @@ $var_objective = "Backlog-Unit";
       });
       
     
+      $('.check').on('click', function(){
+            isChecked = $(this).is(':checked')
+            
+            if(isChecked){ 
+                $("#backlog-assign").show();
+            }
+         
+            })
 
     });
     
