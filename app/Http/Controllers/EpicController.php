@@ -730,11 +730,32 @@ class EpicController extends Controller
                 curl_close($ch);
             }
         }
+        if ($date->epic_type == "unit") {
+            $organization = DB::table("business_units")->where("id", $date->buisness_unit_id)->first();
+            $objective = DB::table("objectives")->where("org_id", $date->buisness_unit_id)->where("unit_id", $date->buisness_unit_id)->where("trash", null)->where("type", "unit")->get();
+        }
+        if ($date->epic_type == "stream") {
+            $organization = DB::table("value_stream")->where("id", $date->buisness_unit_id)->first();
+            $objective = DB::table("objectives")->where("org_id", $date->buisness_unit_id)->where("unit_id", $date->buisness_unit_id)->where("trash", null)->where("type", "stream")->get();
+        }
+        if ($date->epic_type == "BU") {
+            $organization = DB::table("unit_team")->where("id", $date->buisness_unit_id)->first();
+            $objective = DB::table("objectives")->where("org_id", $date->buisness_unit_id)->where("unit_id", $date->buisness_unit_id)->where("trash", null)->where("type", "BU")->get();
+        }
+        if ($date->epic_type == "VS") {
+            $organization = DB::table("value_team")->where("id", $date->buisness_unit_id)->first();
+            $objective = DB::table("objectives")->where("org_id", $date->buisness_unit_id)->where("unit_id", $date->buisness_unit_id)->where("trash", null)->where("type", "VS")->get();
+        }
+        if ($date->epic_type == "org") {
+            $organization = DB::table("organization")->where("id", $date->buisness_unit_id)->first();
+            $objective = DB::table("objectives")->where("unit_id", $date->buisness_unit_id)->where("trash", null)->where("type", "org")->get();
+        }
+        if ($date->epic_type == "orgT") {
+            $organization = DB::table("org_team")->where("id", $date->buisness_unit_id)->first();
+            $objective = DB::table("objectives")->where("unit_id", $date->buisness_unit_id)->where("trash", null)->where("type", "orgT")->get();
+        }
+        return view("objective.objective-render",compact("organization", "objective"));
 
-       
-        $data = Epic::find($request->edit_epic_id);
-        $html = view('epics.modalheader', compact('data'))->render();
-        return $html;
     }
     public function updateflagstatus(Request $request)
     {

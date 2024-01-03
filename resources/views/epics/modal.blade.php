@@ -136,7 +136,11 @@
                 selectedOptions: '{{ $data->epic_name }}',
             },
             success: function(res) {
-                $('.modalheaderforapend').html(res);
+                showheader(id);
+                $('#parentCollapsible').html(res);
+                $("#nestedCollapsible{{ $data->obj_id }}").collapse('toggle');
+                $("#key-result{{ $data->key_id }}").collapse('toggle');
+                $("#initiative{{ $data->initiative_id }}").collapse('toggle');
             },
             error: function(error) {
                 
