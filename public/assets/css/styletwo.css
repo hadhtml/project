@@ -104,6 +104,9 @@
 .newmodalcontent .form-control{
     height: 48px !important;
 }
+.newmodalcontent .form-group{
+    z-index: 1000;
+}
 .newmodalcontent .form-group>label {
     bottom: 0;
     left: 15px;
