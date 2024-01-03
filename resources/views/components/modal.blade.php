@@ -222,7 +222,7 @@
                         <p>Fill out the form, submit and hit the save button.</p>
                     </div>
                     
-                    <span id="obj-feild-error" class="ml-3 text-danger"></span>
+                    
     
                 </div>
 
@@ -234,6 +234,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div id="success-obj"  role="alert"></div>
+                        <span id="obj-feild-error" class="text-danger"></span>
                     </div>
                 </div>
                 <form class="needs-validation" method="POST" >
@@ -243,7 +244,7 @@
                         <div class="col-md-12 col-lg-12 col-xl-12">
                             <div class="form-group mb-0">
                                 <input type="text" class="form-control" id="objective_name" required>
-                                <label for="objective-name">Objective Name</label>
+                                <label for="objective-name">Objective Name <small class="text-danger">*</small></label>
 
                             </div>
                         </div>
@@ -394,7 +395,7 @@
 
                         
                         <div class="col-md-12">
-                            <button onclick="saveObjective();" type="button" class="btn btn-primary btn-lg btn-theme btn-block ripple">Submit</button>
+                            <button onclick="saveObjective();" id="saveobjectivebutton" type="button" class="btn btn-primary btn-lg btn-theme btn-block ripple">Save Objective</button>
                         </div>
                     </div>
                 </form>
@@ -530,7 +531,7 @@
                         <p>Fill out the form, submit and hit the save button.</p>
                     </div>
                     
-                    <span id="initiative-feild-error" class="ml-3 text-danger"></span>
+                    
 
                 </div>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -547,6 +548,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div id="success-initiative"  role="alert"></div>
+                        <span id="initiative-feild-error" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row">
@@ -607,7 +609,7 @@
                             </div>
                         </div>
                         <div class="col-md-12">
-                            <button type="button" onclick="saveKeyinitiative();" class="btn btn-primary btn-lg btn-theme btn-block ripple">Submit</button>
+                            <button type="button" id="saveinitiativebutton" onclick="saveKeyinitiative();" class="btn btn-primary btn-lg btn-theme btn-block ripple">Save Initiative</button>
                         </div>
                     </div>
                 </form>

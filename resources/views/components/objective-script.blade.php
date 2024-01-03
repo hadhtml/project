@@ -352,7 +352,7 @@
 
 
     function saveObjective() {
-
+        
         var objective_name = $('#objective_name').val();
         var start_date = $('#start_date').val();
         var end_date = $('#end_date').val();
@@ -385,7 +385,7 @@
         });
 
 
-
+        $('#saveobjectivebutton').html('<i class="fa fa-spin fa-spinner"></i>');
         $.ajax({
             type: "POST",
             url: "{{ url('save-objective') }}",
@@ -424,10 +424,11 @@
                     '<div class="alert alert-success" role="alert"> Objective Created successfully</div>'
                 );
                 $('#obj-feild-error').html('');
+                $('#saveobjectivebutton').html('Save Objective');
                 setTimeout(function() {
                     $('#create-objective').modal('hide');
                     $('#success-obj').html('');
-                }, 3000);
+                }, 1000);
                 $('#parentCollapsible').html(res);
 
                 // }
@@ -1219,6 +1220,7 @@
             return false;
 
         }
+        $('#saveinitiativebutton').html('<i class="fa fa-spin fa-spinner"></i>');
         $.ajax({
             type: "POST",
             url: "{{ url('save-key-initiative') }}",
@@ -1256,10 +1258,11 @@
                     '<div class="alert alert-success" role="alert"> initiative Created successfully</div>'
                 );
                 $('#initiative-feild-error').html('');
+                $('#saveinitiativebutton').html('Save Initiative');
                 setTimeout(function() {
                     $('#create-initiative').modal('hide');
                     $('#success-initiative').html('');
-                }, 3000);
+                }, 2000);
                 $('#parentCollapsible').html(res);
                 $("#nestedCollapsible" + obj_id_initiative).collapse('toggle');
                 $("#key-result" + key_id_initiative).collapse('toggle');
