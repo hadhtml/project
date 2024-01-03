@@ -417,8 +417,7 @@
                     <div class="col-md-12">
                         <p>Fill out the form, submit and hit the save button.</p>
                     </div>
-                    <div id="success-obj-edit"  role="alert"></div>
-                    <span id="obj-feild-error-edit" class="ml-3 text-danger"></span>
+                    
     
                 </div>
 
@@ -427,6 +426,12 @@
                 </button>
             </div>
             <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="success-obj-edit"  role="alert"></div>
+                        <span id="obj-feild-error-edit" class="text-danger"></span>
+                    </div>
+                </div>
                 <form class="needs-validation" method="POST" >
                     @csrf
                     <input type="hidden" name="obj_id" id="edit_obj_id">
@@ -482,7 +487,7 @@
                         </div>
 
                         <div class="col-md-12">
-                            <button onclick="UpdateObjective();" type="button" class="btn btn-primary btn-lg btn-theme btn-block ripple">Submit</button>
+                            <button onclick="UpdateObjective();" id="updateobjectivebutton" type="button" class="btn btn-primary btn-lg btn-theme btn-block ripple">Update Objective</button>
                         </div>
                     </div>
                 </form>

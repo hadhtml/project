@@ -465,6 +465,7 @@
 
         if ($('#edit_objective_name').val() != '' || $('#edit_start_date').val() != '' || $('#edit_end_date').val() !=
             '') {
+            $('#updateobjectivebutton').html('<i class="fa fa-spin fa-spinner"></i>');
             $.ajax({
                 type: "POST",
                 url: "{{ url('update-objective') }}",
@@ -485,18 +486,19 @@
                 },
                 success: function(res) {
 
-                    $('#edit_objective_name').val('');
-                    $('#edit_start_date').val('');
-                    $('#edit_end_date').val('');
-                    $('#edit_obj_small_description').val('');
+                    // $('#edit_objective_name').val('');
+                    // $('#edit_start_date').val('');
+                    // $('#edit_end_date').val('');
+                    // $('#edit_obj_small_description').val('');
                     $('#success-obj-edit').html(
                         '<div class="alert alert-success" role="alert"> Objective Updated successfully</div>'
                     );
                     $('#oobj-feild-error-edit').html('');
+                    $('#updateobjectivebutton').html('Update Objective');
                     setTimeout(function() {
                         $('#edit-objective').modal('hide');
                         $('#success-obj-edit').html('');
-                    }, 3000);
+                    }, 2000);
 
                     $('#parentCollapsible').html(res);
                     $("#nestedCollapsible" + edit_obj_id).collapse('toggle');
