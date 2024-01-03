@@ -176,7 +176,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <form class="needs-validation" action="#" method="POST" novalidate>
+                        <form class="needs-validation" action="#" method="POST">
                             @csrf
                             <input type="hidden" value="{{ $data->id }}" id="flag_epic_id">
                             <input type="hidden" value="{{ $data->initiative_id }}" id="flag_ini_epic_id">
@@ -203,8 +203,9 @@
                                     <div class="form-group mb-0">
                                         <label for="lead-manager">Flag Assignee <small class="text-danger">*</small></label>
                                         <select class="form-control" id="flag_assign">
+                                            <option value="">Select Flag Assignee </option>
                                             @foreach(DB::table('members')->where('org_user',Auth::id())->get() as $r)
-                                              <option value="{{ $r->id }}">{{ $r->name }}</option>
+                                              <option value="{{ $r->id }}">{{ $r->name }} {{ $r->last_name }}</option>
                                             @endforeach
                                         </select>
                                         
@@ -213,13 +214,13 @@
                                  <div class="col-md-12 col-lg-12 col-xl-12">
                                     <div class="form-group mb-0">
                                         <label for="small-description">Title <small class="text-danger">*</small></label>
-                                        <input type="text" class="form-control"  id="flag_title" >
+                                        <input required type="text" class="form-control"  id="flag_title" >
                                         
                                     </div>
                                 </div>
                                 <div class="col-md-12 col-lg-12 col-xl-12">
                                     <div class="form-group mb-0">
-                                        <label for="small-description">Description <small class="text-danger">*</small></label>
+                                        <label for="small-description">Description</label>
                                         <textarea id="flag_description" class="form-control"></textarea>
                                         
                                     </div>

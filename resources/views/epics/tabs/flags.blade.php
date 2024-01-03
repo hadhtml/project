@@ -173,17 +173,17 @@ function getOrder(){
                     <div class="col-md-2 text-right">
                         <img class="edit-item-image" type="button" onclick="showupdatecard({{$r->id}})" src="{{ url('public/assets/svg/edit-2.svg') }}">
                         <img class="delete-item-image" onclick="deleteflagshow({{$r->id}})" src="{{ url('public/assets/svg/trash.svg') }}">
-                        <div class="deletechildstory" id="deleteattachmentshow{{ $s->id }}">
+                        <div class="deletechildstory" id="deleteattachmentshow{{ $r->id }}">
                             <div class="row">
                                 <div class="col-md-10">
-                                    <h4>Delete Flag</h4>
+                                    <h4 class="text-left">Delete Flag</h4>
                                 </div>
                                 <div class="col-md-2">
                                     <img onclick="deleteflagshow({{$r->id}})" src="{{ url('public/assets/svg/crossdelete.svg') }}">
                                 </div>
                             </div>
-                            <p>Do you want to delete this Flag? You won’t be able to undo this action.</p>
-                            <span onclick="deletechilditem({{ $r->id }})" id="deletebutton{{ $s->id }}" class="btn btn-danger btn-block">Delete</span>
+                            <p class="text-left">Do you want to delete this Flag? You won’t be able to undo this action.</p>
+                            <span onclick="deleteflag({{ $r->id }})" id="deletebutton{{ $r->id }}" class="btn btn-danger btn-block">Delete</span>
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -332,7 +332,7 @@ $('#saveepicflag').on('submit',(function(e) {
 }));
 
 
-function deleteattachmentshow(id) {
+function deleteflagshow(id) {
 $('#deleteattachmentshow'+id).slideToggle();
 }
 function uploadattachment() {
@@ -352,6 +352,25 @@ function updateflagstatus(id,status) {
         data: {
             id:id,
             status:status,
+        },
+        success: function(data) {
+            showtabwithoutloader('{{$data->id}}' , 'flags');
+        },
+        error: function(error) {
+          console.log('Error updating card position:', error);
+        }
+    });
+}
+function deleteflag(id) {
+    $('#deletebutton'+id).html('<i class="fa fa-spin fa-spinner"></i>');
+    $.ajax({
+        type: "POST",
+        url: "{{ url('dashboard/flags/deleteflag') }}",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+            delete_id:id
         },
         success: function(data) {
             showtabwithoutloader('{{$data->id}}' , 'flags');

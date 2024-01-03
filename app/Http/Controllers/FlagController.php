@@ -50,9 +50,9 @@ class FlagController extends Controller
         {
             $organization = DB::table('org_team')->where('slug',$organizationid)->first();
         }
-        $doneflag = flags::where('business_units' , $organization->id)->where('archived' , 2)->where('flag_status' , 'doneflag')->orderby('id' , 'desc')->get();
-        $inprogress = flags::where('business_units' , $organization->id)->where('archived' , 2)->where('flag_status' , 'inprogress')->orderby('id' , 'desc')->get();
-        $todoflag = flags::where('business_units' , $organization->id)->where('archived' , 2)->where('flag_status' , 'todoflag')->orderby('id' , 'desc')->get();
+        $doneflag = flags::where('business_units' , $organization->id)->where('board_type' , $organization->type)->where('archived' , 2)->where('flag_status' , 'doneflag')->orderby('id' , 'desc')->get();
+        $inprogress = flags::where('business_units' , $organization->id)->where('board_type' , $organization->type)->where('archived' , 2)->where('flag_status' , 'inprogress')->orderby('id' , 'desc')->get();
+        $todoflag = flags::where('business_units' , $organization->id)->where('board_type' , $organization->type)->where('archived' , 2)->where('flag_status' , 'todoflag')->orderby('id' , 'desc')->get();
         $epics = DB::table('epics')->where('buisness_unit_id' , $organization->id)->where('trash' , Null)->get();
     	return view('flags.index',compact('organization','doneflag','inprogress','todoflag','type','epics')); 
     }
@@ -80,15 +80,15 @@ class FlagController extends Controller
         }
         if($request->id == 'all')
         {
-            $doneflag = flags::where('business_units' , $organization->id)->where('archived',2)->where('flag_status' , 'doneflag')->orderby('id' , 'desc')->get();
-            $inprogress = flags::where('business_units' , $organization->id)->where('archived',2)->where('flag_status' , 'inprogress')->orderby('id' , 'desc')->get();
-            $todoflag = flags::where('business_units' , $organization->id)->where('archived',2)->where('flag_status' , 'todoflag')->orderby('id' , 'desc')->get();
+            $doneflag = flags::where('business_units' , $organization->id)->where('board_type' , $organization->type)->where('archived',2)->where('flag_status' , 'doneflag')->orderby('id' , 'desc')->get();
+            $inprogress = flags::where('business_units' , $organization->id)->where('board_type' , $organization->type)->where('archived',2)->where('flag_status' , 'inprogress')->orderby('id' , 'desc')->get();
+            $todoflag = flags::where('business_units' , $organization->id)->where('board_type' , $organization->type)->where('archived',2)->where('flag_status' , 'todoflag')->orderby('id' , 'desc')->get();
         }
         if($request->id == 'archived')
         {
-            $doneflag = flags::where('business_units' , $organization->id)->where('archived' , 1)->where('flag_status' , 'doneflag')->orderby('id' , 'desc')->get();
-            $inprogress = flags::where('business_units' , $organization->id)->where('archived' , 1)->where('flag_status' , 'inprogress')->orderby('id' , 'desc')->get();
-            $todoflag = flags::where('business_units' , $organization->id)->where('archived' , 1)->where('flag_status' , 'todoflag')->orderby('id' , 'desc')->get();
+            $doneflag = flags::where('business_units' , $organization->id)->where('board_type' , $organization->type)->where('archived' , 1)->where('flag_status' , 'doneflag')->orderby('id' , 'desc')->get();
+            $inprogress = flags::where('business_units' , $organization->id)->where('board_type' , $organization->type)->where('archived' , 1)->where('flag_status' , 'inprogress')->orderby('id' , 'desc')->get();
+            $todoflag = flags::where('business_units' , $organization->id)->where('board_type' , $organization->type)->where('archived' , 1)->where('flag_status' , 'todoflag')->orderby('id' , 'desc')->get();
         }
         $epics = DB::table('epics')->where('buisness_unit_id' , $organization->id)->where('trash' , Null)->get();
         $type = $request->type;
@@ -330,6 +330,33 @@ class FlagController extends Controller
             $addescalateflag->save();
         }
         
+        if($flag->board_type == 'unit')
+        {
+            $business_units = DB::table('business_units')->where('id' , $flag->business_units)->first();
+            $organization    = DB::table('organization')->where('user_id' , Auth::id())->first();
+            $add = new escalate_cards();
+            $add->flag_id = $request->id;
+            $add->from = 'business_units';
+            $add->to = 'organization';
+            $add->from_id = $business_units->id;
+            $add->to_id = $organization->id;
+            $add->save();
+            // Save Flag to Escalate
+            $addescalateflag = new flags();
+            $addescalateflag->business_units = $add->to_id;
+            $addescalateflag->epic_id = $flag->epic_id;
+            $addescalateflag->flag_type = $flag->flag_type;
+            $addescalateflag->flag_assign = $flag->flag_assign;
+            $addescalateflag->flag_title = $flag->flag_title;
+            $addescalateflag->flag_description = $flag->flag_description;
+            $addescalateflag->archived = 2;
+            $addescalateflag->flag_status = 'todoflag';
+            $addescalateflag->board_type = 'org';
+            $addescalateflag->escalate = $add->id;
+            $addescalateflag->save();
+        }
+
+
     }
     public function savecomment(Request $request)
     {
