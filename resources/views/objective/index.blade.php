@@ -396,7 +396,7 @@ $var_objective = 'PageT-'.$type;
                                                    $InitiativeProgress = 0;
                                                    }
                                                    @endphp
-                                                   <div class="card bg-transparent shadow-none boardI">
+                                                   <div class="card bg-transparent shadow-none">
                                                       <div class="card-header initiative-header"
                                                          style="background: #f9   f9f9 !important;" id="backlog-{{$initiative->id}}">
                                                          <div class="d-flex flex-row justify-content-between header-objective align-items-center"
