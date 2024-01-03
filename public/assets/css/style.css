@@ -19159,8 +19159,8 @@ option {
 
 .symbol.symbol-30>img {
     width: 100%;
-    max-width: 38px;
-    height: 38px;
+    max-width: 30px;
+    height: 30px;
     object-fit: cover;
 }
 
@@ -22359,8 +22359,8 @@ div[role="circleprogressbar"]::before {
 }
 
 .leader-section img {
-    width: 46px;
-    height: 46px;
+    width: 30px;
+    height: 30px;
     object-fit: cover;
     background-size: cover;
     border-radius: 100px;

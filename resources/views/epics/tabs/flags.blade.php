@@ -45,21 +45,24 @@ function getOrder(){
                   <span class="dropdown-toggle orderbybutton" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     @if(isset($orderby))
                         @if($orderby == 'asc')
-                            Order by Older
+                            Filter by Older
                         @endif
                         @if($orderby == 'desc')
-                            Order by Latest
+                            Filter by Latest
                         @endif
                     @else
-                        Order By
+                        Filter By
                     @endif
                     <svg xmlns="http://www.w3.org/2000/svg" width="11" height="7" viewBox="0 0 11 7" fill="none">
                       <path d="M10.8339 0.644857C10.6453 0.456252 10.3502 0.439106 10.1422 0.593419L10.0826 0.644857L5.49992 5.2273L0.917236 0.644857C0.72863 0.456252 0.433494 0.439106 0.225519 0.593419L0.165935 0.644857C-0.0226701 0.833463 -0.0398163 1.1286 0.114497 1.33657L0.165935 1.39616L5.12427 6.35449C5.31287 6.5431 5.60801 6.56024 5.81599 6.40593L5.87557 6.35449L10.8339 1.39616C11.0414 1.18869 11.0414 0.852323 10.8339 0.644857Z" fill="#787878"/>
                     </svg> 
                   </span>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" onclick="showorderby('desc',{{ $data->id }},'attachments')" href="javascript:void(0)">Latest</a>
-                    <a class="dropdown-item" onclick="showorderby('asc',{{ $data->id }},'attachments')" href="javascript:void(0)">Older</a>
+                    <a class="dropdown-item" href="javascript:void(0)">All</a>
+                    <a class="dropdown-item" href="javascript:void(0)">Impediment</a>
+                    <a class="dropdown-item" href="javascript:void(0)">Risk</a>
+                    <a class="dropdown-item" href="javascript:void(0)">Blocker</a>
+                    <a class="dropdown-item" href="javascript:void(0)">Action</a>
                   </div>
                 </div>
                 <span onclick="uploadattachment()" class="btn btn-default btn-sm">Raise Flag</span>
@@ -71,7 +74,7 @@ function getOrder(){
     <div class="col-md-12">
         <div class="card comment-card storyaddcard">
             <div class="card-body">
-                <form id="saveepicflag" class="needs-validation" action="{{ url('dashboard/epics/saveepicflag') }}" method="POST" novalidate>
+                <form id="saveepicflag" class="needs-validation" action="{{ url('dashboard/epics/saveepicflag') }}" method="POST">
                     @csrf
                     <input type="hidden" value="{{ $data->id }}" name="flag_epic_id">
                     <input type="hidden" value="{{ $data->buisness_unit_id }}" name="business_units">
@@ -80,7 +83,7 @@ function getOrder(){
                         <div class="col-md-6 col-lg-6 col-xl-6">
                             <div class="form-group mb-0">
                                 <label for="flag_type">Flag Type <small class="text-danger">*</small></label>
-                               <select class="form-control" name="flag_type" id="flag_type" >
+                               <select required class="form-control" name="flag_type" id="flag_type" >
                                    <option value="">Select Flag Type</option>
                                    <option value="Risk">Risk</option>
                                    <option value="Impediment">Impediment</option>
@@ -93,7 +96,8 @@ function getOrder(){
                          <div class="col-md-6 col-lg-6 col-xl-6">
                             <div class="form-group mb-0">
                                 <label for="flag_assignee">Flag Assignee <small class="text-danger">*</small></label>
-                                <select class="form-control" id="flag_assignee" name="flag_assign">
+                                <select required class="form-control" id="flag_assignee" name="flag_assign">
+                                    <option value="">Select Flag Assignee</option>
                                     @foreach(DB::table('members')->where('org_user',Auth::id())->get() as $r)
                                       <option value="{{ $r->id }}">{{ $r->name }} {{ $r->last_name }}</option>
                                     @endforeach
@@ -104,13 +108,13 @@ function getOrder(){
                          <div class="col-md-12 col-lg-12 col-xl-12">
                             <div class="form-group mb-0">
                                 <label for="small-description">Title <small class="text-danger">*</small></label>
-                                <input type="text" class="form-control"  name="flag_title" >
+                                <input required type="text" class="form-control"  name="flag_title" >
                                 
                             </div>
                         </div>
                         <div class="col-md-12 col-lg-12 col-xl-12">
                             <div class="form-group mb-0">
-                                <label for="small-description">Description <small class="text-danger">*</small></label>
+                                <label for="small-description">Description</label>
                                 <textarea name="flag_description" class="form-control"></textarea>
                                 
                             </div>
@@ -168,7 +172,19 @@ function getOrder(){
                     </div>
                     <div class="col-md-2 text-right">
                         <img class="edit-item-image" type="button" onclick="showupdatecard({{$r->id}})" src="{{ url('public/assets/svg/edit-2.svg') }}">
-                        <img class="delete-item-image" src="{{ url('public/assets/svg/trash.svg') }}">
+                        <img class="delete-item-image" onclick="deleteflagshow({{$r->id}})" src="{{ url('public/assets/svg/trash.svg') }}">
+                        <div class="deletechildstory" id="deleteattachmentshow{{ $s->id }}">
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <h4>Delete Flag</h4>
+                                </div>
+                                <div class="col-md-2">
+                                    <img onclick="deleteflagshow({{$r->id}})" src="{{ url('public/assets/svg/crossdelete.svg') }}">
+                                </div>
+                            </div>
+                            <p>Do you want to delete this Flag? You won’t be able to undo this action.</p>
+                            <span onclick="deletechilditem({{ $r->id }})" id="deletebutton{{ $s->id }}" class="btn btn-danger btn-block">Delete</span>
+                        </div>
                     </div>
                     <div class="col-md-3">
                         @if($r->flag_status == 'todoflag')
