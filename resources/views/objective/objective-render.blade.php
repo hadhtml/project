@@ -17,6 +17,18 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
                   </div>
                   <div class="ml-2">
                      {{$obj->objective_name}}
+                     @if($keyweightcounte > 0)
+                        @if($keyweightcounte > 100)
+                           <div class=" text-danger w-25" role="">
+                              <small>Adjust Key Weight to 100 ({{$keyweightcounte}})</small>
+                           </div>
+                        @endif
+                        @if($keyweightcounte < 100)
+                           <div class=" text-danger" role="">
+                              <small>Adjust Key Weight to 100  ({{$keyweightcounte}})</small>
+                           </div>
+                        @endif
+                     @endif
                   </div>
                </div>
             </h5>
@@ -56,18 +68,6 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
                @endif
             </div>
          </div>
-         @if($keyweightcounte > 0)
-         @if($keyweightcounte > 100)
-         <div class=" text-danger w-25" role="">
-            <small>Adjust Key Weight to 100 ({{$keyweightcounte}})</small>
-         </div>
-         @endif
-         @if($keyweightcounte < 100)
-         <div class=" text-danger" role="">
-            <small>Adjust Key Weight to 100  ({{$keyweightcounte}})</small>
-         </div>
-         @endif
-         @endif
          @php
          $objedit = preg_replace('/[^\p{L}\p{N}\s]/u', '',$obj->detail);
          $trimmedStringobj = trim($objedit);

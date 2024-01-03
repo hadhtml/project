@@ -101,7 +101,7 @@
                   
             @if ($var_objective == 'Member')
                  
-            @include('components.sidebar-component')
+            @include('profile.sidebar')
             
 
             @endif
@@ -176,7 +176,7 @@
             
             @if ($var_objective == 'Jira')
                  
-            @include('components.sidebar-component')
+                @include('profile.sidebar')
 
             @endif
             

@@ -1331,3 +1331,33 @@ button:focus {
     background-color: #f8d7da;
     border-color: #f5c6cb;
  }
+.card-svg .material-symbols-outlined{
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+    padding: 10px;
+}
+.folder_supervised{
+    color: #8a50fc;
+    background-color: #eee5ff;
+}
+.key_visualizer{
+    color: #56d6cf;
+    background-color: #c9f7f5;
+}
+.team_dashboard{
+    color: #f65868;
+    background-color: #ffe2e6;
+}
+.groups{
+    color: #ffbf42;
+    background-color: #fff4de;
+}
+.Summarize{
+    color: #49a3ff;
+    background-color: #e1f0ff;
+}
+.warning_off{
+    color: #5cad6d;
+    background-color: #e1ffeb;    
+}

@@ -47,20 +47,24 @@ $Impediments = DB::table('flags')->where('business_units',$organization->id)->wh
             <div class="col-md-3 mb-4">
                 <div class="dashboard-card">
                     <div class="card-svg">
-                        <a href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}"> <img src="{{ url('public/assets/svg/portfoliosvg.svg') }}"></a>
+                        <a href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}"> 
+                            <span class="material-symbols-outlined folder_supervised">folder_supervised</span>
+                        </a>
                     </div>
                     <div class="dashboard-card-tittle">
-                        <h4>Portfolio</h4>
+                        <h4>OKR Planner</h4>
                     </div>
                     <div class="dashboard-card-number">
-                        <h3>{{$Portfolio}}</h3>
+                        <h3>{{ $Portfolio }} <small>@if($Portfolio > 1) Objectives @else Objective @endif</small></h3>
                     </div>
                 </div>
             </div>
             <div class="col-md-3 mb-4">
                 <div class="dashboard-card">
                     <div class="card-svg">
-                        <a href="{{url('dashboard/organization/'.$organization->slug.'/BT-Backlog/'.$organization->type)}}"> <img src="{{ url('public/assets/svg/epicsbacklogsvg.svg') }}"></a>
+                        <a href="{{url('dashboard/organization/'.$organization->slug.'/BT-Backlog/'.$organization->type)}}"> 
+                            <span class="material-symbols-outlined key_visualizer">key_visualizer</span>
+                        </a>
                     </div>
                     <div class="dashboard-card-tittle">
                         <h4>Epics Backlog</h4>
@@ -74,14 +78,14 @@ $Impediments = DB::table('flags')->where('business_units',$organization->id)->wh
                 <div class="dashboard-card">
                     <div class="card-svg">
                         <a href="{{url('dashboard/organization/'.$organization->slug.'/performance-dashboard/'.$organization->type)}}"> 
-                            <img src="{{ url('public/assets/svg/performancesvg.svg') }}">
+                            <span class="material-symbols-outlined team_dashboard">team_dashboard</span>
                         </a> 
                     </div>
                     <div class="dashboard-card-tittle">
-                        <h4>Performance</h4>
+                        <h4>Performance Dashboard</h4>
                     </div>
                     <div class="dashboard-card-number">
-                        <h3>{{$Performance}}</h3>
+                        <h3>{{$Performance}} <small>@if($Performance > 1) KPI(s) @else KPI @endif</small></h3>
                     </div>
                 </div>
             </div>
@@ -89,7 +93,9 @@ $Impediments = DB::table('flags')->where('business_units',$organization->id)->wh
             <div class="col-md-3 mb-4">
                 <div class="dashboard-card">
                     <div class="card-svg">
-                        <a href="{{url('dashboard/organization/'.$organization->slug.'/BU-Report/'.$organization->type)}}">   <img src="{{ url('public/assets/svg/reportingsvg.svg') }}"></a>
+                        <a href="{{url('dashboard/organization/'.$organization->slug.'/BU-Report/'.$organization->type)}}">   
+                            <span class="material-symbols-outlined groups">groups</span>
+                        </a>
                     </div>
                     <div class="dashboard-card-tittle">
                         <h4>Reporting</h4>
@@ -103,8 +109,8 @@ $Impediments = DB::table('flags')->where('business_units',$organization->id)->wh
                 <div class="dashboard-card">
                     <div class="card-svg">
                         <a href="{{url('dashboard/flags/'.$organization->slug.'/impediments/'.$organization->type)}}" > 
-                            <img src="{{ url('public/assets/svg/impedimentssvg.svg') }}">
-                        </a>   
+                            <span class="material-symbols-outlined Summarize">Summarize</span>
+                        </a>  
                     </div>
                     <div class="dashboard-card-tittle">
                         <h4>Impediments</h4>

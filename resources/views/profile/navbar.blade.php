@@ -14,34 +14,45 @@
                 
                 <ul class="list-unstyled ps-0 expanded-navbar-options">
                    
-                    <li class="mb-1">
-                        <a href="{{url('dashboard/organizations')}}" @if (url()->current() == url('dashboard/organizations')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
-                            <div class="mr-2">
-                                <span style="font-size:22px" class="material-symbols-outlined">auto_stories</span>
-                            </div>
-                            <div class="mr-2">
-                               Dashboard
-                            </div>
-                        </a>
-                    </li>
+                    
               
 
                     <li class="mb-1">
                         <a href="{{url('profile-setting')}}" @if (url()->current() == url('profile-setting'))  class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center" @endif>
                             <div class="mr-2">
-                                 <span style="font-size:22px" class="material-symbols-outlined">groups</span>
+                                 <span style="font-size:22px" class="material-symbols-outlined">person</span>
                             </div>
                             <div class="mr-2">
                                 Profile
                             </div>
                         </a>
                     </li>
+                    <li class="mb-1">
+                        <a href="{{url('dashboard/organization/setting')}}" @if (url()->current() == url('dashboard/organization/setting')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
+                            <div class="mr-2">
+                                <span style="font-size:22px" class="material-symbols-outlined">manufacturing</span>
+                            </div>
+                            <div class="mr-2">
+                               Settings
+                            </div>
+                        </a>
+                    </li>
+                    <li class="mb-1">
+                            <a href="{{url('dashboard/organization/users')}}" @if (url()->current() == url('dashboard/organization/users'))  class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center" @endif>
 
+                            <div class="mr-2">
+                                 <span style="font-size:22px" class="material-symbols-outlined">group_add</span>
+                            </div>
+                            <div class="mr-2">
+                                All Users
+                            </div>
+                        </a>
+                    </li>
                     <li class="mb-1">
                             <a href="{{url('change-password')}}" @if (url()->current() == url('change-password'))  class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center" @endif>
 
                             <div class="mr-2">
-                                 <span style="font-size:22px" class="material-symbols-outlined">groups</span>
+                                 <span style="font-size:22px" class="material-symbols-outlined">key</span>
                             </div>
                             <div class="mr-2">
                                 Change Password

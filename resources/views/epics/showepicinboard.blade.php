@@ -1,28 +1,25 @@
 <div onclick="editepic({{$e->id}})" class="card" style="width:102.7%">
        <div class="card card-epic border-radius" style="margin-bottom:0px !important">
             <div class="card-header bg-white border-bottom-radius pt-2 pl-4 pr-4 pb-2">
-	            <div>
-	               <div class="d-flex flex-row justify-content-between align-items-center">
-	                  <div class="d-flex flex-row">
-	                     <div class="mr-2">
-	                        <img src="{{ url('public/assets/svg/objectives/four.svg') }}">
-	                     </div>
-	                     <div>
-	                        @if($e->epic_status == 'Done')
-	                        <span class="badge-cs-small success">{{$e->epic_status}}</span>
-	                        @endif
-	                        @if($e->epic_status == 'In progress')
-	                        <span class="badge-cs-small warning w-100">{{$e->epic_status}}</span>
-	                        @endif 
-	                        @if($e->epic_status == 'To Do')
-	                        <span class="badge-cs-small bg-secondary ">{{$e->epic_status}}</span>
-	                        @endif 
-	                     </div>
-	                  </div>
-	               </div>
-	            </div>
+               <div class="d-flex">
+                  <div style="width:35%;">
+                     <img src="{{ url('public/assets/svg/objectives/four.svg') }}">
+                  </div>
+                  <div style="width:65%;">
+                     @if($e->epic_status == 'Done')
+                     <span class="badge-cs-small success">{{$e->epic_status}}</span>
+                     @endif
+                     @if($e->epic_status == 'In progress')
+                     <span class="badge-cs-small warning w-100">{{$e->epic_status}}</span>
+                     @endif 
+                     @if($e->epic_status == 'To Do')
+                     <span class="badge-cs-small bg-secondary ">{{$e->epic_status}}</span>
+                     @endif 
+                  </div>
+               </div>
             @php
-            $flag = DB::table('flags')->where('epic_id' , $e->id)->first();
+               $flag = DB::table('flags')->where('epic_id' , $e->id)->first();
+               $flagscount = DB::table('flags')->where('epic_id' , $e->id)->count();
             @endphp
             @if($flag)
             @if($flag->flag_status != 'doneflag')
@@ -33,7 +30,7 @@
                      <img src="{{ url('public/assets/svg/svgrisk.svg') }}">
                   </div>
                   <div>
-                     <span onclick="editepic({{$e->id}})" style="color:#fa9bcf !important; font-size:12px">{{$flag->flag_type}}</span>
+                     <span onclick="editepic({{$e->id}})" style="color:#fa9bcf !important; font-size:12px">{{$flag->flag_type}} @if($flagscount > 1) +{{$flagscount}} @endif</span>
                   </div>
                </div>
                @endif
@@ -43,7 +40,7 @@
                      <img src="{{ url('public/assets/svg/svgeight.svg') }}">
                   </div>
                   <div>
-                     <span onclick="editepic({{$e->id}})" style="color:#fa9bcf !important; font-size:12px">{{$flag->flag_type}}</span>
+                     <span onclick="editepic({{$e->id}})" style="color:#fa9bcf !important; font-size:12px">{{$flag->flag_type}} @if($flagscount > 1) +{{$flagscount}} @endif</span>
                   </div>
                </div>
                @endif 
@@ -53,7 +50,7 @@
                      <img src="{{ url('public/assets/svg/svgnine.svg') }}">
                   </div>
                   <div>
-                     <span onclick="editepic({{$e->id}})" style="color:#fa9bcf !important; font-size:12px">{{$flag->flag_type}}</span>
+                     <span onclick="editepic({{$e->id}})" style="color:#fa9bcf !important; font-size:12px">{{$flag->flag_type}} @if($flagscount > 1) +{{$flagscount}} @endif</span>
                   </div>
                </div>
                @endif 
@@ -63,7 +60,7 @@
                      <img src="{{ url('public/assets/svg/svgten.svg') }}">
                   </div>
                   <div>
-                     <span onclick="editepic({{$e->id}})" style="color:#fa9bcf !important; font-size:12px">{{$flag->flag_type}}</span>
+                     <span onclick="editepic({{$e->id}})" style="color:#fa9bcf !important; font-size:12px">{{$flag->flag_type}} @if($flagscount > 1) +{{$flagscount}} @endif</span>
                   </div>
                </div>
                @endif 
