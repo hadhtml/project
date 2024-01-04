@@ -310,7 +310,7 @@
                                                     <td>
                                                         <div class="text-center">
                                                             @if ($backlog->epic_status != NULL)
-                                                            @if ($backlog->epic_status == 'In Progress')
+                                                            @if ($backlog->epic_status == 'In progress')
                                                                 <span
                                                                     class="badge-cs warning w-100">{{ $backlog->epic_status }}</span>
                                                             @endif

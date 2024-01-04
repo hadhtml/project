@@ -2086,7 +2086,7 @@
             return false;
         }
 
-
+        $('#savequarterbutton').html('<i class="fa fa-spin fa-spinner"></i>');
         $.ajax({
             type: "POST",
             url: "{{ url('save-sprint') }}",
@@ -2106,14 +2106,13 @@
             },
             success: function(res) {
 
-                $('#success-sprint').html(
-                    '<div class="alert alert-success" role="alert">Sprint Added successfully</div>'
-                );
+                $('#success-sprint').html('<div class="alert alert-success" role="alert">Sprint Added successfully</div>');
+                $('#savequarterbutton').html('Start');
                 setTimeout(function() {
                     $('#create-report').modal('hide');
                     $('#success-sprint').html('');
                     $('#sprint-error').html('');
-                }, 3000);
+                }, 1000);
 
                 $('#sprint-end').html(
                     '<button class="button mr-1" onclick="endquarter();">End Quarter</button>');
@@ -2130,7 +2129,8 @@
 
 
     function endquarter() {
-
+        $('#endquarterbutton').html('<i class="fa fa-spin fa-spinner"></i>');
+        $('#endquarterbutton').css('min-width' , '100px;');
         var unit_id = "{{ $organization->id }}";
         var type = "{{ $organization->type }}";
         $.ajax({
@@ -2144,7 +2144,7 @@
                 type: type
             },
             success: function(res) {
-
+                $('#endquarterbutton').html('End Quater');
                 $('#sprint-end').html(
                     '<button class="button mr-1" data-toggle="modal" data-target="#create-report">Start Quarter</button>'
                     );

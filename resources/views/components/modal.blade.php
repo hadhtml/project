@@ -1071,14 +1071,19 @@
                     <div class="col-md-12">
                         <p>Fill out the form, submit and hit the save button.</p>
                     </div>
-                      <div id="success-sprint"  role="alert"></div>
-                    <span id="sprint-error" class="ml-3 text-danger"></span>
+                      
                 </div>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <img src="{{asset('public/assets/images/icons/minus.svg')}}">
                 </button>
             </div>
             <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="success-sprint"  role="alert"></div>
+                        <span id="sprint-error" class="text-danger"></span>
+                    </div>
+                </div>
                 <form class="needs-validation" action="#" method="POST" novalidate>
                 @csrf
             
@@ -1110,7 +1115,7 @@
                         </div>
 
                         <div class="col-md-12">
-                            <button class="btn btn-primary btn-lg btn-theme btn-block ripple mt-3" onclick="saveQuarter();"  type="button">Start</button>
+                            <button id="savequarterbutton" class="btn btn-primary btn-lg btn-theme btn-block ripple mt-3" onclick="saveQuarter();"  type="button">Start</button>
                         </div>
                     </div>
                 </form>

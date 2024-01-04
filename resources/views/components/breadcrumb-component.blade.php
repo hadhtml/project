@@ -152,33 +152,9 @@ $sprint = DB::table('sprint')->where('user_id',Auth::id())->where('value_unit_id
                 </div>
              
             </div>
-            <!--<div class="mr-3">-->
-            <!--    <button class="btn-circle btn-tolbar bg-transparent">-->
-            <!--        <img src="{{asset('public/assets/images/icons/share.svg')}}" width="20" width="20">-->
-            <!--    </button>-->
-            <!--    <button class="btn-circle btn-tolbar bg-transparent">-->
-            <!--        <img src="{{asset('public/assets/images/icons/calendar.svg')}}" width="20" width="20">-->
-            <!--    </button>-->
-            <!--    <button class="btn-circle btn-tolbar bg-transparent">-->
-            <!--        <img src="{{asset('public/assets/images/icons/filter.svg')}}" width="20" width="20">-->
-            <!--    </button>-->
-            <!--</div>-->
-            <!--<div class="mr-3">-->
-            <!--    <div class="symbol-group symbol-hover">-->
-            <!--        <div class="symbol symbol-30 symbol-circle" data-toggle="tooltip" title="" data-original-title="Mark Stone">-->
-            <!--            <img alt="Pic" src="https://img.freepik.com/free-photo/handsome-confident-smiling-man-with-hands-crossed-chest_176420-18743.jpg?w=2000">-->
-            <!--        </div>-->
-            <!--        <div class="symbol symbol-30 symbol-circle" data-toggle="tooltip" title="" data-original-title="Charlie Stone">-->
-            <!--            <img alt="Pic" src="https://t4.ftcdn.net/jpg/02/98/28/89/360_F_298288984_8i0PB7s9aWPzi1LeuNGGrnjXkmXRpcZn.jpg">-->
-            <!--        </div>-->
-            <!--        <div class="symbol symbol-30 symbol-label-counter symbol-circle symbol-light" data-toggle="tooltip" title="" data-original-title="More users">-->
-            <!--            <span class="symbol-label font-weight-bold">5+</span>-->
-            <!--        </div>-->
-            <!--    </div>-->
-            <!--</div>-->
             @if($sprint > 0)
             <div id="sprint-end">
-                <button class="button mr-1" data-toggle="modal" data-target="#" onclick="endquarter()">End Quarter</button>
+                <button class="button mr-1" id="endquarterbutton" data-toggle="modal" data-target="#" onclick="endquarter()">End Quarter</button>
             </div>
             @else
              <div id="sprint-end">
