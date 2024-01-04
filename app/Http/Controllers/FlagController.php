@@ -19,6 +19,10 @@ use Carbon\Carbon;
 
 class FlagController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth','verified']);
+    }
     public function flags($organizationid , $flagtype , $type)
     {
         if($type == 'stream')
@@ -105,11 +109,19 @@ class FlagController extends Controller
         $html = view('flags.modalheader', compact('data'))->render();
         return $html;
     }
+    public function modalheader(Request $request)
+    {
+        $data = flags::find($request->id);
+        $html = view('flags.modalheader', compact('data'))->render();
+        return $html;
+    }
     public function savemember(Request $request)
     {
         $check = flag_members::where('flag_id' , $request->dataid)->where('member_id' , $request->id)->count();
         if($check > 0)
         {
+            $notification = DB::table('members')->where('id' , $request->id)->first()->name.' '.DB::table('members')->where('id' , $request->id)->first()->last_name.' Removed From Flag';
+            Cmf::save_activity(Auth::id() , $notification,'flags',$request->dataid);
             flag_members::where('flag_id' , $request->dataid)->where('member_id' , $request->id)->delete();
         }
         else
@@ -118,6 +130,8 @@ class FlagController extends Controller
             $member->member_id = $request->id;
             $member->flag_id = $request->dataid;
             $member->save();
+            $notification = DB::table('members')->where('id' , $request->id)->first()->name.' '.DB::table('members')->where('id' , $request->id)->first()->last_name.' Added In Flag';
+            Cmf::save_activity(Auth::id() , $notification,'flags',$request->dataid);
         }
         $data = flags::find($request->dataid);
         $html = view('flags.modalheader', compact('data'))->render();
@@ -152,6 +166,8 @@ class FlagController extends Controller
     }
     public function deleteflag(Request $request)
     {
+        activities::where('type' , 'flags')->where('value_id' , $request->delete_id)->delete();
+        flag_members::where('flag_id' , $request->delete_id)->delete();
         flag_comments::where('flag_id' , $request->delete_id)->delete();
         flags::where('id' , $request->delete_id)->delete();
     }
