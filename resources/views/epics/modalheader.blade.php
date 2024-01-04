@@ -1,12 +1,12 @@
 <div class="row positionrelative">
-    <div class="col-md-12">
-        <h5 class="modal-title newmodaltittle marginleftthirty" id="create-epic">
-            <img src="{{ url('public/assets/svg/epicheaderheader.svg') }}">{{ $data->epic_name }}
+    <div class="col-md-12 mb-5">
+        <h5 class="modal-title newmodaltittle epic-tittle-header marginleftthirty" id="create-epic">
+            <img src="{{ url('public/assets/svg/epicheaderheader.svg') }}">@if($data->epic_name) {{ $data->epic_name }} @else Enter Epic Tittle @endif
         </h5>
     </div>
-    <div class="col-md-12 marginleftthirty newmodalsubtittle">
+    <!-- <div class="col-md-12 marginleftthirty newmodalsubtittle">
         <p>{{ DB::table('objectives')->where('id' , $data->obj_id)->first()->objective_name }}/{{ DB::table('key_result')->where('id' , $data->key_id)->first()->key_name }}/{{ DB::table('initiative')->where('id' , $data->initiative_id)->first()->initiative_name }}</p>    
-    </div>
+    </div> -->
     <div class="col-md-12 displayflex">
         <div class="btn-group epicheaderborderleft">
             <button type="button" class="btn btn-default statuschangebutton @if($data->epic_status == 'To Do') todo-button-color @endif @if($data->epic_status == 'In progress') inprogress-button-color @endif @if($data->epic_status == 'Done') done-button-color @endif" id="showboardbutton">
@@ -21,15 +21,7 @@
                 @endif
             </button>
             <button type="button" class="@if($data->epic_status == 'To Do') todo-button-color @endif @if($data->epic_status == 'In progress') inprogress-button-color @endif @if($data->epic_status == 'Done') done-button-color @endif statuschangebuttonarrow btn btn-danger dropdown-toggle dropdown-toggle-split archivebeardcimbgbutton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                @if($data->epic_status == 'To Do') 
-                <img src="{{url('public/assets/images/icons/angle-down.svg')}}" width="20">
-                @endif 
-                @if($data->epic_status == 'In progress') 
-                <img src="{{url('public/assets/svg/arrow-down-white.svg')}}" width="20">
-                @endif 
-                @if($data->epic_status == 'Done') 
-                <img src="{{url('public/assets/svg/arrow-down-white.svg')}}" width="20">
-                @endif          
+                <img src="{{url('public/assets/svg/arrow-down-white.svg')}}" width="20">         
                 <span class="sr-only">Toggle Dropdown</span>
             </button>
             <div class="dropdown-menu">
@@ -48,33 +40,135 @@
             </div>
         </div>
         @if($data->epic_start_date)
-        <a href="javascript:vodi(0)" class="epic-header-buttons" id="showboardbutton">
-            <img src="{{url('public/assets/svg/note-text.svg')}}" width="20"> <span>{{ Cmf::date_format_new($data->epic_start_date) }} - {{ Cmf::date_format_new($data->epic_end_date) }}</span>
+        <a href="javascript:void(0)" class="epic-datepicker" id="showboardbutton">
+            <img src="{{url('public/assets/svg/note-text.svg')}}" width="20">
+            <input readonly type="text" name="daterange" value="{{ date('m/d/Y', strtotime($data->epic_start_date)) }} - {{ date('m/d/Y', strtotime($data->epic_end_date)) }}" />
         </a>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+        <script>
+        $(function() {
+          $('input[name="daterange"]').daterangepicker({
+            opens: 'right'
+          }, function(start, end, label) {
+            console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+            $.ajax({
+                type: "POST",
+                url: "{{ url('dashboard/epics/changeepicdate') }}",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    epic_id:'{{ $data->id }}',
+                    start:start.format('YYYY-MM-DD'),
+                    end:end.format('YYYY-MM-DD'),
+                },
+                success: function(res) {
+                    var modaltab = $('#modaltab').val();
+                    if(modaltab == 'general')
+                    {
+                        editepic('{{ $data->id }}');
+                    }
+                },
+                error: function(error) {
+                    
+                }
+            });
+          });
+        });
+        </script>
         @endif
         @if($data->team_id)
         <div class="members-list">
             <div id="members">
-                <a href="javascript:vodi(0)" class="epic-header-buttons" id="showboardbutton">
+                <a onclick="showmemberbox()" href="javascript:void(0)" class="epic-header-buttons" id="showboardbutton">
                     <img src="{{url('public/assets/svg/profile-2user.svg')}}" width="20"> 1
                 </a>
             </div>
         </div>
         @else
-        <a href="javascript:vodi(0)" class="epic-header-buttons" id="showboardbutton">
-            <img src="{{url('public/assets/svg/btnteamsvg.svg')}}" width="20"> Add Team
+        <a href="javascript:void(0)" onclick="showmemberbox()" class="epic-header-buttons" id="showboardbutton">
+            <img src="{{url('public/assets/svg/btnteamsvg.svg')}}" width="20">Team
         </a>
         @endif
-
+        <div class="memberlistposition">
+            <div class="memberadd-box team-select-box">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <h4>Select Team</h4>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <img onclick="showmemberbox()" class="memberclose" src="{{url('public/assets/svg/memberclose.svg')}}">
+                    </div>
+                </div>
+                <!-- <div class="row">
+                    <div class="col-md-12">
+                        <div class="mb-2 positionrelative">
+                            <input onkeyup="searchteam(this.value)" type="text" placeholder="Search Team" class="form-control" name="flag_title" id="objective-name" required>
+                            <div class="membersearchiconforinput">
+                                <img src="{{ url('public/assets/images/searchiconsvg.svg') }}">
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="row" id="memberstoshow">
+                    @if($data->epic_type == 'unit')
+                        @foreach(DB::table('unit_team')->where('org_id',$data->buisness_unit_id)->where('type' , 'BU')->get() as $r)
+                            <div class="col-md-12 memberprofile" onclick="selectteamforepic({{$r->id}} , {{$data->id}})">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="memberprofileimage">
+                                            <img src="{{ Avatar::create($r->team_title)->toBase64() }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="membername">{{ $r->team_title }}</div>
+                                        <div class="memberdetail">Team Leader: {{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
+                                    </div>
+                                    <div class="col-md-2 text-center mt-3">
+                                        @if($data->team_id == $r->id)
+                                        <img class="tickimage" src="{{ url('public/assets/svg/smalltick.svg') }}">
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
+                    @if($data->epic_type == 'org')
+                        @foreach(DB::table('org_team')->where('org_id',$data->buisness_unit_id)->where('type' , 'orgT')->get() as $r)
+                            <div class="col-md-12 memberprofile" onclick="selectteamforepic({{$r->id}} , {{$data->id}})">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="memberprofileimage">
+                                            <img src="{{ Avatar::create($r->team_title)->toBase64() }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="membername">{{ $r->team_title }}</div>
+                                        <div class="memberdetail">Team Leader: {{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
+                                    </div>
+                                    <div class="col-md-2 text-center mt-3">
+                                        @if($data->team_id == $r->id)
+                                        <img class="tickimage" src="{{ url('public/assets/svg/smalltick.svg') }}">
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+        </div>
         <div class="epic-header-buttons raise-flag-button">
 
             <a onclick="rasiseflag({{$data->id}})" href="javascript:void(0)"  id="showboardbutton">
-                <img src="{{url('public/assets/svg/btnflagsvg.svg')}}" width="20"> Raise Flag @if(DB::table('flags')->where('epic_id'  ,$data->id)->count() > 0) ({{ DB::table('flags')->where('epic_id'  ,$data->id)->count() }}) @endif
+                <img src="{{url('public/assets/svg/btnflagsvg.svg')}}" width="20"> Flag @if(DB::table('flags')->where('epic_id'  ,$data->id)->count() > 0) ({{ DB::table('flags')->where('epic_id'  ,$data->id)->count() }}) @endif
             </a>
             <div class="raiseflag-box">
                 <div class="row">
                     <div class="col-md-6">
-                        <h4>Raise Flag</h4>
+                        <h4>Flag</h4>
                     </div>
                     <div class="col-md-6 text-right">
                         <img onclick="rasiseflag()" class="memberclose" src="{{url('public/assets/svg/memberclose.svg')}}">
@@ -142,15 +236,7 @@
        
 
         <div class="moverightside">
-            <h1 class="epic-percentage">80 % Completed</h1>
-            <div class="dashboard-card-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img  src="{{url('public/assets/svg/more.svg')}}" width="20">
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="javascript:void(0)">Action One</a>
-                    <a class="dropdown-item" href="javascript:void(0)">Action Two</a>
-                    <a class="dropdown-item" href="javascript:void(0)">Action Three</a>
-                </div>
-            </div>
+            <h1 class="epic-percentage">{{ $data->epic_progress }} % Completed</h1>
         </div>
     </div>
 </div>
@@ -161,11 +247,37 @@
     <img data-dismiss="modal" class="closeimage" aria-label="Close" src="{{url('public/assets/svg/cross.svg')}}">
 </div>
 <script type="text/javascript">
-    function rasiseflag() {
-        $('.raiseflag-box').slideToggle();
-    }
-    function maximizemodal() {
-        $('#modaldialog').toggleClass('modalfullscreen')
-        $('#edit-epic-modal-new').css('padding-right' , '0px')
-    }
+function showmemberbox() {
+    $('.memberadd-box').slideToggle();
+}
+function rasiseflag() {
+    $('.raiseflag-box').slideToggle();
+}
+function maximizemodal() {
+    $('#modaldialog').toggleClass('modalfullscreen')
+    $('#edit-epic-modal-new').css('padding-right' , '0px')
+}
+function selectteamforepic(id , epic_id) {
+    $.ajax({
+        type: "POST",
+        url: "{{ url('dashboard/epics/selectteamforepic') }}",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+            id:id,
+            epic_id:epic_id,
+        },
+        success: function(res) {
+            $('#memberstoshow').html(res);
+            if($('#modaltab').val() == 'teams')
+            {
+                showtabwithoutloader(epic_id , 'teams');    
+            }
+        },
+        error: function(error) {
+            
+        }
+    });
+}
 </script>

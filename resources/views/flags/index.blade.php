@@ -170,8 +170,6 @@ if($type == 'orgT')
 drakeflags.on("drop", function (el, target, source, sibling) {
     var parentElId = target.id;
     var droppedElId = el.id;
-    // Perform additional operations or AJAX request here
-    // Example: Update the position of the card using AJAX
     $.ajax({
         type: "POST",
         url: "{{ url('dashboard/flags/change-flag-status') }}",
@@ -183,7 +181,32 @@ drakeflags.on("drop", function (el, target, source, sibling) {
             droppedElId:droppedElId,
         },
         success: function(response) {
-            console.log('Card position updated successfully.');
+            var ordertodo= $("#todoflag .ui-state-default").map(function() {
+                return this.id;        
+            }).get();
+            var orderinprogress= $("#in-progress .ui-state-default").map(function() {
+                return this.id;        
+            }).get();
+            var orderdone= $("#done .ui-state-default").map(function() {
+                return this.id;        
+            }).get();
+
+
+            $.ajax({
+                type: "POST",
+                url: "{{ url('dashboard/flags/sortflags') }}",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    ordertodo: ordertodo,
+                    orderinprogress:orderinprogress,
+                    orderdone:orderdone,
+                },
+                success: function(res) {
+                    
+                }
+            });
         },
         error: function(error) {
             console.log('Error updating card position:', error);

@@ -25,7 +25,7 @@
                             <li onclick="escalateflag({{$data->id}})"><img src="{{ url('public/assets/svg/escalate-action.svg') }}"> Escalate</li>
                         @endif
                     @endif
-                    <li><span class="material-symbols-outlined">share</span> Share</li>
+                    <!-- <li><span class="material-symbols-outlined">share</span> Share</li> -->
                     <li onclick="moveflagshow({{$data->id}})"><span class="material-symbols-outlined">east</span> Move</li>
                     @if($data->archived == 1)
                     <li onclick="unarchiveflag({{$data->id}})"><span class="material-symbols-outlined">archive</span> Un Archive</li>
@@ -154,6 +154,26 @@
             data: {
                 id:id,
                 dataid:dataid,
+            },
+            success: function(res) {
+                $('.modalheaderforapend').html(res);
+                viewboards($('#viewboards').val());
+            },
+            error: function(error) {
+                console.log('Error updating card position:', error);
+            }
+        });
+    }
+    function modalheader() {
+        var id = '{{ $data->id }}';
+        $.ajax({
+            type: "POST",
+            url: "{{ url('dashboard/flags/modalheader') }}",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                id:id,
             },
             success: function(res) {
                 $('.modalheaderforapend').html(res);

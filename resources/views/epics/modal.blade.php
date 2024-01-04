@@ -10,35 +10,47 @@
                 <input type="hidden" id="modaltab" value="general">
                 <ul>
                     <li id="general" onclick="showtab({{$data->id}} , 'general')" class="tabsclass active">
-                        <img src="{{ url('public/assets/svg/edit-2.svg') }}"> Basic Details
+                        <span class="material-symbols-outlined"> edit_square </span> General
                     </li>
                     <li id="childitems" onclick="showtab({{$data->id}} , 'childitems')" class="tabsclass">
-                        <img src="{{ url('public/assets/svg/task.svg') }}"> Child Items
+                        <span class="material-symbols-outlined">toc</span> Child Items
                     </li>
                     <li id="comments" onclick="showtab({{$data->id}} , 'comments')" class="tabsclass">
-                        <img src="{{ url('public/assets/svg/comment.svg') }}"> Comments
+                        <span class="material-symbols-outlined">comment</span> Comments
                     </li>
                     <li id="activites" onclick="showtab({{$data->id}} , 'activites')" class="tabsclass">
-                        <img src="{{ url('public/assets/svg/activites.svg') }}"> Activities
+                       <span class="material-symbols-outlined">browse_activity</span> Activities
                     </li>
-                    <li id="checkins" onclick="showtab({{$data->id}} , 'checkins')" class="tabsclass">
-                        <img src="{{ url('public/assets/svg/activites.svg') }}"> Check-Ins
-                    </li>
+                    <!-- <li id="checkins" onclick="showtab({{$data->id}} , 'checkins')" class="tabsclass">
+                        <span class="material-symbols-outlined">checklist</span> Check-Ins
+                    </li> -->
                     <li id="attachment" onclick="showtab({{$data->id}} , 'attachment')" class="tabsclass">
-                        <img src="{{ url('public/assets/svg/attachment.svg') }}"> Attachments</li>
+                        <span class="material-symbols-outlined"> attachment </span> Attachments</li>
                     <li id="flags" onclick="showtab({{$data->id}} , 'flags')" class="tabsclass">
-                        <img src="{{ url('public/assets/svg/btnflagsvg.svg') }}"> Flags
+                        <span class="material-symbols-outlined">flag</span> Flags
                     </li>
                     <li id="teams" onclick="showtab({{$data->id}} , 'teams')" class="tabsclass">
-                        <img src="{{ url('public/assets/svg/profile-2user.svg') }}"> Teams
+                        <span class="material-symbols-outlined"> group </span> Teams
                     </li>
                 </ul>
                 <h4>Action</h4>
                 <ul class="positionrelative">
                     <!-- <li><img src="{{ url('public/assets/svg/archive-action.svg') }}"> Archive</li> -->
-                    <li><img src="{{ url('public/assets/svg/share-action.svg') }}"> Share</li>
+                    <!-- <li><span class="material-symbols-outlined">share</span> Share</li> -->
                     <!-- <li><img src="{{ url('public/assets/svg/arrow-right-action.svg') }}"> Move</li> -->
-                    <li><img src="{{ url('public/assets/svg/trash-action.svg') }}"> Delete</li>
+                    <li onclick="deleteflagshow({{$data->id}})"><span class="material-symbols-outlined">delete</span> Delete</li>
+                    <div class="deleteflag deleteepiccard" id="flagdelete{{ $data->id }}">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <h4>Delete Epic</h4>
+                            </div>
+                            <div class="col-md-2">
+                                <img onclick="deleteflagshow({{$data->id}})" src="{{ url('public/assets/svg/crossdelete.svg') }}">
+                            </div>
+                        </div>
+                        <p>All actions will be removed from the activity feed and you won’t be able to re-open the card. There is no undo.</p>
+                        <button onclick="DeleteEpic({{$data->id}},{{ $data->initiative_id }},{{ $data->key_id }},{{ $data->obj_id }})" class="btn btn-danger btn-block">Delete</button>
+                    </div>
                 </ul>
             </div>
         </div>
@@ -46,8 +58,13 @@
             <div class="row">
                 <div class="col-md-12 col-lg-12 col-xl-12">
                     <div class="d-flex flex-row align-items-center justify-content-between block-header">
-                        <div>
-                            <h4><img src="{{ url('public/assets/svg/editsvg.svg') }}"> Basic Details</h4>
+                        <div class="d-flex flex-row align-items-center">
+                            <div class="mr-2">
+                                <span class="material-symbols-outlined">edit_square</span>
+                            </div>
+                            <div>
+                                <h4>General</h4>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -95,6 +112,9 @@
     </div>
 </div>
 <script type="text/javascript">
+    function deleteflagshow(id) {
+        $('#flagdelete'+id).slideToggle();
+    }
     function changeepicstatus(status , id) {
         $.ajax({
             type: "POST",
@@ -116,7 +136,11 @@
                 selectedOptions: '{{ $data->epic_name }}',
             },
             success: function(res) {
-                $('.modalheaderforapend').html(res);
+                showheader(id);
+                $('#parentCollapsible').html(res);
+                $("#nestedCollapsible{{ $data->obj_id }}").collapse('toggle');
+                $("#key-result{{ $data->key_id }}").collapse('toggle');
+                $("#initiative{{ $data->initiative_id }}").collapse('toggle');
             },
             error: function(error) {
                 
@@ -211,9 +235,12 @@
             cache:false,
             contentType: false,
             processData: false,
-            success: function(data){
-                showepicinboard('{{ $data->id }}');
-                editepic('{{ $data->id }}');
+            success: function(res){
+                $('#parentCollapsible').html(res);
+                $("#nestedCollapsible{{ $data->obj_id }}").collapse('toggle');
+                $("#key-result{{ $data->key_id }}").collapse('toggle');
+                $("#initiative{{ $data->initiative_id }}").collapse('toggle');                
+                showheader('{{ $data->id }}')
                 $('#updatebutton').html('Save Changes');
             }
         });

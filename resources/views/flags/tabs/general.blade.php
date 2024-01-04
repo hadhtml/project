@@ -84,7 +84,8 @@
             processData: false,
             success: function(data){
                 $('#updatebutton').html('Save Changes');
-                $('#'+cardid).html(data)         
+                modalheader();
+                viewboards($('#viewboards').val());
             }
         });
     }));

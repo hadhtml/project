@@ -1,4 +1,4 @@
-<div class="card" style="width:102.7%">
+<div onclick="editepic({{$e->id}})" class="card" style="width:102.7%">
        <div class="card card-epic border-radius" style="margin-bottom:0px !important">
             <div class="card-header bg-white border-bottom-radius pt-2 pl-4 pr-4 pb-2">
 	            <div>
@@ -19,18 +19,6 @@
 	                        @endif 
 	                     </div>
 	                  </div>
-	                  <div>
-	                     <div
-	                        class="dropdown">
-	                        <button class="btn-circle btn-tolbar dropdown-toggle bg-white" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-	                        	<img src="{{ asset('public/assets/images/icons/dots.svg') }}">
-	                        </button>
-	                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-	                           <a class="dropdown-item" href="javascript:void(0)" onclick="editepic({{$e->id}})">Edit</a>
-	                           <a class="dropdown-item" href="javascript:void(0)" onclick="DeleteEpic({{$e->id}},{{ $e->initiative_id }},{{ $e->key_id }},{{ $e->obj_id }})">Delete</a>
-	                        </div>
-	                     </div>
-	                  </div>
 	               </div>
 	            </div>
             @php
@@ -45,7 +33,7 @@
                      <img src="{{ url('public/assets/svg/svgrisk.svg') }}">
                   </div>
                   <div>
-                     <span style="color:#fa9bcf !important; font-size:12px">{{$flag->flag_type}}</span>
+                     <span onclick="editepic({{$e->id}})" style="color:#fa9bcf !important; font-size:12px">{{$flag->flag_type}}</span>
                   </div>
                </div>
                @endif
@@ -55,7 +43,7 @@
                      <img src="{{ url('public/assets/svg/svgeight.svg') }}">
                   </div>
                   <div>
-                     <span style="color:#fa9bcf !important; font-size:12px">{{$flag->flag_type}}</span>
+                     <span onclick="editepic({{$e->id}})" style="color:#fa9bcf !important; font-size:12px">{{$flag->flag_type}}</span>
                   </div>
                </div>
                @endif 
@@ -65,7 +53,7 @@
                      <img src="{{ url('public/assets/svg/svgnine.svg') }}">
                   </div>
                   <div>
-                     <span style="color:#fa9bcf !important; font-size:12px">{{$flag->flag_type}}</span>
+                     <span onclick="editepic({{$e->id}})" style="color:#fa9bcf !important; font-size:12px">{{$flag->flag_type}}</span>
                   </div>
                </div>
                @endif 
@@ -75,7 +63,7 @@
                      <img src="{{ url('public/assets/svg/svgten.svg') }}">
                   </div>
                   <div>
-                     <span style="color:#fa9bcf !important; font-size:12px">{{$flag->flag_type}}</span>
+                     <span onclick="editepic({{$e->id}})" style="color:#fa9bcf !important; font-size:12px">{{$flag->flag_type}}</span>
                   </div>
                </div>
                @endif 
@@ -93,7 +81,7 @@
                class="title load-more" id="load-more{{$e->id}}"  style="line-height:15px">
                {{ \Illuminate\Support\Str::limit($e->epic_name,40, $end='') }}
                @if($str > 40)
-               <a href="javascript:void(0);" onclick="loadmore({{$e->id}});" id="toggle-button{{$e->id}}" class="" style="font-size:10px;">More</a>
+               <a onclick="editepic({{$e->id}})" href="javascript:void(0);" onclick="loadmore({{$e->id}});" id="toggle-button{{$e->id}}" class="" style="font-size:10px;">More</a>
                @endif
             </h6>
             <h6
@@ -101,16 +89,19 @@
                {{$e->epic_name}}
                <a href="javascript:void(0);" onclick="seeless({{$e->id}});" id="toggle-button-less{{$e->id}}" class="" style="font-size:10px;">Less</a>
             </h6>
+            @php
+               $epic_detail  = strip_tags($e->epic_detail);
+            @endphp
             <p
                class="content show-read-more" id="show-read{{$e->id}}">
-               {{ \Illuminate\Support\Str::limit($e->epic_detail,122, $end='') }}
+               {!! \Illuminate\Support\Str::limit($epic_detail,122, $end='') !!}
                @if($strl > 122 )
-               <a href="javascript:void(0);" onclick="loadmoretext({{$e->id}});" id="toggle-button-text{{$e->id}}" class="" style="font-size:10px;">More</a>
+               <a onclick="editepic({{$e->id}})" href="javascript:void(0);" onclick="loadmoretext({{$e->id}});" id="toggle-button-text{{$e->id}}" class="" style="font-size:10px;">More</a>
                @endif
             </p>
             <p
                class="content show-read-more-text" id="show-read-more{{$e->id}}" style="display:none">
-               {{$e->epic_detail}}
+               {{$epic_detail}}
                <a href="javascript:void(0);" onclick="seelesstext({{$e->id}});" id="toggle-button-less-text{{$e->id}}" class="" style="font-size:10px">Less</a>
             </p>
             <div
@@ -188,4 +179,4 @@
          </div>
       </div>
    </div>
-	</div>
+</div>

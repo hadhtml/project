@@ -1,8 +1,15 @@
+<script src="{{ url('public/assets/bootstrap-typeahead.min.js') }}"></script>
+<script src="{{ url('public/assets/mention.js') }}"></script>
 <div class="row">
     <div class="col-md-12 col-lg-12 col-xl-12 @if($comments->count() > 1) paddingrightzero @endif">
         <div class="d-flex flex-row align-items-center justify-content-between block-header">
-            <div>
-                <h4><img src="{{ url('public/assets/svg/commentsmain.svg') }}"> Comments</h4>
+            <div class="d-flex flex-row align-items-center">
+                <div class="mr-2">
+                    <span class="material-symbols-outlined">comment</span>
+                </div>
+                <div>
+                    <h4>Comments</h4>
+                </div>
             </div>
             <div class="displayflex">
                 <div class="dropdown firstdropdownofcomments">
@@ -39,19 +46,35 @@
                 @csrf
                 <input type="hidden" value="{{ $data->id }}" name="flag_id">
                 <input type="hidden" value="{{ Auth::user()->id }}" name="user_id">
-                    <div>
-                        <div class="form-group mb-0">
-                            <label for="objective-name">Write Comment</label>
-                            <input type="text" class="form-control" name="comment" id="objective-name" required>
-                        </div>
+                    <div class="form-group mb-8">
+                        <label for="objective-name">Write Comment</label>
+                        <textarea id="textarea" style="height:100% !important;" class="form-control mention" name="comment" rows="5"></textarea>
                     </div>
-                    <div>
-                        <span onclick="writecomment()" class="btn btn-default btn-sm">Cancel</span>
-                        <button type="submit" id="savecommentbutton{{ $data->id }}" class="btn btn-primary btn-sm">Save</button>
-                    </div>
+                    <span onclick="writecomment()" class="btn btn-default btn-sm">Cancel</span>
+                    <button type="submit" id="savecommentbutton{{ $data->id }}" class="btn btn-primary btn-sm">Save</button>
                 </form>
             </div>
         </div>
+        <script type="text/javascript">
+            $("#textarea").keypress(function (e) {
+                if(e.which === 13 && !e.shiftKey) {
+                    e.preventDefault();
+                    $(this).closest("form").submit();
+                }
+            });
+            $(document).ready(function(){
+             $(".mention").mention({
+                users: [
+                    @foreach(DB::table('members')->where('org_user',Auth::id())->get() as $r)
+                    {
+                       username: '{{ $r->name }}',
+                       image: '{{ Avatar::create($r->name)->toBase64() }}'
+                    }@if($loop->last) @else ,@endif 
+                    @endforeach
+                ]
+             });
+          });
+        </script>
         <div class="col-md-12 col-lg-12 col-xl-12">
             @if($comments->count() > 0)
             @foreach($comments as $r)
@@ -95,8 +118,11 @@
                 <div class="card-body">
                     <div class="d-flex flex-column">
                         <div class="d-flex justify-content-between align-items-center mb-2">
-                            <div class="d-flex flex-row align-items-center">
-                                <div class="d-flex flex-column">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <img width="36" height="36" src="{{ Avatar::create($user->name)->toBase64() }}">
+                                </div>
+                                <div class="col-md-9">
                                     <div>
                                         <h5>{{ $user->name }} {{ $user->last_name }}</h5>
                                         <small>{{ Cmf::date_format($r->created_at) }}</small>
@@ -208,8 +234,11 @@
                     <div class="card-body">
                         <div class="d-flex flex-column">
                             <div class="d-flex justify-content-between align-items-center mb-2">
-                                <div class="d-flex flex-row align-items-center">
-                                    <div class="d-flex flex-column">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <img width="36" height="36" src="{{ Avatar::create($user->name)->toBase64() }}">
+                                    </div>
+                                    <div class="col-md-9">
                                         <div>
                                             <h5>{{ $puser->name }} {{ $puser->last_name }}</h5>
                                             <small>{{ Cmf::date_format($p->created_at) }}</small>
@@ -288,6 +317,36 @@
 </div>
 </div>
 <script type="text/javascript">
+function showorderby(id,flag_id,table) {
+    $.ajax({
+        type: "POST",
+        url: "{{ url('dashboard/epics/showorderby') }}",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+            id:id,
+            flag_id:flag_id,
+            table:table,
+        },
+        success: function(res) {
+            if(id == 'desc')
+            {
+                console.log(id)
+                $('.orderbycommentbutton').html('Order By Latest <svg xmlns="http://www.w3.org/2000/svg" width="11" height="7" viewBox="0 0 11 7" fill="none"> <path d="M10.8339 0.644857C10.6453 0.456252 10.3502 0.439106 10.1422 0.593419L10.0826 0.644857L5.49992 5.2273L0.917236 0.644857C0.72863 0.456252 0.433494 0.439106 0.225519 0.593419L0.165935 0.644857C-0.0226701 0.833463 -0.0398163 1.1286 0.114497 1.33657L0.165935 1.39616L5.12427 6.35449C5.31287 6.5431 5.60801 6.56024 5.81599 6.40593L5.87557 6.35449L10.8339 1.39616C11.0414 1.18869 11.0414 0.852323 10.8339 0.644857Z" fill="#787878"/> </svg>')
+            }
+            if(id == 'asc')
+            {
+                console.log(id)
+                $('.orderbycommentbutton').html('Order By Older <svg xmlns="http://www.w3.org/2000/svg" width="11" height="7" viewBox="0 0 11 7" fill="none"> <path d="M10.8339 0.644857C10.6453 0.456252 10.3502 0.439106 10.1422 0.593419L10.0826 0.644857L5.49992 5.2273L0.917236 0.644857C0.72863 0.456252 0.433494 0.439106 0.225519 0.593419L0.165935 0.644857C-0.0226701 0.833463 -0.0398163 1.1286 0.114497 1.33657L0.165935 1.39616L5.12427 6.35449C5.31287 6.5431 5.60801 6.56024 5.81599 6.40593L5.87557 6.35449L10.8339 1.39616C11.0414 1.18869 11.0414 0.852323 10.8339 0.644857Z" fill="#787878"/> </svg>')
+            }
+            $('.secondportion').html(res);
+        },
+        error: function(error) {
+            console.log('Error updating card position:', error);
+        }
+    });
+}
 $('#savecomment{{ $data->id }}').on('submit',(function(e) {
     $('#savecommentbutton{{ $data->id }}').html('<i class="fa fa-spin fa-spinner"></i>');
     e.preventDefault();

@@ -1,10 +1,16 @@
 <div class="row">
     <div class="col-md-12 col-lg-12 col-xl-12 @if($attachments->count() > 4) paddingrightzero @endif">
         <div class="d-flex flex-row align-items-center justify-content-between block-header">
-            <div>
-                <h4><img src="{{ url('public/assets/svg/attachmentmainsvg.svg') }}"> Attachments</h4>
+            <div class="d-flex flex-row align-items-center">
+                <div class="mr-2">
+                    <span class="material-symbols-outlined">attachment</span>
+                </div>
+                <div>
+                    <h4>Attachments</h4>
+                </div>
             </div>
             <div class="displayflex">
+                @if($attachments->count() > 0)
                 <div class="dropdown firstdropdownofcomments">
                   <span class="dropdown-toggle orderbybutton" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     @if(isset($orderby))
@@ -22,10 +28,12 @@
                     </svg> 
                   </span>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" onclick="showorderby('desc',{{ $data->id }},'attachments')" href="javascript:void(0)">Latest</a>
-                    <a class="dropdown-item" onclick="showorderby('asc',{{ $data->id }},'attachments')" href="javascript:void(0)">Older</a>
+                    @foreach(DB::table('attachments')->where('value_id' , $data->id)->where('type' , 'epics')->orderby('id' , 'desc')->groupBy('attachments.extension')->get() as $e)
+                    <a class="dropdown-item" onclick="showorderbyattachment('pdf',{{ $data->id }},'attachments')" href="javascript:void(0)">Order By {{ $e->extension }}</a>
+                    @endforeach
                   </div>
                 </div>
+                @endif
                 <span onclick="uploadattachment()" class="btn btn-default btn-sm">Upload</span>
             </div>
         </div>

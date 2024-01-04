@@ -6,7 +6,7 @@
                 @if($r->image)
                 <img src="{{ url('public/assets/images') }}/{{ $r->image }}">
                 @else
-                <div class="namecounter">{{ substr($r->name, 0, 1); }}</div>
+                <img src="{{ Avatar::create($r->name)->toBase64() }}">
                 @endif
             </div>
         </div>

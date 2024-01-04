@@ -1,3 +1,5 @@
+<script src="{{ url('public/assets/bootstrap-typeahead.min.js') }}"></script>
+<script src="{{ url('public/assets/mention.js') }}"></script>
 <div class="row">
     <div class="col-md-12 col-lg-12 col-xl-12 @if($comments->count() > 1) paddingrightzero @endif">
         <div class="d-flex flex-row align-items-center justify-content-between block-header">
@@ -44,20 +46,35 @@
                 @csrf
                 <input type="hidden" value="{{ $data->id }}" name="flag_id">
                 <input type="hidden" value="{{ Auth::user()->id }}" name="user_id">
-                    <div>
-                        <div class="form-group mb-0">
-                            <label for="objective-name">Write Comment</label>
-                            <textarea required class="form-control" name="comment"></textarea>
-                        </div>
+                    <div class="form-group mb-8">
+                        <label for="objective-name">Write Comment</label>
+                        <textarea id="textarea" style="height:100% !important;" class="form-control mention" name="comment" rows="5"></textarea>
                     </div>
-                    <div>
-                        <span onclick="writecomment()" class="btn btn-default btn-sm">Cancel</span>
-                        <button type="submit" id="savecommentbutton{{ $data->id }}" class="btn btn-primary btn-sm">Save</button>
-                    </div>
+                    <span onclick="writecomment()" class="btn btn-default btn-sm">Cancel</span>
+                    <button type="submit" id="savecommentbutton{{ $data->id }}" class="btn btn-primary btn-sm">Save</button>
                 </form>
             </div>
         </div>
-    
+        <script type="text/javascript">
+            $("#textarea").keypress(function (e) {
+                if(e.which === 13 && !e.shiftKey) {
+                    e.preventDefault();
+                    $(this).closest("form").submit();
+                }
+            });
+            $(document).ready(function(){
+             $(".mention").mention({
+                users: [
+                    @foreach(DB::table('members')->where('org_user',Auth::id())->get() as $r)
+                    {
+                       username: '{{ $r->name }}',
+                       image: '{{ Avatar::create($r->name)->toBase64() }}'
+                    }@if($loop->last) @else ,@endif 
+                    @endforeach
+                ]
+             });
+          });
+        </script>
     <div class="col-md-12 col-lg-12 col-xl-12">
         @if($comments->count() > 0)
         @foreach($comments as $r)
@@ -312,6 +329,8 @@ $('#savecomment{{ $data->id }}').on('submit',(function(e) {
             $("#savecomment{{ $data->id }}")[0].reset();
             $('#updateflag{{ $data->id }}').submit();
             $('.secondportion').html(data);
+
+            viewboards($('#viewboards').val());
         }
     });
 }));
