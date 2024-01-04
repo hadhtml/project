@@ -74,86 +74,34 @@
             }
          });
     }
-    function saveEpicMonth() {
-        $('#firsttimeepiccreate').html('<i class="fa fa-spin fa-spinner"><i>')
-        var epic_name = $('#epic_name_month').val();
-        var epic_start_date = $('#epic_start_date_month').val();
-        var epic_end_date = $('#epic_end_date_month').val();
-        var epic_description = $('#epic_description_month').val();
+    function addepicmonth(month_id, month_name, quarter_id, initiative_id, key_id, obj_id) {
         var org_id = "{{ $organization->org_id }}";
-        var slug = "{{ $organization->slug }}";
         var unit_id = "{{ $organization->id }}";
-        var ini_epic_id = $('#ini_epic_id_month').val();
-        var epic_status = $('#epic_status_month').val();
-        var epic_key = $('#epic_key_month').val();
-        var epic_obj = $('#epic_obj_month').val();
-        var buisness_unit_id = $('#buisness_unit_id').val();
-        var epic_type = $('#epic_type').val();
-        var epic_month = $('#month_id').val();
-        var epic_quartar = $('#q_id').val();
         var type = "{{ $organization->type }}";
-        var selectedOptions = $('#team').val();
-        var epicData = [];
-        $('.epic-input').each(function() {
-            epicData.push($(this).val());
+        var slug = "{{ $organization->slug }}";
+        $.ajax({
+            type: "POST",
+            url: "{{ url('dashboard/epics/savenewepic') }}",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                slug: slug,
+                org_id: org_id,
+                initiative_id: initiative_id,
+                month_id: month_id,
+                quarter_id: quarter_id,
+                unit_id: unit_id,
+                type: type,
+                obj_id: obj_id,
+                key_id: key_id,
+                buisness_unit_id: unit_id,
+                epic_type: type
+            },
+            success: function(res) {
+                editepic(res);
+            }
         });
-        var epicStory = [];
-        $('.story_id').each(function() {
-            epicStory.push($(this).val());
-        });
-        var epicComment = [];
-        $('.comment_id').each(function() {
-            epicComment.push($(this).val());
-        });
-        if ($('#epic_name_month').val() != '') {
-            $.ajax({
-                type: "POST",
-                url: "{{ url('dashboard/epics/savenewepic') }}",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: {
-                    epic_name: epic_name,
-                    epic_start_date: epic_start_date,
-                    epic_end_date: epic_end_date,
-                    epic_description: epic_description,
-                    org_id: org_id,
-                    slug: slug,
-                    ini_epic_id: ini_epic_id,
-                    epicData: epicData,
-                    epic_status: epic_status,
-                    epic_month: epic_month,
-                    epic_quartar: epic_quartar,
-                    unit_id: unit_id,
-                    type: type,
-                    epic_obj: epic_obj,
-                    selectedOptions: selectedOptions,
-                    epic_key: epic_key,
-                    epicStory: epicStory,
-                    epicComment: epicComment,
-                    buisness_unit_id: buisness_unit_id,
-                    epic_type: epic_type
-
-                },
-                success: function(res) {
-                    $('#epic_name_month').val('');
-                    $('#epic_start_date_month').val('');
-                    $('#epic_end_date_month').val('');
-                    $('#epic_description_month').val('');
-                    $('#epic-feild-error-month').html('');
-                    $('#parentCollapsible').html(res);
-                    $("#nestedCollapsible" + epic_obj).collapse('toggle');
-                    $("#key-result" + epic_key).collapse('toggle');
-                    $("#initiative" + ini_epic_id).collapse('toggle');
-                    $("#AddStory").collapse('toggle');
-                    handleDivClick(ini_epic_id);
-                    showlatestepicdatainmodal();
-                }
-            });
-        } else {
-            $('#firsttimeepiccreate').html('Save Changes')
-            $('#epic_name_month').focus()
-        }
     }
     $(document).ready(function() {
         $('#epic_description_month').summernote({
@@ -640,11 +588,12 @@
 
     $(document).ready(function() {
         $(document).on('input', '.range-slider__range-two', function() {
+            console.log($(this).val());
             $('.range-slider__range-two').val($(this).val());
             $('#sliderValue').val($(this).val());
             var slider = $('#sliderValue').val();
-
             var obj = $('#key_obj_id').val();
+            var key_id = $('#key_id_weight_tab').val();
             $.ajax({
                 type: "GET",
                 url: "{{ url('check-key-weight') }}",
@@ -654,21 +603,15 @@
                 data: {
                     obj: obj,
                     slider: slider,
-
+                    key_id: key_id,
                 },
                 success: function(res) {
-
                     if (res.key > 100) {
-                        $('#wieght-error').html(
-                            '<small class="text-danger ml-2">Combined weight percentage must not be greater than 100</small>'
-                            );
-
+                        var setvalue  = parseInt(res.key)-100;
+                        $('#wieght-error').html('<small class="text-danger ml-2">Combined weight Percentage not be greater than 100%. You Can Set Weight Value of This Key Result is <b>'+setvalue+'</b></small>');
                     } else {
                         $('#wieght-error').html('');
                     }
-
-
-
                 }
             });
 
@@ -2016,44 +1959,7 @@
     }
 
 
-    function addepicmonth(month_id, month_name, q_id, ini_epic_id, epic_key, epic_obj) {
-
-        $('#ini_epic_id_month').val(ini_epic_id);
-        $('#epic_key_month').val(epic_key);
-        $('#epic_obj_month').val(epic_obj);
-        $('#month_id').val(month_id);
-        $('#q_id').val(q_id);
-
-        const monthName = month_name;
-        const year = 2023;
-        const {
-            start,
-            end
-        } = getMonthStartAndEndDates(monthName, year);
-
-        // console.log("Start Date:", start.toDateString());
-        // console.log("End Date:", end.toDateString());
-
-
-        const formattedDate = formatDate(start.toDateString());
-        const endformattedDate = formatDate(end.toDateString());
-
-        $('#epic_start_date_month').attr('min', formattedDate);
-
-        $('#epic_start_date_month').val(formattedDate);
-        $('#epic_end_date_month').val(endformattedDate);
-
-        // if (formattedDate) {
-        //   console.log(formattedDate); // Output: "2023-07-01"
-        // } else {
-        //   console.log("Invalid date.");
-        $('.story-data').html('');
-        $('#comment_area').html('');
-        var randomInteger = getRandomInt(100, 999);
-        $('#r_id').val(randomInteger);
-        // }
-
-    }
+    
 
 
 
@@ -2093,25 +1999,6 @@
 
 
     }
-
-    // $(document).ready(function(){
-    //  var maxLength = 240;
-    //  $(".show-read-more").each(function(){
-    //      var myStr = $(this).text();
-    //      if($.trim(myStr).length > maxLength){
-    //          var newStr = myStr.substring(0, maxLength);
-    //          var removedStr = myStr.substring(maxLength, $.trim(myStr).length);
-    //          $(this).empty().html(newStr);
-    //          $(this).append(' <a href="javascript:void(0);" class="read-more" style="color:black;">Read More...</a>');
-    //          $(this).append('<span class="more-text">' + removedStr + '</span>');
-
-    //      }
-    //  });
-    //  $(".read-more").click(function(){
-    //      $(this).siblings(".more-text").contents().unwrap();
-    //      $(this).remove();
-    //  });
-    // });
 
     function loadmore(x) {
 
