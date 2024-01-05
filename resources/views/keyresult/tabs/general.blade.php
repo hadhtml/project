@@ -53,6 +53,14 @@
     </div>
 </form>
 <script type="text/javascript">
+    $( document ).ready(function() {
+        var mindate = '{{ DB::table("objectives")->where("id" , $data->obj_id)->first()->start_date }}';
+        var maxdate = '{{ DB::table("objectives")->where("id" , $data->obj_id)->first()->end_date }}';
+        $('#key_end_date').attr('min', mindate);
+        $('#key_end_date').attr('max', maxdate);
+        $('#key_start_date').attr('min', mindate);
+        $('#key_start_date').attr('max', maxdate);
+    });
     function changeepicstatus(status , id) {
         $.ajax({
             type: "POST",
