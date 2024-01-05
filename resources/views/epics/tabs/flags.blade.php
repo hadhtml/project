@@ -209,7 +209,7 @@ function getOrder(){
                                 @if($user->image != NULL)
                                 <img class="user-image" src="{{asset('public/assets/images/'.$user->image)}}" alt="Example Image">
                                 @else
-                                <img class="user-image" src="{{ Avatar::create($user->name)->toBase64() }}" alt="Example Image">
+                                <img class="user-image" src="{{ Avatar::create($user->name.' '.$user->last_name)->toBase64() }}" alt="Example Image">
                                 @endif
                             </div>
                             <div>

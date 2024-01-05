@@ -1383,3 +1383,20 @@ button:focus {
     color: #5cad6d;
     background-color: #e1ffeb;    
 } 
+.organization-drop{
+    font-size: 12px !important;
+}
+
+.organization-drop .multiselect{
+    width: 110px;
+    font-size: 12px !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+.organization-drop .multiselect-container{
+    min-width: 200px;
+    font-size: 14px;
+}
+.dropdown-item:hover{
+    cursor: pointer;
+}

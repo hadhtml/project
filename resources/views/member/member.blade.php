@@ -180,30 +180,30 @@ $var_objective = "Member";
             </button>
          </div>
          <div class="modal-body">
-            <form class="needs-validation" action="{{url('save-member')}}" enctype="multipart/form-data" method="POST">
+            <form class="needs-validation" action="{{url('save-member')}}" autocomplete="off" enctype="multipart/form-data" method="POST">
                @csrf
                <div class="row">
                   <div class="col-md-12 col-lg-12 col-xl-12">
                      <div class="form-group mb-0">
-                        <input type="text" class="form-control" id="member_name" name="member_name" required>
+                        <input autocomplete="off" type="text" class="form-control" id="member_name" name="member_name" required>
                         <label for="objective-name">First Name</label>
                      </div>
                   </div>
                   <div class="col-md-12 col-lg-12 col-xl-12">
                      <div class="form-group mb-0">
-                        <input type="text" class="form-control" id="member_name" name="last_member_name" required>
+                        <input autocomplete="off" type="text" class="form-control" id="member_name" name="last_member_name" required>
                         <label for="objective-name">Last Name</label>
                      </div>
                   </div>
                   <div class="col-md-12 col-lg-12 col-xl-12">
                      <div class="form-group mb-0">
-                        <input type="email" class="form-control" id="email" name="email" onfocusout="checkemail(this.value)" required>
+                        <input autocomplete="off" type="email" class="form-control" autocomplete="" id="email" name="email" onfocusout="checkemail(this.value)" required>
                         <label for="email">Email</label>
                      </div>
                   </div>
                   <div class="col-md-12 col-lg-12 col-xl-12">
                      <div class="form-group mb-0">
-                        <input type="text" class="form-control" name="phone" onkeypress="return onlyNumberKey(event)" id="phone_number" required>
+                        <input autocomplete="off" type="text" class="form-control" name="phone" onkeypress="return onlyNumberKey(event)" id="phone_number" required>
                         <label for="phone-number">Phone number</label>
                      </div>
                   </div>
@@ -220,7 +220,7 @@ $var_objective = "Member";
                   <!--</div>  -->
                   <div class="col-md-12 col-lg-12 col-xl-12">
                      <div class="form-group mb-0">
-                        <input type="text" class="form-control" id="role" name="role" required>
+                        <input autocomplete="off" type="text" class="form-control" id="role" name="role" required>
                         <label for="role">Role</label>
                      </div>
                   </div>

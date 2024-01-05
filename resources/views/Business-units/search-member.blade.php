@@ -5,7 +5,7 @@
             @if($r->image != NULL)
             <img width="45px" height="45px" src="{{asset('public/assets/images/'.$r->image)}}" alt="Example Image">
             @else
-            <img width="45px" height="45px" src="{{ Avatar::create($r->name)->toBase64() }}" alt="Example Image">
+            <img width="45px" height="45px" src="{{ Avatar::create($r->name.' '.$r->last_name)->toBase64() }}" alt="Example Image">
             @endif
             
         </div>

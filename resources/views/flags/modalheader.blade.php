@@ -61,7 +61,7 @@
                     @if($member->image)
                     <img data-toggle="tooltip" title="" data-original-title="{{ $member->name }} {{ $member->last_name }}" src="{{ url('public/assets/images') }}/{{ $member->image }}">
                     @else
-                    <img data-toggle="tooltip" title="" data-original-title="{{ $member->name }} {{ $member->last_name }}" src="{{ Avatar::create($member->name)->toBase64() }}" alt="{{ $member->name }}" title="{{ $member->name }} {{ $member->last_name }}">
+                    <img data-toggle="tooltip" title="" data-original-title="{{ $member->name }} {{ $member->last_name }}"  src="{{ Avatar::create($member->name.' '.$member->last_name)->toBase64() }}" alt="{{ $member->name }}" title="{{ $member->name }} {{ $member->last_name }}">
                     @endif
                 </div>
                 @endforeach

@@ -49,7 +49,10 @@ $organization  = DB::table('organization')->where('user_id',Auth::id())->first()
                      @if($user->image != NULL)
                      <img src="{{asset('public/assets/images/'.$user->image)}}" style="width:100px; height:100px; object-fit:cover" alt="Example Image">
                      @else
-                     <img src="{{ Avatar::create($user->name)->toBase64() }}" style="width:100px; height:100px; object-fit:cover">
+                     @php
+                          $avatarname = substr($user->name, 0, 1).' '.substr($user->last_name, 0, 1);
+                     @endphp
+                     <img src="{{ Avatar::create($avatarname)->toBase64() }}" style="width:100px; height:100px; object-fit:cover">
                      @endif
                      <div class="form-group mb-0">
                         <input type="file" class="form-control" name="image" accept=".png, .jpg, .jpeg" >

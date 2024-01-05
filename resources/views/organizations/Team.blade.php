@@ -38,7 +38,7 @@
                         ->count();
 
                 @endphp
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="card business-card">
                         <div class="card-body">
                             <div class="d-flex flex-row justify-content-between">
@@ -84,7 +84,7 @@
                                                             <img src="{{ asset('public/assets/images/' . $r->image) }}"
                                                                 alt="Example Image">
                                                         @else
-                                                            <img src="{{ Avatar::create($r->name)->toBase64() }}"
+                                                            <img src="{{ Avatar::create($r->name.' '.$r->last_name)->toBase64() }}"
                                                                 alt="Example Image">
                                                         @endif
                                                     </div>
@@ -286,7 +286,7 @@
                                             @endforeach
 
                                         </div>
-                                        <div class="col-md-12">
+                                        <div class="col-md-12 mt-7">
                                             <button class="btn btn-primary btn-lg btn-theme btn-block ripple"
                                                 type="submit">Submit</button>
                                         </div>

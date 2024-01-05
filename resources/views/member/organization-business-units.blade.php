@@ -87,13 +87,13 @@ $var_objective = "Org-Unit";
                                 @if($r->image != NULL)
                                 <img src="{{asset('public/assets/images/'.$r->image)}}" alt="lead">
                                 @else
-                                <img src="{{ Avatar::create($r->name)->toBase64() }}" alt="lead">
+                                <img src="{{ Avatar::create($r->name.''.$r->last_name)->toBase64() }}" alt="lead">
                                 @endif
                             </div>
 
                             <div class="d-flex flex-column">
                                 <div>
-                                    <span class="text-primary">Team Leader</span>
+                                    <span class="text-primary">Lead</span>
                                 </div>
                                 <div>
                                     <span>{{$r->name}} {{ $r->last_name }}</span>
