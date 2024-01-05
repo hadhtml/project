@@ -95,9 +95,9 @@ function getOrder(){
                         </div>
                          <div class="col-md-6 col-lg-6 col-xl-6">
                             <div class="form-group mb-0">
-                                <label for="flag_assignee">Flag Assignee <small class="text-danger">*</small></label>
+                                <label for="flag_assignee">Assignee <small class="text-danger">*</small></label>
                                 <select required class="form-control" id="flag_assignee" name="flag_assign">
-                                    <option value="">Select Flag Assignee</option>
+                                    <option value="">Select Assignee</option>
                                     @foreach(DB::table('members')->where('org_user',Auth::id())->get() as $r)
                                       <option value="{{ $r->id }}">{{ $r->name }} {{ $r->last_name }}</option>
                                     @endforeach

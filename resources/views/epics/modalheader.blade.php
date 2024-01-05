@@ -201,9 +201,9 @@
                                 </div>
                                  <div class="col-md-12 col-lg-12 col-xl-12">
                                     <div class="form-group mb-0">
-                                        <label for="lead-manager">Flag Assignee <small class="text-danger">*</small></label>
+                                        <label for="lead-manager">Assignee <small class="text-danger">*</small></label>
                                         <select class="form-control" id="flag_assign">
-                                            <option value="">Select Flag Assignee </option>
+                                            <option value="">Select Assignee </option>
                                             @foreach(DB::table('members')->where('org_user',Auth::id())->get() as $r)
                                               <option value="{{ $r->id }}">{{ $r->name }} {{ $r->last_name }}</option>
                                             @endforeach
