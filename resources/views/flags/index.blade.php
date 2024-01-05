@@ -83,7 +83,6 @@ if($type == 'orgT')
                         </div>
                         <div class="card bg-light-gray shadow-none imp-parent-card">
                             <div class="card-body pt-3">
-                                
                                 <div class="kanban-search-bar">
                                     <input onkeyup="searchflag(this.value,'todoflag')" type="text" class="form-control input-sm" placeholder="Search...">
                                 </div>

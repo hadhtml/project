@@ -400,9 +400,8 @@
                  @include('Business-units.unit-backlog-breadcrum')
                  @endif
                  
-                  @if ($var_objective == 'Jira')
-                 @include('Business-units.Jira-breadcrumb')
-
+                @if ($var_objective == 'Jira')
+                    @include('settings.beardcumb')
                  @endif
                  
                  @if ($var_objective == 'Report-unit')

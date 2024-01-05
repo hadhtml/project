@@ -6,7 +6,7 @@ use Auth;
 use DB;
 class Quarters
 {
-	function GetQuarter($start_date,$end_date)
+ public static function GetQuarter($start_date,$end_date)
  {
     $startDate = Carbon::parse($start_date);
     $endDate = Carbon::parse($end_date);
@@ -28,7 +28,7 @@ class Quarters
     return $quarters;
    }
    
-   function GetQuarterYear($start_date,$end_date,$data)
+ public static function GetQuarterYear($start_date,$end_date,$data)
  {
     $startDate = Carbon::parse($start_date);
     $endDate = Carbon::parse($end_date);

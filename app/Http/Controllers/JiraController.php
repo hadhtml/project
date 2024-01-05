@@ -24,7 +24,10 @@ class JiraController extends Controller
     {
         $this->middleware('auth');
     }
-    
+    public function financialsettings()
+    {
+         return view('settings.financial');  
+    }
      public function jira(Request $request)
     {
 
@@ -271,7 +274,7 @@ class JiraController extends Controller
      {
          
       $Jiradata = DB::table('jira_setting')->where('user_id',Auth::id())->get();
-       return view('Business-units.jira-setting',compact('Jiradata'));  
+       return view('settings.jira-setting',compact('Jiradata'));  
      }
      
      public function AddJiraSetting(Request $request)
