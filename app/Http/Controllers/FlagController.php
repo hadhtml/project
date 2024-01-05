@@ -108,8 +108,44 @@ class FlagController extends Controller
     }
     public function changestatus(Request $request)
     {
+        $previousstatus = DB::table('flags')->where('id' , $request->droppedElId)->first()->flag_status;
+
+        if($previousstatus == 'inprogress')
+        {
+            $from_status = '<b style="background-color: #E1DB3F; color: white; border-radius: 10px; padding-left: 5px; padding-right: 5px; ">In Progress</b>';
+        }
+        if($previousstatus == 'doneflag')
+        {
+            $from_status = '<b style="background-color: #3fe1a7; color: white; border-radius: 10px; padding-left: 5px; padding-right: 5px; ">Done</b>';
+        }
+        if($previousstatus == 'todoflag')
+        {
+            $from_status = '<b style="background-color: #6c757d; color: white; border-radius: 10px; padding-left: 5px; padding-right: 5px; ">To Do</b>';
+        }
+
+        if($request->parentElId == 'todoflag')
+        {
+            $tostatus = '<b style="background-color: #6c757d; color: white; border-radius: 10px; padding-left: 5px; padding-right: 5px; ">To Do</b>';
+        }
+        if($request->parentElId == 'doneflag')
+        {
+            $tostatus = '<b style="background-color: #3fe1a7; color: white; border-radius: 10px; padding-left: 5px; padding-right: 5px; ">Done</b>';
+        }
+        if($request->parentElId == 'inprogress')
+        {
+            $tostatus = '<b style="background-color: #E1DB3F; color: white; border-radius: 10px; padding-left: 5px; padding-right: 5px; ">In Progress</b>';
+        }
+
+
+
+
+        $notification = "Status Changed From ".$from_status .' To '.$tostatus;
+        Cmf::save_activity(Auth::id() , $notification,'flags',$request->droppedElId);
+
         DB::table('flags')->where('id',$request->droppedElId)->update(['flag_status' => $request->parentElId]);
         $data = flags::find($request->droppedElId);
+
+
         $html = view('flags.modalheader', compact('data'))->render();
         return $html;
     }
