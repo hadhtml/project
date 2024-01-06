@@ -187,6 +187,22 @@ class FlagController extends Controller
     public function updateflag(Request $request)
     {
         $update = flags::find($request->id);
+        if($update->flag_title != $request->flag_title)
+        {
+            $activity = 'Updated Title Field from "'.$update->flag_title.'" To "'.$request->flag_title.'" ';
+            Cmf::save_activity(Auth::id() , $activity,'flags',$request->id);
+        }
+        if($update->flag_description != $request->flag_description)
+        {
+            if($update->flag_description)
+            {
+                $activity = 'Updated Description Field';
+                Cmf::save_activity(Auth::id() , $activity,'flags',$request->id);
+            }else{
+                $activity = 'Added a Description';
+                Cmf::save_activity(Auth::id() , $activity,'flags',$request->id);
+            }
+        }
         $update->flag_title = $request->flag_title;
         $update->flag_description = $request->flag_description;
         $update->save();
@@ -200,7 +216,6 @@ class FlagController extends Controller
             $update_escalated_flag->flag_type = $request->flag_type;
             $update_escalated_flag->save();
         }
-        Cmf::save_activity(Auth::id() , 'Updated a Impediment Flag','flags',$request->id);
         $html = view('flags.simplecard', compact('r'))->render();
         return $html;
     }
@@ -548,9 +563,13 @@ class FlagController extends Controller
     }
     public function removeepic(Request $request)
     {
+
         $update = flags::find($request->id);
         $update->epic_id = null;
         $update->save();
+
+        Cmf::save_activity(Auth::id() , 'Remove Epic  From Flag','flags',$request->id);
+
         $data = flags::find($request->id);
         $html = view('flags.tabs.epicinputtoshow', compact('data'))->render();
         return $html;
@@ -559,7 +578,10 @@ class FlagController extends Controller
     {
         $update = flags::find($request->flagid);
         $update->epic_id = $request->id;
+        $epic = Epic::find($request->id);
         $update->save();
+        $notification = 'Epic <b style="background-color: #6c757d; color: white; border-radius: 10px; padding-left: 5px; padding-right: 5px; "> '.$epic->epic_name. ' </b> Added in Flag';
+        Cmf::save_activity(Auth::id() , $notification,'flags',$request->flagid);
         $data = flags::find($request->flagid);
         $html = view('flags.tabs.epicinputtoshow', compact('data'))->render();
         return $html;

@@ -40,7 +40,7 @@ class TeamController extends Controller
     if($type == 'org')
     {
         $organization = DB::table('organization')->where('slug',$id)->first();        
-        $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
+        $Backlog  =  DB::table('team_backlog')->where('type' , 'org')->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
     }
 
     if($type == 'orgT')
@@ -51,7 +51,7 @@ class TeamController extends Controller
 
     
    
-    return view('Team.backlog',compact('Backlog','organization','type'));  
+    return view('epicbacklog.index',compact('Backlog','organization','type'));  
         
     }
 
