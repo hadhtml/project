@@ -334,7 +334,9 @@ drake.on("drop", function (el, target, source, sibling) {
 <script>
     $(document).ready(function() {
         // Initialize DataTable
-        $('.data-table').DataTable();
+        $('.data-table').DataTable({
+            "ordering": false
+        });
     });
     $(document).ready(function() {
     $('.search-team').select2({
