@@ -6,9 +6,9 @@
             
 
             <div class="flex-shrink-0 p-3 bg-white sub-nav open" id="panel">
-                <button id="closeBtn" class="close-button">
+                {{-- <button id="closeBtn" class="close-button">
                     <img src="https://dev.agileprolific.com/public/assets/images/icons/collaps.svg">
-                </button>
+                </button> --}}
                 <h6 class="title">Value Streams</h6>
                 <ul class="list-unstyled ps-0 expanded-navbar mb-0">
             

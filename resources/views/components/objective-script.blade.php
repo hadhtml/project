@@ -352,7 +352,7 @@
 
 
     function saveObjective() {
-
+        
         var objective_name = $('#objective_name').val();
         var start_date = $('#start_date').val();
         var end_date = $('#end_date').val();
@@ -385,7 +385,7 @@
         });
 
 
-
+        $('#saveobjectivebutton').html('<i class="fa fa-spin fa-spinner"></i>');
         $.ajax({
             type: "POST",
             url: "{{ url('save-objective') }}",
@@ -424,10 +424,11 @@
                     '<div class="alert alert-success" role="alert"> Objective Created successfully</div>'
                 );
                 $('#obj-feild-error').html('');
+                $('#saveobjectivebutton').html('Save Objective');
                 setTimeout(function() {
                     $('#create-objective').modal('hide');
                     $('#success-obj').html('');
-                }, 3000);
+                }, 1000);
                 $('#parentCollapsible').html(res);
 
                 // }
@@ -464,6 +465,7 @@
 
         if ($('#edit_objective_name').val() != '' || $('#edit_start_date').val() != '' || $('#edit_end_date').val() !=
             '') {
+            $('#updateobjectivebutton').html('<i class="fa fa-spin fa-spinner"></i>');
             $.ajax({
                 type: "POST",
                 url: "{{ url('update-objective') }}",
@@ -484,18 +486,19 @@
                 },
                 success: function(res) {
 
-                    $('#edit_objective_name').val('');
-                    $('#edit_start_date').val('');
-                    $('#edit_end_date').val('');
-                    $('#edit_obj_small_description').val('');
+                    // $('#edit_objective_name').val('');
+                    // $('#edit_start_date').val('');
+                    // $('#edit_end_date').val('');
+                    // $('#edit_obj_small_description').val('');
                     $('#success-obj-edit').html(
                         '<div class="alert alert-success" role="alert"> Objective Updated successfully</div>'
                     );
                     $('#oobj-feild-error-edit').html('');
+                    $('#updateobjectivebutton').html('Update Objective');
                     setTimeout(function() {
                         $('#edit-objective').modal('hide');
                         $('#success-obj-edit').html('');
-                    }, 3000);
+                    }, 2000);
 
                     $('#parentCollapsible').html(res);
                     $("#nestedCollapsible" + edit_obj_id).collapse('toggle');
@@ -1219,6 +1222,7 @@
             return false;
 
         }
+        $('#saveinitiativebutton').html('<i class="fa fa-spin fa-spinner"></i>');
         $.ajax({
             type: "POST",
             url: "{{ url('save-key-initiative') }}",
@@ -1256,10 +1260,11 @@
                     '<div class="alert alert-success" role="alert"> initiative Created successfully</div>'
                 );
                 $('#initiative-feild-error').html('');
+                $('#saveinitiativebutton').html('Save Initiative');
                 setTimeout(function() {
                     $('#create-initiative').modal('hide');
                     $('#success-initiative').html('');
-                }, 3000);
+                }, 2000);
                 $('#parentCollapsible').html(res);
                 $("#nestedCollapsible" + obj_id_initiative).collapse('toggle');
                 $("#key-result" + key_id_initiative).collapse('toggle');
@@ -2081,7 +2086,7 @@
             return false;
         }
 
-
+        $('#savequarterbutton').html('<i class="fa fa-spin fa-spinner"></i>');
         $.ajax({
             type: "POST",
             url: "{{ url('save-sprint') }}",
@@ -2101,14 +2106,13 @@
             },
             success: function(res) {
 
-                $('#success-sprint').html(
-                    '<div class="alert alert-success" role="alert">Sprint Added successfully</div>'
-                );
+                $('#success-sprint').html('<div class="alert alert-success" role="alert">Sprint Added successfully</div>');
+                $('#savequarterbutton').html('Start');
                 setTimeout(function() {
                     $('#create-report').modal('hide');
                     $('#success-sprint').html('');
                     $('#sprint-error').html('');
-                }, 3000);
+                }, 1000);
 
                 $('#sprint-end').html(
                     '<button class="button mr-1" onclick="endquarter();">End Quarter</button>');
@@ -2125,7 +2129,8 @@
 
 
     function endquarter() {
-
+        $('#endquarterbutton').html('<i class="fa fa-spin fa-spinner"></i>');
+        $('#endquarterbutton').css('min-width' , '100px;');
         var unit_id = "{{ $organization->id }}";
         var type = "{{ $organization->type }}";
         $.ajax({
@@ -2139,7 +2144,7 @@
                 type: type
             },
             success: function(res) {
-
+                $('#endquarterbutton').html('End Quater');
                 $('#sprint-end').html(
                     '<button class="button mr-1" data-toggle="modal" data-target="#create-report">Start Quarter</button>'
                     );

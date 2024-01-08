@@ -33,12 +33,12 @@ $var_objective = 'Page-'.$type;
         <div class="row" id="chart-update">
             @foreach ($data as $chart_data)
                 @php
+                      $chart = array();
                       $chart = DB::table('chart_data')
                         ->where('kpi_setting_id', $chart_data->id)
                         ->whereNotNull('target_value')
                         ->orderby('id','DESC')
-                        ->first();
-    
+                        ->first();    
                     
                     $alldata = DB::table('chart_data')
                         ->whereNotNull('target_value')
@@ -283,6 +283,7 @@ $var_objective = 'Page-'.$type;
                                         </div>
                                     </div>
                                     <div class="d-flex flex-row align-items-center">
+                                        @if($chart)
                                         @if($chart_data)
                                         @if ($chart_data->target_option == 'null')
                                         <div class="mr-2">
@@ -336,6 +337,7 @@ $var_objective = 'Page-'.$type;
                                             @endif
                                            @endif
                                        
+                                        @endif
                                         @endif
                                     </div>
                                 </div>

@@ -33,7 +33,7 @@ $var_objective = "Org-Unit-team";
     $EpicResultcount  = DB::table('epics')->where('buisness_unit_id',$team->id)->where('epic_type','BU')->where('trash',NULL)->count();
 
     @endphp
-<div class="col-md-3">
+<div class="col-md-4">
     <div class="card business-card">
         <div class="card-body">
             <div class="d-flex flex-row justify-content-between">
@@ -73,13 +73,13 @@ $var_objective = "Org-Unit-team";
                                         @if($r->image != NULL)
                                         <img src="{{asset('public/assets/images/'.$r->image)}}" alt="Example Image">
                                         @else
-                                        <img src="{{ Avatar::create($r->name)->toBase64() }}" alt="Example Image">
+                                        <img src="{{ Avatar::create($r->name.' '.$r->last_name)->toBase64() }}" alt="Example Image">
                                         @endif
                                     </div>
 
                                     <div class="d-flex flex-column">
                                         <div>
-                                            <span class="text-primary">Team Lead</span>
+                                            <span class="text-primary">Lead</span>
                                         </div>
                                         <div>
                                             <span>{{$r->name}} {{ $r->last_name }}</span>
@@ -261,7 +261,7 @@ $var_objective = "Org-Unit-team";
                                     @endforeach
                                
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-12 mt-7">
                                     <button class="btn btn-primary btn-lg btn-theme btn-block ripple" type="submit">Submit</button>
                                 </div>
                             </div>
