@@ -96,7 +96,7 @@
                       <img src="{{ url('public/assets/svg') }}/{{ $imagename }}">                
                 </div>
                 <div class="col-md-8 filename">
-                    {{ $r->file_name }}<br>
+                    {!! \Illuminate\Support\Str::limit($r->file_name,60, $end='') !!}<br>
                     <span class="datecolor">Added On {{ Cmf::date_format($r->created_at) }}</span>
                 </div>
                 <div class="col-md-3">
