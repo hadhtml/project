@@ -527,11 +527,21 @@ class FlagController extends Controller
         }
         if($request->tab == 'attachment')
         {
+            $extensions = attachments::where('value_id' , $request->id)->groupBy('extension')->where('type' , 'flags')->orderby('id' , 'desc')->get();
             $attachments = attachments::where('value_id' , $request->id)->where('type' , 'flags')->orderby('id' , 'desc')->get();
             $data = flags::find($request->id);
-            $html = view('flags.tabs.attachments', compact('attachments','data'))->render();
+            $html = view('flags.tabs.attachments', compact('attachments','data','extensions'))->render();
             return $html;
         }
+    }
+    public function filterbyextension(Request $request)
+    {
+        $extensions = attachments::where('value_id' , $request->id)->groupBy('extension')->where('type' , 'flags')->orderby('id' , 'desc')->get();
+        $attachments = attachments::where('value_id' , $request->id)->where('extension' , $request->extention)->where('type' , 'flags')->orderby('id' , 'desc')->get();
+        $data = flags::find($request->id);
+        $extension = $request->extention;
+        $html = view('flags.tabs.attachments', compact('attachments','data','extensions','extension'))->render();
+        return $html;
     }
     public function uploadattachment(Request $request)
     {
