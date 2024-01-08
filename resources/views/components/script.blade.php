@@ -349,6 +349,7 @@ drake.on("drop", function (el, target, source, sibling) {
  $('.chkveg').val('');
   $('.chkveg').multiselect({
     includeSelectAllOption:false,
+    numberDisplayed: 0
   });
 
 
