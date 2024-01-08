@@ -1446,3 +1446,11 @@ button:focus {
 .dropdown-item:hover{
     cursor: pointer;
 }
+.team-card h3 a {
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 25px;
+    color: black;
+    text-decoration: none;
+}
