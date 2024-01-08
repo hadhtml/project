@@ -221,16 +221,13 @@ class FlagController extends Controller
     }
     public function deleteflag(Request $request)
     {
-        $checkescalate = escalate_cards::where('flag_id' , $request->delete_id)->first();
-        if($checkescalate)
+        $flag = flags::find($request->delete_id);
+        if($flag->escalate)
         {
-            $getescalatedflag = flags::where('escalate' , $checkescalate->id)->first();
-            $updateflag = flags::find($getescalatedflag->id);
-            $updateflag->escalate = null;
-            $updateflag->save();
-            escalate_cards::where('flag_id' , $request->delete_id)->delete();
-            $activity = 'Escalated Flag Deleted';
-            Cmf::save_activity(Auth::id() , $activity,'flags',$updateflag->id);
+            $escalate = escalate_cards::find($flag->escalate);
+            $activity = 'Deleted Escalation of this Flag';
+            Cmf::save_activity(Auth::id() , $activity,'flags',$escalate->flag_id);
+            escalate_cards::where('id' , $flag->escalate)->delete();
         }
         activities::where('type' , 'flags')->where('value_id' , $request->delete_id)->delete();
         flag_members::where('flag_id' , $request->delete_id)->delete();
