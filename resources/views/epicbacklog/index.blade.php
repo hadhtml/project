@@ -339,219 +339,78 @@ $var_objective = 'TBaclog-' . $type;
                         </div>
                      </div>
                   </div>
-                  <div class="modal fade" id="create{{ $backlog->id }}" tabindex="-1"
-                     role="dialog" aria-labelledby="create-epic" aria-hidden="true">
-                     <div class="modal-dialog modal-lg" id="modaldialog" role="document">
-                        <div class="modal-content">
-                           <div class="modal-header modalheaderforapend">
-                              <div class="row positionrelative">
-                                  <div class="col-md-12 mb-5">
-                                      <h5 class="modal-title newmodaltittle epic-tittle-header marginleftthirty" id="create-epic">
-                                          <img src="{{ url('public/assets/svg/epicheaderheader.svg') }}">{{ $backlog->epic_title }}
-                                      </h5>
-                                  </div>
-                                  <div class="col-md-12 displayflex">
-                                      <div class="btn-group epicheaderborderleft">
-                                          <button type="button" class="btn btn-default statuschangebutton @if($backlog->epic_status == 'To Do') todo-button-color @endif @if($backlog->epic_status == 'In progress') inprogress-button-color @endif @if($backlog->epic_status == 'Done') done-button-color @endif" id="showboardbutton">
-                                              @if($backlog->epic_status == 'To Do')
-                                                  To Do
-                                              @endif
-                                              @if($backlog->epic_status == 'In progress')
-                                                  In Progress
-                                              @endif
-                                              @if($backlog->epic_status == 'Done')
-                                                  Done
-                                              @endif
-                                          </button>
-                                          <button type="button" class="@if($backlog->epic_status == 'To Do') todo-button-color @endif @if($backlog->epic_status == 'In progress') inprogress-button-color @endif @if($backlog->epic_status == 'Done') done-button-color @endif statuschangebuttonarrow btn btn-danger dropdown-toggle dropdown-toggle-split archivebeardcimbgbutton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                              <img src="{{url('public/assets/svg/arrow-down-white.svg')}}" width="20">         
-                                              <span class="sr-only">Toggle Dropdown</span>
-                                          </button>
-                                          <div class="dropdown-menu">
-                                              @if($backlog->epic_status == 'To Do')
-                                                  <a class="dropdown-item" onclick="changeepicstatus('In progress',{{$backlog->id}})" href="javascript:void(0)">In Progress</a>
-                                                  <a class="dropdown-item" onclick="changeepicstatus('Done',{{$backlog->id}})" href="javascript:void(0)">Done</a>
-                                              @endif
-                                              @if($backlog->epic_status == 'In progress')
-                                                  <a class="dropdown-item" onclick="changeepicstatus('To Do',{{$backlog->id}})" href="javascript:void(0)">To Do</a>
-                                                  <a class="dropdown-item" onclick="changeepicstatus('Done',{{$backlog->id}})" href="javascript:void(0)">Done</a>
-                                              @endif
-                                              @if($backlog->epic_status == 'Done')
-                                                  <a class="dropdown-item" onclick="changeepicstatus('To Do',{{$backlog->id}})" href="javascript:void(0)">To Do</a>
-                                                  <a class="dropdown-item" onclick="changeepicstatus('In progress',{{$backlog->id}})" href="javascript:void(0)">In Progress</a>
-                                              @endif
-                                          </div>
-                                      </div>
-                                      @if($backlog->team_id)
-                                      <div class="members-list">
-                                          <div id="members">
-                                              <a onclick="showmemberbox()" href="javascript:void(0)" class="epic-header-buttons" id="showboardbutton">
-                                                  <img src="{{url('public/assets/svg/profile-2user.svg')}}" width="20"> 1
-                                              </a>
-                                          </div>
-                                      </div>
-                                      @else
-                                      <a href="javascript:void(0)" onclick="showmemberbox()" class="epic-header-buttons" id="showboardbutton">
-                                          <img src="{{url('public/assets/svg/btnteamsvg.svg')}}" width="20">Team
-                                      </a>
-                                      @endif
-                                      <div class="memberlistposition">
-                                          <div class="memberadd-box team-select-box">
-                                              <div class="row mb-3">
-                                                  <div class="col-md-6">
-                                                      <h4>Select Team</h4>
-                                                  </div>
-                                                  <div class="col-md-6 text-right">
-                                                      <img onclick="showmemberbox()" class="memberclose" src="{{url('public/assets/svg/memberclose.svg')}}">
-                                                  </div>
-                                              </div>
-                                              <div class="row" id="memberstoshow">
-                                                  
-                                              </div>
-                                          </div>
-                                      </div>
-                                      <div class="moverightside">
-                                          <h1 class="epic-percentage">{{ $backlog->progress }} % Completed</h1>
-                                      </div>
-                                  </div>
+                  <div class="modal fade" id="create{{$backlog->id}}" tabindex="-1" role="dialog" aria-labelledby="create-epic" aria-hidden="true">
+                     <div class="modal-dialog" role="document">
+                        <div class="modal-content" style="width: 526px !important;">
+                           <div class="modal-header">
+                              <div class="row">
+                                 <div class="col-md-12">
+                                    <h5 class="modal-title" id="create-epic">Update Backlog Epic</h5>
+                                 </div>
+                                 <div class="col-md-12">
+                                    <p>Fill out the form, submit and hit the save button.</p>
+                                 </div>
+                                 <div id=""  role="alert"></div>
+                                 <span id="" class="ml-3 text-danger"></span>
                               </div>
-                              <div class="rightside" >
-                                  <span onclick="maximizemodal()">
-                                      <img  src="{{url('public/assets/svg/maximize.svg')}}">
-                                  </span>
-                                  <img data-dismiss="modal" class="closeimage" aria-label="Close" src="{{url('public/assets/svg/cross.svg')}}">
-                              </div>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <img src="{{asset('public/assets/images/icons/minus.svg')}}">
+                              </button>
                            </div>
-                           <div class="modal-body" id="showformforedit">
-                               <div class="row"><div class="col-md-12"><div class="border-top"></div></div></div>
-                               <div class="row mt-3">
-                                   <div class="col-md-3">
-                                       <div class="menuettitle">
-                                           <h4>Menu</h4>
-                                           <input type="hidden" id="modaltab" value="general">
-                                           <ul>
-                                               <li id="general" onclick="showtab({{$backlog->id}} , 'general')" class="tabsclass active">
-                                                   <span class="material-symbols-outlined"> edit_square </span> General
-                                               </li>
-                                               <li id="childitems" onclick="showtab({{$backlog->id}} , 'childitems')" class="tabsclass">
-                                                   <span class="material-symbols-outlined">toc</span> Child Items
-                                               </li>
-                                               <li id="comments" onclick="showtab({{$backlog->id}} , 'comments')" class="tabsclass">
-                                                   <span class="material-symbols-outlined">comment</span> Comments
-                                               </li>
-                                               <li id="activites" onclick="showtab({{$backlog->id}} , 'activites')" class="tabsclass">
-                                                  <span class="material-symbols-outlined">browse_activity</span> Activities
-                                               </li>
-                                               <li id="attachment" onclick="showtab({{$backlog->id}} , 'attachment')" class="tabsclass">
-                                                   <span class="material-symbols-outlined"> attachment </span> Attachments</li>
-                                               <li id="flags" onclick="showtab({{$backlog->id}} , 'flags')" class="tabsclass">
-                                                   <span class="material-symbols-outlined">flag</span> Flags
-                                               </li>
-                                               <li id="teams" onclick="showtab({{$backlog->id}} , 'teams')" class="tabsclass">
-                                                   <span class="material-symbols-outlined"> group </span> Teams
-                                               </li>
-                                           </ul>
-                                           <h4>Action</h4>
-                                           <ul class="positionrelative">
-                                               <!-- <li><img src="{{ url('public/assets/svg/archive-action.svg') }}"> Archive</li> -->
-                                               <!-- <li><span class="material-symbols-outlined">share</span> Share</li> -->
-                                               <!-- <li><img src="{{ url('public/assets/svg/arrow-right-action.svg') }}"> Move</li> -->
-                                               <li onclick="deleteflagshow({{$backlog->id}})"><span class="material-symbols-outlined">delete</span> Delete</li>
-                                               <div class="deleteflag deleteepiccard" id="flagdelete{{ $backlog->id }}">
-                                                   <div class="row">
-                                                       <div class="col-md-10">
-                                                           <h4>Delete Epic</h4>
-                                                       </div>
-                                                       <div class="col-md-2">
-                                                           <img onclick="deleteflagshow({{$backlog->id}})" src="{{ url('public/assets/svg/crossdelete.svg') }}">
-                                                       </div>
-                                                   </div>
-                                                   <p>All actions will be removed from the activity feed and you won’t be able to re-open the card. There is no undo.</p>
-                                                   <button class="btn btn-danger btn-block">Delete</button>
-                                               </div>
-                                           </ul>
+                           <div class="modal-body">
+                              <form class="needs-validation" action="{{url('update-backlog-epic')}}" method="POST" >
+                                 @csrf
+                                 <input type="hidden" name="backlog_id" value="{{$backlog->id}}">
+                                 <div class="row">
+                                    <div class="col-md-12 col-lg-12 col-xl-12">
+                                       <div class="form-group mb-0">
+                                          <input type="text" class="form-control" value="{{$backlog->epic_title}}" name="epic_name" id="" required>
+                                          <label for="objective-name">Epic Title</label>
                                        </div>
-                                   </div>
-                                   <div class="col-md-9 secondportion">
-                                       <div class="row">
-                                           <div class="col-md-12 col-lg-12 col-xl-12">
-                                               <div class="d-flex flex-row align-items-center justify-content-between block-header">
-                                                   <div class="d-flex flex-row align-items-center">
-                                                       <div class="mr-2">
-                                                           <span class="material-symbols-outlined">edit_square</span>
-                                                       </div>
-                                                       <div>
-                                                           <h4>General</h4>
-                                                       </div>
-                                                   </div>
-                                               </div>
-                                           </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-6 col-xl-6">
+                                       <div class="form-group mb-0">
+                                          <input type="date" class="form-control"  name="epic_start_date" value="{{$backlog->epic_start_date}}">
+                                          <label for="start-date">Start Date</label>
                                        </div>
-                                       <form class="needs-validation" action="{{ url('update-teambacklog-epic') }}" method="POST">
-                                          @csrf
-                                          <input type="hidden" name="backlog_id" value="{{ $backlog->id }}">
-                                          <input type="hidden" name="edit_team_type" value="{{ $backlog->type }}">
-                                          <div class="row">
-                                            <div class="col-md-12 col-lg-12 col-xl-12">
-                                                <div class="form-group mb-0">
-                                                    <label for="epic_name">Epic Title</label>
-                                                    <input type="text" class="form-control" value="{{ $backlog->epic_title }}"name="epic_name" id="" required>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 col-lg-6 col-xl-6">
-                                                <div class="form-group mb-0">
-                                                    <label for="epic_start_date">Start Date</label>
-                                                    <input type="date" class="form-control"name="epic_start_date"value="{{ $backlog->epic_start_date }}">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 col-lg-6 col-xl-6">
-                                                <div class="form-group mb-0">
-                                                    <label for="epic_end_date">End Date</label>
-                                                    <input type="date" class="form-control"name="epic_end_date"value="{{ $backlog->epic_end_date }}">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12 col-lg-12 col-xl-12">
-                                                <div class="form-group mb-0">
-                                                    <label for="editor{{ $backlog->id }}">Description</label>
-                                                    <div class="textareaformcontrol">
-                                                        <textarea name="epic_detail" id="editor{{ $backlog->id }}">{{ $backlog->epic_detail }}</textarea> 
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row margintopfourtypixel">
-                                            <div class="col-md-12 text-right">
-                                                <button type="submit" class="btn btn-primary btn-theme ripple savechangebutton" id="updatebutton">Save Changes</button>
-                                            </div>
-                                        </div>
-                                             <!-- <div class="col-md-12 col-lg-12 col-xl-12">
-                                                <div class="form-group mb-0">
-                                                   <select class="form-control" name="epic_status">
-                                                      <option value="To Do">To Do</option>
-                                                      <option value="In progress">In Progress</option>
-                                                      <option value="Done">Done</option>
-                                                   </select>
-                                                   <label for="small-description">Status</label>
-                                                </div>
-                                             </div> -->
-
-                                            
-                                             <!-- <div class="col-md-12 col-lg-12 col-xl-12">
-                                                <div class="form-group mb-0">
-                                                   <select class="form-control" name ="team"
-                                                      class="">
-                                                      <option value="">Assign Team</option>
-                                                      @foreach (DB::table('unit_team')->where('org_id', $organization->id)->get() as $r)
-                                                      <option value="{{ $r->id }}">
-                                                         {{ $r->team_title }}
-                                                      </option>
-                                                      @endforeach
-                                                   </select>
-                                                </div>
-                                             </div> -->
-                                       </form>
-                                   </div>
-                               </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-6 col-xl-6">
+                                       <div class="form-group mb-0">
+                                          <input type="date" class="form-control"  name="epic_end_date" value="{{$backlog->epic_end_date}}">
+                                          <label for="end-date">End Date</label>
+                                       </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-xl-12">
+                                       <div class="form-group mb-0">
+                                          <select class="form-control" name="epic_status">
+                                             <option value="To Do">To Do</option>
+                                             <option value="In progress">In Progress</option>
+                                             <option value="Done">Done</option>
+                                          </select>
+                                          <label for="small-description">Status</label>
+                                       </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-xl-12">
+                                       <div class="form-group mb-0">
+                                          <input type="text" class="form-control" value="{{$backlog->epic_detail}}"  name="epic_description">
+                                          <label for="small-description">Small Description</label>
+                                       </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-xl-12">
+                                       <div class="form-group mb-0">
+                                          <select class="form-control" name ="team"  class="">
+                                             <option value="">Assign Team</option>
+                                             @foreach(DB::table('value_team')->where('org_id',$organization->id)->get() as $r)
+                                             <option value="{{$r->id}}">{{$r->team_title}}</option>
+                                             @endforeach
+                                          </select>
+                                       </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                       <button class="btn btn-primary btn-lg btn-theme btn-block ripple mt-3"  type="submit">Update</button>
+                                    </div>
+                                 </div>
+                              </form>
                            </div>
                         </div>
                      </div>
