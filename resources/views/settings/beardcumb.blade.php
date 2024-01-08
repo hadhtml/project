@@ -7,7 +7,7 @@
                 @if(url()->current() == url('dashboard/organization/setting')) 
                 Jira Settings
                 @endif
-                @if(url()->current() == url('dashboard/organization/setting/financial')) 
+                @if(url()->current() == url('dashboard/organization/financialsetting')) 
                 Financial Year Settings
                 @endif
             </h5>
@@ -20,7 +20,7 @@
                     <p>@if(url()->current() == url('dashboard/organization/setting')) 
                 Jira Settings
                 @endif
-                @if(url()->current() == url('dashboard/organization/setting/financial')) 
+                @if(url()->current() == url('dashboard/organization/financialsetting')) 
                 Financial Year Settings
                 @endif</p>
                 </div>

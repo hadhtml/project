@@ -193,7 +193,7 @@ Route::get('dashboard/organization/Bu/dashboard', [App\Http\Controllers\MemberCo
 Route::get('get-jira-epic', [App\Http\Controllers\JiraController::class,'jira']);
 Route::post('assign-jira-epic', [App\Http\Controllers\JiraController::class,'AssignJiraEpic']);
 Route::get('dashboard/organization/setting', [App\Http\Controllers\JiraController::class,'JiraSetting']);
-Route::get('dashboard/organization/setting/financial', [App\Http\Controllers\JiraController::class,'financialsettings']); 
+Route::get('dashboard/organization/financialsetting', [App\Http\Controllers\JiraController::class,'financialsettings']); 
 Route::post('add-jira-setting', [App\Http\Controllers\JiraController::class,'AddJiraSetting']);
 Route::post('add-financial-year', [App\Http\Controllers\JiraController::class,'AddFinancialYear']);
 Route::post('update-jira-setting', [App\Http\Controllers\JiraController::class,'UpdateJiraSetting']);
