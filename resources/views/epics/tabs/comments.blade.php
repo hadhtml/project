@@ -68,7 +68,7 @@
                     @foreach(DB::table('members')->where('org_user',Auth::id())->get() as $r)
                     {
                        username: '{{ $r->name }}',
-                       image: '{{ Avatar::create($r->name)->toBase64() }}'
+                       image: '{{ Avatar::create($r->name.' '.$r->last_name)->toBase64() }}'
                     }@if($loop->last) @else ,@endif 
                     @endforeach
                 ]
@@ -120,7 +120,7 @@
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <div class="row">
                                 <div class="col-md-3">
-                                    <img width="36" height="36" src="{{ Avatar::create($user->name)->toBase64() }}">
+                                    <img width="36" height="36" src="{{ Avatar::create($user->name.' '.$user->last_name)->toBase64() }}">
                                 </div>
                                 <div class="col-md-9">
                                     <div>
@@ -236,7 +236,7 @@
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <div class="row">
                                     <div class="col-md-3">
-                                        <img width="36" height="36" src="{{ Avatar::create($user->name)->toBase64() }}">
+                                        <img width="36" height="36" src="{{ Avatar::create($user->name.' '.$user->last_name)->toBase64() }}">
                                     </div>
                                     <div class="col-md-9">
                                         <div>

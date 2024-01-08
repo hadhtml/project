@@ -84,7 +84,7 @@ function getOrder(){
                             <div class="form-group mb-0">
                                 <label for="flag_type">Flag Type <small class="text-danger">*</small></label>
                                <select required class="form-control" name="flag_type" id="flag_type" >
-                                   <option value="">Select Flag Type</option>
+                                   <option value="">Select Type</option>
                                    <option value="Risk">Risk</option>
                                    <option value="Impediment">Impediment</option>
                                    <option value="Blocker">Blocker</option>
@@ -95,9 +95,9 @@ function getOrder(){
                         </div>
                          <div class="col-md-6 col-lg-6 col-xl-6">
                             <div class="form-group mb-0">
-                                <label for="flag_assignee">Flag Assignee <small class="text-danger">*</small></label>
+                                <label for="flag_assignee">Assignee <small class="text-danger">*</small></label>
                                 <select required class="form-control" id="flag_assignee" name="flag_assign">
-                                    <option value="">Select Flag Assignee</option>
+                                    <option value="">Select Assignee</option>
                                     @foreach(DB::table('members')->where('org_user',Auth::id())->get() as $r)
                                       <option value="{{ $r->id }}">{{ $r->name }} {{ $r->last_name }}</option>
                                     @endforeach
@@ -173,17 +173,17 @@ function getOrder(){
                     <div class="col-md-2 text-right">
                         <img class="edit-item-image" type="button" onclick="showupdatecard({{$r->id}})" src="{{ url('public/assets/svg/edit-2.svg') }}">
                         <img class="delete-item-image" onclick="deleteflagshow({{$r->id}})" src="{{ url('public/assets/svg/trash.svg') }}">
-                        <div class="deletechildstory" id="deleteattachmentshow{{ $s->id }}">
+                        <div class="deletechildstory" id="deleteattachmentshow{{ $r->id }}">
                             <div class="row">
                                 <div class="col-md-10">
-                                    <h4>Delete Flag</h4>
+                                    <h4 class="text-left">Delete Flag</h4>
                                 </div>
                                 <div class="col-md-2">
                                     <img onclick="deleteflagshow({{$r->id}})" src="{{ url('public/assets/svg/crossdelete.svg') }}">
                                 </div>
                             </div>
-                            <p>Do you want to delete this Flag? You won’t be able to undo this action.</p>
-                            <span onclick="deletechilditem({{ $r->id }})" id="deletebutton{{ $s->id }}" class="btn btn-danger btn-block">Delete</span>
+                            <p class="text-left">Do you want to delete this Flag? You won’t be able to undo this action.</p>
+                            <span onclick="deleteflag({{ $r->id }})" id="deletebutton{{ $r->id }}" class="btn btn-danger btn-block">Delete</span>
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -209,7 +209,7 @@ function getOrder(){
                                 @if($user->image != NULL)
                                 <img class="user-image" src="{{asset('public/assets/images/'.$user->image)}}" alt="Example Image">
                                 @else
-                                <img class="user-image" src="{{ Avatar::create($user->name)->toBase64() }}" alt="Example Image">
+                                <img class="user-image" src="{{ Avatar::create($user->name.' '.$user->last_name)->toBase64() }}" alt="Example Image">
                                 @endif
                             </div>
                             <div>
@@ -332,7 +332,7 @@ $('#saveepicflag').on('submit',(function(e) {
 }));
 
 
-function deleteattachmentshow(id) {
+function deleteflagshow(id) {
 $('#deleteattachmentshow'+id).slideToggle();
 }
 function uploadattachment() {
@@ -352,6 +352,25 @@ function updateflagstatus(id,status) {
         data: {
             id:id,
             status:status,
+        },
+        success: function(data) {
+            showtabwithoutloader('{{$data->id}}' , 'flags');
+        },
+        error: function(error) {
+          console.log('Error updating card position:', error);
+        }
+    });
+}
+function deleteflag(id) {
+    $('#deletebutton'+id).html('<i class="fa fa-spin fa-spinner"></i>');
+    $.ajax({
+        type: "POST",
+        url: "{{ url('dashboard/flags/deleteflag') }}",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+            delete_id:id
         },
         success: function(data) {
             showtabwithoutloader('{{$data->id}}' , 'flags');

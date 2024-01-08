@@ -244,7 +244,7 @@ function getOrder(){
                                         @if($r->image != NULL)
                                         <img data-toggle="tooltip" title="" data-original-title="{{$r->name}}" src="{{asset('public/assets/images/'.$r->image)}}" alt="Example Image">
                                         @else
-                                        <img data-toggle="tooltip" title="" data-original-title="{{$r->name}}" src="{{ Avatar::create($r->name)->toBase64() }}" alt="{{$r->name}} {{$r->last_name}}">
+                                        <img data-toggle="tooltip" title="" data-original-title="{{$r->name}}" src="{{ Avatar::create($r->name.' '.$r->last_name)->toBase64() }}" alt="{{$r->name}} {{$r->last_name}}">
                                         @endif
                                     @endif
                                 @endforeach

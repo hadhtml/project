@@ -89,7 +89,7 @@
                     <div class="col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group mb-0">
                             <label for="epic_end_date">End Date</label>
-                            <input type="date" class="form-control" value="{{ date('Y-m-d',strtotime($data->epic_end_date)) }}" name="epic_end_date" name="edit_epic_end_date" required>
+                            <input id="epic_end_date" type="date" class="form-control" value="{{ date('Y-m-d',strtotime($data->epic_end_date)) }}" name="epic_end_date" name="edit_epic_end_date" required>
                             
                         </div>
                     </div>
@@ -112,6 +112,14 @@
     </div>
 </div>
 <script type="text/javascript">
+    $( document ).ready(function() {
+        var mindate = '{{ DB::table("initiative")->where("id" , $data->initiative_id)->first()->initiative_start_date }}';
+        var maxdate = '{{ DB::table("initiative")->where("id" , $data->initiative_id)->first()->initiative_end_date }}';
+        $('#epic_end_date').attr('min', mindate);
+        $('#epic_end_date').attr('max', maxdate);
+        $('#epic_start_date').attr('min', mindate);
+        $('#epic_start_date').attr('max', maxdate);
+    });
     function deleteflagshow(id) {
         $('#flagdelete'+id).slideToggle();
     }
