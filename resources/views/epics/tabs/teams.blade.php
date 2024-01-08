@@ -54,8 +54,7 @@
                             @if($team->lead_id)
                                 @foreach(DB::table('members')->get() as $r)
                                     @if($r->id == $team->lead_id)
-
-                                        <div class="d-flex flex-row align-items-center">
+                                    <div class="d-flex flex-row align-items-center">
                                             <div class="mr-2">
                                                 @if($r->image != NULL)
                                                 <img src="{{asset('public/assets/images/'.$r->image)}}" alt="Example Image">
@@ -63,7 +62,6 @@
                                                 <img src="{{ Avatar::create($r->name.' '.$r->last_name)->toBase64() }}" alt="Example Image">
                                                 @endif
                                             </div>
-
                                             <div class="d-flex flex-column">
                                                 <div>
                                                     <span class="text-primary">Team Lead</span>

@@ -839,20 +839,23 @@ class OrganizationController extends Controller
 {
     $request->validate([
         'old_password' => 'required|min:8',
-        'password' => 'required|min:8',
+        'password' => 'required|string|min:6|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/',
         'password_confirmation' => 'required|same:password|min:8',
     ]);
     $data = $request->all();
     $id = auth()->user();
+
     if(Hash::check($data['old_password'], $id->password) == true)
     {
         $id->password = Hash::make($data['password']);
         $id->save();
-        return redirect()->back()->with('msg','Password Update Successfully...!!');
+        return redirect()->back()->with('message','Password Update Successfully...!!');
+
     }
     else
     {
-        return redirect()->back()->with('msg','Old password does not match');
+
+     return redirect()->back()->with('message','Old password does not match');
     }
 }
 

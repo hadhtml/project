@@ -84,7 +84,7 @@ function getOrder(){
                             <div class="form-group mb-0">
                                 <label for="flag_type">Flag Type <small class="text-danger">*</small></label>
                                <select required class="form-control" name="flag_type" id="flag_type" >
-                                   <option value="">Select Flag Type</option>
+                                   <option value="">Select Type</option>
                                    <option value="Risk">Risk</option>
                                    <option value="Impediment">Impediment</option>
                                    <option value="Blocker">Blocker</option>
