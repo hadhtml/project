@@ -45,7 +45,7 @@ class ChartController extends Controller
          
         
   
-        DB::table('kpi_setting')->insert([
+      $KPI =   DB::table('kpi_setting')->insertGetId([
 
             't_value' => $request->t_value,
             'green' => $green,
@@ -68,7 +68,7 @@ class ChartController extends Controller
         
         $data = DB::table('kpi_setting')->orderby('id', 'DESC')->first();
         try {
-        Excel::import(new UsersImport($request->title, $request->subtitle, $data->id), $request->file('file'));
+        Excel::import(new UsersImport($request->title, $request->subtitle,$KPI), $request->file('file'));
             } catch (\InvalidArgumentException $ex) {
 
                 dd($ex->getMessage());

@@ -332,12 +332,12 @@ drake.on("drop", function (el, target, source, sibling) {
 <!-- Datatable -->
 
 <script>
-    $(document).ready(function() {
-        // Initialize DataTable
-        $('.data-table').DataTable({
-            "ordering": false
-        });
-    });
+    // $(document).ready(function() {
+    //     // Initialize DataTable
+    //     $('.data-table').DataTable({
+    //         "ordering": false
+    //     });
+    // });
     $(document).ready(function() {
     $('.search-team').select2({
       width: '100%',
@@ -348,7 +348,7 @@ drake.on("drop", function (el, target, source, sibling) {
 
  $('.chkveg').val('');
   $('.chkveg').multiselect({
-    includeSelectAllOption:true,
+    includeSelectAllOption:false,
   });
 
 

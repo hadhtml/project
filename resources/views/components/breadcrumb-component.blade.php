@@ -117,6 +117,7 @@ $sprint = DB::table('sprint')->where('user_id',Auth::id())->where('value_unit_id
                     Team
                   
                     <select class="chkveg" multiple="multiple" >
+                        <option value="All">All</option>
                         @foreach(DB::table('org_team')->where('org_id',$organization->id)->get() as $r)
                         <option value="{{$r->id}}">{{$r->team_title}}</option>
                         @endforeach

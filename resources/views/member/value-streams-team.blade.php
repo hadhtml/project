@@ -70,7 +70,7 @@ $var_objective = "Stream-team";
  
                                      <div class="d-flex flex-column">
                                          <div>
-                                             <span class="text-primary">Team Lead</span>
+                                             <span class="text-primary">Lead</span>
                                          </div>
                                          <div>
                                              <span>{{$r->name}} {{ $r->last_name }}</span>

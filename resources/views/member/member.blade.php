@@ -8,7 +8,7 @@ $var_objective = "Member";
    <div class="col-md-12">
       <div class="card">
          <div class="card-body p-10">
-            <table class="table data-table example">
+            <table class="table data-table exmaple" id="">
                <thead>
                   <tr>
                      <td>
@@ -336,36 +336,18 @@ $var_objective = "Member";
    // }
    
    
-       // $(document).ready(function() {
-       //   // DataTables initialization
-       //   var table = $('#example').DataTable({
-       //     "pagingType": "full_numbers",
-       //     "language": {
-       //       "paginate": {
-       //         "previous": "&lsaquo;", // Custom previous arrow
-       //         "next": "&rsaquo;" // Custom next arrow
-       //       }
-       //     }
-       //   });
-   
-       //   // Check All checkbox functionality
-    
-            
-       // });
+       
    
        $(document).ready(function() {
-       var table = $('.example').DataTable({
-       "pagingType": "full_numbers",
-       "language": {
-           "paginate": {
-               "previous": "&lsaquo;", // Custom previous arrow
-               "next": "&rsaquo;" // Custom next arrow
-           }
-       },
-      "columnDefs": [
-       { "orderable":false, "targets": [0,6] }
-   ]
-   });
+         var table = $('.exmaple').DataTable({
+            'order':[],
+            'columnDefs': [{
+                "targets": [0,6],
+                "orderable": false
+            }]
+         
+      });
+
    
        
        });
