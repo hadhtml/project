@@ -836,7 +836,7 @@ class MemberController extends Controller
      if($type == 'VS')
      {
      $organization  = DB::table('value_team')->where('slug',$id)->first();
-     $data = DB::table('kpi_setting')->where('user_id',Auth::id())->where('stream_id',$organization->id)->where('type','VU')->get();  
+     $data = DB::table('kpi_setting')->where('user_id',Auth::id())->where('stream_id',$organization->id)->where('type','VS')->get();  
 
             
      }

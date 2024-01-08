@@ -120,14 +120,16 @@ class EpicController extends Controller
             $objective = DB::table("objectives")->where("org_id", $data->buisness_unit_id)->where("unit_id", $data->buisness_unit_id)->where("trash", null)->where("type", "unit")->get();
         }
         if ($data->epic_type == "stream") {
+        
             $organization = DB::table("value_stream")->where("id", $data->buisness_unit_id)->first();
-            $objective = DB::table("objectives")->where("org_id", $data->buisness_unit_id)->where("unit_id", $data->buisness_unit_id)->where("trash", null)->where("type", "stream")->get();
+            $objective = DB::table("objectives")->where("unit_id", $data->buisness_unit_id)->where("trash", null)->where("type", "stream")->get();
         }
         if ($data->epic_type == "BU") {
             $organization = DB::table("unit_team")->where("id", $data->buisness_unit_id)->first();
             $objective = DB::table("objectives")->where("org_id", $data->buisness_unit_id)->where("unit_id", $data->buisness_unit_id)->where("trash", null)->where("type", "BU")->get();
         }
         if ($data->epic_type == "VS") {
+
             $organization = DB::table("value_team")->where("id", $data->buisness_unit_id)->first();
             $objective = DB::table("objectives")->where("org_id", $data->buisness_unit_id)->where("unit_id", $data->buisness_unit_id)->where("trash", null)->where("type", "VS")->get();
         }

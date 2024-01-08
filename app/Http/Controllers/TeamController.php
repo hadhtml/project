@@ -40,7 +40,7 @@ class TeamController extends Controller
     if($type == 'org')
     {
         $organization = DB::table('organization')->where('slug',$id)->first();        
-        $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
+        $Backlog  =  DB::table('team_backlog')->where('type' , 'org')->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
     }
 
     if($type == 'orgT')
@@ -51,7 +51,7 @@ class TeamController extends Controller
 
     
    
-    return view('Team.backlog',compact('Backlog','organization','type'));  
+    return view('epicbacklog.index',compact('Backlog','organization','type'));  
         
     }
 
@@ -511,6 +511,55 @@ $updateData = [
     function EpicTeamSearch(Request $request)
     {
         $FladId = $request->input("chartId");
+      
+          if ($FladId[0] == "All") {
+            if ($request->type == "unit") {
+                $organization = DB::table("business_units")
+                    ->where("slug", $request->slug)
+                    ->first();
+                $objective = DB::table("objectives")
+                    ->where("org_id", $request->org_id)
+                    ->where("unit_id", $request->unit_id)
+                    ->where("trash", null)
+                    ->where("type", "unit")
+                    ->get();
+                return view(
+                    "objective.objective-render",
+                    compact("organization", "objective")
+                );
+            }
+
+            if ($request->type == "stream") {
+                $organization = DB::table("value_stream")
+                    ->where("slug", $request->slug)
+                    ->first();
+                $objective = DB::table("objectives")
+                    ->where("org_id", $request->org_id)
+                    ->where("unit_id", $request->unit_id)
+                    ->where("trash", null)
+                    ->where("type", "stream")
+                    ->get();
+                return view(
+                    "objective.objective-render",
+                    compact("organization", "objective")
+                );
+            }
+
+            if ($request->type == "org") {
+                $organization = DB::table("organization")
+                    ->where("slug", $request->slug)
+                    ->first();
+                $objective = DB::table("objectives")
+                    ->where("unit_id", $request->unit_id)
+                    ->where("trash", null)
+                    ->where("type", "org")
+                    ->get();
+                return view(
+                    "objective.objective-render",
+                    compact("organization", "objective")
+                );
+            }
+        }
 
         if ($request->type == "unit") {
             $organization = DB::table("business_units")
@@ -541,6 +590,21 @@ $updateData = [
             return view(
                 "objective.epicTeamsearch",
                 compact("organization", "objective", "FladId")
+            );
+        }
+
+        if ($request->type == "org") {
+            $organization = DB::table("organization")
+                ->where("slug", $request->slug)
+                ->first();
+            $objective = DB::table("objectives")
+                ->where("unit_id", $request->unit_id)
+                ->where("trash", null)
+                ->where("type", "org")
+                ->get();
+            return view(
+                "objective.epicTeamsearch",
+                compact("organization", "objective",'FladId')
             );
         }
 
