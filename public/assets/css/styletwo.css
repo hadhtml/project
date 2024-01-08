@@ -373,6 +373,52 @@
 .member-area::-webkit-scrollbar-thumb:hover {
   background: #555; 
 }
+
+/* width */
+.searchepic-box::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.searchepic-box::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+.searchepic-box::-webkit-scrollbar-thumb {
+  background: #c5c9d1;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+.searchepic-box::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+/* width */
+#memberstoshow::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+#memberstoshow::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+#memberstoshow::-webkit-scrollbar-thumb {
+  background: #c5c9d1;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+#memberstoshow::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+
+
+
 .member-area::-webkit-scrollbar {
   width: 10px;
 }

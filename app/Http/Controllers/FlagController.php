@@ -312,6 +312,31 @@ class FlagController extends Controller
     public function escalateflag(Request $request)
     {
         $flag = flags::find($request->id);
+        if($flag->board_type == 'orgT')
+        {
+            $getteam = DB::table('org_team')->where('id' , $flag->business_units)->first();
+            $unit    = DB::table('organization')->where('id' , $getteam->org_id)->first();
+            $add = new escalate_cards();
+            $add->flag_id = $request->id;
+            $add->from = 'org_team';
+            $add->to = 'organization';
+            $add->from_id = $getteam->id;
+            $add->to_id = $unit->id;
+            $add->save();
+            // Save Flag to Escalate
+            $addescalateflag = new flags();
+            $addescalateflag->business_units = $add->to_id;
+            $addescalateflag->epic_id = $flag->epic_id;
+            $addescalateflag->flag_type = $flag->flag_type;
+            $addescalateflag->flag_assign = $flag->flag_assign;
+            $addescalateflag->flag_title = $flag->flag_title;
+            $addescalateflag->flag_description = $flag->flag_description;
+            $addescalateflag->archived = 2;
+            $addescalateflag->flag_status = 'todoflag';
+            $addescalateflag->board_type = 'unit';
+            $addescalateflag->escalate = $add->id;
+            $addescalateflag->save();
+        }
         if($flag->board_type == 'BU')
         {
             $getteam = DB::table('unit_team')->where('id' , $flag->business_units)->first();
@@ -609,7 +634,11 @@ class FlagController extends Controller
         {
             $organization = DB::table('organization')->where('slug',$request->organizationid)->first();
         }
-        $epics = DB::table('epics')->where('epic_name', 'LIKE', "%$request->id%")->where('buisness_unit_id' , $organization->id)->where('trash' , Null)->get();
+        if($request->type == 'orgT')
+        {
+            $organization = DB::table('org_team')->where('slug',$request->organizationid)->first();
+        }
+        $epics = DB::table('epics')->where('epic_name', 'LIKE', "%$request->id%")->where('buisness_unit_id' , $organization->id)->where('epic_type' , $request->type)->where('trash' , Null)->get();
 
         if($epics->count() > 0)
         {

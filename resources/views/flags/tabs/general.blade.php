@@ -101,6 +101,7 @@
             },
             success: function(res) {
                 $('#epicinputtoshow').html(res);
+                viewboards($('#viewboards').val());
             },
             error: function(error) {
                 console.log('Error updating card position:', error);
@@ -121,6 +122,7 @@
             },
             success: function(res) {
                 $('#epicinputtoshow').html(res);
+                viewboards($('#viewboards').val());
             },
             error: function(error) {
                 console.log('Error updating card position:', error);
