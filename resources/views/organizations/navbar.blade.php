@@ -60,7 +60,7 @@
                 @if(auth()->user()->image)
                 <img src="{{asset('public/assets/images/'.auth()->user()->image)}}" class="dropdown-toggle fixbar-user" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 @else
-                <img src="{{ Avatar::create(auth()->user()->name)->toBase64() }}" class="dropdown-toggle fixbar-user" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img src="{{ Avatar::create(auth()->user()->name.''.auth()->user()->last_name)->toBase64() }}" class="dropdown-toggle fixbar-user" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
                 @endif
                 <div class="dropdown-menu mb-5">
