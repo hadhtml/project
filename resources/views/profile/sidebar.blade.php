@@ -29,13 +29,6 @@
                     <span class="material-symbols-outlined">action_key</span>
                 </a>
             </li>
-
-            {{-- <li>
-                <a href="{{url('dashboard/organization/users')}}" @if (url()->current() == url('dashboard/organization/users')) class="active-link" @else class="nav-link"  @endif title="" data-toggle="tooltip" data-placement="right" data-original-title="Users">
-                    <span class="material-symbols-outlined">group</span>
-                </a>
-            </li> --}}
-
         </ul>
         <div class="align-items-center mx-auto mb-3 text-center">
             <ul class="bottom-bar">
@@ -60,11 +53,14 @@
                 @if(auth()->user()->image)
                 <img src="{{asset('public/assets/images/'.auth()->user()->image)}}" class="dropdown-toggle fixbar-user" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 @else
-                <img src="{{ Avatar::create(auth()->user()->name)->toBase64() }}" class="dropdown-toggle fixbar-user" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                @php
+                    $avatarname = substr(auth()->user()->name, 0, 1).' '.substr(auth()->user()->last_name, 0, 1);
+                @endphp
+                <img src="{{ Avatar::create($avatarname)->toBase64() }}" class="dropdown-toggle fixbar-user" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
                 @endif
                 <div class="dropdown-menu mb-5">
-                    <a class="dropdown-item" href="#">Profile</a>
+                    <a class="dropdown-item" href="{{ url('profile-setting') }}">Profile</a>
                     <a class="dropdown-item" href="{{url('change-password')}}">Security</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item bg-primary text-white" href="{{ route('logout') }}"  onclick="event.preventDefault();
