@@ -117,7 +117,7 @@ class EpicController extends Controller
         DB::table("objectives")->where("id", $data->obj_id)->update(["q_obj_prog" => $QuartertotalObj]);
         if ($data->epic_type == "unit") {
             $organization = DB::table("business_units")->where("id", $data->buisness_unit_id)->first();
-            $objective = DB::table("objectives")->where("org_id", $data->buisness_unit_id)->where("unit_id", $data->buisness_unit_id)->where("trash", null)->where("type", "unit")->get();
+            $objective = DB::table("objectives")->where("unit_id", $data->buisness_unit_id)->where("trash", null)->where("type", "unit")->get();
         }
         if ($data->epic_type == "stream") {
         
@@ -126,12 +126,11 @@ class EpicController extends Controller
         }
         if ($data->epic_type == "BU") {
             $organization = DB::table("unit_team")->where("id", $data->buisness_unit_id)->first();
-            $objective = DB::table("objectives")->where("org_id", $data->buisness_unit_id)->where("unit_id", $data->buisness_unit_id)->where("trash", null)->where("type", "BU")->get();
+            $objective = DB::table("objectives")->where("unit_id", $data->buisness_unit_id)->where("trash", null)->where("type", "BU")->get();
         }
         if ($data->epic_type == "VS") {
-
             $organization = DB::table("value_team")->where("id", $data->buisness_unit_id)->first();
-            $objective = DB::table("objectives")->where("org_id", $data->buisness_unit_id)->where("unit_id", $data->buisness_unit_id)->where("trash", null)->where("type", "VS")->get();
+            $objective = DB::table("objectives")->where("unit_id", $data->buisness_unit_id)->where("trash", null)->where("type", "VS")->get();
         }
         if ($data->epic_type == "org") {
             $organization = DB::table("organization")->where("id", $data->buisness_unit_id)->first();
@@ -997,6 +996,10 @@ class EpicController extends Controller
     }
     public function savenewepic(Request $request)
     {
+        $year =  date('Y');
+        $month =  $request->month;
+        $day =  date('d');
+        $date = $year . "-" . str_pad($month, 2, "0", STR_PAD_LEFT) . "-" . str_pad($day, 2, "0", STR_PAD_LEFT);
         $createepic = new Epic();
         $createepic->epic_status = 'To Do';
         $createepic->initiative_id = $request->initiative_id;
@@ -1010,8 +1013,8 @@ class EpicController extends Controller
         $createepic->save();
         $update = Epic::find($createepic->id);
         $update->trash = $createepic->created_at;
-        $update->epic_start_date = $createepic->created_at;
-        $update->epic_end_date = $createepic->created_at;
+        $update->epic_start_date = $date;
+        $update->epic_end_date = $date;
         $update->save();
         return $createepic->id;
     }

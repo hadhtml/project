@@ -79,6 +79,7 @@
         var unit_id = "{{ $organization->id }}";
         var type = "{{ $organization->type }}";
         var slug = "{{ $organization->slug }}";
+        var month = new Date(Date.parse(month_name +" 1, 2012")).getMonth()+1;
         $.ajax({
             type: "POST",
             url: "{{ url('dashboard/epics/savenewepic') }}",
@@ -86,6 +87,7 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             data: {
+                month:month,
                 slug: slug,
                 org_id: org_id,
                 initiative_id: initiative_id,

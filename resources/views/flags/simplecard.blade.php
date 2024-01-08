@@ -13,11 +13,15 @@
                 $check_escalate = DB::table('escalate_cards')->where('flag_id' , $r->id)
             @endphp
             @if($check_escalate->count() > 0)
+                @if(DB::table('flags')->where('escalate' , $check_escalate->first()->id)->first())
                 @if(DB::table('flags')->where('escalate' , $check_escalate->first()->id)->first()->flag_status == 'doneflag')
                     <div class="un-blocked ml-2">
                         <img src="{{ url('public/assets/svg/unblocked.svg') }}">
                         Unblocked
                     </div>
+                @endif
+                @else
+                    {{$check_escalate->first()->id}}
                 @endif
             @endif
         </div>

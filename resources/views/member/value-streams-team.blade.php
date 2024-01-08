@@ -186,7 +186,7 @@ $var_objective = "Stream-team";
         <div class="modal-header">
             <div class="row">
                 <div class="col-md-12">
-                    <h5 class="modal-title" id="create-epic">Create Team</h5>
+                    <h5 class="modal-title" id="create-epic">Update Team</h5>
                 </div>
                 <div class="col-md-12">
                     <p>Lorem ipsum dummy text for printing</p>
@@ -252,7 +252,7 @@ $var_objective = "Stream-team";
                         </div>
                         @endforeach
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-12 mt-7">
                         <button class="btn btn-primary btn-lg btn-theme btn-block ripple" type="submit">Update</button>
                     </div>
                 </div>
@@ -350,7 +350,7 @@ $var_objective = "Stream-team";
                             </div>
                             @endforeach
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-12 mt-7">
                             <button class="btn btn-primary btn-lg btn-theme btn-block ripple" type="submit">Create Team</button>
                         </div>
                     </div>
