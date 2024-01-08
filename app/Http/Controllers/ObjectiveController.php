@@ -1602,6 +1602,7 @@ class ObjectiveController extends Controller
             ->where("id", $request->edit_epic_id)
             ->first();
         $monthName = Carbon::parse($request->edit_epic_end_date)->format("F");
+        
         $month = DB::table("quarter_month")
             ->where("initiative_id", $request->edit_ini_epic_id)
             ->where("month", $monthName)
