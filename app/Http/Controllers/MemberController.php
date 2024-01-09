@@ -66,7 +66,7 @@ class MemberController extends Controller
         $Member->phone = $request->phone;
         if($request->add_image)
         {
-        $Member->image = $this->sendimagetodirectory($request->add_image);
+            $Member->image = $this->sendimagetodirectory($request->add_image);
         }
         $Member->user_id = $User->id;
         $Member->org_id = $request->org_id;
@@ -87,10 +87,13 @@ class MemberController extends Controller
         'password' => $password,
 
         ];
-        Mail::send('email.email-member', $data, function($message) use ($email) {
-        $message->to($email, env('MAIL_FROM_NAME'))->subject('Login Credentials');
-        $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+        $organization = DB::table('organization')->where('user_id' ,Auth::id())->first()->organization_name
+        $subject = Auth::user()->name.' '.Auth::user()->last_name.' added you as a '.$request->role.' in '.$organization.'';
+        Mail::send('email.email-member', ['data' => $data], function ($message) use ($request, $subject) {
+            $message->to($request->email);
+            $message->subject($subject);
         });
+
     } catch (\Error $ex) {
 
         return redirect()->back()->with('message', 'Member Added Successfully');

@@ -35,6 +35,15 @@ class EpicController extends Controller
         $data->epic_end_date = $request->epic_end_date;
         $data->epic_detail = $request->epic_detail;
         $data->save();
+
+
+        $month = date("F",strtotime($request->epic_end_date));
+        $year = date("Y",strtotime($request->epic_end_date));
+        $quarterMonth  = DB::table('quarter_month')->where('id' , $data->month_id)->first();        
+        $quarterMonthtoselect  = DB::table('quarter_month')->where('year' , $year)->where('month' , $month)->first();
+        $data = Epic::find($request->epic_id);
+        $data->month_id = $quarterMonthtoselect->id;
+        $data->save();
         if(!$request->epic_name)
         {
             $update = Epic::find($request->epic_id);

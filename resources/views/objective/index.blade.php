@@ -469,7 +469,7 @@ $var_objective = 'PageT-'.$type;
                                                          </div>
                                                       </div>
                                                       @php
-                                                      $quarter  = DB::table('quarter')->where('initiative_id',$initiative->id)->get();
+                                                      $quarter = DB::table('quarter')->where('initiative_id',$initiative->id)->get();
                                                       @endphp
                                                       <div id="initiative{{$initiative->id}}" class="collapse" >
                                                          <div class="container-fluid py-7" style="width: 96%; margin: 0px auto;">
