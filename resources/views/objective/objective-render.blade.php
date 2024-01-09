@@ -5,9 +5,9 @@
 $keyResultcount  = DB::table('key_result')->wherenull('trash')->where('obj_id',$obj->id)->count();
 $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$obj->id)->sum('weight');
 @endphp
-<div class="card bg-transparent shadow-none">
-   <div class="card-header objective-header active-header bg-white border-bottom" id="parentHeading">
-      <div class="d-flex flex-row header-objective align-items-center"
+<div class="card bg-transparent shadow-none boardI" >
+   <div class="card-header objective-header active-header bg-white border-bottom"  id="backlog-{{$obj->id}}">
+      <div class="d-flex flex-row header-objective align-items-center" 
          data-toggle="collapse" data-target="#nestedCollapsible{{$obj->id}}">
          <div class="title">
             <h5 data-toggle="tooltip" data-placement="top" data-original-title="Objective">
@@ -16,7 +16,7 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
                      <img src="{{ url('public/assets/svg/objectives/one.svg') }}">
                   </div>
                   <div class="ml-2">
-                     {{$obj->objective_name}}
+                     {{$obj->objective_name}} <br>
                      @if($keyweightcounte > 0)
                         @if($keyweightcounte > 100)
                            <div class=" text-danger w-25" role="">
@@ -42,7 +42,7 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
             </div>
             <div class="content-item">
                @if($obj->status == 'In progress')
-               <span class="badge-cs warning" style="width:80%">In progress</span>
+               <span class="badge-cs warning" style="width:100%">In progress</span>
                @endif
                @if($obj->status == 'Done')
                <span class="badge-cs success">Done</span>
@@ -90,7 +90,7 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
          <div>
             <!-- begin Item -->
             @php
-            $keyResult  = DB::table('key_result')->wherenull('trash')->where('obj_id',$obj->id)->get();
+            $keyResult  = DB::table('key_result')->wherenull('trash')->where('obj_id',$obj->id)->orderby('IndexCount')->get();
             @endphp
             <div class="row">
                <div class="col-md-12">
@@ -100,8 +100,8 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
                   $initiativeResultCount  = DB::table('initiative')->where('key_id',$key->id)->count();
                   $initiativeweightcount = DB::table('initiative')->where('key_id',$key->id)->sum('initiative_weight');
                   @endphp
-                  <div class="card bg-transparent shadow-none">
-                     <div class="card-header keyresult-header bg-light-gray">
+                  <div class="card bg-transparent shadow-none boardI">
+                     <div class="card-header keyresult-header bg-light-gray" id="backlog-{{$key->id}}">
                         <div class="d-flex flex-row justify-content-between header-objective align-items-center"
                            data-toggle="collapse" data-target="#key-result{{$key->id}}">
                            <div class="title ">
@@ -124,9 +124,9 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
                               <div class="content-item">
                                  <p>{{ \Carbon\Carbon::parse($key->key_start_date)->format('M d')}} - {{ \Carbon\Carbon::parse($key->key_end_date)->format('M d')}}</p>
                               </div>
-                              <div class="content-item">                                        
+                              <div class="content-item">                                                               
                                  @if($key->key_status == 'In progress')
-                                 <span class="badge-cs warning " style="width:80%">In progress</span>
+                                 <span class="badge-cs warning " style="width:100%">In progress</span>
                                  @endif
                                  @if($key->key_status == 'Done')
                                  <span class="badge-cs success">Done</span>
@@ -167,8 +167,7 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
                            $trimmedStringkey = trim($keyedit);
                            @endphp
                            <div class="action ml-0">
-                              <button
-                                 class="btn btn-icon btn-circle bg-white btn-tolbar ml-auto" onclick="editobjectivekey({{$key->id}})">
+                              <button class="btn btn-icon btn-circle bg-white btn-tolbar ml-auto" onclick="editobjectivekey({{$key->id}})">
                               <img src="{{ asset('public/assets/images/icons/edit.svg') }}"
                                  alt="Edit"
                                  style="border-radius: 50%; width: 18px; height: 18px;">
@@ -211,12 +210,12 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
                                     $InitiativeProgress = 0;
                                     }
                                     @endphp
-                                    <div class="card bg-transparent shadow-none">
+                                    <div class="card bg-transparent shadow-none boardI">
                                        <div class="card-header initiative-header"
                                           style="background: #f9   f9f9 !important;" id="backlog-{{$initiative->id}}">
                                           <div class="d-flex flex-row justify-content-between header-objective align-items-center"
                                              data-toggle="collapse"
-                                             data-target="#initiative{{$initiative->id}}" onclick="handleDivClick({{$initiative->id}})">
+                                             data-target="#initiative{{$initiative->id}}" onclick="handleDivClick({{$initiative->id}})" >
                                              <div class="title" >
                                                 <h5 data-toggle="tooltip" data-placement="top" data-original-title="initiative">
                                                    <div class="d-flex flex-row align-items-center">
@@ -237,9 +236,9 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
                                                 <div class="content-item">
                                                    <p>{{ \Carbon\Carbon::parse($initiative->initiative_start_date)->format('M d')}} - {{ \Carbon\Carbon::parse($initiative->initiative_end_date)->format('M d')}}</p>
                                                 </div>
-                                                <div class="content-item">
+                                                <div class="content-item">                                                                                        
                                                    @if($initiative->initiative_status == 'In progress')
-                                                   <span class="badge-cs warning" style="width:80%">In progress</span>
+                                                   <span class="badge-cs warning" style="width:100%">In progress</span>
                                                    @endif
                                                    @if($initiative->initiative_status == 'Done')
                                                    <span class="badge-cs success">Done</span>
@@ -253,14 +252,14 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
                                                    <div role="progressbar" id="qcomp{{$initiative->id}}" aria-valuenow="{{$initiative->q_initiative_prog}}" aria-valuemin="0" aria-valuemax="100" style="--value:{{round($initiative->q_initiative_prog,0)}}"></div>
                                                    @else
                                                    <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="--value:0"></div>
-                                                   @endif
+                                                   @endif  
                                                 </div>
                                                 <div class="content-item" style="width:10%">
                                                    @if($initiative->initiative_prog > 0)
                                                    <div role="progressbar" id="proginit{{$initiative->id}}" aria-valuenow="{{$initiative->initiative_prog}}" aria-valuemin="0" aria-valuemax="100" style="--value:{{round($initiative->initiative_prog,0)}}"></div>
                                                    @else
                                                    <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="--value:0"></div>
-                                                   @endif
+                                                   @endif 
                                                 </div>
                                              </div>
                                              @php
@@ -355,66 +354,64 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
                                                                                  @php
                                                                                  $epic  = DB::table('epics')->where('month_id',$month->id)->where('trash',NULL)->get();
                                                                                  @endphp
-                                                                                 <div  @if($CurrentQuarter) @if($q->id < $CurrentQuarter->quarter_id) class="board-flex" @endif @endif class="board"  style="width:236px"
+                                                                                 <div  @if($CurrentQuarter) @if($q->id < $CurrentQuarter->quarter_id) class="board-flex" @endif @endif class="board boardI"  style="width:236px"
                                                                                  id="{{$month->id}}">
-                                                                                 <header
-                                                                                    class="noselect">
+                                                                                 <header class="noselect">
                                                                                     {{$month->month}}
                                                                                  </header>
                                                                                  @if(count($epic) > 0)
                                                                                  @foreach($epic as $e)
-                                                                                 @include('epics.index')
+                                                                                     @include('epics.index')
                                                                                  @endforeach
-                                                                                 @endif
-                                                                                 <button
-                                                                               class="btn  btn-primary border-1 ml-3 no-drag" @if($CurrentQuarter) @if($q->id < $CurrentQuarter->quarter_id) disabled @endif  @endif onclick="addepicmonth({{$month->id}},'{{$month->month}}','{{$q->id}}','{{$initiative->id}}','{{$key->id}}','{{$obj->id}}')" data-toggle="modal" data-target="#create-epic-month" draggable="false">
-                                                                               Add Epics
-                                                                               </button>
-                                                                              </div>
-                                                                              @endforeach
                                                                               @endif
+                                                                              <button
+                                                                              class="btn  btn-primary border-1 ml-3 no-drag" @if($CurrentQuarter) @if($q->id < $CurrentQuarter->quarter_id) disabled @endif  @endif onclick="addepicmonth({{$month->id}},'{{$month->month}}','{{$q->id}}','{{$initiative->id}}','{{$key->id}}','{{$obj->id}}')" data-toggle="modal" data-target="#create-epic-month" draggable="false">
+                                                                              Add Epics
+                                                                              </button>
                                                                            </div>
+                                                                           @endforeach
+                                                                           @endif
+                                                                        </div>
+                                                                     </div>
+                                                                     <div
+                                                                        class="d-flex flex-row-reverse zoom-btn-section">
+                                                                        <div>
+                                                                           <button
+                                                                              class="btn-circle btn-zoom-buttons zoom" onclick="zoom_in({{$q->id}})" >
+                                                                           <img width="20px"
+                                                                              height="20px"
+                                                                              src="{{asset('public/assets/images/icons/search-zoom-in.svg')}}"
+                                                                              alt="zoom-In">
+                                                                           </button>
                                                                         </div>
                                                                         <div
-                                                                           class="d-flex flex-row-reverse zoom-btn-section">
-                                                                           <div>
-                                                                              <button
-                                                                                 class="btn-circle btn-zoom-buttons zoom" onclick="zoom_in({{$q->id}})">
-                                                                              <img width="20px"
-                                                                                 height="20px"
-                                                                                 src="{{asset('public/assets/images/icons/search-zoom-in.svg')}}"
-                                                                                 alt="zoom-In">
-                                                                              </button>
-                                                                           </div>
-                                                                           <div
-                                                                              class="mr-2">
-                                                                              <button
-                                                                                 class="btn-circle btn-zoom-buttons zoom-out" onclick="zoom_out({{$q->id}})">
-                                                                              <img width="20px"
-                                                                                 height="20px"
-                                                                                 src="{{asset('public/assets/images/icons/search-zoom-out.svg')}}"
-                                                                                 alt="zoom-Out">
-                                                                              </button>
-                                                                           </div>
-                                                                           <div
-                                                                              class="mr-2">
-                                                                              <button
-                                                                                 class="btn-circle btn-zoom-buttons zoom-init" onclick="zoom_init({{$q->id}})">
-                                                                              <img width="20px"
-                                                                                 height="20px"
-                                                                                 src="{{asset('public/assets/images/icons/maximize.svg')}}"
-                                                                                 alt="zoom-Out">
-                                                                              </button>
-                                                                           </div>
+                                                                           class="mr-2">
+                                                                           <button
+                                                                              class="btn-circle btn-zoom-buttons zoom-out" onclick="zoom_out({{$q->id}})">
+                                                                           <img width="20px"
+                                                                              height="20px"
+                                                                              src="{{asset('public/assets/images/icons/search-zoom-out.svg')}}"
+                                                                              alt="zoom-Out">
+                                                                           </button>
+                                                                        </div>
+                                                                        <div
+                                                                           class="mr-2">
+                                                                           <button
+                                                                              class="btn-circle btn-zoom-buttons zoom-init" onclick="zoom_init({{$q->id}})">
+                                                                           <img width="20px"
+                                                                              height="20px"
+                                                                              src="{{asset('public/assets/images/icons/maximize.svg')}}"
+                                                                              alt="zoom-Out">
+                                                                           </button>
                                                                         </div>
                                                                      </div>
                                                                   </div>
                                                                </div>
                                                             </div>
-                                                            @endif
-                                                            @endforeach
-                                                            @endif
                                                          </div>
+                                                         @endif
+                                                         @endforeach
+                                                         @endif
                                                       </div>
                                                    </div>
                                                 </div>
@@ -423,59 +420,60 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
                                        </div>
                                     </div>
                                  </div>
-                                 @endforeach
-                                 @endif
                               </div>
+                              @endforeach
+                              @endif
                            </div>
-                           @php
-                           $initiativeweightcounte = DB::table('initiative')->where('key_id',$key->id)->sum('initiative_weight');
-                           $monthnumber = DB::table('settings')->where('user_id',Auth::id())->first();
-                           $number = 0;
-                           if($monthnumber)
-                           {
-                           $number = $monthnumber->month;
-                           }else
-                           {
-                           $number = 0;
-                           }
-                           @endphp
-                           <!-- end Item -->
-                           <!-- begin Add New -->
-                           <div class="row py-2">
-                              <div class="col-md-12">
-                                 <a href="" data-toggle="modal" onclick="initiative({{$key->id}},'{{$obj->id}}','{{$initiativeweightcounte}}','{{$key->key_start_date}}','{{$key->key_end_date}}')"
-                                    data-target="#create-initiative"
-                                    class="col-action"><img
-                                    src="{{ asset('public/assets/images/icons/add-circle.svg') }}"
-                                    class="mr-1"> Add Initiative</a>
-                              </div>
-                           </div>
-                           <!-- end Add New -->
                         </div>
-                        <!-- end Initiative -->
+                        @php
+                        $initiativeweightcounte = DB::table('initiative')->where('key_id',$key->id)->sum('initiative_weight');
+                        $monthnumber = DB::table('settings')->where('user_id',Auth::id())->first();
+                        $number = 0;
+                        if($monthnumber)
+                        {
+                        $number = $monthnumber->month;
+                        }else
+                        {
+                        $number = 0;
+                        }
+                        @endphp
+                        <!-- end Item -->
+                        <!-- begin Add New -->
+                        <div class="row py-2">
+                           <div class="col-md-12">
+                              <a href="" data-toggle="modal" onclick="initiative({{$key->id}},'{{$obj->id}}','{{$initiativeweightcounte}}','{{$key->key_start_date}}','{{$key->key_end_date}}')"
+                                 data-target="#create-initiative"
+                                 class="col-action"><img
+                                 src="{{ asset('public/assets/images/icons/add-circle.svg') }}"
+                                 class="mr-1"> Add Initiative</a>
+                           </div>
+                        </div>
+                        <!-- end Add New -->
                      </div>
+                     <!-- end Initiative -->
                   </div>
                </div>
-               @endforeach
-               @endif
             </div>
+            @endforeach
+            @endif
          </div>
-         <!-- end Item -->
-         <!-- begin Add New -->
-         @php
-         $keyweightcount = DB::table('key_result')->where('obj_id',$obj->id)->sum('weight');
-         @endphp
-         <div class="row py-2">
-            <div class="col-md-12">
-               <a href="javascript:void(0)" onclick="objective({{$obj->id}})" class="col-action key_obj"><img
-                  src="{{ asset('public/assets/images/icons/add-circle.svg') }}"
-                  class="mr-1"> Add Key Result</a>
-            </div>
-         </div>
-         <!-- end Add New -->
       </div>
-      <!-- end Key Results -->
+      <!-- end Item -->
+      <!-- begin Add New -->
+      @php
+         $keyweightcount = DB::table('key_result')->where('obj_id',$obj->id)->sum('weight');
+      @endphp
+      <div class="row py-2">
+         <div class="col-md-12">
+            <a href="javascript:void(0)" onclick="objective({{$obj->id}})"
+               class="col-action key_obj"><img
+               src="{{ asset('public/assets/images/icons/add-circle.svg') }}"
+               class="mr-1"> Add Key Result</a>
+         </div>
+      </div>
+      <!-- end Add New -->
    </div>
+   <!-- end Key Results -->
 </div>
 </div>
 @endforeach
@@ -483,61 +481,66 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
 No objective found.
 @endif
 <script>
-   var containers = Array.from(document.getElementsByClassName("board"));
-   var drake = dragula(containers);
-   drake.on("drop", function(el, target, source, sibling) {
-       var parentElId = target.id;
-       var droppedElId = el.id;
-       $.ajax({
-           type: "POST",
-           url: "{{ url('change-epic-month') }}",
-           headers: {
-               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-           },
-           data: {
-               parentElId: parentElId,
-               droppedElId: droppedElId,
-           },
-           success: function(response) {
-               console.log('Card position updated successfully.');
-           },
-           error: function(error) {
-               console.log('Error updating card position:', error);
-           }
-       });
-   });
+   // var containers = Array.from(document.getElementsByClassName("board"));
+   // var drake = dragula(containers);
+   // drake.on("drop", function(el, target, source, sibling) {
+   //     var parentElId = target.id;
+   //     var droppedElId = el.id;
+   //     $.ajax({
+   //         type: "POST",
+   //         url: "{{ url('change-epic-month') }}",
+   //         headers: {
+   //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+   //         },
+   //         data: {
+   //             parentElId: parentElId,
+   //             droppedElId: droppedElId,
+   //         },
+   //         success: function(response) {
+   //             console.log('Card position updated successfully.');
+   //         },
+   //         error: function(error) {
+   //             console.log('Error updating card position:', error);
+   //         }
+   //     });
+   // });
 </script>
 
 <script type="text/javascript">
-   var containers = Array.from(document.getElementsByClassName("boardI"));
-       var drake = dragula(containers);
-   
-       // Save position on drop
-       drake.on("drop", function (el, target, source, sibling) {
-           var backlogId = el.id.split("-")[1];
-           
-           var newPosition = Array.from(target.children).indexOf(el) + 1;
-         
+     var containers = Array.from(document.getElementsByClassName("boardI"));
+    var drake = dragula(containers);
+
+    // Save position on drop
+    drake.on("drop", function (el, target, source, sibling) {
+        var droppedElId = el.id.split("-")[1];
         
-           $.ajax({
-           type: "POST",
-           url: "{{ url('change-init-pos') }}",
-           headers: {
-               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-           },
-           data: {
-           backlogId:backlogId,
-           newPosition:newPosition,
-           
-         
-   
-           },
-           success: function(response) {
-               console.log('Card position updated successfully.');
-           },
-           error: function(error) {
-               console.log('Error updating card position:', error);
-           }
-       });
-       });
+        var newPosition = Array.from(target.children).indexOf(el) + 1;
+        var parentElId = target.id;
+       
+  
+     
+     
+        $.ajax({
+        type: "POST",
+        url: "{{ url('change-init-pos') }}",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+        droppedElId:droppedElId,
+        newPosition:newPosition,
+        parentElId:parentElId
+        
+      
+
+        },
+        success: function(response) {
+            console.log('Card position updated successfully.');
+        },
+        error: function(error) {
+            console.log('Error updating card position:', error);
+        }
+    });
+    });
+
    </script>
