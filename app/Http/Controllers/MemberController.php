@@ -87,7 +87,7 @@ class MemberController extends Controller
         'password' => $password,
 
         ];
-        $organization = DB::table('organization')->where('user_id' ,Auth::id())->first()->organization_name
+        $organization = DB::table('organization')->where('user_id' ,Auth::id())->first()->organization_name;
         $subject = Auth::user()->name.' '.Auth::user()->last_name.' added you as a '.$request->role.' in '.$organization.'';
         Mail::send('email.email-member', ['data' => $data], function ($message) use ($request, $subject) {
             $message->to($request->email);
