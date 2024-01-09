@@ -36,6 +36,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $organization->id)
                 ->where("trash", null)
                 ->where("type", "unit")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -47,6 +48,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $organization->id)
                 ->where("trash", null)
                 ->where("type", "stream")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -58,6 +60,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $organization->id)
                 ->where("trash", null)
                 ->where("type", "BU")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -69,6 +72,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $organization->id)
                 ->where("trash", null)
                 ->where("type", "VS")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -80,6 +84,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $organization->id)
                 ->where("trash", null)
                 ->where("type", "org")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -91,6 +96,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $organization->id)
                 ->where("trash", null)
                 ->where("type", "orgT")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -114,6 +120,13 @@ class ObjectiveController extends Controller
         // }else
         // {
 
+            $counter = 1;
+            $pos = DB::table('objectives')->orderby('id','DESC')->where('unit_id',$request->unit_id)->first();
+            if($pos)
+            {
+            $counter = $pos->IndexCount + 1; 
+            }
+
         $OBJ = DB::table("objectives")->insertGetId([
             "objective_name" => $request->objective_name,
             "org_id" => $request->org_id,
@@ -124,6 +137,7 @@ class ObjectiveController extends Controller
             "unit_id" => $request->unit_id,
             "type" => $request->type,
             "status" => $request->objective_status,
+            'IndexCount' => $counter,
         ]);
 
         if ($request->has("unitid")) {
@@ -150,6 +164,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "unit")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -162,6 +177,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "stream")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -174,6 +190,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "BU")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -186,6 +203,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "VS")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -197,6 +215,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "org")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -208,6 +227,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "orgT")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -243,6 +263,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "unit")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -255,6 +276,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "stream")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -267,6 +289,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "BU")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -279,6 +302,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "VS")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -290,6 +314,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "org")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -301,6 +326,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "orgT")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -332,6 +358,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "unit")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -344,6 +371,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "stream")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -356,6 +384,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "BU")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -368,6 +397,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "VS")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -379,6 +409,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "org")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -390,6 +421,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "orgT")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -418,6 +450,13 @@ class ObjectiveController extends Controller
             $team = null;
         }
 
+        $counter = 1;
+        $pos = DB::table('key_result')->orderby('id','DESC')->where('obj_id',$request->obj_id)->first();
+        if($pos)
+        {
+        $counter = $pos->IndexCount + 1; 
+        }
+
         $KEY = DB::table("key_result")->insertGetId([
             "key_name" => $request->key_name,
             "obj_id" => $request->obj_id,
@@ -434,6 +473,7 @@ class ObjectiveController extends Controller
             "target_number" => $request->target_number,
             "type" => $request->type,
             "unit_id" => $request->unit_id,
+            'IndexCount' => $counter,
         ]);
 
         $counter = 0;
@@ -471,6 +511,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "unit")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -483,6 +524,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "stream")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -495,6 +537,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "BU")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -507,6 +550,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "VS")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -518,6 +562,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "org")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -529,6 +574,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "orgT")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -605,6 +651,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "BU")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -617,6 +664,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "VS")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -628,6 +676,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "org")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -639,6 +688,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "orgT")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -674,6 +724,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "unit")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -686,6 +737,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "stream")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -698,6 +750,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "BU")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -710,6 +763,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "VS")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -721,6 +775,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "org")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -732,6 +787,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "orgT")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -871,6 +927,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "unit")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -883,6 +940,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "stream")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -895,6 +953,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "BU")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -907,6 +966,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "VS")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -918,6 +978,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "org")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -929,6 +990,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "orgT")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -968,6 +1030,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "unit")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -980,6 +1043,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "stream")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -992,6 +1056,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "BU")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -1004,6 +1069,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "VS")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -1015,6 +1081,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "org")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -1026,6 +1093,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "orgT")
+                ->orderby('IndexCount')
                 ->get();
         }
 
@@ -1091,6 +1159,7 @@ class ObjectiveController extends Controller
                     ->where("unit_id", $request->unit_id)
                     ->where("trash", null)
                     ->where("type", "unit")
+                    ->orderby('IndexCount')
                     ->get();
             }
 
@@ -1103,6 +1172,7 @@ class ObjectiveController extends Controller
                     ->where("unit_id", $request->unit_id)
                     ->where("trash", null)
                     ->where("type", "stream")
+                    ->orderby('IndexCount')
                     ->get();
             }
 
@@ -1115,6 +1185,7 @@ class ObjectiveController extends Controller
                     ->where("unit_id", $request->unit_id)
                     ->where("trash", null)
                     ->where("type", "BU")
+                    ->orderby('IndexCount')
                     ->get();
             }
 
@@ -1127,6 +1198,7 @@ class ObjectiveController extends Controller
                     ->where("unit_id", $request->unit_id)
                     ->where("trash", null)
                     ->where("type", "VS")
+                    ->orderby('IndexCount')
                     ->get();
             }
 
@@ -1138,6 +1210,7 @@ class ObjectiveController extends Controller
                     ->where("unit_id", $request->unit_id)
                     ->where("trash", null)
                     ->where("type", "org")
+                    ->orderby('IndexCount')
                     ->get();
             }
 
@@ -1149,6 +1222,7 @@ class ObjectiveController extends Controller
                     ->where("unit_id", $request->unit_id)
                     ->where("trash", null)
                     ->where("type", "orgT")
+                    ->orderby('IndexCount')
                     ->get();
             }
     
@@ -1293,6 +1367,7 @@ class ObjectiveController extends Controller
                     ->where("unit_id", $request->unit_id)
                     ->where("trash", null)
                     ->where("type", "unit")
+                    ->orderby('IndexCount')
                     ->get();
             }
 
@@ -1305,6 +1380,7 @@ class ObjectiveController extends Controller
                     ->where("unit_id", $request->unit_id)
                     ->where("trash", null)
                     ->where("type", "stream")
+                    ->orderby('IndexCount')
                     ->get();
             }
 
@@ -1317,6 +1393,7 @@ class ObjectiveController extends Controller
                     ->where("unit_id", $request->unit_id)
                     ->where("trash", null)
                     ->where("type", "BU")
+                    ->orderby('IndexCount')
                     ->get();
             }
 
@@ -1329,6 +1406,7 @@ class ObjectiveController extends Controller
                     ->where("unit_id", $request->unit_id)
                     ->where("trash", null)
                     ->where("type", "VS")
+                    ->orderby('IndexCount')
                     ->get();
             }
 
@@ -1340,6 +1418,7 @@ class ObjectiveController extends Controller
                     ->where("unit_id", $request->unit_id)
                     ->where("trash", null)
                     ->where("type", "org")
+                    ->orderby('IndexCount')
                     ->get();
             }
 
@@ -1351,6 +1430,7 @@ class ObjectiveController extends Controller
                     ->where("unit_id", $request->unit_id)
                     ->where("trash", null)
                     ->where("type", "orgT")
+                    ->orderby('IndexCount')
                     ->get();
             }
     
@@ -1427,6 +1507,7 @@ class ObjectiveController extends Controller
                     ->where("unit_id", $request->unit_id)
                     ->where("trash", null)
                     ->where("type", "unit")
+                    ->orderby('IndexCount')
                     ->get();
             }
 
@@ -1439,6 +1520,7 @@ class ObjectiveController extends Controller
                     ->where("unit_id", $request->unit_id)
                     ->where("trash", null)
                     ->where("type", "stream")
+                    ->orderby('IndexCount')
                     ->get();
             }
 
@@ -1451,6 +1533,7 @@ class ObjectiveController extends Controller
                     ->where("unit_id", $request->unit_id)
                     ->where("trash", null)
                     ->where("type", "BU")
+                    ->orderby('IndexCount')
                     ->get();
             }
 
@@ -1463,6 +1546,7 @@ class ObjectiveController extends Controller
                     ->where("unit_id", $request->unit_id)
                     ->where("trash", null)
                     ->where("type", "VS")
+                    ->orderby('IndexCount')
                     ->get();
             }
 
@@ -1474,6 +1558,7 @@ class ObjectiveController extends Controller
                     ->where("unit_id", $request->unit_id)
                     ->where("trash", null)
                     ->where("type", "org")
+                    ->orderby('IndexCount')
                     ->get();
             }
 
@@ -1485,6 +1570,7 @@ class ObjectiveController extends Controller
                     ->where("unit_id", $request->unit_id)
                     ->where("trash", null)
                     ->where("type", "orgT")
+                    ->orderby('IndexCount')
                     ->get();
             }
     
@@ -3150,14 +3236,54 @@ class ObjectiveController extends Controller
     public function UpdatePosInit(Request $request)
     {
 
-      $existsInModelA = DB::table('initiative')->where('id',$request->backlogId)->first();
+      $existsInModelA = DB::table('initiative')->where('id',$request->droppedElId)->first();
+      $existsInModelK = DB::table('key_result')->where('id',$request->droppedElId)->first();
+      $existsInModelO = DB::table('objectives')->where('id',$request->droppedElId)->first();
+      $Epic = DB::table('epics')->where('id',$request->droppedElId)->first();
+
 
       if($existsInModelA)
       { 
         $existsOldE = DB::table('initiative')->where('IndexCount',$request->newPosition)->first();
         DB::table('initiative')->where('id',$existsOldE->id)->update(['IndexCount' => $existsInModelA->IndexCount,]);
-        DB::table('initiative')->where('id',$request->backlogId)->update(['IndexCount' => $request->newPosition,]);
+        DB::table('initiative')->where('id',$request->droppedElId)->update(['IndexCount' => $request->newPosition,]);
       }
+
+      if($existsInModelK)
+      { 
+        $existsOldE = DB::table('key_result')->where('IndexCount',$request->newPosition)->first();
+        DB::table('key_result')->where('id',$existsOldE->id)->update(['IndexCount' => $existsInModelK->IndexCount,]);
+        DB::table('key_result')->where('id',$request->droppedElId)->update(['IndexCount' => $request->newPosition,]);
+      }
+
+      if($existsInModelO)
+      { 
+        $existsOldE = DB::table('objectives')->where('IndexCount',$request->newPosition)->first();
+        DB::table('objectives')->where('id',$existsOldE->id)->update(['IndexCount' => $existsInModelO->IndexCount,]);
+        DB::table('objectives')->where('id',$request->droppedElId)->update(['IndexCount' => $request->newPosition,]);
+      }
+
+      if($Epic)
+      { 
+        $quarterMonth = DB::table("epics")
+      ->where("id", $request->droppedElId)
+      ->update(["month_id" => $request->parentElId]);
+
+       $epic = DB::table("epics")
+      ->where("id", $request->droppedElId)
+      ->first();
+       $keycount = DB::table("initiative")
+      ->where("id", $epic->initiative_id)
+      ->first();
+      $obj = DB::table("objectives")
+      ->where("id", $keycount->obj_id)
+      ->first();
+       $org = DB::table("organization")
+      ->where("id", $obj->org_id)
+      ->first();
+      }
+
+      
       
 
     }
