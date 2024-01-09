@@ -121,7 +121,14 @@
                         <div class="d-flex flex-row align-items-center">
                             <div class="d-flex flex-column">
                                 <div>
-                                    <h5>{{ $user->name }} {{ $user->last_name }}</h5>
+                                    
+                                    <h5>
+                                        @if($user->image != NULL)
+                                    <img src="{{asset('public/assets/images/'.$user->image)}}" alt="Example Image">
+                                    @else
+                                    <img height="20" width="20" src="{{ Avatar::create($user->name.' '.$user->last_name)->toBase64() }}" alt="Example Image">
+                                    @endif
+                                        {{ $user->name }} {{ $user->last_name }}</h5>
                                     <small>{{ Cmf::date_format($r->created_at) }}</small>
                                     @if($r->created_at != $r->updated_at)
                                     <small>Updated</small>
@@ -142,8 +149,20 @@
                             </div>
                         </div>
                     </div>
+                    @php
+                    $str = strlen($r->comment);
+                    @endphp
                     <div>
-                        <p>{{ $r->comment }}</p>
+                        <p class="load-more" id="load-more{{$r->id}}">{{ \Illuminate\Support\Str::limit($r->comment,220, $end='') }}
+                            @if($str > 220)
+                            <a  href="javascript:void(0);" onclick="loadmore({{$r->id}});" id="toggle-button{{$r->id}}" class="" style="font-size:10px;">More</a>
+                            @endif
+                        </p>
+
+                        <p id="more-content{{$r->id}}"  style="line-height:15px;display:none">
+                            {{$r->comment}}
+                      <a href="javascript:void(0);" onclick="seeless({{$r->id}});" id="toggle-button-less{{$r->id}}" class="" style="font-size:10px;">Less</a>
+                        </p>
                     </div>
                     <div>
                         <button onclick="replycomment({{$r->id}})" class="btn btn-default btn-sm">Reply</button>
@@ -367,4 +386,37 @@ function deletecomment(id) {
         }
     });
 }
+
+function loadmore(x) {
+
+const toggleButton = document.getElementById("toggle-button" + x);
+const moreContent = document.getElementById("more-content");
+const LoadmoreContent = document.getElementById("load-more" + x);
+
+toggleButton.addEventListener("click", function() {
+    // moreContent.style.display = "block";
+    // LoadmoreContent.style.display = "none";
+
+    $('#more-content' + x).show();
+    $('#load-more' + x).hide();
+
+});
+}
+
+function seeless(x) {
+
+const toggleButton = document.getElementById("toggle-button-less" + x);
+const moreContent = document.getElementById("more-content");
+const LoadmoreContent = document.getElementById("load-more" + x);
+
+toggleButton.addEventListener("click", function() {
+    // moreContent.style.display = "none";
+    // LoadmoreContent.style.display = "block";
+
+    $('#more-content' + x).hide();
+    $('#load-more' + x).show();
+
+});
+}
+
 </script>
