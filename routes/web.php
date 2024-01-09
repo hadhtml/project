@@ -251,6 +251,9 @@ Route::name('linking.')->namespace('App\Http\Controllers')->prefix('dashboard/li
 Route::name('epicbacklog.')->namespace('App\Http\Controllers')->prefix('dashboard/epicbacklog')->group(function () {
     Route::POST('getepic', 'EpicBacklogController@getepicmodal');
     Route::POST('showheader', 'EpicBacklogController@showheader');
+    Route::POST('showtab', 'EpicBacklogController@showtab');
+    Route::POST('uploadattachment', 'EpicBacklogController@uploadattachment');
+    Route::POST('deleteattachment', 'EpicBacklogController@deleteattachment');
 });
 
 

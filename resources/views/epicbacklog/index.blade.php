@@ -673,11 +673,11 @@ $var_objective = 'TBaclog-' . $type;
              $('#epic-backlog-modal-content').html(res);
              $('#edit-backlog-epic-modal-new').modal('show');
              // showtab(id , 'general');
-             showheaderbacklog(epic_id);
+             showheaderbacklog(id, table);
          }
       });
    }
-   function showheaderbacklog(id) {
+   function showheaderbacklog(id, table) {
         $.ajax({
             type: "POST",
             url: "{{ url('dashboard/epicbacklog/showheader') }}",
@@ -685,7 +685,8 @@ $var_objective = 'TBaclog-' . $type;
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             data: {
-                id:id,
+               id:id,
+               table:table,
             },
             success: function(res) {
                 $('.modalheaderforapend').html(res);
@@ -766,129 +767,7 @@ $var_objective = 'TBaclog-' . $type;
    
    }
    
-   $('.category').on('change', function() {
-       var id = $(this).val();
-       var type = "{{ $organization->type }}";
-       if (id) {
-           $.ajax({
-               type: "GET",
-               url: "{{ url('get-value-obj') }}",
-               headers: {
-                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-               },
-               data: {
-                   id: id,
-                   type: type,
-               },
-               success: function(res) {
-   
-                   if (res) {
-                       $('.obj').empty();
-                       $('.obj').append('<option hidden>Choose Objective</option>');
-                       $.each(res, function(key, course) {
-                           $('select[name="locstate"]').append('<option value="' + course
-                               .id + '">' + course.objective_name + '</option>');
-                       });
-                   } else {
-                       $('.obj').empty();
-   
-                   }
-   
-               }
-           });
-       } else {
-           $('.init').empty();
-           $('.key').empty();
-           $('.obj').empty();
-       }
-   
-   });
-   
-   
-   
-   function getvaluekey(id) {
-   
-       $.ajax({
-           type: "GET",
-           url: "{{ url('get-value-key') }}",
-           headers: {
-               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-           },
-           data: {
-               id: id,
-           },
-           success: function(res) {
-   
-               if (res) {
-                   $('.key').empty();
-                   $('.key').append('<option hidden>Choose Key Result</option>');
-                   $.each(res, function(key, course) {
-                       $('select[name="lockey"]').append('<option value="' + course.id + '">' +
-                           course.key_name + '</option>');
-                   });
-               } else {
-                   $('.key').empty();
-               }
-   
-           }
-       });
-   
-   }
-   
-   function getvalueintit(id) {
-   
-       $.ajax({
-           type: "GET",
-           url: "{{ url('get-value-init') }}",
-           headers: {
-               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-           },
-           data: {
-               id: id,
-           },
-           success: function(res) {
-   
-               if (res) {
-                   $('.init').empty();
-                   $('.init').append('<option hidden value="">Choose initiative</option>');
-                   $.each(res, function(key, course) {
-                       $('select[name="locinit"]').append('<option value="' + course.id + '">' +
-                           course.initiative_name + '</option>');
-                   });
-               } else {
-                   $('.init').empty();
-               }
-   
-           }
-       });
-   
-   }
-   
-   function assign_epic_unit(val) {
-   
-       var slug = "{{ $organization->slug }}";
-       var id = "{{ $organization->id }}";
-   
-       $.ajax({
-           type: "GET",
-           url: "{{ url('get-assign-epic-unit') }}",
-           headers: {
-               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-           },
-           data: {
-               id: id,
-               slug: slug,
-               val: val
-           },
-           success: function(res) {
-   
-               $('#olddata').html(res);
-   
-   
-           }
-       });
-   
-   }
+
    
    function c_jira(id) {
    

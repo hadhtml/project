@@ -9,27 +9,21 @@
                 <h4>Menu</h4>
                 <input type="hidden" id="modaltab" value="general">
                 <ul>
-                    <li id="general" onclick="showtab({{$data->id}} , 'general')" class="tabsclass active">
+                    <li id="general" onclick="showtab({{$data->id}} , 'general','{{$table}}')" class="tabsclass active">
                         <span class="material-symbols-outlined"> edit_square </span> General
                     </li>
-                    <li id="childitems" onclick="showtab({{$data->id}} , 'childitems')" class="tabsclass">
-                        <span class="material-symbols-outlined">toc</span> Child Items
+                    <li id="asign" onclick="showtab({{$data->id}} , 'asign','{{$table}}')" class="tabsclass">
+                        <span class="material-symbols-outlined">person_check</span> Asign
                     </li>
-                    <li id="comments" onclick="showtab({{$data->id}} , 'comments')" class="tabsclass">
+                    <li id="comments" onclick="showtab({{$data->id}} , 'comments','{{$table}}')" class="tabsclass">
                         <span class="material-symbols-outlined">comment</span> Comments
                     </li>
-                    <li id="activites" onclick="showtab({{$data->id}} , 'activites')" class="tabsclass">
+                    <li id="activites" onclick="showtab({{$data->id}} , 'activites','{{$table}}')" class="tabsclass">
                        <span class="material-symbols-outlined">browse_activity</span> Activities
                     </li>
-                    <!-- <li id="checkins" onclick="showtab({{$data->id}} , 'checkins')" class="tabsclass">
-                        <span class="material-symbols-outlined">checklist</span> Check-Ins
-                    </li> -->
-                    <li id="attachment" onclick="showtab({{$data->id}} , 'attachment')" class="tabsclass">
+                    <li id="attachment" onclick="showtab({{$data->id}} , 'attachment','{{$table}}')" class="tabsclass">
                         <span class="material-symbols-outlined"> attachment </span> Attachments</li>
-                    <li id="flags" onclick="showtab({{$data->id}} , 'flags')" class="tabsclass">
-                        <span class="material-symbols-outlined">flag</span> Flags
-                    </li>
-                    <li id="teams" onclick="showtab({{$data->id}} , 'teams')" class="tabsclass">
+                    <li id="teams" onclick="showtab({{$data->id}} , 'teams','{{$table}}')" class="tabsclass">
                         <span class="material-symbols-outlined"> group </span> Teams
                     </li>
                 </ul>
@@ -155,7 +149,7 @@
         $('#modaltab').val(tab);
         $.ajax({
             type: "POST",
-            url: "{{ url('dashboard/epics/showtab') }}",
+            url: "{{ url('dashboard/epicbacklog/showtab') }}",
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
@@ -173,19 +167,20 @@
             }
         });
     }
-    function showtab(id , tab) {
+    function showtab(id , tab , table) {
         $('#modaltab').val(tab);
         $('.secondportion').addClass('loaderdisplay');
         $('.secondportion').html('<i class="fa fa-spin fa-spinner"></i>');
         $.ajax({
             type: "POST",
-            url: "{{ url('dashboard/epics/showtab') }}",
+            url: "{{ url('dashboard/epicbacklog/showtab') }}",
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             data: {
                 id:id,
                 tab:tab,
+                table: table,
             },
             success: function(res) {
                 $('.secondportion').removeClass('loaderdisplay');
