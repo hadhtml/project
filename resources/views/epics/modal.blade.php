@@ -104,7 +104,7 @@
                 </div>
                 <div class="row margintopfourtypixel">
                     <div class="col-md-12 text-right">
-                        <button type="submit" class="btn btn-primary btn-theme ripple savechangebutton" id="updatebutton">Save Changes</button>
+                        <button type="submit" class="btn btn-primary btn-theme ripple savechangebutton" id="updatebutton">@if($data->epic_name) Save Changes @else Save Epic @endif</button>
                     </div>
                 </div>
             </form>
@@ -250,6 +250,10 @@
                 $("#initiative{{ $data->initiative_id }}").collapse('toggle');                
                 showheader('{{ $data->id }}')
                 $('#updatebutton').html('Save Changes');
+
+                @if(!$data->epic_name)
+                $('#edit-epic-modal-new').modal('hide');
+                @endif
             }
         });
     }));

@@ -64,4 +64,7 @@
     {
       $(".profile-image-container:odd").css({"background-color":"#dbf7e8"});
     });
+    function showdetailsofactivity(id){ 
+        $('#activitydetalbox'+id).slideToggle();
+    }
 </script>

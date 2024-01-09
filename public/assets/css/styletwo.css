@@ -353,6 +353,30 @@
     overflow-x: hidden;
 }
 
+
+/* width */
+.activitydetalbox::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.activitydetalbox::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+.activitydetalbox::-webkit-scrollbar-thumb {
+  background: #c5c9d1;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+.activitydetalbox::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+
+
 /* width */
 .member-area::-webkit-scrollbar {
   width: 10px;
@@ -1453,4 +1477,19 @@ button:focus {
     line-height: 25px;
     color: black;
     text-decoration: none;
+}
+.activitydetalbox{
+    display: none;
+    position: absolute;
+    width: 300px;
+    background-color: white;
+    z-index: 111;
+    right: 15px;
+    height: 200px;
+    padding: 10px;
+    border-radius: 5px;
+    top: 15px;
+    box-shadow: rgba(87, 106, 134, 0.2) 0px 10px 24px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }

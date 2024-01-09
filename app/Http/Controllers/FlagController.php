@@ -189,14 +189,16 @@ class FlagController extends Controller
         $update = flags::find($request->id);
         if($update->flag_title != $request->flag_title)
         {
-            $activity = 'Updated Title Field from "'.$update->flag_title.'" To "'.$request->flag_title.'" ';
+            $rand = rand(123456789 , 987654321);
+            $activity = 'has updated Title Field <a href="javascript:void(0)" onclick="showdetailsofactivity('.$rand.')">See Details</a> <div class="activitydetalbox deletecomment" id="activitydetalbox'.$rand.'"><div class="row"> <div class="col-md-10"> <h4>Title Update</h4> </div> <div class="col-md-2"> <img onclick="showdetailsofactivity('.$rand.')" src="'.url("public/assets/svg/crossdelete.svg").'"> </div> </div><p style="margin-bottom:0px;">'.$update->flag_title.'</p><div class="text-center mt-2 mb-2"><span class="material-symbols-outlined"> arrow_downward </span></div><p>'.$request->flag_title.'</p></div>';
             Cmf::save_activity(Auth::id() , $activity,'flags',$request->id);
         }
         if($update->flag_description != $request->flag_description)
         {
             if($update->flag_description)
             {
-                $activity = 'Updated Description Field';
+                $rand = rand(123456781239 , 987651234321);
+                $activity = 'has updated Description Field <a href="javascript:void(0)" onclick="showdetailsofactivity('.$rand.')">See Details</a> <div class="activitydetalbox deletecomment" id="activitydetalbox'.$rand.'"><div class="row"> <div class="col-md-10"> <h4>Description Update</h4> </div> <div class="col-md-2"> <img onclick="showdetailsofactivity('.$rand.')" src="'.url("public/assets/svg/crossdelete.svg").'"> </div> </div><p style="margin-bottom:0px;">'.$update->flag_description.'</p><div class="text-center mt-2 mb-2"><span class="material-symbols-outlined"> arrow_downward </span></div><p>'.$request->flag_description.'</p></div>';
                 Cmf::save_activity(Auth::id() , $activity,'flags',$request->id);
             }else{
                 $activity = 'Added a Description';
