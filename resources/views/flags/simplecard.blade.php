@@ -13,11 +13,15 @@
                 $check_escalate = DB::table('escalate_cards')->where('flag_id' , $r->id)
             @endphp
             @if($check_escalate->count() > 0)
+                @if(DB::table('flags')->where('escalate' , $check_escalate->first()->id)->first())
                 @if(DB::table('flags')->where('escalate' , $check_escalate->first()->id)->first()->flag_status == 'doneflag')
                     <div class="un-blocked ml-2">
                         <img src="{{ url('public/assets/svg/unblocked.svg') }}">
                         Unblocked
                     </div>
+                @endif
+                @else
+                    {{$check_escalate->first()->id}}
                 @endif
             @endif
         </div>
@@ -75,7 +79,7 @@
                             @if($user->image != NULL)
                             <img class="user-image" src="{{asset('public/assets/images/'.$user->image)}}" alt="{{ $user->name }}" data-toggle="tooltip" title="" data-original-title="{{ $user->name }} {{ $user->last_name }}">
                             @else
-                            <img class="user-image" src="{{ Avatar::create($user->name)->toBase64() }}" alt="{{ $user->name }}" data-toggle="tooltip" title="" data-original-title="{{ $user->name }} {{ $user->last_name }}">
+                            <img class="user-image" src="{{ Avatar::create($user->name.' '.$user->last_name)->toBase64() }}" alt="{{ $user->name }}" data-toggle="tooltip" title="" data-original-title="{{ $user->name }} {{ $user->last_name }}">
                             @endif
                         @endforeach
                         @if($totalmember > 3)

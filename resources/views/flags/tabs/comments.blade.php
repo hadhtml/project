@@ -68,7 +68,7 @@
                     @foreach(DB::table('members')->where('org_user',Auth::id())->get() as $r)
                     {
                        username: '{{ $r->name }}',
-                       image: '{{ Avatar::create($r->name)->toBase64() }}'
+                       image: '{{ Avatar::create($r->name.''.$r->last_name)->toBase64() }}'
                     }@if($loop->last) @else ,@endif 
                     @endforeach
                 ]

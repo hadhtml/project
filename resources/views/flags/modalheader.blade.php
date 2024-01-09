@@ -61,7 +61,7 @@
                     @if($member->image)
                     <img data-toggle="tooltip" title="" data-original-title="{{ $member->name }} {{ $member->last_name }}" src="{{ url('public/assets/images') }}/{{ $member->image }}">
                     @else
-                    <img data-toggle="tooltip" title="" data-original-title="{{ $member->name }} {{ $member->last_name }}" src="{{ Avatar::create($member->name)->toBase64() }}" alt="{{ $member->name }}" title="{{ $member->name }} {{ $member->last_name }}">
+                    <img data-toggle="tooltip" title="" data-original-title="{{ $member->name }} {{ $member->last_name }}"  src="{{ Avatar::create($member->name.' '.$member->last_name)->toBase64() }}" alt="{{ $member->name }}" title="{{ $member->name }} {{ $member->last_name }}">
                     @endif
                 </div>
                 @endforeach
@@ -101,7 +101,7 @@
                                         @if($r->image)
                                         <img src="{{ url('public/assets/images') }}/{{ $r->image }}">
                                         @else
-                                        <img src="{{ Avatar::create($r->name)->toBase64() }}">
+                                        <img src="{{ Avatar::create($r->name.' '.$r->last_name)->toBase64() }}">
                                         @endif
                                     </div>
                                 </div>

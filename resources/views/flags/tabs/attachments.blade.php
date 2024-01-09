@@ -12,23 +12,19 @@
             <div class="displayflex">
                 <div class="dropdown firstdropdownofcomments">
                   <span class="dropdown-toggle orderbybutton" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    @if(isset($orderby))
-                        @if($orderby == 'asc')
-                            Order by Older
-                        @endif
-                        @if($orderby == 'desc')
-                            Order by Latest
-                        @endif
+                    @if(isset($extension))
+                       Filter By {{ $extension }}
                     @else
-                        Order By
+                        Filter By
                     @endif
                     <svg xmlns="http://www.w3.org/2000/svg" width="11" height="7" viewBox="0 0 11 7" fill="none">
                       <path d="M10.8339 0.644857C10.6453 0.456252 10.3502 0.439106 10.1422 0.593419L10.0826 0.644857L5.49992 5.2273L0.917236 0.644857C0.72863 0.456252 0.433494 0.439106 0.225519 0.593419L0.165935 0.644857C-0.0226701 0.833463 -0.0398163 1.1286 0.114497 1.33657L0.165935 1.39616L5.12427 6.35449C5.31287 6.5431 5.60801 6.56024 5.81599 6.40593L5.87557 6.35449L10.8339 1.39616C11.0414 1.18869 11.0414 0.852323 10.8339 0.644857Z" fill="#787878"/>
                     </svg> 
                   </span>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" onclick="showorderby('desc',{{ $data->id }},'attachments')" href="javascript:void(0)">Latest</a>
-                    <a class="dropdown-item" onclick="showorderby('asc',{{ $data->id }},'attachments')" href="javascript:void(0)">Older</a>
+                    @foreach($extensions as $r)
+                    <a class="dropdown-item" onclick="filterbyextension({{ $data->id }},'{{ $r->extension }}')" href="javascript:void(0)">{{ $r->extension }}</a>
+                    @endforeach
                   </div>
                 </div>
                 <span onclick="uploadattachment()" class="btn btn-default btn-sm">Upload</span>
@@ -96,7 +92,7 @@
                       <img src="{{ url('public/assets/svg') }}/{{ $imagename }}">                
                 </div>
                 <div class="col-md-8 filename">
-                    {{ $r->file_name }}<br>
+                    {!! \Illuminate\Support\Str::limit($r->file_name,60, $end='') !!}<br>
                     <span class="datecolor">Added On {{ Cmf::date_format($r->created_at) }}</span>
                 </div>
                 <div class="col-md-3">
@@ -127,6 +123,25 @@
 </div>
 </div>
 <script type="text/javascript">
+  function filterbyextension(id,extention) {
+      $.ajax({
+          type: "POST",
+          url: "{{ url('dashboard/flags/filterbyextension') }}",
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          data: {
+              id:id,
+              extention:extention
+          },
+          success: function(data) {
+              $('.secondportion').html(data);
+          },
+          error: function(error) {
+              console.log('Error updating card position:', error);
+          }
+      });
+  }
   function deleteattachmentshow(id) {
     $('#deleteattachmentshow'+id).slideToggle();
   }

@@ -18,11 +18,11 @@
                     @php
                         $check_escalate = DB::table('escalate_cards')->where('flag_id' , $data->id)
                     @endphp
-                    @if($data->board_type != 'unit')
+                    @if($data->board_type != 'org')
                         @if($check_escalate->count() > 0)
-                            <li><img src="{{ url('public/assets/svg/escalate-action.svg') }}"> Escalated</li>
+                            <li><span class="material-symbols-outlined"> escalator </span> Escalated</li>
                         @else
-                            <li onclick="escalateflag({{$data->id}})"><img src="{{ url('public/assets/svg/escalate-action.svg') }}"> Escalate</li>
+                            <li onclick="escalateflag({{$data->id}})"><span class="material-symbols-outlined"> escalator </span> Escalate</li>
                         @endif
                     @endif
                     <!-- <li><span class="material-symbols-outlined">share</span> Share</li> -->

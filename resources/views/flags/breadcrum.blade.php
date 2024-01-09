@@ -76,23 +76,40 @@
         </div>
         <!--end::Info-->
         <!--begin::Toolbar-->
-        <div>
-            <div class="btn-group">
-              <button type="button" class="btn btn-default" style="border-top-right-radius:0px !important; border-bottom-right-radius:0px !important;" id="showboardbutton"> 
-                    <img src="{{url('public/assets/images/icons/filter.svg')}}" width="20">
-                    View All
-                </button>
-              <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split archivebeardcimbgbutton" style=""  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img src="{{url('public/assets/images/icons/angle-down.svg')}}" width="20">
-                <span class="sr-only">Toggle Dropdown</span>
-              </button>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="javascript:void(0)" onclick="viewboards('all')">View All</a>
-                <a class="dropdown-item" href="javascript:void(0)" onclick="viewboards('archived')">Archived</a>
-              </div>
+        <div class="d-flex align-items-center toolbar">
+            <div class="d-flex flex-row organization-drop align-items-center mr-3">
+                <div class="d-flex flex-column mr-3">
+                    <div style="padding:20px">
+                        Team
+                        <select class="chkveg" multiple="multiple" >
+                        @foreach(DB::table('value_team')->where('org_id',$organization->id)->get() as $r)
+                            <option value="{{$r->id}}">{{$r->team_title}}</option>
+                        @endforeach
+                        </select>
+                        <button class="btn-circle btn-tolbar bg-transparent" type="button" onclick="getflagsbyteam();" >
+                           <img src="{{asset('public/assets/images/icons/filter.svg')}}" width="20" width="20">
+                        </button>
+                    </div>
+                </div>
             </div>
-            <button onclick="addnewflag({{ $organization->id }} , '{{$organization->type}}' , 'Impediment')" class="btn btn-primary">Add New</button>
-            <input id="viewboards" value="all" type="hidden" name="">
+            <div>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-default" style="border-top-right-radius:0px !important; border-bottom-right-radius:0px !important;" id="showboardbutton"> 
+                        <img src="{{url('public/assets/images/icons/filter.svg')}}" width="20">
+                        View All
+                    </button>
+                  <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split archivebeardcimbgbutton" style=""  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="{{url('public/assets/images/icons/angle-down.svg')}}" width="20">
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href="javascript:void(0)" onclick="viewboards('all')">View All</a>
+                    <a class="dropdown-item" href="javascript:void(0)" onclick="viewboards('archived')">Archived</a>
+                  </div>
+                </div>
+                <button onclick="addnewflag({{ $organization->id }} , '{{$organization->type}}' , 'Impediment')" class="btn btn-primary">Add New</button>
+                <input id="viewboards" value="all" type="hidden" name="">
+            </div>
         </div>
     </div>
 </div>
