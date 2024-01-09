@@ -110,7 +110,7 @@ $var_objective = "Member";
                                     <div class="col-md-12 col-lg-12 col-xl-12">
                                        <div class="form-group mb-0">
                                           <input type="email" class="form-control" onchange="checkemailedit(this.value)" value="{{$member->email}}" id="email_edit">
-                                          <label for="email">Email</label>
+                                          <label for="email" style="bottom:72px;">Email</label>
                                        </div>
                                     </div>
                                     <div class="col-md-12 col-lg-12 col-xl-12">

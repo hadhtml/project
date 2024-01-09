@@ -64,7 +64,7 @@ $var_objective = "Stream-team";
                                          @if($r->image != NULL)
                                          <img src="{{asset('public/assets/images/'.$r->image)}}" alt="Example Image">
                                          @else
-                                         <img src="{{ Avatar::create($r->name.''.$r->last_name)->toBase64() }}" alt="Example Image">
+                                         <img src="{{ Avatar::create($r->name.' '.$r->last_name)->toBase64() }}" alt="Example Image">
                                          @endif
                                      </div>
  
@@ -91,7 +91,7 @@ $var_objective = "Stream-team";
                             $name = $r->name.' '.$r->last_name;
                             @endphp
  
-                             <div class="symbol symbol-30 symbol-circle" data-toggle="tooltip" title="" data-original-title="Charlie Stone">
+                             <div class="symbol symbol-30 symbol-circle" data-toggle="tooltip" title="" data-original-title="{{$name}}">
                                  @if($r->image != NULL)
                                          <img src="{{asset('public/assets/images/'.$r->image)}}" alt="Example Image">
                                          @else

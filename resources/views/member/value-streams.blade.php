@@ -287,7 +287,19 @@ $var_objective = "V-Stream";
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script>
-    
+   $(document).ready(function() {
+    var table = $('.data-table').DataTable({
+            'order':[],
+            'columnDefs': [{
+                "targets": [0,5],
+                "orderable": false
+            }]
+         
+      });
+
+       });
+
+
      $(document).ready(function() {
     setTimeout(function(){$('.alert-success').slideUp();},3000); 
     });

@@ -2939,39 +2939,54 @@ class ObjectiveController extends Controller
     {
         $FladId = $request->input("chartId");
 
-        // if ($FladId[0] == "All") {
-        //     if ($request->type == "unit") {
-        //         $organization = DB::table("business_units")
-        //             ->where("slug", $request->slug)
-        //             ->first();
-        //         $objective = DB::table("objectives")
-        //             ->where("org_id", $request->org_id)
-        //             ->where("unit_id", $request->unit_id)
-        //             ->where("trash", null)
-        //             ->where("type", "unit")
-        //             ->get();
-        //         return view(
-        //             "objective.objective-render",
-        //             compact("organization", "objective")
-        //         );
-        //     }
+        if ($FladId[0] == "All") {
+            if ($request->type == "unit") {
+                $organization = DB::table("business_units")
+                    ->where("slug", $request->slug)
+                    ->first();
+                $objective = DB::table("objectives")
+                    ->where("org_id", $request->org_id)
+                    ->where("unit_id", $request->unit_id)
+                    ->where("trash", null)
+                    ->where("type", "unit")
+                    ->get();
+                return view(
+                    "objective.objective-render",
+                    compact("organization", "objective")
+                );
+            }
 
-        //     if ($request->type == "stream") {
-        //         $organization = DB::table("value_stream")
-        //             ->where("slug", $request->slug)
-        //             ->first();
-        //         $objective = DB::table("objectives")
-        //             ->where("org_id", $request->org_id)
-        //             ->where("unit_id", $request->unit_id)
-        //             ->where("trash", null)
-        //             ->where("type", "stream")
-        //             ->get();
-        //         return view(
-        //             "objective.objective-render",
-        //             compact("organization", "objective")
-        //         );
-        //     }
-        // }
+            if ($request->type == "stream") {
+                $organization = DB::table("value_stream")
+                    ->where("slug", $request->slug)
+                    ->first();
+                $objective = DB::table("objectives")
+                    ->where("org_id", $request->org_id)
+                    ->where("unit_id", $request->unit_id)
+                    ->where("trash", null)
+                    ->where("type", "stream")
+                    ->get();
+                return view(
+                    "objective.objective-render",
+                    compact("organization", "objective")
+                );
+            }
+
+            if ($request->type == "org") {
+                $organization = DB::table("organization")
+                    ->where("slug", $request->slug)
+                    ->first();
+                $objective = DB::table("objectives")
+                    ->where("unit_id", $request->unit_id)
+                    ->where("trash", null)
+                    ->where("type", "org")
+                    ->get();
+                return view(
+                    "objective.objective-render",
+                    compact("organization", "objective")
+                );
+            }
+        }
 
         if ($request->type == "unit") {
             $organization = DB::table("business_units")
@@ -2982,6 +2997,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "unit")
+                ->orderby('IndexCount')
                 ->get();
             return view(
                 "objective.epicFlag",
@@ -2998,6 +3014,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "stream")
+                ->orderby('IndexCount')
                 ->get();
             return view(
                 "objective.epicFlag",
@@ -3014,6 +3031,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "BU")
+                ->orderby('IndexCount')
                 ->get();
             return view(
                 "objective.epicFlag",
@@ -3030,6 +3048,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "VS")
+                ->orderby('IndexCount')
                 ->get();
             return view(
                 "objective.epicFlag",
@@ -3045,6 +3064,7 @@ class ObjectiveController extends Controller
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "org")
+                ->orderby('IndexCount')
                 ->get();
             
                 return view(
