@@ -79,6 +79,7 @@
         var unit_id = "{{ $organization->id }}";
         var type = "{{ $organization->type }}";
         var slug = "{{ $organization->slug }}";
+        var month = new Date(Date.parse(month_name +" 1, 2012")).getMonth()+1;
         $.ajax({
             type: "POST",
             url: "{{ url('dashboard/epics/savenewepic') }}",
@@ -86,6 +87,7 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             data: {
+                month:month,
                 slug: slug,
                 org_id: org_id,
                 initiative_id: initiative_id,
@@ -1505,6 +1507,7 @@
 
         if ($('#edit_initiative_name').val() != '' || $('#edit_initiative_start_date').val() != '' || $(
                 '#edit_initiative_end_date').val() != '') {
+            $('#updateinitiativebutton').html('<i class="fa fa-spin fa-spinner"></i>');
             $.ajax({
                 type: "POST",
                 url: "{{ url('update-key-initiative') }}",
@@ -1528,8 +1531,6 @@
 
                 },
                 success: function(res) {
-
-
                     if (res == 1) {
                         $('#initiative-date-error').html(
                             'There are some items planned for this quarter. They need be removed.');
@@ -1539,18 +1540,14 @@
                         $('#initiative_start_date').val('');
                         $('#initiative_end_date').val('');
                         $('#initiative_detail').val('');
-                        $('#success-initiative-edit').html(
-                            '<div class="alert alert-success" role="alert"> initiative Updated successfully</div>'
-                        );
+                        $('#success-initiative-edit').html('<div class="alert alert-success" role="alert"> initiative Updated successfully</div>');
                         $('#initiative-feild-error-edit').html('');
-                        setTimeout(function() {
-                            $('#edit-initiative').modal('hide');
-                            $('#success-initiative-edit').html('');
-                        }, 3000);
+                        $('#updateinitiativebutton').html('Update Initiative');
                         $('#parentCollapsible').html(res);
-
                         $("#nestedCollapsible" + obj_edit).collapse('toggle');
                         $("#key-result" + key_edit).collapse('toggle');
+                        $('#edit-initiative').modal('hide');
+                        $('#success-initiative-edit').html('');
                     }
 
 

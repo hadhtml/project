@@ -100,7 +100,39 @@
                          
                         </a>
                     </li>
-
+                    <!-- <li class="mb-1">
+                        <a href="{{url('dashboard/flags/'.$organization->slug.'/risk/org')}}" @if (url()->current() == url('dashboard/flags/'.$organization->slug.'/risk/org')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
+                            <div class="mr-2">
+                                <span style="font-size:22px" class="material-symbols-outlined">emergency</span>
+                            </div>
+                            <div class="mr-2">
+                                Risk
+                            </div>
+                         
+                        </a>
+                    </li>
+                    <li class="mb-1">
+                        <a href="{{url('dashboard/flags/'.$organization->slug.'/blocker/org')}}" @if (url()->current() == url('dashboard/flags/'.$organization->slug.'/blocker/org')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
+                            <div class="mr-2">
+                                <span style="font-size:22px" class="material-symbols-outlined">block</span>
+                            </div>
+                            <div class="mr-2">
+                                Blocker
+                            </div>
+                         
+                        </a>
+                    </li>
+                    <li class="mb-1">
+                        <a href="{{url('dashboard/flags/'.$organization->slug.'/blocker/org')}}" @if (url()->current() == url('dashboard/flags/'.$organization->slug.'/blocker/org')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
+                            <div class="mr-2">
+                                <span style="font-size:22px" class="material-symbols-outlined">call_to_action</span>
+                            </div>
+                            <div class="mr-2">
+                                Action
+                            </div>
+                         
+                        </a>
+                    </li> -->
                     <li class="mb-1">
                         <a href="{{url('dashboard/organization/'.$organization->slug.'/Org-TEAMS')}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/Org-TEAMS')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
                             <div class="mr-2">

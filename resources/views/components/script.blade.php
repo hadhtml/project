@@ -220,37 +220,37 @@ function handleDivClick(x)
       
 
     
-var containers = Array.from(document.getElementsByClassName("board"));
-var drake = dragula(containers);
+// var containers = Array.from(document.getElementsByClassName("board"));
+// var drake = dragula(containers);
 
-// Save position on drop
-drake.on("drop", function (el, target, source, sibling) {
-    var parentElId = target.id;
-    var droppedElId = el.id;
+// // Save position on drop
+// drake.on("drop", function (el, target, source, sibling) {
+//     var parentElId = target.id;
+//     var droppedElId = el.id;
 
-    // Perform additional operations or AJAX request here
-    // Example: Update the position of the card using AJAX
-    $.ajax({
-        type: "POST",
-        url: "{{ url('change-epic-month') }}",
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        data: {
-        parentElId:parentElId,
-        droppedElId:droppedElId,
+//     // Perform additional operations or AJAX request here
+//     // Example: Update the position of the card using AJAX
+//     $.ajax({
+//         type: "POST",
+//         url: "{{ url('change-epic-month') }}",
+//         headers: {
+//             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//         },
+//         data: {
+//         parentElId:parentElId,
+//         droppedElId:droppedElId,
         
       
 
-        },
-        success: function(response) {
-            console.log('Card position updated successfully.');
-        },
-        error: function(error) {
-            console.log('Error updating card position:', error);
-        }
-    });
-});
+//         },
+//         success: function(response) {
+//             console.log('Card position updated successfully.');
+//         },
+//         error: function(error) {
+//             console.log('Error updating card position:', error);
+//         }
+//     });
+// });
 
 
 
@@ -291,10 +291,11 @@ drake.on("drop", function (el, target, source, sibling) {
 
     // Save position on drop
     drake.on("drop", function (el, target, source, sibling) {
-        var backlogId = el.id.split("-")[1];
+        var droppedElId = el.id.split("-")[1];
         
         var newPosition = Array.from(target.children).indexOf(el) + 1;
-      
+        var parentElId = target.id;
+
      
         $.ajax({
         type: "POST",
@@ -303,8 +304,9 @@ drake.on("drop", function (el, target, source, sibling) {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         data: {
-        backlogId:backlogId,
+        droppedElId:droppedElId,
         newPosition:newPosition,
+        parentElId:parentElId
         
       
 
@@ -349,6 +351,7 @@ drake.on("drop", function (el, target, source, sibling) {
  $('.chkveg').val('');
   $('.chkveg').multiselect({
     includeSelectAllOption:false,
+    numberDisplayed: 0
   });
 
 

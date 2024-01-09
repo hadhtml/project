@@ -191,9 +191,9 @@ $var_objective = 'PageT-'.$type;
                $keyResultcount  = DB::table('key_result')->wherenull('trash')->where('obj_id',$obj->id)->count();
                $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$obj->id)->sum('weight');
                @endphp
-               <div class="card bg-transparent shadow-none">
-                  <div class="card-header objective-header active-header bg-white border-bottom" id="parentHeading">
-                     <div class="d-flex flex-row header-objective align-items-center"
+               <div class="card bg-transparent shadow-none boardI" >
+                  <div class="card-header objective-header active-header bg-white border-bottom"  id="backlog-{{$obj->id}}">
+                     <div class="d-flex flex-row header-objective align-items-center" 
                         data-toggle="collapse" data-target="#nestedCollapsible{{$obj->id}}">
                         <div class="title">
                            <h5 data-toggle="tooltip" data-placement="top" data-original-title="Objective">
@@ -276,7 +276,7 @@ $var_objective = 'PageT-'.$type;
                         <div>
                            <!-- begin Item -->
                            @php
-                           $keyResult  = DB::table('key_result')->wherenull('trash')->where('obj_id',$obj->id)->get();
+                           $keyResult  = DB::table('key_result')->wherenull('trash')->where('obj_id',$obj->id)->orderby('IndexCount')->get();
                            @endphp
                            <div class="row">
                               <div class="col-md-12">
@@ -286,8 +286,8 @@ $var_objective = 'PageT-'.$type;
                                  $initiativeResultCount  = DB::table('initiative')->where('key_id',$key->id)->count();
                                  $initiativeweightcount = DB::table('initiative')->where('key_id',$key->id)->sum('initiative_weight');
                                  @endphp
-                                 <div class="card bg-transparent shadow-none">
-                                    <div class="card-header keyresult-header bg-light-gray">
+                                 <div class="card bg-transparent shadow-none boardI">
+                                    <div class="card-header keyresult-header bg-light-gray" id="backlog-{{$key->id}}">
                                        <div class="d-flex flex-row justify-content-between header-objective align-items-center"
                                           data-toggle="collapse" data-target="#key-result{{$key->id}}">
                                           <div class="title ">
@@ -396,7 +396,7 @@ $var_objective = 'PageT-'.$type;
                                                    $InitiativeProgress = 0;
                                                    }
                                                    @endphp
-                                                   <div class="card bg-transparent shadow-none">
+                                                   <div class="card bg-transparent shadow-none boardI">
                                                       <div class="card-header initiative-header"
                                                          style="background: #f9   f9f9 !important;" id="backlog-{{$initiative->id}}">
                                                          <div class="d-flex flex-row justify-content-between header-objective align-items-center"
@@ -540,10 +540,9 @@ $var_objective = 'PageT-'.$type;
                                                                                                 @php
                                                                                                 $epic  = DB::table('epics')->where('month_id',$month->id)->where('trash',NULL)->get();
                                                                                                 @endphp
-                                                                                                <div  @if($CurrentQuarter) @if($q->id < $CurrentQuarter->quarter_id) class="board-flex" @endif @endif class="board"  style="width:236px"
+                                                                                                <div  @if($CurrentQuarter) @if($q->id < $CurrentQuarter->quarter_id) class="board-flex" @endif @endif class="board boardI"  style="width:236px"
                                                                                                 id="{{$month->id}}">
-                                                                                                <header
-                                                                                                   class="noselect">
+                                                                                                <header class="noselect">
                                                                                                    {{$month->month}}
                                                                                                 </header>
                                                                                                 @if(count($epic) > 0)

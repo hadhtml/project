@@ -636,9 +636,7 @@
                     <div class="col-md-12">
                         <p>Fill out the form, submit and hit the save button.</p>
                     </div>
-                    <div id="success-initiative-edit"  role="alert"></div>
-                    <span id="initiative-feild-error-edit" class="ml-3 text-danger"></span>
-                   <span  id="initiative-date-error" class="ml-3 text-danger"></span>
+                    
                 </div>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <img src="{{asset('public/assets/images/icons/minus.svg')}}">
@@ -646,10 +644,16 @@
             </div>
             
             <div id="wieght-error-edit-init"></div>
-                 <div class="row mt-3 mb-2" id="initiative-edit-weight">
-                 </div>
+            <div class="row mt-3 mb-2" id="initiative-edit-weight"></div>
                  
             <div class="modal-body">
+               <div class="row">
+                    <div class="col-md-12">
+                        <div id="success-initiative-edit"  role="alert"></div>
+                        <span id="initiative-feild-error-edit" class="ml-3 text-danger"></span>
+                        <span  id="initiative-date-error" class="ml-3 text-danger"></span>
+                    </div>
+                </div>
                 <form class="needs-validation" method="POST" action="#" novalidate>
                     @csrf
                     <input type="hidden" id="edit_id_initiative">
@@ -695,7 +699,7 @@
                             </div>
                         </div>
                         <div class="col-md-12">
-                            <button type="button" onclick="UpdateKeyinitiative();" class="btn btn-primary btn-lg btn-theme btn-block ripple">Submit</button>
+                            <button type="button" id="updateinitiativebutton" onclick="UpdateKeyinitiative();" class="btn btn-primary btn-lg btn-theme btn-block ripple">Update Initiative</button>
                         </div>
                     </div>
                 </form>
