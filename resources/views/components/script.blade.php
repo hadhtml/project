@@ -361,7 +361,7 @@ $(function() {
 
 $('.flag-search').val('');
  $('.flag-search').multiselect({
-   includeSelectAllOption:true,
+   includeSelectAllOption:false,
  });
 
 
