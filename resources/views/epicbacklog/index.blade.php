@@ -59,40 +59,13 @@ $var_objective = 'TBaclog-' . $type;
                         </label>
                      </td>
                      <td class="draggable">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
-                           viewBox="0 0 22 22" fill="none">
-                           <g clip-path="url(#clip0_2251_29600)">
-                              <path
-                                 d="M22 11C22 4.92487 17.0751 0 11 0C4.92487 0 0 4.92487 0 11C0 17.0751 4.92487 22 11 22C17.0751 22 22 17.0751 22 11Z"
-                                 fill="#EFEFEF" />
-                              <path
-                                 d="M9.7267 17.1115C9.60672 17.1115 9.48675 17.0895 9.37199 17.0456C8.98075 16.8917 8.73036 16.507 8.73036 16.0674V12.523H7.50971C7.11326 12.523 6.76896 12.2868 6.60725 11.9076C6.44554 11.5284 6.50814 11.0998 6.76896 10.7866L10.7178 6.06072C10.9943 5.73101 11.4221 5.61561 11.8133 5.77497C12.2045 5.92884 12.4549 6.3135 12.4549 6.75311V10.2975H13.6756C14.072 10.2975 14.4163 10.5338 14.578 10.913C14.7397 11.2921 14.6771 11.7207 14.4163 12.034L10.4674 16.7598C10.2744 16.9906 10.0032 17.1115 9.7267 17.1115ZM11.4533 6.52781C11.4064 6.52781 11.349 6.5443 11.3021 6.60474L7.3532 11.3361C7.26974 11.435 7.30105 11.5339 7.3167 11.5724C7.33235 11.6108 7.38451 11.7043 7.50971 11.7043H9.12159C9.33547 11.7043 9.51283 11.8911 9.51283 12.1164V16.0729C9.51283 16.2103 9.60673 16.2653 9.64846 16.2817C9.69019 16.2982 9.79451 16.3257 9.87797 16.2213L13.8268 11.49C13.9103 11.391 13.879 11.2921 13.8634 11.2537C13.8477 11.2152 13.7955 11.1218 13.6703 11.1218H12.0585C11.8446 11.1218 11.6672 10.9349 11.6672 10.7096V6.75311C11.6672 6.61573 11.5733 6.56078 11.5316 6.5443C11.5159 6.53331 11.4846 6.52781 11.4533 6.52781Z"
-                                 fill="#292D32" />
-                           </g>
-                           <defs>
-                              <clipPath id="clip0_2251_29600">
-                                 <rect width="22" height="22" fill="white" />
-                              </clipPath>
-                           </defs>
-                        </svg>
+                        <img src="{{ url('public/assets/svg/impedimentbacklog.svg') }}">
                         {{ $backlog->epic_title }}
                      </td>
                      <td>
                         @if ($backlog->assign_status == null)
                         Assign
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-                           viewBox="0 0 18 18" fill="none" data-toggle="modal"
-                           data-target="#assign-unitbacklog-epic{{ $backlog->id }}">
-                           <path
-                              d="M4.72421 14.1377C4.29212 14.1377 3.88837 13.989 3.59796 13.7127C3.22962 13.3656 3.05254 12.8415 3.11629 12.2748L3.37837 9.9798C3.42796 9.54772 3.69004 8.97397 3.99462 8.6623L9.81004 2.50688C11.2621 0.969799 12.778 0.9273 14.315 2.37938C15.8521 3.83147 15.8946 5.3473 14.4425 6.88438L8.62712 13.0398C8.32962 13.3585 7.77712 13.656 7.34504 13.7269L5.06421 14.1165C4.94379 14.1235 4.83754 14.1377 4.72421 14.1377ZM12.0838 2.3723C11.5384 2.3723 11.0638 2.7123 10.5821 3.2223L4.76671 9.3848C4.62504 9.53355 4.46212 9.88772 4.43379 10.0931L4.17171 12.3881C4.14337 12.6219 4.20004 12.8131 4.32754 12.9335C4.45504 13.054 4.64629 13.0965 4.88004 13.061L7.16087 12.6715C7.36629 12.6361 7.70629 12.4519 7.84796 12.3031L13.6634 6.14772C14.5417 5.21272 14.8605 4.34855 13.5784 3.14438C13.0117 2.59897 12.523 2.3723 12.0838 2.3723Z"
-                              fill="#292D32" />
-                           <path
-                              d="M13.0824 8.06722C13.0683 8.06722 13.047 8.06722 13.0329 8.06722C10.8229 7.84764 9.04495 6.16889 8.70495 3.97305C8.66245 3.68264 8.86078 3.41347 9.1512 3.36389C9.44162 3.32139 9.71078 3.51972 9.76037 3.81014C10.0295 5.5243 11.4179 6.8418 13.1462 7.0118C13.4366 7.04014 13.6491 7.30222 13.6208 7.59264C13.5854 7.8618 13.3516 8.06722 13.0824 8.06722Z"
-                              fill="#292D32" />
-                           <path
-                              d="M15.6748 16.4255H2.9248C2.63439 16.4255 2.39355 16.1847 2.39355 15.8943C2.39355 15.6039 2.63439 15.363 2.9248 15.363H15.6748C15.9652 15.363 16.2061 15.6039 16.2061 15.8943C16.2061 16.1847 15.9652 16.4255 15.6748 16.4255Z"
-                              fill="#292D32" />
-                        </svg>
+                        <img src="{{ url('public/assets/svg/asignteam.svg') }}" data-toggle="modal"  data-target="#assign-unitbacklog-epic{{ $backlog->id }}">
                         @endif
                      </td>
                      <div class="modal fade" id="assign-unitbacklog-epic{{ $backlog->id }}"
@@ -299,17 +272,11 @@ $var_objective = 'TBaclog-' . $type;
                         </div>
                      </td>
                      <td>
-                        <button class="btn-circle btn-tolbar" data-toggle="modal"
-                           data-target="#create{{ $backlog->id }}">
-                        <img src="{{ asset('public/assets/images/icons/edit.svg') }}"
-                           data-toggle="tooltip" data-placement="top"
-                           data-original-title="Edit">
+                        <button class="btn-circle btn-tolbar" onclick="editbacklogepic({{ $backlog->id }} , 'team_backlog')">
+                           <img src="{{ asset('public/assets/images/icons/edit.svg') }}" data-toggle="tooltip" data-placement="top" data-original-title="Edit">
                         </button>
-                        <button class="btn-circle btn-tolbar" data-toggle="modal"
-                           data-target="#delete{{ $backlog->id }}">
-                        <img src="{{ asset('public/assets/images/icons/delete.svg') }}"
-                           data-toggle="tooltip" data-placement="top"
-                           data-original-title="Delete">
+                        <button class="btn-circle btn-tolbar" data-toggle="modal" data-target="#delete{{ $backlog->id }}">
+                           <img src="{{ asset('public/assets/images/icons/delete.svg') }}" data-toggle="tooltip" data-placement="top" data-original-title="Delete">
                         </button>
                      </td>
                   </tr>
@@ -680,22 +647,54 @@ $var_objective = 'TBaclog-' . $type;
       </div>
    </div>
 </div>
+<div class="modal" id="edit-backlog-epic-modal-new" tabindex="-1" role="dialog" aria-labelledby="edit-epic" aria-hidden="true">
+    <div class="modal-dialog modal-lg" id="modaldialog" role="document">
+        <div class="modal-content newmodalcontent" id="epic-backlog-modal-content">
+            
+        </div>
+    </div>
+</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript">
-  $('.editor').summernote({
-        height: 180,
-        toolbar: [
-            ['style', ['bold', 'italic', 'underline', 'clear']],
-            ['font', ['strikethrough', 'superscript', 'subscript']],
-            ['fontsize', ['fontsize']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['height', ['height']],
-            ['view', ['fullscreen', 'codeview']],
-        ],
-    });
-</script>
 <script>
+   function editbacklogepic(id , table) {
+      var new_url="{{ url()->current() }}?epicbacklog="+id;
+      window.history.pushState("data","Title",new_url);
+      $.ajax({
+         type: "POST",
+         url: "{{ url('dashboard/epicbacklog/getepic') }}",
+         headers: {
+             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+         },
+         data: {
+             id: id,
+             table: table,
+         },
+         success: function(res) {
+             $('#epic-backlog-modal-content').html(res);
+             $('#edit-backlog-epic-modal-new').modal('show');
+             // showtab(id , 'general');
+             showheaderbacklog(epic_id);
+         }
+      });
+   }
+   function showheaderbacklog(id) {
+        $.ajax({
+            type: "POST",
+            url: "{{ url('dashboard/epicbacklog/showheader') }}",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                id:id,
+            },
+            success: function(res) {
+                $('.modalheaderforapend').html(res);
+            },
+            error: function(error) {
+                
+            }
+        });
+    }
    $(document).ready(function() {
        var table = $('.example').DataTable({
            "pagingType": "full_numbers",

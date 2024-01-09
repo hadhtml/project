@@ -248,6 +248,12 @@ Route::name('linking.')->namespace('App\Http\Controllers')->prefix('dashboard/li
     Route::get('{organizationid}/{type}', 'LinkingController@index');
 });
 
+Route::name('epicbacklog.')->namespace('App\Http\Controllers')->prefix('dashboard/epicbacklog')->group(function () {
+    Route::POST('getepic', 'EpicBacklogController@getepicmodal');
+    Route::POST('showheader', 'EpicBacklogController@showheader');
+});
+
+
 
 Route::name('epics.')->namespace('App\Http\Controllers')->prefix('dashboard/epics')->group(function () {
     Route::POST('getepic', 'EpicController@getepicmodal');
