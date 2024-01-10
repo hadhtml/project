@@ -12,44 +12,43 @@
         </div>
     </div>
 </div>
-<form id="updategeneral" class="needs-validation" action="{{ url('dashboard/epics/updategeneral') }}" method="POST" novalidate>
-    @csrf
-    <input type="hidden" value="{{ $data->id }}" name="epic_id">
-    <div class="row">
-        <div class="col-md-12 col-lg-12 col-xl-12">
-            <div class="form-group mb-0">
-                <label for="epic_name">Epic Title</label>
-                <input type="text" required='true' value="{{ $data->epic_title }}" class="form-control" name="epic_name" id="epic_name">
-            </div>
+<form id="updategeneral" class="needs-validation" action="{{ url('dashboard/epicbacklog/updategeneral') }}" method="POST" novalidate>
+                @csrf
+<input type="hidden" value="{{ $data->id }}" name="epic_id">
+<div class="row">
+    <div class="col-md-12 col-lg-12 col-xl-12">
+        <div class="form-group mb-0">
+            <label for="epic_name">Epic Title</label>
+            <input type="text" required='true' value="{{ $data->epic_title }}" class="form-control" name="epic_name" id="epic_title">
         </div>
-        <div class="col-md-6 col-lg-6 col-xl-6">
-            <div class="form-group mb-0">
-                <label for="epic_start_date">Start Date</label>
-                <input id="epic_start_date" type="date" class="form-control" value="{{ date('Y-m-d',strtotime($data->epic_start_date)) }}" name="epic_start_date"  required>
-                
-            </div>
+    </div>
+    <div class="col-md-6 col-lg-6 col-xl-6">
+        <div class="form-group mb-0">
+            <label for="epic_start_date">Start Date</label>
+            <input id="epic_start_date" type="date" class="form-control" value="{{ date('Y-m-d',strtotime($data->epic_start_date)) }}" name="epic_start_date"  required>
+            
         </div>
-        <div class="col-md-6 col-lg-6 col-xl-6">
-            <div class="form-group mb-0">
-                <label for="epic_end_date">End Date</label>
-                <input id="epic_end_date" type="date" class="form-control" value="{{ date('Y-m-d',strtotime($data->epic_end_date)) }}" name="epic_end_date" name="edit_epic_end_date" required>
-                
-            </div>
+    </div>
+    <div class="col-md-6 col-lg-6 col-xl-6">
+        <div class="form-group mb-0">
+            <label for="epic_end_date">End Date</label>
+            <input id="epic_end_date" type="date" class="form-control" value="{{ date('Y-m-d',strtotime($data->epic_end_date)) }}" name="epic_end_date" required>
         </div>
-        <div class="col-md-12 col-lg-12 col-xl-12">
-            <div class="form-group mb-0">
-                <label for="editor{{ $data->id }}">Description</label>
-                <div class="textareaformcontrol">
-                    <textarea name="epic_detail" id="editor{{ $data->id }}">{{ $data->epic_detail }}</textarea> 
-                </div>
+    </div>
+    <div class="col-md-12 col-lg-12 col-xl-12">
+        <div class="form-group mb-0">
+            <label for="editor{{ $data->id }}">Description</label>
+            <div class="textareaformcontrol">
+                <textarea name="epic_detail" id="editor{{ $data->id }}">{{ $data->epic_detail }}</textarea> 
             </div>
         </div>
     </div>
-    <div class="row margintopfourtypixel">
-        <div class="col-md-12 text-right">
-            <button type="submit" class="btn btn-primary btn-theme ripple savechangebutton" id="updatebutton">@if($data->epic_title) Save Changes @else Save Epic @endif</button>
-        </div>
+</div>
+<div class="row margintopfourtypixel">
+    <div class="col-md-12 text-right">
+        <button type="submit" class="btn btn-primary btn-theme ripple savechangebutton" id="updatebutton">@if($data->epic_title) Save Changes @else Save Epic @endif</button>
     </div>
+</div>
 </form>
 <script type="text/javascript">
     function showtab(id , tab , table) {
@@ -101,10 +100,8 @@
             cache:false,
             contentType: false,
             processData: false,
-            success: function(data){
-                showepicinboard('{{ $data->id }}');
-                editepic('{{ $data->id }}');
-                showheader('{{ $data->id }}')
+            success: function(res){
+                showheaderbacklog('{{ $data->id }}' , '{{ $table }}')
                 $('#updatebutton').html('Save Changes');
             }
         });

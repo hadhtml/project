@@ -12,6 +12,7 @@ use App\Models\flag_members;
 use App\Models\flags;
 use App\Models\flag_comments;
 use App\Models\escalate_cards;
+use App\Models\team_backlog;
 use App\Models\epics_stroy;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -31,7 +32,8 @@ class EpicBacklogController extends Controller
     public function showheader(Request $request)
     {
         $data = DB::table($request->table)->where('id' , $request->id)->first();
-        $html = view('epicbacklog.modalheader', compact('data'))->render();
+        $table = $request->table;
+        $html = view('epicbacklog.modalheader', compact('data','table'))->render();
         return $html;
     }
     public function showtab(Request $request)
@@ -90,6 +92,83 @@ class EpicBacklogController extends Controller
             $html = view('epics.tabs.checkins')->render();
             return $html;
         }
+    }
+    public function changeepicdate(Request $request)
+    {
+        $data = team_backlog::find($request->epic_id);
+        $data->epic_start_date = $request->start;
+        $data->epic_end_date = $request->end;
+        $data->save();
+    }
+    public function changeepicstatus(Request $request)
+    {
+        DB::table($request->table)->where('id' , $request->id)->update(array('epic_status' =>$request->status));
+    }
+    public function updategeneral(Request $request)
+    {
+        $data = team_backlog::find($request->epic_id);
+        $data->epic_title = $request->epic_name;
+        $data->epic_start_date = $request->epic_start_date;
+        $data->epic_end_date = $request->epic_end_date;
+        $data->epic_detail = $request->epic_detail;
+        $data->save();
+
+         $jira = DB::table('backlog')->where('id',$data->id)->first();
+         if($jira)
+         {
+            $backlog = DB::table('epics')->where('jira_id',$jira->jira_id)->first();
+             if($backlog)
+             {
+               DB::table('epics')->where('jira_id',$jira->jira_id)->update(['epic_name' => $request->epic_name]);
+             }
+         
+            if($jira->jira_id != '')
+            {
+                $Account = DB::table('jira_setting')->where('user_id',Auth::id())->first();
+                $username = $Account->user_name;
+                $apiToken = $Account->token;
+                $issueKeyOrId = $jira->jira_id;
+                $apiEndpoint = "{$Account->jira_url}/rest/api/3/issue/{$issueKeyOrId}";
+                $auth = base64_encode("$username:$apiToken");
+                    $updateData = [
+                        "fields" => [
+                            "description" => [
+                                "type" => "doc",
+                                "version" => 1,
+                                "content" => [
+                                    [
+                                        "type" => "paragraph",
+                                        "content" => [
+                                            [
+                                                "type" => "text",
+                                                "text" => $request->epic_description
+                                            ]
+                                        ]
+                                    ]
+                                ]
+                            ],
+                            
+                           "summary" => $request->epic_name, 
+                        ],
+                    ];
+                    $ch = curl_init($apiEndpoint);
+                    if ($ch === false) {
+                        die("cURL initialization failed");
+                    }
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+                    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($updateData));
+                    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                        "Authorization: Basic {$auth}",
+                        "Content-Type: application/json",
+                    ]);
+                    $response = curl_exec($ch);
+                    curl_close($ch);
+                 }     
+        }
+        $table = $request->table;
+        $html = view('epicbacklog.tabs.general', compact('data','table'))->render();
+        return $html;
     }
     public function uploadattachment(Request $request)
     {

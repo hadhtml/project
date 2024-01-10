@@ -63,14 +63,14 @@
                     </div>
                 </div>
             </div>
-            <form id="updategeneral" class="needs-validation" action="{{ url('dashboard/epics/updategeneral') }}" method="POST" novalidate>
+            <form id="updategeneral" class="needs-validation" action="{{ url('dashboard/epicbacklog/updategeneral') }}" method="POST" novalidate>
                 @csrf
                 <input type="hidden" value="{{ $data->id }}" name="epic_id">
                 <div class="row">
                     <div class="col-md-12 col-lg-12 col-xl-12">
                         <div class="form-group mb-0">
                             <label for="epic_name">Epic Title</label>
-                            <input type="text" required='true' value="{{ $data->epic_title }}" class="form-control" name="epic_name" id="epic_name">
+                            <input type="text" required='true' value="{{ $data->epic_title }}" class="form-control" name="epic_name" id="epic_title">
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-6 col-xl-6">
@@ -83,8 +83,7 @@
                     <div class="col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group mb-0">
                             <label for="epic_end_date">End Date</label>
-                            <input id="epic_end_date" type="date" class="form-control" value="{{ date('Y-m-d',strtotime($data->epic_end_date)) }}" name="epic_end_date" name="edit_epic_end_date" required>
-                            
+                            <input id="epic_end_date" type="date" class="form-control" value="{{ date('Y-m-d',strtotime($data->epic_end_date)) }}" name="epic_end_date" required>
                         </div>
                     </div>
                     <div class="col-md-12 col-lg-12 col-xl-12">
@@ -108,42 +107,6 @@
 <script type="text/javascript">
     function deleteflagshow(id) {
         $('#flagdelete'+id).slideToggle();
-    }
-    function changeepicstatus(status , id) {
-        $.ajax({
-            type: "POST",
-            url: "{{ url('dashboard/epics/changeepicstatus') }}",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: {
-                edit_epic_status: status,
-            },
-            success: function(res) {
-                
-            },
-            error: function(error) {
-                
-            }
-        });
-    }
-    function showheader(id) {
-        $.ajax({
-            type: "POST",
-            url: "{{ url('dashboard/epics/showheader') }}",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: {
-                id:id,
-            },
-            success: function(res) {
-                $('.modalheaderforapend').html(res);
-            },
-            error: function(error) {
-                
-            }
-        });
     }
     function showtabwithoutloader(id , tab) {
         $('#modaltab').val(tab);
@@ -217,7 +180,8 @@
             contentType: false,
             processData: false,
             success: function(res){
-                
+                showheaderbacklog('{{ $data->id }}' , '{{ $table }}')
+                $('#updatebutton').html('Save Changes');
             }
         });
     }));

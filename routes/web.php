@@ -178,7 +178,7 @@ Route::get('get-value-obj', [App\Http\Controllers\MemberController::class,'GetBa
 Route::get('get-value-key', [App\Http\Controllers\MemberController::class,'GetBacklogKey']);
 Route::get('get-value-init', [App\Http\Controllers\MemberController::class,'GetBacklogInit']);
 
-Route::post('update-backlog-epic', [App\Http\Controllers\MemberController::class,'UpdateBacklogEpic']);
+
 Route::post('delete-stream-backlog', [App\Http\Controllers\MemberController::class,'DeleteStreamBacklogEpic']);
 
 Route::post('assign-backlog-epic',[App\Http\Controllers\MemberController::class,'AssignBacklogEpic']);
@@ -254,6 +254,9 @@ Route::name('epicbacklog.')->namespace('App\Http\Controllers')->prefix('dashboar
     Route::POST('showtab', 'EpicBacklogController@showtab');
     Route::POST('uploadattachment', 'EpicBacklogController@uploadattachment');
     Route::POST('deleteattachment', 'EpicBacklogController@deleteattachment');
+    Route::post('updategeneral', 'EpicBacklogController@updategeneral');
+    Route::POST('changeepicdate', 'EpicBacklogController@changeepicdate');
+    Route::POST('changeepicstatus', 'EpicBacklogController@changeepicstatus');
 });
 
 

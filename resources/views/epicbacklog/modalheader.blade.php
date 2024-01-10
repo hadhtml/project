@@ -52,7 +52,7 @@
             console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
             $.ajax({
                 type: "POST",
-                url: "{{ url('dashboard/epics/changeepicdate') }}",
+                url: "{{ url('dashboard/epicbacklog/changeepicdate') }}",
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
@@ -65,7 +65,7 @@
                     var modaltab = $('#modaltab').val();
                     if(modaltab == 'general')
                     {
-                        editepic('{{ $data->id }}');
+                        editbacklogepic('{{ $data->id }}','{{ $table }}');
                     }
                 },
                 error: function(error) {
@@ -180,7 +180,7 @@
             </div>
         </div>
         <div class="moverightside">
-            <h1 class="epic-percentage">{{ $data->progress }} % Completed</h1>
+            <h1 class="epic-percentage">@if($data->progress){{ $data->progress }} % Completed @endif</h1>
         </div>
     </div>
 </div>
@@ -191,6 +191,27 @@
     <img data-dismiss="modal" class="closeimage" aria-label="Close" src="{{url('public/assets/svg/cross.svg')}}">
 </div>
 <script type="text/javascript">
+function changeepicstatus(status , id) {
+var table = '{{ $table }}';
+$.ajax({
+    type: "POST",
+    url: "{{ url('dashboard/epicbacklog/changeepicstatus') }}",
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    data: {
+        table:table,
+        id: id,
+        status: status,
+    },
+    success: function(res) {
+        showheaderbacklog(id , table);
+    },
+    error: function(error) {
+        
+    }
+});
+}
 function showmemberbox() {
     $('.memberadd-box').slideToggle();
 }
