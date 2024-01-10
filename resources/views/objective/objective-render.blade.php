@@ -6,7 +6,7 @@ $keyResultcount  = DB::table('key_result')->wherenull('trash')->where('obj_id',$
 $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$obj->id)->sum('weight');
 @endphp
 <div class="card bg-transparent shadow-none boardI" >
-   <div class="card-header objective-header active-header bg-white border-bottom"  id="backlog-{{$obj->id}}">
+   <div class="card-header objective-header active-header bg-white border-bottom"  id="obj-{{$obj->id}}-{{$type}}-{{$organization->id}}">
       <div class="d-flex flex-row header-objective align-items-center" 
          data-toggle="collapse" data-target="#nestedCollapsible{{$obj->id}}">
          <div class="title">
@@ -100,8 +100,8 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
                   $initiativeResultCount  = DB::table('initiative')->where('key_id',$key->id)->count();
                   $initiativeweightcount = DB::table('initiative')->where('key_id',$key->id)->sum('initiative_weight');
                   @endphp
-                  <div class="card bg-transparent shadow-none boardI">
-                     <div class="card-header keyresult-header bg-light-gray" id="backlog-{{$key->id}}">
+                  <div class="card bg-transparent shadow-none boardI" >
+                     <div class="card-header keyresult-header bg-light-gray" id="key-{{$key->id}}-{{$type}}-{{$organization->id}}">
                         <div class="d-flex flex-row justify-content-between header-objective align-items-center"
                            data-toggle="collapse" data-target="#key-result{{$key->id}}">
                            <div class="title ">
@@ -212,7 +212,7 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
                                     @endphp
                                     <div class="card bg-transparent shadow-none boardI">
                                        <div class="card-header initiative-header"
-                                          style="background: #f9   f9f9 !important;" id="backlog-{{$initiative->id}}">
+                                          style="background: #f9   f9f9 !important;" id="backlog-{{$initiative->id}}-{{$type}}-{{$organization->id}}">
                                           <div class="d-flex flex-row justify-content-between header-objective align-items-center"
                                              data-toggle="collapse"
                                              data-target="#initiative{{$initiative->id}}" onclick="handleDivClick({{$initiative->id}})" >
@@ -507,19 +507,27 @@ No objective found.
 </script>
 
 <script type="text/javascript">
-     var containers = Array.from(document.getElementsByClassName("boardI"));
+  var containers = Array.from(document.getElementsByClassName("boardI"));
     var drake = dragula(containers);
 
     // Save position on drop
     drake.on("drop", function (el, target, source, sibling) {
         var droppedElId = el.id.split("-")[1];
-        
+        var dropped = el.id.split("-")[0];
+        var taskOrder = [];
         var newPosition = Array.from(target.children).indexOf(el) + 1;
+        var Target = Array.from(target.children);
+        for (var i = 0; i < Target.length; i++) {
+            taskOrder.push(Target[i].id.split('-')[1]);
+                    }
+
         var parentElId = target.id;
+        var slug = el.id.split("-")[3];
+        var type = el.id.split("-")[2];
+     
        
-  
      
-     
+    
         $.ajax({
         type: "POST",
         url: "{{ url('change-init-pos') }}",
@@ -529,18 +537,26 @@ No objective found.
         data: {
         droppedElId:droppedElId,
         newPosition:newPosition,
-        parentElId:parentElId
+        parentElId:parentElId,
+        dropped:dropped,
+        taskOrder:taskOrder,
+        slug:slug,
+        type:type,
+      
+
         
       
 
         },
         success: function(response) {
             console.log('Card position updated successfully.');
+            $('#parentCollapsible').html(response);
         },
         error: function(error) {
             console.log('Error updating card position:', error);
         }
     });
     });
+
 
    </script>

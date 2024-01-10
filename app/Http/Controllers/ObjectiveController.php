@@ -3257,34 +3257,68 @@ class ObjectiveController extends Controller
     {
 
       $existsInModelA = DB::table('initiative')->where('id',$request->droppedElId)->first();
-      $existsInModelK = DB::table('key_result')->where('id',$request->droppedElId)->first();
-      $existsInModelO = DB::table('objectives')->where('id',$request->droppedElId)->first();
-      $Epic = DB::table('epics')->where('id',$request->droppedElId)->first();
 
-
-      if($existsInModelA)
+    
+     
+      if($request->dropped == 'backlog')
       { 
-        $existsOldE = DB::table('initiative')->where('IndexCount',$request->newPosition)->first();
-        DB::table('initiative')->where('id',$existsOldE->id)->update(['IndexCount' => $existsInModelA->IndexCount,]);
-        DB::table('initiative')->where('id',$request->droppedElId)->update(['IndexCount' => $request->newPosition,]);
+
+        if($request->taskOrder[0] == $request->droppedElId)
+        {
+            $existsInModelKOld = DB::table('initiative')->where('id',$request->taskOrder[1])->first();
+            $existsInModelK = DB::table('initiative')->where('id',$request->droppedElId)->first();
+            DB::table('initiative')->where('id',$request->taskOrder[1])->update(['IndexCount' => $existsInModelK->IndexCount,]);
+            DB::table('initiative')->where('id',$request->droppedElId)->update(['IndexCount' => $existsInModelKOld->IndexCount]);  
+        }else
+        {
+            $existsInModelKOld = DB::table('initiative')->where('id',$request->taskOrder[0])->first();
+            $existsInModelK = DB::table('initiative')->where('id',$request->droppedElId)->first();
+            DB::table('initiative')->where('id',$request->taskOrder[0])->update(['IndexCount' => $existsInModelK->IndexCount,]);
+            DB::table('initiative')->where('id',$request->droppedElId)->update(['IndexCount' => $existsInModelKOld->IndexCount]);
+        }
+        
+     
       }
 
-      if($existsInModelK)
+      if($request->dropped == 'key')
       { 
-        $existsOldE = DB::table('key_result')->where('IndexCount',$request->newPosition)->first();
-        DB::table('key_result')->where('id',$existsOldE->id)->update(['IndexCount' => $existsInModelK->IndexCount,]);
-        DB::table('key_result')->where('id',$request->droppedElId)->update(['IndexCount' => $request->newPosition,]);
+        if($request->taskOrder[0] == $request->droppedElId)
+        {
+            $existsInModelKOld = DB::table('key_result')->where('id',$request->taskOrder[1])->first();
+            $existsInModelK = DB::table('key_result')->where('id',$request->droppedElId)->first();
+            DB::table('key_result')->where('id',$request->taskOrder[1])->update(['IndexCount' => $existsInModelK->IndexCount,]);
+            DB::table('key_result')->where('id',$request->droppedElId)->update(['IndexCount' => $existsInModelKOld->IndexCount]);  
+        }else
+        {
+            $existsInModelKOld = DB::table('key_result')->where('id',$request->taskOrder[0])->first();
+            $existsInModelK = DB::table('key_result')->where('id',$request->droppedElId)->first();
+            DB::table('key_result')->where('id',$request->taskOrder[0])->update(['IndexCount' => $existsInModelK->IndexCount,]);
+            DB::table('key_result')->where('id',$request->droppedElId)->update(['IndexCount' => $existsInModelKOld->IndexCount]);
+        }
+        
       }
 
-      if($existsInModelO)
+      if($request->dropped == 'obj')
       { 
-        $existsOldE = DB::table('objectives')->where('IndexCount',$request->newPosition)->first();
-        DB::table('objectives')->where('id',$existsOldE->id)->update(['IndexCount' => $existsInModelO->IndexCount,]);
-        DB::table('objectives')->where('id',$request->droppedElId)->update(['IndexCount' => $request->newPosition,]);
+        if($request->taskOrder[0] == $request->droppedElId)
+        {
+            $existsInModelKOld = DB::table('objectives')->where('id',$request->taskOrder[1])->first();
+            $existsInModelK = DB::table('objectives')->where('id',$request->droppedElId)->first();
+            DB::table('objectives')->where('id',$request->taskOrder[1])->update(['IndexCount' => $existsInModelK->IndexCount,]);
+            DB::table('objectives')->where('id',$request->droppedElId)->update(['IndexCount' => $existsInModelKOld->IndexCount]);  
+        }else
+        {
+            $existsInModelKOld = DB::table('objectives')->where('id',$request->taskOrder[0])->first();
+            $existsInModelK = DB::table('objectives')->where('id',$request->droppedElId)->first();
+            DB::table('objectives')->where('id',$request->taskOrder[0])->update(['IndexCount' => $existsInModelK->IndexCount,]);
+            DB::table('objectives')->where('id',$request->droppedElId)->update(['IndexCount' => $existsInModelKOld->IndexCount]);
+        }
+      
       }
-
-      if($Epic)
-      { 
+      
+      if($request->dropped == 'epic')
+      {
+        $Epic = DB::table('epics')->where('id',$request->droppedElId)->first();
         $quarterMonth = DB::table("epics")
       ->where("id", $request->droppedElId)
       ->update(["month_id" => $request->parentElId]);
@@ -3303,8 +3337,26 @@ class ObjectiveController extends Controller
       ->first();
       }
 
-      
-      
+    //   $type = $request->type;
+    //   if ($request->type == "org") {
+    //     $organization = DB::table("organization")
+    //         ->where("id", $request->slug)
+    //         ->first();
+    //     $objective = DB::table("objectives")
+    //         ->where("unit_id", $organization->id)
+    //         ->where("trash", null)
+    //         ->where("type", "org")
+    //         ->orderby('IndexCount')
+    //         ->get();
+    // }
+
+   
+
+
+    // return view(
+    //     "objective.objective-render",
+    //     compact("organization", "objective",'type')
+    // );
 
     }
 }
