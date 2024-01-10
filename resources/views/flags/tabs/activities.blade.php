@@ -40,29 +40,26 @@
         @if($activity->count() > 0)
         <div class="activity-feed">
             @foreach($activity as $r)
+            @php
+            $substring = substr($r->activity, 0, 20);
+            @endphp
+
             <div class="activity">
               <div class="profile-image-container">
-                @if($r->activity == 'Added a New Comment')
+                @if($r->activity == 'Added a New Comment' || $r->activity == 'Delete a Comment')
                 <span class="material-symbols-outlined"> comment </span>
-                @endif
-                @if($r->activity == 'Reply a Comment')
+                @elseif($r->activity == 'Reply a Comment')
                 <span class="material-symbols-outlined"> reply </span>
-                @endif
-
-                @if($r->activity == 'Added a Description' || $r->activity == 'Updated Description Field')
+                @elseif($r->activity == 'Added a Description' || $r->activity == 'Updated Description Field')
                 <span class="material-symbols-outlined"> edit </span>
-                @endif
-
-                @if($r->activity == 'Added a New Attachment')
+                @elseif($r->activity == 'Added a New Attachment')
                 <span class="material-symbols-outlined"> attach_file </span>
-                @endif
-                @php
-                $substring = substr($r->activity, 0, 20);
-                @endphp
-                @if($substring == 'Updated Title Field ')
+                @elseif($substring == 'Updated Title Field ')
                 <span class="material-symbols-outlined"> edit </span>
-                @endif
+                @else
+                <span class="material-symbols-outlined">person_add</span>
                 {{-- <img src="{{ url('public/assets/svg/trend-up.svg') }}" alt="User Profile"> --}}
+                @endif
               
               </div>
               <div class="dotted-line"></div>
