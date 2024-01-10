@@ -69,7 +69,7 @@
                     </div>
                 </div>
             </div>
-            <form id="updategeneral" class="needs-validation" action="{{ url('dashboard/epics/updategeneral') }}" method="POST" novalidate>
+            <form id="updategeneralepic" class="needs-validation" action="{{ url('dashboard/epics/updategeneral') }}" method="POST" novalidate>
                 @csrf
                 <input type="hidden" value="{{ $data->id }}" name="epic_id">
                 <div class="row">
@@ -104,7 +104,7 @@
                 </div>
                 <div class="row margintopfourtypixel">
                     <div class="col-md-12 text-right">
-                        <button type="submit" class="btn btn-primary btn-theme ripple savechangebutton" id="updatebutton">@if($data->epic_name) Save Changes @else Save Epic @endif</button>
+                        <button type="submit" class="btn btn-primary btn-theme ripple savechangebutton" id="updatebuttonepic">@if($data->epic_name) Save Changes @else Save Epic @endif</button>
                     </div>
                 </div>
             </form>
@@ -232,8 +232,8 @@
             ['view', ['fullscreen', 'codeview']],
         ],
     });
-    $('#updategeneral').on('submit',(function(e) {
-        $('#updatebutton').html('<i class="fa fa-spin fa-spinner"></i>');
+    $('#updategeneralepic').on('submit',(function(e) {
+        $('#updatebuttonepic').html('<i class="fa fa-spin fa-spinner"></i>');
         e.preventDefault();
         var formData = new FormData(this);
         $.ajax({
@@ -249,7 +249,7 @@
                 $("#key-result{{ $data->key_id }}").collapse('toggle');
                 $("#initiative{{ $data->initiative_id }}").collapse('toggle');                
                 showheader('{{ $data->id }}')
-                $('#updatebutton').html('Save Changes');
+                $('#updatebuttonepic').html('Save Changes');
 
                 @if(!$data->epic_name)
                 $('#edit-epic-modal-new').modal('hide');
