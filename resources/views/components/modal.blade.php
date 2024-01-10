@@ -202,7 +202,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" onclick="DeleteObjectivekey();" class="btn btn-danger">Confirm</button>
+          <button type="button" id="deletekeyresultbutton" onclick="DeleteObjectivekey();" class="btn btn-danger">Confirm</button>
         </div>
         </form>
       </div>

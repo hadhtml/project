@@ -284,7 +284,8 @@
     }
 
     function updateepicflag() {
-        $('#updateflagmodalbuton').html('<i class="fa fa-spin fa-spinner"></i>')
+        $('#updateflagmodalbuton').html('<i class="fa fa-spin fa-spinner"></i>');
+        $("#updateflagmodalbuton" ).prop("disabled", true);
         var flag_type = $('#flag_type').val();
         var flag_title = $('#flag_title').val();
         var flag_description = $('#flag_description').val();
@@ -321,6 +322,7 @@
                 },
                 success: function(res) {
                     $('#updateflagmodalbuton').html('<i class="fa fa-check"></i> Success');
+                    $("#updateflagmodalbuton" ).prop("disabled", false);
                     $('#updateflagmodalbuton').css('background-color', 'green');
                     $('#parentCollapsible').html(res);
                     $("#nestedCollapsible" + flag_epic_obj).collapse('toggle');
@@ -388,6 +390,7 @@
 
 
         $('#saveobjectivebutton').html('<i class="fa fa-spin fa-spinner"></i>');
+        $("#saveobjectivebutton" ).prop("disabled", true);
         $.ajax({
             type: "POST",
             url: "{{ url('save-objective') }}",
@@ -427,6 +430,7 @@
                 );
                 $('#obj-feild-error').html('');
                 $('#saveobjectivebutton').html('Save Objective');
+                $("#saveobjectivebutton" ).prop("disabled", false);
                 setTimeout(function() {
                     $('#create-objective').modal('hide');
                     $('#success-obj').html('');
@@ -468,6 +472,7 @@
         if ($('#edit_objective_name').val() != '' || $('#edit_start_date').val() != '' || $('#edit_end_date').val() !=
             '') {
             $('#updateobjectivebutton').html('<i class="fa fa-spin fa-spinner"></i>');
+            $("#updateobjectivebutton" ).prop("disabled", true);
             $.ajax({
                 type: "POST",
                 url: "{{ url('update-objective') }}",
@@ -487,26 +492,16 @@
                     type: type
                 },
                 success: function(res) {
-
-                    // $('#edit_objective_name').val('');
-                    // $('#edit_start_date').val('');
-                    // $('#edit_end_date').val('');
-                    // $('#edit_obj_small_description').val('');
-                    $('#success-obj-edit').html(
-                        '<div class="alert alert-success" role="alert"> Objective Updated successfully</div>'
-                    );
+                    $('#success-obj-edit').html('<div class="alert alert-success" role="alert"> Objective Updated successfully</div>');
                     $('#oobj-feild-error-edit').html('');
                     $('#updateobjectivebutton').html('Update Objective');
+                    $("#updateobjectivebutton" ).prop("disabled", false);
                     setTimeout(function() {
                         $('#edit-objective').modal('hide');
                         $('#success-obj-edit').html('');
-                    }, 2000);
-
+                    }, 1000);
                     $('#parentCollapsible').html(res);
                     $("#nestedCollapsible" + edit_obj_id).collapse('toggle');
-
-
-
                 }
             });
         } else {
@@ -523,13 +518,13 @@
     }
 
     function DeleteObjective() {
-
         var delete_obj_id = $('#obj_delete_id').val();
         var org_id = "{{ $organization->org_id }}";
         var slug = "{{ $organization->slug }}";
         var unit_id = "{{ $organization->id }}";
         var type = "{{ $organization->type }}";
         $('#deleteobjectivebutton').html('<i class="fa fa-spin fa-spinner"></i>');
+        $("#deleteobjectivebutton" ).prop("disabled", true);
         $.ajax({
             type: "POST",
             url: "{{ url('Delete-objective') }}",
@@ -544,22 +539,15 @@
                 type: type
             },
             success: function(res) {
-
-                $('#success-obj-delete').html(
-                    '<div class="alert alert-success" role="alert"> Objective Deleted successfully</div>'
-                );
-
+                $('#success-obj-delete').html('<div class="alert alert-success" role="alert"> Objective Deleted successfully</div>');
                 setTimeout(function() {
                     $('#delete-objective').modal('hide');
                     $('#success-obj-delete').html('');
                 }, 1000);
                 $('#deleteobjectivebutton').html('Confirm');
+                $("#deleteobjectivebutton" ).prop("disabled", false);
                 $('#parentCollapsible').html(res);
                 $("#nestedCollapsible" + delete_obj_id).collapse('toggle');
-
-
-
-
             }
         });
 
@@ -1076,7 +1064,8 @@
         var obj = $('#key_delete_obj_id').val();
         var type = "{{ $organization->type }}";
 
-
+        $('#deletekeyresultbutton').html('<i class="fa fa-spin fa-spinner"></i>');
+        $("#deletekeyresultbutton" ).prop("disabled", true);
         $.ajax({
             type: "POST",
             url: "{{ url('Delete-objective-key') }}",
@@ -1091,22 +1080,15 @@
                 type: type
             },
             success: function(res) {
-
-                $('#success-key-delete').html(
-                    '<div class="alert alert-success" role="alert"> Key Result Deleted successfully</div>'
-                );
-
+                $('#success-key-delete').html('<div class="alert alert-success" role="alert"> Key Result Deleted successfully</div>');
                 setTimeout(function() {
                     $('#delete-objective-key').modal('hide');
                     $('#success-key-delete').html('');
-                }, 3000);
-
+                }, 1000);
+                $('#deletekeyresultbutton').html('Confirm');
+                $("#deletekeyresultbutton" ).prop("disabled", false);
                 $('#parentCollapsible').html(res);
                 $("#nestedCollapsible" + obj).collapse('toggle');
-
-
-
-
             }
         });
 
@@ -1225,6 +1207,7 @@
 
         }
         $('#saveinitiativebutton').html('<i class="fa fa-spin fa-spinner"></i>');
+        $( "#saveinitiativebutton" ).prop("disabled", true);
         $.ajax({
             type: "POST",
             url: "{{ url('save-key-initiative') }}",
@@ -1262,11 +1245,12 @@
                     '<div class="alert alert-success" role="alert"> initiative Created successfully</div>'
                 );
                 $('#initiative-feild-error').html('');
-                $('#saveinitiativebutton').html('Save Initiative');
                 setTimeout(function() {
                     $('#create-initiative').modal('hide');
                     $('#success-initiative').html('');
-                }, 2000);
+                }, 1000);
+                $('#saveinitiativebutton').html('Save Initiative');
+                $("#saveinitiativebutton").prop("disabled", false);
                 $('#parentCollapsible').html(res);
                 $("#nestedCollapsible" + obj_id_initiative).collapse('toggle');
                 $("#key-result" + key_id_initiative).collapse('toggle');
@@ -1508,6 +1492,7 @@
         if ($('#edit_initiative_name').val() != '' || $('#edit_initiative_start_date').val() != '' || $(
                 '#edit_initiative_end_date').val() != '') {
             $('#updateinitiativebutton').html('<i class="fa fa-spin fa-spinner"></i>');
+            $( "#updateinitiativebutton" ).prop("disabled", true);
             $.ajax({
                 type: "POST",
                 url: "{{ url('update-key-initiative') }}",
@@ -1543,6 +1528,7 @@
                         $('#success-initiative-edit').html('<div class="alert alert-success" role="alert"> initiative Updated successfully</div>');
                         $('#initiative-feild-error-edit').html('');
                         $('#updateinitiativebutton').html('Update Initiative');
+                        $("#updateinitiativebutton" ).prop("disabled", false);
                         $('#parentCollapsible').html(res);
                         $("#nestedCollapsible" + obj_edit).collapse('toggle');
                         $("#key-result" + key_edit).collapse('toggle');
@@ -2084,6 +2070,7 @@
         }
 
         $('#savequarterbutton').html('<i class="fa fa-spin fa-spinner"></i>');
+        $("#savequarterbutton" ).prop("disabled", true);
         $.ajax({
             type: "POST",
             url: "{{ url('save-sprint') }}",
@@ -2102,23 +2089,15 @@
 
             },
             success: function(res) {
-
                 $('#success-sprint').html('<div class="alert alert-success" role="alert">Sprint Added successfully</div>');
-                $('#savequarterbutton').html('Start');
                 setTimeout(function() {
                     $('#create-report').modal('hide');
                     $('#success-sprint').html('');
                     $('#sprint-error').html('');
                 }, 1000);
-
-                $('#sprint-end').html(
-                    '<button class="button mr-1" onclick="endquarter();">End Quarter</button>');
-
-
-
-
-
-
+                $('#savequarterbutton').html('Start');
+                $("#savequarterbutton" ).prop("disabled", false);
+                $('#sprint-end').html('<button class="button mr-1" onclick="endquarter();">End Quarter</button>');
             }
         });
 
@@ -2127,6 +2106,7 @@
 
     function endquarter() {
         $('#endquarterbutton').html('<i class="fa fa-spin fa-spinner"></i>');
+        $("#endquarterbutton" ).prop("disabled", true);
         $('#endquarterbutton').css('min-width' , '100px;');
         var unit_id = "{{ $organization->id }}";
         var type = "{{ $organization->type }}";
@@ -2142,6 +2122,7 @@
             },
             success: function(res) {
                 $('#endquarterbutton').html('End Quater');
+                $("#endquarterbutton" ).prop("disabled", false);
                 $('#sprint-end').html(
                     '<button class="button mr-1" data-toggle="modal" data-target="#create-report">Start Quarter</button>'
                     );
