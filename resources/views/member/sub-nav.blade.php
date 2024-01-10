@@ -57,7 +57,7 @@
                 </ul>
 
                 <ul class="list-unstyled ps-0 expanded-navbar-options">
-                    <li class="mb-1">
+                    {{-- <li class="mb-1">
                         <a href="{{url('dashboard/organization/'.$organization->slug.'/performance-dashboard/'.$organization->type)}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/performance-dashboard/'.$organization->type)) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
                             <div class="mr-2">
                                 <span style="font-size:22px" class="material-symbols-outlined">team_dashboard</span>
@@ -66,7 +66,7 @@
                                 Performance Dash.
                             </div>
                         </a>
-                    </li>
+                    </li> --}}
                     <li class="mb-1">
                         <a href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
                             <div class="mr-2">

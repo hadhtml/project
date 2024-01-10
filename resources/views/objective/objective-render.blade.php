@@ -6,7 +6,7 @@ $keyResultcount  = DB::table('key_result')->wherenull('trash')->where('obj_id',$
 $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$obj->id)->sum('weight');
 @endphp
 <div class="card bg-transparent shadow-none boardI" >
-   <div class="card-header objective-header active-header bg-white border-bottom"  id="obj-{{$obj->id}}-{{$type}}-{{$organization->id}}">
+   <div class="card-header objective-header active-header bg-white border-bottom"  id="obj-{{$obj->id}}">
       <div class="d-flex flex-row header-objective align-items-center" 
          data-toggle="collapse" data-target="#nestedCollapsible{{$obj->id}}">
          <div class="title">
@@ -101,7 +101,7 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
                   $initiativeweightcount = DB::table('initiative')->where('key_id',$key->id)->sum('initiative_weight');
                   @endphp
                   <div class="card bg-transparent shadow-none boardI" >
-                     <div class="card-header keyresult-header bg-light-gray" id="key-{{$key->id}}-{{$type}}-{{$organization->id}}">
+                     <div class="card-header keyresult-header bg-light-gray" id="key-{{$key->id}}">
                         <div class="d-flex flex-row justify-content-between header-objective align-items-center"
                            data-toggle="collapse" data-target="#key-result{{$key->id}}">
                            <div class="title ">
@@ -212,7 +212,7 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
                                     @endphp
                                     <div class="card bg-transparent shadow-none boardI">
                                        <div class="card-header initiative-header"
-                                          style="background: #f9   f9f9 !important;" id="backlog-{{$initiative->id}}-{{$type}}-{{$organization->id}}">
+                                          style="background: #f9   f9f9 !important;" id="backlog-{{$initiative->id}}">
                                           <div class="d-flex flex-row justify-content-between header-objective align-items-center"
                                              data-toggle="collapse"
                                              data-target="#initiative{{$initiative->id}}" onclick="handleDivClick({{$initiative->id}})" >
@@ -522,8 +522,7 @@ No objective found.
                     }
 
         var parentElId = target.id;
-        var slug = el.id.split("-")[3];
-        var type = el.id.split("-")[2];
+   
      
        
      
@@ -540,8 +539,7 @@ No objective found.
         parentElId:parentElId,
         dropped:dropped,
         taskOrder:taskOrder,
-        slug:slug,
-        type:type,
+     
       
 
         
@@ -550,7 +548,6 @@ No objective found.
         },
         success: function(response) {
             console.log('Card position updated successfully.');
-            $('#parentCollapsible').html(response);
         },
         error: function(error) {
             console.log('Error updating card position:', error);
