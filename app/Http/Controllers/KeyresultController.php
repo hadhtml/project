@@ -218,6 +218,13 @@ class KeyresultController extends Controller
     }
     public function createkeyresult(Request $request)
     {
+        $counter = 1;
+        $pos = DB::table('key_result')->orderby('id','DESC')->where('obj_id',$request->obj_id)->first();
+        if($pos)
+        {
+        $counter = $pos->IndexCount + 1; 
+        }
+
         $objective = DB::Table('objectives')->where('id' , $request->obj_id)->first();
         $create = new key_result();
         $create->user_id = Auth::id();
@@ -230,6 +237,7 @@ class KeyresultController extends Controller
         $update->trash = $create->created_at;
         $update->key_start_date = $create->created_at;
         $update->key_end_date = $create->created_at;
+        $update->IndexCount =  $counter;
         $update->save(); 
         return $create->id;
     }
