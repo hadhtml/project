@@ -22,7 +22,6 @@
                     </svg> 
                   </span>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" onclick="filterbyextension({{ $data->id }},'All')" href="javascript:void(0)">All</a>
                     @foreach($extensions as $r)
                     <a class="dropdown-item" onclick="filterbyextension({{ $data->id }},'{{ $r->extension }}')" href="javascript:void(0)">{{ $r->extension }}</a>
                     @endforeach

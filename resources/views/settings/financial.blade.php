@@ -25,7 +25,7 @@ $var_objective = "Jira";
                   <div class="col-md-12 col-lg-12 col-xl-12">
                      <div class="form-group mb-0">
                         <select class="form-control" name="month">
-                        <option @if($month) @if($month->month == 0) selected @endif @endif value='0'>Janaury</option>
+                        <option @if($month) @if($month->month == 0) selected @endif @endif value='0'>January</option>
                         <option @if($month) @if($month->month == 1) selected @endif @endif value='1'>February</option>
                         <option @if($month) @if($month->month == 2) selected @endif @endif value='2'>March</option>
                         <option @if($month) @if($month->month == 3) selected @endif @endif value='3'>April</option>
