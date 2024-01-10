@@ -119,7 +119,7 @@
                                 <div class="row">
                                     <div class="col-md-2">
                                         <div class="memberprofileimage">
-                                            <img src="{{ Avatar::create($r->team_title)->toBase64() }}">
+                                            <img class="gixie" data-item-id="{{ $r->id }}">
                                         </div>
                                     </div>
                                     <div class="col-md-8">
@@ -141,7 +141,7 @@
                                 <div class="row">
                                     <div class="col-md-2">
                                         <div class="memberprofileimage">
-                                            <img src="{{ Avatar::create($r->team_title)->toBase64() }}">
+                                            <img class="gixie" data-item-id="{{ $r->id }}">
                                         </div>
                                     </div>
                                     <div class="col-md-8">
@@ -304,4 +304,15 @@ function selectteamforepic(id , epic_id) {
         }
     });
 }
+</script>
+
+<script type="text/javascript">
+    var elements = document.querySelectorAll('.gixie');
+
+    elements.forEach(function(element) {
+        var itemId = element.getAttribute('data-item-id');
+        var imageData = new GIXI(300).getImage(); 
+
+        element.setAttribute('src', imageData);
+    });
 </script>
