@@ -109,7 +109,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                 <a href="{{url('dashboard/organization/'.$team->slug.'/BU-TEAMS')}}" class="btn  align-items-center rounded"  aria-expanded="true">
                     <div class="d-flex flex-row align-items-center">
                         <div class="mr-2">
-                            <span style="font-size:22px" class="material-symbols-outlined">domain</span>
+                            <span class="material-symbols-outlined"> arrow_back </span>
                         </div>
                         <div>
                             Business Unit Team
@@ -129,7 +129,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                 <a href="{{url('dashboard/organization/'.$team->slug.'/Org-TEAMS')}}" class="btn  align-items-center rounded"  aria-expanded="true">
                     <div class="d-flex flex-row align-items-center">
                         <div class="mr-2">
-                            <span style="font-size:22px" class="material-symbols-outlined">domain</span>
+                            <span class="material-symbols-outlined"> arrow_back </span>
                         </div>
                         <div>
                             Organization  Team
@@ -150,7 +150,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                 <a href="{{url('dashboard/organization/'.$team->slug.'/VS-TEAMS')}}" class="btn  align-items-center rounded"  aria-expanded="true">
                     <div class="d-flex flex-row align-items-center">
                         <div class="mr-2">
-                            <span style="font-size:22px" class="material-symbols-outlined">domain</span>
+                            <span class="material-symbols-outlined"> arrow_back </span>
                         </div>
                         <div>
                             Value Stream Team

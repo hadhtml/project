@@ -7,7 +7,7 @@
                 <a href="{{url('dashboard/organization/Business-Units')}}" class="btn  align-items-center rounded"  aria-expanded="true">
                     <div class="d-flex flex-row align-items-center">
                         <div class="mr-2">
-                            <span style="font-size:22px" class="material-symbols-outlined">domain</span>
+                            <span class="material-symbols-outlined"> arrow_back </span>
                         </div>
                         <div>
                             Business Units
