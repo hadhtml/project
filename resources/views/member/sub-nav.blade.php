@@ -16,8 +16,7 @@
                         <a href="{{url('dashboard/organization/'.$Unit->slug.'/Value-Streams')}}" class="btn  align-items-center rounded"  aria-expanded="true">
                             <div class="d-flex flex-row align-items-center">
                                 <div class="mr-2">
-                                    <span style="font-size:22px" class="material-symbols-outlined">domain</span>
-                                </div>
+                                    <span class="material-symbols-outlined"> arrow_back </span>                                </div>
                                 <div>
                                     Value Stream
                                 </div>
@@ -111,16 +110,6 @@
                         </a>
                     </li>
 
-                    <li class="mb-1">
-                        <a href="{{url('dashboard/organization/'.$organization->slug.'/VS-TEAMS')}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/VS-TEAMS')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
-                            <div class="mr-2">
-                                 <span style="font-size:22px" class="material-symbols-outlined">groups</span>
-                            </div>
-                            <div class="mr-2">
-                                Teams
-                            </div>
-                        </a>
-                    </li>
 
                     <li class="mb-1">
                         <a href="{{url('dashboard/flags/'.$organization->slug.'/impediments/stream')}}" @if (url()->current() == url('dashboard/flags/'.$organization->slug.'/impediments/stream')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
@@ -133,6 +122,18 @@
                             <!-- <div>
                                 <span class="badge btn-circle-xs badge-warning text-sm">2</span>
                             </div> -->
+                        </a>
+                    </li>
+
+                    
+                    <li class="mb-1">
+                        <a href="{{url('dashboard/organization/'.$organization->slug.'/VS-TEAMS')}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/VS-TEAMS')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
+                            <div class="mr-2">
+                                 <span style="font-size:22px" class="material-symbols-outlined">groups</span>
+                            </div>
+                            <div class="mr-2">
+                                Teams
+                            </div>
                         </a>
                     </li>
 
