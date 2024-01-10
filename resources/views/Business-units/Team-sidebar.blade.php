@@ -298,7 +298,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
 
 
             @if($organization->type == 'BU')
-            <li class="mb-1">
+            {{-- <li class="mb-1">
                 <a href="{{url('dashboard/organization/'.$organization->slug.'/performance-dashboard/'.$organization->type)}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/performance-dashboard/'.$organization->type)) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
                     <div class="mr-2">
                          <span style="font-size:22px" class="material-symbols-outlined">team_dashboard</span>
@@ -307,13 +307,13 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                         Performance Dash.
                     </div>
                 </a>
-            </li>
+            </li> --}}
 
             @endif
 
   
             @if($organization->type == 'VS')
-            <li class="mb-1">
+            {{-- <li class="mb-1">
                 <a href="{{url('dashboard/organization/'.$organization->slug.'/performance-dashboard/'.$organization->type)}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/performance-dashboard/'.$organization->type)) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
                     <div class="mr-2">
                          <span style="font-size:22px" class="material-symbols-outlined">team_dashboard</span>
@@ -322,11 +322,11 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                         Performance Dash.
                     </div>
                 </a>
-            </li>
+            </li> --}}
             @endif
 
             @if($organization->type == 'orgT')
-            <li class="mb-1">
+            {{-- <li class="mb-1">
                 <a href="{{url('dashboard/organization/'.$organization->slug.'/performance-dashboard/'.$organization->type)}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/performance-dashboard/'.$organization->type)) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
                     <div class="mr-2">
                          <span style="font-size:22px" class="material-symbols-outlined">team_dashboard</span>
@@ -335,7 +335,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                         Performance Dash.
                     </div>
                 </a>
-            </li>
+            </li> --}}
 
             @endif
             

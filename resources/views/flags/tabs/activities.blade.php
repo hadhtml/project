@@ -35,14 +35,35 @@
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row" >
     <div class="col-md-12">
         @if($activity->count() > 0)
         <div class="activity-feed">
             @foreach($activity as $r)
             <div class="activity">
               <div class="profile-image-container">
-                <img src="{{ url('public/assets/svg/trend-up.svg') }}" alt="User Profile">
+                @if($r->activity == 'Added a New Comment')
+                <span class="material-symbols-outlined"> comment </span>
+                @endif
+                @if($r->activity == 'Reply a Comment')
+                <span class="material-symbols-outlined"> reply </span>
+                @endif
+
+                @if($r->activity == 'Added a Description' || $r->activity == 'Updated Description Field')
+                <span class="material-symbols-outlined"> edit </span>
+                @endif
+
+                @if($r->activity == 'Added a New Attachment')
+                <span class="material-symbols-outlined"> attach_file </span>
+                @endif
+                @php
+                $substring = substr($r->activity, 0, 20);
+                @endphp
+                @if($substring == 'Updated Title Field ')
+                <span class="material-symbols-outlined"> edit </span>
+                @endif
+                {{-- <img src="{{ url('public/assets/svg/trend-up.svg') }}" alt="User Profile"> --}}
+              
               </div>
               <div class="dotted-line"></div>
               <div class="activity-content">
