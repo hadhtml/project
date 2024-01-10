@@ -1493,3 +1493,57 @@ button:focus {
     overflow-y: auto;
     overflow-x: hidden;
 }
+.profilepopup{
+    height: 170px;
+    width: 280px;
+    position: absolute;
+    left: 0;
+    top: 35px;
+    z-index: 10000;
+    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    display: none;
+}
+.profilepopuplinks .removelink{
+    font-size: 14px;
+    font-weight: 400;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+.profilepopuplinks .removelink:hover{
+    background-color: #f1f2f4;
+}
+.profilepopuplinks .removelink a{
+    text-decoration: none;
+}
+.profilepopuplinks{
+    height: 70px;
+    background-color: white;
+    padding-top: 20px;
+}
+.profilepopupheader{
+    background-color: #0c66e4;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    height: 100px;
+    position: relative;
+}
+.profilepopupimage{
+    position: absolute;
+    height: 80px;
+    width: 80px;
+    top: 30px;
+    left: 20px;
+}
+.profilepopupbackground{
+    text-align: right;
+    margin-top: 10%;
+    position: absolute;
+    left: 120;
+    top: 30px;
+}
+.profilepopupbackground p{
+    color: white;
+    font-size: 12px;
+
+}

@@ -155,6 +155,15 @@ class FlagController extends Controller
         $html = view('flags.modalheader', compact('data'))->render();
         return $html;
     }
+    public function removefromflag(Request $request)
+    {
+        $notification = DB::table('members')->where('id' , $request->id)->first()->name.' '.DB::table('members')->where('id' , $request->id)->first()->last_name.' Removed From Flag';
+        Cmf::save_activity(Auth::id() , $notification,'flags',$request->flag_id);
+        flag_members::where('flag_id' , $request->flag_id)->where('member_id' , $request->id)->delete();
+        $data = flags::find($request->flag_id);
+        $html = view('flags.modalheader', compact('data'))->render();
+        return $html;
+    }
     public function savemember(Request $request)
     {
         $check = flag_members::where('flag_id' , $request->dataid)->where('member_id' , $request->id)->count();

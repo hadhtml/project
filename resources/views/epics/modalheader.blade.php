@@ -277,7 +277,7 @@ function rasiseflag() {
     $('.raiseflag-box').slideToggle();
 }
 function maximizemodal() {
-    $('#modaldialog').toggleClass('modalfullscreen')
+    $('#modaldialogepic').toggleClass('modalfullscreen')
     $('#edit-epic-modal-new').css('padding-right' , '0px')
 }
 function selectteamforepic(id , epic_id) {

@@ -744,7 +744,7 @@
 
 
 <div class="modal" id="edit-epic-modal-new" tabindex="-1" role="dialog" aria-labelledby="edit-epic" aria-hidden="true">
-    <div class="modal-dialog modal-lg" id="modaldialog" role="document">
+    <div class="modal-dialog modal-lg" id="modaldialogepic" role="document">
         <div class="modal-content newmodalcontent" id="epic-modal-content">
             
         </div>

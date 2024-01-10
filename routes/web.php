@@ -242,7 +242,7 @@ Route::name('flags.')->namespace('App\Http\Controllers')->prefix('dashboard/flag
     Route::POST('modalheader', 'FlagController@modalheader');
     Route::POST('sortflags', 'FlagController@sortflags');
     Route::POST('filterbyextension', 'FlagController@filterbyextension');
-    
+    Route::POST('removefromflag', 'FlagController@removefromflag');
 });
 Route::name('linking.')->namespace('App\Http\Controllers')->prefix('dashboard/linking')->group(function () {
     Route::get('{organizationid}/{type}', 'LinkingController@index');

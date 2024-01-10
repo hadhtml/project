@@ -110,7 +110,7 @@ function getOrder(){
                         <div class="col-md-6">
                             <div class="form-group mb-0">
                                 <label for="small-description">Assignee (optional)</label>
-                                <select required class="form-control" name="story_assign" id="story_assign">
+                                <select class="form-control" name="story_assign" id="story_assign">
                                     <option value="">Select Assignee</option>
                                     @foreach(DB::table('members')->where('org_user',Auth::id())->get() as $r)
                                       <option value="{{ $r->id }}">{{ $r->name }} {{ $r->last_name }}</option>
