@@ -1547,3 +1547,7 @@ button:focus {
     font-size: 12px;
 
 }
+#deleteobjectivebutton{
+    width: 95px;
+    height: 40px;
+}

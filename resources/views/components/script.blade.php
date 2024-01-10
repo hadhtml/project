@@ -19,6 +19,7 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.13.0/Sortable.min.js"></script>
 
 
 <!-- Zoom -->
@@ -292,11 +293,19 @@ function handleDivClick(x)
     // Save position on drop
     drake.on("drop", function (el, target, source, sibling) {
         var droppedElId = el.id.split("-")[1];
-        
+        var dropped = el.id.split("-")[0];
+        var taskOrder = [];
         var newPosition = Array.from(target.children).indexOf(el) + 1;
-        var parentElId = target.id;
+        var Target = Array.from(target.children);
+        for (var i = 0; i < Target.length; i++) {
+            taskOrder.push(Target[i].id.split('-')[1]);
+                    }
 
+        var parentElId = target.id;
      
+       
+     
+    
         $.ajax({
         type: "POST",
         url: "{{ url('change-init-pos') }}",
@@ -306,7 +315,11 @@ function handleDivClick(x)
         data: {
         droppedElId:droppedElId,
         newPosition:newPosition,
-        parentElId:parentElId
+        parentElId:parentElId,
+        dropped:dropped,
+        taskOrder:taskOrder,
+      
+
         
       
 
@@ -368,12 +381,12 @@ $('.flag-search').val('');
 });
 
     $(".js-select2").select2({
-			closeOnSelect : false,
-			placeholder : "Placeholder",
-			// allowHtml: true,
-			allowClear: true,
-			tags: true // создает новые опции на лету
-		});
+            closeOnSelect : false,
+            placeholder : "Placeholder",
+            // allowHtml: true,
+            allowClear: true,
+            tags: true // создает новые опции на лету
+        });
   
 
 </script>
@@ -451,3 +464,4 @@ drake.on('drop', function(el, target, source, sibling) {
     });
 
   </script>
+  

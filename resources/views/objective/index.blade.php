@@ -192,7 +192,7 @@ $var_objective = 'PageT-'.$type;
                $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$obj->id)->sum('weight');
                @endphp
                <div class="card bg-transparent shadow-none boardI" >
-                  <div class="card-header objective-header active-header bg-white border-bottom"  id="obj-{{$obj->id}}-{{$type}}-{{$organization->id}}">
+                  <div class="card-header objective-header active-header bg-white border-bottom"  id="obj-{{$obj->id}}">
                      <div class="d-flex flex-row header-objective align-items-center" 
                         data-toggle="collapse" data-target="#nestedCollapsible{{$obj->id}}">
                         <div class="title">
@@ -287,7 +287,7 @@ $var_objective = 'PageT-'.$type;
                                  $initiativeweightcount = DB::table('initiative')->where('key_id',$key->id)->sum('initiative_weight');
                                  @endphp
                                  <div class="card bg-transparent shadow-none boardI" >
-                                    <div class="card-header keyresult-header bg-light-gray" id="key-{{$key->id}}-{{$type}}-{{$organization->id}}">
+                                    <div class="card-header keyresult-header bg-light-gray" id="key-{{$key->id}}">
                                        <div class="d-flex flex-row justify-content-between header-objective align-items-center"
                                           data-toggle="collapse" data-target="#key-result{{$key->id}}">
                                           <div class="title ">
@@ -398,7 +398,7 @@ $var_objective = 'PageT-'.$type;
                                                    @endphp
                                                    <div class="card bg-transparent shadow-none boardI">
                                                       <div class="card-header initiative-header"
-                                                         style="background: #f9   f9f9 !important;" id="backlog-{{$initiative->id}}-{{$type}}-{{$organization->id}}">
+                                                         style="background: #f9   f9f9 !important;" id="backlog-{{$initiative->id}}">
                                                          <div class="d-flex flex-row justify-content-between header-objective align-items-center"
                                                             data-toggle="collapse"
                                                             data-target="#initiative{{$initiative->id}}" onclick="handleDivClick({{$initiative->id}})" >

@@ -529,7 +529,7 @@
         var slug = "{{ $organization->slug }}";
         var unit_id = "{{ $organization->id }}";
         var type = "{{ $organization->type }}";
-
+        $('#deleteobjectivebutton').html('<i class="fa fa-spin fa-spinner"></i>');
         $.ajax({
             type: "POST",
             url: "{{ url('Delete-objective') }}",
@@ -552,8 +552,8 @@
                 setTimeout(function() {
                     $('#delete-objective').modal('hide');
                     $('#success-obj-delete').html('');
-                }, 3000);
-
+                }, 1000);
+                $('#deleteobjectivebutton').html('Confirm');
                 $('#parentCollapsible').html(res);
                 $("#nestedCollapsible" + delete_obj_id).collapse('toggle');
 
