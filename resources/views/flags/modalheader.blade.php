@@ -101,7 +101,7 @@
                                         @if($r->image)
                                         <img src="{{ url('public/assets/images') }}/{{ $r->image }}">
                                         @else
-                                        <img src="{{ Avatar::create($r->name)->toBase64() }}">
+                                        <img src="{{ Avatar::create($r->name.' '.$r->last_name)->toBase64() }}">
                                         @endif
                                     </div>
                                 </div>
