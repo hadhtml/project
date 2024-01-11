@@ -11,8 +11,15 @@
                                 <div class="mr-2">
                                     <a href="{{route('home')}}">Dashboard</a>
                                 </div>
-                               
                                 <div class="mr-2">
+                              
+                                    
+                                    @if (url()->current() != url('dashboard/organization/Business-Units'))
+                                    <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->business_name}}</a>
+                                    @endif
+
+                        
+                                  
                                 </div>
                                 <div class="mr-2">
                                     <p>Business Units</p>

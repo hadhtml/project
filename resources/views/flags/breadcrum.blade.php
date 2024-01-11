@@ -77,6 +77,7 @@
         <!--end::Info-->
         <!--begin::Toolbar-->
         <div class="d-flex align-items-center toolbar">
+            @if($type == 'unit')
             <div class="d-flex flex-row organization-drop align-items-center mr-3">
                 <div class="d-flex flex-column mr-3">
                     <div style="padding:20px">
@@ -92,6 +93,41 @@
                     </div>
                 </div>
             </div>
+            @endif
+            @if($type == 'stream')
+            <div class="d-flex flex-row organization-drop align-items-center mr-3">
+                <div class="d-flex flex-column mr-3">
+                    <div style="padding:20px">
+                        Team
+                        <select class="chkveg" multiple="multiple" >
+                        @foreach(DB::table('value_team')->where('org_id',$organization->id)->get() as $r)
+                            <option value="{{$r->id}}">{{$r->team_title}}</option>
+                        @endforeach
+                        </select>
+                        <button class="btn-circle btn-tolbar bg-transparent" type="button" onclick="getflagsbyteam();" >
+                           <img src="{{asset('public/assets/images/icons/filter.svg')}}" width="20" width="20">
+                        </button>
+                    </div>
+                </div>
+            </div>
+            @endif
+            @if($type == 'org')
+            <div class="d-flex flex-row organization-drop align-items-center mr-3">
+                <div class="d-flex flex-column mr-3">
+                    <div style="padding:20px">
+                        Team
+                        <select class="chkveg" multiple="multiple" >
+                        @foreach(DB::table('value_team')->where('org_id',$organization->id)->get() as $r)
+                            <option value="{{$r->id}}">{{$r->team_title}}</option>
+                        @endforeach
+                        </select>
+                        <button class="btn-circle btn-tolbar bg-transparent" type="button" onclick="getflagsbyteam();" >
+                           <img src="{{asset('public/assets/images/icons/filter.svg')}}" width="20" width="20">
+                        </button>
+                    </div>
+                </div>
+            </div>
+            @endif
             <div>
                 <div class="btn-group">
                   <button type="button" class="btn btn-default" style="border-top-right-radius:0px !important; border-bottom-right-radius:0px !important;" id="showboardbutton"> 

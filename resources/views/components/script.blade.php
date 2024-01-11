@@ -303,7 +303,8 @@ function handleDivClick(x)
 
         var parentElId = target.id;
      
-       
+        var type = el.id.split("-")[2];
+        var slug = el.id.split("-")[3];
      
     
         $.ajax({
@@ -318,6 +319,9 @@ function handleDivClick(x)
         parentElId:parentElId,
         dropped:dropped,
         taskOrder:taskOrder,
+        type:type,
+        slug:slug
+
       
 
         
@@ -326,7 +330,11 @@ function handleDivClick(x)
         },
         success: function(response) {
             console.log('Card position updated successfully.');
-        },
+            $('#parentCollapsible').html(response);
+            $("#nestedCollapsible" + el.id.split("-")[4]).collapse('toggle');
+            $("#key-result" + el.id.split("-")[5]).collapse('toggle');
+            $("#initiative" + el.id.split("-")[6]).collapse('toggle');
+                },
         error: function(error) {
             console.log('Error updating card position:', error);
         }
@@ -381,12 +389,12 @@ $('.flag-search').val('');
 });
 
     $(".js-select2").select2({
-			closeOnSelect : false,
-			placeholder : "Placeholder",
-			// allowHtml: true,
-			allowClear: true,
-			tags: true // создает новые опции на лету
-		});
+            closeOnSelect : false,
+            placeholder : "Placeholder",
+            // allowHtml: true,
+            allowClear: true,
+            tags: true // создает новые опции на лету
+        });
   
 
 </script>

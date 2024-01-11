@@ -20,6 +20,9 @@
     if($data->epic_type == 'org'){
         $team = DB::table('org_team')->where('id'  ,$data->team_id)->first();
     }
+    if($data->epic_type == 'stream'){
+        $team = DB::table('value_team')->where('id'  ,$data->team_id)->first();
+    }
     $dataArray = explode(',', $team->member);
     $dataCount = count($dataArray);
     $firstTwoIds = array_slice($dataArray, 0, 2);

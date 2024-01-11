@@ -59,9 +59,43 @@
                 @endphp
                 <div class="member-list-image membermargenles">
                     @if($member->image)
-                    <img data-toggle="tooltip" title="" data-original-title="{{ $member->name }} {{ $member->last_name }}" src="{{ url('public/assets/images') }}/{{ $member->image }}">
+                    <div class="positionrelative">
+                        <img onclick="showmemberprofile({{ $member->id }})" data-toggle="tooltip" title="" data-original-title="{{ $member->name }} {{ $member->last_name }}" src="{{ url('public/assets/images') }}/{{ $member->image }}">
+                        <div class="profilepopup" id="profilepopup{{ $member->id }}">
+                            <div class="profilepopupheader">
+                                <div class="profilepopupbackground">
+                                    <p>{{ $member->name }} {{ $member->last_name }}</p>
+                                </div>
+                                <div class="profilepopupimage">
+                                    <img src="{{ Avatar::create($member->name.' '.$member->last_name)->toBase64() }}" alt="{{ $member->name }}">
+                                </div>
+                            </div>
+                            <div class="profilepopuplinks">
+                                <div class="removelink">
+                                    <a onclick="removefromflag({{ $member->id }})" href="javascript:void(0)">Remove From Flag</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     @else
-                    <img data-toggle="tooltip" title="" data-original-title="{{ $member->name }} {{ $member->last_name }}"  src="{{ Avatar::create($member->name.' '.$member->last_name)->toBase64() }}" alt="{{ $member->name }}" title="{{ $member->name }} {{ $member->last_name }}">
+                    <div class="positionrelative">
+                        <img onclick="showmemberprofile({{ $member->id }})" data-toggle="tooltip" title="" data-original-title="{{ $member->name }} {{ $member->last_name }}"  src="{{ Avatar::create($member->name.' '.$member->last_name)->toBase64() }}" alt="{{ $member->name }}" title="{{ $member->name }} {{ $member->last_name }}">
+                        <div class="profilepopup" id="profilepopup{{ $member->id }}">
+                            <div class="profilepopupheader">
+                                <div class="profilepopupbackground">
+                                    <p>{{ $member->name }} {{ $member->last_name }}</p>
+                                </div>
+                                <div class="profilepopupimage">
+                                    <img src="{{ Avatar::create($member->name.' '.$member->last_name)->toBase64() }}" alt="{{ $member->name }}">
+                                </div>
+                            </div>
+                            <div class="profilepopuplinks">
+                                <div class="removelink">
+                                    <a onclick="removefromflag({{ $member->id }})" href="javascript:void(0)">Remove From Flag</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     @endif
                 </div>
                 @endforeach
@@ -133,4 +167,28 @@
     $(function () {
       $('[data-toggle="tooltip"]').tooltip()
     })
+    function showmemberprofile(id) {
+        $('#profilepopup'+id).slideToggle();
+    }
+    function removefromflag(id) {
+        var flag_id = '{{ $data->id }}';
+        $.ajax({
+            type: "POST",
+            url: "{{ url('dashboard/flags/removefromflag') }}",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                id:id,
+                flag_id:flag_id,
+            },
+            success: function(res) {
+               $('.modalheaderforapend').html(res);
+                viewboards($('#viewboards').val());
+            },
+            error: function(error) {
+                
+            }
+        });
+    }
 </script>

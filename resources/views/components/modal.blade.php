@@ -202,7 +202,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" onclick="DeleteObjectivekey();" class="btn btn-danger">Confirm</button>
+          <button type="button" id="deletekeyresultbutton" onclick="DeleteObjectivekey();" class="btn btn-danger">Confirm</button>
         </div>
         </form>
       </div>
@@ -517,7 +517,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" onclick="DeleteObjective();" class="btn btn-danger">Confirm</button>
+          <button type="button" id="deleteobjectivebutton" onclick="DeleteObjective();" class="btn btn-danger">Confirm</button>
         </div>
         </form>
       </div>
@@ -744,7 +744,7 @@
 
 
 <div class="modal" id="edit-epic-modal-new" tabindex="-1" role="dialog" aria-labelledby="edit-epic" aria-hidden="true">
-    <div class="modal-dialog modal-lg" id="modaldialog" role="document">
+    <div class="modal-dialog modal-lg" id="modaldialogepic" role="document">
         <div class="modal-content newmodalcontent" id="epic-modal-content">
             
         </div>
