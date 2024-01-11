@@ -173,7 +173,7 @@ function getOrder(){
                     <div class="col-md-2 text-right">
                         <img class="edit-item-image" type="button" onclick="showupdatecard({{$r->id}})" src="{{ url('public/assets/svg/edit-2.svg') }}">
                         <img class="delete-item-image" onclick="deleteflagshow({{$r->id}})" src="{{ url('public/assets/svg/trash.svg') }}">
-                        <div class="deletechildstory" id="deleteattachmentshow{{ $r->id }}">
+                        <div class="deletechildstory hidepopupall" id="deleteattachmentshow{{ $r->id }}">
                             <div class="row">
                                 <div class="col-md-10">
                                     <h4 class="text-left">Delete Flag</h4>

@@ -348,7 +348,7 @@
     width: 100%;
 }
 #memberstoshow{
-    height: 100px;
+    height: 160px;
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -1554,4 +1554,7 @@ button:focus {
 #deletekeyresultbutton{
     width: 95px;
     height: 40px;
+}
+.member-add-box-flag-height{
+    height: 270px;
 }

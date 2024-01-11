@@ -93,7 +93,7 @@
         </a>
         @endif
         <div class="memberlistposition">
-            <div class="memberadd-box team-select-box">
+            <div class="memberadd-box team-select-box hidepopupall">
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <h4>Select Team</h4>
@@ -187,7 +187,7 @@
             <a onclick="rasiseflag({{$data->id}})" href="javascript:void(0)"  id="showboardbutton">
                 <img src="{{url('public/assets/svg/btnflagsvg.svg')}}" width="20"> Flag @if(DB::table('flags')->where('epic_id'  ,$data->id)->count() > 0) ({{ DB::table('flags')->where('epic_id'  ,$data->id)->count() }}) @endif
             </a>
-            <div class="raiseflag-box">
+            <div class="raiseflag-box hidepopupall">
                 <div class="row">
                     <div class="col-md-6">
                         <h4>Flag</h4>
@@ -305,14 +305,11 @@ function selectteamforepic(id , epic_id) {
     });
 }
 </script>
-
 <script type="text/javascript">
     var elements = document.querySelectorAll('.gixie');
-
     elements.forEach(function(element) {
         var itemId = element.getAttribute('data-item-id');
         var imageData = new GIXI(300).getImage(); 
-
         element.setAttribute('src', imageData);
     });
 </script>

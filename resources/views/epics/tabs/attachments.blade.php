@@ -78,7 +78,7 @@
         @if($attachments->count() > 0)
         @foreach($attachments as $r)
         <div class="card attachment-card-new">
-            <div class="deletecomment" id="deleteattachmentshow{{ $r->id }}">
+            <div class="deletecomment hidepopupall" id="deleteattachmentshow{{ $r->id }}">
                 <div class="row">
                     <div class="col-md-10">
                         <h4>Delete Attachment</h4>

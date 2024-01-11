@@ -282,7 +282,7 @@ function getOrder(){
                             </div>
                             <img class="edit-item-image" type="button" onclick="editstorynew({{$s->id}})" src="{{ url('public/assets/svg/edit-2.svg') }}">
                             <img onclick="deletechilditemshow({{$s->id}})" class="delete-item-image" src="{{ url('public/assets/svg/trash.svg') }}">
-                            <div class="deletechildstory" id="deleteattachmentshow{{ $s->id }}">
+                            <div class="deletechildstory hidepopupall" id="deleteattachmentshow{{ $s->id }}">
                                 <div class="row">
                                     <div class="col-md-10">
                                         <h4>Delete Child Item</h4>

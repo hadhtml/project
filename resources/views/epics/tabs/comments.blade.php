@@ -82,7 +82,7 @@
                 $user = DB::table('users')->where('id',$r->user_id)->first();
             @endphp
             <div class="card comment-card-new">
-                <div class="deletecomment" id="commentdelete{{ $r->id }}">
+                <div class="deletecomment hidepopupall" id="commentdelete{{ $r->id }}">
                     <div class="row">
                         <div class="col-md-10">
                             <h4>Delete Comment</h4>
@@ -198,7 +198,7 @@
                 $puser = DB::table('users')->where('id',$p->user_id)->first();
             @endphp
                 <div class="card comment-card-new reply-card">
-                    <div class="deletecomment" id="commentdelete{{ $p->id }}">
+                    <div class="deletecomment hidepopupall" id="commentdelete{{ $p->id }}">
                         <div class="row">
                             <div class="col-md-10">
                                 <h4>Delete Comment</h4>

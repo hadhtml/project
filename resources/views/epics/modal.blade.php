@@ -39,7 +39,7 @@
                     <!-- <li><span class="material-symbols-outlined">share</span> Share</li> -->
                     <!-- <li><img src="{{ url('public/assets/svg/arrow-right-action.svg') }}"> Move</li> -->
                     <li onclick="deleteflagshow({{$data->id}})"><span class="material-symbols-outlined">delete</span> Delete</li>
-                    <div class="deleteflag deleteepiccard" id="flagdelete{{ $data->id }}">
+                    <div class="deleteflag deleteepiccard hidepopupall" id="flagdelete{{ $data->id }}">
                         <div class="row">
                             <div class="col-md-10">
                                 <h4>Delete Epic</h4>
