@@ -119,16 +119,16 @@
                 <div class="d-flex flex-column">
                     <div class="d-flex justify-content-between align-items-center mb-2">
                         <div class="d-flex flex-row align-items-center">
-                            <div class="d-flex flex-column">
-                                <div>
-                                    
-                                    <h5>
-                                        @if($user->image != NULL)
-                                    <img src="{{asset('public/assets/images/'.$user->image)}}" alt="Example Image">
+                            <div class="d-flex">
+                                <div class="mr-2">
+                                    @if($user->image != NULL)
+                                    <img height="40" width="40" style="border-radius: 50%;" src="{{asset('public/assets/images/'.$user->image)}}" alt="{{ $user->name }} {{ $user->last_name }}">
                                     @else
-                                    <img height="20" width="20" src="{{ Avatar::create($user->name.' '.$user->last_name)->toBase64() }}" alt="Example Image">
+                                    <img height="40" width="40" src="{{ Avatar::create($user->name.' '.$user->last_name)->toBase64() }}" alt="Example Image">
                                     @endif
-                                        {{ $user->name }} {{ $user->last_name }}</h5>
+                                </div>
+                                <div>
+                                    <h5>{{ $user->name }} {{ $user->last_name }}</h5>
                                     <small>{{ Cmf::date_format($r->created_at) }}</small>
                                     @if($r->created_at != $r->updated_at)
                                     <small>Updated</small>
@@ -252,9 +252,16 @@
                     <div class="d-flex flex-column">
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <div class="d-flex flex-row align-items-center">
-                                <div class="d-flex flex-column">
+                                <div class="d-flex">
+                                    <div class="mr-2">
+                                        @if($puser->image != NULL)
+                                        <img height="40" width="40" style="border-radius: 50%;" src="{{asset('public/assets/images/'.$puser->image)}}" alt="{{ $puser->name }} {{ $puser->last_name }}">
+                                        @else
+                                        <img height="40" width="40" src="{{ Avatar::create($puser->name.' '.$puser->last_name)->toBase64() }}" alt="Example Image">
+                                        @endif
+                                    </div>
                                     <div>
-                                        <h5>{{ $puser->name }} {{ $puser->last_name }}</h5>
+                                        <h5>{{ $user->name }} {{ $user->last_name }}</h5>
                                         <small>{{ Cmf::date_format($p->created_at) }}</small>
                                         @if($p->created_at != $p->updated_at)
                                         <small>Updated</small>
