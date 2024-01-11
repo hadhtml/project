@@ -42,11 +42,11 @@
             @foreach($activity as $r)
             <div class="activity">
               <div class="profile-image-container">
-                <img src="{{ url('public/assets/svg/trend-up.svg') }}" alt="User Profile">
+                <span style="font-size:18px;" class="material-symbols-outlined"> {{ $r->icon }} </span>
               </div>
               <div class="dotted-line"></div>
               <div class="activity-content">
-                <div class="activity-header">{{ DB::table('users')->where('id' , $r->user_id)->first()->name }} {{ DB::table('users')->where('id' , $r->user_id)->first()->last_name }}<span> {{ $r->activity }}</span></div>
+                <div class="activity-header">{{ DB::table('users')->where('id' , $r->user_id)->first()->name }} {{ DB::table('users')->where('id' , $r->user_id)->first()->last_name }}<span> {!! $r->activity !!}</span></div>
                 <div class="activity-time">{{ Cmf::create_time_ago($r->created_at) }}</div>
               </div>
             </div>

@@ -30,11 +30,32 @@ class EpicController extends Controller
     public function updategeneral(Request $request)
     {
         $data = Epic::find($request->epic_id);
+        if($data->epic_name != $request->epic_name)
+        {
+            $rand = rand(123456789 , 987654321);
+            $activity = 'has updated Title Field <a href="javascript:void(0)" onclick="showdetailsofactivity('.$rand.')">See Details</a> <div class="activitydetalbox deletecomment" id="activitydetalbox'.$rand.'"><div class="row"> <div class="col-md-10"> <h4>Title Update</h4> </div> <div class="col-md-2"> <img onclick="showdetailsofactivity('.$rand.')" src="'.url("public/assets/svg/crossdelete.svg").'"> </div> </div><p style="margin-bottom:0px;">'.$data->epic_name.'</p><div class="text-center mt-2 mb-2"><span class="material-symbols-outlined"> arrow_downward </span></div><p>'.$request->epic_name.'</p></div>';
+            Cmf::save_activity(Auth::id() , $activity,'epics',$request->epic_id, 'edit');
+        }
+        if($data->epic_detail != $request->epic_detail)
+        {
+            if($data->epic_detail)
+            {
+                $rand = rand(123456781239 , 987651234321);
+                $activity = 'has updated Description Field <a href="javascript:void(0)" onclick="showdetailsofactivity('.$rand.')">See Details</a> <div class="activitydetalbox deletecomment" id="activitydetalbox'.$rand.'"><div class="row"> <div class="col-md-10"> <h4>Description Update</h4> </div> <div class="col-md-2"> <img onclick="showdetailsofactivity('.$rand.')" src="'.url("public/assets/svg/crossdelete.svg").'"> </div> </div><p style="margin-bottom:0px;">'.$data->epic_detail.'</p><div class="text-center mt-2 mb-2"><span class="material-symbols-outlined"> arrow_downward </span></div><p>'.$request->epic_detail.'</p></div>';
+                Cmf::save_activity(Auth::id() , $activity,'epics',$request->epic_id, 'edit');
+            }else{
+                $activity = 'Added a Description';
+                Cmf::save_activity(Auth::id() , $activity,'epics',$request->epic_id, 'edit');
+            }
+        }
         $data->epic_name = $request->epic_name;
         $data->epic_start_date = $request->epic_start_date;
         $data->epic_end_date = $request->epic_end_date;
         $data->epic_detail = $request->epic_detail;
         $data->save();
+
+
+
 
 
         $month = date("F",strtotime($request->epic_end_date));
@@ -170,6 +191,10 @@ class EpicController extends Controller
         {
             $organization  = DB::table('value_team')->where('slug',$request->slug)->first();
         }
+        if($request->organization == 'org')
+        {
+            $organization  = DB::table('organization')->where('slug',$request->slug)->first();
+        }
         $html = view('epics.showepicinboard', compact('organization','e'))->render();
         return $html;
     }
@@ -239,7 +264,7 @@ class EpicController extends Controller
         $add->type = 'epics';
         $add->value_id = $request->value_id;
         $add->save();
-        Cmf::save_activity(Auth::id() , 'Added a New Attachment','epics',$request->value_id);
+        Cmf::save_activity(Auth::id() , 'Added a New Attachment','epics',$request->value_id , 'attach_file');
         $attachments = attachments::where('value_id' , $request->value_id)->where('type' , 'epics')->orderby('id' , 'desc')->get();
         $data = Epic::find($request->value_id);
         $html = view('epics.tabs.attachments', compact('attachments','data'))->render();
@@ -250,7 +275,7 @@ class EpicController extends Controller
         $attachment = attachments::find($request->id);
         attachments::where('id',$request->id)->delete();
         $attachments = attachments::where('value_id' , $attachment->value_id)->where('type' , 'epics')->orderby('id' , 'desc')->get();
-        Cmf::save_activity(Auth::id() , 'Delete a Attachment','flags',$attachment->value_id);
+        Cmf::save_activity(Auth::id() , 'Delete a Attachment','flags',$attachment->value_id , 'delete');
         $data = Epic::find($attachment->value_id);
         $html = view('epics.tabs.attachments', compact('attachments','data'))->render();
         return $html;
@@ -261,7 +286,7 @@ class EpicController extends Controller
         $item->epic_id = $request->epic_id;
         $item->epic_story_name = $request->epic_story_name;
         $item->story_assign = $request->story_assign;
-        // $item->story_type = $request->story_type;
+        $item->story_type = $request->story_type;
         $item->story_status = $request->story_status;
         $item->StoryID = Str::slug('SSP-'.rand(100,999));
         // $item->VS_BU_ID = $request->VS_BU_ID;
@@ -288,7 +313,7 @@ class EpicController extends Controller
         $addcomment->type = 'comment';
         $addcomment->comment_type = 'epics';
         $addcomment->save();
-        Cmf::save_activity(Auth::id() , 'Added a New Comment','epics',$request->flag_id);
+        Cmf::save_activity(Auth::id() , 'Added a New Comment','epics',$request->flag_id , 'comment');
         $comments = flag_comments::where('flag_id' , $request->flag_id)->wherenull('comment_id')->orderby('id' , 'desc')->get();
         $data = Epic::find($request->flag_id);
         $html = view('epics.tabs.comments', compact('comments','data'))->render();
@@ -299,7 +324,7 @@ class EpicController extends Controller
         $addcomment = flag_comments::find($request->comment_id);
         $addcomment->comment = $request->comment;
         $addcomment->save();
-        Cmf::save_activity(Auth::id() , 'Update a Comment','epics',$addcomment->flag_id);
+        Cmf::save_activity(Auth::id() , 'Update a Comment','epics',$addcomment->flag_id, 'comment');
         $comments = flag_comments::where('flag_id' , $addcomment->flag_id)->wherenull('comment_id')->orderby('id' , 'desc')->get();
         $data = Epic::find($addcomment->flag_id);
         $html = view('epics.tabs.comments', compact('comments','data'))->render();
@@ -314,7 +339,7 @@ class EpicController extends Controller
         $addcomment->type = 'reply';
         $addcomment->comment_id = $request->comment_id;
         $addcomment->save();
-        Cmf::save_activity(Auth::id() , 'Reply a Comment','epics',$request->flag_id);
+        Cmf::save_activity(Auth::id() , 'Reply a Comment','epics',$request->flag_id, 'reply');
         $comments = flag_comments::where('flag_id' , $request->flag_id)->wherenull('comment_id')->orderby('id' , 'desc')->get();
         $data = Epic::find($request->flag_id);
         $html = view('epics.tabs.comments', compact('comments','data'))->render();
@@ -326,7 +351,7 @@ class EpicController extends Controller
         flag_comments::where('id' , $request->id)->delete();
         flag_comments::where('comment_id' , $request->id)->delete();
         $comments = flag_comments::where('flag_id' , $comment->flag_id)->wherenull('comment_id')->orderby('id' , 'desc')->get();
-        Cmf::save_activity(Auth::id() , 'Delete a Comment','epics',$comment->flag_id);
+        Cmf::save_activity(Auth::id() , 'Delete a Comment','epics',$comment->flag_id, 'delete');
         $data = Epic::find($comment->flag_id);
         $html = view('epics.tabs.comments', compact('comments','data'))->render();
         return $html;
@@ -466,6 +491,42 @@ class EpicController extends Controller
     }
     public function changeepicstatus(Request $request)
     {
+
+
+
+
+        $previousstatus = DB::table('epics')->where('id' , $request->edit_epic_id)->first()->epic_status;
+
+        if($previousstatus == 'In progress')
+        {
+            $from_status = '<b style="background-color: #E1DB3F; color: white; border-radius: 10px; padding-left: 5px; padding-right: 5px; ">In Progress</b>';
+        }
+        if($previousstatus == 'Done')
+        {
+            $from_status = '<b style="background-color: #3fe1a7; color: white; border-radius: 10px; padding-left: 5px; padding-right: 5px; ">Done</b>';
+        }
+        if($previousstatus == 'To Do')
+        {
+            $from_status = '<b style="background-color: #6c757d; color: white; border-radius: 10px; padding-left: 5px; padding-right: 5px; ">To Do</b>';
+        }
+
+        if($request->edit_epic_status == 'To Do')
+        {
+            $tostatus = '<b style="background-color: #6c757d; color: white; border-radius: 10px; padding-left: 5px; padding-right: 5px; ">To Do</b>';
+        }
+        if($request->edit_epic_status == 'Done')
+        {
+            $tostatus = '<b style="background-color: #3fe1a7; color: white; border-radius: 10px; padding-left: 5px; padding-right: 5px; ">Done</b>';
+        }
+        if($request->edit_epic_status == 'In progress')
+        {
+            $tostatus = '<b style="background-color: #E1DB3F; color: white; border-radius: 10px; padding-left: 5px; padding-right: 5px; ">In Progress</b>';
+        }
+        $notification = "Status Changed From ".$from_status .' To '.$tostatus;
+        Cmf::save_activity(Auth::id() , $notification,'epics',$request->edit_epic_id , 'detector_status');
+
+
+
         $date = DB::table("epics")
             ->where("id", $request->edit_epic_id)
             ->first();

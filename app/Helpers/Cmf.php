@@ -21,7 +21,7 @@ class Cmf
     public static function get_file_extension($file_name) {
         return substr(strrchr($file_name,'.'),1);
     }
-    public static function save_activity($user_id , $activity,$type,$value_id)
+    public static function save_activity($user_id , $activity,$type,$value_id,$icon)
     {
         $act = new activities();
         $act->user_id = $user_id;
@@ -29,6 +29,7 @@ class Cmf
         $act->is_read = 1;
         $act->type = $type;
         $act->value_id = $value_id;
+        $act->icon = $icon;
         $act->save();
     }
     public static function create_time_ago($time)

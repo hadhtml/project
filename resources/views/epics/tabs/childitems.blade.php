@@ -120,17 +120,34 @@ function getOrder(){
                         </div>
                         <div class="col-md-6">
                             <div class="form-group mb-0">
-                               <label for="small-description">Status</label>
-                               <select name="story_status" class="form-control">
-                                <option  value="To Do">To Do</option>
-                                <option  value="In progress">In Progress</option>
-                                 <option value="Done">Done</option>
+                               <label for="small-description">Type</label>
+                               <select required name="story_type" class="form-control">
+                                <option  value="">Select Type</option>
+                                <option  value="Task">Task</option>
+                                <option  value="Bug">Bug</option>
+                                 <option value="Story">Story</option>
                                </select>
                             </div>
                         </div>
                     </div>
+                    <input type="hidden" value="To Do" id="storystatusnew" name="story_status">
                     <div class="row mt-3">
-                        <div class="col-md-12 text-right">
+                        <div class="col-md-6">
+                            <div class="dropdown firstdropdownofcomments">
+                              <span class="dropdown-toggle" type="button" id="dropdownnew" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Status To Do
+                                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="7" viewBox="0 0 11 7" fill="none">
+                                  <path d="M10.8339 0.644857C10.6453 0.456252 10.3502 0.439106 10.1422 0.593419L10.0826 0.644857L5.49992 5.2273L0.917236 0.644857C0.72863 0.456252 0.433494 0.439106 0.225519 0.593419L0.165935 0.644857C-0.0226701 0.833463 -0.0398163 1.1286 0.114497 1.33657L0.165935 1.39616L5.12427 6.35449C5.31287 6.5431 5.60801 6.56024 5.81599 6.40593L5.87557 6.35449L10.8339 1.39616C11.0414 1.18869 11.0414 0.852323 10.8339 0.644857Z" fill="#787878"/>
+                                </svg> 
+                              </span>
+                              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" onclick="selectstorystatus('To Do' , 'new')" href="javascript:void(0)">To Do</a>
+                                <a class="dropdown-item" onclick="selectstorystatus('In progress' , 'new')" href="javascript:void(0)">In Progress</a>
+                                <a class="dropdown-item" onclick="selectstorystatus('Done' , 'new')" href="javascript:void(0)">Done</a>
+                              </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 text-right">
                             <span onclick="additem()" class="btn btn-default btn-sm">Cancel</span>
                             <button id="createchilditembutton" type="submit" class="btn btn-primary btn-sm">Save</button>
                         </div>
@@ -231,7 +248,15 @@ function getOrder(){
                                 <span class="checkbox-label"></span>
                             </label>
                             <div class="child-item-id">
-                                <img src="{{ url('public/assets/svg/child-item-id.svg') }}"> {{ $s->StoryID }}
+                                @if($s->story_type == 'Bug')
+                                <span class="material-symbols-outlined">bug_report</span><span style="position:absolute;margin-left: 5px;">{{ $s->StoryID }}</span> 
+                                @endif
+                                @if($s->story_type == 'Task')
+                                <span class="material-symbols-outlined">task</span> <span style="position:absolute;margin-left: 5px;">{{ $s->StoryID }}</span> 
+                                @endif
+                                @if($s->story_type == 'Story')
+                                <span class="material-symbols-outlined">cycle</span> <span style="position:absolute;margin-left: 5px;">{{ $s->StoryID }}</span> 
+                                @endif
                             </div>
                         </div>
                         <div class="child-item-tittle">
@@ -318,19 +343,36 @@ function getOrder(){
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group mb-0">
-                                       <label for="small-description">Status</label>
-                                       <select class="form-control" id="edit_story_status{{$s->id}}">
-                                        <option @if($s->story_status == 'To Do') selected @endif value="To Do">To Do</option>
-                                        <option @if($s->story_status == 'In progress') selected @endif value="In progress">In Progress</option>
-                                         <option @if($s->story_status == 'Done') selected @endif value="Done">Done</option>
+                                       <label for="small-description">Type</label>
+                                       <select required class="form-control edit_story_type{{$s->id}}">
+                                        <option @if($s->story_type == 'Task') selected @endif  value="Task">Task</option>
+                                        <option @if($s->story_type == 'Bug') selected @endif value="Bug">Bug</option>
+                                         <option @if($s->story_type == 'Story') selected @endif value="Story">Story</option>
                                        </select>
-                                        
                                     </div>
                                 </div>
                             </div>
-                            <div>
-                                <span type="button" onclick="editstorynew({{$s->id}})" class="btn btn-default btn-sm">Cancel</span>
-                                <span type="button" onclick="updatestory({{$s->id}});" id="updateitembutton{{ $s->id }}" class="btn btn-primary btn-sm">Update</span>
+                            <input type="hidden" value="{{ $s->story_status }}" id="storystatus{{$s->id}}" class="edit_story_status{{$s->id}}">
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <div class="dropdown firstdropdownofcomments">
+                                      <span class="dropdown-toggle" type="button" id="dropdown{{$s->id}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Status {{ $s->story_status }}
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="11" height="7" viewBox="0 0 11 7" fill="none">
+                                          <path d="M10.8339 0.644857C10.6453 0.456252 10.3502 0.439106 10.1422 0.593419L10.0826 0.644857L5.49992 5.2273L0.917236 0.644857C0.72863 0.456252 0.433494 0.439106 0.225519 0.593419L0.165935 0.644857C-0.0226701 0.833463 -0.0398163 1.1286 0.114497 1.33657L0.165935 1.39616L5.12427 6.35449C5.31287 6.5431 5.60801 6.56024 5.81599 6.40593L5.87557 6.35449L10.8339 1.39616C11.0414 1.18869 11.0414 0.852323 10.8339 0.644857Z" fill="#787878"/>
+                                        </svg> 
+                                      </span>
+                                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" onclick="selectstorystatus('To Do' , {{$s->id}})" href="javascript:void(0)">To Do</a>
+                                        <a class="dropdown-item" onclick="selectstorystatus('In progress' , {{$s->id}})" href="javascript:void(0)">In Progress</a>
+                                        <a class="dropdown-item" onclick="selectstorystatus('Done' , {{$s->id}})" href="javascript:void(0)">Done</a>
+                                      </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <span onclick="editstorynew({{$s->id}})" class="btn btn-default btn-sm">Cancel</span>
+                                    <span type="button" onclick="updatestory({{$s->id}});" id="updateitembutton{{ $s->id }}" class="btn btn-primary btn-sm">Update</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -448,7 +490,8 @@ function updatestory(s_id) {
     $('#updateitembutton'+s_id).html('<i class="fa fa-spin fa-spinner"></i>');
     // var title = $('#title'+s_id).val();
     var title = $('#edit_story_title' + s_id).val();
-    var story_status = $('#edit_story_status' + s_id).val();
+    var story_status = $('.edit_story_status' + s_id).val();
+    var story_type = $('.edit_story_type' + s_id).val();
     var story_assign = $('#edit_story_assign' + s_id).val();
     var key = $('#edit_epic_key').val();
     var obj = $('#edit_epic_obj').val();
@@ -463,6 +506,7 @@ function updatestory(s_id) {
                 s_id: s_id,
                 title: title,
                 story_status: story_status,
+                story_type: story_type,
                 story_assign: story_assign,
                 key: key,
                 obj: obj
@@ -497,7 +541,7 @@ function deletechilditem(id) {
 }
 function changeitemstatus(status , id) {
     var title = $('#edit_story_title' + id).val();
-    var story_status = $('#edit_story_status' + id).val();
+    var story_status = $('.edit_story_status' + id).val();
     var story_assign = $('#edit_story_assign' + id).val();
     $.ajax({
         type: "POST",

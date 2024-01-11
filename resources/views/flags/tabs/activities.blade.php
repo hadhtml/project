@@ -46,21 +46,7 @@
 
             <div class="activity">
               <div class="profile-image-container">
-                @if($r->activity == 'Added a New Comment' || $r->activity == 'Delete a Comment')
-                <span class="material-symbols-outlined"> comment </span>
-                @elseif($r->activity == 'Reply a Comment')
-                <span class="material-symbols-outlined"> reply </span>
-                @elseif($r->activity == 'Added a Description' || $r->activity == 'Updated Description Field')
-                <span class="material-symbols-outlined"> edit </span>
-                @elseif($r->activity == 'Added a New Attachment')
-                <span class="material-symbols-outlined"> attach_file </span>
-                @elseif($substring == 'Updated Title Field ')
-                <span class="material-symbols-outlined"> edit </span>
-                @else
-                <span class="material-symbols-outlined">person_add</span>
-                {{-- <img src="{{ url('public/assets/svg/trend-up.svg') }}" alt="User Profile"> --}}
-                @endif
-              
+                <span style="font-size:18px;" class="material-symbols-outlined">{{ $r->icon }}</span>        
               </div>
               <div class="dotted-line"></div>
               <div class="activity-content">
@@ -82,7 +68,5 @@
     {
       $(".profile-image-container:odd").css({"background-color":"#dbf7e8"});
     });
-    function showdetailsofactivity(id){ 
-        $('#activitydetalbox'+id).slideToggle();
-    }
+    
 </script>

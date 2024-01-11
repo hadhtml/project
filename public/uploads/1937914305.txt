@@ -1,0 +1,32 @@
+What We Left Now 
+
+These all Points Will be Done till 15th of December
+
+
+1-> Freelancer Category PAge Filters
+2-> Banners 
+3-> Category Content
+4-> Term of Use Content
+5-> Privacy Policy Content
+6-> FAQ
+7-> Contact Us Form
+9-> Social Media Pages
+10->Google Console
+11->Is Carrier Required?
+12->Is Advertising Page is Required?
+13->About US Page
+14->Skills Added in Seller Panel
+15->Language Add in Seller Panel
+16->Seller Panel Chat
+17->Freelancer Chat
+18->Freelancer Notification Alert on SMS (Need Twilio Account for this)
+19->Freelancer Notification on Email
+20->Metta Tags Dynamic
+21->OG Tags Dynamic
+22-> Transection against Coupen Code in admin panel 
+23-> Transection history on Admin
+24-> Add Model on Hero Section on Homepage 
+	Freelancer (REgister Here)
+	DEsign your Product (Only Two Option Show in the Hero Section)	
+	Sellers
+	

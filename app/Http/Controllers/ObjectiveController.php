@@ -2322,6 +2322,7 @@ class ObjectiveController extends Controller
         $childitem = epics_stroy::find($request->s_id);
         $childitem->epic_story_name = $request->title;
         $childitem->story_status = $request->story_status;
+        $childitem->story_type = $request->story_type;
         $childitem->story_assign = $request->story_assign;
         if($request->story_status == "Done")
         {
