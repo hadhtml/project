@@ -36,14 +36,14 @@ $var_objective = "Org-Unit";
                         </div>
                         <div>
                             <div class="dropdown d-flex">
-                            <button class="btn btn-circle dropdown-toggle btn-tolbar bg-transparent" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="{{ url('public/assets/svg/dropdowndots.svg') }}">
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item"  data-toggle="modal" data-target="#edit{{$unit->id}}">Edit</a>
-                                <a class="dropdown-item" data-toggle="modal" data-target="#delete{{$unit->id}}">Delete</a>
+                                <button class="btn btn-circle dropdown-toggle btn-tolbar bg-transparent" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <img src="{{ url('public/assets/svg/dropdowndots.svg') }}">
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item"  data-toggle="modal" data-target="#edit{{$unit->id}}">Edit</a>
+                                    <a class="dropdown-item" data-toggle="modal" data-target="#delete{{$unit->id}}">Delete</a>
+                                </div>
                             </div>
-                        </div>
                         </div>
                     </div>
                     <div class="content-section">

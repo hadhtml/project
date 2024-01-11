@@ -198,7 +198,7 @@ $var_objective = "Member";
                   <div class="col-md-12 col-lg-12 col-xl-12">
                      <div class="form-group mb-0">
                         <input autocomplete="off" type="email" class="form-control" autocomplete="" id="email" name="email" onfocusout="checkemail(this.value)" required>
-                        <label for="email">Email</label>
+                        <label for="objective-name" style="bottom:72px;">Email</label>
                      </div>
                   </div>
                   <div class="col-md-12 col-lg-12 col-xl-12">

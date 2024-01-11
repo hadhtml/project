@@ -5,7 +5,7 @@
                         <div class="d-flex align-items-start flex-column flex-wrap mr-2">
                             <!--begin::Page Title-->
                             <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
-                                Teams
+                                Value Stream
                             </h5>
                             <div class="d-flex flex-row page-sub-titles">
                                 <div class="mr-2">
@@ -20,7 +20,10 @@
                                     <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->value_name}}</a>
                                 </div>
                                 <div class="mr-2">
-                                    <p>Teams</p>
+                                    <p>
+                                        Value Stream
+
+                                    </p>
                                 </div>
                             </div>
                         </div>
