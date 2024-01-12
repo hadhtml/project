@@ -121,7 +121,6 @@ Route::post('delete-graph-val', [App\Http\Controllers\ChartController::class, 'D
 Route::get('download/{file_name}', [App\Http\Controllers\ChartController::class, 'getDownload']);
 Route::get('get-chart-status', [App\Http\Controllers\ChartController::class, 'ChartFilter']);
 Route::get('chart-status', [App\Http\Controllers\ChartController::class, 'GetChartStatus']);
-Route::post('save-epic-month', [App\Http\Controllers\ObjectiveController::class,'SaveEpicMonth']);
 
 // Members
 
@@ -179,7 +178,7 @@ Route::get('get-value-obj', [App\Http\Controllers\MemberController::class,'GetBa
 Route::get('get-value-key', [App\Http\Controllers\MemberController::class,'GetBacklogKey']);
 Route::get('get-value-init', [App\Http\Controllers\MemberController::class,'GetBacklogInit']);
 
-Route::post('update-backlog-epic', [App\Http\Controllers\MemberController::class,'UpdateBacklogEpic']);
+
 Route::post('delete-stream-backlog', [App\Http\Controllers\MemberController::class,'DeleteStreamBacklogEpic']);
 
 Route::post('assign-backlog-epic',[App\Http\Controllers\MemberController::class,'AssignBacklogEpic']);
@@ -194,6 +193,7 @@ Route::get('dashboard/organization/Bu/dashboard', [App\Http\Controllers\MemberCo
 Route::get('get-jira-epic', [App\Http\Controllers\JiraController::class,'jira']);
 Route::post('assign-jira-epic', [App\Http\Controllers\JiraController::class,'AssignJiraEpic']);
 Route::get('dashboard/organization/setting', [App\Http\Controllers\JiraController::class,'JiraSetting']);
+Route::get('dashboard/organization/financialsetting', [App\Http\Controllers\JiraController::class,'financialsettings']); 
 Route::post('add-jira-setting', [App\Http\Controllers\JiraController::class,'AddJiraSetting']);
 Route::post('add-financial-year', [App\Http\Controllers\JiraController::class,'AddFinancialYear']);
 Route::post('update-jira-setting', [App\Http\Controllers\JiraController::class,'UpdateJiraSetting']);
@@ -208,6 +208,8 @@ Route::post('add-teambacklog-epic', [App\Http\Controllers\TeamController::class,
 Route::post('assign-teambacklog-epic', [App\Http\Controllers\TeamController::class,'AssignTeamBacklogEpic']);
 Route::post('update-teambacklog-epic', [App\Http\Controllers\TeamController::class,'UpdateTeamBacklogEpic']);
 Route::post('delete-team-backlog', [App\Http\Controllers\TeamController::class,'DeleteTeamBacklogEpic']);
+Route::get('get-assign-epic-all', [App\Http\Controllers\TeamController::class,'AssignEpicAll']);
+
 
 Route::name('flags.')->namespace('App\Http\Controllers')->prefix('dashboard/flags')->group(function () {
     Route::get('{organizationid}/{flagtype}/{type}', 'FlagController@flags');
@@ -239,10 +241,26 @@ Route::name('flags.')->namespace('App\Http\Controllers')->prefix('dashboard/flag
     Route::POST('searchepic', 'FlagController@searchepic');
     Route::POST('selectepic', 'FlagController@selectepic');
     Route::POST('moveflag', 'FlagController@moveflag');
+    Route::POST('modalheader', 'FlagController@modalheader');
+    Route::POST('sortflags', 'FlagController@sortflags');
+    Route::POST('filterbyextension', 'FlagController@filterbyextension');
+    Route::POST('removefromflag', 'FlagController@removefromflag');
 });
 Route::name('linking.')->namespace('App\Http\Controllers')->prefix('dashboard/linking')->group(function () {
     Route::get('{organizationid}/{type}', 'LinkingController@index');
 });
+
+Route::name('epicbacklog.')->namespace('App\Http\Controllers')->prefix('dashboard/epicbacklog')->group(function () {
+    Route::POST('getepic', 'EpicBacklogController@getepicmodal');
+    Route::POST('showheader', 'EpicBacklogController@showheader');
+    Route::POST('showtab', 'EpicBacklogController@showtab');
+    Route::POST('uploadattachment', 'EpicBacklogController@uploadattachment');
+    Route::POST('deleteattachment', 'EpicBacklogController@deleteattachment');
+    Route::post('updategeneral', 'EpicBacklogController@updategeneral');
+    Route::POST('changeepicdate', 'EpicBacklogController@changeepicdate');
+    Route::POST('changeepicstatus', 'EpicBacklogController@changeepicstatus');
+});
+
 
 
 Route::name('epics.')->namespace('App\Http\Controllers')->prefix('dashboard/epics')->group(function () {
@@ -269,8 +287,11 @@ Route::name('epics.')->namespace('App\Http\Controllers')->prefix('dashboard/epic
     Route::POST('bulkupdate', 'EpicController@bulkupdate'); 
     Route::POST('selectteamforepic', 'EpicController@selectteamforepic'); 
     Route::POST('sortflags', 'EpicController@sortflags');
-    Route::POST('showorderbyactivity', 'EpicController@showorderbyactivity'); 
-
+    Route::POST('showorderbyactivity', 'EpicController@showorderbyactivity');
+    Route::POST('showorderby', 'EpicController@showorderby');
+    Route::POST('savenewepic', 'EpicController@savenewepic');
+    Route::POST('showlatestepicdatainmodal', 'EpicController@showlatestepicdatainmodal');
+    Route::POST('saveepicflag', 'EpicController@saveepicflag');    
     
 });
 
@@ -282,6 +303,10 @@ Route::name('keyresult.')->namespace('App\Http\Controllers')->prefix('dashboard/
     Route::POST('updatetarget', 'KeyresultController@updatetarget');
     Route::POST('addquartervalue', 'KeyresultController@addquartervalue')->name('addquartervalue');
     Route::POST('deletequartervalue', 'KeyresultController@deletequartervalue')->name('deletequartervalue');
+    Route::POST('createkeyresult', 'KeyresultController@createkeyresult');
+    Route::POST('changekeyresultstatus', 'KeyresultController@changekeyresultstatus');
+    Route::POST('removeweight', 'KeyresultController@removeweight');
+    Route::POST('addweight', 'KeyresultController@addweight');
     
 });
 
