@@ -103,7 +103,7 @@
                                 <div class="d-flex flex-column">
                                     <div>
                                         <div class="form-group mb-0">
-                                            <textarea value="{{ $r->comment }}" rows="5" type="text" class="form-control" name="comment" id="objective-name" required>{{ $r->comment }}</textarea>
+                                            <input value="{{ $r->comment }}" type="text" class="form-control" name="comment" id="objective-name" required>
                                         </div>
                                     </div>
                                     <div>
