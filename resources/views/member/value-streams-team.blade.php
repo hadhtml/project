@@ -376,7 +376,9 @@ function search_member(val)
             data:{val:val},
             success: function(res) {
                 
-            $('#member').html(res);    
+            $('#member').html(res);   
+            $('#member-old').hide();
+ 
 
             }
         });
