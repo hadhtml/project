@@ -383,7 +383,7 @@
                                 </div>
                                 <hr>
                             </div>
-                            <div class="col-md-12 col-lg-12 col-xl-12 member-area" id="member">
+                            <div class="col-md-12 col-lg-12 col-xl-12 member-area" id="member-old">
                                 @foreach (DB::table('members')->where('org_user', Auth::id())->get() as $r)
                                     <div class="d-flex flex-row align-items-center justify-content-between single-member">
                                         <div class="d-flex flex-row align-items-center ">
@@ -403,12 +403,14 @@
                                             </div>
                                         </div>
                                         <div>
-                                            <input type="checkbox" value="{{ $r->id }}" name="member[]">
+                                            <input type="checkbox" class="check" value="{{ $r->id }}" name="member[]">
                                         </div>
                                     </div>
                                 @endforeach
 
                             </div>
+                            <div class="col-md-12 col-lg-12 col-xl-12 member-area" id="member">
+                            </div>    
                             <div class="col-md-12 mt-7">
                                 <button class="btn btn-primary btn-lg btn-theme btn-block ripple" type="submit">Create
                                     Team</button>
@@ -424,7 +426,8 @@
 
     <script>
         function search_member(val) {
-
+          if(val != '')
+          {
             $.ajax({
                 type: "GET",
                 url: "{{ url('get-user') }}",
@@ -434,9 +437,19 @@
                 success: function(res) {
 
                     $('#member').html(res);
+                    $('#member-old').hide();
+
 
                 }
             });
+
+        }else
+        {
+            
+            $('#member-old').show();
+            $('#member').html('');
+
+        }
 
         }
         $(document).ready(function() {
@@ -453,5 +466,13 @@
 
             element.setAttribute('src', imageData);
         });
+
+        $('.check').on('click', function() {
+                isChecked = $(this).is(':checked')
+
+                if (isChecked) {
+                }
+
+            })
     </script>
 @endsection
