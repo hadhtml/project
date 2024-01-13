@@ -79,62 +79,46 @@ class TeamController extends Controller
 
     public function AssignTeamBacklogEpic(Request $request)
     {
-
-      
-          $backlogIds = explode(',', $request->input('backlog_id'));
-          
-           foreach($backlogIds  as $key => $value)
-          {
-              
-          $log = DB::table('team_backlog')->where('id',$value)->first();
-          foreach($request->end_date  as $key => $value)
-          {
-        
-         $monthName = Carbon::parse($request->end_date[$key])->format('F');
-         $Year = Carbon::parse($request->end_date[$key])->format('Y');
-           $month = DB::table('quarter_month')->where('initiative_id',$request->locinit)->where('month',$monthName)->where('year',$Year)->first();
-           if(!$month)
-           {
-            return redirect()->back()->with('message', 'initiative Quarter Month Not Found');
-           }
-           
-            $EpicId = DB::table('epics')->insertGetId([
-        
-                'epic_status' => $log->epic_status,
-                'epic_name' => $log->epic_title,
-                'epic_detail' => $log->epic_detail,
-                'epic_start_date' => $request->start_date[$key],
-                'epic_end_date' => $request->end_date[$key],
-                'initiative_id' => $request->locinit,
-                'user_id' => Auth::id(),
-                'month_id' => $month->id,
-                'quarter_id' => $month->quarter_id, 
-                'backlog_id' => $log->id,
-                 'type' => $request->team_type,
-                 'key_id' => $request->lockey,
-                'jira_id' =>  $log->jira_id,
-                'account_id' => $log->account_id,
-                'jira_project' =>  $log->jira_project,
-
-        
+        $backlogIds = explode(',', $request->input('backlog_id'));
+        foreach($backlogIds  as $key => $value)
+        {  
+            $log = DB::table('team_backlog')->where('id',$value)->first();
+            foreach($request->end_date  as $key => $value)
+            {
+                $monthName = Carbon::parse($request->end_date[$key])->format('F');
+                $Year = Carbon::parse($request->end_date[$key])->format('Y');
+                $month = DB::table('quarter_month')->where('initiative_id',$request->locinit)->where('month',$monthName)->where('year',$Year)->first();
+                if(!$month)
+                {
+                    return redirect()->back()->with('message', 'initiative Quarter Month Not Found');
+                }
+                $EpicId = DB::table('epics')->insertGetId([
+                    'epic_status' => $log->epic_status,
+                    'epic_name' => $log->epic_title,
+                    'epic_detail' => $log->epic_detail,
+                    'epic_start_date' => $request->start_date[$key],
+                    'epic_end_date' => $request->end_date[$key],
+                    'initiative_id' => $request->locinit,
+                    'user_id' => Auth::id(),
+                    'month_id' => $month->id,
+                    'quarter_id' => $month->quarter_id, 
+                    'backlog_id' => $log->id,
+                    'type' => $request->team_type,
+                    'key_id' => $request->lockey,
+                    'jira_id' =>  $log->jira_id,
+                    'account_id' => $log->account_id,
+                    'jira_project' =>  $log->jira_project,
                 ]);
-
-        
-          }
-          
-           foreach($request->end_date  as $k => $value)
-          {
-           DB::table('team_backlog')->where('id', $value)->update(['epic_start_date' => $request->start_date[$k],'epic_end_date' => $request->end_date[$k]]);
-          }
-          }
-          
-         $backlogstatus = DB::table('team_backlog')->whereIn('id', $backlogIds)->update(['assign_status'=> 1,'quarter'=> $month->quarter_name.' '.$month->year,'epic_start_date' => $request->start_date,'epic_end_date' => $request->end_date]);
-
-   
-    $Quartertotal = 0;
-    $totalinitiative = 0;
-    $finaltotal  = 0;
-    
+            }
+            foreach($request->end_date  as $k => $value)
+            {
+               DB::table('team_backlog')->where('id', $value)->update(['epic_start_date' => $request->start_date[$k],'epic_end_date' => $request->end_date[$k]]);
+            }
+        }  
+        $backlogstatus = DB::table('team_backlog')->whereIn('id', $backlogIds)->update(['assign_status'=> 1,'quarter'=> $month->quarter_name.' '.$month->year,'epic_start_date' => $request->start_date,'epic_end_date' => $request->end_date]);
+        $Quartertotal = 0;
+        $totalinitiative = 0;
+        $finaltotal  = 0;
         $currentDate = Carbon::now();
         $currentYear = $currentDate->year;
         $currentMonth = $currentDate->month;

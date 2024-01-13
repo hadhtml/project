@@ -239,7 +239,7 @@ class JiraController extends Controller
                 if($request->type == 'BU' || $request->type == 'VS' || $request->type == 'orgT' || $request->type == 'org')
                 {
                  DB::table('team_backlog')->insert([
-                'epic_status' => $log->E_Status,
+                'epic_status' => 'To Do',
                 'epic_title' => $log->Summary,
                 'epic_detail' => $log->detail,
                 'epic_start_date' => $log->Startdate,
