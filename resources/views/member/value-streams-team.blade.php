@@ -326,7 +326,7 @@ $var_objective = "Stream-team";
                             </div>
                             <hr>
                         </div>
-                        <div class="col-md-12 col-lg-12 col-xl-12 member-area" id="member">
+                        <div class="col-md-12 col-lg-12 col-xl-12 member-area" id="member-old">
                           
                             @foreach(DB::table('members')->where('org_user',Auth::id())->get() as $r)
                             <div class="d-flex flex-row align-items-center justify-content-between single-member">
@@ -349,6 +349,9 @@ $var_objective = "Stream-team";
                                 </div>
                             </div>
                             @endforeach
+                           
+                        </div>
+                        <div class="col-md-12 col-lg-12 col-xl-12 member-area" id="member">
                         </div>
                         <div class="col-md-12 mt-7">
                             <button class="btn btn-primary btn-lg btn-theme btn-block ripple" type="submit">Create Team</button>
@@ -365,17 +368,27 @@ $var_objective = "Stream-team";
 <script>
 function search_member(val)
 {
-           
+    if(val != '')
+          {
            $.ajax({
             type: "GET",
             url:"{{url('get-user')}}", 
             data:{val:val},
             success: function(res) {
                 
-            $('#member').html(res);    
+            $('#member').html(res);   
+            $('#member-old').hide();
+ 
 
             }
         });
+    }else
+        {
+            
+            $('#member-old').show();
+            $('#member').html('');
+
+        }
     
 }
  $(document).ready(function() {

@@ -838,6 +838,34 @@ $var_objective = 'TBaclog-' . $type;
    
    
    }
+
+   function assign_epic(val)
+        {
+            
+        var slug = "{{$organization->slug}}";   
+        var id = "{{$organization->id}}"; 
+        var type = "{{$organization->type}}"; 
+
+        $.ajax({
+        type: "GET",
+        url: "{{ url('get-assign-epic-all') }}",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+        id:id,
+        slug:slug,
+        val:val,
+        type:type
+        },
+        success: function(res) {
+          
+        $('#olddata').html(res);
+        
+        }
+        });
+
+        }
    
    
    

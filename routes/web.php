@@ -208,6 +208,8 @@ Route::post('add-teambacklog-epic', [App\Http\Controllers\TeamController::class,
 Route::post('assign-teambacklog-epic', [App\Http\Controllers\TeamController::class,'AssignTeamBacklogEpic']);
 Route::post('update-teambacklog-epic', [App\Http\Controllers\TeamController::class,'UpdateTeamBacklogEpic']);
 Route::post('delete-team-backlog', [App\Http\Controllers\TeamController::class,'DeleteTeamBacklogEpic']);
+Route::get('get-assign-epic-all', [App\Http\Controllers\TeamController::class,'AssignEpicAll']);
+
 
 Route::name('flags.')->namespace('App\Http\Controllers')->prefix('dashboard/flags')->group(function () {
     Route::get('{organizationid}/{flagtype}/{type}', 'FlagController@flags');

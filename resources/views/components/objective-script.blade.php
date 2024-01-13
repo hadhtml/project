@@ -1077,7 +1077,8 @@
                 org_id: org_id,
                 slug: slug,
                 unit_id: unit_id,
-                type: type
+                type:type,
+                obj:obj
             },
             success: function(res) {
                 $('#success-key-delete').html('<div class="alert alert-success" role="alert"> Key Result Deleted successfully</div>');
@@ -1302,7 +1303,9 @@
                 org_id: org_id,
                 slug: slug,
                 unit_id: unit_id,
-                type: type
+                type: type,
+                initiative_delete_key_id:initiative_delete_key_id,
+                initiative_delete_obj_id:initiative_delete_obj_id,
             },
             success: function(res) {
 
@@ -1328,7 +1331,7 @@
     }
 
     function editinitiative(initiative_id, initiative_name, initiative_start_date, initiative_end_date,
-        initiative_detail, initiative_weight, initiative_key, initiative_obj) {
+        initiative_detail, initiative_weight, initiative_key, initiative_obj,end_date) {
 
 
         $('#edit_id_initiative').val(initiative_id);
@@ -1340,6 +1343,7 @@
         $('#edit_id_initiative_obj').val(initiative_obj);
 
         $('.edit_initiative_start_date').attr('min', initiative_start_date);
+        $('#edit_initiative_end_date').attr('max', end_date);
         getinitiativweight(initiative_id);
         $('#wieght-error-edit-init').html('');
 

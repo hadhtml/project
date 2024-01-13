@@ -597,5 +597,90 @@ $updateData = [
         
     }
 
+    public function AssignEpicAll(Request $request)
+    {
+    
+
+    if($request->type == 'org')
+    {
+    $organization = DB::table('organization')->where('id',$request->id)->first();
+    if($request->val == 1)
+    {
+
+      $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->where('type','org')->where('assign_status',1)->get();  
+    }
+    if($request->val == 0)
+    {
+      $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->where('type','org')->where('assign_status',NULL)->get();  
+    }
+      if($request->val == 'all')
+    {
+      $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->where('type','org')->get();  
+    }
+
+    }
+
+    if($request->type == 'BU')
+    {
+    $organization = DB::table('unit_team')->where('id',$request->id)->first();
+    if($request->val == 1)
+    {
+        
+      $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->where('type','BU')->where('assign_status',1)->get();  
+    }
+    if($request->val == 0)
+    {
+      $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->where('type','BU')->where('assign_status',NULL)->get();  
+    }
+      if($request->val == 'all')
+    {
+      $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->where('type','BU')->get();  
+    }
+
+    }
+
+    if($request->type == 'VS')
+    {
+    $organization = DB::table('value_team')->where('id',$request->id)->first();
+    if($request->val == 1)
+    {
+        
+      $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->where('type','VS')->where('assign_status',1)->get();  
+    }
+    if($request->val == 0)
+    {
+      $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->where('type','VS')->where('assign_status',NULL)->get();  
+    }
+      if($request->val == 'all')
+    {
+      $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->where('type','VS')->get();  
+    }
+
+    }
+
+    if($request->type == 'orgT')
+    {
+    $organization = DB::table('org_team')->where('id',$request->id)->first();
+    if($request->val == 1)
+    {
+        
+      $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->where('type','orgT')->where('assign_status',1)->get();  
+    }
+    if($request->val == 0)
+    {
+      $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->where('type','orgT')->where('assign_status',NULL)->get();  
+    }
+      if($request->val == 'all')
+    {
+      $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->where('type','orgT')->get();  
+    }
+
+    }
+
+    return view('Team.assign-backlog-all',compact('Backlog','organization'));  
+
+    }
+  
+
     
 }

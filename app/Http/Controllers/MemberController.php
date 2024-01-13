@@ -29,7 +29,7 @@ class MemberController extends Controller
     public function AllMembers()
     {
         $Member  = Member::where('org_user',Auth::id())
-        ->join('users','members.user_id','=','users.id')->select('members.*','users.*','users.role AS u_role','users.status AS u_status','members.id AS ID','users.id AS u_id','members.name AS Name','members.last_name AS LastName')
+        ->join('users','members.user_id','=','users.id')->select('members.*','users.*','users.role AS u_role','users.status AS u_status','members.id AS ID','users.id AS u_id','members.name AS Name','members.last_name AS LastName','members.image AS image')
         ->get();
         return view('member.member',compact('Member'));
 
@@ -131,7 +131,7 @@ class MemberController extends Controller
               $Member->image = $this->sendimagetodirectory($request->image);
             }else{
 
-                $Member->image = $request->old_image;
+            $Member->image = $request->old_image;
     
             }
            
@@ -1190,7 +1190,7 @@ $updateData = [
 
     }
     
-       public function AssignEpicBacklog(Request $request)
+    public function AssignEpicBacklog(Request $request)
     {
     
 

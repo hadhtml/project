@@ -826,7 +826,6 @@ $var_objective = "Backlog-Unit";
           
         $('#olddata').html(res);
         
-
         }
         });
 
