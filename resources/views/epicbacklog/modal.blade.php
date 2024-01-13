@@ -15,16 +15,16 @@
                     <li id="asign" onclick="showtab({{$data->id}} , 'asign','{{$table}}')" class="tabsclass">
                         <span class="material-symbols-outlined">person_check</span> Asign
                     </li>
-                    <li id="comments" onclick="showtab({{$data->id}} , 'comments','{{$table}}')" class="tabsclass">
+                    <!-- <li id="comments" onclick="showtab({{$data->id}} , 'comments','{{$table}}')" class="tabsclass">
                         <span class="material-symbols-outlined">comment</span> Comments
                     </li>
                     <li id="activites" onclick="showtab({{$data->id}} , 'activites','{{$table}}')" class="tabsclass">
                        <span class="material-symbols-outlined">browse_activity</span> Activities
                     </li>
                     <li id="attachment" onclick="showtab({{$data->id}} , 'attachment','{{$table}}')" class="tabsclass">
-                        <span class="material-symbols-outlined"> attachment </span> Attachments</li>
+                        <span class="material-symbols-outlined"> attachment </span> Attachments</li> -->
                     <li id="teams" onclick="showtab({{$data->id}} , 'teams','{{$table}}')" class="tabsclass">
-                        <span class="material-symbols-outlined"> group </span> Teams
+                        <span class="material-symbols-outlined"> group </span> Team
                     </li>
                 </ul>
                 <h4>Action</h4>
