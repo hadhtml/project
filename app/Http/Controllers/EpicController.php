@@ -1091,7 +1091,7 @@ class EpicController extends Controller
     public function saveepicflag(Request $request)
     {
         $flag = new flags();
-        $flag->business_units = $request->buisness_unit_id;
+        $flag->business_units = $request->business_units;
         $flag->epic_id = $request->flag_epic_id;
         $flag->flag_type = $request->flag_type;
         $flag->flag_title = $request->flag_title;
