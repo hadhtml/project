@@ -58,22 +58,32 @@
                                 @foreach(DB::table('members')->get() as $r)
                                     @if($r->id == $team->lead_id)
                                     <div class="d-flex flex-row align-items-center">
-                                            <div class="mr-2">
-                                                @if($r->image != NULL)
-                                                <img src="{{asset('public/assets/images/'.$r->image)}}" alt="Example Image">
-                                                @else
-                                                <img src="{{ Avatar::create($r->name.' '.$r->last_name)->toBase64() }}" alt="Example Image">
-                                                @endif
+                                        <div class="mr-2">
+                                            @if($r->image != NULL)
+                                            <img src="{{asset('public/assets/images/'.$r->image)}}" alt="Example Image">
+                                            @else
+                                            <img src="{{ Avatar::create($r->name.' '.$r->last_name)->toBase64() }}" alt="Example Image">
+                                            @endif
+                                        </div>
+                                        <div class="d-flex flex-column">
+                                            <div>
+                                                <span class="text-primary">Team Lead</span>
                                             </div>
-                                            <div class="d-flex flex-column">
-                                                <div>
-                                                    <span class="text-primary">Team Lead</span>
-                                                </div>
-                                                <div>
-                                                    <span>{{$r->name}} {{ $r->last_name }}</span>
+                                            <div>
+                                                <span>{{$r->name}} {{ $r->last_name }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="mr-2">
+                                            <div class="dropdown d-flex">
+                                                <button class="btn btn-circle dropdown-toggle btn-tolbar bg-transparent" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <img src="{{ url('public/assets/svg/dropdowndots.svg') }}">
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                    <a onclick="removeteamfromepic({{$data->id}})" class="dropdown-item">Remove From Epic</a>
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
                                     @endif
                                 @endforeach
                             @endif
@@ -104,4 +114,20 @@
 
         element.setAttribute('src', imageData);
     });
+    function removeteamfromepic(id) {
+        $.ajax({
+            type: "POST",
+            url: "{{ url('dashboard/epics/removeteamfromepic') }}",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                id: id
+            },
+            success: function(res) {
+                $('.secondportion').html(res);
+                showheader('{{ $data->id }}');
+            }
+        });
+    }
 </script>

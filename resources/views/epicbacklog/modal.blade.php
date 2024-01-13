@@ -66,6 +66,7 @@
             <form id="updategeneral" class="needs-validation" action="{{ url('dashboard/epicbacklog/updategeneral') }}" method="POST" novalidate>
                 @csrf
                 <input type="hidden" value="{{ $data->id }}" name="epic_id">
+                <input type="hidden" name="table" value="{{ $table }}">
                 <div class="row">
                     <div class="col-md-12 col-lg-12 col-xl-12">
                         <div class="form-group mb-0">

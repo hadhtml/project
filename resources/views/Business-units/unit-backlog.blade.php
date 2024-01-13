@@ -171,7 +171,7 @@ $var_objective = "Backlog-Unit";
                         </div>
                      </td>
                      <td>
-                        <button class="btn-circle btn-tolbar" data-toggle="modal" data-target="#create{{$backlog->id}}" >
+                        <button class="btn-circle btn-tolbar" onclick="editbacklogepic({{ $backlog->id }} , 'backlog_unit')">
                         <img src="{{asset('public/assets/images/icons/edit.svg')}}" data-toggle="tooltip" data-placement="top" data-original-title="Edit">
                         </button>
                         <button class="btn-circle btn-tolbar" data-toggle="modal" data-target="#delete{{$backlog->id}}">
@@ -202,82 +202,6 @@ $var_objective = "Backlog-Unit";
                                  <button type="submit" class="btn btn-danger">Confirm</button>
                               </div>
                            </form>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="modal fade" id="create{{$backlog->id}}" tabindex="-1" role="dialog" aria-labelledby="create-epic" aria-hidden="true">
-                     <div class="modal-dialog" role="document">
-                        <div class="modal-content" style="width: 526px !important;">
-                           <div class="modal-header">
-                              <div class="row">
-                                 <div class="col-md-12">
-                                    <h5 class="modal-title" id="create-epic">Update Backlog Epic</h5>
-                                 </div>
-                                 <div class="col-md-12">
-                                    <p>Fill out the form, submit and hit the save button.</p>
-                                 </div>
-                                 <div id=""  role="alert"></div>
-                                 <span id="" class="ml-3 text-danger"></span>
-                              </div>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <img src="{{asset('public/assets/images/icons/minus.svg')}}">
-                              </button>
-                           </div>
-                           <div class="modal-body">
-                              <form class="needs-validation" action="{{url('update-unitbacklog-epic')}}" method="POST" >
-                                 @csrf
-                                 <input type="hidden" name="backlog_id" value="{{$backlog->id}}">
-                                 <div class="row">
-                                    <div class="col-md-12 col-lg-12 col-xl-12">
-                                       <div class="form-group mb-0">
-                                          <input type="text" class="form-control" value="{{$backlog->epic_title}}" name="epic_name" id="" required>
-                                          <label for="objective-name">Epic Title</label>
-                                       </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-6 col-xl-6">
-                                       <div class="form-group mb-0">
-                                          <input type="date" class="form-control"  name="epic_start_date" value="{{$backlog->epic_start_date}}">
-                                          <label for="start-date">Start Date</label>
-                                       </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-6 col-xl-6">
-                                       <div class="form-group mb-0">
-                                          <input type="date" class="form-control"  name="epic_end_date" value="{{$backlog->epic_end_date}}">
-                                          <label for="end-date">End Date</label>
-                                       </div>
-                                    </div>
-                                    <div class="col-md-12 col-lg-12 col-xl-12">
-                                       <div class="form-group mb-0">
-                                          <select class="form-control" name="epic_status">
-                                             <option value="To Do">To Do</option>
-                                             <option value="In progress">In Progress</option>
-                                             <option value="Done">Done</option>
-                                          </select>
-                                          <label for="small-description">Status</label>
-                                       </div>
-                                    </div>
-                                    <div class="col-md-12 col-lg-12 col-xl-12">
-                                       <div class="form-group mb-0">
-                                          <input type="text" class="form-control" value="{{$backlog->epic_detail}}"  name="epic_description">
-                                          <label for="small-description">Small Description</label>
-                                       </div>
-                                    </div>
-                                    <div class="col-md-12 col-lg-12 col-xl-12">
-                                       <div class="form-group mb-0">
-                                          <select class="form-control" name ="team"  class="">
-                                             <option value="">Assign Team</option>
-                                             @foreach(DB::table('unit_team')->where('org_id',$organization->id)->get() as $r)
-                                             <option value="{{$r->id}}">{{$r->team_title}}</option>
-                                             @endforeach
-                                          </select>
-                                       </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                       <button class="btn btn-primary btn-lg btn-theme btn-block ripple mt-3"  type="submit">Update</button>
-                                    </div>
-                                 </div>
-                              </form>
-                           </div>
                         </div>
                      </div>
                   </div>
@@ -556,8 +480,55 @@ $var_objective = "Backlog-Unit";
       </div>
    </div>
 </div>
+<div class="modal" id="edit-backlog-epic-modal-new" tabindex="-1" role="dialog" aria-labelledby="edit-epic" aria-hidden="true">
+    <div class="modal-dialog modal-lg" id="modaldialog" role="document">
+        <div class="modal-content newmodalcontent" id="epic-backlog-modal-content">
+            
+        </div>
+    </div>
+</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+   function editbacklogepic(id , table) {
+      var new_url="{{ url()->current() }}?epicbacklog="+id;
+      window.history.pushState("data","Title",new_url);
+      $.ajax({
+         type: "POST",
+         url: "{{ url('dashboard/epicbacklog/getepic') }}",
+         headers: {
+             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+         },
+         data: {
+             id: id,
+             table: table,
+         },
+         success: function(res) {
+             $('#epic-backlog-modal-content').html(res);
+             $('#edit-backlog-epic-modal-new').modal('show');
+             // showtab(id , 'general');
+             showheaderbacklog(id, table);
+         }
+      });
+   }
+   function showheaderbacklog(id, table) {
+        $.ajax({
+            type: "POST",
+            url: "{{ url('dashboard/epicbacklog/showheader') }}",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+               id:id,
+               table:table,
+            },
+            success: function(res) {
+                $('.modalheaderforapend').html(res);
+            },
+            error: function(error) {
+                
+            }
+        });
+    }
    $(document).ready(function() {
     $('#editorbacklog').summernote({
         height: 180,

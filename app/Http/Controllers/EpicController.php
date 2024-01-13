@@ -253,6 +253,14 @@ class EpicController extends Controller
             return $html;
         }
     }
+    public function removeteamfromepic(Request $request)
+    {
+        $data = Epic::find($request->id);
+        $data->team_id = null;
+        $data->save();
+        $html = view('epics.tabs.teams', compact('data'))->render();
+        return $html;
+    }
     public function uploadattachment(Request $request)
     {
         $filename = $request->file('file')->getClientOriginalName();

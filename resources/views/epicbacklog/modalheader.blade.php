@@ -155,7 +155,7 @@
                         @endforeach
                     @endif
                     @if($data->type == 'stream')
-                        @foreach(DB::table('value_team')->where('org_id',$data->buisness_unit_id)->where('type' , 'VS')->get() as $r)
+                        @foreach(DB::table('value_team')->where('org_id',$data->unit_id)->where('type' , 'VS')->get() as $r)
                             <div class="col-md-12 memberprofile" onclick="selectteamforepic({{$r->id}} , {{$data->id}})">
                                 <div class="row">
                                     <div class="col-md-2">

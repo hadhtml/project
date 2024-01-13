@@ -460,6 +460,8 @@ class MemberController extends Controller
             'epic_status' => $request->epic_status,
             'epic_detail' => $request->epic_description,
             'stream_id' => $request->Stream_id,
+            'type' => $request->type,
+            'unit_id' => $request->Stream_id,
             'position' => $counter,
             'user_id' => Auth::id(),
             

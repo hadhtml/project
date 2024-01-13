@@ -13,7 +13,8 @@ use App\Models\flags;
 use App\Models\flag_comments;
 use App\Models\escalate_cards;
 use App\Models\team_backlog;
-use App\Models\epics_stroy;
+use App\Models\backlog;
+use App\Models\backlog_unit;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use DB;
@@ -106,66 +107,37 @@ class EpicBacklogController extends Controller
     }
     public function updategeneral(Request $request)
     {
-        $data = team_backlog::find($request->epic_id);
-        $data->epic_title = $request->epic_name;
-        $data->epic_start_date = $request->epic_start_date;
-        $data->epic_end_date = $request->epic_end_date;
-        $data->epic_detail = $request->epic_detail;
-        $data->save();
 
-         $jira = DB::table('backlog')->where('id',$data->id)->first();
-         if($jira)
-         {
-            $backlog = DB::table('epics')->where('jira_id',$jira->jira_id)->first();
-             if($backlog)
-             {
-               DB::table('epics')->where('jira_id',$jira->jira_id)->update(['epic_name' => $request->epic_name]);
-             }
-         
-            if($jira->jira_id != '')
-            {
-                $Account = DB::table('jira_setting')->where('user_id',Auth::id())->first();
-                $username = $Account->user_name;
-                $apiToken = $Account->token;
-                $issueKeyOrId = $jira->jira_id;
-                $apiEndpoint = "{$Account->jira_url}/rest/api/3/issue/{$issueKeyOrId}";
-                $auth = base64_encode("$username:$apiToken");
-                    $updateData = [
-                        "fields" => [
-                            "description" => [
-                                "type" => "doc",
-                                "version" => 1,
-                                "content" => [
-                                    [
-                                        "type" => "paragraph",
-                                        "content" => [
-                                            [
-                                                "type" => "text",
-                                                "text" => $request->epic_description
-                                            ]
-                                        ]
-                                    ]
-                                ]
-                            ],
-                            
-                           "summary" => $request->epic_name, 
-                        ],
-                    ];
-                    $ch = curl_init($apiEndpoint);
-                    if ($ch === false) {
-                        die("cURL initialization failed");
-                    }
-                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
-                    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($updateData));
-                    curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                        "Authorization: Basic {$auth}",
-                        "Content-Type: application/json",
-                    ]);
-                    $response = curl_exec($ch);
-                    curl_close($ch);
-                 }     
+        if($request->table == 'team_backlog')
+        {
+            $data = team_backlog::find($request->epic_id);
+            $data->epic_title = $request->epic_name;
+            $data->epic_start_date = $request->epic_start_date;
+            $data->epic_end_date = $request->epic_end_date;
+            $data->epic_detail = $request->epic_detail;
+            $data->save();
         }
+        
+        if($request->table == 'backlog')
+        {
+            $data = backlog::find($request->epic_id);
+            $data->epic_title = $request->epic_name;
+            $data->epic_start_date = $request->epic_start_date;
+            $data->epic_end_date = $request->epic_end_date;
+            $data->epic_detail = $request->epic_detail;
+            $data->save();
+        }
+
+        if($request->table == 'backlog_unit')
+        {
+            $data = backlog_unit::find($request->epic_id);
+            $data->epic_title = $request->epic_name;
+            $data->epic_start_date = $request->epic_start_date;
+            $data->epic_end_date = $request->epic_end_date;
+            $data->epic_detail = $request->epic_detail;
+            $data->save();   
+        }
+
         $table = $request->table;
         $html = view('epicbacklog.tabs.general', compact('data','table'))->render();
         return $html;

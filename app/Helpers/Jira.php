@@ -163,7 +163,7 @@ class Jira
     
     }
     
-     public function UpdateBVsjira()
+     public static function UpdateBVsjira()
     {
 
      
