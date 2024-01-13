@@ -44,18 +44,17 @@
     </div>
 </div>
 <div class="rightside" >
-    <span onclick="maximizemodal()">
-        <img  src="{{url('public/assets/svg/maximize.svg')}}">
+    <span onclick="maximizemodal()" id="open_in_full">
+        <span class="material-symbols-outlined">open_in_full</span>
+    </span>
+    <span onclick="maximizemodal()" class="d-none" id="close_fullscreen">
+        <span class="material-symbols-outlined">close_fullscreen</span>
     </span>
     <img data-dismiss="modal" class="closeimage" aria-label="Close" src="{{url('public/assets/svg/cross.svg')}}">
 </div>
 <script type="text/javascript">
     function rasiseflag() {
         $('.raiseflag-box').slideToggle();
-    }
-    function maximizemodal() {
-        $('#modaldialog').toggleClass('modalfullscreen')
-        $('#edit-epic-modal-new').css('padding-right' , '0px')
     }
     function changekeyresultstatus(status , id) {
         $.ajax({

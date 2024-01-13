@@ -13,3 +13,11 @@ function selectstorystatus(status , id) {
 function showdetailsofactivity(id){ 
     $('#activitydetalbox'+id).slideToggle();
 }
+function maximizemodal() {
+    $('#modaldialogepic').toggleClass('modalfullscreen');
+    $('#edit-epic-modal-new').css('padding-right' , '0px')
+    $('#modaldialog').toggleClass('modalfullscreen')
+    $('#edit-modal').css('padding-right' , '0px');
+    $("#open_in_full").toggleClass("d-none");
+    $('#close_fullscreen').toggleClass('d-none');
+}

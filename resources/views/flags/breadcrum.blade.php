@@ -380,10 +380,6 @@ function deleteflag(id) {
     $('#deleteid').val(id);
     $('#deleteflagmodal').modal('show');
 }
-function maximizemodal() {
-    $('#modaldialog').toggleClass('modalfullscreen')
-    $('#edit-modal').css('padding-right' , '0px')
-}
 $('#deleteflagform').on('submit',(function(e) {
     $('#deleteflagbutton').html('<i class="fa fa-spin fa-spinner"></i>');
     e.preventDefault();
