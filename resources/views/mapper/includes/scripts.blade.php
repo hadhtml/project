@@ -7,7 +7,7 @@ const dataToImport = {
                     "name": "personalized",
                     "data": {},
                     "class": "organization-tab",
-                    "html": "<div>Organiaztion</div>",
+                    "html": "<div>{{ $organization->organization_name }}</div>",
                     "typenode": false,
                     "inputs": {},
                     "outputs": {
