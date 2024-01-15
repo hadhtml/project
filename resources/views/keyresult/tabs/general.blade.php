@@ -180,6 +180,8 @@
             success: function(res){
                 $('#updatebutton').html('Save Changes');
                 showheader($('#key_result_id').val());
+
+
                 var objective_id_for_nested =  $('#objective_id_for_nested').val();
                 $('#parentCollapsible').html(res);
                 $("#nestedCollapsible" + objective_id_for_nested).collapse('toggle');

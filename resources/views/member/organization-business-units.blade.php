@@ -126,10 +126,10 @@ $var_objective = "Org-Unit";
                 <div class="modal-header">
                     <div class="d-flex flex-column">
                         <div>
-                            <h5 class="modal-title mb-0" id="exampleModalLabel">Delete Business Units</h5>
+                            <h5 class="modal-title mb-0" id="exampleModalLabel">Delete Business Unit</h5>
                         </div>
                         <div>
-                            <small>Are you sure you want to delete this Business Units?</small>
+                            <small>Are you sure you want to delete this Business Unit?</small>
                         </div>
                     </div>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">

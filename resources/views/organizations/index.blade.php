@@ -29,6 +29,7 @@
         $Impediments = DB::table('flags')
             ->where('business_units', $organization->id)
             ->where('board_type', 'org')
+            ->where('flag_title','!=',NULL)
             ->count();
 
     @endphp

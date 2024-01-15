@@ -525,7 +525,7 @@ No objective found.
    
         var type = el.id.split("-")[2];
         var slug = el.id.split("-")[3];
-        var Init = el.id.split("-")[6];
+     
        
      
     
@@ -542,8 +542,7 @@ No objective found.
         dropped:dropped,
         taskOrder:taskOrder,
         type:type,
-        slug:slug,
-        Init:Init,
+        slug:slug
 
         
       

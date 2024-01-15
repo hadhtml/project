@@ -489,6 +489,7 @@ $updateData = [
     {
         $FladId = $request->input("chartId");
       
+      
           if ($FladId[0] == "All") {
             if ($request->type == "unit") {
                 $organization = DB::table("business_units")

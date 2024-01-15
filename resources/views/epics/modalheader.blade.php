@@ -125,7 +125,7 @@
                                         </div>
                                         <div class="col-md-8">
                                             <div class="membername">{{ $r->team_title }}</div>
-                                            <div class="memberdetail">Team Leader: {{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
+                                            <div class="memberdetail">{{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
                                         </div>
                                         <div class="col-md-2 text-center mt-3">
                                             @if($data->team_id == $r->id)
@@ -151,7 +151,7 @@
                                         </div>
                                         <div class="col-md-8">
                                             <div class="membername">{{ $r->team_title }}</div>
-                                            <div class="memberdetail">Team Leader: {{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
+                                            <div class="memberdetail">{{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
                                         </div>
                                         <div class="col-md-2 text-center mt-3">
                                             @if($data->team_id == $r->id)
@@ -177,7 +177,7 @@
                                         </div>
                                         <div class="col-md-8">
                                             <div class="membername">{{ $r->team_title }}</div>
-                                            <div class="memberdetail">Team Leader: {{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
+                                            <div class="memberdetail">{{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
                                         </div>
                                         <div class="col-md-2 text-center mt-3">
                                             @if($data->team_id == $r->id)
@@ -202,7 +202,7 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="membername">{{ $r->team_title }}</div>
-                                        <div class="memberdetail">Team Leader: {{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
+                                        <div class="memberdetail">{{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
                                     </div>
                                     <div class="col-md-2 text-center mt-3">
                                         @if($data->team_id == $r->id)
@@ -298,11 +298,8 @@
     </div>
 </div>
 <div class="rightside" >
-    <span onclick="maximizemodal()" id="open_in_full">
-        <span class="material-symbols-outlined">open_in_full</span>
-    </span>
-    <span onclick="maximizemodal()" class="d-none" id="close_fullscreen">
-        <span class="material-symbols-outlined">close_fullscreen</span>
+    <span id="maximizeimage" onclick="maximizemodal()">
+        <img src="{{url('public/assets/svg/maximize.svg')}}">
     </span>
     <img data-dismiss="modal" class="closeimage" aria-label="Close" src="{{url('public/assets/svg/cross.svg')}}">
 </div>
@@ -312,6 +309,11 @@ function showmemberbox() {
 }
 function rasiseflag() {
     $('.raiseflag-box').slideToggle();
+}
+function maximizemodal() {
+    $('#modaldialogepic').toggleClass('modalfullscreen');
+    $('#maximizeimage').html('<span class="material-symbols-outlined"> close_fullscreen </span>');
+    $('#edit-epic-modal-new').css('padding-right' , '0px')
 }
 function selectteamforepic(id , epic_id) {
     $.ajax({

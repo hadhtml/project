@@ -33,7 +33,7 @@ $keyqvalue = $keyqfirst->value;
   </div>
 </div>
 @else
-<div class="ml-2 text-danger mt-2" role="alert">First Start Quarter</div>
+{{-- <div class="ml-2 text-danger mt-2" role="alert">First Start Quarter</div> --}}
 @endif
 <div class="row field_wrapper_key">
   <div class="col-md-12">
@@ -75,7 +75,7 @@ $keyqvalue = $keyqfirst->value;
 </div>
 <div class="row margintopfourtypixel">
   <div class="col-md-12 text-right">
-     <button class="btn btn-primary" @if($KEYChart) onclick="addnewquartervalue({{$key->id}},'{{$KEYChart->id}}','{{$report->id}}')" @endif type="button">Add</button>
+     <button class="btn btn-primary"  @if($KEYChart) onclick="addnewquartervalue({{$key->id}},'{{$KEYChart->id}}','{{$report->id}}')" @else disabled @endif type="button">Add</button>
   </div>
 </div>
 @else

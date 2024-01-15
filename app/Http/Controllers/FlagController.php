@@ -281,6 +281,8 @@ class FlagController extends Controller
         $member->member_id = $request->flag_assign;
         $member->flag_id = $flag->id;
         $member->save();
+        
+        DB::table('epics')->where('id',$request->flag_epic_id)->update(['flag_assign' => 1]);
         if($request->type == 'unit')
         {
             $organization  = DB::table('business_units')->where('slug',$request->slug)->first();

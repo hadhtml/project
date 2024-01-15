@@ -2,7 +2,7 @@
 $var_objective = "V-Stream";
 @endphp
 @extends('components.main-layout')
-<title>VS-Business Unit</title>
+<title>Value Stream</title>
 @section('content')
 
 <div class="row">
