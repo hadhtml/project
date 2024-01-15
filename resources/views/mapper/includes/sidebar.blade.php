@@ -12,30 +12,11 @@
                     <span class="material-symbols-outlined">domain</span>
                 </a>
             </li>
-            <!-- <li class="buttonClick">
-                <a href="#" data-toggle="tooltip" data-placement="right" data-original-title="Search">
-                    <span class="material-symbols-outlined">search</span>
-                </a>
-            </li> -->
-            
-            <!-- <li>
-                <a href="{{url('dashboard/organization/contacts')}}" @if (url()->current() == url('dashboard/organization/contacts')) class="active-link" @else class="nav-link"  @endif  title="" data-toggle="tooltip" data-placement="right" data-original-title="Contacts">
-                    <span class="material-symbols-outlined">perm_contact_calendar</span>
-                </a>
-            </li> -->
-
             <li>
-                <a href="{{ url('dashboard/okr-mapper') }}"  class="nav-link"  title="" data-toggle="tooltip" data-placement="right" data-original-title="OKR Mapper">
+                <a href="{{ url('dashboard/okr-mapper') }}"  @if (url()->current() == url('okr-mapper')) class="active-link" @else class="nav-link"  @endif  title="" data-toggle="tooltip" data-placement="right" data-original-title="OKR Mapper">
                     <span class="material-symbols-outlined">action_key</span>
                 </a>
             </li>
-
-            {{-- <li>
-                <a href="{{url('dashboard/organization/users')}}" @if (url()->current() == url('dashboard/organization/users')) class="active-link" @else class="nav-link"  @endif title="" data-toggle="tooltip" data-placement="right" data-original-title="Users">
-                    <span class="material-symbols-outlined">group</span>
-                </a>
-            </li> --}}
-
         </ul>
         <div class="align-items-center mx-auto mb-3 text-center">
             <ul class="bottom-bar">
@@ -55,6 +36,7 @@
                     </a>
                 </li> -->
             </ul>
+
             <div class="mt-2 dropup">
                 @if(auth()->user()->image)
                 <img src="{{asset('public/assets/images/'.auth()->user()->image)}}" class="dropdown-toggle fixbar-user" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -76,10 +58,7 @@
             </div>
         </div>
     </div>
-    @include('components.subnav-component')
+    <!-- Include -->
+
+
 </div>
-
-
-
-
-

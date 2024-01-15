@@ -246,8 +246,8 @@ Route::name('flags.')->namespace('App\Http\Controllers')->prefix('dashboard/flag
     Route::POST('filterbyextension', 'FlagController@filterbyextension');
     Route::POST('removefromflag', 'FlagController@removefromflag');
 });
-Route::name('linking.')->namespace('App\Http\Controllers')->prefix('dashboard/linking')->group(function () {
-    Route::get('{organizationid}/{type}', 'LinkingController@index');
+Route::name('linking.')->namespace('App\Http\Controllers')->prefix('dashboard')->group(function () {
+    Route::get('okr-mapper', 'MapperController@index');
 });
 
 Route::name('epicbacklog.')->namespace('App\Http\Controllers')->prefix('dashboard/epicbacklog')->group(function () {

@@ -1,9 +1,9 @@
 @php
 $var_objective = 'linking';
 @endphp
-@extends('linking.includes.layout')
+@extends('mapper.includes.layout')
 @section('metta_tittle')
-<title>Linking </title>
+<title>Okr Mapper </title>
 @endsection
 @section('content')
 @php
@@ -56,7 +56,7 @@ $var_objective = 'linking';
 
 
 
-                   @include('linking.includes.scripts') 
+                   @include('mapper.includes.scripts') 
 
                     editor.start();
                     editor.import(dataToImport);

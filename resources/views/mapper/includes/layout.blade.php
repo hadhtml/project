@@ -40,13 +40,12 @@
         <div class="page d-flex flex-row flex-column-fluid body-cont">
             <!-- begin Sidebar -->             
             @if ($var_objective == 'linking')
-                @include('Business-units.unit-sidebar')
-                @include('Business-units.unit-subnav')
+                @include('mapper.includes.sidebar')
             @endif
             <!-- end Sidebar -->
             <div class="content d-flex flex-column flex-column-fluid">
                 @if ($var_objective == 'linking')
-                    @include('linking.includes.beardcumb')
+                    @include('mapper.includes.beardcumb')
                 @endif
                 <div class="container-fluid">
                 @yield('content')
@@ -54,5 +53,6 @@
             </div>
         </div>
     </div>
+    @include('components.script')
 </body>
 </html>
