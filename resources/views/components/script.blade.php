@@ -305,7 +305,7 @@ function handleDivClick(x)
      
         var type = el.id.split("-")[2];
         var slug = el.id.split("-")[3];
-     
+        var Init = el.id.split("-")[6];
     
         $.ajax({
         type: "POST",
@@ -320,7 +320,8 @@ function handleDivClick(x)
         dropped:dropped,
         taskOrder:taskOrder,
         type:type,
-        slug:slug
+        slug:slug,
+        Init:Init
 
       
 

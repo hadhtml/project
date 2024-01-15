@@ -3610,6 +3610,75 @@ DB::table("objectives")
       {
 
         $CurrentQuarters = DB::table('quarter_month')->where('id',$request->parentElId)->first();
+        if($request->Init != $CurrentQuarters->initiative_id)
+        {
+            if ($request->type == "org") {
+                $organization = DB::table("organization")
+                    ->where("id", $request->slug)
+                    ->first();
+                $objective = DB::table("objectives")
+                    ->where("unit_id", $organization->id)
+                    ->where("trash", null)
+                    ->where("type", "org")
+                    ->orderby('IndexCount')
+                    ->get();
+            }
+        
+            if ($request->type == "unit") {
+                $organization = DB::table("business_units")
+                    ->where("id", $request->slug)
+                    ->first();
+                $objective = DB::table("objectives")
+                ->where("unit_id", $organization->id)
+                    ->where("trash", null)
+                    ->where("type", "unit")
+                    ->orderby('IndexCount')
+                    ->get();
+            }
+        
+            if ($request->type == "stream") {
+                $organization = DB::table("value_stream")
+                    ->where("id", $request->slug)
+                    ->first();
+                $objective = DB::table("objectives")
+                ->where("unit_id", $organization->id)
+                    ->where("trash", null)
+                    ->where("type", "stream")
+                    ->orderby('IndexCount')
+                    ->get();
+            }
+        
+            if ($request->type == "BU") {
+                $organization = DB::table("unit_team")
+                    ->where("id", $request->slug)
+                    ->first();
+                $objective = DB::table("objectives")
+                ->where("unit_id", $organization->id)
+                    ->where("trash", null)
+                    ->where("type", "BU")
+                    ->orderby('IndexCount')
+                    ->get();
+            }
+        
+            if ($request->type == "VS") {
+                $organization = DB::table("value_team")
+                    ->where("id", $request->slug)
+                    ->first();
+                $objective = DB::table("objectives")
+                     ->where("unit_id", $organization->id)
+                    ->where("trash", null)
+                    ->where("type", "VS")
+                    ->orderby('IndexCount')
+                    ->get();
+            }
+        
+        
+            return view(
+                "objective.objective-render",
+                compact("organization", "objective")
+            );  
+        }else
+        {
 
         $monthName = $CurrentQuarters->month;
         $monthEndDate = $this->getMonthEndDate($monthName);
@@ -3855,6 +3924,7 @@ DB::table("objectives")
         "objective.objective-render",
         compact("organization", "objective")
     );
+}
 
     }
 
