@@ -30,10 +30,40 @@ class EpicController extends Controller
     public function updategeneral(Request $request)
     {
         $data = Epic::find($request->epic_id);
+        if($data->epic_name != $request->epic_name)
+        {
+            $rand = rand(123456789 , 987654321);
+            $activity = 'has updated Title Field <a href="javascript:void(0)" onclick="showdetailsofactivity('.$rand.')">See Details</a> <div class="activitydetalbox deletecomment" id="activitydetalbox'.$rand.'"><div class="row"> <div class="col-md-10"> <h4>Title Update</h4> </div> <div class="col-md-2"> <img onclick="showdetailsofactivity('.$rand.')" src="'.url("public/assets/svg/crossdelete.svg").'"> </div> </div><p style="margin-bottom:0px;">'.$data->epic_name.'</p><div class="text-center mt-2 mb-2"><span class="material-symbols-outlined"> arrow_downward </span></div><p>'.$request->epic_name.'</p></div>';
+            Cmf::save_activity(Auth::id() , $activity,'epics',$request->epic_id, 'edit');
+        }
+        if($data->epic_detail != $request->epic_detail)
+        {
+            if($data->epic_detail)
+            {
+                $rand = rand(123456781239 , 987651234321);
+                $activity = 'has updated Description Field <a href="javascript:void(0)" onclick="showdetailsofactivity('.$rand.')">See Details</a> <div class="activitydetalbox deletecomment" id="activitydetalbox'.$rand.'"><div class="row"> <div class="col-md-10"> <h4>Description Update</h4> </div> <div class="col-md-2"> <img onclick="showdetailsofactivity('.$rand.')" src="'.url("public/assets/svg/crossdelete.svg").'"> </div> </div><p style="margin-bottom:0px;">'.$data->epic_detail.'</p><div class="text-center mt-2 mb-2"><span class="material-symbols-outlined"> arrow_downward </span></div><p>'.$request->epic_detail.'</p></div>';
+                Cmf::save_activity(Auth::id() , $activity,'epics',$request->epic_id, 'edit');
+            }else{
+                $activity = 'Added a Description';
+                Cmf::save_activity(Auth::id() , $activity,'epics',$request->epic_id, 'edit');
+            }
+        }
         $data->epic_name = $request->epic_name;
         $data->epic_start_date = $request->epic_start_date;
         $data->epic_end_date = $request->epic_end_date;
         $data->epic_detail = $request->epic_detail;
+        $data->save();
+
+
+
+
+
+        $month = date("F",strtotime($request->epic_end_date));
+        $year = date("Y",strtotime($request->epic_end_date));
+        $quarterMonth  = DB::table('quarter_month')->where('id' , $data->month_id)->first();        
+        $quarterMonthtoselect  = DB::table('quarter_month')->where('year' , $year)->where('month' , $month)->where('initiative_id' , $data->initiative_id)->first();
+        $data = Epic::find($request->epic_id);
+        $data->month_id = $quarterMonthtoselect->id;
         $data->save();
         if(!$request->epic_name)
         {
@@ -117,7 +147,7 @@ class EpicController extends Controller
         DB::table("objectives")->where("id", $data->obj_id)->update(["q_obj_prog" => $QuartertotalObj]);
         if ($data->epic_type == "unit") {
             $organization = DB::table("business_units")->where("id", $data->buisness_unit_id)->first();
-            $objective = DB::table("objectives")->where("org_id", $data->buisness_unit_id)->where("unit_id", $data->buisness_unit_id)->where("trash", null)->where("type", "unit")->get();
+            $objective = DB::table("objectives")->where("unit_id", $data->buisness_unit_id)->where("trash", null)->where("type", "unit")->get();
         }
         if ($data->epic_type == "stream") {
         
@@ -126,12 +156,11 @@ class EpicController extends Controller
         }
         if ($data->epic_type == "BU") {
             $organization = DB::table("unit_team")->where("id", $data->buisness_unit_id)->first();
-            $objective = DB::table("objectives")->where("org_id", $data->buisness_unit_id)->where("unit_id", $data->buisness_unit_id)->where("trash", null)->where("type", "BU")->get();
+            $objective = DB::table("objectives")->where("unit_id", $data->buisness_unit_id)->where("trash", null)->where("type", "BU")->get();
         }
         if ($data->epic_type == "VS") {
-
             $organization = DB::table("value_team")->where("id", $data->buisness_unit_id)->first();
-            $objective = DB::table("objectives")->where("org_id", $data->buisness_unit_id)->where("unit_id", $data->buisness_unit_id)->where("trash", null)->where("type", "VS")->get();
+            $objective = DB::table("objectives")->where("unit_id", $data->buisness_unit_id)->where("trash", null)->where("type", "VS")->get();
         }
         if ($data->epic_type == "org") {
             $organization = DB::table("organization")->where("id", $data->buisness_unit_id)->first();
@@ -161,6 +190,10 @@ class EpicController extends Controller
         if($request->organization == 'VS')
         {
             $organization  = DB::table('value_team')->where('slug',$request->slug)->first();
+        }
+        if($request->organization == 'org')
+        {
+            $organization  = DB::table('organization')->where('slug',$request->slug)->first();
         }
         $html = view('epics.showepicinboard', compact('organization','e'))->render();
         return $html;
@@ -220,6 +253,14 @@ class EpicController extends Controller
             return $html;
         }
     }
+    public function removeteamfromepic(Request $request)
+    {
+        $data = Epic::find($request->id);
+        $data->team_id = null;
+        $data->save();
+        $html = view('epics.tabs.teams', compact('data'))->render();
+        return $html;
+    }
     public function uploadattachment(Request $request)
     {
         $filename = $request->file('file')->getClientOriginalName();
@@ -231,7 +272,7 @@ class EpicController extends Controller
         $add->type = 'epics';
         $add->value_id = $request->value_id;
         $add->save();
-        Cmf::save_activity(Auth::id() , 'Added a New Attachment','epics',$request->value_id);
+        Cmf::save_activity(Auth::id() , 'Added a New Attachment','epics',$request->value_id , 'attach_file');
         $attachments = attachments::where('value_id' , $request->value_id)->where('type' , 'epics')->orderby('id' , 'desc')->get();
         $data = Epic::find($request->value_id);
         $html = view('epics.tabs.attachments', compact('attachments','data'))->render();
@@ -242,7 +283,7 @@ class EpicController extends Controller
         $attachment = attachments::find($request->id);
         attachments::where('id',$request->id)->delete();
         $attachments = attachments::where('value_id' , $attachment->value_id)->where('type' , 'epics')->orderby('id' , 'desc')->get();
-        Cmf::save_activity(Auth::id() , 'Delete a Attachment','flags',$attachment->value_id);
+        Cmf::save_activity(Auth::id() , 'Delete a Attachment','flags',$attachment->value_id , 'delete');
         $data = Epic::find($attachment->value_id);
         $html = view('epics.tabs.attachments', compact('attachments','data'))->render();
         return $html;
@@ -253,7 +294,7 @@ class EpicController extends Controller
         $item->epic_id = $request->epic_id;
         $item->epic_story_name = $request->epic_story_name;
         $item->story_assign = $request->story_assign;
-        // $item->story_type = $request->story_type;
+        $item->story_type = $request->story_type;
         $item->story_status = $request->story_status;
         $item->StoryID = Str::slug('SSP-'.rand(100,999));
         // $item->VS_BU_ID = $request->VS_BU_ID;
@@ -280,7 +321,7 @@ class EpicController extends Controller
         $addcomment->type = 'comment';
         $addcomment->comment_type = 'epics';
         $addcomment->save();
-        Cmf::save_activity(Auth::id() , 'Added a New Comment','epics',$request->flag_id);
+        Cmf::save_activity(Auth::id() , 'Added a New Comment','epics',$request->flag_id , 'comment');
         $comments = flag_comments::where('flag_id' , $request->flag_id)->wherenull('comment_id')->orderby('id' , 'desc')->get();
         $data = Epic::find($request->flag_id);
         $html = view('epics.tabs.comments', compact('comments','data'))->render();
@@ -291,7 +332,7 @@ class EpicController extends Controller
         $addcomment = flag_comments::find($request->comment_id);
         $addcomment->comment = $request->comment;
         $addcomment->save();
-        Cmf::save_activity(Auth::id() , 'Update a Comment','epics',$addcomment->flag_id);
+        Cmf::save_activity(Auth::id() , 'Update a Comment','epics',$addcomment->flag_id, 'comment');
         $comments = flag_comments::where('flag_id' , $addcomment->flag_id)->wherenull('comment_id')->orderby('id' , 'desc')->get();
         $data = Epic::find($addcomment->flag_id);
         $html = view('epics.tabs.comments', compact('comments','data'))->render();
@@ -306,7 +347,7 @@ class EpicController extends Controller
         $addcomment->type = 'reply';
         $addcomment->comment_id = $request->comment_id;
         $addcomment->save();
-        Cmf::save_activity(Auth::id() , 'Reply a Comment','epics',$request->flag_id);
+        Cmf::save_activity(Auth::id() , 'Reply a Comment','epics',$request->flag_id, 'reply');
         $comments = flag_comments::where('flag_id' , $request->flag_id)->wherenull('comment_id')->orderby('id' , 'desc')->get();
         $data = Epic::find($request->flag_id);
         $html = view('epics.tabs.comments', compact('comments','data'))->render();
@@ -318,7 +359,7 @@ class EpicController extends Controller
         flag_comments::where('id' , $request->id)->delete();
         flag_comments::where('comment_id' , $request->id)->delete();
         $comments = flag_comments::where('flag_id' , $comment->flag_id)->wherenull('comment_id')->orderby('id' , 'desc')->get();
-        Cmf::save_activity(Auth::id() , 'Delete a Comment','epics',$comment->flag_id);
+        Cmf::save_activity(Auth::id() , 'Delete a Comment','epics',$comment->flag_id, 'delete');
         $data = Epic::find($comment->flag_id);
         $html = view('epics.tabs.comments', compact('comments','data'))->render();
         return $html;
@@ -458,6 +499,42 @@ class EpicController extends Controller
     }
     public function changeepicstatus(Request $request)
     {
+
+
+
+
+        $previousstatus = DB::table('epics')->where('id' , $request->edit_epic_id)->first()->epic_status;
+
+        if($previousstatus == 'In progress')
+        {
+            $from_status = '<b style="background-color: #E1DB3F; color: white; border-radius: 10px; padding-left: 5px; padding-right: 5px; ">In Progress</b>';
+        }
+        if($previousstatus == 'Done')
+        {
+            $from_status = '<b style="background-color: #3fe1a7; color: white; border-radius: 10px; padding-left: 5px; padding-right: 5px; ">Done</b>';
+        }
+        if($previousstatus == 'To Do')
+        {
+            $from_status = '<b style="background-color: #6c757d; color: white; border-radius: 10px; padding-left: 5px; padding-right: 5px; ">To Do</b>';
+        }
+
+        if($request->edit_epic_status == 'To Do')
+        {
+            $tostatus = '<b style="background-color: #6c757d; color: white; border-radius: 10px; padding-left: 5px; padding-right: 5px; ">To Do</b>';
+        }
+        if($request->edit_epic_status == 'Done')
+        {
+            $tostatus = '<b style="background-color: #3fe1a7; color: white; border-radius: 10px; padding-left: 5px; padding-right: 5px; ">Done</b>';
+        }
+        if($request->edit_epic_status == 'In progress')
+        {
+            $tostatus = '<b style="background-color: #E1DB3F; color: white; border-radius: 10px; padding-left: 5px; padding-right: 5px; ">In Progress</b>';
+        }
+        $notification = "Status Changed From ".$from_status .' To '.$tostatus;
+        Cmf::save_activity(Auth::id() , $notification,'epics',$request->edit_epic_id , 'detector_status');
+
+
+
         $date = DB::table("epics")
             ->where("id", $request->edit_epic_id)
             ->first();
@@ -734,19 +811,19 @@ class EpicController extends Controller
         }
         if ($date->epic_type == "unit") {
             $organization = DB::table("business_units")->where("id", $date->buisness_unit_id)->first();
-            $objective = DB::table("objectives")->where("org_id", $date->buisness_unit_id)->where("unit_id", $date->buisness_unit_id)->where("trash", null)->where("type", "unit")->get();
+            $objective = DB::table("objectives")->where("unit_id", $date->buisness_unit_id)->where("trash", null)->where("type", "unit")->get();
         }
         if ($date->epic_type == "stream") {
             $organization = DB::table("value_stream")->where("id", $date->buisness_unit_id)->first();
-            $objective = DB::table("objectives")->where("org_id", $date->buisness_unit_id)->where("unit_id", $date->buisness_unit_id)->where("trash", null)->where("type", "stream")->get();
+            $objective = DB::table("objectives")->where("unit_id", $date->buisness_unit_id)->where("trash", null)->where("type", "stream")->get();
         }
         if ($date->epic_type == "BU") {
             $organization = DB::table("unit_team")->where("id", $date->buisness_unit_id)->first();
-            $objective = DB::table("objectives")->where("org_id", $date->buisness_unit_id)->where("unit_id", $date->buisness_unit_id)->where("trash", null)->where("type", "BU")->get();
+            $objective = DB::table("objectives")->where("unit_id", $date->buisness_unit_id)->where("trash", null)->where("type", "BU")->get();
         }
         if ($date->epic_type == "VS") {
             $organization = DB::table("value_team")->where("id", $date->buisness_unit_id)->first();
-            $objective = DB::table("objectives")->where("org_id", $date->buisness_unit_id)->where("unit_id", $date->buisness_unit_id)->where("trash", null)->where("type", "VS")->get();
+            $objective = DB::table("objectives")->where("unit_id", $date->buisness_unit_id)->where("trash", null)->where("type", "VS")->get();
         }
         if ($date->epic_type == "org") {
             $organization = DB::table("organization")->where("id", $date->buisness_unit_id)->first();
@@ -964,28 +1041,13 @@ class EpicController extends Controller
         {
             $teams = DB::table('org_team')->where('org_id',$update->buisness_unit_id)->where('type' , 'orgT')->get();
         }
-        foreach($teams as $r)
+        if($update->epic_type == 'stream')
         {
-            echo '<div class="col-md-12 memberprofile" onclick="selectteamforepic('.$r->id.','.$update->id.')">
-                    <div class="row">
-                        <div class="col-md-2">
-                            <div class="memberprofileimage">
-                                <img src="'.Avatar::create($r->team_title)->toBase64().'">
-                            </div>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="membername">'.$r->team_title.'</div>
-                            <div class="memberdetail">Team Leader: '.DB::table('members')->where('id' , $r->lead_id)->first()->name.' '.DB::table('members')->where('id' , $r->lead_id)->first()->last_name.'</div>
-                        </div>
-                        <div class="col-md-2 text-center mt-3">';
-                            if($update->team_id == $r->id)
-                            {
-                                echo '<img class="tickimage" src="'.url('public/assets/svg/smalltick.svg').'">';
-                            }
-                        echo '</div>
-                    </div>
-                </div>';
-        }                        
+            $teams = DB::table('value_team')->where('org_id',$update->buisness_unit_id)->where('type' , 'VS')->get();
+        }
+        $update = $update;
+        $html = view('epics.teamappend', compact('teams','update'))->render();
+        return $html;                 
     }
     public function showorderbyactivity(Request $request)
     {
@@ -997,6 +1059,10 @@ class EpicController extends Controller
     }
     public function savenewepic(Request $request)
     {
+        $year =  date('Y');
+        $month =  $request->month;
+        $day =  date('d');
+        $date = $year . "-" . str_pad($month, 2, "0", STR_PAD_LEFT) . "-" . str_pad($day, 2, "0", STR_PAD_LEFT);
         $createepic = new Epic();
         $createepic->epic_status = 'To Do';
         $createepic->initiative_id = $request->initiative_id;
@@ -1010,8 +1076,8 @@ class EpicController extends Controller
         $createepic->save();
         $update = Epic::find($createepic->id);
         $update->trash = $createepic->created_at;
-        $update->epic_start_date = $createepic->created_at;
-        $update->epic_end_date = $createepic->created_at;
+        $update->epic_start_date = $date;
+        $update->epic_end_date = $date;
         $update->save();
         return $createepic->id;
     }
@@ -1025,7 +1091,7 @@ class EpicController extends Controller
     public function saveepicflag(Request $request)
     {
         $flag = new flags();
-        $flag->business_units = $request->buisness_unit_id;
+        $flag->business_units = $request->business_units;
         $flag->epic_id = $request->flag_epic_id;
         $flag->flag_type = $request->flag_type;
         $flag->flag_title = $request->flag_title;
