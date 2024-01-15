@@ -310,6 +310,8 @@ Route::name('keyresult.')->namespace('App\Http\Controllers')->prefix('dashboard/
     Route::POST('addweight', 'KeyresultController@addweight');
     Route::POST('selectteamokrmapper', 'KeyresultController@selectteamokrmapper');
     Route::POST('okrmapperform', 'KeyresultController@okrmapperform');
+    Route::POST('checkkeyresultlink', 'KeyresultController@checkkeyresultlink');
+    Route::POST('deletelinking', 'KeyresultController@deletelinking');
     
 });
 

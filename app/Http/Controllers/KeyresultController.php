@@ -185,8 +185,9 @@ class KeyresultController extends Controller
         }
         if($request->tab == 'okrmapper')
         {
+            $linking = team_link_child::where('bussiness_key_id' , $request->id)->get();
             $data = key_result::find($request->id);
-            $html = view('keyresult.tabs.okrmapper', compact('data'))->render();
+            $html = view('keyresult.tabs.okrmapper', compact('data','linking'))->render();
             return $html;
         }
     }
@@ -337,9 +338,29 @@ class KeyresultController extends Controller
         $add->type = $request->type;
         $add->save();
 
-
+        $linking = team_link_child::where('bussiness_key_id' , $request->bussiness_key_id)->get();
         $data = key_result::find($request->bussiness_key_id);
-        $html = view('keyresult.tabs.okrmapper', compact('data'))->render();
+        $html = view('keyresult.tabs.okrmapper', compact('data','linking'))->render();
+        return $html;
+    }
+    public function checkkeyresultlink(Request $request)
+    {
+        $check = team_link_child::where('team_id' , $request->team_id)->where('team_obj_id' , $request->team_obj_id)->where('bussiness_unit_id' , $request->bussiness_unit_id)->where('bussiness_obj_id' , $request->bussiness_obj_id)->where('bussiness_key_id' , $request->bussiness_key_id)->count();
+        if($check == 0)
+        {
+            return 1;
+        }else{
+            return 2;
+        }
+    }
+    public function deletelinking(Request $request)
+    {
+        $data = team_link_child::where('id' , $request->id)->first();
+
+        team_link_child::where('id' , $request->id)->delete();
+        $linking = team_link_child::where('bussiness_key_id' , $data->bussiness_key_id)->get();
+        $data = key_result::find($data->bussiness_key_id);
+        $html = view('keyresult.tabs.okrmapper', compact('data','linking'))->render();
         return $html;
     }
 }
