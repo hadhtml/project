@@ -28,8 +28,8 @@
                     <!-- <li id="teams" onclick="showtab({{$data->id}} , 'teams')" class="tabsclass">
                         <span class="material-symbols-outlined"> group </span> Teams
                     </li> -->
-                    <!-- <li id="okrmapper" onclick="showtab({{$data->id}} , 'okrmapper')" class="tabsclass">
-                        <span class="material-symbols-outlined"> link </span> OKR Mapper</li> -->
+                    <li id="okrmapper" onclick="showtab({{$data->id}} , 'okrmapper')" class="tabsclass">
+                        <span class="material-symbols-outlined"> link </span> OKR Mapper</li>
                 </ul>
                 <h4>Action</h4>
                 <ul class="positionrelative">

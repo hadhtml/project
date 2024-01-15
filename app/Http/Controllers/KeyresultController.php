@@ -299,4 +299,29 @@ class KeyresultController extends Controller
     {
         DB::table('key_result')->where('id' , $request->id)->update(array('weight' => $request->weight));   
     }
+    public function selectteamokrmapper(Request $request)
+    {
+        if($request->type == 'org')
+        {
+            $objectives = DB::table('objectives')->where('type' , 'orgT')->where('unit_id' , $request->id)->get();
+        }
+        if($request->type == 'stream')
+        {
+            $objectives = DB::table('objectives')->where('type' , 'VS')->where('unit_id' , $request->id)->get();
+        }
+        if($request->type == 'unit')
+        {
+            $objectives = DB::table('objectives')->where('type' , 'BU')->where('unit_id' , $request->id)->get();
+        }
+
+        if($objectives->count() > 0)
+        {
+            foreach ($objectives as $r) {
+                echo '<option value="'.$r->id.'">'.$r->objective_name.'</option>';
+            }
+        }else{
+            echo 1;
+        }
+        
+    }
 }
