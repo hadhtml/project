@@ -14,6 +14,8 @@ use App\Models\flag_comments;
 use App\Models\escalate_cards;
 use App\Models\key_result;
 use App\Models\key_chart;
+use App\Models\team_link_child;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use DB;
@@ -323,5 +325,21 @@ class KeyresultController extends Controller
             echo 1;
         }
         
+    }
+    public function okrmapperform(Request $request)
+    {
+        $add = new team_link_child();
+        $add->team_id = $request->team_id;
+        $add->team_obj_id = $request->team_obj_id;
+        $add->bussiness_unit_id = $request->bussiness_unit_id;
+        $add->bussiness_obj_id = $request->bussiness_obj_id;
+        $add->bussiness_key_id = $request->bussiness_key_id;
+        $add->type = $request->type;
+        $add->save();
+
+
+        $data = key_result::find($request->bussiness_key_id);
+        $html = view('keyresult.tabs.okrmapper', compact('data'))->render();
+        return $html;
     }
 }

@@ -23,7 +23,10 @@
                     <div class="card-body">
                         <form id="okrmapperform" class="needs-validation" action="{{ url('dashboard/keyresult/okrmapperform') }}" method="POST">
                             @csrf
-                            <input type="hidden" value="{{ $data->id }}" name="key_result_id">
+                            <input type="hidden" value="{{ $data->id }}" name="bussiness_key_id">
+                            <input type="hidden" value="{{ $data->type }}" name="type">
+                            <input type="hidden" value="{{ $data->unit_id }}" name="bussiness_unit_id">
+                            <input type="hidden" value="{{ $data->obj_id }}" name="bussiness_obj_id">
                             <div class="row">
                                 <div class="col-md-12 col-lg-12 col-xl-12">
                                     <div class="form-group mb-0">
@@ -51,7 +54,7 @@
                                 <div class="col-md-12 col-lg-12 col-xl-12">
                                     <div class="form-group mb-0">
                                         <label for="key_name">Select Objective <small id="objectiveerror" class="text-danger"></small></label>
-                                        <select required name="objective_id" id="select_objective" class="form-control">
+                                        <select required name="team_obj_id" id="select_objective" class="form-control">
                                             <option value="">Select Objective</option>
                                         </select>
                                     </div>
