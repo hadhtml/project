@@ -540,7 +540,7 @@ $var_objective = 'PageT-'.$type;
                                                                                                 @php
                                                                                                 $epic  = DB::table('epics')->where('month_id',$month->id)->where('trash',NULL)->get();
                                                                                                 @endphp
-                                                                                                <div  @if($CurrentQuarter) @if($q->id < $CurrentQuarter->quarter_id) class="board-flex" @endif @endif class="board boardI"  style="width:236px"
+                                                                                                <div  @if($CurrentQuarter) @if($q->id < $CurrentQuarter->quarter_id) class="board" @endif @endif class="board boardI"  style="width:236px"
                                                                                                 id="{{$month->id}}">
                                                                                                 <header class="noselect">
                                                                                                    {{$month->month}}

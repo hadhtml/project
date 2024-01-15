@@ -2,7 +2,7 @@
 $var_objective = "V-Stream";
 @endphp
 @extends('components.main-layout')
-<title>VS-Business Unit</title>
+<title>Value Stream</title>
 @section('content')
 
 <div class="row">
@@ -114,8 +114,8 @@ $var_objective = "V-Stream";
                     
                             <div class="modal-body">
                               
-                            Are you sure you want to delete this Business Units?
-                            <input type="text" name="" id="noPasteField" class="form-control" placeholder="Type  Business Name" required>
+                            Are you sure you want to delete this Value Stream?
+                            <input type="text" name="" id="noPasteField" class="form-control" placeholder="Type  Value Stream" required>
                     
                             </div>
                             <div class="modal-footer">

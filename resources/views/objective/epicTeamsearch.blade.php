@@ -353,7 +353,15 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
                                                                                  @if(count($quarterMonth) > 0)    
                                                                                  @foreach($quarterMonth as $month)
                                                                                  @php
-                                                                                $epic  = DB::table('epics')->where('month_id',$month->id)->where('initiative_id',$initiative->id)->where('trash',NULL)->whereIn('team_id',$FladId)->get();
+
+                                                                                if($FladId[0] == 0)
+                                                                                {
+                                                                                 $epic  = DB::table('epics')->where('month_id',$month->id)->where('initiative_id',$initiative->id)->where('team_id',0)->where('trash',NULL)->get();
+
+                                                                                }else
+                                                                                {
+                                                                                 $epic  = DB::table('epics')->where('month_id',$month->id)->where('initiative_id',$initiative->id)->where('trash',NULL)->whereIn('team_id',$FladId)->get();
+                                                                                }
                                                                                       
                                                                                  @endphp
                                                                                  <div  @if($CurrentQuarter) @if($q->id < $CurrentQuarter->quarter_id) class="board-flex" @endif @endif class="board"  style="width:236px"

@@ -409,9 +409,9 @@
                                 @endforeach
 
                             </div>
-                            <div class="col-md-12 col-lg-12 col-xl-12 member-area" id="member">
+                            <div class="col-md-12 col-lg-12 col-xl-12 member-area" style="display:none" id="member">
                             </div>    
-                            <div class="col-md-12 mt-7">
+                            <div class="col-md-12">
                                 <button class="btn btn-primary btn-lg btn-theme btn-block ripple" type="submit">Create
                                     Team</button>
                             </div>
@@ -436,6 +436,7 @@
                 },
                 success: function(res) {
 
+                    $('#member').show();
                     $('#member').html(res);
                     $('#member-old').hide();
 
@@ -447,7 +448,7 @@
         {
             
             $('#member-old').show();
-            $('#member').html('');
+            $('#member').hide();
 
         }
 
