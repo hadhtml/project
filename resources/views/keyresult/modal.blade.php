@@ -1,5 +1,5 @@
 <div class="modal-header modalheaderforapend">
-    @include('epics.modalheader')
+    @include('keyresult.modalheader')
 </div>
 <div class="modal-body" id="showformforedit">
     <div class="row"><div class="col-md-12"><div class="border-top"></div></div></div>
@@ -12,26 +12,24 @@
                     <li id="general" onclick="showtab({{$data->id}} , 'general')" class="tabsclass active">
                         <span class="material-symbols-outlined"> edit_square </span> General
                     </li>
-                    <li id="childitems" onclick="showtab({{$data->id}} , 'childitems')" class="tabsclass">
-                        <span class="material-symbols-outlined">toc</span> Child Items
+                    <li id="targets" onclick="showtab({{$data->id}} , 'targets')" class="tabsclass">
+                        <span class="material-symbols-outlined"> target </span> Targets
                     </li>
-                    <li id="comments" onclick="showtab({{$data->id}} , 'comments')" class="tabsclass">
-                        <span class="material-symbols-outlined">comment</span> Comments
+                    <li id="values" onclick="showtab({{$data->id}} , 'values')" class="tabsclass">
+                        <span class="material-symbols-outlined"> database </span> Values
                     </li>
-                    <li id="activites" onclick="showtab({{$data->id}} , 'activites')" class="tabsclass">
-                       <span class="material-symbols-outlined">browse_activity</span> Activities
+                    <li id="weighttab" onclick="showtab({{$data->id}} , 'weighttab')" class="tabsclass">
+                        <span class="material-symbols-outlined"> weight </span> Weight
                     </li>
-                    <!-- <li id="checkins" onclick="showtab({{$data->id}} , 'checkins')" class="tabsclass">
-                        <span class="material-symbols-outlined">checklist</span> Check-Ins
+                    <!-- <li id="charts" onclick="showtab({{$data->id}} , 'charts')" class="tabsclass">
+                        <span class="material-symbols-outlined">monitoring</span> Charts
                     </li> -->
-                    <li id="attachment" onclick="showtab({{$data->id}} , 'attachment')" class="tabsclass">
-                        <span class="material-symbols-outlined"> attachment </span> Attachments</li>
-                    <li id="flags" onclick="showtab({{$data->id}} , 'flags')" class="tabsclass">
-                        <span class="material-symbols-outlined">flag</span> Flags
-                    </li>
-                    <li id="teams" onclick="showtab({{$data->id}} , 'teams')" class="tabsclass">
+                    
+                    <!-- <li id="teams" onclick="showtab({{$data->id}} , 'teams')" class="tabsclass">
                         <span class="material-symbols-outlined"> group </span> Teams
-                    </li>
+                    </li> -->
+                    <!-- <li id="okrmapper" onclick="showtab({{$data->id}} , 'okrmapper')" class="tabsclass">
+                        <span class="material-symbols-outlined"> link </span> OKR Mapper</li> -->
                 </ul>
                 <h4>Action</h4>
                 <ul class="positionrelative">
@@ -39,17 +37,17 @@
                     <!-- <li><span class="material-symbols-outlined">share</span> Share</li> -->
                     <!-- <li><img src="{{ url('public/assets/svg/arrow-right-action.svg') }}"> Move</li> -->
                     <li onclick="deleteflagshow({{$data->id}})"><span class="material-symbols-outlined">delete</span> Delete</li>
-                    <div class="deleteflag deleteepiccard hidepopupall" id="flagdelete{{ $data->id }}">
+                    <div class="deleteflag deleteepiccard" id="flagdelete{{ $data->id }}">
                         <div class="row">
                             <div class="col-md-10">
-                                <h4>Delete Epic</h4>
+                                <h4>Delete Key Result</h4>
                             </div>
                             <div class="col-md-2">
                                 <img onclick="deleteflagshow({{$data->id}})" src="{{ url('public/assets/svg/crossdelete.svg') }}">
                             </div>
                         </div>
                         <p>All actions will be removed from the activity feed and you won’t be able to re-open the card. There is no undo.</p>
-                        <button onclick="DeleteEpic({{$data->id}},{{ $data->initiative_id }},{{ $data->key_id }},{{ $data->obj_id }})" class="btn btn-danger btn-block">Delete</button>
+                        <button onclick="deletekeyresult({{$data->id}},{{$data->obj_id}})" class="btn btn-danger btn-block">Delete</button>
                     </div>
                 </ul>
             </div>
@@ -58,38 +56,34 @@
             <div class="row">
                 <div class="col-md-12 col-lg-12 col-xl-12">
                     <div class="d-flex flex-row align-items-center justify-content-between block-header">
-                        <div class="d-flex flex-row align-items-center">
-                            <div class="mr-2">
-                                <span class="material-symbols-outlined">edit_square</span>
-                            </div>
-                            <div>
-                                <h4>General</h4>
-                            </div>
+                        <div>
+                            <h4><img src="{{ url('public/assets/svg/editsvg.svg') }}"> General</h4>
                         </div>
                     </div>
                 </div>
             </div>
-            <form id="updategeneralepic" class="needs-validation" action="{{ url('dashboard/epics/updategeneral') }}" method="POST" novalidate>
+            <form id="updategeneral" class="needs-validation" action="{{ url('dashboard/keyresult/updategeneral') }}" method="POST" novalidate>
                 @csrf
-                <input type="hidden" value="{{ $data->id }}" name="epic_id">
+                <input type="hidden" id="key_result_id" value="{{ $data->id }}" name="id">
+                <input type="hidden" value="{{ $data->obj_id }}" id="objective_id_for_nested">
                 <div class="row">
                     <div class="col-md-12 col-lg-12 col-xl-12">
                         <div class="form-group mb-0">
-                            <label for="epic_name">Epic Title</label>
-                            <input type="text" required='true' value="{{ $data->epic_name }}" class="form-control" name="epic_name" id="epic_name">
+                            <label for="key_name">Key Result title</label>
+                            <input type="text" required='true' value="{{ $data->key_name }}" class="form-control" name="key_name" id="key_title">
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group mb-0">
-                            <label for="epic_start_date">Start Date</label>
-                            <input id="epic_start_date" type="date" class="form-control" value="{{ date('Y-m-d',strtotime($data->epic_start_date)) }}" name="epic_start_date"  required>
+                            <label for="key_start_date">Start Date</label>
+                            <input id="key_start_date" type="date" class="form-control" value="{{ date('Y-m-d',strtotime($data->key_start_date)) }}" name="key_start_date"  required>
                             
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group mb-0">
-                            <label for="epic_end_date">End Date</label>
-                            <input id="epic_end_date" type="date" class="form-control" value="{{ date('Y-m-d',strtotime($data->epic_end_date)) }}" name="epic_end_date" name="edit_epic_end_date" required>
+                            <label for="key_end_date">End Date</label>
+                            <input id="key_end_date" type="date" class="form-control" value="{{ date('Y-m-d',strtotime($data->key_end_date)) }}" name="key_end_date" required>
                             
                         </div>
                     </div>
@@ -97,14 +91,14 @@
                         <div class="form-group mb-0">
                             <label for="editor{{ $data->id }}">Description</label>
                             <div class="textareaformcontrol">
-                                <textarea name="epic_detail" id="editor{{ $data->id }}">{{ $data->epic_detail }}</textarea> 
+                                <textarea name="key_detail" id="editor{{ $data->id }}">{{ $data->key_detail }}</textarea> 
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row margintopfourtypixel">
                     <div class="col-md-12 text-right">
-                        <button type="submit" class="btn btn-primary btn-theme ripple savechangebutton" id="updatebuttonepic">@if($data->epic_name) Save Changes @else Save Epic @endif</button>
+                        <button type="submit" class="btn btn-primary btn-theme ripple savechangebutton" id="updatebutton">Save Changes</button>
                     </div>
                 </div>
             </form>
@@ -113,12 +107,12 @@
 </div>
 <script type="text/javascript">
     $( document ).ready(function() {
-        var mindate = '{{ DB::table("initiative")->where("id" , $data->initiative_id)->first()->initiative_start_date }}';
-        var maxdate = '{{ DB::table("initiative")->where("id" , $data->initiative_id)->first()->initiative_end_date }}';
-        $('#epic_end_date').attr('min', mindate);
-        $('#epic_end_date').attr('max', maxdate);
-        $('#epic_start_date').attr('min', mindate);
-        $('#epic_start_date').attr('max', maxdate);
+        var mindate = '{{ DB::table("objectives")->where("id" , $data->obj_id)->first()->start_date }}';
+        var maxdate = '{{ DB::table("objectives")->where("id" , $data->obj_id)->first()->end_date }}';
+        $('#key_end_date').attr('min', mindate);
+        $('#key_end_date').attr('max', maxdate);
+        $('#key_start_date').attr('min', mindate);
+        $('#key_start_date').attr('max', maxdate);
     });
     function deleteflagshow(id) {
         $('#flagdelete'+id).slideToggle();
@@ -144,11 +138,7 @@
                 selectedOptions: '{{ $data->epic_name }}',
             },
             success: function(res) {
-                showheader(id);
-                $('#parentCollapsible').html(res);
-                $("#nestedCollapsible{{ $data->obj_id }}").collapse('toggle');
-                $("#key-result{{ $data->key_id }}").collapse('toggle');
-                $("#initiative{{ $data->initiative_id }}").collapse('toggle');
+                $('.modalheaderforapend').html(res);
             },
             error: function(error) {
                 
@@ -158,7 +148,7 @@
     function showheader(id) {
         $.ajax({
             type: "POST",
-            url: "{{ url('dashboard/epics/showheader') }}",
+            url: "{{ url('dashboard/keyresult/showheader') }}",
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
@@ -201,7 +191,7 @@
         $('.secondportion').html('<i class="fa fa-spin fa-spinner"></i>');
         $.ajax({
             type: "POST",
-            url: "{{ url('dashboard/epics/showtab') }}",
+            url: "{{ url('dashboard/keyresult/showtab') }}",
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
@@ -232,8 +222,8 @@
             ['view', ['fullscreen', 'codeview']],
         ],
     });
-    $('#updategeneralepic').on('submit',(function(e) {
-        $('#updatebuttonepic').html('<i class="fa fa-spin fa-spinner"></i>');
+    $('#updategeneral').on('submit',(function(e) {
+        $('#updatebutton').html('<i class="fa fa-spin fa-spinner"></i>');
         e.preventDefault();
         var formData = new FormData(this);
         $.ajax({
@@ -244,16 +234,11 @@
             contentType: false,
             processData: false,
             success: function(res){
+                $('#updatebutton').html('Save Changes');
+                showheader($('#key_result_id').val());
+                var objective_id_for_nested =  $('#objective_id_for_nested').val();
                 $('#parentCollapsible').html(res);
-                $("#nestedCollapsible{{ $data->obj_id }}").collapse('toggle');
-                $("#key-result{{ $data->key_id }}").collapse('toggle');
-                $("#initiative{{ $data->initiative_id }}").collapse('toggle');                
-                showheader('{{ $data->id }}')
-                $('#updatebuttonepic').html('Save Changes');
-
-                @if(!$data->epic_name)
-                $('#edit-epic-modal-new').modal('hide');
-                @endif
+                $("#nestedCollapsible" + objective_id_for_nested).collapse('toggle');
             }
         });
     }));

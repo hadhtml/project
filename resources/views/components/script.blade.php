@@ -20,7 +20,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.13.0/Sortable.min.js"></script>
-
+<script src="{{ asset('public/assets/js/custom.js') }}"></script>
 
 <!-- Zoom -->
 
@@ -305,7 +305,7 @@ function handleDivClick(x)
      
         var type = el.id.split("-")[2];
         var slug = el.id.split("-")[3];
-        var Init = el.id.split("-")[6];
+     
     
         $.ajax({
         type: "POST",
@@ -320,8 +320,7 @@ function handleDivClick(x)
         dropped:dropped,
         taskOrder:taskOrder,
         type:type,
-        slug:slug,
-        Init:Init
+        slug:slug
 
       
 
@@ -372,7 +371,7 @@ function handleDivClick(x)
 
  $('.chkveg').val('');
   $('.chkveg').multiselect({
-    includeSelectAllOption:false,
+    includeSelectAllOption:true,
     numberDisplayed: 0
   });
 
@@ -383,7 +382,7 @@ $(function() {
 
 $('.flag-search').val('');
  $('.flag-search').multiselect({
-   includeSelectAllOption:false,
+   includeSelectAllOption:true,
  });
 
 

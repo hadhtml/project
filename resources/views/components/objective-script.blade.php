@@ -2184,6 +2184,7 @@
         var unit_id = "{{ $organization->id }}";
         var type = "{{ $organization->type }}";
         var chartId = $('.flag-search').val();
+        var count = chartId.length;
              
         if (chartId != '') {
             $.ajax({
@@ -2199,6 +2200,7 @@
                     unit_id: unit_id,
                     type: type,
                     chartId: chartId,
+                    count:count,
 
                 },
                 success: function(res) {

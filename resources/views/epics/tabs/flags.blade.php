@@ -162,7 +162,7 @@ function getOrder(){
                     <div class="col-md-1 text-left">
                         <div class="child-item-chekbox-portion">
                             <label class="form-checkbox">
-                                <input @if($r->flag_status == 'done') checked @endif class="form-check-input"  type="checkbox" @if($r->flag_status == 'done') onclick="updateflagstatus({{$r->id}} , 'todoflag')" @else onclick="updateflagstatus({{$r->id}} , 'done')" @endif value="{{$r->id}}"  id="flexCheckDefault">
+                                <input @if($r->flag_status == 'doneflag') checked @endif class="form-check-input"  type="checkbox" @if($r->flag_status == 'doneflag') onclick="updateflagstatus({{$r->id}} , 'todoflag')" @else onclick="updateflagstatus({{$r->id}} , 'doneflag')" @endif value="{{$r->id}}"  id="flexCheckDefault">
                                 <span class="checkbox-label"></span>
                             </label>
                         </div>
@@ -173,7 +173,7 @@ function getOrder(){
                     <div class="col-md-2 text-right">
                         <img class="edit-item-image" type="button" onclick="showupdatecard({{$r->id}})" src="{{ url('public/assets/svg/edit-2.svg') }}">
                         <img class="delete-item-image" onclick="deleteflagshow({{$r->id}})" src="{{ url('public/assets/svg/trash.svg') }}">
-                        <div class="deletechildstory" id="deleteattachmentshow{{ $r->id }}">
+                        <div class="deletechildstory hidepopupall" id="deleteattachmentshow{{ $r->id }}">
                             <div class="row">
                                 <div class="col-md-10">
                                     <h4 class="text-left">Delete Flag</h4>
@@ -193,7 +193,7 @@ function getOrder(){
                         @if($r->flag_status == 'inprogress')
                         <div class="flagstatusbadge inprogress-button-color">In Progress</div>
                         @endif
-                        @if($r->flag_status == 'done')
+                        @if($r->flag_status == 'doneflag')
                         <div class="flagstatusbadge done-button-color">Done</div>
                         @endif
                         

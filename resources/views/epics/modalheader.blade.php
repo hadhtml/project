@@ -93,7 +93,7 @@
         </a>
         @endif
         <div class="memberlistposition">
-            <div class="memberadd-box team-select-box">
+            <div class="memberadd-box team-select-box hidepopupall">
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <h4>Select Team</h4>
@@ -114,48 +114,82 @@
                 </div> -->
                 <div class="row" id="memberstoshow">
                     @if($data->epic_type == 'unit')
-                        @foreach(DB::table('unit_team')->where('org_id',$data->buisness_unit_id)->where('type' , 'BU')->get() as $r)
-                            <div class="col-md-12 memberprofile" onclick="selectteamforepic({{$r->id}} , {{$data->id}})">
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <div class="memberprofileimage">
-                                            <img class="gixie" data-item-id="{{ $r->id }}">
+                        @if(DB::table('unit_team')->where('org_id',$data->buisness_unit_id)->where('type' , 'BU')->count() > 0)
+                            @foreach(DB::table('unit_team')->where('org_id',$data->buisness_unit_id)->where('type' , 'BU')->get() as $r)
+                                <div class="col-md-12 memberprofile" onclick="selectteamforepic({{$r->id}} , {{$data->id}})">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="memberprofileimage">
+                                                <img class="gixie" data-item-id="{{ $r->id }}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="membername">{{ $r->team_title }}</div>
+                                            <div class="memberdetail">{{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
+                                        </div>
+                                        <div class="col-md-2 text-center mt-3">
+                                            @if($data->team_id == $r->id)
+                                            <img class="tickimage" src="{{ url('public/assets/svg/smalltick.svg') }}">
+                                            @endif
                                         </div>
                                     </div>
-                                    <div class="col-md-8">
-                                        <div class="membername">{{ $r->team_title }}</div>
-                                        <div class="memberdetail">Team Leader: {{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
-                                    </div>
-                                    <div class="col-md-2 text-center mt-3">
-                                        @if($data->team_id == $r->id)
-                                        <img class="tickimage" src="{{ url('public/assets/svg/smalltick.svg') }}">
-                                        @endif
-                                    </div>
                                 </div>
-                            </div>
-                        @endforeach
+                            @endforeach
+                        @else
+                            <div style="position: absolute; left: 25%; top: 50%; ">No team Available</div>
+                        @endif
                     @endif
                     @if($data->epic_type == 'org')
-                        @foreach(DB::table('org_team')->where('org_id',$data->buisness_unit_id)->where('type' , 'orgT')->get() as $r)
-                            <div class="col-md-12 memberprofile" onclick="selectteamforepic({{$r->id}} , {{$data->id}})">
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <div class="memberprofileimage">
-                                            <img class="gixie" data-item-id="{{ $r->id }}">
+                        @if(DB::table('org_team')->where('org_id',$data->buisness_unit_id)->where('type' , 'orgT')->count() > 0)
+                            @foreach(DB::table('org_team')->where('org_id',$data->buisness_unit_id)->where('type' , 'orgT')->get() as $r)
+                                <div class="col-md-12 memberprofile" onclick="selectteamforepic({{$r->id}} , {{$data->id}})">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="memberprofileimage">
+                                                <img class="gixie" data-item-id="{{ $r->id }}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="membername">{{ $r->team_title }}</div>
+                                            <div class="memberdetail">{{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
+                                        </div>
+                                        <div class="col-md-2 text-center mt-3">
+                                            @if($data->team_id == $r->id)
+                                            <img class="tickimage" src="{{ url('public/assets/svg/smalltick.svg') }}">
+                                            @endif
                                         </div>
                                     </div>
-                                    <div class="col-md-8">
-                                        <div class="membername">{{ $r->team_title }}</div>
-                                        <div class="memberdetail">Team Leader: {{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
-                                    </div>
-                                    <div class="col-md-2 text-center mt-3">
-                                        @if($data->team_id == $r->id)
-                                        <img class="tickimage" src="{{ url('public/assets/svg/smalltick.svg') }}">
-                                        @endif
+                                </div>
+                            @endforeach
+                        @else
+                            <div style="position: absolute; left: 25%; top: 50%; ">No team Available</div>
+                        @endif
+                    @endif
+                    @if($data->epic_type == 'stream')
+                        @if(DB::table('value_team')->where('org_id',$data->buisness_unit_id)->where('type' , 'VS')->count() > 0)
+                            @foreach(DB::table('value_team')->where('org_id',$data->buisness_unit_id)->where('type' , 'VS')->get() as $r)
+                                <div class="col-md-12 memberprofile" onclick="selectteamforepic({{$r->id}} , {{$data->id}})">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="memberprofileimage">
+                                                <img src="{{ Avatar::create($r->team_title)->toBase64() }}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="membername">{{ $r->team_title }}</div>
+                                            <div class="memberdetail">{{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
+                                        </div>
+                                        <div class="col-md-2 text-center mt-3">
+                                            @if($data->team_id == $r->id)
+                                            <img class="tickimage" src="{{ url('public/assets/svg/smalltick.svg') }}">
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        @endforeach
+                            @endforeach
+                        @else
+                            <div style="position: absolute; left: 25%; top: 50%; ">No team Available</div>
+                        @endif
                     @endif
                     @if($data->epic_type == 'stream')
                         @foreach(DB::table('value_team')->where('org_id',$data->buisness_unit_id)->where('type' , 'VS')->get() as $r)
@@ -168,7 +202,7 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="membername">{{ $r->team_title }}</div>
-                                        <div class="memberdetail">Team Leader: {{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
+                                        <div class="memberdetail">{{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
                                     </div>
                                     <div class="col-md-2 text-center mt-3">
                                         @if($data->team_id == $r->id)
@@ -187,7 +221,7 @@
             <a onclick="rasiseflag({{$data->id}})" href="javascript:void(0)"  id="showboardbutton">
                 <img src="{{url('public/assets/svg/btnflagsvg.svg')}}" width="20"> Flag @if(DB::table('flags')->where('epic_id'  ,$data->id)->count() > 0) ({{ DB::table('flags')->where('epic_id'  ,$data->id)->count() }}) @endif
             </a>
-            <div class="raiseflag-box">
+            <div class="raiseflag-box hidepopupall">
                 <div class="row">
                     <div class="col-md-6">
                         <h4>Flag</h4>
@@ -305,14 +339,11 @@ function selectteamforepic(id , epic_id) {
     });
 }
 </script>
-
 <script type="text/javascript">
     var elements = document.querySelectorAll('.gixie');
-
     elements.forEach(function(element) {
         var itemId = element.getAttribute('data-item-id');
         var imageData = new GIXI(300).getImage(); 
-
         element.setAttribute('src', imageData);
     });
 </script>

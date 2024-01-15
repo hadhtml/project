@@ -61,7 +61,7 @@
                     @if($member->image)
                     <div class="positionrelative">
                         <img onclick="showmemberprofile({{ $member->id }})" data-toggle="tooltip" title="" data-original-title="{{ $member->name }} {{ $member->last_name }}" src="{{ url('public/assets/images') }}/{{ $member->image }}">
-                        <div class="profilepopup" id="profilepopup{{ $member->id }}">
+                        <div class="profilepopup hidepopupall" id="profilepopup{{ $member->id }}">
                             <div class="profilepopupheader">
                                 <div class="profilepopupbackground">
                                     <p>{{ $member->name }} {{ $member->last_name }}</p>
@@ -80,7 +80,7 @@
                     @else
                     <div class="positionrelative">
                         <img onclick="showmemberprofile({{ $member->id }})" data-toggle="tooltip" title="" data-original-title="{{ $member->name }} {{ $member->last_name }}"  src="{{ Avatar::create($member->name.' '.$member->last_name)->toBase64() }}" alt="{{ $member->name }}" title="{{ $member->name }} {{ $member->last_name }}">
-                        <div class="profilepopup" id="profilepopup{{ $member->id }}">
+                        <div class="profilepopup hidepopupall" id="profilepopup{{ $member->id }}">
                             <div class="profilepopupheader">
                                 <div class="profilepopupbackground">
                                     <p>{{ $member->name }} {{ $member->last_name }}</p>
@@ -107,7 +107,7 @@
             </div>
             <div class="member-list-image memberlistposition">
                 <img data-toggle="tooltip" title="" data-original-title="Add New Assignee" onclick="showmemberbox()" src="{{url('public/assets/svg/plussmember.svg')}}">
-                <div class="memberadd-box" @if(isset($memberopen)) style="display:block;" @endif>
+                <div class="memberadd-box hidepopupall member-add-box-flag-height" @if(isset($memberopen)) style="display:block;" @endif>
                     <div class="row">
                         <div class="col-md-6">
                             <h4>Assignee</h4>
