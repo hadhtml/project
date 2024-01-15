@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Organization;
+use App\Models\team_link_child;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
@@ -462,21 +463,9 @@ $updateData = [
 
     public function GetValueLink(Request $request)
     {
-    $type = $request->type;
- 
-
-    if($request->type == 'stream')
-    {    
-    $KeyLink = DB::table('team_link_child')
-    ->join('business_units','business_units.id','=','team_link_child.bussiness_unit_id')
-    ->join('key_result','key_result.id','=','team_link_child.bussiness_key_id')
-    ->select('business_units.*','team_link_child.id AS ID','key_result.key_name AS obj_name')
-    ->where('team_link_child.team_obj_id','=',$request->id)
-    ->where('team_link_child.type',$request->type)->get();
-    }
-
-  
-    return view('Team.Get-Obj-link',compact('KeyLink','type'));  
+        $linking = team_link_child::where('team_obj_id' , $request->id)->get();
+        $html = view('Team.Get-Obj-link', compact('linking'))->render();
+        return $html;  
     }
 
     public function DeleteTeamLinkObj(Request $request)

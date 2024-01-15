@@ -142,13 +142,25 @@ class ObjectiveController extends Controller
 
         if ($request->has("unitid")) {
             foreach ($request->unitid as $key => $value) {
+                if($request->type == 'BU')
+                {
+                    $linkingtype = 'unit';
+                }
+                if($request->type == 'orgT')
+                {
+                    $linkingtype = 'org';
+                }
+                if($request->type == 'VS')
+                {
+                    $linkingtype = 'stream';
+                }
                 DB::table("team_link_child")->insert([
                     "team_id" => $request->unit_id,
                     "team_obj_id" => $OBJ,
                     "bussiness_unit_id" => $request->unitid[$key],
                     "bussiness_obj_id" => $request->unitObj[$key],
                     "bussiness_key_id" => $request->unitObjkey[$key],
-                    "type" => $request->type,
+                    "type" => $linkingtype,
                 ]);
             }
         }
