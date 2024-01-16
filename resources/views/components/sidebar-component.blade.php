@@ -25,7 +25,7 @@
             </li> -->
 
             <li>
-                <a href="#"  class="nav-link"  title="" data-toggle="tooltip" data-placement="right" data-original-title="OKR Mapper">
+                <a href="{{ url('dashboard/okr-mapper') }}"  class="nav-link"  title="" data-toggle="tooltip" data-placement="right" data-original-title="OKR Mapper">
                     <span class="material-symbols-outlined">action_key</span>
                 </a>
             </li>

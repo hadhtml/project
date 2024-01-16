@@ -407,8 +407,8 @@
 
 
 <div class="modal fade" id="edit-objective" tabindex="-1" role="dialog" aria-labelledby="edit-objective" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content" style="width: 526px !important;">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
             <div class="modal-header">
                 <div class="row">
                     <div class="col-md-12">

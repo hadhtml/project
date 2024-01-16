@@ -158,8 +158,11 @@
     </div>
 </div>
 <div class="rightside" >
-    <span onclick="maximizemodal()">
+    <span onclick="maximizemodal()" id="open_in_full">
         <span class="material-symbols-outlined">open_in_full</span>
+    </span>
+    <span onclick="maximizemodal()" class="d-none" id="close_fullscreen">
+        <span class="material-symbols-outlined">close_fullscreen</span>
     </span>
     <img data-dismiss="modal" class="closeimage" aria-label="Close" src="{{url('public/assets/svg/cross.svg')}}">
 </div>

@@ -67,7 +67,7 @@
                                         </div>
                                         <div class="d-flex flex-column">
                                             <div>
-                                                <span class="text-primary">Team</span>
+                                                <span class="text-primary">Team Lead</span>
                                             </div>
                                             <div>
                                                 <span>{{$r->name}} {{ $r->last_name }}</span>
