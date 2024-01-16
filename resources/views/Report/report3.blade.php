@@ -58,7 +58,8 @@ $var_objective = 'Report-'.$type;
                                                        @if($k->obj_id == $o->id)
                                                        @php
                                                        $KEYChart = array();
-                                                       $key = DB::table('key_result')->where('id',$k->id)->first();
+                                                    
+                                                       $keyR = DB::table('key_result')->where('id',$k->id)->first();
                                                        if($report)
                                                        {
                                                        $keyvalue = DB::table('key_quarter_value')->where('key_id',$k->id)->where('sprint_id',$report->id)->orderby('id','DESC')->first();
@@ -84,7 +85,7 @@ $var_objective = 'Report-'.$type;
                                                                 <span class="ml-2"><a href="{{url('dashboard/organization/report-2/'.$k->id.'/'.$report->id.'/'.$type)}}"> {{ $id }}.{{$k->key_name}}</span></a>
                                                             </td>
                                                             <td class="text-center">@if($KEYChart){{$KEYChart->quarter_value}}@endif</td>
-                                                            <td class="center">@if($key){{$key->target_number}}@endif</td>
+                                                            <td class="center">@if($keyR){{$keyR->target_number}}@endif</td>
                                                             <td class="center">@if($keyvalue){{$keyvalue->value}}@endif</td>
                                                             <td class="center text-success">100%</td>
                                                         </tr>
