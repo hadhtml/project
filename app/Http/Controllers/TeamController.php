@@ -412,16 +412,15 @@ $updateData = [
     $type = $request->type;    
     if($request->type == 'BU')
     {
-    $Team = DB::table('business_units')->where('id',$request->org_id)->get();
+        $Team = DB::table('business_units')->where('id',$request->org_id)->get();
     }
-    if($request->type == 'stream')
+    if($request->type == 'orgT')
     {
-    $steam = DB::table('value_stream')->where('id',$request->id)->first();
-    $Team = DB::table('business_units')->where('id',$steam->unit_id)->get();
+        $Team = DB::table('organization')->where('id',$request->org_id)->get();
     }
     if($request->type == 'VS')
     { 
-    $Team = DB::table('value_stream')->where('id',$request->org_id)->get();
+        $Team = DB::table('value_stream')->where('id',$request->org_id)->get();
     }
      
     return view('Team.Append-Bu',compact('Team','index','type'));  

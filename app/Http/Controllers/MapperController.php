@@ -68,4 +68,9 @@ class MapperController extends Controller
             return 2;
         }
     }
+    public function getorganizationkeyresult(Request $request)
+    {
+        $objective = DB::table('key_result')->where('obj_id',$request->id)->get();
+        return $objective;
+    }
 }

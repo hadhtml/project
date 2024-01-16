@@ -250,6 +250,7 @@ Route::name('linking.')->namespace('App\Http\Controllers')->prefix('dashboard')-
     Route::get('okr-mapper', 'MapperController@index');
     Route::POST('linking/saveteamlevellinking', 'MapperController@saveteamlevellinking');
     Route::POST('linking/checkkeyresultmapper', 'MapperController@checkkeyresultmapper');
+    Route::POST('linking/getorganizationkeyresult', 'MapperController@getorganizationkeyresult');
     
 });
 
