@@ -386,8 +386,8 @@ $updateData = [
 
     public function GetBUKey(Request $request)
     {
-    $objective = DB::table('key_result')->where('id','!=',$request->key_id)->where('obj_id',$request->id)->get();
-    return $objective;
+        $objective = DB::table('key_result')->where('obj_id',$request->id)->get();
+        return $objective;
     }
 
     public function AppendTeam(Request $request)
@@ -464,7 +464,28 @@ $updateData = [
     public function GetValueLink(Request $request)
     {
         $linking = team_link_child::where('team_obj_id' , $request->id)->get();
-        $html = view('Team.Get-Obj-link', compact('linking'))->render();
+        $type = $request->type;
+        if ($type == "unit") {
+            $organization = DB::table("business_units")->where("id", $request->unit_id)->first();
+        }
+        if ($type == "stream") {
+            $organization = DB::table("value_stream")->where("id", $request->unit_id)->first();
+        }
+        if ($type == "BU") {
+            $organization = DB::table("unit_team")->where("id", $request->unit_id)->first();
+        }
+        if ($type == "VS") {
+            $organization = DB::table("value_team")->where("id", $request->unit_id)->first();
+            
+        }
+        if ($type == "org") {
+            $organization = DB::table("organization")->where("id", $request->unit_id)->first();
+        }
+        if ($type == "orgT") {
+            $organization = DB::table("org_team")->where("id", $request->unit_id)->first();
+        }
+        $objective = DB::table('objectives')->where('id' , $request->id)->first();
+        $html = view('Team.Get-Obj-link', compact('linking','type','organization','objective'))->render();
         return $html;  
     }
 

@@ -92,13 +92,13 @@
                         <div class="row">
                             <div class="col-md-12">
                                 @if($r->type == 'org')
-                                    {{ DB::table('org_team')->where('org_id' , $r->team_id)->first()->team_title }} -> {{ DB::table('objectives')->where('id' , $r->team_obj_id)->first()->objective_name }}
+                                    {{ DB::table('org_team')->where('id' , $r->team_id)->first()->team_title }} -> {{ DB::table('objectives')->where('id' , $r->team_obj_id)->first()->objective_name }}
                                 @endif
                                 @if($r->type == 'unit')
-                                    {{ DB::table('unit_team')->where('org_id' , $r->team_id)->first()->team_title }} -> {{ DB::table('objectives')->where('id' , $r->team_obj_id)->first()->objective_name }}
+                                    {{ DB::table('unit_team')->where('id' , $r->team_id)->first()->team_title }} -> {{ DB::table('objectives')->where('id' , $r->team_obj_id)->first()->objective_name }}
                                 @endif
                                 @if($r->type == 'stream')
-                                    {{ DB::table('value_team')->where('org_id' , $r->team_id)->first()->team_title }} -> {{ DB::table('objectives')->where('id' , $r->team_obj_id)->first()->objective_name }}
+                                    {{ DB::table('value_team')->where('id' , $r->team_id)->first()->team_title }} -> {{ DB::table('objectives')->where('id' , $r->team_obj_id)->first()->objective_name }}
                                 @endif
                             </div>
                             <div class="col-md-12">

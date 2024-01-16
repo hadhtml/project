@@ -248,6 +248,9 @@ Route::name('flags.')->namespace('App\Http\Controllers')->prefix('dashboard/flag
 });
 Route::name('linking.')->namespace('App\Http\Controllers')->prefix('dashboard')->group(function () {
     Route::get('okr-mapper', 'MapperController@index');
+    Route::POST('linking/saveteamlevellinking', 'MapperController@saveteamlevellinking');
+    Route::POST('linking/checkkeyresultmapper', 'MapperController@checkkeyresultmapper');
+    
 });
 
 Route::name('epicbacklog.')->namespace('App\Http\Controllers')->prefix('dashboard/epicbacklog')->group(function () {
@@ -313,13 +316,10 @@ Route::name('keyresult.')->namespace('App\Http\Controllers')->prefix('dashboard/
     Route::POST('checkkeyresultlink', 'KeyresultController@checkkeyresultlink');
     Route::POST('deletelinking', 'KeyresultController@deletelinking');
     
-});
 
 
-Route::name('linking.')->namespace('App\Http\Controllers')->prefix('dashboard/linking')->group(function () {
-    Route::get('{id}/{type}', 'LinkingController@index');
-    
 });
+
 
 
 //EpicComment
