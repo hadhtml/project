@@ -172,7 +172,8 @@
                                     <div class="row">
                                         <div class="col-md-2">
                                             <div class="memberprofileimage">
-                                                <img src="{{ Avatar::create($r->team_title)->toBase64() }}">
+                                                {{-- <img src="{{ Avatar::create($r->team_title)->toBase64() }}"> --}}
+                                                <img class="gixie" data-item-id="{{ $r->id }}">
                                             </div>
                                         </div>
                                         <div class="col-md-8">
@@ -193,7 +194,7 @@
                     @endif
                     @if($data->epic_type == 'stream')
                         @foreach(DB::table('value_team')->where('org_id',$data->buisness_unit_id)->where('type' , 'VS')->get() as $r)
-                            <div class="col-md-12 memberprofile" onclick="selectteamforepic({{$r->id}} , {{$data->id}})">
+                            {{-- <div class="col-md-12 memberprofile" onclick="selectteamforepic({{$r->id}} , {{$data->id}})">
                                 <div class="row">
                                     <div class="col-md-2">
                                         <div class="memberprofileimage">
@@ -210,7 +211,7 @@
                                         @endif
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         @endforeach
                     @endif
                 </div>

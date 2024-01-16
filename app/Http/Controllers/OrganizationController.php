@@ -330,6 +330,7 @@ class OrganizationController extends Controller
              $objid = array();
              $objective = DB::table('objectives')->whereBetween('created_at', [$s->start_data, $s->end_date])->where('user_id',Auth::id())->where('unit_id',$s->value_unit_id)
              ->where('type',$request->type)->where('trash',NULL)->get();
+     
              foreach($objective as $obj)
              {
              $objid[] = $obj->id;  
@@ -355,7 +356,7 @@ class OrganizationController extends Controller
              $masterkey = array();
              $tempkey = array(); 
              $keyid = []; 
-             $key = DB::table('key_result')->whereBetween('created_at', [$s->start_data, $s->end_date])->whereIn('obj_id',$objid)->get();
+             $key = DB::table('key_result')->whereIn('obj_id',$objid)->get();
              foreach($key as $kk)
              {
              $keyid[] = $kk->id;  
@@ -367,9 +368,9 @@ class OrganizationController extends Controller
              foreach($key as $k)
              {
                  
-            $epicCount = DB::table('epics')->whereBetween('created_at', [$s->start_data, $s->end_date])->where('key_id',$k->id)->where('trash',NULL)->count();
-              $epicComp =  DB::table('epics')->whereBetween('created_at', [$s->start_data, $s->end_date])->where('key_id',$k->id)->where('trash',NULL)->where('epic_progress','=',100)->count();
-              $epicincomp = DB::table('epics')->whereBetween('created_at', [$s->start_data, $s->end_date])->where('key_id',$k->id)->where('trash',NULL)->where('epic_progress','!=',100)->count();
+            $epicCount = DB::table('epics')->where('key_id',$k->id)->where('trash',NULL)->count();
+              $epicComp =  DB::table('epics')->where('key_id',$k->id)->where('trash',NULL)->where('epic_progress','=',100)->count();
+              $epicincomp = DB::table('epics')->where('key_id',$k->id)->where('trash',NULL)->where('epic_progress','!=',100)->count();
               
               $tempkey['id'] = $k->id;
               $tempkey['obj_id'] = $k->obj_id;
@@ -392,7 +393,12 @@ class OrganizationController extends Controller
                
              $masterinit = array();
              $tempinit = array();  
-             $init = DB::table('initiative')->whereBetween('created_at', [$s->start_data, $s->end_date])->where('user_id',Auth::id())->get();
+             $init = DB::table('initiative')->whereIn('key_id',$keyid)->where('user_id',Auth::id())->get();
+
+             foreach($init as $i_id)
+             {
+              $tempinit[] = $i_id->id;  
+             }
              foreach($init as $i)
              {
             //   $tempinit['id'] = $i->id;
@@ -417,7 +423,7 @@ class OrganizationController extends Controller
                
              $masterepic = array();
              $tempepic = array();  
-             $epic = DB::table('epics')->whereBetween('created_at', [$s->start_data, $s->end_date])->where('user_id',Auth::id())->get();
+             $epic = DB::table('epics')->whereIn('initiative_id',$tempinit)->where('user_id',Auth::id())->get();
              foreach($epic as $e)
              {
             //   $tempepic['id'] = $e->id;

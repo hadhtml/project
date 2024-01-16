@@ -16,14 +16,16 @@
                     <a href="{{route('home')}}">Dashboard</a>
                 </div>
                
-                <div class="mr-2">
-                    <a href="{{url('dashboard/organization/Business-Units')}}">Business Units</a>
-                </div>
+              
                 @if(isset($organization))
                 <div class="mr-2">
                     <p>{{ DB::table('business_units')->where('id' , $organization->id)->first()->business_name }}</p>
                 </div>
                 @endif
+
+                <div class="mr-2">
+                    <a href="{{url('dashboard/organization/Business-Units')}}">Business Unit</a>
+                </div>
             </div>
             <!--End Breadcrum Items -->
         </div>

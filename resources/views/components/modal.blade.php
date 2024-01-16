@@ -1058,13 +1058,37 @@
     </div>
 </div>
 
+@php
+$currentDate = \Carbon\Carbon::now();
+$currentYear = $currentDate->year;
+$currentMonth = $currentDate->month;
+$yearMonthString = $currentDate->format('Y');
+$yearMonth = $currentDate->format('F');
+$CurrentQuarter = '';
+$CurrentQuarter = DB::table('quarter_month')
+                  ->where('org_id',$organization->id)
+                  ->where('month',$yearMonth)
+                  ->where('year',$yearMonthString)->first();
+if($CurrentQuarter)
+{
+    $Quarter = DB::table('quarter_month')
+                  ->where('quarter_id',$CurrentQuarter->quarter_id)
+                  ->orderby('id','DESC')
+                   ->first();
+$monthNumber = \Carbon\Carbon::parse($Quarter->month)->month;
+$firstDayOfNextMonth = \Carbon\Carbon::create(null, $monthNumber + 1, 1, 0, 0, 0);
+$lastDayOfMonth = $firstDayOfNextMonth->subDay();
+$formattedDate = $lastDayOfMonth->toDateString();
+}
+
+@endphp
   <div class="modal fade" id="create-report" tabindex="-1" role="dialog" aria-labelledby="create-report" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="width: 526px !important;">
             <div class="modal-header">
                 <div class="row">
                     <div class="col-md-12">
-                        <h5 class="modal-title" id="create-epic">Create Quarter/Sprint </h5>
+                        <h5 class="modal-title" id="create-epic">Create Quarter/Sprint</h5>
                     </div>
                     <div class="col-md-12">
                         <p>Fill out the form, submit and hit the save button.</p>
@@ -1094,13 +1118,13 @@
                         </div>
                         <div class="col-md-6 col-lg-6 col-xl-6">
                             <div class="form-group mb-0">
-                                <input type="date" class="form-control" value="{{ date('Y-m-d') }}" id="q_start_date"  required>
-                                <label for="start-date">Start Date</label>
+                                <input type="date" class="form-control" min="{{ date('Y-m-d') }}" id="q_start_date"  required>
+                                <label for="start-date" style="bottom:72px;">Start Date</label>
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-6 col-xl-6">
                             <div class="form-group mb-0">
-                                <input type="date" class="form-control" value="{{ date('Y-m-d') }}" id="q_end_date" required>
+                                <input type="date" class="form-control" @if($CurrentQuarter) value="{{$formattedDate}}" @endif id="q_end_date" required>
                                 <label for="end-date">End Date</label>
                             </div>
                         </div>

@@ -12,11 +12,11 @@
                     <a style="text-decoration: none;" href="{{ url('dashboard/organizations') }}">Dashboard</a>
                 </div>
                 @if($type == 'unit')
-                <div class="mr-2">
+                {{-- <div class="mr-2">
                     <a style="text-decoration: none;" href="{{ url('dashboard/organization/Business-Units') }}">
                         Buisness Units
                     </a>
-                </div>
+                </div> --}}
                 <div class="mr-2">
                     <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->business_name}}</a>
                 </div>
@@ -28,9 +28,9 @@
                 @php
                     $unit  = DB::table('business_units')->where('id' , $organization->unit_id)->first();
                 @endphp
-                <div class="mr-2">
+                {{-- <div class="mr-2">
                     <a style="text-decoration: none;" href="{{ url('dashboard/organization') }}/{{ $unit->slug }}/Value-Streams">Value Streams</a>
-                </div>
+                </div> --}}
                 <div class="mr-2">
                     <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->value_name}}</a>
                 </div>

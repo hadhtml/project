@@ -15,6 +15,9 @@
                                 </div>
                                 
                                 <div class="mr-2">
+                                    @if($organization->type == 'unit')
+                                    <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->business_name}}</a>
+                                    @endif
                                 </div>
                                 <div class="mr-2">
                                     <p>Value Streams</p>

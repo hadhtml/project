@@ -28,7 +28,7 @@ class Quarters
     return $quarters;
    }
    
- public static function GetQuarterYear($start_date,$end_date,$data)
+ public static function GetQuarterYear($start_date,$end_date,$data,$org_id)
  {
     $startDate = Carbon::parse($start_date);
     $endDate = Carbon::parse($end_date);
@@ -92,6 +92,7 @@ foreach ($quarters as $year => $yearQuarters) {
                 'initiative_id' => $data,
                  'quarter_name' => 'Q' .$quarterNum,
                  'year' => $year,
+                 'org_id' => $org_id,
             ]);
         }
         

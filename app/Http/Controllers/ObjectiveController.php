@@ -962,7 +962,9 @@ DB::table("objectives")
         $quarters = Quarters::GetQuarterYear(
             $startDateFormatted,
             $request->initiative_end_date,
-            $data->id
+            $data->id,
+            $request->unit_id,
+
         );
 
         //      $endDate = Carbon::parse($request->initiative_start_date);
