@@ -25,11 +25,11 @@
                 </a>
             </li> -->
 
-            <li>
+           <!--  <li>
                 <a href="#"  class="nav-link"  title="" data-toggle="tooltip" data-placement="right" data-original-title="OKR Mapper">
                     <span class="material-symbols-outlined">action_key</span>
                 </a>
-            </li>
+            </li> -->
 
             {{-- <li>
                 <a href="{{url('dashboard/organization/users')}}" @if (url()->current() == url('dashboard/organization/users')) class="active-link" @else class="nav-link"  @endif title="" data-toggle="tooltip" data-placement="right" data-original-title="Users">
