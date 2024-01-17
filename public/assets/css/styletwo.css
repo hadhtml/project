@@ -1558,3 +1558,92 @@ button:focus {
 .member-add-box-flag-height{
     height: 270px;
 }
+.filerbyasigne-box{
+    display: none;
+    width: 329px;
+    box-shadow: 0 10px 24px rgb(87 106 134 / 20%);
+    position: absolute;
+    z-index: 111111;
+    background-color: white;
+    border-radius: 10px;
+    right: 0;
+    padding: 15px;
+    top: 50px;
+}
+.filerbyasigne-box .memberclose{
+    cursor: pointer;
+    height: 12px;
+    width: 12px;
+}
+.filerbyasigne-box h4{
+    font-size: 16px;
+    font-weight: 500;
+}
+.filerbyuserflags{
+    position: relative;
+}
+#flagmembershowmain{
+    height: 140px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+#flagmembershowmain::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+#flagmembershowmain::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+#flagmembershowmain::-webkit-scrollbar-thumb {
+  background: #c5c9d1;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+#flagmembershowmain::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+.filtermemberdisplay{
+    display: flex;
+}
+.memberdisplay{
+    display: flex;
+}
+.memberdisplay{
+    border-radius: 20px;
+    background-color: white;
+    padding: 10px;
+}
+
+.imagefilter{
+    width: 25px;
+    height: 25px;
+}
+.imagefilter img{
+    width: 100%;
+    height: 100%;
+}
+.filteredusername{
+    font-size: 11px;
+    font-weight: 500;
+    color: #585858;
+}
+.textfilteruser{
+    margin-left: 5px;
+}
+.filteruserresult{
+    font-size: 9px;
+    font-weight: 500;
+    color: #585858;
+}
+
+.cleariconfilter a span{
+    color: #585858;
+    font-size: 21px;
+    margin-left: 10px;
+    margin-top: 5px;
+}

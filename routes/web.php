@@ -245,6 +245,8 @@ Route::name('flags.')->namespace('App\Http\Controllers')->prefix('dashboard/flag
     Route::POST('sortflags', 'FlagController@sortflags');
     Route::POST('filterbyextension', 'FlagController@filterbyextension');
     Route::POST('removefromflag', 'FlagController@removefromflag');
+    Route::POST('filterbyasignee', 'FlagController@filterbyasignee');
+    
 });
 Route::name('linking.')->namespace('App\Http\Controllers')->prefix('dashboard')->group(function () {
     Route::get('okr-mapper', 'MapperController@index');

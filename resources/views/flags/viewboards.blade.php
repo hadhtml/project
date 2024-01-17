@@ -6,6 +6,57 @@
 @endif
 <div class="row">
     <div class="col-md-12">
+        <div class="row mb-3">
+            <div class="col-md-10">
+                <div class="d-flex">
+                    <div class="filterbyasignetittle mr-3 mt-3">
+                        <b>Filter By Assignee:</b>
+                    </div>
+                    <div class="filtermemberdisplay">
+                        <div class="memberdisplay mr-2">
+                            <div class="imagefilter">
+                                <img src="{{ Avatar::create('AJ')->toBase64() }}">
+                            </div>
+                            <div class="textfilteruser">
+                                <div class="filteredusername">Usama Kashif</div>
+                                <div class="filteruserresult">2 Result</div>
+                            </div>
+                            <div class="cleariconfilter mr-1 ml-1">
+                                <a href="javascript:void(0)"><span class="material-symbols-outlined">close</span></a>
+                            </div>
+                        </div>
+                        <div class="memberdisplay mr-2">
+                            <div class="imagefilter">
+                                <img src="{{ Avatar::create('AJ')->toBase64() }}">
+                            </div>
+                            <div class="textfilteruser">
+                                <div class="filteredusername">Usama Kashif</div>
+                                <div class="filteruserresult">2 Result</div>
+                            </div>
+                            <div class="cleariconfilter mr-1 ml-1">
+                                <a href="javascript:void(0)"><span class="material-symbols-outlined">close</span></a>
+                            </div>
+                        </div>
+                        <div class="memberdisplay mr-2">
+                            <div class="imagefilter">
+                                <img src="{{ Avatar::create('AJ')->toBase64() }}">
+                            </div>
+                            <div class="textfilteruser">
+                                <div class="filteredusername">Usama Kashif</div>
+                                <div class="filteruserresult">2 Result</div>
+                            </div>
+                            <div class="cleariconfilter mr-1 ml-1">
+                                <a href="javascript:void(0)"><span class="material-symbols-outlined">close</span></a>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 text-right">
+                <a href="">Clear Filter</a>
+            </div>
+        </div>
         <div class="card">
             <div class="card-body">
                 <div class="row">
