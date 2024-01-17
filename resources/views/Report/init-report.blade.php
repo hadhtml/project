@@ -107,18 +107,18 @@ $var_objective = 'Report-'.$type;
                                                     </clipPath>
                                                 </defs>
                                             </svg>
-                                            <span class="ml-2"><a href="javascript:void(0)">SSP-@if($SprintInit){{$SprintInit->initiative_key_id}}@endif</span></a>
+                                            <span class="ml-2">SSP-@if($SprintInit){{$SprintInit->initiative_key_id}}@endif</span>
                                         </td>
-                                        <td class="cell-20-percent"><a href="javascript:void(0)">{{$epic->epic_name}}</a></td>
+                                        <td class="cell-20-percent">{{$epic->epic_name}}</td>
                                         <td>Added</td>
                                         <td>{{$epic->epic_date}}</td>
                                         <td>{{\Carbon\Carbon::parse($epic->epic_done)->format('M d,Y')}}</td>
                                         <td>Done</td>
-                                        <td><a href="javascript:void(0)">IN{{$epic->epic_init_id}}</a></td>
+                                        <td>IN{{$epic->epic_init_id}}</td>
                                         @php
                                         $SprintInit = DB::table('sprint_report')->where('initiative_id',$epic->epic_init_id)->where('q_id',$sprint)->first();
                                         @endphp
-                                        <td class="cell-30-percent"><a href="javascript:void(0)">@if($SprintInit){{$SprintInit->initiative_name}}@endif</a></td>
+                                        <td class="cell-30-percent">@if($SprintInit){{$SprintInit->initiative_name}}@endif</td>
                                     </tr>
                               
                                    
@@ -197,16 +197,16 @@ $var_objective = 'Report-'.$type;
                                                     </clipPath>
                                                 </defs>
                                             </svg>
-                                            <span class="ml-2"><a href="javascript:void(0)">SSP-@if($SprintInit){{$SprintInit->initiative_key_id}}@endif</span></a>
+                                            <span class="ml-2">SSP-@if($SprintInit){{$SprintInit->initiative_key_id}}@endif</span>
                                         </td>
-                                        <td class="cell-20-percent"><a href="javascript:void(0)">{{$epic->epic_name}}</a></td>
+                                        <td class="cell-20-percent">{{$epic->epic_name}}</td>
                                         <td>Added</td>
                                         <td>{{$epic->epic_date}}</td>
                                        
                                         <td>{{$epic->epic_status}}</td>
-                                        <td><a href="javascript:void(0)">IN{{$epic->epic_init_id}}</a></td>
+                                        <td>IN{{$epic->epic_init_id}}</td>
                                        
-                                        <td class="cell-30-percent"><a href="javascript:void(0)">@if($SprintInit){{$SprintInit->initiative_name}}@endif</a></td>
+                                        <td class="cell-30-percent">@if($SprintInit){{$SprintInit->initiative_name}}@endif</td>
                                     </tr>
                           
                                     @endforeach
@@ -285,16 +285,16 @@ $var_objective = 'Report-'.$type;
                                                     </clipPath>
                                                 </defs>
                                             </svg>
-                                            <span class="ml-2"><a href="javascript:void(0)">SSP-@if($SprintInit){{$SprintInit->initiative_key_id}}@endif</span></a>
+                                            <span class="ml-2">SSP-@if($SprintInit){{$SprintInit->initiative_key_id}}@endif</span>
                                         </td>
-                                        <td class="cell-20-percent"><a href="javascript:void(0)">{{$epic->epic_name}}</a></td>
+                                        <td class="cell-20-percent">{{$epic->epic_name}}</td>
                                         <td>Added</td>
                                         <td>{{$epic->epic_date}}</td>
                                     
                                         <td>{{$epic->epic_status}}</td>
-                                        <td><a href="javascript:void(0)">IN{{$epic->epic_init_id}}</a></td>
+                                        <td>IN{{$epic->epic_init_id}}</td>
                                      
-                                        <td class="cell-30-percent"><a href="javascript:void(0)">@if($SprintInit){{$SprintInit->initiative_name}}@endif</a></td>
+                                        <td class="cell-30-percent">@if($SprintInit){{$SprintInit->initiative_name}}@endif</td>
                                     </tr>
                                     
                                     @endforeach

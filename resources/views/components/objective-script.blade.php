@@ -2638,7 +2638,7 @@
 
     function getBUKeystore(id,z)
     {
-    localStorage.setItem("key-id",id);
+        localStorage.setItem("key-id",id);
     }
 
     function editkeyqvalue(id, val) {
@@ -2677,6 +2677,30 @@
 
     }
 
+    function getorganizationkeyresult(id) {
+        $.ajax({
+            type: "POST",
+            url: "{{ url('dashboard/linking/getorganizationkeyresult') }}",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                id: id
+            },
+            success: function(res) {
+                if (res) {
+                    $('#showorganizationkeyresult').empty();
+                    $('#showorganizationkeyresult').append('<option hidden>Choose Key Result</option>');
+                    $.each(res, function(key, course) {
+                        $('#showorganizationkeyresult').append('<option value="' + course.id + '">' + course
+                            .key_name + '</option>');
+                    });
+                } else {
+                    $('#showorganizationkeyresult').empty();
+                }
+            }
+        });
+    }
 
     function addepicreply(id, val) {
         $('#epic-reply' + id).html(
@@ -2914,6 +2938,7 @@
 
     }
 
+    
     function getobjlink(id) {
 
     var type = "{{ $organization->type }}";
