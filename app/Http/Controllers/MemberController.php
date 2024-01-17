@@ -1299,13 +1299,22 @@ $updateData = [
      public function DeleteValueStream(Request $request)
     {
 
-     
+        $name = DB::table('value_stream')->where('id',$request->delete_id)->where('value_name',$request->value_name)->first();
+
+        if(!$name)
+        {
+        return redirect()->back()->with('message', 'Please Enter Correct Value Stream Name');
+        }else
+        {
+
         DB::table('value_stream')->where('id',$request->delete_id)->delete();
         DB::table('objectives')->where('unit_id',$request->delete_id)->delete();
         DB::table('value_team')->where('org_id',$request->delete_id)->delete();
+        return redirect()->back()->with('message', 'Value Stream Deleted Successfully');
+        }
 
        
-        return redirect()->back()->with('message', 'Value Stream Deleted Successfully');
+       
 
     }
     
