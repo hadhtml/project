@@ -246,8 +246,12 @@ Route::name('flags.')->namespace('App\Http\Controllers')->prefix('dashboard/flag
     Route::POST('filterbyextension', 'FlagController@filterbyextension');
     Route::POST('removefromflag', 'FlagController@removefromflag');
 });
-Route::name('linking.')->namespace('App\Http\Controllers')->prefix('dashboard/linking')->group(function () {
-    Route::get('{organizationid}/{type}', 'LinkingController@index');
+Route::name('linking.')->namespace('App\Http\Controllers')->prefix('dashboard')->group(function () {
+    Route::get('okr-mapper', 'MapperController@index');
+    Route::POST('linking/saveteamlevellinking', 'MapperController@saveteamlevellinking');
+    Route::POST('linking/checkkeyresultmapper', 'MapperController@checkkeyresultmapper');
+    Route::POST('linking/getorganizationkeyresult', 'MapperController@getorganizationkeyresult');
+    
 });
 
 Route::name('epicbacklog.')->namespace('App\Http\Controllers')->prefix('dashboard/epicbacklog')->group(function () {
@@ -292,6 +296,7 @@ Route::name('epics.')->namespace('App\Http\Controllers')->prefix('dashboard/epic
     Route::POST('savenewepic', 'EpicController@savenewepic');
     Route::POST('showlatestepicdatainmodal', 'EpicController@showlatestepicdatainmodal');
     Route::POST('saveepicflag', 'EpicController@saveepicflag');    
+    Route::POST('removeteamfromepic', 'EpicController@removeteamfromepic');
     
 });
 
@@ -307,14 +312,15 @@ Route::name('keyresult.')->namespace('App\Http\Controllers')->prefix('dashboard/
     Route::POST('changekeyresultstatus', 'KeyresultController@changekeyresultstatus');
     Route::POST('removeweight', 'KeyresultController@removeweight');
     Route::POST('addweight', 'KeyresultController@addweight');
+    Route::POST('selectteamokrmapper', 'KeyresultController@selectteamokrmapper');
+    Route::POST('okrmapperform', 'KeyresultController@okrmapperform');
+    Route::POST('checkkeyresultlink', 'KeyresultController@checkkeyresultlink');
+    Route::POST('deletelinking', 'KeyresultController@deletelinking');
     
-});
 
 
-Route::name('linking.')->namespace('App\Http\Controllers')->prefix('dashboard/linking')->group(function () {
-    Route::get('{id}/{type}', 'LinkingController@index');
-    
 });
+
 
 
 //EpicComment
