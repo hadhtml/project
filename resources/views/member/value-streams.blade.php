@@ -95,9 +95,10 @@ $var_objective = "V-Stream";
                                 </button>
                             </td>
                         </tr>
-                        
+                       
                          <div class="modal fade" id="delete{{$stream->ID}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
+                      
                           <div class="modal-content">
                             <div class="modal-header">
                               <h5 class="modal-title" id="exampleModalLabel">Delete Value Stream</h5>
@@ -105,22 +106,26 @@ $var_objective = "V-Stream";
                                 <span aria-hidden="true">&times;</span>
                               </button>
                             </div>
-                          
                     
-                            <form method="POST" action="{{url('delete-value-stream')}}">
+                            <form method="POST">
                              @csrf   
                              <input type="hidden" name="delete_id" value="{{$stream->ID}}">
                            
-                    
+
                             <div class="modal-body">
+                           
+                                <div class="modal-body-error">
+                                </div>
                               
                             Are you sure you want to delete this Value Stream?
-                            <input type="text" name="value_name" id="noPasteField" class="form-control" placeholder="Type  Value Stream" required>
+                            <input type="text" name="value_name"  id="noPasteField" class="form-control noPasteField{{$stream->ID}}" placeholder="Type  Value Stream" required>
                     
                             </div>
+                        
+
                             <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                              <button type="submit" class="btn btn-danger">Confirm</button>
+                              <button type="button" onclick="DeleteValue({{$stream->ID}})" class="btn btn-danger">Confirm</button>
                             </div>
                             </form>
                           </div>
@@ -308,5 +313,47 @@ $var_objective = "V-Stream";
     e.preventDefault();
     var text = (e.originalEvent || e).clipboardData.getData("text/plain");
 });
+
+
+function DeleteValue(delete_id)
+        {
+ 
+        //  var delete_id = $('#delete_id').val();
+         var value_name = $('.noPasteField'+delete_id).val();
+
+         alert(delete_id + value_name);
+        if(value_name == '')
+        {
+          $('#show-error').html('<div class="alert alert-danger" role="alert"> Please Enter Correct Value Stream Name</div>');    
+            return  false;
+        }
+       
+        $.ajax({
+        type: "POST",
+        url: "{{ url('delete-value-stream') }}",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+        delete_id:delete_id,
+        value_name:value_name
+        },
+        success: function(res) {
+         alert(res);   
+         if(res == 1)
+         {
+         $('.modal-body-error').html('<div class="alert alert-danger" role="alert"> Please Enter Correct Value Stream Name</div>');    
+             
+         }else
+         {
+         $('.modal-body-error').html('<div class="alert alert-success" role="alert"> Value Stream Deleted Successfully</div>');
+         location.reload();
+         } 
+
+
+        }
+        });
+
+        }
 </script>
 @endsection

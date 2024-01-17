@@ -120,6 +120,9 @@ $var_objective = "Org-Unit";
 
         <!-- Models -->
 
+       
+
+
         <div class="modal fade" id="delete{{$unit->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content" style="padding: 6px !important;">
@@ -137,22 +140,21 @@ $var_objective = "Org-Unit";
                   </button>
                 </div>
                 
-                <div id="show-error"></div>
 
-                <form method="POST" method="POST" action="{{url('delete-business-unit')}}">
+                <form method="POST">
                  @csrf   
                  <input type="hidden" name="delete_id" id="delete_id" value="{{$unit->id}}">
                
-
+                 <div id="show-error"></div>
                 <div class="modal-body">
                   
                 
-                <input type="text" name="val"  id="noPasteField" class="form-control" placeholder="Write business unit name and hit confirm" required>
+                <input type="text" name="bu_name"  id="bu_name{{$unit->id}}" class="form-control" placeholder="Write business unit name and hit confirm" required>
 
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="submit"  onclick="DeleteUnit();" class="btn btn-danger">Confirm</button>
+                  <button type="button"  onclick="DeleteUnit({{$unit->id}});" class="btn btn-danger">Confirm</button>
                 </div>
                 </form>
               </div>
@@ -311,16 +313,19 @@ $var_objective = "Org-Unit";
     var text = (e.originalEvent || e).clipboardData.getData("text/plain");
 });
 
-        function DeleteUnit()
+        function DeleteUnit(delete_id)
         {
  
-         var delete_id = $('#delete_id').val();
-    
-        if($('#PasteField').val() == '')
+        //  var delete_id = $('#delete_id').val();
+         var val = $('#bu_name'+delete_id).val();
+
+      
+        if(val == '')
         {
           $('#show-error').html('<div class="alert alert-danger" role="alert"> Please Enter  Business Units Name</div>');    
             return  false;
         }
+       
         $.ajax({
         type: "POST",
         url: "{{ url('delete-business-unit') }}",
@@ -332,7 +337,6 @@ $var_objective = "Org-Unit";
         val:val
         },
         success: function(res) {
-          
          if(res == 1)
          {
          $('#show-error').html('<div class="alert alert-danger" role="alert"> Please Enter Correct Business Units Name</div>');    
