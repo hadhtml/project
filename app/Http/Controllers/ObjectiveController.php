@@ -3022,13 +3022,20 @@ DB::table("objectives")
     }
     public function checkkeyweight(Request $request)
     {
-        $key = DB::table("key_result")->where("obj_id", $request->obj)->sum("weight");
-        echo $value = $key + $request->slider;
-        if($value < 100)
+        $nkey = DB::table("key_result")->where("obj_id", $request->obj)->sum("weight");
+        $keyid = DB::table("key_result")->where("id", $request->key_id)->first();
+        $oldsum = $nkey - $keyid->weight;
+        $newvalue = $oldsum + $request->slider;
+     
+        if($newvalue <= 100.0)
         {
             DB::table('key_result')->where('id' , $request->key_id)->update(array('weight' => $request->slider));
         }
-        return response()->json(["key" => $value]);
+
+       
+
+
+        return response()->json(["key" => $newvalue]);
     }
     public function checkkeyweightedit(Request $request)
     {

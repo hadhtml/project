@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Organization;
+use App\Models\team_link_child;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
@@ -385,8 +386,8 @@ $updateData = [
 
     public function GetBUKey(Request $request)
     {
-    $objective = DB::table('key_result')->where('id','!=',$request->key_id)->where('obj_id',$request->id)->get();
-    return $objective;
+        $objective = DB::table('key_result')->where('obj_id',$request->id)->get();
+        return $objective;
     }
 
     public function AppendTeam(Request $request)
@@ -411,16 +412,15 @@ $updateData = [
     $type = $request->type;    
     if($request->type == 'BU')
     {
-    $Team = DB::table('business_units')->where('id',$request->org_id)->get();
+        $Team = DB::table('business_units')->where('id',$request->org_id)->get();
     }
-    if($request->type == 'stream')
+    if($request->type == 'orgT')
     {
-    $steam = DB::table('value_stream')->where('id',$request->id)->first();
-    $Team = DB::table('business_units')->where('id',$steam->unit_id)->get();
+        $Team = DB::table('organization')->where('id',$request->org_id)->get();
     }
     if($request->type == 'VS')
     { 
-    $Team = DB::table('value_stream')->where('id',$request->org_id)->get();
+        $Team = DB::table('value_stream')->where('id',$request->org_id)->get();
     }
      
     return view('Team.Append-Bu',compact('Team','index','type'));  
@@ -462,21 +462,30 @@ $updateData = [
 
     public function GetValueLink(Request $request)
     {
-    $type = $request->type;
- 
-
-    if($request->type == 'stream')
-    {    
-    $KeyLink = DB::table('team_link_child')
-    ->join('business_units','business_units.id','=','team_link_child.bussiness_unit_id')
-    ->join('key_result','key_result.id','=','team_link_child.bussiness_key_id')
-    ->select('business_units.*','team_link_child.id AS ID','key_result.key_name AS obj_name')
-    ->where('team_link_child.team_obj_id','=',$request->id)
-    ->where('team_link_child.type',$request->type)->get();
-    }
-
-  
-    return view('Team.Get-Obj-link',compact('KeyLink','type'));  
+        $linking = team_link_child::where('team_obj_id' , $request->id)->get();
+        $type = $request->type;
+        if ($type == "unit") {
+            $organization = DB::table("business_units")->where("id", $request->unit_id)->first();
+        }
+        if ($type == "stream") {
+            $organization = DB::table("value_stream")->where("id", $request->unit_id)->first();
+        }
+        if ($type == "BU") {
+            $organization = DB::table("unit_team")->where("id", $request->unit_id)->first();
+        }
+        if ($type == "VS") {
+            $organization = DB::table("value_team")->where("id", $request->unit_id)->first();
+            
+        }
+        if ($type == "org") {
+            $organization = DB::table("organization")->where("id", $request->unit_id)->first();
+        }
+        if ($type == "orgT") {
+            $organization = DB::table("org_team")->where("id", $request->unit_id)->first();
+        }
+        $objective = DB::table('objectives')->where('id' , $request->id)->first();
+        $html = view('Team.Get-Obj-link', compact('linking','type','organization','objective'))->render();
+        return $html;  
     }
 
     public function DeleteTeamLinkObj(Request $request)
