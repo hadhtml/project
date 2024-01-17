@@ -127,14 +127,14 @@ $var_objective = 'Report-'.$type;
                                                     </clipPath>
                                                 </defs>
                                             </svg>
-                                            <span class="ml-2"><a href="javascript:void(0)">SSP-{{$k->id}}</span></a>
+                                            <span class="ml-2">SSP-{{$k->id}}</span>
                                         </td>
-                                        <td class="cell-20-percent"><a href="javascript:void(0)">{{$epic->epic_name}}</a></td>
+                                        <td class="cell-20-percent">{{$epic->epic_name}}</td>
                                         <td>Added</td>
                                         <td>{{$epic->epic_date}}</td>
                                         <td>{{\Carbon\Carbon::parse($epic->epic_done)->format('M d,Y')}}</td>
                                         <td>Done</td>
-                                        <td><a href="javascript:void(0)">IN{{$init->id}}</a></td>
+                                        <td>IN{{$init->id}}</td>
                                         <td class="cell-30-percent"><a href="javascript:void(0)"></a>{{$init->initiative_name}}</td>
                                     </tr>
                                     @endif
@@ -215,14 +215,14 @@ $var_objective = 'Report-'.$type;
                                                     </clipPath>
                                                 </defs>
                                             </svg>
-                                            <span class="ml-2"><a href="javascript:void(0)">SSP-{{$k->id}}</span></a>
+                                            <span class="ml-2">SSP-{{$k->id}}</span>
                                         </td>
-                                        <td class="cell-20-percent"><a href="javascript:void(0)">{{$epic->epic_name}}</a></td>
+                                        <td class="cell-20-percent">{{$epic->epic_name}}</td>
                                         <td>Added</td>
                                         <td>{{$epic->epic_date}}</td>
                                        
                                         <td>{{$epic->epic_status}}</td>
-                                        <td><a href="javascript:void(0)">IN{{$init->id}}</a></td>
+                                        <td>IN{{$init->id}}</td>
                                         <td class="cell-30-percent"><a href="javascript:void(0)"></a>{{$init->initiative_name}}</td>
                                     </tr>
                                     @endif
@@ -303,14 +303,14 @@ $var_objective = 'Report-'.$type;
                                                     </clipPath>
                                                 </defs>
                                             </svg>
-                                            <span class="ml-2"><a href="javascript:void(0)">SSP-{{$k->id}}</span></a>
+                                            <span class="ml-2">SSP-{{$k->id}}</span>
                                         </td>
-                                        <td class="cell-20-percent"><a href="javascript:void(0)">{{$epic->epic_name}}</a></td>
+                                        <td class="cell-20-percent">{{$epic->epic_name}}</td>
                                         <td>Added</td>
                                         <td>{{$epic->epic_date}}</td>
                                     
                                         <td>{{$epic->epic_status}}</td>
-                                        <td><a href="javascript:void(0)">IN{{$init->id}}</a></td>
+                                        <td>IN{{$init->id}}</td>
                                         <td class="cell-30-percent"><a href="javascript:void(0)"></a>{{$init->initiative_name}}</td>
                                     </tr>
                                     @endif
