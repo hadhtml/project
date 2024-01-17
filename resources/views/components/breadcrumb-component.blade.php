@@ -41,29 +41,28 @@ $sprint = DB::table('sprint')->where('user_id',Auth::id())->where('value_unit_id
                     </div>
                                
                              
-                                <div class="mr-2">
-                                    @if($organization->type == 'stream')
-                                    <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->value_name}}</a>
-                                    @endif
-                                    
-                                     @if($organization->type == 'unit')
-                                    <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->business_name}}</a>
-                                    @endif
+                    <!-- <div class="mr-2">
+                        @if($organization->type == 'stream')
+                        <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->value_name}}</a>
+                        @endif
+                        
+                         @if($organization->type == 'unit')
+                        <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->business_name}}</a>
+                        @endif
 
-                                    @if($organization->type == 'BU')
-                                    <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->team_title}}</a>
-                                    @endif
-                                    @if($organization->type == 'VS')
-                                    <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->team_title}}</a>
-                                    @endif
-                                    @if($organization->type == 'orgT')
-                                    <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->team_title}}</a>
-                                    @endif
-                                  
-                                </div>
-                                <div class="mr-2">
-                                    <p>OKR Planner</p>
-                                </div>
+                        @if($organization->type == 'BU')
+                        <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->team_title}}</a>
+                        @endif
+                        @if($organization->type == 'VS')
+                        <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->team_title}}</a>
+                        @endif
+                        @if($organization->type == 'orgT')
+                        <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->team_title}}</a>
+                        @endif
+                    </div> -->
+                    <div class="mr-2">
+                        <p>OKR Planner</p>
+                    </div>
             </div>
         </div>
         <!--end::Info-->
