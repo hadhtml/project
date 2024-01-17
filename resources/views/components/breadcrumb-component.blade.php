@@ -163,7 +163,7 @@ $sprint = DB::table('sprint')->where('user_id',Auth::id())->where('value_unit_id
             </div>
             @else
              <div id="sprint-end">
-                <button class="button mr-1" data-toggle="modal" data-target="#create-report">Start Quarter</button>
+                <button class="button mr-1"  onclick="startquarter()">Start Quarter</button>
             </div>
             @endif
             <div>

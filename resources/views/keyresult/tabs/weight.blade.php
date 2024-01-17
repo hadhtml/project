@@ -34,7 +34,7 @@
         <input class="range-slider__range-two form-control"  type="range" value="{{ $data->weight }}" min="1" max="100">
     </div>
     <div class="col-md-6">
-        <input readonly id="sliderValue" @if($data->weight == 0) value="1" @else value="{{ $data->weight }}" @endif class="form-control range-slider__range-two"  type="text" min="1" >
+        <input  id="sliderValue" @if($data->weight == 0) value="1" @else value="{{ $data->weight }}" @endif class="form-control range-slider__range-two"  type="text" min="1" >
     </div>
 </div>
 
