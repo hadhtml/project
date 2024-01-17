@@ -581,7 +581,7 @@
 
     $(document).ready(function() {
         $(document).on('input', '.range-slider__range-two', function() {
-            console.log($(this).val());
+            // console.log($(this).val());
             $('.range-slider__range-two').val($(this).val());
             $('#sliderValue').val($(this).val());
             var slider = $('#sliderValue').val();
@@ -599,9 +599,10 @@
                     key_id: key_id,
                 },
                 success: function(res) {
+                    
                     if (res.key > 100) {
                         var setvalue  = parseInt(res.key)-100;
-                        $('#wieght-error').html('<small class="text-danger ml-2">Combined weight Percentage not be greater than 100%. You Can Set Weight Value of This Key Result is <b>'+setvalue+'</b></small>');
+                        $('#wieght-error').html('<div class="row"> <div class="col-md-12"><small class="text-danger ml-2">Combined weight Percentage not be greater than 100%. You Can Set Weight Value of This Key Result is <b>'+setvalue+'</b></small></div></div>');
                     } else {
                         $('#wieght-error').html('');
                     }
@@ -2053,6 +2054,15 @@
             $('#show-read' + x).show();
 
         });
+    }
+
+    
+
+    function startquarter() 
+    {
+    $('#create-report').modal('show');
+
+    
     }
 
     function saveQuarter() {

@@ -124,7 +124,7 @@ $var_objective = 'Report-'.$type;
                                         @php
                                         $SprintInit = DB::table('sprint_report')->where('initiative_id',$epic->epic_init_id)->where('q_id',$sprint)->first();
                                         @endphp
-                                        <td class="cell-30-percent">@if($SprintInit){{$SprintInit->initiative_name}}@endif</td>
+                                        <td class="cell-30-percent"><a href="{{url('dashboard/organization/report-init/'.$epic->epic_init_id.'/'.$sprint.'/'.$type)}}">@if($SprintInit){{$SprintInit->initiative_name}}@endif</a></td>
                                     </tr>
                               
                                    
@@ -212,7 +212,7 @@ $var_objective = 'Report-'.$type;
                                         <td>{{$epic->epic_status}}</td>
                                         <td>IN{{$epic->epic_init_id}}</td>
                                        
-                                        <td class="cell-30-percent"><a href="javascript:void(0)">@if($SprintInit){{$SprintInit->initiative_name}}@endif</a></td>
+                                        <td class="cell-30-percent"><a href="{{url('dashboard/organization/report-init/'.$epic->epic_init_id.'/'.$sprint.'/'.$type)}}">@if($SprintInit){{$SprintInit->initiative_name}}@endif</a></td>
                                     </tr>
                           
                                     @endforeach
@@ -300,7 +300,8 @@ $var_objective = 'Report-'.$type;
                                         <td>{{$epic->epic_status}}</td>
                                         <td>IN{{$epic->epic_init_id}}</td>
                                      
-                                        <td class="cell-30-percent"><a href="javascript:void(0)">@if($SprintInit){{$SprintInit->initiative_name}}@endif</a></td>
+                                        <td class="cell-30-percent"><a href="{{url('dashboard/organization/report-init/'.$epic->epic_init_id.'/'.$sprint.'/'.$type)}}">@if($SprintInit){{$SprintInit->initiative_name}}@endif</a></td>
+
                                     </tr>
                                     
                                     @endforeach

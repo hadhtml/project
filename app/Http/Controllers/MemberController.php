@@ -1279,14 +1279,15 @@ $updateData = [
         
         if(!$name)
         {
-        return redirect()->back()->with('message', 'Please Enter Correct Business Units Name');
+        // return redirect()->back()->with('message', 'Please Enter Correct Business Units Name');
+        echo 1;
         }else
         {
         DB::table('business_units')->where('id',$request->delete_id)->delete();
         DB::table('value_stream')->where('unit_id',$request->delete_id)->delete();
         DB::table('objectives')->where('unit_id',$request->delete_id)->delete();
         DB::table('unit_team')->where('org_id',$request->delete_id)->delete();
-        return redirect()->back()->with('message', 'Business Units Deleted Successfully');
+        // return redirect()->back()->with('message', 'Business Units Deleted Successfully');
    
         }
       
@@ -1303,14 +1304,15 @@ $updateData = [
 
         if(!$name)
         {
-        return redirect()->back()->with('message', 'Please Enter Correct Value Stream Name');
+        // return redirect()->back()->with('message', 'Please Enter Correct Value Stream Name');
+        echo 1;
         }else
         {
 
         DB::table('value_stream')->where('id',$request->delete_id)->delete();
         DB::table('objectives')->where('unit_id',$request->delete_id)->delete();
         DB::table('value_team')->where('org_id',$request->delete_id)->delete();
-        return redirect()->back()->with('message', 'Value Stream Deleted Successfully');
+        // return redirect()->back()->with('message', 'Value Stream Deleted Successfully');
         }
 
        
