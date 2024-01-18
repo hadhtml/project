@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Organization;
+use App\Models\team_link_child;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
@@ -24,41 +25,40 @@ class TeamController extends Controller
     
     public function TeamBacklog($id,$type)
     {
-    if($type == 'BU')
-    {
-        $organization = DB::table('unit_team')->where('slug',$id)->first();        
-        $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->where('assign_status',NULL)->get();
-    }
-
-    if($type == 'VS')
-    {
-        $organization = DB::table('value_team')->where('slug',$id)->first();        
-        $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->where('assign_status',NULL)->get();
-    }
-
-    
-    if($type == 'org')
-    {
-        $organization = DB::table('organization')->where('slug',$id)->first();        
-        $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->where('assign_status',NULL)->get();
-    }
-
-    if($type == 'orgT')
-    {
-        $organization = DB::table('org_team')->where('slug',$id)->first();        
-        $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->where('assign_status',NULL)->get();
-    }
-
-    
-   
-    return view('Team.backlog',compact('Backlog','organization','type'));  
+        if($type == 'BU')
+        {
+            $organization = DB::table('unit_team')->where('slug',$id)->first();        
+            $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
+        }
+        if($type == 'VS')
+        {
+            $organization = DB::table('value_team')->where('slug',$id)->first();        
+            $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
+        }
+        if($type == 'org')
+        {
+            $organization = DB::table('organization')->where('slug',$id)->first();        
+            $Backlog  =  DB::table('team_backlog')->where('type' , 'org')->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
+        }
+        if($type == 'orgT')
+        {
+            $organization = DB::table('org_team')->where('slug',$id)->first();        
+            $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
+        }
+        return view('epicbacklog.index',compact('Backlog','organization','type'));  
         
     }
 
     public function SaveTeamBacklogEpic(Request $request)
     {
 
-     
+        $counter = 0;
+        $data = DB::table('team_backlog')->orderby('id','DESC')->where('user_id',Auth::id())->first();
+        if($data)
+        {
+        $counter = $data->position + 1; 
+        }
+
         DB::table('team_backlog')
         ->insert([
             'epic_title' => $request->epic_name,
@@ -68,6 +68,8 @@ class TeamController extends Controller
             'epic_detail' => $request->epic_description,
             'unit_id' => $request->unit_id,
             'type' => $request->type,
+            'position' => $counter,
+            'user_id' => Auth::id(),
             
             ]);
       
@@ -78,61 +80,46 @@ class TeamController extends Controller
 
     public function AssignTeamBacklogEpic(Request $request)
     {
-
-      
-          $backlogIds = explode(',', $request->input('backlog_id'));
-          
-           foreach($backlogIds  as $key => $value)
-          {
-              
-          $log = DB::table('team_backlog')->where('id',$value)->first();
-          foreach($request->end_date  as $key => $value)
-          {
-        
-         $monthName = Carbon::parse($request->end_date[$key])->format('F');
-           $month = DB::table('quarter_month')->where('initiative_id',$request->locinit)->where('month',$monthName)->first();
-           if(!$month)
-           {
-            return redirect()->back()->with('message', 'initiative Quarter Month Not Found');
-           }
-           
-            $EpicId = DB::table('epics')->insertGetId([
-        
-                'epic_status' => $log->epic_status,
-                'epic_name' => $log->epic_title,
-                'epic_detail' => $log->epic_detail,
-                'epic_start_date' => $request->start_date[$key],
-                'epic_end_date' => $request->end_date[$key],
-                'initiative_id' => $request->locinit,
-                'user_id' => Auth::id(),
-                'month_id' => $month->id,
-                'quarter_id' => $month->quarter_id, 
-                'backlog_id' => $log->id,
-                 'type' => $request->team_type,
-                 'key_id' => $request->lockey,
-                'jira_id' =>  $log->jira_id,
-                'account_id' => $log->account_id,
-                'jira_project' =>  $log->jira_project,
-
-        
+        $backlogIds = explode(',', $request->input('backlog_id'));
+        foreach($backlogIds  as $key => $value)
+        {  
+            $log = DB::table('team_backlog')->where('id',$value)->first();
+            foreach($request->end_date  as $key => $value)
+            {
+                $monthName = Carbon::parse($request->end_date[$key])->format('F');
+                $Year = Carbon::parse($request->end_date[$key])->format('Y');
+                $month = DB::table('quarter_month')->where('initiative_id',$request->locinit)->where('month',$monthName)->where('year',$Year)->first();
+                if(!$month)
+                {
+                    return redirect()->back()->with('message', 'initiative Quarter Month Not Found');
+                }
+                $EpicId = DB::table('epics')->insertGetId([
+                    'epic_status' => $log->epic_status,
+                    'epic_name' => $log->epic_title,
+                    'epic_detail' => $log->epic_detail,
+                    'epic_start_date' => $request->start_date[$key],
+                    'epic_end_date' => $request->end_date[$key],
+                    'initiative_id' => $request->locinit,
+                    'user_id' => Auth::id(),
+                    'month_id' => $month->id,
+                    'quarter_id' => $month->quarter_id, 
+                    'backlog_id' => $log->id,
+                    'type' => $request->team_type,
+                    'key_id' => $request->lockey,
+                    'jira_id' =>  $log->jira_id,
+                    'account_id' => $log->account_id,
+                    'jira_project' =>  $log->jira_project,
                 ]);
-
-        
-          }
-          
-           foreach($request->end_date  as $k => $value)
-          {
-           DB::table('team_backlog')->where('id', $value)->update(['epic_start_date' => $request->start_date[$k],'epic_end_date' => $request->end_date[$k]]);
-          }
-          }
-          
-         $backlogstatus = DB::table('team_backlog')->whereIn('id', $backlogIds)->update(['assign_status'=> 1,'quarter'=> $month->quarter_name.' '.$month->year,'epic_start_date' => $request->start_date,'epic_end_date' => $request->end_date]);
-
-   
-    $Quartertotal = 0;
-    $totalinitiative = 0;
-    $finaltotal  = 0;
-    
+            }
+            foreach($request->end_date  as $k => $value)
+            {
+               DB::table('team_backlog')->where('id', $value)->update(['epic_start_date' => $request->start_date[$k],'epic_end_date' => $request->end_date[$k]]);
+            }
+        }  
+        $backlogstatus = DB::table('team_backlog')->whereIn('id', $backlogIds)->update(['assign_status'=> 1,'quarter'=> $month->quarter_name.' '.$month->year,'epic_start_date' => $request->start_date,'epic_end_date' => $request->end_date]);
+        $Quartertotal = 0;
+        $totalinitiative = 0;
+        $finaltotal  = 0;
         $currentDate = Carbon::now();
         $currentYear = $currentDate->year;
         $currentMonth = $currentDate->month;
@@ -399,8 +386,8 @@ $updateData = [
 
     public function GetBUKey(Request $request)
     {
-    $objective = DB::table('key_result')->where('id','!=',$request->key_id)->where('obj_id',$request->id)->get();
-    return $objective;
+        $objective = DB::table('key_result')->where('obj_id',$request->id)->get();
+        return $objective;
     }
 
     public function AppendTeam(Request $request)
@@ -425,16 +412,15 @@ $updateData = [
     $type = $request->type;    
     if($request->type == 'BU')
     {
-    $Team = DB::table('business_units')->where('id',$request->org_id)->get();
+        $Team = DB::table('business_units')->where('id',$request->org_id)->get();
     }
-    if($request->type == 'stream')
+    if($request->type == 'orgT')
     {
-    $steam = DB::table('value_stream')->where('id',$request->id)->first();
-    $Team = DB::table('business_units')->where('id',$steam->unit_id)->get();
+        $Team = DB::table('organization')->where('id',$request->org_id)->get();
     }
     if($request->type == 'VS')
     { 
-    $Team = DB::table('value_stream')->where('id',$request->org_id)->get();
+        $Team = DB::table('value_stream')->where('id',$request->org_id)->get();
     }
      
     return view('Team.Append-Bu',compact('Team','index','type'));  
@@ -476,21 +462,30 @@ $updateData = [
 
     public function GetValueLink(Request $request)
     {
-    $type = $request->type;
- 
-
-    if($request->type == 'stream')
-    {    
-    $KeyLink = DB::table('team_link_child')
-    ->join('business_units','business_units.id','=','team_link_child.bussiness_unit_id')
-    ->join('key_result','key_result.id','=','team_link_child.bussiness_key_id')
-    ->select('business_units.*','team_link_child.id AS ID','key_result.key_name AS obj_name')
-    ->where('team_link_child.team_obj_id','=',$request->id)
-    ->where('team_link_child.type',$request->type)->get();
-    }
-
-  
-    return view('Team.Get-Obj-link',compact('KeyLink','type'));  
+        $linking = team_link_child::where('team_obj_id' , $request->id)->get();
+        $type = $request->type;
+        if ($type == "unit") {
+            $organization = DB::table("business_units")->where("id", $request->unit_id)->first();
+        }
+        if ($type == "stream") {
+            $organization = DB::table("value_stream")->where("id", $request->unit_id)->first();
+        }
+        if ($type == "BU") {
+            $organization = DB::table("unit_team")->where("id", $request->unit_id)->first();
+        }
+        if ($type == "VS") {
+            $organization = DB::table("value_team")->where("id", $request->unit_id)->first();
+            
+        }
+        if ($type == "org") {
+            $organization = DB::table("organization")->where("id", $request->unit_id)->first();
+        }
+        if ($type == "orgT") {
+            $organization = DB::table("org_team")->where("id", $request->unit_id)->first();
+        }
+        $objective = DB::table('objectives')->where('id' , $request->id)->first();
+        $html = view('Team.Get-Obj-link', compact('linking','type','organization','objective'))->render();
+        return $html;  
     }
 
     public function DeleteTeamLinkObj(Request $request)
@@ -502,6 +497,56 @@ $updateData = [
     function EpicTeamSearch(Request $request)
     {
         $FladId = $request->input("chartId");
+      
+      
+          if ($FladId[0] == "All") {
+            if ($request->type == "unit") {
+                $organization = DB::table("business_units")
+                    ->where("slug", $request->slug)
+                    ->first();
+                $objective = DB::table("objectives")
+                    ->where("org_id", $request->org_id)
+                    ->where("unit_id", $request->unit_id)
+                    ->where("trash", null)
+                    ->where("type", "unit")
+                    ->get();
+                return view(
+                    "objective.objective-render",
+                    compact("organization", "objective")
+                );
+            }
+
+            if ($request->type == "stream") {
+                $organization = DB::table("value_stream")
+                    ->where("slug", $request->slug)
+                    ->first();
+                $objective = DB::table("objectives")
+                    ->where("org_id", $request->org_id)
+                    ->where("unit_id", $request->unit_id)
+                    ->where("trash", null)
+                    ->where("type", "stream")
+                    ->get();
+                return view(
+                    "objective.objective-render",
+                    compact("organization", "objective")
+                );
+            }
+
+            if ($request->type == "org") {
+                $organization = DB::table("organization")
+                    ->where("slug", $request->slug)
+                    ->first();
+                $objective = DB::table("objectives")
+                    ->where("unit_id", $request->unit_id)
+                    ->where("trash", null)
+                    ->where("type", "org")
+                    ->get();
+                return view(
+                    "objective.objective-render",
+                    compact("organization", "objective")
+                );
+            }
+        }
 
         if ($request->type == "unit") {
             $organization = DB::table("business_units")
@@ -535,6 +580,21 @@ $updateData = [
             );
         }
 
+        if ($request->type == "org") {
+            $organization = DB::table("organization")
+                ->where("slug", $request->slug)
+                ->first();
+            $objective = DB::table("objectives")
+                ->where("unit_id", $request->unit_id)
+                ->where("trash", null)
+                ->where("type", "org")
+                ->get();
+            return view(
+                "objective.epicTeamsearch",
+                compact("organization", "objective",'FladId')
+            );
+        }
+
       
     }
 
@@ -546,6 +606,91 @@ $updateData = [
     return view('Business-units.team-dashboard',compact('organization','BUTeam'));  
         
     }
+
+    public function AssignEpicAll(Request $request)
+    {
+    
+
+    if($request->type == 'org')
+    {
+    $organization = DB::table('organization')->where('id',$request->id)->first();
+    if($request->val == 1)
+    {
+
+      $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->where('type','org')->where('assign_status',1)->get();  
+    }
+    if($request->val == 0)
+    {
+      $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->where('type','org')->where('assign_status',NULL)->get();  
+    }
+      if($request->val == 'all')
+    {
+      $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->where('type','org')->get();  
+    }
+
+    }
+
+    if($request->type == 'BU')
+    {
+    $organization = DB::table('unit_team')->where('id',$request->id)->first();
+    if($request->val == 1)
+    {
+        
+      $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->where('type','BU')->where('assign_status',1)->get();  
+    }
+    if($request->val == 0)
+    {
+      $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->where('type','BU')->where('assign_status',NULL)->get();  
+    }
+      if($request->val == 'all')
+    {
+      $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->where('type','BU')->get();  
+    }
+
+    }
+
+    if($request->type == 'VS')
+    {
+    $organization = DB::table('value_team')->where('id',$request->id)->first();
+    if($request->val == 1)
+    {
+        
+      $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->where('type','VS')->where('assign_status',1)->get();  
+    }
+    if($request->val == 0)
+    {
+      $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->where('type','VS')->where('assign_status',NULL)->get();  
+    }
+      if($request->val == 'all')
+    {
+      $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->where('type','VS')->get();  
+    }
+
+    }
+
+    if($request->type == 'orgT')
+    {
+    $organization = DB::table('org_team')->where('id',$request->id)->first();
+    if($request->val == 1)
+    {
+        
+      $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->where('type','orgT')->where('assign_status',1)->get();  
+    }
+    if($request->val == 0)
+    {
+      $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->where('type','orgT')->where('assign_status',NULL)->get();  
+    }
+      if($request->val == 'all')
+    {
+      $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->where('type','orgT')->get();  
+    }
+
+    }
+
+    return view('Team.assign-backlog-all',compact('Backlog','organization'));  
+
+    }
+  
 
     
 }

@@ -34,11 +34,17 @@ class OrganizationController extends Controller
 
     public function SaveOrgTeam(Request $request)
     {
-
+      if($request->has('member'))
+      {
+      $member = implode(',',$request->member);
+      }else
+      {
+       $member = NULL;
+      }
         DB::table('org_team')
         ->insert([
             'org_id' => $request->team_unit_id,
-            'member' => implode(',',$request->member),
+            'member' => $member,
             'lead_id' => $request->lead_manager_team,
             'team_title' => $request->team_title,
             'slug' => Str::slug($request->team_title.'-'.rand(10, 99)),
@@ -324,6 +330,7 @@ class OrganizationController extends Controller
              $objid = array();
              $objective = DB::table('objectives')->whereBetween('created_at', [$s->start_data, $s->end_date])->where('user_id',Auth::id())->where('unit_id',$s->value_unit_id)
              ->where('type',$request->type)->where('trash',NULL)->get();
+     
              foreach($objective as $obj)
              {
              $objid[] = $obj->id;  
@@ -349,7 +356,7 @@ class OrganizationController extends Controller
              $masterkey = array();
              $tempkey = array(); 
              $keyid = []; 
-             $key = DB::table('key_result')->whereBetween('created_at', [$s->start_data, $s->end_date])->whereIn('obj_id',$objid)->get();
+             $key = DB::table('key_result')->whereIn('obj_id',$objid)->get();
              foreach($key as $kk)
              {
              $keyid[] = $kk->id;  
@@ -361,9 +368,9 @@ class OrganizationController extends Controller
              foreach($key as $k)
              {
                  
-            $epicCount = DB::table('epics')->whereBetween('created_at', [$s->start_data, $s->end_date])->where('key_id',$k->id)->where('trash',NULL)->count();
-              $epicComp =  DB::table('epics')->whereBetween('created_at', [$s->start_data, $s->end_date])->where('key_id',$k->id)->where('trash',NULL)->where('epic_progress','=',100)->count();
-              $epicincomp = DB::table('epics')->whereBetween('created_at', [$s->start_data, $s->end_date])->where('key_id',$k->id)->where('trash',NULL)->where('epic_progress','!=',100)->count();
+            $epicCount = DB::table('epics')->where('key_id',$k->id)->where('trash',NULL)->count();
+              $epicComp =  DB::table('epics')->where('key_id',$k->id)->where('trash',NULL)->where('epic_progress','=',100)->count();
+              $epicincomp = DB::table('epics')->where('key_id',$k->id)->where('trash',NULL)->where('epic_progress','!=',100)->count();
               
               $tempkey['id'] = $k->id;
               $tempkey['obj_id'] = $k->obj_id;
@@ -386,7 +393,12 @@ class OrganizationController extends Controller
                
              $masterinit = array();
              $tempinit = array();  
-             $init = DB::table('initiative')->whereBetween('created_at', [$s->start_data, $s->end_date])->where('user_id',Auth::id())->get();
+             $init = DB::table('initiative')->whereIn('key_id',$keyid)->where('user_id',Auth::id())->get();
+
+             foreach($init as $i_id)
+             {
+              $tempinit[] = $i_id->id;  
+             }
              foreach($init as $i)
              {
             //   $tempinit['id'] = $i->id;
@@ -411,7 +423,7 @@ class OrganizationController extends Controller
                
              $masterepic = array();
              $tempepic = array();  
-             $epic = DB::table('epics')->whereBetween('created_at', [$s->start_data, $s->end_date])->where('user_id',Auth::id())->get();
+             $epic = DB::table('epics')->whereIn('initiative_id',$tempinit)->where('user_id',Auth::id())->get();
              foreach($epic as $e)
              {
             //   $tempepic['id'] = $e->id;
@@ -564,6 +576,10 @@ class OrganizationController extends Controller
           {
           $organization = DB::table('organization')->where('id',$report->value_unit_id)->first();        
           }
+          if($type == 'orgT')
+          {
+          $organization = DB::table('org_team')->where('id',$report->value_unit_id)->first();        
+          }
           if($sprint)
           {
           $obj =   json_decode($sprint->objective);
@@ -575,10 +591,33 @@ class OrganizationController extends Controller
 
     }
     
-    public function SecondReport($id,$sprint)
+    public function SecondReport($id,$sprint,$type)
     {
         $report = DB::table('sprint')->where('id',$sprint)->first();
-        $organization = DB::table('business_units')->where('id',$report->value_unit_id)->first();        
+        if($type == 'unit')
+        {
+        $organization = DB::table('business_units')->where('id',$report->value_unit_id)->first();
+        }
+        if($type == 'stream')
+        {
+        $organization = DB::table('value_stream')->where('id',$report->value_unit_id)->first();
+        }
+        if($type == 'BU')
+        {
+        $organization = DB::table('unit_team')->where('id',$report->value_unit_id)->first();        
+        }
+        if($type == 'VS')
+        {
+        $organization = DB::table('value_team')->where('id',$report->value_unit_id)->first();        
+        }
+        if($type == 'org')
+        {
+        $organization = DB::table('organization')->where('id',$report->value_unit_id)->first();        
+        }
+        if($type == 'orgT')
+        {
+        $organization = DB::table('org_team')->where('id',$report->value_unit_id)->first();        
+        }   
         $SprintInit = DB::table('sprint_report')->where('initiative_key_id',$id)->where('q_id',$sprint)->get();
         $SprintObj = DB::table('sprint_report')->where('q_id',$sprint)->first();
         $obj =   json_decode($SprintObj->objective);
@@ -592,17 +631,67 @@ class OrganizationController extends Controller
     public function AllEpicReport($sprint,$type)
     {
         $report = DB::table('sprint')->where('id',$sprint)->first();
-        $organization = DB::table('business_units')->where('id',$report->value_unit_id)->first();        
+        
+        if($type == 'unit')
+        {
+        $organization = DB::table('business_units')->where('id',$report->value_unit_id)->first();
+        }
+        if($type == 'stream')
+        {
+        $organization = DB::table('value_stream')->where('id',$report->value_unit_id)->first();
+        }
+        if($type == 'BU')
+        {
+        $organization = DB::table('unit_team')->where('id',$report->value_unit_id)->first();        
+        }
+        if($type == 'VS')
+        {
+        $organization = DB::table('value_team')->where('id',$report->value_unit_id)->first();        
+        }
+        if($type == 'org')
+        {
+        $organization = DB::table('organization')->where('id',$report->value_unit_id)->first();        
+        }
+
+        if($type == 'orgT')
+        {
+        $organization = DB::table('org_team')->where('id',$report->value_unit_id)->first();        
+        }
 
         return view('Report.allreportepic',compact('report','sprint','type','organization'));
 
     
     }
 
-    public function AllInitReport($init,$sprint)
+    public function AllInitReport($init,$sprint,$type)
     {
         $report = DB::table('sprint')->where('id',$sprint)->first();
+        if($type == 'unit')
+        {
         $organization = DB::table('business_units')->where('id',$report->value_unit_id)->first();
+        }
+        if($type == 'stream')
+        {
+        $organization = DB::table('value_stream')->where('id',$report->value_unit_id)->first();
+        }
+        if($type == 'BU')
+        {
+        $organization = DB::table('unit_team')->where('id',$report->value_unit_id)->first();        
+        }
+        if($type == 'VS')
+        {
+        $organization = DB::table('value_team')->where('id',$report->value_unit_id)->first();        
+        }
+        if($type == 'org')
+        {
+        $organization = DB::table('organization')->where('id',$report->value_unit_id)->first();        
+        }
+
+        if($type == 'orgT')
+        {
+        $organization = DB::table('org_team')->where('id',$report->value_unit_id)->first();        
+        }
+
         $InitName = DB::table('sprint_report')->where('initiative_id',$init)->where('q_id',$sprint)->first();        
         $type = $organization->type;
         return view('Report.init-report',compact('report','sprint','type','organization','init','InitName'));
@@ -756,20 +845,23 @@ class OrganizationController extends Controller
 {
     $request->validate([
         'old_password' => 'required|min:8',
-        'password' => 'required|min:8',
+        'password' => 'required|string|min:6|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/',
         'password_confirmation' => 'required|same:password|min:8',
     ]);
     $data = $request->all();
     $id = auth()->user();
+
     if(Hash::check($data['old_password'], $id->password) == true)
     {
         $id->password = Hash::make($data['password']);
         $id->save();
-        return redirect()->back()->with('msg','Password Update Successfully...!!');
+        return redirect()->back()->with('message','Password Update Successfully...!!');
+
     }
     else
     {
-        return redirect()->back()->with('msg','Old password does not match');
+
+     return redirect()->back()->with('message','Old password does not match');
     }
 }
 
@@ -810,6 +902,40 @@ public function UpdateProfile(Request $request)
 
 }
     
+public function AllsprintEpicReport($sprint,$type)
+{
+    $report = DB::table('sprint')->where('id',$sprint)->first();
+    
+    if($type == 'unit')
+    {
+    $organization = DB::table('business_units')->where('id',$report->value_unit_id)->first();
+    }
+    if($type == 'stream')
+    {
+    $organization = DB::table('value_stream')->where('id',$report->value_unit_id)->first();
+    }
+    if($type == 'BU')
+    {
+    $organization = DB::table('unit_team')->where('id',$report->value_unit_id)->first();        
+    }
+    if($type == 'VS')
+    {
+    $organization = DB::table('value_team')->where('id',$report->value_unit_id)->first();        
+    }
+    if($type == 'org')
+    {
+    $organization = DB::table('organization')->where('id',$report->value_unit_id)->first();        
+    }
+
+    if($type == 'orgT')
+    {
+    $organization = DB::table('org_team')->where('id',$report->value_unit_id)->first();        
+    }
+
+    return view('Report.allepicsprint',compact('report','sprint','type','organization'));
+
+
+}
     
 
 

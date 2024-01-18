@@ -29,7 +29,7 @@ class MemberController extends Controller
     public function AllMembers()
     {
         $Member  = Member::where('org_user',Auth::id())
-        ->join('users','members.user_id','=','users.id')->select('members.*','users.*','users.role AS u_role','users.status AS u_status','members.id AS ID','users.id AS u_id','members.name AS Name','members.last_name AS LastName')
+        ->join('users','members.user_id','=','users.id')->select('members.*','users.*','users.role AS u_role','users.status AS u_status','members.id AS ID','users.id AS u_id','members.name AS Name','members.last_name AS LastName','members.image AS image')
         ->get();
         return view('member.member',compact('Member'));
 
@@ -66,7 +66,7 @@ class MemberController extends Controller
         $Member->phone = $request->phone;
         if($request->add_image)
         {
-        $Member->image = $this->sendimagetodirectory($request->add_image);
+            $Member->image = $this->sendimagetodirectory($request->add_image);
         }
         $Member->user_id = $User->id;
         $Member->org_id = $request->org_id;
@@ -87,10 +87,13 @@ class MemberController extends Controller
         'password' => $password,
 
         ];
-        Mail::send('email.email-member', $data, function($message) use ($email) {
-        $message->to($email, env('MAIL_FROM_NAME'))->subject('Login Credentials');
-        $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+        $organization = DB::table('organization')->where('user_id' ,Auth::id())->first()->organization_name;
+        $subject = Auth::user()->name.' '.Auth::user()->last_name.' added you as a '.$request->role.' in '.$organization.'';
+        Mail::send('email.email-member', ['data' => $data], function ($message) use ($request, $subject) {
+            $message->to($request->email);
+            $message->subject($subject);
         });
+
     } catch (\Error $ex) {
 
         return redirect()->back()->with('message', 'Member Added Successfully');
@@ -128,7 +131,7 @@ class MemberController extends Controller
               $Member->image = $this->sendimagetodirectory($request->image);
             }else{
 
-                $Member->image = $request->old_image;
+            $Member->image = $request->old_image;
     
             }
            
@@ -313,11 +316,17 @@ class MemberController extends Controller
     public function SaveBusinessTeam(Request $request)
     {
 
-     
+       if($request->has('member'))
+       {
+       $member = implode(',',$request->member);
+       }else
+       {
+        $member = NULL;
+       }
         DB::table('unit_team')
         ->insert([
             'org_id' => $request->team_unit_id,
-            'member' => implode(',',$request->member),
+            'member' => $member,
             'lead_id' => $request->lead_manager_team,
             'team_title' => $request->team_title,
             'slug' => Str::slug($request->team_title.'-'.rand(10, 99)),
@@ -334,10 +343,18 @@ class MemberController extends Controller
        public function SaveStreamTeam(Request $request)
     {
 
+        if($request->has('member'))
+        {
+        $member = implode(',',$request->member);
+        }else
+        {
+         $member = NULL;
+        }
+
         DB::table('value_team')
         ->insert([
             'org_id' => $request->org_stream_id,
-            'member' => implode(',',$request->member),
+            'member' => $member,
             'lead_id' => $request->lead_manager_team,
             'team_title' => $request->team_title,
             'slug' => Str::slug($request->team_title.'-'.rand(10, 99)),
@@ -393,10 +410,18 @@ class MemberController extends Controller
           public function SaveGlobTeam(Request $request)
     {
 
+        if($request->has('member'))
+        {
+        $member = implode(',',$request->member);
+        }else
+        {
+         $member = NULL;
+        }
+
         DB::table('teams')
         ->insert([
             'org_id' => $request->org_id,
-            'member' => implode(',',$request->member),
+            'member' => $member,
             'lead_id' => $request->lead_manager_team,
             'team_title' => $request->team_title,
             
@@ -420,7 +445,13 @@ class MemberController extends Controller
        public function SaveBacklogEpic(Request $request)
     {
 
-     
+        $counter = 0;
+        $data = DB::table('backlog')->orderby('id','DESC')->where('user_id',Auth::id())->first();
+        if($data)
+        {
+            $counter = $data->position + 1; 
+        }
+
         DB::table('backlog')
         ->insert([
             'epic_title' => $request->epic_name,
@@ -429,6 +460,10 @@ class MemberController extends Controller
             'epic_status' => $request->epic_status,
             'epic_detail' => $request->epic_description,
             'stream_id' => $request->Stream_id,
+            'type' => $request->type,
+            'unit_id' => $request->Stream_id,
+            'position' => $counter,
+            'user_id' => Auth::id(),
             
             ]);
       
@@ -437,93 +472,7 @@ class MemberController extends Controller
 
     }
     
-         public function UpdateBacklogEpic(Request $request)
-       {
-
-        DB::table('backlog')
-        ->where('id',$request->backlog_id)
-        ->update([
-            'epic_title' => $request->epic_name,
-            'epic_start_date' => $request->epic_start_date,
-            'epic_end_date' => $request->epic_end_date,
-            'epic_status' => $request->epic_status,
-            'epic_detail' => $request->epic_description,
-            'team_id' => $request->team,
-            
-            ]);
-            
-         $jira = DB::table('backlog')->where('id',$request->backlog_id)->first();
-         if($jira->jira_id != '')
-         {
-         $backlog = DB::table('epics')->where('jira_id',$jira->jira_id)->first();
-         if($backlog)
-         {
-           DB::table('epics')
-           ->where('jira_id',$jira->jira_id)
-           ->update(['epic_name' => $request->epic_name]);
-           
-         }
-         
-    if($jira->jira_id != '')
-    {
-    $Account = DB::table('jira_setting')->where('user_id',Auth::id())->first();
-    $username = $Account->user_name;
-    $apiToken = $Account->token;
-    $issueKeyOrId = $jira->jira_id;
-    $apiEndpoint = "{$Account->jira_url}/rest/api/3/issue/{$issueKeyOrId}";
-
-    $auth = base64_encode("$username:$apiToken");
-
-        $updateData = [
-    "fields" => [
-        "description" => [
-            "type" => "doc",
-            "version" => 1,
-            "content" => [
-                [
-                    "type" => "paragraph",
-                    "content" => [
-                        [
-                            "type" => "text",
-                            "text" => $request->epic_description
-                        ]
-                    ]
-                ]
-            ]
-        ],
-        
-       "summary" => $request->epic_name, 
-    ],
     
-     
-];
-        
-        $ch = curl_init($apiEndpoint);
-        
-        if ($ch === false) {
-            die("cURL initialization failed");
-        }
-        
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($updateData));
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            "Authorization: Basic {$auth}",
-            "Content-Type: application/json",
-        ]);
-        
-        $response = curl_exec($ch);
-        
-        curl_close($ch);
-
-     }
-             
-         }
-      
-       
-        return redirect()->back()->with('message', 'Backlog Epic Updated Successfully');
-
-    }
     
     public function GetBacklogObj(Request $request)
     {
@@ -586,7 +535,8 @@ class MemberController extends Controller
           foreach($request->end_date  as $key => $value)
           {
            $monthName = Carbon::parse($request->end_date[$key])->format('F');
-           $month = DB::table('quarter_month')->where('initiative_id',$request->locinit)->where('month',$monthName)->first();
+           $Year = Carbon::parse($request->end_date[$key])->format('Y');
+           $month = DB::table('quarter_month')->where('initiative_id',$request->locinit)->where('month',$monthName)->where('year',$Year)->first();
            
            if(!$month)
            {
@@ -804,7 +754,7 @@ class MemberController extends Controller
      if($type == 'VS')
      {
      $organization  = DB::table('value_team')->where('slug',$id)->first();
-     $data = DB::table('kpi_setting')->where('user_id',Auth::id())->where('stream_id',$organization->id)->where('type','VU')->get();  
+     $data = DB::table('kpi_setting')->where('user_id',Auth::id())->where('stream_id',$organization->id)->where('type','VS')->get();  
 
             
      }
@@ -904,7 +854,12 @@ class MemberController extends Controller
     public function SaveUnitBacklogEpic(Request $request)
     {
 
-     
+        $counter = 0;
+        $data = DB::table('backlog_unit')->orderby('id','DESC')->where('user_id',Auth::id())->first();
+        if($data)
+        {
+            $counter = $data->position + 1; 
+        }
         DB::table('backlog_unit')
         ->insert([
             'epic_title' => $request->epic_name,
@@ -913,6 +868,8 @@ class MemberController extends Controller
             'epic_status' => $request->epic_status,
             'epic_detail' => $request->epic_description,
             'unit_id' => $request->unit_id,
+            'position' => $counter,
+            'user_id' => Auth::id(),
             
             ]);
       
@@ -1028,7 +985,9 @@ $updateData = [
           {
         
          $monthName = Carbon::parse($request->end_date[$key])->format('F');
-           $month = DB::table('quarter_month')->where('initiative_id',$request->locinit)->where('month',$monthName)->first();
+         $Year = Carbon::parse($request->end_date[$key])->format('Y');
+
+           $month = DB::table('quarter_month')->where('initiative_id',$request->locinit)->where('month',$monthName)->where('year',$Year)->first();
            if(!$month)
            {
             return redirect()->back()->with('message', 'initiative Quarter Month Not Found');
@@ -1233,7 +1192,7 @@ $updateData = [
 
     }
     
-       public function AssignEpicBacklog(Request $request)
+    public function AssignEpicBacklog(Request $request)
     {
     
 
@@ -1320,14 +1279,15 @@ $updateData = [
         
         if(!$name)
         {
-        return redirect()->back()->with('message', 'Please Enter Correct Business Units Name');
+        // return redirect()->back()->with('message', 'Please Enter Correct Business Units Name');
+        echo 1;
         }else
         {
         DB::table('business_units')->where('id',$request->delete_id)->delete();
         DB::table('value_stream')->where('unit_id',$request->delete_id)->delete();
         DB::table('objectives')->where('unit_id',$request->delete_id)->delete();
         DB::table('unit_team')->where('org_id',$request->delete_id)->delete();
-        return redirect()->back()->with('message', 'Business Units Deleted Successfully');
+        // return redirect()->back()->with('message', 'Business Units Deleted Successfully');
    
         }
       
@@ -1340,13 +1300,23 @@ $updateData = [
      public function DeleteValueStream(Request $request)
     {
 
-     
+        $name = DB::table('value_stream')->where('id',$request->delete_id)->where('value_name',$request->value_name)->first();
+
+        if(!$name)
+        {
+        // return redirect()->back()->with('message', 'Please Enter Correct Value Stream Name');
+        echo 1;
+        }else
+        {
+
         DB::table('value_stream')->where('id',$request->delete_id)->delete();
         DB::table('objectives')->where('unit_id',$request->delete_id)->delete();
         DB::table('value_team')->where('org_id',$request->delete_id)->delete();
+        // return redirect()->back()->with('message', 'Value Stream Deleted Successfully');
+        }
 
        
-        return redirect()->back()->with('message', 'Value Stream Deleted Successfully');
+       
 
     }
     
@@ -1413,6 +1383,15 @@ $updateData = [
         $existsOld = DB::table('backlog')->where('position',$request->newPosition)->where('assign_status',NULL)->first();
         DB::table('backlog')->where('id',$existsOld->id)->update(['position' => $existsInModelB->position,]);
         DB::table('backlog')->where('id',$request->backlogId)->update(['position' => $request->newPosition,]);
+      }
+
+      $existsInModelC = DB::table('team_backlog')->where('id',$request->backlogId)->where('assign_status',NULL)->first();
+      
+      if($existsInModelC)
+      { 
+        $existsOld = DB::table('team_backlog')->where('position',$request->newPosition)->where('assign_status',NULL)->first();
+        DB::table('team_backlog')->where('id',$existsOld->id)->update(['position' => $existsInModelC->position,]);
+        DB::table('team_backlog')->where('id',$request->backlogId)->update(['position' => $request->newPosition,]);
       }
 
        
