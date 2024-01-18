@@ -119,7 +119,7 @@ class Jira
 		return $utasks;
 	}
 	
-	  public function UpdateBujira()
+	  public static function UpdateBujira()
     {
 
      
@@ -163,7 +163,7 @@ class Jira
     
     }
     
-     public function UpdateBVsjira()
+     public static function UpdateBVsjira()
     {
 
      

@@ -116,9 +116,9 @@ $img = 'https://agileprolific.com/dev/public/assets/images/icons/logo.svg';
  <br>
   Your login credentials are provided below:
 <br>
-<span style="font-weight:bold;">Email: &nbsp;</span><span style="font-weight:lighter;" class="">{{$Username}}</span> 
+<span style="font-weight:bold;">Email: &nbsp;</span><span style="font-weight:lighter;" class="">{{$data['Username']}}</span> 
  <br>
-  <span style="font-weight:bold;">Password: &nbsp;</span><span style="font-weight:lighter;" class="">{{$password}}</span>
+  <span style="font-weight:bold;">Password: &nbsp;</span><span style="font-weight:lighter;" class="">{{$data['password']}}</span>
 <br><br>  
 <br></td>
 </tr>

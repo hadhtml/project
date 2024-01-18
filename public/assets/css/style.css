@@ -18362,7 +18362,7 @@ hr {
     font-size: 16px;
     font-style: normal;
     font-weight: 600;
-    padding-right: 70px;
+    padding-right: 60px;
     text-decoration: none;
     line-height: normal;
     text-transform: capitalize;
@@ -18558,8 +18558,10 @@ option {
     }
 }
 
-@media (min-width: 992px) .aside {
+@media (min-width: 992px) {
+    .aside {
     width: 140px;
+}
 }
 
 .aside {
@@ -18567,7 +18569,7 @@ option {
     flex-direction: column;
     z-index: 1030;
     position: fixed;
-    width: 70px;
+    width: 4%;
     height: 100vh;
     margin-top: 5%;
     background-color: #547AFF;
@@ -18715,7 +18717,7 @@ option {
 
 .sidebar li a {
     border-radius: 10rem !important;
-    padding: 14px !important;
+    padding: 11px !important;
     margin: 0px auto;
     display: block;
     width: 100% !important;
@@ -18901,19 +18903,22 @@ option {
 
 
 .sub-nav {
+
+    display: flex;
+    flex-direction: column;
+    z-index: 1030;
     position: fixed;
-    left: -300px;
-    /* Start with the panel hidden off-screen */
+    width: 15%;
     height: 100vh;
+    margin-left: 8px;
     background-color: #f8f9fa;
     padding: 20px;
     transition: left 0.3s ease-in-out;
-    z-index: 1;
     box-shadow: 30px 44px 44px 0px rgba(0, 0, 0, 0.05);
 }
 
 .sub-nav.open {
-    left: 4.5%;
+    left: 3.5%;
 }
 
 .close-button {
@@ -18936,6 +18941,7 @@ option {
     border-radius: 360px !important;
     text-align: left;
     padding: 7px 17px !important;
+    background-color: white !important;
     font-size: 13px !important;
     font-style: normal;
     margin-bottom: 0px;
@@ -19017,8 +19023,9 @@ option {
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    margin-top: 5%;
+    margin-top: 6%;
     padding: 12px 25px;
+
 }
 
 .subheader div {
@@ -19152,8 +19159,8 @@ option {
 
 .symbol.symbol-30>img {
     width: 100%;
-    max-width: 38px;
-    height: 38px;
+    max-width: 30px;
+    height: 30px;
     object-fit: cover;
 }
 
@@ -20307,7 +20314,7 @@ input[type="radio"]:checked {
 }
 
 .btn-primary {
-    border-radius: 54px;
+    border-radius: 54px !important;
     height: 43px;
     border: 1px solid #3661EC;
     background: var(--primary-color, #3661EC);
@@ -20802,11 +20809,30 @@ input[type="radio"]:checked {
 
 .kanban-header {
     cursor: pointer;
-    margin-bottom: 14px;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+    padding: 15px 30px;
+}
+.bg-todo
+{
+    background-color: #717171;
+    color: white;
+}
+
+.bg-inprogress
+{
+    background-color: #E1DB3F;
+    color: white;
+}
+
+.bg-done
+{
+    background-color: #3FE1A7;
+    color: white;
 }
 
 .kanban-header h4 {
-    color: var(--Black, #000);
+    color: var(--Black, #fff);
     font-size: 17px;
     font-style: normal;
     font-weight: 600;
@@ -20816,7 +20842,7 @@ input[type="radio"]:checked {
 }
 
 .kanban-header small {
-    color: var(--Ligh-text, #A7A7A7);
+    color: var(--Ligh-text, #fff);
     font-size: 12.552px;
     font-style: normal;
     font-weight: 400;
@@ -20839,6 +20865,12 @@ input[type="radio"]:checked {
 
 .kanban-content {
     min-height: 100px;
+}
+
+.imp-parent-card
+{
+    border-top-right-radius: 0px !important;
+    border-top-left-radius: 0px !important;
 }
 
 .kanban-card {
@@ -20893,11 +20925,16 @@ input[type="radio"]:checked {
 }
 
 .impediment-card .image-cont img {
-    width: 31px;
-    height: 31px;
+    width: 30px;
+    height: 30px;
     object-fit: cover;
     background-size: cover;
     border-radius: 1000px;
+    margin-left: -6px;
+}
+
+.impediment-card .image-cont img:first-child {
+    margin-left: 0px;
 }
 
 .un-blocked {
@@ -21122,7 +21159,8 @@ input[type="radio"]:checked {
 }
 
 .rightside span {
-    padding: 15px;
+    padding: 6px;
+    font-size: 21px;
     cursor: pointer;
 }
 
@@ -21165,6 +21203,7 @@ input[type="radio"]:checked {
 .statuschangebuttonarrow {
     height: 31px;
     padding-top: 5px !important;
+    padding-right: 8px !important;
     background-color: #924aef !important;
 }
 
@@ -21273,7 +21312,7 @@ input[type="radio"]:checked {
 }
 
 .textareaformcontrol .btn-sm {
-    font-size: 10px !important;
+    font-size: 13px !important;
     min-width: unset !important;
     border-radius: 2px !important;
     padding: 8px !important;
@@ -21282,12 +21321,19 @@ input[type="radio"]:checked {
 
 .note-editor .note-toolbar,
 .note-popover .popover-content {
-    padding: 3px !important;
+    padding: 11px !important;
+    border-bottom: 1px solid lightgray !important;
 }
 
 .note-editor .note-toolbar>.note-btn-group,
 .note-popover .popover-content>.note-btn-group {
     margin-top: 0px !important;
+}
+
+.note-btn-group .note-btn
+{
+    border:none !important;
+    background-color: #fff !important;
 }
 
 .note-toolbar {
@@ -21314,9 +21360,22 @@ input[type="radio"]:checked {
 
 .menuettitle ul li {
     color: #b2b2b2;
+    display: flex;
+    align-items: center;
     font-size: 14px;
     margin-bottom: 15px;
     cursor: pointer;
+}
+
+.menuettitle ul li span
+{
+    margin-right: 5px;
+    font-size: 21px;
+}
+
+.note-toolbar
+{
+    background-color: white !important;
 }
 
 .menuettitle ul .active {
@@ -21455,34 +21514,6 @@ input[type="radio"]:checked {
     cursor: pointer;
 }
 
-
-.activity-feed {
-    overflow: auto;
-    height: 50vh;
-    width: 100%;
-}
-
-/* width */
-.activity-feed::-webkit-scrollbar {
-    width: 10px;
-}
-
-/* Track */
-.activity-feed::-webkit-scrollbar-track {
-    background: #f1f1f1;
-}
-
-/* Handle */
-.activity-feed::-webkit-scrollbar-thumb {
-    background: #c5c9d1;
-    border-radius: 10px;
-}
-
-/* Handle on hover */
-.activity-feed::-webkit-scrollbar-thumb:hover {
-    background: #555;
-}
-
 .activity {
     position: relative;
     margin-bottom: 10px;
@@ -21605,9 +21636,10 @@ input[type="radio"]:checked {
     width: 100%;
     font-size: 80%;
     text-align: center;
-    text-transform: uppercase;
+    text-transform: unset;
     border: 2px dashed #ccc;
     margin: 15px 1px 0px 0px;
+    border-radius: 10px;
     padding: 2rem;
 }
 
@@ -21703,15 +21735,15 @@ input[type="radio"]:checked {
 .moveflag {
     cursor: auto;
     position: absolute;
-    border-radius: 5px;
+    border-radius: 10px;
     display: none;
     width: 285px;
     z-index: 1111;
     top: 40;
     left: 80px;
-    padding: 10px;
+    padding: 15px;
     background-color: white;
-    box-shadow: 0px 2px 2px 4px rgb(87 106 134 / 20%);
+    box-shadow: 0px 2px 20px 4px rgb(87 106 134 / 20%);
 }
 
 .moveflag img {
@@ -22206,7 +22238,7 @@ div[role="circleprogressbar"]::before {
 
 .bottom-bar li a {
     border-radius: 10rem !important;
-    padding: 14px !important;
+    padding: 11px !important;
     margin: 0px auto;
     display: block;
     width: 100% !important;
@@ -22227,6 +22259,13 @@ div[role="circleprogressbar"]::before {
 }
 
 .body-content {
+    margin-left: 15%;
+    width: 84%;
+    padding: 0px;
+}
+
+.body-inner-content
+{
     padding: 25px !important;
 }
 
@@ -22293,7 +22332,12 @@ div[role="circleprogressbar"]::before {
     line-height: 25px;
     color: black;
     text-decoration: none;
-    /* 138.889% */
+    display: block;
+    line-clamp: 2;
+    white-space: nowrap;
+    width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .business-card .content-section {
@@ -22315,8 +22359,8 @@ div[role="circleprogressbar"]::before {
 }
 
 .leader-section img {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     object-fit: cover;
     background-size: cover;
     border-radius: 100px;
@@ -22331,4 +22375,49 @@ div[role="circleprogressbar"]::before {
   'opsz' 24
 }
 
+.counter-section
+{
+    margin-top: 15px;
+}
+.counter-card
+{
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 5px;
+    border:1px dashed #E2E2E2;
+}
 
+.counter-card small
+{
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.counter-card b
+{
+    font-size: 13px;
+font-style: normal;
+color: black;
+font-weight: 500;
+line-height: normal;
+}
+
+
+
+.btn-circle-xs {
+    padding: 2px 7px !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 15px;
+    text-align: center;
+
+    font-size: 11px !important;
+    line-height: 1.42857;
+}
+
+
+.nav-active{
+    background-color: #F3F3F3 !important;
+}

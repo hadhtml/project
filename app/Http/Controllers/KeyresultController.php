@@ -14,6 +14,8 @@ use App\Models\flag_comments;
 use App\Models\escalate_cards;
 use App\Models\key_result;
 use App\Models\key_chart;
+use App\Models\team_link_child;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use DB;
@@ -183,8 +185,9 @@ class KeyresultController extends Controller
         }
         if($request->tab == 'okrmapper')
         {
+            $linking = team_link_child::where('bussiness_key_id' , $request->id)->get();
             $data = key_result::find($request->id);
-            $html = view('keyresult.tabs.okrmapper', compact('data'))->render();
+            $html = view('keyresult.tabs.okrmapper', compact('data','linking'))->render();
             return $html;
         }
     }
@@ -298,5 +301,66 @@ class KeyresultController extends Controller
     public function addweight(Request $request)
     {
         DB::table('key_result')->where('id' , $request->id)->update(array('weight' => $request->weight));   
+    }
+    public function selectteamokrmapper(Request $request)
+    {
+        if($request->type == 'org')
+        {
+            $objectives = DB::table('objectives')->where('type' , 'orgT')->where('unit_id' , $request->id)->get();
+        }
+        if($request->type == 'stream')
+        {
+            $objectives = DB::table('objectives')->where('type' , 'VS')->where('unit_id' , $request->id)->get();
+        }
+        if($request->type == 'unit')
+        {
+            $objectives = DB::table('objectives')->where('type' , 'BU')->where('unit_id' , $request->id)->get();
+        }
+
+        if($objectives->count() > 0)
+        {
+            foreach ($objectives as $r) {
+                echo '<option value="'.$r->id.'">'.$r->objective_name.'</option>';
+            }
+        }else{
+            echo 1;
+        }
+        
+    }
+    public function okrmapperform(Request $request)
+    {
+        $add = new team_link_child();
+        $add->team_id = $request->team_id;
+        $add->team_obj_id = $request->team_obj_id;
+        $add->bussiness_unit_id = $request->bussiness_unit_id;
+        $add->bussiness_obj_id = $request->bussiness_obj_id;
+        $add->bussiness_key_id = $request->bussiness_key_id;
+        $add->type = $request->type;
+        $add->save();
+
+        $linking = team_link_child::where('bussiness_key_id' , $request->bussiness_key_id)->get();
+        $data = key_result::find($request->bussiness_key_id);
+        $html = view('keyresult.tabs.okrmapper', compact('data','linking'))->render();
+        return $html;
+    }
+    public function checkkeyresultlink(Request $request)
+    {
+        $check = team_link_child::where('team_id' , $request->team_id)->where('team_obj_id' , $request->team_obj_id)->where('bussiness_unit_id' , $request->bussiness_unit_id)->where('bussiness_obj_id' , $request->bussiness_obj_id)->where('bussiness_key_id' , $request->bussiness_key_id)->count();
+        if($check == 0)
+        {
+            return 1;
+        }else{
+            return 2;
+        }
+    }
+    public function deletelinking(Request $request)
+    {
+        $data = team_link_child::where('id' , $request->id)->first();
+
+        team_link_child::where('id' , $request->id)->delete();
+        $linking = team_link_child::where('bussiness_key_id' , $data->bussiness_key_id)->get();
+        $data = key_result::find($data->bussiness_key_id);
+        $html = view('keyresult.tabs.okrmapper', compact('data','linking'))->render();
+        return $html;
     }
 }

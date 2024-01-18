@@ -28,7 +28,7 @@ $organization = DB::table('organization')->where('user_id',Auth::id())->where('t
          </a>
       </li>
       <li class="mb-1">
-         <a href="{{url('dashboard/organization/setting/financial')}}" @if (url()->current() == url('dashboard/organization/setting/financial')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
+         <a href="{{url('dashboard/organization/financialsetting')}}" @if (url()->current() == url('dashboard/organization/setting/financial')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
          <div class="mr-2">
             <span style="font-size:22px" class="material-symbols-outlined">payments</span>
          </div>

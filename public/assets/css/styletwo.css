@@ -104,6 +104,9 @@
 .newmodalcontent .form-control{
     height: 48px !important;
 }
+.newmodalcontent .form-group{
+    z-index: 1000;
+}
 .newmodalcontent .form-group>label {
     bottom: 0;
     left: 15px;
@@ -339,9 +342,125 @@
 
 
 .activity-feed {
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
     height: 50vh;
     width: 100%;
+}
+#memberstoshow{
+    height: 160px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+
+/* width */
+.activitydetalbox::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.activitydetalbox::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+.activitydetalbox::-webkit-scrollbar-thumb {
+  background: #c5c9d1;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+.activitydetalbox::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+
+
+/* width */
+.member-area::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.member-area::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+.member-area::-webkit-scrollbar-thumb {
+  background: #c5c9d1;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+.member-area::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+/* width */
+.searchepic-box::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.searchepic-box::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+.searchepic-box::-webkit-scrollbar-thumb {
+  background: #c5c9d1;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+.searchepic-box::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+/* width */
+#memberstoshow::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+#memberstoshow::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+#memberstoshow::-webkit-scrollbar-thumb {
+  background: #c5c9d1;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+#memberstoshow::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+
+
+
+.member-area::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+#memberstoshow::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+#memberstoshow::-webkit-scrollbar-thumb {
+  background: #c5c9d1;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+#memberstoshow::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }
 
 /* width */
@@ -619,8 +738,11 @@
 .dashboard-card-tittle{
     margin-top: 10px;
 }
+.dashbaord-card-link:hover{
+    text-decoration: none;
+}
 .dashboard-card-tittle h4{
-    font-size: 14px;
+    font-size: 12px;
     color: #999999;
 }
 .dashboard-card-number{
@@ -628,6 +750,7 @@
 }
 .dashboard-card-number h3{
     font-size: 20px;
+    color: #121212;
     font-weight: 700;
 }
 .dashboard-card-tittle-second{
@@ -887,6 +1010,7 @@ div[role="circleprogressbar"]::before {
 .child-item-actions{
     width: 35%;
     display: flex;
+    position: relative;
 }
 
 .child-item-actions .btn-group
@@ -970,15 +1094,15 @@ div[role="circleprogressbar"]::before {
     padding-left: 35px;
 }
 .todo-button-color{
-    background-color: #f3f3f3 !important;
-    color: black !important;
+    background-color: #6c757d !important;
+    color: white !important;
 }
 .inprogress-button-color{
-    background-color: #924aef !important;
+    background-color: #E1DB3F !important;
     color: white !important;
 }
 .done-button-color{
-    background-color: #0069d9 !important;
+    background-color: #3fe1a7 !important;
     color: white !important;
 }
 
@@ -1078,4 +1202,448 @@ div[role="circleprogressbar"]::before {
 .impediment-color{
     background-color: purple;
     color: white;
+}
+.buisnessunit-tab-value-stream-objective{
+    position: relative;
+}
+.buisnessunit-tab-value-stream-objective .inputs{
+    position: absolute;
+    top: 25px;
+}
+.define-quarterly-targets{
+    font-size: 16px;
+}
+.deletequarter{
+    position: absolute;
+    top: 17px;
+    right: 0;
+    font-size: 13px !important;
+    background-color: white;
+    border-radius: 100px;
+    padding: 1px;
+    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+}
+.target-error{
+    color: red;
+    display: none;
+    font-size: 12px;
+}
+.value-table .btn-circle.btn-tolbar{
+    width: 32px;
+    height: 32px;
+}
+.value-table .table td, .table th{
+    padding: 0.55rem;
+}
+.value-table thead th {
+    border-top: none !important;
+    border-bottom: none !important;
+    font-size: 12px;
+}
+.value-table thead {
+    background-color: #f3f3f3;
+}
+.valueiconeditdelete{
+    background-color: #f3f3f3;
+    padding: 5px;
+    border-radius: 100px;
+    margin-left: 10px;
+}
+.valueheading{
+    color: var(--Light-Gray, #787878);
+    font-size: 13px;
+}
+#edit-key-result-new .modal-body{
+    min-height: 500px;
+}
+.add-weight-heading{
+    font-size: 16px;
+    color: #b2b2b2;
+}
+
+/*#edit-key-result-new input[type="checkbox"]
+{
+    border: none !important;
+    background-color: #f3f3f3 !important;
+}*/
+.epic-datepicker{
+    position: relative;
+}
+.epic-datepicker img{
+    position: absolute;
+    top: 4px;
+    left: 18px;
+}
+.epic-datepicker input{
+    height: 31px;
+    background-color: #f3f3f3 !important;
+    color: #787878;
+    border-radius: 12px;
+    font-size: 11px !important;
+    border-radius: 100px;
+    border: none;
+    padding: 10px;
+    margin-left: 10px;
+    padding-left: 30px;
+    cursor: pointer;
+}
+.epic-datepicker input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none !important;
+}
+.deletechildstory{
+    position: absolute;
+    border-radius: 12px;
+    display: none;
+    width: 285px;
+    height: 145px;
+    z-index: 1111;
+    right: 0px;
+    top: 125%;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0px 2px 2px 4px rgb(87 106 134 / 20%);
+}
+.deletechildstory img {
+    cursor: pointer;
+}
+
+.deletechildstory h4 {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.deletechildstory button {
+    height: 41px;
+    border-radius: 5px !important;
+}
+
+.deletechildstory p {
+    font-size: 12px !important;
+
+}
+
+.delete-item-image{
+    cursor: pointer;
+}
+.deletealert{
+    display: none;
+}
+.card-epic .content{
+    margin: 0 !important;
+}
+.epic-tittle-header img{
+    top: 3px !important;
+}
+.team-select-box{
+    left: -55px !important;
+}
+.deleteepiccard{
+    top: 5px !important;
+    left: 90px !important;
+}
+.dropup{
+    z-index: 1111;
+}
+.business-card{
+    margin-bottom: 30px;
+}
+.col-action:hover{
+    text-decoration: none;
+}
+.target-error{
+    display: block !important;
+}
+.value-table tbody td {
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+.padding-right-ten{
+    padding-right: 10px;
+}
+.membermorethenthree{
+    width: 30px;
+    height: 30px;
+    padding: 7px;
+    font-size: 13px;
+    background-color: #f3f3f3;
+    cursor: pointer;
+    margin-left: -6px;
+}
+.membermargenles{
+    margin-left: -6px;
+}
+
+.membermargenles:first-child{
+    margin-left: 6px;
+}
+.simplecardmoreusers{
+    width: 30px;
+    height: 30px;
+     padding: 0px; 
+    font-size: 13px;
+    background-color: #f3f3f3;
+    cursor: pointer;
+    margin-left: -6px;
+    border-radius: 50%;
+    text-align: center;
+    padding-top: 5px;
+}
+
+ .mention_name{
+    font-size:12px;
+ }
+ .mention_username{
+    font-size:12px;
+    color:#999;
+ }
+ .mention_image{
+    float: left;
+    margin-right: 5px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    width: 20px;
+    height: 20px;
+    }
+ .active .mention_username{
+    color:black;
+ }
+ #wieght-error{
+    position: relative;
+    
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+ }
+.card-svg .material-symbols-outlined{
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+    padding: 10px;
+}
+.folder_supervised{
+    color: #8a50fc;
+    background-color: #eee5ff;
+}
+.key_visualizer{
+    color: #56d6cf;
+    background-color: #c9f7f5;
+}
+.team_dashboard{
+    color: #f65868;
+    background-color: #ffe2e6;
+}
+.groups{
+    color: #ffbf42;
+    background-color: #fff4de;
+}
+.Summarize{
+    color: #49a3ff;
+    background-color: #e1f0ff;
+}
+.warning_off{
+    color: #5cad6d;
+    background-color: #e1ffeb;    
+} 
+.organization-drop{
+    font-size: 12px !important;
+}
+
+.organization-drop .multiselect{
+    width: 110px;
+    font-size: 12px !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+.organization-drop .multiselect-container{
+    min-width: 200px;
+    font-size: 14px;
+}
+.dropdown-item:hover{
+    cursor: pointer;
+}
+.team-card h3 a {
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 25px;
+    color: black;
+    text-decoration: none;
+}
+.activitydetalbox{
+    display: none;
+    position: absolute;
+    width: 300px;
+    background-color: white;
+    z-index: 111;
+    right: 15px;
+    height: 200px;
+    padding: 10px;
+    border-radius: 5px;
+    top: 15px;
+    box-shadow: rgba(87, 106, 134, 0.2) 0px 10px 24px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.profilepopup{
+    height: 170px;
+    width: 280px;
+    position: absolute;
+    left: 0;
+    top: 35px;
+    z-index: 10000;
+    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    display: none;
+}
+.profilepopuplinks .removelink{
+    font-size: 14px;
+    font-weight: 400;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+.profilepopuplinks .removelink:hover{
+    background-color: #f1f2f4;
+}
+.profilepopuplinks .removelink a{
+    text-decoration: none;
+}
+.profilepopuplinks{
+    height: 70px;
+    background-color: white;
+    padding-top: 20px;
+}
+.profilepopupheader{
+    background-color: #0c66e4;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    height: 100px;
+    position: relative;
+}
+.profilepopupimage{
+    position: absolute;
+    height: 80px;
+    width: 80px;
+    top: 30px;
+    left: 20px;
+}
+.profilepopupbackground{
+    text-align: right;
+    margin-top: 10%;
+    position: absolute;
+    left: 120;
+    top: 30px;
+}
+.profilepopupbackground p{
+    color: white;
+    font-size: 12px;
+
+}
+#deleteobjectivebutton{
+    width: 95px;
+    height: 40px;
+}
+#deletekeyresultbutton{
+    width: 95px;
+    height: 40px;
+}
+.member-add-box-flag-height{
+    height: 270px;
+}
+.filerbyasigne-box{
+    display: none;
+    width: 329px;
+    box-shadow: 0 10px 24px rgb(87 106 134 / 20%);
+    position: absolute;
+    z-index: 111111;
+    background-color: white;
+    border-radius: 10px;
+    right: 0;
+    padding: 15px;
+    top: 50px;
+}
+.filerbyasigne-box .memberclose{
+    cursor: pointer;
+    height: 12px;
+    width: 12px;
+}
+.filerbyasigne-box h4{
+    font-size: 16px;
+    font-weight: 500;
+}
+.filerbyuserflags{
+    position: relative;
+}
+#flagmembershowmain{
+    height: 140px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+#flagmembershowmain::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+#flagmembershowmain::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+#flagmembershowmain::-webkit-scrollbar-thumb {
+  background: #c5c9d1;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+#flagmembershowmain::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+.filtermemberdisplay{
+    display: flex;
+}
+.memberdisplay{
+    display: flex;
+}
+.memberdisplay{
+    border-radius: 20px;
+    background-color: white;
+    padding: 10px;
+}
+
+.imagefilter{
+    width: 25px;
+    height: 25px;
+}
+.imagefilter img{
+    width: 100%;
+    height: 100%;
+}
+.filteredusername{
+    font-size: 11px;
+    font-weight: 500;
+    color: #585858;
+}
+.textfilteruser{
+    margin-left: 5px;
+}
+.filteruserresult{
+    font-size: 9px;
+    font-weight: 500;
+    color: #585858;
+}
+
+.cleariconfilter a span{
+    color: #585858;
+    font-size: 21px;
+    margin-left: 10px;
+    margin-top: 5px;
 }

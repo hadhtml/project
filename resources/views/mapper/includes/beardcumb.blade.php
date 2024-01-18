@@ -4,7 +4,7 @@
         <div class="d-flex align-items-start flex-column flex-wrap mr-2">
             <!--begin::Page Title-->
             <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
-                Linking
+                Okr Mapper
             </h5>
             <!-- Breadcrum Items -->
             <div class="d-flex flex-row page-sub-titles">
@@ -12,18 +12,7 @@
                     <p>Dashboard</p>
                 </div>
                 <div class="mr-2">
-                    <a href="{{url('dashboard/organization/contacts')}}" style="text-decoration: none;"></a>
-                </div>
-                <div class="mr-2">
-                    @if($organization->type == 'unit')
-                    <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->business_name}}</a>
-                    @endif
-                    @if($organization->type == 'stream')
-                    <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->value_name}}</a>
-                    @endif
-                </div>
-                <div class="mr-2">
-                    <p>Linking</p>
+                    <p>Okr Mapper</p>
                 </div>
             </div>
             <!--End Breadcrum Items -->
