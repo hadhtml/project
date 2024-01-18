@@ -2376,6 +2376,8 @@ DB::table("objectives")
             ->where("epic_id", $request->epicid)
             ->delete();
 
+        DB::table('flags')->where('epic_id' , $request->epicid)->delete();
+
         $Quartertotal = 0;
         $totalinitiative = 0;
         $finaltotal = 0;
