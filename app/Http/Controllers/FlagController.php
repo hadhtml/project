@@ -99,39 +99,6 @@ class FlagController extends Controller
         $html = view('flags.viewboards',compact('organization','doneflag','inprogress','todoflag','type','epics'));
         return $html;
     }
-    public function filterbyasignee(Request $request)
-    {
-        if($request->type == 'stream')
-        {
-            $organization = DB::table('value_stream')->where('slug',$request->slug)->first();
-        }
-        if($request->type == 'unit')
-        {
-            $organization = DB::table('business_units')->where('slug',$request->slug)->first();
-        }
-        if($request->type == 'BU')
-        {
-            $organization = DB::table('unit_team')->where('slug',$request->slug)->first();
-        }
-        if($request->type == 'VS')
-        {
-            $organization = DB::table('value_team')->where('slug',$request->slug)->first();
-        }
-        if($request->type == 'org')
-        {
-            $organization = DB::table('organization')->where('slug',$request->slug)->first();
-        }
-        if($request->type == 'orgT')
-        {
-            $organization = DB::table("org_team")->where("slug", $request->slug)->first();
-        }
-
-
-        $epics = DB::table('epics')->where('buisness_unit_id' , $organization->id)->where('trash' , Null)->get();
-        $type = $request->type;
-        $html = view('flags.viewboards',compact('organization','doneflag','inprogress','todoflag','type','epics'));
-        return $html;
-    }
     public function searchflag(Request $request)
     {
         $organization = DB::table('business_units')->where('id',$request->organization_id)->first();
