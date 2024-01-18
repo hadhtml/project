@@ -29,6 +29,12 @@
                     <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->team_title}}</a>
                 </div>
                 @endif
+
+                @if($organization->type == 'org')
+                <div class="mr-2">  
+                <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->organization_name}}</a>
+                </div>
+                @endif
                 <div class="mr-2">
                     <p>Epic Backlog</p>
                 </div>

@@ -321,6 +321,7 @@ function DeleteValue(delete_id)
         //  var delete_id = $('#delete_id').val();
          var value_name = $('.noPasteField'+delete_id).val();
 
+    
         if(value_name == '')
         {
           $('#show-error').html('<div class="alert alert-danger" role="alert"> Please Enter Correct Value Stream Name</div>');    
