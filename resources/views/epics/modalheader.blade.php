@@ -220,7 +220,7 @@
         <div class="epic-header-buttons raise-flag-button">
 
             <a onclick="rasiseflag({{$data->id}})" href="javascript:void(0)"  id="showboardbutton">
-                <img src="{{url('public/assets/svg/btnflagsvg.svg')}}" width="20"> Flag @if(DB::table('flags')->where('epic_id'  ,$data->id)->count() > 0) ({{ DB::table('flags')->where('flag_status' , '!=' , 'doneflag')->where('epic_id'  ,$data->id)->count() }}) @endif
+                <img src="{{url('public/assets/svg/btnflagsvg.svg')}}" width="20"> Flag @if(DB::table('flags')->where('epic_id'  ,$data->id)->count() > 0) ({{ DB::table('flags')->where('epic_id'  ,$data->id)->count() }}) @endif
             </a>
             <div class="raiseflag-box hidepopupall">
                 <div class="row">

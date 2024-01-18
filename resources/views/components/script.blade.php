@@ -294,6 +294,7 @@ function handleDivClick(x)
     drake.on("drop", function (el, target, source, sibling) {
         var droppedElId = el.id.split("-")[1];
         var dropped = el.id.split("-")[0];
+   
         var taskOrder = [];
         var newPosition = Array.from(target.children).indexOf(el) + 1;
         var Target = Array.from(target.children);
@@ -305,7 +306,7 @@ function handleDivClick(x)
      
         var type = el.id.split("-")[2];
         var slug = el.id.split("-")[3];
-     
+        var Init = el.id.split("-")[6];
     
         $.ajax({
         type: "POST",
@@ -320,7 +321,8 @@ function handleDivClick(x)
         dropped:dropped,
         taskOrder:taskOrder,
         type:type,
-        slug:slug
+        slug:slug,
+        Init:Init
 
       
 

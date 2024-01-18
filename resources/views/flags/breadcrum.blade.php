@@ -81,62 +81,57 @@
         <!--end::Info-->
         <!--begin::Toolbar-->
         <div class="d-flex align-items-center toolbar">
-            <div class="filerbyuserflags mr-2">
-                <button type="button" onclick="filerbyasigne()" class="btn btn-default">Filter By Assignee</button>
-                <div class="filerbyasigne-box hidepopupall" @if(isset($memberopen)) style="display:block;" @endif>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h4>Assignee</h4>
-                        </div>
-                        <div class="col-md-6 text-right">
-                            <img onclick="filerbyasigne()" class="memberclose" src="{{url('public/assets/svg/memberclose.svg')}}">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="mb-2 positionrelative">
-                                <input onkeyup="searchmember(this.value)" type="text" placeholder="Search Assignee" class="form-control" name="flag_title" id="objective-name" required>
-                                <div class="membersearchiconforinput">
-                                    <img src="{{ url('public/assets/images/searchiconsvg.svg') }}">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row" id="flagmembershowmain">
-                        <form method="POST" id="filterbyasigneeform" action="{{ url('dashboard/flags/filterbyasignee') }}">
-                            @csrf
-                            <input type="hidden" value="{{ $type }}" name="type">
-                            <input type="hidden" value="{{ $organization->slug }}" name="slug">
-                            @foreach(DB::table('members')->where('org_user' , Auth::id())->limit(8)->get() as $r)
-
-                                <div class="col-md-12 memberprofile">
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <div class="memberprofileimage">
-                                                @if($r->image)
-                                                <img src="{{ url('public/assets/images') }}/{{ $r->image }}">
-                                                @else
-                                                <img src="{{ Avatar::create($r->name.' '.$r->last_name)->toBase64() }}">
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <div class="membername">{{ $r->name }} {{ $r->last_name }}</div>
-                                            <div class="memberdetail">{{ DB::table('users')->where('id' , $r->user_id)->first()->role }}</div>
-                                        </div>
-                                        <div class="col-md-2 text-center mt-3">
-                                            <input value="{{ $r->id }}" name="membervalues[]" onclick="filterbyasignee({{$r->id}})" type="checkbox">
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                            @endforeach
-                            <button id="filterbyasigneeformbutton" type="submit">sadsd</button>
-                        </form>
+            @if($type == 'unit')
+            <div class="d-flex flex-row organization-drop align-items-center mr-3">
+                <div class="d-flex flex-column mr-3">
+                    <div style="padding:20px">
+                        Team
+                        <select class="chkveg" multiple="multiple" >
+                        @foreach(DB::table('value_team')->where('org_id',$organization->id)->get() as $r)
+                            <option value="{{$r->id}}">{{$r->team_title}}</option>
+                        @endforeach
+                        </select>
+                        <button class="btn-circle btn-tolbar bg-transparent" type="button" onclick="getflagsbyteam();" >
+                           <img src="{{asset('public/assets/images/icons/filter.svg')}}" width="20" width="20">
+                        </button>
                     </div>
                 </div>
             </div>
-
+            @endif
+            @if($type == 'stream')
+            <div class="d-flex flex-row organization-drop align-items-center mr-3">
+                <div class="d-flex flex-column mr-3">
+                    <div style="padding:20px">
+                        Team
+                        <select class="chkveg" multiple="multiple" >
+                        @foreach(DB::table('value_team')->where('org_id',$organization->id)->get() as $r)
+                            <option value="{{$r->id}}">{{$r->team_title}}</option>
+                        @endforeach
+                        </select>
+                        <button class="btn-circle btn-tolbar bg-transparent" type="button" onclick="getflagsbyteam();" >
+                           <img src="{{asset('public/assets/images/icons/filter.svg')}}" width="20" width="20">
+                        </button>
+                    </div>
+                </div>
+            </div>
+            @endif
+            @if($type == 'org')
+            <div class="d-flex flex-row organization-drop align-items-center mr-3">
+                <div class="d-flex flex-column mr-3">
+                    <div style="padding:20px">
+                        Team
+                        <select class="chkveg" multiple="multiple" >
+                        @foreach(DB::table('value_team')->where('org_id',$organization->id)->get() as $r)
+                            <option value="{{$r->id}}">{{$r->team_title}}</option>
+                        @endforeach
+                        </select>
+                        <button class="btn-circle btn-tolbar bg-transparent" type="button" onclick="getflagsbyteam();" >
+                           <img src="{{asset('public/assets/images/icons/filter.svg')}}" width="20" width="20">
+                        </button>
+                    </div>
+                </div>
+            </div>
+            @endif
             <div>
                 <div class="btn-group">
                   <button type="button" class="btn btn-default" style="border-top-right-radius:0px !important; border-bottom-right-radius:0px !important;" id="showboardbutton"> 
@@ -192,27 +187,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/dragula@3.7.3/dist/dragula.min.js"></script>
 <script>
-function filterbyasignee(id) {
-    $('#filterbyasigneeformbutton').click();
-}
-$('#filterbyasigneeform').on('submit',(function(e) {
-    e.preventDefault();
-    var formData = new FormData(this);
-    $.ajax({
-        type:'POST',
-        url: $(this).attr('action'),
-        data:formData,
-        cache:false,
-        contentType: false,
-        processData: false,
-        success: function(data){
-            
-        }
-    });
-}));
-function filerbyasigne() {
-    $('.filerbyasigne-box').slideToggle();
-}
 function addnewflag(id,type,flag_type) {
     $.ajax({
         type: "POST",
@@ -380,7 +354,7 @@ function archiveflag(id) {
         },
         success: function(res) {
             viewboards($('#viewboards').val());
-            $('#edit-epic').modal('hide');
+            editflag(id);
         },
         error: function(error) {
             console.log('Error updating card position:', error);
