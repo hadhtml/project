@@ -192,8 +192,8 @@ $var_objective = 'PageT-'.$type;
                $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$obj->id)->sum('weight');
                @endphp
                {{-- Objective Div --}}
-               <div class="card bg-transparent shadow-none " >
-                  <div class="card-header objective-header active-header bg-white border-bottom"  id="obj-{{$obj->id}}">
+               <div class="card bg-transparent shadow-none boardI" >
+                  <div class="card-header objective-header active-header bg-white border-bottom"  id="obj-{{$obj->id}}-{{$organization->type}}-{{$organization->id}}">
                      <div class="d-flex flex-row header-objective align-items-center" 
                         data-toggle="collapse" data-target="#nestedCollapsible{{$obj->id}}">
                         <div class="title">
@@ -292,8 +292,8 @@ $var_objective = 'PageT-'.$type;
                                  $initiativeweightcount = DB::table('initiative')->where('key_id',$key->id)->sum('initiative_weight');
                                  @endphp
                                  {{-- key Result Div --}}
-                                 <div class="card bg-transparent shadow-none " >
-                                    <div class="card-header keyresult-header bg-light-gray" id="key-{{$key->id}}">
+                                 <div class="card bg-transparent shadow-none boardI" >
+                                    <div class="card-header keyresult-header bg-light-gray" id="key-{{$key->id}}-{{$organization->type}}-{{$organization->id}}-{{$obj->id}}">
                                        <div class="d-flex flex-row justify-content-between header-objective align-items-center"
                                           data-toggle="collapse" data-target="#key-result{{$key->id}}">
                                           <div class="title ">
@@ -403,9 +403,9 @@ $var_objective = 'PageT-'.$type;
                                                    }
                                                    @endphp
                                                    {{-- initiative Div --}}
-                                                   <div class="card bg-transparent shadow-none">
+                                                   <div class="card bg-transparent shadow-none boardI">
                                                       <div class="card-header initiative-header"
-                                                         style="background: #f9   f9f9 !important;" id="backlog-{{$initiative->id}}">
+                                                         style="background: #f9   f9f9 !important;" id="backlog-{{$initiative->id}}-{{$organization->type}}-{{$organization->id}}-{{$obj->id}}-{{$key->id}}">
                                                          <div class="d-flex flex-row justify-content-between header-objective align-items-center"
                                                             data-toggle="collapse"
                                                             data-target="#initiative{{$initiative->id}}" onclick="handleDivClick({{$initiative->id}})" >
@@ -550,7 +550,7 @@ $var_objective = 'PageT-'.$type;
                                                                                                 <div  @if($CurrentQuarter) @if($q->id < $CurrentQuarter->quarter_id) class="board" @endif @endif class="board boardI"  style="width:236px"
                                                                                                 id="{{$month->id}}">
                                                                                                 {{-- Month name --}}
-                                                                                                <header class="noselect">
+                                                                                                <header class="noselect" id="month-{{$month->id}}-{{$organization->type}}-{{$organization->id}}-{{$obj->id}}-{{$key->id}}-{{$initiative->id}}">
                                                                                                    {{$month->month}}
                                                                                                 </header>
                                                                                                 {{-- end month name --}}
@@ -561,7 +561,7 @@ $var_objective = 'PageT-'.$type;
                                                                                              @endif
                                                                                              {{-- button div --}}
                                                                                              <button
-                                                                                             class="btn  btn-primary border-1 ml-3 no-drag" @if($CurrentQuarter) @if($q->id < $CurrentQuarter->quarter_id) disabled @endif  @endif onclick="addepicmonth({{$month->id}},'{{$month->month}}','{{$q->id}}','{{$initiative->id}}','{{$key->id}}','{{$obj->id}}')" data-toggle="modal" data-target="#create-epic-month" draggable="false">
+                                                                                             class="btn  btn-primary border-1 ml-3 no-drag" @if($CurrentQuarter) @if($q->id < $CurrentQuarter->quarter_id) disabled @endif  @endif onclick="addepicmonth({{$month->id}},'{{$month->month}}','{{$q->id}}','{{$initiative->id}}','{{$key->id}}','{{$obj->id}}')" id="month-{{$month->id}}-{{$organization->type}}-{{$organization->id}}-{{$obj->id}}-{{$key->id}}-{{$initiative->id}}" data-toggle="modal" data-target="#create-epic-month" draggable="false">
                                                                                              Add Epics
                                                                                              </button>
                                                                                              

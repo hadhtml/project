@@ -5,8 +5,8 @@
 $keyResultcount  = DB::table('key_result')->wherenull('trash')->where('obj_id',$obj->id)->count();
 $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$obj->id)->sum('weight');
 @endphp
-<div class="card bg-transparent shadow-none" >
-   <div class="card-header objective-header active-header bg-white border-bottom"  id="obj-{{$obj->id}}">
+<div class="card bg-transparent shadow-none boardI" >
+   <div class="card-header objective-header active-header bg-white border-bottom"  id="obj-{{$obj->id}}-{{$organization->type}}-{{$organization->id}}">
       <div class="d-flex flex-row header-objective align-items-center" 
          data-toggle="collapse" data-target="#nestedCollapsible{{$obj->id}}">
          <div class="title">
@@ -27,7 +27,7 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
                               <small>Adjust Key Weight to 100  ({{$keyweightcounte}})</small>
                            </div>
                         @endif
-                        {{-- @if($keyweightcounte < 100)
+                        {{-- @if($keyweightcounte <= 100)
                            <div class=" text-danger" role="">
                               <small>Adjust Key Weight to 100  ({{$keyweightcounte}})</small>
                            </div>
@@ -104,8 +104,9 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
                   $initiativeResultCount  = DB::table('initiative')->where('key_id',$key->id)->count();
                   $initiativeweightcount = DB::table('initiative')->where('key_id',$key->id)->sum('initiative_weight');
                   @endphp
-                  <div class="card bg-transparent shadow-none" >
-                     <div class="card-header keyresult-header bg-light-gray" id="key-{{$key->id}}">
+                  {{-- key Result Div --}}
+                  <div class="card bg-transparent shadow-none boardI" >
+                     <div class="card-header keyresult-header bg-light-gray" id="key-{{$key->id}}-{{$organization->type}}-{{$organization->id}}-{{$obj->id}}">
                         <div class="d-flex flex-row justify-content-between header-objective align-items-center"
                            data-toggle="collapse" data-target="#key-result{{$key->id}}">
                            <div class="title ">
@@ -214,9 +215,10 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
                                     $InitiativeProgress = 0;
                                     }
                                     @endphp
-                                    <div class="card bg-transparent shadow-none">
+                                    {{-- initiative Div --}}
+                                    <div class="card bg-transparent shadow-none boardI">
                                        <div class="card-header initiative-header"
-                                          style="background: #f9   f9f9 !important;" id="backlog-{{$initiative->id}}">
+                                          style="background: #f9   f9f9 !important;" id="backlog-{{$initiative->id}}-{{$organization->type}}-{{$organization->id}}-{{$obj->id}}-{{$key->id}}">
                                           <div class="d-flex flex-row justify-content-between header-objective align-items-center"
                                              data-toggle="collapse"
                                              data-target="#initiative{{$initiative->id}}" onclick="handleDivClick({{$initiative->id}})" >
@@ -287,7 +289,7 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
                                           </div>
                                        </div>
                                        @php
-                                       $quarter  = DB::table('quarter')->where('initiative_id',$initiative->id)->get();
+                                       $quarter = DB::table('quarter')->where('initiative_id',$initiative->id)->get();
                                        @endphp
                                        <div id="initiative{{$initiative->id}}" class="collapse" >
                                           <div class="container-fluid py-7" style="width: 96%; margin: 0px auto;">
@@ -358,20 +360,24 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
                                                                                  @php
                                                                                  $epic  = DB::table('epics')->where('month_id',$month->id)->where('trash',NULL)->get();
                                                                                  @endphp
-                                                                                 <div  @if($CurrentQuarter) @if($q->id < $CurrentQuarter->quarter_id) class="board-flex" @endif @endif class="board boardI"  style="width:236px"
+                                                                                 <div  @if($CurrentQuarter) @if($q->id < $CurrentQuarter->quarter_id) class="board" @endif @endif class="board boardI"  style="width:236px"
                                                                                  id="{{$month->id}}">
-                                                                                 <header class="noselect">
+                                                                                 {{-- Month name --}}
+                                                                                 <header class="noselect" id="month-{{$month->id}}-{{$organization->type}}-{{$organization->id}}-{{$obj->id}}-{{$key->id}}-{{$initiative->id}}">
                                                                                     {{$month->month}}
                                                                                  </header>
+                                                                                 {{-- end month name --}}
                                                                                  @if(count($epic) > 0)
                                                                                  @foreach($epic as $e)
                                                                                      @include('epics.index')
                                                                                  @endforeach
                                                                               @endif
+                                                                              {{-- button div --}}
                                                                               <button
-                                                                              class="btn  btn-primary border-1 ml-3 no-drag" @if($CurrentQuarter) @if($q->id < $CurrentQuarter->quarter_id) disabled @endif  @endif onclick="addepicmonth({{$month->id}},'{{$month->month}}','{{$q->id}}','{{$initiative->id}}','{{$key->id}}','{{$obj->id}}')" data-toggle="modal" data-target="#create-epic-month" draggable="false">
+                                                                              class="btn  btn-primary border-1 ml-3 no-drag" @if($CurrentQuarter) @if($q->id < $CurrentQuarter->quarter_id) disabled @endif  @endif onclick="addepicmonth({{$month->id}},'{{$month->month}}','{{$q->id}}','{{$initiative->id}}','{{$key->id}}','{{$obj->id}}')" id="month-{{$month->id}}-{{$organization->type}}-{{$organization->id}}-{{$obj->id}}-{{$key->id}}-{{$initiative->id}}" data-toggle="modal" data-target="#create-epic-month" draggable="false">
                                                                               Add Epics
                                                                               </button>
+                                                                              
                                                                            </div>
                                                                            @endforeach
                                                                            @endif
@@ -600,7 +606,8 @@ $formattedDate = $lastDayOfMonth->toDateString();
 </script>
 
 <script type="text/javascript">
-  var containers = Array.from(document.getElementsByClassName("boardI"));
+
+var containers = Array.from(document.getElementsByClassName("boardI"));
     var drake = dragula(containers);
 
     // Save position on drop
@@ -615,12 +622,10 @@ $formattedDate = $lastDayOfMonth->toDateString();
                     }
 
         var parentElId = target.id;
-   
+     
         var type = el.id.split("-")[2];
         var slug = el.id.split("-")[3];
-     
-       
-     
+        var Init = el.id.split("-")[6];
     
         $.ajax({
         type: "POST",
@@ -635,10 +640,8 @@ $formattedDate = $lastDayOfMonth->toDateString();
         dropped:dropped,
         taskOrder:taskOrder,
         type:type,
-        slug:slug
-
-        
-      
+        slug:slug,
+        Init:Init
 
         },
         success: function(response) {
@@ -647,8 +650,7 @@ $formattedDate = $lastDayOfMonth->toDateString();
             $("#nestedCollapsible" + el.id.split("-")[4]).collapse('toggle');
             $("#key-result" + el.id.split("-")[5]).collapse('toggle');
             $("#initiative" + el.id.split("-")[6]).collapse('toggle');
-        
-        },
+                },
         error: function(error) {
             console.log('Error updating card position:', error);
         }
