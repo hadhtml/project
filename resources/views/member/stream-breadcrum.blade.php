@@ -20,10 +20,17 @@
                                     <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->value_name}}</a>
                                 </div>
                                 <div class="mr-2">
+                                    @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/VS-TEAMS'))
+                                    <p>
+                                        Teams
+
+                                    </p>
+                                    @else
                                     <p>
                                         Value Stream
 
                                     </p>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -35,9 +42,11 @@
                                 <!--    OKRs</a>-->
                             </div>
                             <div>
+                                @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/VS-TEAMS'))
                                 <button class="button" type="button" data-toggle="modal" data-target="#add-team-stream">
                                     Add New
                                 </button>
+                                @endif
                             </div>
                         </div>
                         <!--end::Toolbar-->

@@ -49,14 +49,17 @@
                                                    @if($organization->type == 'orgT')
                                                    <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->team_title}}</a>
                                                    @endif
+                                                   @if($organization->type == 'org')
+                                                   <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->organization_name}}</a>
+                                                   @endif
                                                </div>
                                                <div class="mr-2">
                                                    <p>Reports</p>
                                                </div>
 
-                                               <div class="mr-2">
+                                               {{-- <div class="mr-2">
                                                 <p>OKR Epics</p>
-                                            </div>
+                                            </div> --}}
                            </div>
                         </div>
                         <!--end::Info-->
