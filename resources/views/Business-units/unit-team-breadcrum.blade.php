@@ -72,9 +72,11 @@
                         <!--begin::Toolbar-->
                         <div class="d-flex align-items-center toolbar">
                             <div>
+                                @if($organization->type == 'unit')
                                 <button class="button" type="button" data-toggle="modal" data-target="#add-team">
                                     Create Team
                                 </button>
+                                @endif
                             </div>
                         </div>
                         <!--end::Toolbar-->

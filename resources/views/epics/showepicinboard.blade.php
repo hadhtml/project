@@ -18,8 +18,8 @@
                   </div>
                </div>
             @php
-               $flag = DB::table('flags')->where('flag_status' , '!=' , 'doneflag')->where('epic_id' , $e->id)->first();
-               $flagscount = DB::table('flags')->where('epic_id' , $e->id)->where('flag_status' , '!=' , 'doneflag')->count();
+               $flag = DB::table('flags')->where('epic_id' , $e->id)->first();
+               $flagscount = DB::table('flags')->where('epic_id' , $e->id)->count();
             @endphp
             @if($flag)
             @if($flag->flag_status != 'doneflag')

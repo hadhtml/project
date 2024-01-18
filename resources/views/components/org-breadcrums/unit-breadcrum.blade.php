@@ -23,9 +23,13 @@
                 </div>
                 @endif
 
+                @if(isset($organization))
                 <div class="mr-2">
-                    <a href="{{url('dashboard/organization/Business-Units')}}">Business Unit</a>
+                    <a href="{{url('dashboard/organization/Business-Units')}}">BU-Dashboard</a>
                 </div>
+                @else
+                <a href="{{url('dashboard/organization/Business-Units')}}">Business Units</a>
+                @endif
             </div>
             <!--End Breadcrum Items -->
         </div>
