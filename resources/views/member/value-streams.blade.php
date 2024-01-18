@@ -339,7 +339,7 @@ function DeleteValue(delete_id)
         value_name:value_name
         },
         success: function(res) {
-         alert(res);   
+      
          if(res == 1)
          {
          $('.modal-body-error').html('<div class="alert alert-danger" role="alert"> Please Enter Correct Value Stream Name</div>');    
