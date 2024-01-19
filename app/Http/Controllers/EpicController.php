@@ -48,6 +48,17 @@ class EpicController extends Controller
                 Cmf::save_activity(Auth::id() , $activity,'epics',$request->epic_id, 'edit');
             }
         }
+
+        if($data->epic_start_date != $request->epic_start_date)
+        {
+            $activity = 'has updated Start Date From '.Cmf::date_format_new($data->epic_start_date).' To '.Cmf::date_format_new($request->epic_start_date).' ';
+            Cmf::save_activity(Auth::id() , $activity,'epics',$request->epic_id, 'edit');
+        }
+        if($data->epic_end_date != $request->epic_end_date)
+        {
+            $activity = 'has updated End Date From '.Cmf::date_format_new($data->epic_end_date).' To '.Cmf::date_format_new($request->epic_end_date).' ';
+            Cmf::save_activity(Auth::id() , $activity,'epics',$request->epic_id, 'edit');
+        }
         $data->epic_name = $request->epic_name;
         $data->epic_start_date = $request->epic_start_date;
         $data->epic_end_date = $request->epic_end_date;
