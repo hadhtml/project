@@ -1,4 +1,23 @@
+@php
+if($organization->type == 'BU')
+{
+$team  = DB::table('business_units')->where('id',$organization->org_id)->first();  
+}
 
+
+if($organization->type == 'VS')
+{
+$team  = DB::table('value_stream')->where('id',$organization->org_id)->first();
+$Unit  = DB::table('business_units')->where('id',$team->unit_id)->first();  
+
+}
+
+if($organization->type == 'orgT')
+{
+$team  = DB::table('organization')->where('id',$organization->org_id)->first();  
+}
+
+@endphp
    <div class="subheader subheader-solid breadcrums" id="kt_subheader">
                     <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
                         <!--begin::Info-->
@@ -39,6 +58,28 @@
                                     
 
                                     
+                                </div>
+
+                @if($organization->type == 'VS')                
+                <div class="mr-2">
+               
+                    <a  href="{{url('dashboard/organization/'.$Unit->slug.'/portfolio/'.$Unit->type)}}" style="text-decoration: none;" >{{$Unit->business_name}}</a>
+               
+                </div>
+                @endif
+
+                @if($organization->type == 'VS')
+
+                <div class="mr-2">
+                    <a  href="{{url('dashboard/organization/'.$team->slug.'/portfolio/'.$team->type)}}" style="text-decoration: none;" >{{$team->value_name}}</a>
+            
+                </div>
+                @endif
+
+                                <div class="mr-2">
+                                    @if($organization->type == 'BU')
+                                    <a  href="{{url('dashboard/organization/'.$team->slug.'/portfolio/'.$team->type)}}" style="text-decoration: none;" >{{$team->business_name}}</a>
+                                    @endif
                                 </div>
 
                                 <div class="mr-2">

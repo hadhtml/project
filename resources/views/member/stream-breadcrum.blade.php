@@ -1,3 +1,8 @@
+@php
+
+$team  = DB::table('business_units')->where('id',$organization->unit_id)->first();  
+
+@endphp
 
  <div class="subheader subheader-solid breadcrums" id="kt_subheader">
                     <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
@@ -15,6 +20,9 @@
                                
                                 </div>
                                 
+                                <div class="mr-2">
+                                    <a  href="{{url('dashboard/organization/'.$team->slug.'/portfolio/'.$team->type)}}" style="text-decoration: none;" >{{$team->business_name}}</a>
+                                </div>
                          
                                 <div class="mr-2">
                                     <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->value_name}}</a>

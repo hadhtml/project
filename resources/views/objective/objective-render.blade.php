@@ -552,13 +552,13 @@ $formattedDate = $lastDayOfMonth->toDateString();
                         </div>
                         <div class="col-md-6 col-lg-6 col-xl-6">
                             <div class="form-group mb-0">
-                                <input type="date" class="form-control" min="{{ date('Y-m-d') }}" id="q_start_date"  required>
+                                <input type="date" class="form-control" min="{{ date('Y-m-d') }}" value="{{date('Y-m-d')}}" id="q_start_date"  required>
                                 <label for="start-date" style="bottom:72px;">Start Date</label>
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-6 col-xl-6">
                             <div class="form-group mb-0">
-                                <input type="date" class="form-control" @if($CurrentQuarter) value="{{$formattedDate}}" @endif id="q_end_date" required>
+                                <input type="date" min="{{ date('Y-m-d') }}" class="form-control" @if($CurrentQuarter) value="{{$formattedDate}}" @endif id="q_end_date" required>
                                 <label for="end-date">End Date</label>
                             </div>
                         </div>

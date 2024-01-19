@@ -14,11 +14,11 @@
 
                 </div>
 
-                @if($organization->type == 'org')
+                {{-- @if($organization->type == 'org')
                 <div class="mr-2">
                 <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->organization_name}}</a>
             </div>
-                @endif
+                @endif --}}
              
                 <div class="mr-2">
                     <p>Teams</p>

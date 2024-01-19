@@ -61,6 +61,15 @@ $var_objective = 'Report-'.$type;
                             @if($type ==  'stream')
                             <td>{{$organization->value_name}}</td>
                             @endif
+                            @if($type ==  'BU')
+                            <td>{{$organization->team_title}}</td>
+                            @endif
+                            @if($type ==  'VS')
+                            <td>{{$organization->team_title}}</td>
+                            @endif
+                            @if($type ==  'orgT')
+                            <td>{{$organization->team_title}}</td>
+                            @endif
                             <td>{{ \Carbon\Carbon::parse($r->start_data)->format('M d Y')}}</td>
                             <td>{{ \Carbon\Carbon::parse($r->end_date)->format('M d Y')}}</td>
                             <td class="text-center">
