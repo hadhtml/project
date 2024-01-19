@@ -31,7 +31,7 @@
             ->where('board_type', 'org')
             ->where('flag_title','!=',NULL)
             ->count();
-
+        $businessunits = DB::table('business_units')->where('user_id' ,  Auth::id())->count();
     @endphp
     
     
@@ -125,6 +125,21 @@
                         </div>
                         <div class="dashboard-card-number">
                             <h3>{{ $Impediments }}</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="dashboard-card">
+                        <div class="card-svg">
+                            <a href="{{ url('dashboard/organization/Business-Units') }}">
+                                <span class="material-symbols-outlined warning_off">domain</span>
+                            </a>
+                        </div>
+                        <div class="dashboard-card-tittle">
+                            <h4>Business Units</h4>
+                        </div>
+                        <div class="dashboard-card-number">
+                            <h3>{{ $businessunits }}</h3>
                         </div>
                     </div>
                 </div>
