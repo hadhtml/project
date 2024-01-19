@@ -2369,12 +2369,15 @@ DB::table("objectives")
 
     public function DeleteEpic(Request $request)
     {
+
         DB::table("epics")
             ->where("id", $request->epicid)
             ->update(["trash" => Carbon::now()]);
         DB::table("epics_stroy")
             ->where("epic_id", $request->epicid)
             ->delete();
+
+        DB::table('flags')->where('epic_id' , $request->epicid)->delete();
 
         $Quartertotal = 0;
         $totalinitiative = 0;
@@ -2415,6 +2418,14 @@ DB::table("objectives")
             DB::table("initiative")
                 ->where("id", $CurrentQuarter->initiative_id)
                 ->update(["q_initiative_prog" => $Quartertotal]);
+        }else
+        {
+            DB::table("quarter")
+            ->where("id", $CurrentQuarter->quarter_id)
+            ->update(["quarter_progress" => 0]);
+        DB::table("initiative")
+            ->where("id", $CurrentQuarter->initiative_id)
+            ->update(["q_initiative_prog" => 0]); 
         }
 
         $initcount = DB::table("initiative")
@@ -2462,11 +2473,17 @@ DB::table("objectives")
             if ($epicinitiativecount > 0) {
                 $totalinitiative = $initiativeprogress / $epicinitiativecount;
                 $finaltotal = $totalinitiative * 100;
-            }
-
-            DB::table("initiative")
+                DB::table("initiative")
                 ->where("id", $epic->initiative_id)
                 ->update(["initiative_prog" => $finaltotal]);
+            }else
+            {
+                DB::table("initiative")
+                ->where("id", $epic->initiative_id)
+                ->update(["initiative_prog" => 0]);
+            }
+
+           
         }
 
         $objwcount = DB::table("key_result")
@@ -2501,23 +2518,39 @@ DB::table("objectives")
                 ->where("key_id", $request->edit_epic_key)
                 ->where("initiative_prog", "=", 100)
                 ->count();
-            $totalkey = $keyprogress / $keycount;
-            $finaltotalkey = $totalkey * 100;
-            DB::table("key_result")
-                ->where("id", $request->edit_epic_key)
-                ->update(["key_prog" => $finaltotalkey]);
+            if($keycount > 0)
+            {
+                $totalkey = $keyprogress / $keycount;
+                $finaltotalkey = $totalkey * 100;
+                DB::table("key_result")
+                    ->where("id", $request->edit_epic_key)
+                    ->update(["key_prog" => $finaltotalkey]);
 
-            $QuarterprogressKey = DB::table("initiative")
-                ->where("key_id", $request->edit_epic_key)
-                ->where("q_initiative_prog", "=", 100)
-                ->count();
-            $QuartertotalKey = round(
-                ($QuarterprogressKey / $keycount) * 100,
-                2
-            );
-            DB::table("key_result")
+                    $QuarterprogressKey = DB::table("initiative")
+                    ->where("key_id", $request->edit_epic_key)
+                    ->where("q_initiative_prog", "=", 100)
+                    ->count();
+                $QuartertotalKey = round(
+                    ($QuarterprogressKey / $keycount) * 100,
+                    2
+                );
+                DB::table("key_result")
+                    ->where("id", $request->edit_epic_key)
+                    ->update(["q_key_prog" => $QuartertotalKey]);
+            }else
+            {
+                DB::table("key_result")
                 ->where("id", $request->edit_epic_key)
-                ->update(["q_key_prog" => $QuartertotalKey]);
+                ->update(["key_prog" => 0]);
+
+                DB::table("key_result")
+                    ->where("id", $request->edit_epic_key)
+                    ->update(["q_key_prog" => 0]);
+
+            }    
+            
+
+          
         }
 
         $objcount = DB::table("key_result")
@@ -2527,21 +2560,37 @@ DB::table("objectives")
             ->where("obj_id", $request->edit_epic_obj)
             ->where("key_prog", "=", 100)
             ->count();
-        $totalobj = $objprogress / $objcount;
-        $finaltotalobj = $totalobj * 100;
-
-        DB::table("objectives")
+         
+         if($objcount > 0)
+         {
+            $totalobj = $objprogress / $objcount;
+            $finaltotalobj = $totalobj * 100;
+    
+            DB::table("objectives")
+                ->where("id", $request->edit_epic_obj)
+                ->update(["obj_prog" => $finaltotalobj]);
+    
+            $QuarterprogressObj = DB::table("key_result")
+                ->where("obj_id", $request->edit_epic_obj)
+                ->where("q_key_prog", "=", 100)
+                ->count();
+            $QuartertotalObj = round(($QuarterprogressObj / $objcount) * 100, 2);
+            DB::table("objectives")
+                ->where("id", $request->edit_epic_obj)
+                ->update(["q_obj_prog" => $QuartertotalObj]);
+         }else
+         {
+            DB::table("objectives")
             ->where("id", $request->edit_epic_obj)
-            ->update(["obj_prog" => $finaltotalobj]);
+            ->update(["obj_prog" => 0]);
 
-        $QuarterprogressObj = DB::table("key_result")
-            ->where("obj_id", $request->edit_epic_obj)
-            ->where("q_key_prog", "=", 100)
-            ->count();
-        $QuartertotalObj = round(($QuarterprogressObj / $objcount) * 100, 2);
-        DB::table("objectives")
+            DB::table("objectives")
             ->where("id", $request->edit_epic_obj)
-            ->update(["q_obj_prog" => $QuartertotalObj]);
+            ->update(["q_obj_prog" => 0]);
+
+
+         }  
+       
 
         if ($request->type == "unit") {
             $organization = DB::table("business_units")
@@ -3727,15 +3776,156 @@ DB::table("objectives")
 
       if($request->dropped == 'key')
       { 
+    
         if($request->taskOrder[0] == $request->droppedElId)
         {
             $existsInModelKOld = DB::table('key_result')->where('id',$request->taskOrder[1])->first();
+            if(!$existsInModelKOld)
+            {
+
+                if ($request->type == "org") {
+                    $organization = DB::table("organization")
+                        ->where("id", $request->slug)
+                        ->first();
+                    $objective = DB::table("objectives")
+                        ->where("unit_id", $organization->id)
+                        ->where("trash", null)
+                        ->where("type", "org")
+                        ->orderby('IndexCount')
+                        ->get();
+                }
+            
+                if ($request->type == "unit") {
+                    $organization = DB::table("business_units")
+                        ->where("id", $request->slug)
+                        ->first();
+                    $objective = DB::table("objectives")
+                    ->where("unit_id", $organization->id)
+                        ->where("trash", null)
+                        ->where("type", "unit")
+                        ->orderby('IndexCount')
+                        ->get();
+                }
+            
+                if ($request->type == "stream") {
+                    $organization = DB::table("value_stream")
+                        ->where("id", $request->slug)
+                        ->first();
+                    $objective = DB::table("objectives")
+                    ->where("unit_id", $organization->id)
+                        ->where("trash", null)
+                        ->where("type", "stream")
+                        ->orderby('IndexCount')
+                        ->get();
+                }
+            
+                if ($request->type == "BU") {
+                    $organization = DB::table("unit_team")
+                        ->where("id", $request->slug)
+                        ->first();
+                    $objective = DB::table("objectives")
+                    ->where("unit_id", $organization->id)
+                        ->where("trash", null)
+                        ->where("type", "BU")
+                        ->orderby('IndexCount')
+                        ->get();
+                }
+            
+                if ($request->type == "VS") {
+                    $organization = DB::table("value_team")
+                        ->where("id", $request->slug)
+                        ->first();
+                    $objective = DB::table("objectives")
+                         ->where("unit_id", $organization->id)
+                        ->where("trash", null)
+                        ->where("type", "VS")
+                        ->orderby('IndexCount')
+                        ->get();
+                }
+            
+            
+                return view(
+                    "objective.objective-render",
+                    compact("organization", "objective")
+                );
+              
+            }
             $existsInModelK = DB::table('key_result')->where('id',$request->droppedElId)->first();
             DB::table('key_result')->where('id',$request->taskOrder[1])->update(['IndexCount' => $existsInModelK->IndexCount,]);
             DB::table('key_result')->where('id',$request->droppedElId)->update(['IndexCount' => $existsInModelKOld->IndexCount]);  
         }else
         {
             $existsInModelKOld = DB::table('key_result')->where('id',$request->taskOrder[0])->first();
+            if(!$existsInModelKOld)
+            {
+
+                if ($request->type == "org") {
+                    $organization = DB::table("organization")
+                        ->where("id", $request->slug)
+                        ->first();
+                    $objective = DB::table("objectives")
+                        ->where("unit_id", $organization->id)
+                        ->where("trash", null)
+                        ->where("type", "org")
+                        ->orderby('IndexCount')
+                        ->get();
+                }
+            
+                if ($request->type == "unit") {
+                    $organization = DB::table("business_units")
+                        ->where("id", $request->slug)
+                        ->first();
+                    $objective = DB::table("objectives")
+                    ->where("unit_id", $organization->id)
+                        ->where("trash", null)
+                        ->where("type", "unit")
+                        ->orderby('IndexCount')
+                        ->get();
+                }
+            
+                if ($request->type == "stream") {
+                    $organization = DB::table("value_stream")
+                        ->where("id", $request->slug)
+                        ->first();
+                    $objective = DB::table("objectives")
+                    ->where("unit_id", $organization->id)
+                        ->where("trash", null)
+                        ->where("type", "stream")
+                        ->orderby('IndexCount')
+                        ->get();
+                }
+            
+                if ($request->type == "BU") {
+                    $organization = DB::table("unit_team")
+                        ->where("id", $request->slug)
+                        ->first();
+                    $objective = DB::table("objectives")
+                    ->where("unit_id", $organization->id)
+                        ->where("trash", null)
+                        ->where("type", "BU")
+                        ->orderby('IndexCount')
+                        ->get();
+                }
+            
+                if ($request->type == "VS") {
+                    $organization = DB::table("value_team")
+                        ->where("id", $request->slug)
+                        ->first();
+                    $objective = DB::table("objectives")
+                         ->where("unit_id", $organization->id)
+                        ->where("trash", null)
+                        ->where("type", "VS")
+                        ->orderby('IndexCount')
+                        ->get();
+                }
+            
+            
+                return view(
+                    "objective.objective-render",
+                    compact("organization", "objective")
+                );
+              
+            }
             $existsInModelK = DB::table('key_result')->where('id',$request->droppedElId)->first();
             DB::table('key_result')->where('id',$request->taskOrder[0])->update(['IndexCount' => $existsInModelK->IndexCount,]);
             DB::table('key_result')->where('id',$request->droppedElId)->update(['IndexCount' => $existsInModelKOld->IndexCount]);
@@ -3897,6 +4087,8 @@ DB::table("objectives")
       if($request->dropped == 'epic')
       {
 
+        if($request->parentElId)
+        {
         $CurrentQuarters = DB::table('quarter_month')->where('id',$request->parentElId)->first();
         if($request->Init != $CurrentQuarters->initiative_id)
         {
@@ -4212,6 +4404,74 @@ DB::table("objectives")
         "objective.objective-render",
         compact("organization", "objective")
     );
+}else
+{
+    if ($request->type == "org") {
+        $organization = DB::table("organization")
+            ->where("id", $request->slug)
+            ->first();
+        $objective = DB::table("objectives")
+            ->where("unit_id", $organization->id)
+            ->where("trash", null)
+            ->where("type", "org")
+            ->orderby('IndexCount')
+            ->get();
+    }
+
+    if ($request->type == "unit") {
+        $organization = DB::table("business_units")
+            ->where("id", $request->slug)
+            ->first();
+        $objective = DB::table("objectives")
+        ->where("unit_id", $organization->id)
+            ->where("trash", null)
+            ->where("type", "unit")
+            ->orderby('IndexCount')
+            ->get();
+    }
+
+    if ($request->type == "stream") {
+        $organization = DB::table("value_stream")
+            ->where("id", $request->slug)
+            ->first();
+        $objective = DB::table("objectives")
+        ->where("unit_id", $organization->id)
+            ->where("trash", null)
+            ->where("type", "stream")
+            ->orderby('IndexCount')
+            ->get();
+    }
+
+    if ($request->type == "BU") {
+        $organization = DB::table("unit_team")
+            ->where("id", $request->slug)
+            ->first();
+        $objective = DB::table("objectives")
+        ->where("unit_id", $organization->id)
+            ->where("trash", null)
+            ->where("type", "BU")
+            ->orderby('IndexCount')
+            ->get();
+    }
+
+    if ($request->type == "VS") {
+        $organization = DB::table("value_team")
+            ->where("id", $request->slug)
+            ->first();
+        $objective = DB::table("objectives")
+             ->where("unit_id", $organization->id)
+            ->where("trash", null)
+            ->where("type", "VS")
+            ->orderby('IndexCount')
+            ->get();
+    }
+
+
+    return view(
+        "objective.objective-render",
+        compact("organization", "objective")
+    );   
+}
 }
 
 

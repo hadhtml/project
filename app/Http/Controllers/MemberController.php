@@ -1438,11 +1438,17 @@ $updateData = [
 //    $EpicId = DB::table('epic_clone')->where('backlog_id',$id)->first();
      $count = DB::table('backlog_unit')->where('backlog_id',$id)->count();
      $Pos = DB::table('backlog_unit')->orderby('id','DESC')->where('user_id',Auth::id())->first();
+   $counterepic = 1;
+   if($count > 0)
+   {
+    $counterepic = $count ++;
+   }
+   
      $counter = $Pos->position + 1;
     DB::table('backlog_unit')->insertGetId([
  
         'epic_status' => $log->epic_status,
-        'epic_title' => $log->epic_title. '-Copy('.($count++).')',
+        'epic_title' => $log->epic_title. '-Copy('.$counterepic.')',
         'epic_detail' => $log->epic_detail,
         'epic_start_date' => $log->epic_start_date,
         'epic_end_date' => $log->epic_end_date,
@@ -1470,12 +1476,19 @@ $updateData = [
    $Pos = DB::table('backlog')->orderby('id','DESC')->where('user_id',Auth::id())->first();
    $count = DB::table('backlog')->where('backlog_id',$id)->count();
 
+   $counterepic = 1;
+   if($count > 0)
+   {
+    $counterepic = $count ++;
+   }
+   
+
    $counter = $Pos->position + 1;
     DB::table('backlog')->insertGetId([
  
      
         'epic_status' => $log->epic_status,
-        'epic_title' => $log->epic_title. '-Copy('.($count++).')',
+        'epic_title' => $log->epic_title. '-Copy('.$counterepic.')',
         'epic_detail' => $log->epic_detail,
         'epic_start_date' => $log->epic_start_date,
         'epic_end_date' => $log->epic_end_date,
@@ -1502,12 +1515,18 @@ $updateData = [
    $log = DB::table('team_backlog')->where('id',$id)->first();
    $Pos = DB::table('team_backlog')->orderby('id','DESC')->where('user_id',Auth::id())->first();
    $count = DB::table('team_backlog')->where('backlog_id',$id)->count();
+   $counterepic = 1;
+   if($count > 0)
+   {
+    $counterepic = $count ++;
+   }
+   
    $counter = $Pos->position + 1;
     DB::table('team_backlog')->insertGetId([
  
      
         'epic_status' => $log->epic_status,
-        'epic_title' => $log->epic_title. '-Copy('.($count++).')',
+        'epic_title' => $log->epic_title. '-Copy('.$counterepic.')',
         'epic_detail' => $log->epic_detail,
         'epic_start_date' => $log->epic_start_date,
         'epic_end_date' => $log->epic_end_date,
