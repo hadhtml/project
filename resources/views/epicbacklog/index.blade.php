@@ -278,6 +278,15 @@ $var_objective = 'TBaclog-' . $type;
                         <button class="btn-circle btn-tolbar" data-toggle="modal" data-target="#delete{{ $backlog->id }}">
                            <img src="{{ asset('public/assets/images/icons/delete.svg') }}" data-toggle="tooltip" data-placement="top" data-original-title="Delete">
                         </button>
+                        @if ($backlog->backlog_id == NULL)
+                        <a class="btn-circle btn-tolbar" href="{{url('epic-clone/'.$backlog->id.'/'.$organization->type)}}">
+                           <span class="material-symbols-outlined"> content_copy </span>
+                                                   </a>
+                        @else
+                        <a class="btn-circle btn-tolbar" href="{{url('epic-clone/'.$backlog->backlog_id.'/'.$organization->type)}}">
+                           <span class="material-symbols-outlined"> content_copy </span>
+                                                   </a>   
+                        @endif   
                      </td>
                   </tr>
                   <div class="modal fade" id="delete{{ $backlog->id }}" tabindex="-1"

@@ -11,7 +11,7 @@ $Teams = DB::table('unit_team')->where('org_id',$organization->id)->count();
 $Reporting = DB::table('sprint')->where('value_unit_id',$organization->id)->where('type','unit')->count();
 $EpicsBacklog = DB::table('backlog_unit')->where('unit_id',$organization->id)->count();
 $Impediments = DB::table('flags')->where('business_units',$organization->id)->where('flag_title','!=',NULL)->where('board_type','unit')->count();
-
+$valuestream = DB::table('value_stream')->where('unit_id',$organization->id)->count();
 @endphp
 <div class="row">
     <div class="col-md-12">
@@ -103,6 +103,21 @@ $Impediments = DB::table('flags')->where('business_units',$organization->id)->wh
                     </div>
                     <div class="dashboard-card-number">
                         <h3>{{$Impediments}}</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="dashboard-card">
+                    <div class="card-svg">
+                        <a href="{{url('organization/'.$organization->slug.'/Value-Streams')}}" > 
+                            <span class="material-symbols-outlined warning_off">layers</span>
+                        </a>                     
+                    </div>
+                    <div class="dashboard-card-tittle">
+                        <h4>Value Stream</h4>
+                    </div>
+                    <div class="dashboard-card-number">
+                        <h3>{{$valuestream}}</h3>
                     </div>
                 </div>
             </div>

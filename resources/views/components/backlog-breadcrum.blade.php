@@ -1,3 +1,14 @@
+
+@php
+
+if($organization->type == 'stream')
+{
+$team  = DB::table('business_units')->where('id',$organization->unit_id)->first();  
+}
+
+
+
+@endphp
 <div class="subheader subheader-solid breadcrums" id="kt_subheader">
     <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
         <!--begin::Info-->
@@ -10,6 +21,12 @@
                 <div class="mr-2">
                     @if($organization->type == 'stream')
                     <a  href="{{url('dashboard/organization/'.$organization->slug.'/dashboard/'.$organization->type)}}" style="text-decoration: none;" >Dashboard</a>
+                    @endif
+                </div>
+
+                <div class="mr-2">
+                    @if($organization->type == 'stream')
+                    <a  href="{{url('dashboard/organization/'.$team->slug.'/portfolio/'.$team->type)}}" style="text-decoration: none;" >{{$team->business_name}}</a>
                     @endif
                 </div>
              

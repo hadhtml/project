@@ -1,3 +1,29 @@
+
+@php
+if($organization->type == 'BU')
+{
+$team  = DB::table('business_units')->where('id',$organization->org_id)->first();  
+}
+
+if($organization->type == 'stream')
+{
+$team  = DB::table('business_units')->where('id',$organization->unit_id)->first();  
+}
+
+if($organization->type == 'VS')
+{
+$team  = DB::table('value_stream')->where('id',$organization->org_id)->first();
+$Unit  = DB::table('business_units')->where('id',$team->unit_id)->first();  
+
+}
+
+if($organization->type == 'orgT')
+{
+$team  = DB::table('organization')->where('id',$organization->org_id)->first();  
+}
+
+@endphp
+
 <div class="subheader subheader-solid breadcrums" id="kt_subheader">
     <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
         <!--begin::Info-->
@@ -28,9 +54,11 @@
                 @php
                     $unit  = DB::table('business_units')->where('id' , $organization->unit_id)->first();
                 @endphp
-                {{-- <div class="mr-2">
-                    <a style="text-decoration: none;" href="{{ url('dashboard/organization') }}/{{ $unit->slug }}/Value-Streams">Value Streams</a>
-                </div> --}}
+                <div class="mr-2">
+                    @if($organization->type == 'stream')
+                    <a  href="{{url('dashboard/organization/'.$team->slug.'/portfolio/'.$team->type)}}" style="text-decoration: none;" >{{$team->business_name}}</a>
+                    @endif
+                </div>
                 <div class="mr-2">
                     <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->value_name}}</a>
                 </div>
@@ -40,6 +68,9 @@
                 @endif
                 @if($type == 'BU')
                 <div class="mr-2">
+                <a  href="{{url('dashboard/organization/'.$team->slug.'/portfolio/'.$team->type)}}" style="text-decoration: none;" >{{$team->business_name}}</a>
+                </div>
+                <div class="mr-2">
                     <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->team_title}}</a>
                 </div>
                 <div class="mr-2">
@@ -48,6 +79,14 @@
                 @endif
 
                 @if($type == 'VS')
+                <div class="mr-2">
+                    <a  href="{{url('dashboard/organization/'.$Unit->slug.'/portfolio/'.$Unit->type)}}" style="text-decoration: none;" >{{$Unit->business_name}}</a>
+      
+                </div>
+                <div class="mr-2">
+                    <a  href="{{url('dashboard/organization/'.$team->slug.'/portfolio/'.$team->type)}}" style="text-decoration: none;" >{{$team->value_name}}</a>
+       
+                </div>
                 <div class="mr-2">
                     <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->team_title}}</a>
                 </div>
@@ -66,11 +105,11 @@
                 @endif
 
                 @if($type == 'org')
-                @if($organization->type == 'org')
+                {{-- @if($organization->type == 'org')
                 <div class="mr-2">  
                 <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->organization_name}}</a>
                 </div>
-                @endif
+                @endif --}}
                 <div class="mr-2">
                     <p>Impediments</p>
                 </div>
