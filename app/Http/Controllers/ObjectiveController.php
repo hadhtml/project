@@ -1174,6 +1174,14 @@ DB::table("objectives")
                 DB::table("initiative")
                     ->where("id", $CurrentQuarter->initiative_id)
                     ->update(["q_initiative_prog" => $Quartertotal]);
+            }else
+            {
+                DB::table("quarter")
+                ->where("id", $CurrentQuarter->quarter_id)
+                ->update(["quarter_progress" => 0]);
+            DB::table("initiative")
+                ->where("id", $CurrentQuarter->initiative_id)
+                ->update(["q_initiative_prog" => 0]); 
             }
 
             
@@ -1219,11 +1227,17 @@ DB::table("objectives")
         if ($epicinitiativecount > 0) {
             $totalinitiative = $initiativeprogress / $epicinitiativecount;
             $finaltotal = $totalinitiative * 100;
-        }
-
-        DB::table("initiative")
+            DB::table("initiative")
             ->where("id", $request->initiative_delete_id)
             ->update(["initiative_prog" => $finaltotal]);
+        }else
+        {
+            DB::table("initiative")
+            ->where("id", $request->initiative_delete_id)
+            ->update(["initiative_prog" => 0]);
+        }
+
+       
     }
 
     $objwcount = DB::table("key_result")
@@ -1305,21 +1319,35 @@ $objprogress = DB::table("key_result")
 ->where("obj_id", $request->initiative_delete_obj_id)
 ->where("key_prog", "=", 100)
 ->count();
-$totalobj = $objprogress / $objcount;
-$finaltotalobj = $totalobj * 100;
+if($objcount > 0)
+{
+    $totalobj = $objprogress / $objcount;
+    $finaltotalobj = $totalobj * 100;
+    
+    DB::table("objectives")
+    ->where("id", $request->initiative_delete_obj_id)
+    ->update(["obj_prog" => $finaltotalobj]);
+    
+    $QuarterprogressObj = DB::table("key_result")
+    ->where("obj_id", $request->initiative_delete_obj_id)
+    ->where("q_key_prog", "=", 100)
+    ->count();
+    $QuartertotalObj = round(($QuarterprogressObj / $objcount) * 100, 2);
+    DB::table("objectives")
+    ->where("id", $request->initiative_delete_obj_id)
+    ->update(["q_obj_prog" => $QuartertotalObj]);
+}else
+{
+    DB::table("objectives")
+    ->where("id", $request->initiative_delete_obj_id)
+    ->update(["obj_prog" => 0]);
+    
+    $QuartertotalObj = round(($QuarterprogressObj / $objcount) * 100, 2);
+    DB::table("objectives")
+    ->where("id", $request->initiative_delete_obj_id)
+    ->update(["q_obj_prog" => 0]);
+}
 
-DB::table("objectives")
-->where("id", $request->initiative_delete_obj_id)
-->update(["obj_prog" => $finaltotalobj]);
-
-$QuarterprogressObj = DB::table("key_result")
-->where("obj_id", $request->initiative_delete_obj_id)
-->where("q_key_prog", "=", 100)
-->count();
-$QuartertotalObj = round(($QuarterprogressObj / $objcount) * 100, 2);
-DB::table("objectives")
-->where("id", $request->initiative_delete_obj_id)
-->update(["q_obj_prog" => $QuartertotalObj]);
 
 
     
