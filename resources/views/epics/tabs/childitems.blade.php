@@ -95,7 +95,7 @@ function getOrder(){
 </div>
 <div class="row mt-4 uploadattachment">
     <div class="col-md-12 col-lg-12 col-xl-12">
-        <form id="createchilditem" method="POST" action="{{ url('dashboard/epics/createchilditem') }}">
+        <form id="createchilditemform" method="POST" action="{{ url('dashboard/epics/createchilditem') }}">
             @csrf
             <input type="hidden" value="{{ $epic->id }}" name="epic_id">
             <div class="card comment-card storyaddcard">
@@ -582,7 +582,7 @@ function additem() {
     $('.uploadattachment').slideToggle();
     $('.nodatafound').slideToggle();
 }
-$('#createchilditem').on('submit',(function(e) {
+$('#createchilditemform').on('submit',(function(e) {
     $('#createchilditembutton').html('<i class="fa fa-spin fa-spinner"></i>');
     e.preventDefault();
     var formData = new FormData(this);

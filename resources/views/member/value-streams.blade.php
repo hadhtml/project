@@ -12,12 +12,12 @@ $var_objective = "V-Stream";
                 <table class="table data-table">
                     <thead>
                         <tr>
-                            <td>
+                            <!-- <td>
                                 <label class="form-checkbox">
                                     <input type="checkbox" id="checkAll">
                                     <span class="checkbox-label"></span>
                                 </label>
-                            </td>
+                            </td> -->
                             <td>Value Stream</td>
                             <td>Business Unit</td>
                             <td>Lead</td>
@@ -41,13 +41,13 @@ $var_objective = "V-Stream";
                         $TeamCount = DB::table('value_team')->where('org_id',$stream->id)->count();
                        @endphp
                         <tr>
-                            <td>
+                            <!-- <td>
                                 <label class="form-checkbox">
                                     <input type="checkbox">
                                     <span class="checkbox-label"></span>
                                 </label>
-                            </td>
-                            <td> <a  href="{{url('dashboard/organization/'.$stream->slug.'/dashboard/'.$stream->type)}}" class="nav-link text-black">{{$stream->value_name}}</a></td>
+                            </td> -->
+                            <td> <a  href="{{url('dashboard/organization/'.$stream->slug.'/dashboard/'.$stream->type)}}" class="nav-link text-black d-flex"><span style="font-size:22px" class="material-symbols-outlined">layers</span> {{$stream->value_name}}</a></td>
                             <td>{{$stream->business_name}}</td>
                             @if($stream->Lead_id)
                             @foreach(DB::table('members')->get() as $r)
