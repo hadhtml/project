@@ -15,14 +15,20 @@
                     <li id="asign" onclick="showtab({{$data->id}} , 'asign','{{$table}}')" class="tabsclass">
                         <span class="material-symbols-outlined">person_check</span> Asign
                     </li>
-                    <!-- <li id="comments" onclick="showtab({{$data->id}} , 'comments','{{$table}}')" class="tabsclass">
+                    <li id="childitems" onclick="showtab({{$data->id}} , 'childitems')" class="tabsclass">
+                        <span class="material-symbols-outlined">toc</span> Child Items
+                    </li>
+                    <li id="comments" onclick="showtab({{$data->id}} , 'comments')" class="tabsclass">
                         <span class="material-symbols-outlined">comment</span> Comments
                     </li>
-                    <li id="activites" onclick="showtab({{$data->id}} , 'activites','{{$table}}')" class="tabsclass">
+                    <li id="activites" onclick="showtab({{$data->id}} , 'activites')" class="tabsclass">
                        <span class="material-symbols-outlined">browse_activity</span> Activities
                     </li>
-                    <li id="attachment" onclick="showtab({{$data->id}} , 'attachment','{{$table}}')" class="tabsclass">
-                        <span class="material-symbols-outlined"> attachment </span> Attachments</li> -->
+                    <li id="attachment" onclick="showtab({{$data->id}} , 'attachment')" class="tabsclass">
+                        <span class="material-symbols-outlined"> attachment </span> Attachments</li>
+                    <li id="flags" onclick="showtab({{$data->id}} , 'flags')" class="tabsclass">
+                        <span class="material-symbols-outlined">flag</span> Flags
+                    </li>
                     <li id="teams" onclick="showtab({{$data->id}} , 'teams','{{$table}}')" class="tabsclass">
                         <span class="material-symbols-outlined"> group </span> Team
                     </li>

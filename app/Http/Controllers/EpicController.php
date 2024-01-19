@@ -865,11 +865,20 @@ class EpicController extends Controller
         return $html;
     }
     public function changeepicdate(Request $request)
-    {
+    {   
+        $previous = Epic::find($request->epic_id);
+        $from_status = Cmf::date_format_new($previous->epic_start_date).' - '.Cmf::date_format_new($previous->epic_end_date); 
+
         $data = Epic::find($request->epic_id);
         $data->epic_start_date = $request->start;
         $data->epic_end_date = $request->end;
         $data->save();
+
+        $tostatus = Cmf::date_format_new($data->epic_start_date).' - '.Cmf::date_format_new($data->epic_end_date);
+
+        $notification = "Date Changed From ".$from_status .' To '.$tostatus;
+        Cmf::save_activity(Auth::id() , $notification,'epics',$request->epic_id , 'detector_status');
+
     }
     public function sortchilditem(Request $request)
     {
