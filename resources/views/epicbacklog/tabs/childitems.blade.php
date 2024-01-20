@@ -13,7 +13,7 @@ function getOrder(){
     var epic_id = '{{ $epic->id }}';
     $.ajax({
         type: "POST",
-        url: "{{ url('dashboard/epics/sortchilditem') }}",
+        url: "{{ url('dashboard/epicbacklog/sortchilditem') }}",
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
@@ -95,7 +95,7 @@ function getOrder(){
 </div>
 <div class="row mt-4 uploadattachment">
     <div class="col-md-12 col-lg-12 col-xl-12">
-        <form id="createchilditemform" method="POST" action="{{ url('dashboard/epics/createchilditem') }}">
+        <form class="childitemform" method="POST" action="{{ url('dashboard/epicbacklog/createchilditem') }}">
             @csrf
             <input type="hidden" value="{{ $epic->id }}" name="epic_id">
             <div class="card comment-card storyaddcard">
@@ -157,12 +157,6 @@ function getOrder(){
                             </div>
                             <input type="hidden" value="Task" required class="story_type_asign_select" name="story_type">
                         </div>
-                        <div class="col-md-12">
-                            <div class="form-group mb-0">
-                                <label for="epic_story_name">Description</label>
-                                <input type="text" name="description" class="form-control" required>
-                            </div>
-                        </div>
                     </div>
                     <input type="hidden" value="To Do" id="storystatusnew" name="story_status">
                     <div class="row mt-3">
@@ -183,7 +177,7 @@ function getOrder(){
                         </div>
                         <div class="col-md-6 text-right">
                             <span onclick="additem()" class="btn btn-default btn-sm">Cancel</span>
-                            <button id="createchilditembutton" type="submit" class="btn btn-primary btn-sm">Save</button>
+                            <button type="submit" class="btn btn-primary btn-sm createitembutton">Save</button>
                         </div>
                     </div>
                 </div>
@@ -191,6 +185,25 @@ function getOrder(){
         </form>
     </div>
 </div>
+<script type="text/javascript">
+    $('.childitemform').on('submit',(function(e) {
+        $('.createitembutton').html('<i class="fa fa-spin fa-spinner"></i>');
+        e.preventDefault();
+        var formData = new FormData(this);
+        $.ajax({
+            type:'POST',
+            url: $(this).attr('action'),
+            data:formData,
+            cache:false,
+            contentType: false,
+            processData: false,
+            success: function(data){
+                $('.secondportion').html(data);
+            }
+        });
+    }));
+
+</script>
 <div class="row mt-5">
     <div class="activity-feed  col-md-12">
         <div class="col-md-12 col-lg-12 col-xl-12" style="position: relative;">
@@ -452,8 +465,6 @@ function bulkeditcheckbox() {
         $('.bulkedit').css('font-weight' , '400');
 
     }
-
-
     var numberOfChecked = $('.allchilditem:checkbox:checked').length;
     var totalCheckboxes = $('.allchilditem:checkbox').length;
     var numberNotChecked = totalCheckboxes - numberOfChecked;
@@ -616,24 +627,7 @@ function additem() {
     $('.uploadattachment').slideToggle();
     $('.nodatafound').slideToggle();
 }
-$('#createchilditemform').on('submit',(function(e) {
-    $('#createchilditembutton').html('<i class="fa fa-spin fa-spinner"></i>');
-    e.preventDefault();
-    var formData = new FormData(this);
-    var cardid = $('#cardid').val();
-    $.ajax({
-        type:'POST',
-        url: $(this).attr('action'),
-        data:formData,
-        cache:false,
-        contentType: false,
-        processData: false,
-        success: function(data){
-            $('.secondportion').html(data);
-            showheader('{{$epic->id}}')
-        }
-    });
-}));
+
 function selectoption(id) {
     if(id == 'task')
     {

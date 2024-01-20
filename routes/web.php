@@ -265,6 +265,17 @@ Route::name('epicbacklog.')->namespace('App\Http\Controllers')->prefix('dashboar
     Route::post('updategeneral', 'EpicBacklogController@updategeneral');
     Route::POST('changeepicdate', 'EpicBacklogController@changeepicdate');
     Route::POST('changeepicstatus', 'EpicBacklogController@changeepicstatus');
+
+
+    Route::post('createchilditem', 'EpicBacklogController@createchilditem');
+    Route::POST('savecomment', 'EpicController@savecomment');
+    Route::POST('deletecomment', 'EpicController@deletecomment');
+    Route::POST('updatecomment', 'EpicController@updatecomment');
+    Route::POST('orderbycomment', 'EpicController@orderbycomment');
+    Route::POST('savereply', 'EpicController@savereply');
+    Route::POST('sortchilditem', 'EpicController@sortchilditem');
+    Route::POST('deletechilditem', 'EpicController@deletechilditem');
+    Route::POST('orderbychilditem', 'EpicController@orderbychilditem');
 });
 
 

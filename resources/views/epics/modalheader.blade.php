@@ -4,9 +4,6 @@
             <img src="{{ url('public/assets/svg/epicheaderheader.svg') }}">@if($data->epic_name) {{ $data->epic_name }} @else Enter Epic Tittle @endif
         </h5>
     </div>
-    <!-- <div class="col-md-12 marginleftthirty newmodalsubtittle">
-        <p>{{ DB::table('objectives')->where('id' , $data->obj_id)->first()->objective_name }}/{{ DB::table('key_result')->where('id' , $data->key_id)->first()->key_name }}/{{ DB::table('initiative')->where('id' , $data->initiative_id)->first()->initiative_name }}</p>    
-    </div> -->
     <div class="col-md-12 displayflex">
         <div class="btn-group epicheaderborderleft">
             <button type="button" class="btn btn-default statuschangebutton @if($data->epic_status == 'To Do') todo-button-color @endif @if($data->epic_status == 'In progress') inprogress-button-color @endif @if($data->epic_status == 'Done') done-button-color @endif" id="showboardbutton">

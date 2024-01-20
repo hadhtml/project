@@ -706,7 +706,7 @@ $var_objective = 'TBaclog-' . $type;
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-   function editbacklogepic(id , table) {
+   function editbacklogepic(id) {
       var new_url="{{ url()->current() }}?epicbacklog="+id;
       window.history.pushState("data","Title",new_url);
       $.ajax({
@@ -717,17 +717,14 @@ $var_objective = 'TBaclog-' . $type;
          },
          data: {
              id: id,
-             table: table,
          },
          success: function(res) {
              $('#epic-backlog-modal-content').html(res);
              $('#edit-backlog-epic-modal-new').modal('show');
-             // showtab(id , 'general');
-             showheaderbacklog(id, table);
          }
       });
    }
-   function showheaderbacklog(id, table) {
+   function showheaderbacklog(id) {
         $.ajax({
             type: "POST",
             url: "{{ url('dashboard/epicbacklog/showheader') }}",
@@ -736,7 +733,6 @@ $var_objective = 'TBaclog-' . $type;
             },
             data: {
                id:id,
-               table:table,
             },
             success: function(res) {
                 $('.modalheaderforapend').html(res);
@@ -746,6 +742,15 @@ $var_objective = 'TBaclog-' . $type;
             }
         });
     }
+    $(document).ready(function() {
+        @if(isset($_GET['epicbacklog']))
+            editbacklogepic("{{ $_GET['epicbacklog'] }}");
+        @endif
+        $("#edit-backlog-epic-modal-new").on('hidden.bs.modal', function(){
+           var new_url="{{ url()->current() }}";
+           window.history.pushState("data","Title",new_url);
+        });
+    });
    $(document).ready(function() {
       $('#editorbacklog').summernote({
         height: 180,

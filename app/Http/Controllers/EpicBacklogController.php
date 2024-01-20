@@ -11,7 +11,7 @@ use App\Models\attachments;
 use App\Models\flag_members;
 use App\Models\flags;
 use App\Models\flag_comments;
-use App\Models\escalate_cards;
+use App\Models\epics_stroy;
 use App\Models\team_backlog;
 use App\Models\backlog;
 use App\Models\backlog_unit;
@@ -25,30 +25,27 @@ class EpicBacklogController extends Controller
 {
     public function getepicmodal(Request $request)
     {
-        $data = DB::table($request->table)->where('id' , $request->id)->first();
-        $table = $request->table;
-        $html = view('epicbacklog.modal', compact('data','table'))->render();
+        $data = team_backlog::find($request->id);
+        $html = view('epicbacklog.modal', compact('data'))->render();
         return $html;
     }
     public function showheader(Request $request)
     {
-        $data = DB::table($request->table)->where('id' , $request->id)->first();
-        $table = $request->table;
-        $html = view('epicbacklog.modalheader', compact('data','table'))->render();
+        $data = team_backlog::find($request->id);
+        $html = view('epicbacklog.modalheader', compact('data'))->render();
         return $html;
     }
     public function showtab(Request $request)
     {
         if($request->tab == 'general')
         {
-            $data = DB::table($request->table)->where('id' , $request->id)->first();
-            $table = $request->table;
-            $html = view('epicbacklog.tabs.general', compact('data','table'))->render();
+            $data = team_backlog::find($request->id);
+            $html = view('epicbacklog.tabs.general', compact('data'))->render();
             return $html;
         }
         if($request->tab == 'asign')
         {
-            $data = DB::table($request->table)->where('id' , $request->id)->first();
+            $data = team_backlog::find($request->id);
             $html = view('epicbacklog.tabs.asign', compact('data'))->render();
             return $html;
         }
@@ -88,9 +85,11 @@ class EpicBacklogController extends Controller
             $html = view('epics.tabs.flags', compact('flags','data'))->render();
             return $html;
         }
-        if($request->tab == 'checkins')
+        if($request->tab == 'childitems')
         {
-            $html = view('epics.tabs.checkins')->render();
+            $epic = team_backlog::find($request->id);
+            $epicstory = DB::table('epics_stroy')->where('epic_id',$epic->id)->where('epic_type' , 'backlog')->orderby('sort_order' , 'asc')->get();
+            $html = view('epicbacklog.tabs.childitems', compact('epic','epicstory'))->render();
             return $html;
         }
     }
@@ -103,7 +102,7 @@ class EpicBacklogController extends Controller
     }
     public function changeepicstatus(Request $request)
     {
-        DB::table($request->table)->where('id' , $request->id)->update(array('epic_status' =>$request->status));
+        team_backlog::where('id' , $request->id)->update(array('epic_status' =>$request->status));
     }
     public function updategeneral(Request $request)
     {
@@ -173,5 +172,41 @@ class EpicBacklogController extends Controller
         $table = $request->table;
         $html = view('epicbacklog.tabs.attachments', compact('attachments','data','table','extensions'))->render();
         return $html;
+    }
+    public function createchilditem(Request $request)
+    {
+        $item = new epics_stroy();
+        $item->epic_id = $request->epic_id;
+        $item->epic_story_name = $request->epic_story_name;
+        $item->story_assign = $request->story_assign;
+        $item->story_type = $request->story_type;
+        $item->story_status = $request->story_status;
+        $item->StoryID = Str::slug('SSP-'.rand(100,999));
+        $item->epic_type = 'backlog';
+        $item->R_id = rand(100,999);
+        $item->user_id =  Auth::id();
+        $item->save();
+        if($request->story_status == 'Done')
+        {
+            $item = epics_stroy::find($item->id);
+            $item->progress =  100;
+            $item->save();
+        }
+        $epic = team_backlog::find($request->epic_id);
+        $epicstory = DB::table('epics_stroy')->where('epic_id',$epic->id)->where('epic_type' , 'backlog')->orderby('id' , 'desc')->get();
+        $html = view('epics.tabs.childitems', compact('epic','epicstory'))->render();
+        return $html;
+    }
+    public function sortchilditem(Request $request)
+    {
+        $flagcount = epics_stroy::where('epic_id' , $request->epic_id)->where('epic_type' , 'backlog')->count();
+        $i = 0;
+        foreach ($request->order as $key=>$r) {
+            $test = $key+1;
+            if ($i++ > $flagcount) break;
+            $item = epics_stroy::find($r);
+            $item->sort_order = $i;
+            $item->save();       
+        }
     }
 }

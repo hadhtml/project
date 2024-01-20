@@ -21,3 +21,4 @@ function maximizemodal() {
     $("#open_in_full").toggleClass("d-none");
     $('#close_fullscreen').toggleClass('d-none');
 }
+

@@ -36,46 +36,6 @@
                 @endif
             </div>
         </div>
-        @if($data->epic_start_date)
-        <a href="javascript:void(0)" class="epic-datepicker" id="showboardbutton">
-            <img src="{{url('public/assets/svg/note-text.svg')}}" width="20">
-            <input readonly type="text" name="daterange" value="{{ date('m/d/Y', strtotime($data->epic_start_date)) }} - {{ date('m/d/Y', strtotime($data->epic_end_date)) }}" />
-        </a>
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-        <script>
-        $(function() {
-          $('input[name="daterange"]').daterangepicker({
-            opens: 'right'
-          }, function(start, end, label) {
-            console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-            $.ajax({
-                type: "POST",
-                url: "{{ url('dashboard/epicbacklog/changeepicdate') }}",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: {
-                    epic_id:'{{ $data->id }}',
-                    start:start.format('YYYY-MM-DD'),
-                    end:end.format('YYYY-MM-DD'),
-                },
-                success: function(res) {
-                    var modaltab = $('#modaltab').val();
-                    if(modaltab == 'general')
-                    {
-                        editbacklogepic('{{ $data->id }}','{{ $table }}');
-                    }
-                },
-                error: function(error) {
-                    
-                }
-            });
-          });
-        });
-        </script>
-        @endif
         @if($data->team_id)
         <div class="members-list">
             <div id="members">
@@ -90,7 +50,7 @@
         </a>
         @endif
         <div class="memberlistposition">
-            <div class="memberadd-box team-select-box">
+            <div class="memberadd-box team-select-box hidepopupall">
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <h4>Select Team</h4>
@@ -111,71 +71,38 @@
                 </div> -->
                 <div class="row" id="memberstoshow">
                     @if($data->type == 'unit')
-                        @foreach(DB::table('unit_team')->where('org_id',$data->buisness_unit_id)->where('type' , 'BU')->get() as $r)
-                            <div class="col-md-12 memberprofile" onclick="selectteamforepic({{$r->id}} , {{$data->id}})">
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <div class="memberprofileimage">
-                                            <img src="{{ Avatar::create($r->team_title)->toBase64() }}">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="membername">{{ $r->team_title }}</div>
-                                        <div class="memberdetail">Team Leader: {{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
-                                    </div>
-                                    <div class="col-md-2 text-center mt-3">
-                                        @if($data->team_id == $r->id)
-                                        <img class="tickimage" src="{{ url('public/assets/svg/smalltick.svg') }}">
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
+                        @php
+                            $teammember = DB::table('unit_team')->where('org_id',$data->buisness_unit_id)->where('type' , 'BU')->get();
+                        @endphp
                     @endif
                     @if($data->type == 'org')
-                        @foreach(DB::table('org_team')->where('org_id',$data->unit_id)->where('type' , 'orgT')->get() as $r)
-                            <div class="col-md-12 memberprofile" onclick="selectteamforepic({{$r->id}} , {{$data->id}})">
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <div class="memberprofileimage">
-                                            <img src="{{ Avatar::create($r->team_title)->toBase64() }}">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="membername">{{ $r->team_title }}</div>
-                                        <div class="memberdetail">Team Leader: {{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
-                                    </div>
-                                    <div class="col-md-2 text-center mt-3">
-                                        @if($data->team_id == $r->id)
-                                        <img class="tickimage" src="{{ url('public/assets/svg/smalltick.svg') }}">
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
+                        @php
+                            $teammember = DB::table('org_team')->where('org_id',$data->unit_id)->where('type' , 'orgT')->get();
+                        @endphp
                     @endif
                     @if($data->type == 'stream')
-                        @foreach(DB::table('value_team')->where('org_id',$data->unit_id)->where('type' , 'VS')->get() as $r)
-                            <div class="col-md-12 memberprofile" onclick="selectteamforepic({{$r->id}} , {{$data->id}})">
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <div class="memberprofileimage">
-                                            <img src="{{ Avatar::create($r->team_title)->toBase64() }}">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="membername">{{ $r->team_title }}</div>
-                                        <div class="memberdetail">Team Leader: {{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
-                                    </div>
-                                    <div class="col-md-2 text-center mt-3">
-                                        @if($data->team_id == $r->id)
-                                        <img class="tickimage" src="{{ url('public/assets/svg/smalltick.svg') }}">
-                                        @endif
+                        $teammember = DB::table('value_team')->where('org_id',$data->unit_id)->where('type' , 'VS')->get();
+                    @endif
+                    @foreach($teammember as $r)
+                        <div class="col-md-12 memberprofile" onclick="selectteamforepic({{$r->id}} , {{$data->id}})">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="memberprofileimage">
+                                        <img class="gixie" data-item-id="{{ $r->id }}">
                                     </div>
                                 </div>
+                                <div class="col-md-8">
+                                    <div class="membername">{{ $r->team_title }}</div>
+                                    <div class="memberdetail">Lead:{{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
+                                </div>
+                                <div class="col-md-2 text-center mt-3">
+                                    @if($data->team_id == $r->id)
+                                    <img class="tickimage" src="{{ url('public/assets/svg/smalltick.svg') }}">
+                                    @endif
+                                </div>
                             </div>
-                        @endforeach
-                    @endif
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -192,7 +119,6 @@
 </div>
 <script type="text/javascript">
 function changeepicstatus(status , id) {
-var table = '{{ $table }}';
 $.ajax({
     type: "POST",
     url: "{{ url('dashboard/epicbacklog/changeepicstatus') }}",
@@ -200,12 +126,11 @@ $.ajax({
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
     data: {
-        table:table,
         id: id,
         status: status,
     },
     success: function(res) {
-        showheaderbacklog(id , table);
+        showheaderbacklog(id);
     },
     error: function(error) {
         
@@ -245,4 +170,12 @@ function selectteamforepic(id , epic_id) {
         }
     });
 }
+</script>
+<script type="text/javascript">
+    var elements = document.querySelectorAll('.gixie');
+    elements.forEach(function(element) {
+        var itemId = element.getAttribute('data-item-id');
+        var imageData = new GIXI(300).getImage(); 
+        element.setAttribute('src', imageData);
+    });
 </script>

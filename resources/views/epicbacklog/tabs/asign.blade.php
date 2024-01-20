@@ -16,7 +16,7 @@
    @csrf
    <input type="hidden" name="backlog_id" value="{{ $data->id }}">
    <input type="hidden" name="team_type" value="{{ $data->type }}">
-   <div class="row storyaddcard" style="padding:10px;border-radius: 10px;">
+   <div class="row">
       @if ($data->type == 'BU')
       <div class="col-md-12 col-lg-12 col-xl-12">
          <div class="form-group mb-0">

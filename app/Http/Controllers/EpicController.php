@@ -308,7 +308,8 @@ class EpicController extends Controller
         $item->story_type = $request->story_type;
         $item->story_status = $request->story_status;
         $item->StoryID = Str::slug('SSP-'.rand(100,999));
-        // $item->VS_BU_ID = $request->VS_BU_ID;
+        $item->epic_type = 'orignal';
+        $item->description = $request->description;
         $item->R_id = rand(100,999);
         $item->user_id =  Auth::id();
         $item->save();

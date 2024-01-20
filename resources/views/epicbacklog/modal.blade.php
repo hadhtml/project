@@ -9,11 +9,8 @@
                 <h4>Menu</h4>
                 <input type="hidden" id="modaltab" value="general">
                 <ul>
-                    <li id="general" onclick="showtab({{$data->id}} , 'general','{{$table}}')" class="tabsclass active">
+                    <li id="general" onclick="showtab({{$data->id}} , 'general')" class="tabsclass active">
                         <span class="material-symbols-outlined"> edit_square </span> General
-                    </li>
-                    <li id="asign" onclick="showtab({{$data->id}} , 'asign','{{$table}}')" class="tabsclass">
-                        <span class="material-symbols-outlined">person_check</span> Asign
                     </li>
                     <li id="childitems" onclick="showtab({{$data->id}} , 'childitems')" class="tabsclass">
                         <span class="material-symbols-outlined">toc</span> Child Items
@@ -29,8 +26,11 @@
                     <li id="flags" onclick="showtab({{$data->id}} , 'flags')" class="tabsclass">
                         <span class="material-symbols-outlined">flag</span> Flags
                     </li>
-                    <li id="teams" onclick="showtab({{$data->id}} , 'teams','{{$table}}')" class="tabsclass">
+                    <li id="teams" onclick="showtab({{$data->id}} , 'teams')" class="tabsclass">
                         <span class="material-symbols-outlined"> group </span> Team
+                    </li>
+                    <li id="asign" onclick="showtab({{$data->id}} , 'asign')" class="tabsclass">
+                        <span class="material-symbols-outlined">person_check</span> Asign
                     </li>
                 </ul>
                 <h4>Action</h4>
@@ -72,7 +72,6 @@
             <form id="updategeneral" class="needs-validation" action="{{ url('dashboard/epicbacklog/updategeneral') }}" method="POST" novalidate>
                 @csrf
                 <input type="hidden" value="{{ $data->id }}" name="epic_id">
-                <input type="hidden" name="table" value="{{ $table }}">
                 <div class="row">
                     <div class="col-md-12 col-lg-12 col-xl-12">
                         <div class="form-group mb-0">
@@ -137,7 +136,7 @@
             }
         });
     }
-    function showtab(id , tab , table) {
+    function showtab(id , tab) {
         $('#modaltab').val(tab);
         $('.secondportion').addClass('loaderdisplay');
         $('.secondportion').html('<i class="fa fa-spin fa-spinner"></i>');
@@ -150,7 +149,6 @@
             data: {
                 id:id,
                 tab:tab,
-                table: table,
             },
             success: function(res) {
                 $('.secondportion').removeClass('loaderdisplay');
@@ -187,7 +185,7 @@
             contentType: false,
             processData: false,
             success: function(res){
-                showheaderbacklog('{{ $data->id }}' , '{{ $table }}')
+                showheaderbacklog('{{ $data->id }}')
                 $('#updatebutton').html('Save Changes');
             }
         });
