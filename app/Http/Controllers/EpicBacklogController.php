@@ -77,13 +77,13 @@ class EpicBacklogController extends Controller
             $html = view('epicbacklog.tabs.teams', compact('data'))->render();
             return $html;
         }
-        // if($request->tab == 'flags')
-        // {
-        //     $data = Epic::find($request->id);
-        //     $flags = flags::where('epic_id' , $data->id)->orderby('flags.flag_order' , 'asc')->get();
-        //     $html = view('epics.tabs.flags', compact('flags','data'))->render();
-        //     return $html;
-        // }
+        if($request->tab == 'flags')
+        {
+            $data = team_backlog::find($request->id);
+            $flags = flags::where('epic_id' , $data->id)->where('epic_type' , 'backlog')->orderby('flags.flag_order' , 'asc')->get();
+            $html = view('epicbacklog.tabs.flags', compact('flags','data'))->render();
+            return $html;
+        }
         if($request->tab == 'childitems')
         {
             $epic = team_backlog::find($request->id);
@@ -112,6 +112,19 @@ class EpicBacklogController extends Controller
         $data->epic_end_date = $request->epic_end_date;
         $data->epic_detail = $request->epic_detail;
         $data->save();
+
+        if(!$request->epic_name)
+        {
+            $update = team_backlog::find($request->epic_id);
+            $update->trash = $data->created_at;
+            $update->save(); 
+        }else{
+            $update = team_backlog::find($request->epic_id);
+            $update->trash = Null;
+            $update->save(); 
+        }
+
+
         $html = view('epicbacklog.tabs.general', compact('data'))->render();
         return $html;
     }
@@ -252,5 +265,67 @@ class EpicBacklogController extends Controller
         $update = $update;
         $html = view('epics.teamappend', compact('teams','update'))->render();
         return $html;                 
+    }
+    public function addnewbacklogepic(Request $request)
+    {
+
+        $counter = 0;
+        $data = DB::table('team_backlog')->orderby('id','DESC')->where('user_id',Auth::id())->first();
+        if($data)
+        {
+        $counter = $data->position + 1; 
+        }
+        $add = new team_backlog();
+        $add->unit_id = $request->unit_id;
+        $add->type = $request->type;
+        $add->position = $counter;
+        $add->epic_status = 'To Do';
+        $add->user_id = Auth::id();
+        $add->save();
+
+        $year =  date('Y');
+        $month = date('m');
+        $day =  date('d');
+        $date = $year . "-" . str_pad($month, 2, "0", STR_PAD_LEFT) . "-" . str_pad($day, 2, "0", STR_PAD_LEFT);
+
+        $update = team_backlog::find($add->id);
+        $update->trash = $add->created_at;
+        $update->epic_start_date = $date;
+        $update->epic_end_date = $date;
+        $update->save();
+
+        return $add->id;
+    }
+    public function saveepicflag(Request $request)
+    {
+        $flag = new flags();
+        $flag->business_units = $request->business_units;
+        $flag->epic_id = $request->flag_epic_id;
+        $flag->flag_type = $request->flag_type;
+        $flag->flag_title = $request->flag_title;
+        $flag->flag_description = $request->flag_description;
+        $flag->archived = 2;
+        $flag->flag_status = 'todoflag';
+        $flag->epic_type = 'backlog';
+        $flag->board_type = $request->board_type;
+        $flag->save();
+        $member = new flag_members();
+        $member->member_id = $request->flag_assign;
+        $member->flag_id = $flag->id;
+        $member->save();
+    }
+    public function flagupdate(Request $request)
+    {
+        $update = flags::find($request->flag_id);
+        $update->flag_type = $request->flag_type;
+        $update->flag_title = $request->flag_title;
+        $update->flag_description = $request->flag_description;
+        $update->save();
+    }
+    public function updateflagstatus(Request $request)
+    {
+        $flags = flags::find($request->id);
+        $flags->flag_status = $request->status;
+        $flags->save();
     }
 }

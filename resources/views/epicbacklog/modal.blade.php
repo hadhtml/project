@@ -23,9 +23,9 @@
                     </li>
                     <li id="attachment" onclick="showtab({{$data->id}} , 'attachment')" class="tabsclass">
                         <span class="material-symbols-outlined"> attachment </span> Attachments</li>
-                    <!-- <li id="flags" onclick="showtab({{$data->id}} , 'flags')" class="tabsclass">
+                    <li id="flags" onclick="showtab({{$data->id}} , 'flags')" class="tabsclass">
                         <span class="material-symbols-outlined">flag</span> Flags
-                    </li> -->
+                    </li>
                     <li id="teams" onclick="showtab({{$data->id}} , 'teams')" class="tabsclass">
                         <span class="material-symbols-outlined"> group </span> Team
                     </li>

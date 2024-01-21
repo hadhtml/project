@@ -42,7 +42,7 @@ $var_objective = 'TBaclog-' . $type;
                         </label>
                      </td>
                      <td>Title</td>
-                     <td>Quarter</td>
+                     <!-- <td>Quarter</td> -->
                      <td>Start/End Date</td>
                      <td>Status</td>
                      <td>Progress</td>
@@ -62,12 +62,12 @@ $var_objective = 'TBaclog-' . $type;
                         <img src="{{ url('public/assets/svg/impedimentbacklog.svg') }}">
                         {{ $backlog->epic_title }}
                      </td>
-                     <td>
+                     <!-- <td>
                         @if ($backlog->assign_status == null)
                         Assign
                         <img src="{{ url('public/assets/svg/asignteam.svg') }}" data-toggle="modal"  data-target="#assign-unitbacklog-epic{{ $backlog->id }}">
                         @endif
-                     </td>
+                     </td> -->
                      <div class="modal fade" id="assign-unitbacklog-epic{{ $backlog->id }}"
                         tabindex="-1" role="dialog" aria-labelledby="create-epic" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -408,123 +408,11 @@ $var_objective = 'TBaclog-' . $type;
    <div>
       <p class="text-center">You may create your first Epic by clicking the bellow button</p>
    </div>
-   <button class="btn btn-primary btn-lg btn-theme btn-block ripple ml-25" style="width:50%"
-      data-toggle="modal" data-target="#create-backlog-team">
+   <button class="btn btn-primary btn-lg btn-theme btn-block ripple ml-25" onchange="addnewbacklogepic()" style="width:50%">
    Add an Epic
    </button>
 </div>
 @endif 
-<div class="modal fade" id="create-backlog-team" tabindex="-1" role="dialog" aria-labelledby="create-epic"
-   aria-hidden="true">
-   <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content newmodalcontent">
-         <div class="modal-header">
-            <div class="row positionrelative">
-                <div class="col-md-12 mb-5">
-                    <h5 class="modal-title newmodaltittle epic-tittle-header marginleftthirty" id="create-epic">
-                        <img src="{{ url('public/assets/svg/epicheaderheader.svg') }}">Create Epic Backlog  
-                    </h5>
-                </div>
-                <div class="col-md-12 displayflex">
-                    <div class="btn-group epicheaderborderleft">
-                        <button type="button" class="statuschangebutton btn btn-default todo-button-color" id="showboardbutton">
-                             To Do                            
-                        </button>
-                        <button type="button" class="todo-button-color statuschangebuttonarrow btn btn-danger dropdown-toggle dropdown-toggle-split archivebeardcimbgbutton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src="{{url('public/assets/svg/arrow-down-white.svg')}}" width="20">         
-                            <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <div class="dropdown-menu">
-                              <a class="dropdown-item" href="javascript:void(0)">In Progress</a>
-                              <a class="dropdown-item" href="javascript:void(0)">Done</a>
-                        </div>
-                    </div>
-                    <div class="moverightside">
-                        <h1 class="epic-percentage"></h1>
-                    </div>
-                </div>
-            </div>
-            <div class="rightside" >
-                <span onclick="maximizemodal()">
-                    <img  src="{{url('public/assets/svg/maximize.svg')}}">
-                </span>
-                <img data-dismiss="modal" class="closeimage" aria-label="Close" src="{{url('public/assets/svg/cross.svg')}}">
-            </div>
-         </div>
-         <div class="modal-body" id="showformforedit">
-            <div class="row"><div class="col-md-12"><div class="border-top"></div></div></div>
-            <div class="row mt-3">
-                 <div class="col-md-3">
-                     <div class="menuettitle">
-                         <h4>Menu</h4>
-                         <input type="hidden" id="modaltab" value="general">
-                         <ul>
-                             <li id="general" class="tabsclass active">
-                                 <span class="material-symbols-outlined"> edit_square </span> General
-                             </li>
-                         </ul>
-                     </div>
-                 </div>
-                 <div class="col-md-9 secondportion">
-                     <div class="row">
-                         <div class="col-md-12 col-lg-12 col-xl-12">
-                             <div class="d-flex flex-row align-items-center justify-content-between block-header">
-                                 <div class="d-flex flex-row align-items-center">
-                                     <div class="mr-2">
-                                         <span class="material-symbols-outlined">edit_square</span>
-                                     </div>
-                                     <div>
-                                         <h4>General</h4>
-                                     </div>
-                                 </div>
-                             </div>
-                         </div>
-                     </div>
-                     <form class="needs-validation" action="{{ url('add-teambacklog-epic') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="unit_id" value="{{ $organization->id }}">
-                        <input type="hidden" name="type" value="{{ $organization->type }}">
-                        <input type="hidden"  name="epic_status" value="To Do">
-                        <div class="row">
-                            <div class="col-md-12 col-lg-12 col-xl-12">
-                                <div class="form-group mb-0">
-                                    <label for="epic_name">Epic Title</label>
-                                    <input type="text" class="form-control" name="epic_name" id="" required>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-lg-6 col-xl-6">
-                                <div class="form-group mb-0">
-                                    <label for="epic_start_date">Start Date</label>
-                                    <input type="date" class="form-control" name="epic_start_date" id="">
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-lg-6 col-xl-6">
-                                <div class="form-group mb-0">
-                                    <label for="epic_end_date">End Date</label>
-                                    <input type="date" class="form-control" name="epic_end_date" id="">
-                                </div>
-                            </div>
-                            <div class="col-md-12 col-lg-12 col-xl-12">
-                                <div class="form-group mb-0">
-                                    <label>Description</label>
-                                    <div class="textareaformcontrol">
-                                        <textarea name="epic_description" id="editorbacklog"></textarea> 
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row margintopfourtypixel">
-                            <div class="col-md-12 text-right">
-                                <button type="submit" class="btn btn-primary btn-theme ripple savechangebutton">Save Epic</button>
-                            </div>
-                        </div>
-                     </form>
-                 </div>
-             </div>
-         </div>
-      </div>
-   </div>
-</div>
 <div class="modal fade" id="assign-Teambacklog-epic" tabindex="-1" role="dialog" aria-labelledby="create-epic"
    aria-hidden="true">
    <div class="modal-dialog" role="document">
@@ -706,6 +594,24 @@ $var_objective = 'TBaclog-' . $type;
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+   function addnewbacklogepic() {
+      var unit_id = "{{ $organization->id }}";
+      var type = "{{$organization->type}}"; 
+      $.ajax({
+         type: "POST",
+         url: "{{ url('dashboard/epicbacklog/addnewbacklogepic') }}",
+         headers: {
+             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+         },
+         data: {
+             unit_id: unit_id,
+             type: type,
+         },
+         success: function(res) {
+             editbacklogepic(res)
+         }
+      });
+   }
    function editbacklogepic(id) {
       var new_url="{{ url()->current() }}?epicbacklog="+id;
       window.history.pushState("data","Title",new_url);

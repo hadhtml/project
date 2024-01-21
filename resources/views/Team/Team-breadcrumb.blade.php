@@ -104,7 +104,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                 </div>
             <div>
                 <button class="button" id="backlog-assign" data-toggle="modal" style="display:none" onclick="get_epic();" data-target="#">Assign</button>
-                <button class="button" data-toggle="modal" data-target="#create-backlog-team">Add New</button>
+                <button class="button" onclick="addnewbacklogepic()">Add New</button>
                 <button class="button" data-toggle="modal"  data-target="#create-jira-epic">Connect Jira</button>
             </div>
         </div>

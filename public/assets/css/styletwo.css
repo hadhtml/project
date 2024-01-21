@@ -1351,6 +1351,10 @@ button:focus {
 .business-card{
     margin-bottom: 30px;
 }
+.business-card a{
+    text-decoration: none;
+    color: black;
+}
 .col-action:hover{
     text-decoration: none;
 }
