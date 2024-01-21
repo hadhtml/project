@@ -150,7 +150,7 @@ function maximizemodal() {
 function selectteamforepic(id , epic_id) {
     $.ajax({
         type: "POST",
-        url: "{{ url('dashboard/epics/selectteamforepic') }}",
+        url: "{{ url('dashboard/epicbacklog/selectteamforepic') }}",
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },

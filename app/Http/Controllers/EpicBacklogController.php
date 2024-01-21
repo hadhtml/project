@@ -51,40 +51,39 @@ class EpicBacklogController extends Controller
         }
         if($request->tab == 'comments')
         {
-            $comments = flag_comments::where('flag_id' , $request->id)->where('comment_type' , 'epics')->wherenull('comment_id')->orderby('id' , 'desc')->get();
-            $data = Epic::find($request->id);
-            $html = view('epics.tabs.comments', compact('comments','data'))->render();
+            $comments = flag_comments::where('flag_id' , $request->id)->where('comment_type' , 'epicbacklog')->wherenull('comment_id')->orderby('id' , 'desc')->get();
+            $data = team_backlog::find($request->id);
+            $html = view('epicbacklog.tabs.comments', compact('comments','data'))->render();
             return $html;
         }
         if($request->tab == 'activites')
         {
             $activity = activities::where('value_id' , $request->id)->where('type' , 'epicbacklog')->orderby('id' , 'desc')->get();
-            $data = Epic::find($request->id);
-            $html = view('epics.tabs.activities', compact('activity','data'))->render();
+            $data = team_backlog::find($request->id);
+            $html = view('epicbacklog.tabs.activities', compact('activity','data'))->render();
             return $html;
         }
         if($request->tab == 'attachment')
         {
             $extensions = attachments::where('value_id' , $request->id)->groupBy('extension')->where('type' , 'epicbacklog')->orderby('id' , 'desc')->get();
             $attachments = attachments::where('value_id' , $request->id)->where('type' , 'epicbacklog')->orderby('id' , 'desc')->get();
-            $data = DB::table($request->table)->where('id' , $request->id)->first();
-            $table = $request->table;
-            $html = view('epicbacklog.tabs.attachments', compact('attachments','data','table','extensions'))->render();
+            $data = team_backlog::find($request->id);
+            $html = view('epicbacklog.tabs.attachments', compact('attachments','data','extensions'))->render();
             return $html;
         }
         if($request->tab == 'teams')
         {
-            $data = Epic::find($request->id);
-            $html = view('epics.tabs.teams', compact('data'))->render();
+            $data = team_backlog::find($request->id);
+            $html = view('epicbacklog.tabs.teams', compact('data'))->render();
             return $html;
         }
-        if($request->tab == 'flags')
-        {
-            $data = Epic::find($request->id);
-            $flags = flags::where('epic_id' , $data->id)->orderby('flags.flag_order' , 'asc')->get();
-            $html = view('epics.tabs.flags', compact('flags','data'))->render();
-            return $html;
-        }
+        // if($request->tab == 'flags')
+        // {
+        //     $data = Epic::find($request->id);
+        //     $flags = flags::where('epic_id' , $data->id)->orderby('flags.flag_order' , 'asc')->get();
+        //     $html = view('epics.tabs.flags', compact('flags','data'))->render();
+        //     return $html;
+        // }
         if($request->tab == 'childitems')
         {
             $epic = team_backlog::find($request->id);
@@ -107,70 +106,13 @@ class EpicBacklogController extends Controller
     public function updategeneral(Request $request)
     {
 
-        if($request->table == 'team_backlog')
-        {
-            $data = team_backlog::find($request->epic_id);
-            $data->epic_title = $request->epic_name;
-            $data->epic_start_date = $request->epic_start_date;
-            $data->epic_end_date = $request->epic_end_date;
-            $data->epic_detail = $request->epic_detail;
-            $data->save();
-        }
-        
-        if($request->table == 'backlog')
-        {
-            $data = backlog::find($request->epic_id);
-            $data->epic_title = $request->epic_name;
-            $data->epic_start_date = $request->epic_start_date;
-            $data->epic_end_date = $request->epic_end_date;
-            $data->epic_detail = $request->epic_detail;
-            $data->save();
-        }
-
-        if($request->table == 'backlog_unit')
-        {
-            $data = backlog_unit::find($request->epic_id);
-            $data->epic_title = $request->epic_name;
-            $data->epic_start_date = $request->epic_start_date;
-            $data->epic_end_date = $request->epic_end_date;
-            $data->epic_detail = $request->epic_detail;
-            $data->save();   
-        }
-
-        $table = $request->table;
-        $html = view('epicbacklog.tabs.general', compact('data','table'))->render();
-        return $html;
-    }
-    public function uploadattachment(Request $request)
-    {
-        $filename = $request->file('file')->getClientOriginalName();
-        $add = new attachments();
-        $add->user_id = Auth::id();
-        $add->attachment = Cmf::sendimagetodirectory($request->file);
-        $add->file_name = $request->file('file')->getClientOriginalName();
-        $add->extension = Cmf::get_file_extension($filename);
-        $add->type = 'epicbacklog';
-        $add->value_id = $request->value_id;
-        $add->save();
-        Cmf::save_activity(Auth::id() , 'Added a New Attachment','epicbacklog',$request->value_id);
-
-        $extensions = attachments::where('value_id' , $request->value_id)->groupBy('extension')->where('type' , 'epicbacklog')->orderby('id' , 'desc')->get();
-        $attachments = attachments::where('value_id' , $request->value_id)->where('type' , 'epicbacklog')->orderby('id' , 'desc')->get();
-        $data = DB::table($request->table)->where('id' , $request->value_id)->first();
-        $table = $request->table;
-        $html = view('epicbacklog.tabs.attachments', compact('attachments','data','table','extensions'))->render();
-        return $html;
-    }
-    public function deleteattachment(Request $request)
-    {
-        $attachment = attachments::find($request->id);
-        attachments::where('id',$request->id)->delete();
-        Cmf::save_activity(Auth::id() , 'has Deleted Attachment','epicbacklog',$attachment->value_id);
-        $extensions = attachments::where('value_id' , $attachment->value_id)->groupBy('extension')->where('type' , 'epicbacklog')->orderby('id' , 'desc')->get();
-        $attachments = attachments::where('value_id' , $attachment->value_id)->where('type' , 'epicbacklog')->orderby('id' , 'desc')->get();
-        $data = DB::table($request->table)->where('id' , $attachment->value_id)->first();
-        $table = $request->table;
-        $html = view('epicbacklog.tabs.attachments', compact('attachments','data','table','extensions'))->render();
+        $data = team_backlog::find($request->epic_id);
+        $data->epic_title = $request->epic_name;
+        $data->epic_start_date = $request->epic_start_date;
+        $data->epic_end_date = $request->epic_end_date;
+        $data->epic_detail = $request->epic_detail;
+        $data->save();
+        $html = view('epicbacklog.tabs.general', compact('data'))->render();
         return $html;
     }
     public function createchilditem(Request $request)
@@ -180,6 +122,7 @@ class EpicBacklogController extends Controller
         $item->epic_story_name = $request->epic_story_name;
         $item->story_assign = $request->story_assign;
         $item->story_type = $request->story_type;
+        $item->description = $request->description;
         $item->story_status = $request->story_status;
         $item->StoryID = Str::slug('SSP-'.rand(100,999));
         $item->epic_type = 'backlog';
@@ -208,5 +151,106 @@ class EpicBacklogController extends Controller
             $item->sort_order = $i;
             $item->save();       
         }
+    }
+
+    public function savecomment(Request $request)
+    {
+        $addcomment = new flag_comments();
+        $addcomment->flag_id = $request->flag_id;
+        $addcomment->user_id = $request->user_id;
+        $addcomment->comment = $request->comment;
+        $addcomment->type = 'comment';
+        $addcomment->comment_type = 'epicbacklog';
+        $addcomment->save();
+        Cmf::save_activity(Auth::id() , 'Added a New Comment','epicbacklog',$request->flag_id , 'comment');
+        $comments = flag_comments::where('flag_id' , $request->flag_id)->where('comment_type' , 'epicbacklog')->wherenull('comment_id')->orderby('id' , 'desc')->get();
+        $data = team_backlog::find($request->flag_id);
+        $html = view('epicbacklog.tabs.comments', compact('comments','data'))->render();
+        return $html;
+    }
+    public function savereply(Request $request)
+    {
+        $addcomment = new flag_comments();
+        $addcomment->flag_id = $request->flag_id;
+        $addcomment->user_id = $request->user_id;
+        $addcomment->comment = $request->comment;
+        $addcomment->type = 'reply';
+        $addcomment->comment_id = $request->comment_id;
+        $addcomment->save();
+        Cmf::save_activity(Auth::id() , 'Reply a Comment','epicbacklog',$request->flag_id, 'reply');
+        $comments = flag_comments::where('flag_id' , $request->flag_id)->where('comment_type' , 'epicbacklog')->wherenull('comment_id')->orderby('id' , 'desc')->get();
+        $data = team_backlog::find($request->flag_id);
+        $html = view('epicbacklog.tabs.comments', compact('comments','data'))->render();
+        return $html;
+    }
+    public function updatecomment(Request $request)
+    {
+        $addcomment = flag_comments::find($request->comment_id);
+        $addcomment->comment = $request->comment;
+        $addcomment->save();
+        Cmf::save_activity(Auth::id() , 'Update a Comment','epicbacklog',$addcomment->flag_id, 'comment');
+        $comments = flag_comments::where('flag_id' , $addcomment->flag_id)->where('comment_type' , 'epicbacklog')->wherenull('comment_id')->orderby('id' , 'desc')->get();
+        $data = team_backlog::find($addcomment->flag_id);
+        $html = view('epicbacklog.tabs.comments', compact('comments','data'))->render();
+        return $html;
+    }
+    public function deletecomment(Request $request)
+    {
+        $comment = flag_comments::find($request->id);
+        flag_comments::where('id' , $request->id)->delete();
+        flag_comments::where('comment_id' , $request->id)->delete();
+        $comments = flag_comments::where('flag_id' , $comment->flag_id)->where('comment_type' , 'epicbacklog')->wherenull('comment_id')->orderby('id' , 'desc')->get();
+        Cmf::save_activity(Auth::id() , 'Delete a Comment','epicbacklog',$comment->flag_id, 'delete');
+        $data = team_backlog::find($comment->flag_id);
+        $html = view('epicbacklog.tabs.comments', compact('comments','data'))->render();
+        return $html;
+    }
+    public function uploadattachment(Request $request)
+    {
+        $filename = $request->file('file')->getClientOriginalName();
+        $add = new attachments();
+        $add->user_id = Auth::id();
+        $add->attachment = Cmf::sendimagetodirectory($request->file);
+        $add->file_name = $request->file('file')->getClientOriginalName();
+        $add->extension = Cmf::get_file_extension($filename);
+        $add->type = 'epicbacklog';
+        $add->value_id = $request->value_id;
+        $add->save();
+        Cmf::save_activity(Auth::id() , 'Added a New Attachment','epicbacklog',$request->value_id , 'attach_file');
+        $attachments = attachments::where('value_id' , $request->value_id)->where('type' , 'epicbacklog')->orderby('id' , 'desc')->get();
+        $data = team_backlog::find($request->value_id);
+        $html = view('epicbacklog.tabs.attachments', compact('attachments','data'))->render();
+        return $html;
+    }
+    public function deleteattachment(Request $request)
+    {
+        $attachment = attachments::find($request->id);
+        attachments::where('id',$request->id)->delete();
+        $attachments = attachments::where('value_id' , $attachment->value_id)->where('type' , 'epicbacklog')->orderby('id' , 'desc')->get();
+        Cmf::save_activity(Auth::id() , 'Delete a Attachment','epicbacklog',$attachment->value_id , 'delete');
+        $data = team_backlog::find($request->value_id);
+        $html = view('epicbacklog.tabs.attachments', compact('attachments','data'))->render();
+        return $html;
+    }
+    public function selectteamforepic(Request $request)
+    {
+        $update = team_backlog::find($request->epic_id);
+        $update->team_id = $request->id;
+        $update->save();
+        if($update->type == 'unit')
+        {
+            $teams = DB::table('unit_team')->where('org_id',$update->unit_id)->where('type' , 'BU')->get();
+        }
+        if($update->type == 'org')
+        {
+            $teams = DB::table('org_team')->where('org_id',$update->unit_id)->where('type' , 'orgT')->get();
+        }
+        if($update->type == 'stream')
+        {
+            $teams = DB::table('value_team')->where('org_id',$update->unit_id)->where('type' , 'VS')->get();
+        }
+        $update = $update;
+        $html = view('epics.teamappend', compact('teams','update'))->render();
+        return $html;                 
     }
 }

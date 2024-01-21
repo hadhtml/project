@@ -266,16 +266,17 @@ Route::name('epicbacklog.')->namespace('App\Http\Controllers')->prefix('dashboar
     Route::POST('changeepicdate', 'EpicBacklogController@changeepicdate');
     Route::POST('changeepicstatus', 'EpicBacklogController@changeepicstatus');
 
-
+    Route::POST('selectteamforepic', 'EpicBacklogController@selectteamforepic');
     Route::post('createchilditem', 'EpicBacklogController@createchilditem');
-    Route::POST('savecomment', 'EpicController@savecomment');
-    Route::POST('deletecomment', 'EpicController@deletecomment');
-    Route::POST('updatecomment', 'EpicController@updatecomment');
-    Route::POST('orderbycomment', 'EpicController@orderbycomment');
-    Route::POST('savereply', 'EpicController@savereply');
-    Route::POST('sortchilditem', 'EpicController@sortchilditem');
-    Route::POST('deletechilditem', 'EpicController@deletechilditem');
-    Route::POST('orderbychilditem', 'EpicController@orderbychilditem');
+    Route::POST('savecomment', 'EpicBacklogController@savecomment');
+    Route::POST('savereply', 'EpicBacklogController@savereply');
+    Route::POST('updatecomment', 'EpicBacklogController@updatecomment');
+    Route::POST('deletecomment', 'EpicBacklogController@deletecomment');
+
+    // Route::POST('orderbycomment', 'EpicController@orderbycomment');
+    // Route::POST('sortchilditem', 'EpicController@sortchilditem');
+    // Route::POST('deletechilditem', 'EpicController@deletechilditem');
+    // Route::POST('orderbychilditem', 'EpicController@orderbychilditem');
 });
 
 

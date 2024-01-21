@@ -157,6 +157,12 @@ function getOrder(){
                             </div>
                             <input type="hidden" value="Task" required class="story_type_asign_select" name="story_type">
                         </div>
+                        <div class="col-md-12">
+                            <div class="form-group mb-0">
+                                <label for="epic_story_name">Description</label>
+                                <input type="text" name="description" class="form-control" required>
+                            </div>
+                        </div>
                     </div>
                     <input type="hidden" value="To Do" id="storystatusnew" name="story_status">
                     <div class="row mt-3">
@@ -368,7 +374,7 @@ function getOrder(){
                             </div>
                         </div>
                     </div>
-                    <div class="card comment-card storyaddcard editstorycard" id="editstory{{$s->id}}">
+                    <div class="card comment-card storyaddcard editstorycard editstory{{$s->id}}">
                         <div class="card-body"  >
                             <div class="row">
                                 <div class="col-md-12">
@@ -618,7 +624,7 @@ function updateprogress(id , type) {
     }
 }
  function editstorynew(id) {
-    $('#editstory'+id).slideToggle();
+    $('.editstory'+id).slideToggle();
 }
 function deleteattachmentshow(id) {
     $('#deleteattachmentshow'+id).slideToggle();

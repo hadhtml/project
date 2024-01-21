@@ -23,9 +23,9 @@
                     </li>
                     <li id="attachment" onclick="showtab({{$data->id}} , 'attachment')" class="tabsclass">
                         <span class="material-symbols-outlined"> attachment </span> Attachments</li>
-                    <li id="flags" onclick="showtab({{$data->id}} , 'flags')" class="tabsclass">
+                    <!-- <li id="flags" onclick="showtab({{$data->id}} , 'flags')" class="tabsclass">
                         <span class="material-symbols-outlined">flag</span> Flags
-                    </li>
+                    </li> -->
                     <li id="teams" onclick="showtab({{$data->id}} , 'teams')" class="tabsclass">
                         <span class="material-symbols-outlined"> group </span> Team
                     </li>
@@ -48,8 +48,12 @@
                                 <img onclick="deleteflagshow({{$data->id}})" src="{{ url('public/assets/svg/crossdelete.svg') }}">
                             </div>
                         </div>
+                        <form method="POST" action="{{ url('delete-team-backlog') }}">
+                        @csrf
+                        <input type="hidden" name="delete_id" value="{{$data->id}}">
                         <p>All actions will be removed from the activity feed and you won’t be able to re-open the card. There is no undo.</p>
-                        <button class="btn btn-danger btn-block">Delete</button>
+                        <button type="submit" class="btn btn-danger btn-block">Delete</button>
+                        </form>
                     </div>
                 </ul>
             </div>
