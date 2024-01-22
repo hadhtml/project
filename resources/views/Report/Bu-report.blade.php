@@ -196,7 +196,7 @@ $var_objective = 'Report-'.$type;
                                                                         </div>
                                                                         <div class="d-flex flex-column content-area">
                                                                             <div>
-                                                                                <a href="{{url('Okr-report-3/'.$r->id.'/'.$type)}}"><h4>OKR Epics</h4></a>
+                                                                                <a href="{{url('Okr-report-3/'.$r->id.'/'.$type)}}"><h4>OKR Figures</h4></a>
                                                                             </div>
                                                                             <div>
                                                                                 <p>Tracks completion of planned Epics for a Quarter against Objectives and Key Results.</p>
