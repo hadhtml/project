@@ -48,6 +48,17 @@ class EpicController extends Controller
                 Cmf::save_activity(Auth::id() , $activity,'epics',$request->epic_id, 'edit');
             }
         }
+
+        if($data->epic_start_date != $request->epic_start_date)
+        {
+            $activity = 'has updated Start Date From '.Cmf::date_format_new($data->epic_start_date).' To '.Cmf::date_format_new($request->epic_start_date).' ';
+            Cmf::save_activity(Auth::id() , $activity,'epics',$request->epic_id, 'edit');
+        }
+        if($data->epic_end_date != $request->epic_end_date)
+        {
+            $activity = 'has updated End Date From '.Cmf::date_format_new($data->epic_end_date).' To '.Cmf::date_format_new($request->epic_end_date).' ';
+            Cmf::save_activity(Auth::id() , $activity,'epics',$request->epic_id, 'edit');
+        }
         $data->epic_name = $request->epic_name;
         $data->epic_start_date = $request->epic_start_date;
         $data->epic_end_date = $request->epic_end_date;
@@ -297,7 +308,8 @@ class EpicController extends Controller
         $item->story_type = $request->story_type;
         $item->story_status = $request->story_status;
         $item->StoryID = Str::slug('SSP-'.rand(100,999));
-        // $item->VS_BU_ID = $request->VS_BU_ID;
+        $item->epic_type = 'orignal';
+        $item->description = $request->description;
         $item->R_id = rand(100,999);
         $item->user_id =  Auth::id();
         $item->save();
@@ -553,6 +565,24 @@ class EpicController extends Controller
                 ->where("id", $request->edit_epic_id)
                 ->update([
                     "epic_progress" => 100,
+                    "updated_at" => Carbon::now(),
+                ]);
+        }
+
+        if ($request->edit_epic_status == "To Do") {
+            DB::table("epics")
+                ->where("id", $request->edit_epic_id)
+                ->update([
+                    "epic_progress" => 0,
+                    "updated_at" => Carbon::now(),
+                ]);
+        }
+
+        if ($request->edit_epic_status == "In progress") {
+            DB::table("epics")
+                ->where("id", $request->edit_epic_id)
+                ->update([
+                    "epic_progress" => 0,
                     "updated_at" => Carbon::now(),
                 ]);
         }
@@ -865,11 +895,20 @@ class EpicController extends Controller
         return $html;
     }
     public function changeepicdate(Request $request)
-    {
+    {   
+        $previous = Epic::find($request->epic_id);
+        $from_status = Cmf::date_format_new($previous->epic_start_date).' - '.Cmf::date_format_new($previous->epic_end_date); 
+
         $data = Epic::find($request->epic_id);
         $data->epic_start_date = $request->start;
         $data->epic_end_date = $request->end;
         $data->save();
+
+        $tostatus = Cmf::date_format_new($data->epic_start_date).' - '.Cmf::date_format_new($data->epic_end_date);
+
+        $notification = "Date Changed From ".$from_status .' To '.$tostatus;
+        Cmf::save_activity(Auth::id() , $notification,'epics',$request->epic_id , 'detector_status');
+
     }
     public function sortchilditem(Request $request)
     {
