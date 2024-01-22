@@ -30,7 +30,25 @@ $var_objective = 'Report-'.$type;
                     <thead>
                         <tr>
                             <td>Report Title</td>
+                            @if($type ==  'org')
+                            <td>Organization</td>
+                            @endif
+                            @if($type ==  'unit')
                             <td>Business Unit</td>
+                            @endif
+                            @if($type ==  'stream')
+                            <td>value Stream</td>
+                            @endif
+                            @if($type ==  'BU')
+                            <td>BU-Team</td>
+                            @endif
+                            @if($type ==  'VS')
+                            <td>VS-Team</td>
+                            @endif
+                            @if($type ==  'orgT')
+                            <td>Org-Team</td>
+                            @endif
+                          
                             <td>Start Date</td>
                             <td>End Date</td>
                             <td class="text-center">Quarter Status</td>
@@ -49,26 +67,26 @@ $var_objective = 'Report-'.$type;
                         }
                         @endphp
                         <tr>
-                            <td>
+                            <td >
                                 {{$r->title}}
                             </td>
                             @if($type ==  'org')
-                            <td>{{$organization->organization_name}}</td>
+                            <td data-toggle="modal" data-target=".bd-example-modal-lg{{$r->id}}">{{$organization->organization_name}}</td>
                             @endif
                             @if($type ==  'unit')
-                            <td>{{$organization->business_name}}</td>
+                            <td data-toggle="modal" data-target=".bd-example-modal-lg{{$r->id}}">{{$organization->business_name}}</td>
                             @endif
                             @if($type ==  'stream')
-                            <td>{{$organization->value_name}}</td>
+                            <td data-toggle="modal" data-target=".bd-example-modal-lg{{$r->id}}">{{$organization->value_name}}</td>
                             @endif
                             @if($type ==  'BU')
-                            <td>{{$organization->team_title}}</td>
+                            <td data-toggle="modal" data-target=".bd-example-modal-lg{{$r->id}}">{{$organization->team_title}}</td>
                             @endif
                             @if($type ==  'VS')
-                            <td>{{$organization->team_title}}</td>
+                            <td data-toggle="modal" data-target=".bd-example-modal-lg{{$r->id}}">{{$organization->team_title}}</td>
                             @endif
                             @if($type ==  'orgT')
-                            <td>{{$organization->team_title}}</td>
+                            <td data-toggle="modal" data-target=".bd-example-modal-lg{{$r->id}}">{{$organization->team_title}}</td>
                             @endif
                             <td>{{ \Carbon\Carbon::parse($r->start_data)->format('M d Y')}}</td>
                             <td>{{ \Carbon\Carbon::parse($r->end_date)->format('M d Y')}}</td>

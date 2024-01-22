@@ -568,6 +568,24 @@ class EpicController extends Controller
                     "updated_at" => Carbon::now(),
                 ]);
         }
+
+        if ($request->edit_epic_status == "To Do") {
+            DB::table("epics")
+                ->where("id", $request->edit_epic_id)
+                ->update([
+                    "epic_progress" => 0,
+                    "updated_at" => Carbon::now(),
+                ]);
+        }
+
+        if ($request->edit_epic_status == "In progress") {
+            DB::table("epics")
+                ->where("id", $request->edit_epic_id)
+                ->update([
+                    "epic_progress" => 0,
+                    "updated_at" => Carbon::now(),
+                ]);
+        }
         DB::table("epics_stroy")
             ->where("epic_id", $request->edit_epic_id)
             ->update(["progress" => 100]);
