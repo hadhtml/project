@@ -256,8 +256,11 @@
     </div>
 </div>
 <div class="rightside" >
-    <span id="maximizeimage" onclick="maximizemodal()">
-        <img src="{{url('public/assets/svg/maximize.svg')}}">
+    <span onclick="maximizemodal()" id="open_in_full">
+        <span class="material-symbols-outlined">open_in_full</span>
+    </span>
+    <span onclick="maximizemodal()" class="d-none" id="close_fullscreen">
+        <span class="material-symbols-outlined">close_fullscreen</span>
     </span>
     <img data-dismiss="modal" class="closeimage" aria-label="Close" src="{{url('public/assets/svg/cross.svg')}}">
 </div>
@@ -267,11 +270,6 @@ function showmemberbox() {
 }
 function rasiseflag() {
     $('.raiseflag-box').slideToggle();
-}
-function maximizemodal() {
-    $('#modaldialogepic').toggleClass('modalfullscreen');
-    $('#maximizeimage').html('<span class="material-symbols-outlined"> close_fullscreen </span>');
-    $('#edit-epic-modal-new').css('padding-right' , '0px')
 }
 function selectteamforepic(id , epic_id) {
     $.ajax({
