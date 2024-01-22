@@ -110,10 +110,27 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                                                <div class="mr-2">
                                                    <p>Reports</p>
                                                </div>
-
-                                               {{-- <div class="mr-2">
+                                               
+                                               @if (url()->current() == url('Okr-report/'.$Sid.'/'.$organization->type))
+                                               <div class="mr-2">
                                                 <p>OKR Epics</p>
-                                            </div> --}}
+                                            </div>                                         
+                                            @endif
+
+                                            @if (url()->current() == url('dashboard/organization/Okr-report-all/'.$Sid.'/'.$organization->type))
+                                            <div class="mr-2">
+                                             <p>Epics Completed</p>
+                                         </div>                                         
+                                         @endif
+
+                                         @if (url()->current() == url('Okr-report-3/'.$Sid.'/'.$organization->type))
+                                         <div class="mr-2">
+                                          <p>OKR Figures</p>
+                                      </div>                                         
+                                      @endif
+
+                                        
+                                           
                            </div>
                         </div>
                         <!--end::Info-->

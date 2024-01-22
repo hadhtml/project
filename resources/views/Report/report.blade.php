@@ -6,13 +6,7 @@ $var_objective = 'Report-'.$type;
 @section('content')
 <div class="row">
                        
-                        
-                       
-                       
-                
-                
-                     
-              
+                                    
     @if(count($obj) > 0)
     @foreach($obj as $o)
     <div class="col-md-6">
