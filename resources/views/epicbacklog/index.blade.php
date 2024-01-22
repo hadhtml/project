@@ -408,7 +408,7 @@ $var_objective = 'TBaclog-' . $type;
    <div>
       <p class="text-center">You may create your first Epic by clicking the bellow button</p>
    </div>
-   <button class="btn btn-primary btn-lg btn-theme btn-block ripple ml-25" onchange="addnewbacklogepic()" style="width:50%">
+   <button class="btn btn-primary btn-lg btn-theme btn-block ripple ml-25" onclick="addnewbacklogepic()" style="width:50%">
    Add an Epic
    </button>
 </div>
