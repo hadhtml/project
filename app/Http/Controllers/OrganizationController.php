@@ -458,6 +458,7 @@ class OrganizationController extends Controller
     
       public function AllBUReport($id,$type)
     {
+         $Sid = $id;
           if($type == 'unit')
           {
           $organization = DB::table('business_units')->where('slug',$id)->first();        
@@ -496,7 +497,7 @@ class OrganizationController extends Controller
           }
           
           
-          return view('Report.Bu-report',compact('report','organization','type'));
+          return view('Report.Bu-report',compact('report','organization','type','Sid'));
 
     }
 
@@ -507,6 +508,7 @@ class OrganizationController extends Controller
       $key  = array();
       $sprint = array();
       $report = DB::table('sprint')->where('user_id',Auth::id())->where('id',$id)->first();
+      $Sid =  $report->id;
       if($report)
       {
       $sprint = DB::table('sprint_report')->where('user_id',Auth::id())->where('q_id',$report->id)->first();
@@ -543,7 +545,7 @@ class OrganizationController extends Controller
       }
       }
       
-    return view('Report.report3',compact('sprint','obj','key','report','organization','type','count'));
+    return view('Report.report3',compact('sprint','obj','key','report','organization','type','count','Sid'));
 
     }
     
@@ -553,6 +555,7 @@ class OrganizationController extends Controller
           $key  = array();
           $sprint = array();
           $report = DB::table('sprint')->where('user_id',Auth::id())->where('id',$id)->first();
+          $Sid = $report->id;
           if($report)
           {
           $sprint = DB::table('sprint_report')->where('user_id',Auth::id())->where('q_id',$report->id)->first();
@@ -587,13 +590,14 @@ class OrganizationController extends Controller
           }
           }
           
-        return view('Report.report',compact('sprint','obj','key','report','organization','type'));
+        return view('Report.report',compact('sprint','obj','key','report','organization','type','Sid'));
 
     }
     
     public function SecondReport($id,$sprint,$type)
     {
         $report = DB::table('sprint')->where('id',$sprint)->first();
+        $Sid = $report->id;
         if($type == 'unit')
         {
         $organization = DB::table('business_units')->where('id',$report->value_unit_id)->first();
@@ -624,14 +628,14 @@ class OrganizationController extends Controller
         $key =   json_decode($SprintObj->key_result); 
         $type = $organization->type;
 
-        return view('Report.report2',compact('SprintInit','SprintObj','id','obj','key','sprint','organization','type'));
+        return view('Report.report2',compact('SprintInit','SprintObj','id','obj','key','sprint','organization','type','Sid'));
 
     }
 
     public function AllEpicReport($sprint,$type)
     {
         $report = DB::table('sprint')->where('id',$sprint)->first();
-        
+        $Sid = $sprint;
         if($type == 'unit')
         {
         $organization = DB::table('business_units')->where('id',$report->value_unit_id)->first();
@@ -658,7 +662,7 @@ class OrganizationController extends Controller
         $organization = DB::table('org_team')->where('id',$report->value_unit_id)->first();        
         }
 
-        return view('Report.allreportepic',compact('report','sprint','type','organization'));
+        return view('Report.allreportepic',compact('report','sprint','type','organization','Sid'));
 
     
     }
@@ -666,6 +670,8 @@ class OrganizationController extends Controller
     public function AllInitReport($init,$sprint,$type)
     {
         $report = DB::table('sprint')->where('id',$sprint)->first();
+        $Sid = $sprint;
+
         if($type == 'unit')
         {
         $organization = DB::table('business_units')->where('id',$report->value_unit_id)->first();
@@ -694,7 +700,7 @@ class OrganizationController extends Controller
 
         $InitName = DB::table('sprint_report')->where('initiative_id',$init)->where('q_id',$sprint)->first();        
         $type = $organization->type;
-        return view('Report.init-report',compact('report','sprint','type','organization','init','InitName'));
+        return view('Report.init-report',compact('report','sprint','type','organization','init','InitName','Sid'));
 
     
     }
@@ -905,7 +911,7 @@ public function UpdateProfile(Request $request)
 public function AllsprintEpicReport($sprint,$type)
 {
     $report = DB::table('sprint')->where('id',$sprint)->first();
-    
+    $Sid = $sprint;
     if($type == 'unit')
     {
     $organization = DB::table('business_units')->where('id',$report->value_unit_id)->first();
@@ -932,7 +938,7 @@ public function AllsprintEpicReport($sprint,$type)
     $organization = DB::table('org_team')->where('id',$report->value_unit_id)->first();        
     }
 
-    return view('Report.allepicsprint',compact('report','sprint','type','organization'));
+    return view('Report.allepicsprint',compact('report','sprint','type','organization','Sid'));
 
 
 }
