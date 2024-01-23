@@ -361,6 +361,10 @@ class ObjectiveController extends Controller
             ->where("obj_id", $request->delete_obj_id)
             ->delete();
 
+        DB::table("epics")
+            ->where("obj_id", $request->delete_obj_id)
+            ->delete();
+
         if ($request->type == "unit") {
             $organization = DB::table("business_units")
                 ->where("slug", $request->slug)
@@ -4332,10 +4336,37 @@ if($objcount > 0)
         $monthEndDate = $this->getMonthEndDate($monthName);
      
         $Epic = DB::table('epics')->where('id',$request->droppedElId)->first();
-        $quarterMonth = DB::table("epics")
-      ->where("id", $request->droppedElId)
-      ->update(["month_id" => $request->parentElId,'epic_end_date' => $monthEndDate,'quarter_id' => $CurrentQuarters->quarter_id]);
+        if($Epic->old_date != NULL)
+        {
+        $newDate = $Epic->old_date;
+        }else
+        {
+        $newDate = $Epic->epic_end_date;  
+        }
+        $currentDate = Carbon::now();
+        $currentYear = $currentDate->year;
+        $currentMonth = $currentDate->month;
+        $yearMonthString = $currentDate->format("Y");
+        $yearMonth = $currentDate->format("F");
+        $Quarter = "";
 
+        $Quarter = DB::table("quarter_month")
+            ->where("initiative_id", $Epic->initiative_id)
+            ->where("month", $yearMonth)
+            ->where("year", $yearMonthString)
+            ->first();
+        
+      if($CurrentQuarters->quarter_id ==  $Quarter->quarter_id)    
+      {
+        DB::table("epics")
+      ->where("id", $request->droppedElId)
+      ->update(["month_id" => $request->parentElId,'epic_end_date' => $monthEndDate,'quarter_id' => $CurrentQuarters->quarter_id,'old_date' => NULL]);
+      }else
+      {
+        DB::table("epics")
+      ->where("id", $request->droppedElId)
+      ->update(["month_id" => $request->parentElId,'epic_end_date' => $monthEndDate,'quarter_id' => $CurrentQuarters->quarter_id,'old_date' => $newDate]);
+      }
        $epic = DB::table("epics")
       ->where("id", $request->droppedElId)
       ->first();

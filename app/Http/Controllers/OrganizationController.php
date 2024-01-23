@@ -295,41 +295,72 @@ class OrganizationController extends Controller
 
      $s = DB::table('sprint')->where('user_id',Auth::id())->where('status',NULL)->where('value_unit_id',$request->unit_id)->where('type',$request->type)->first();
   
-    // $data = DB::table('objectives')->whereBetween('created_at', [$s->start_data, $s->end_date])->where('user_id',Auth::id())->where('trash',NULL)->count();
-    // $dataobj = DB::table('objectives')->whereBetween('created_at', [$s->start_data, $s->end_date])->where('user_id',Auth::id())->where('trash',NULL)->where('obj_prog','=',100)->count();
-    // $datakey = DB::table('key_result')->whereBetween('created_at', [$s->start_data, $s->end_date])->where('user_id',Auth::id())->count();
-    // $datakeycomp = DB::table('key_result')->whereBetween('created_at', [$s->start_data, $s->end_date])->where('user_id',Auth::id())->where('key_prog','=',100)->count();
-    // $dataepic = DB::table('epics')->whereBetween('created_at', [$s->start_data, $s->end_date])->where('user_id',Auth::id())->count();
-    // $dataepiccomp = DB::table('epics')->whereBetween('created_at', [$s->start_data, $s->end_date])->where('user_id',Auth::id())->where('trash',NULL)->where('epic_progress','=',100)->count();
-    // $dataepicdelete = DB::table('epics')->whereBetween('trash', [$s->start_data, $s->end_date])->where('user_id',Auth::id())->count();
-    // $dataepicinprog = DB::table('epics')->whereBetween('created_at', [$s->start_data, $s->end_date])->where('user_id',Auth::id())->where('trash',NULL)->where('epic_progress','!=',100)
-    // ->where('epic_status','In progress')->count();
-    // $dataepictodo = DB::table('epics')->whereBetween('created_at', [$s->start_data, $s->end_date])->where('user_id',Auth::id())->where('trash',NULL)->where('epic_progress','!=',100)
-    // ->where('epic_status','To Do')->count();
-
-    //      DB::table('sprint_report')
-    //     ->insert([
-    //       'q_id' => $s->id,
-    //       'obj_comp' =>  $dataobj,
-    //       'obj_total' => $data,
-    //       'key_total' => $datakey,
-    //       'key_comp' => $datakeycomp,
-    //       'epic_total' => $dataepic,
-    //       'epic_comp' => $dataepiccomp,
-    //       'epic_remove' => $dataepicdelete,
-    //       'epic_done' => $dataepiccomp,
-    //       'epic_inprog' => $dataepicinprog,
-    //       'epic_todo' => $dataepictodo,
-    //       'user_id' => Auth::id(),
-
         
-    //     ]);
-        
-             $master = array();
-             $temp = array();
-             $objid = array();
-             $objective = DB::table('objectives')->whereBetween('created_at', [$s->start_data, $s->end_date])->where('user_id',Auth::id())->where('unit_id',$s->value_unit_id)
-             ->where('type',$request->type)->where('trash',NULL)->get();
+     $masterepic = array();
+     $tempepic = array();  
+     $epic = DB::table('epics')->whereBetween('epic_end_date', [$s->start_data, $s->end_date])
+     ->where('user_id',Auth::id())
+     ->where('buisness_unit_id',$s->value_unit_id)
+     ->where('epic_type',$request->type)
+     ->where('trash',NULL)->get();
+
+     $Removedepic = DB::table('epics')->whereBetween('old_date', [$s->start_data, $s->end_date])
+     ->where('user_id',Auth::id())
+     ->where('buisness_unit_id',$s->value_unit_id)
+     ->where('epic_type',$request->type)
+     ->where('trash',NULL)->get();
+
+     foreach($Removedepic as $e)
+     {
+
+      
+       DB::table('sprint_report')
+      ->insert([
+        'epic_id' => $e->id,
+        'epic_init_id' => $e->initiative_id,
+        'epic_name' => $e->epic_name,
+        'epic_prog' => $e->epic_progress,
+        'epic_date' => Carbon::parse($e->epic_end_date)->format('M d,Y'),
+        'epic_trash' => $e->created_at,
+        'q_id' =>  $s->id,
+        'epic_done' => $e->updated_at,
+        'epic_status' => $e->epic_status,
+        'epic_remove' => 'remove',
+ 
+      ]);
+     }
+
+    
+    foreach($epic as $ep)
+     {
+      $masterepic[] = $ep->obj_id;  
+     }
+
+     foreach($epic as $e)
+     {
+
+      
+       DB::table('sprint_report')
+      ->insert([
+        'epic_id' => $e->id,
+        'epic_init_id' => $e->initiative_id,
+        'epic_name' => $e->epic_name,
+        'epic_prog' => $e->epic_progress,
+        'epic_date' => Carbon::parse($e->epic_end_date)->format('M d,Y'),
+        'epic_trash' => $e->created_at,
+        'q_id' =>  $s->id,
+        'epic_done' => $e->updated_at,
+        'epic_status' => $e->epic_status,
+        'epic_remove' => 'Added',
+ 
+      ]);
+     }
+
+      $master = array();
+      $temp = array();
+      $objid = array();
+      $objective = DB::table('objectives')->whereBetween('created_at', [$s->start_data, $s->end_date])->where('user_id',Auth::id())->where('unit_id',$s->value_unit_id)
+       ->where('type',$request->type)->where('trash',NULL)->get();
      
              foreach($objective as $obj)
              {
@@ -361,16 +392,13 @@ class OrganizationController extends Controller
              {
              $keyid[] = $kk->id;  
              }
-            //   $epicCount = DB::table('epics')->whereBetween('created_at', [$s->start_data, $s->end_date])->whereIn('key_id',$keyid)->count();
-            //   $epicComp =  DB::table('epics')->whereBetween('created_at', [$s->start_data, $s->end_date])->whereIn('key_id',$keyid)->where('epic_progress','=',100)->count();
-            //   $epicincomp = DB::table('epics')->whereBetween('created_at', [$s->start_data, $s->end_date])->whereIn('key_id',$keyid)->where('epic_progress','!=',100)->count();
 
              foreach($key as $k)
              {
                  
-            $epicCount = DB::table('epics')->where('key_id',$k->id)->where('trash',NULL)->count();
-              $epicComp =  DB::table('epics')->where('key_id',$k->id)->where('trash',NULL)->where('epic_progress','=',100)->count();
-              $epicincomp = DB::table('epics')->where('key_id',$k->id)->where('trash',NULL)->where('epic_progress','!=',100)->count();
+            $epicCount = DB::table('epics')->where('key_id',$k->id)->where('trash',NULL)->whereBetween('epic_end_date', [$s->start_data, $s->end_date])->count();
+              $epicComp =  DB::table('epics')->where('key_id',$k->id)->where('trash',NULL)->whereBetween('epic_end_date', [$s->start_data, $s->end_date])->where('epic_progress','=',100)->count();
+              $epicincomp = DB::table('epics')->where('key_id',$k->id)->where('trash',NULL)->whereBetween('epic_end_date', [$s->start_data, $s->end_date])->where('epic_progress','!=',100)->count();
               
               $tempkey['id'] = $k->id;
               $tempkey['obj_id'] = $k->obj_id;
@@ -401,13 +429,6 @@ class OrganizationController extends Controller
              }
              foreach($init as $i)
              {
-            //   $tempinit['id'] = $i->id;
-            //   $tempinit['key_id'] = $i->key_id;
-            //   $tempinit['init_name'] = $i->initiative_name;
-            //   $tempinit['init_date'] = Carbon::parse($i->initiative_start_date)->format('M d,Y').' - '.Carbon::parse($i->initiative_end_date)->format('M d,Y');
-            //   $tempinit['init_status'] = $i->initiative_status;
-            //   $tempinit['init_prog'] = $i->initiative_prog;
-            //   array_push($masterinit,$tempinit); 
             
                DB::table('sprint_report')
               ->insert([
@@ -421,33 +442,27 @@ class OrganizationController extends Controller
              
           
                
-             $masterepic = array();
-             $tempepic = array();  
-             $epic = DB::table('epics')->whereIn('initiative_id',$tempinit)->where('user_id',Auth::id())->get();
-             foreach($epic as $e)
-             {
-            //   $tempepic['id'] = $e->id;
-            //   $tempepic['initiative_id'] = $e->initiative_id;
-            //   $tempepic['epic_name'] = $e->epic_name;
-            //   $tempepic['epic_date'] = Carbon::parse($e->epic_start_date)->format('M d,Y').' - '.Carbon::parse($e->epic_start_date)->format('M d,Y');
-            //   $tempepic['epic_status'] = $e->epic_status;
-            //   $tempepic['epic_prog'] = $e->epic_name;
-            //   array_push($masterepic,$tempepic); 
+            //  $masterepic = array();
+            //  $tempepic = array();  
+            //  $epic = DB::table('epics')->whereIn('initiative_id',$tempinit)->where('user_id',Auth::id())->get();
+            //  foreach($epic as $e)
+            //  {
+       
               
-               DB::table('sprint_report')
-              ->insert([
-                'epic_id' => $e->id,
-                'epic_init_id' => $e->initiative_id,
-                'epic_name' => $e->epic_name,
-                'epic_prog' => $e->epic_progress,
-                'epic_date' => Carbon::parse($e->epic_end_date)->format('M d,Y'),
-                'epic_trash' => $e->trash,
-                'q_id' =>  $s->id,
-                'epic_done' => $e->updated_at,
-                'epic_status' => $e->epic_status,
+            //    DB::table('sprint_report')
+            //   ->insert([
+            //     'epic_id' => $e->id,
+            //     'epic_init_id' => $e->initiative_id,
+            //     'epic_name' => $e->epic_name,
+            //     'epic_prog' => $e->epic_progress,
+            //     'epic_date' => Carbon::parse($e->epic_end_date)->format('M d,Y'),
+            //     'epic_trash' => $e->trash,
+            //     'q_id' =>  $s->id,
+            //     'epic_done' => $e->updated_at,
+            //     'epic_status' => $e->epic_status,
          
-              ]);
-             }
+            //   ]);
+            //  }
              
           
         
@@ -626,6 +641,7 @@ class OrganizationController extends Controller
         $SprintObj = DB::table('sprint_report')->where('q_id',$sprint)->first();
         $obj =   json_decode($SprintObj->objective);
         $key =   json_decode($SprintObj->key_result); 
+ 
         $type = $organization->type;
 
         return view('Report.report2',compact('SprintInit','SprintObj','id','obj','key','sprint','organization','type','Sid'));
@@ -704,6 +720,78 @@ class OrganizationController extends Controller
 
     
     }
+
+    public function NCEpicReport($sprint,$type)
+    {
+        $report = DB::table('sprint')->where('id',$sprint)->first();
+        $Sid = $sprint;
+        if($type == 'unit')
+        {
+        $organization = DB::table('business_units')->where('id',$report->value_unit_id)->first();
+        }
+        if($type == 'stream')
+        {
+        $organization = DB::table('value_stream')->where('id',$report->value_unit_id)->first();
+        }
+        if($type == 'BU')
+        {
+        $organization = DB::table('unit_team')->where('id',$report->value_unit_id)->first();        
+        }
+        if($type == 'VS')
+        {
+        $organization = DB::table('value_team')->where('id',$report->value_unit_id)->first();        
+        }
+        if($type == 'org')
+        {
+        $organization = DB::table('organization')->where('id',$report->value_unit_id)->first();        
+        }
+
+        if($type == 'orgT')
+        {
+        $organization = DB::table('org_team')->where('id',$report->value_unit_id)->first();        
+        }
+
+        return view('Report.NCreportepic',compact('report','sprint','type','organization','Sid'));
+
+    
+    }
+
+    
+    public function RemoveEpicReport($sprint,$type)
+    {
+        $report = DB::table('sprint')->where('id',$sprint)->first();
+        $Sid = $sprint;
+        if($type == 'unit')
+        {
+        $organization = DB::table('business_units')->where('id',$report->value_unit_id)->first();
+        }
+        if($type == 'stream')
+        {
+        $organization = DB::table('value_stream')->where('id',$report->value_unit_id)->first();
+        }
+        if($type == 'BU')
+        {
+        $organization = DB::table('unit_team')->where('id',$report->value_unit_id)->first();        
+        }
+        if($type == 'VS')
+        {
+        $organization = DB::table('value_team')->where('id',$report->value_unit_id)->first();        
+        }
+        if($type == 'org')
+        {
+        $organization = DB::table('organization')->where('id',$report->value_unit_id)->first();        
+        }
+
+        if($type == 'orgT')
+        {
+        $organization = DB::table('org_team')->where('id',$report->value_unit_id)->first();        
+        }
+
+        return view('Report.RemoveEpic',compact('report','sprint','type','organization','Sid'));
+
+    
+    }
+    
     
     
        public function UpdateSprintQuarter(Request $request)
