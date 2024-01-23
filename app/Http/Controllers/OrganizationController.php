@@ -359,7 +359,7 @@ class OrganizationController extends Controller
       $master = array();
       $temp = array();
       $objid = array();
-      $objective = DB::table('objectives')->whereBetween('created_at', [$s->start_data, $s->end_date])->where('user_id',Auth::id())->where('unit_id',$s->value_unit_id)
+      $objective = DB::table('objectives')->whereIn('id',$masterepic)->where('user_id',Auth::id())->where('unit_id',$s->value_unit_id)
        ->where('type',$request->type)->where('trash',NULL)->get();
      
              foreach($objective as $obj)
