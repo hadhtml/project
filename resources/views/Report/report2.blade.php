@@ -9,6 +9,7 @@ $var_objective = 'Report-'.$type;
         <div class="d-flex flex-row justify-content-between">
             <div class="d-flex flex-column">
                 <div>
+                    @if($obj)
                     @foreach($key as $k)
                     @foreach($obj as $o)
                     @if($k->obj_id == $o->id && $k->id == $id)
@@ -16,6 +17,7 @@ $var_objective = 'Report-'.$type;
                     @endif
                     @endforeach
                     @endforeach
+                    @endif
                 </div>
                 <div class="d-flex flex-row">
                     <div>
@@ -39,14 +41,15 @@ $var_objective = 'Report-'.$type;
                             </svg>
                           </button>
                           <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-
+                            @if($obj)
                             @foreach($obj as $o)
                             @foreach($key as $k)
                             @if($k->obj_id == $o->id)
                             <a class="dropdown-item" href="{{url('dashboard/organization/report-2/'.$k->id.'/'.$sprint.'/'.$type)}}" type="button">{{$k->key_name}}</a>
                             @endif
                             @endforeach
-                            @endforeach  
+                            @endforeach
+                            @endif  
                     </div>
                         </div>
                     </div>
@@ -108,11 +111,16 @@ $var_objective = 'Report-'.$type;
                                 @foreach($SprintInit as $init)
                                 @php
                                 
-                                $SprintEpic = DB::table('sprint_report')->where('epic_init_id',$init->initiative_id)->where('epic_prog','=',100)->where('epic_trash','=',NULL)->where('q_id',$sprint)->get();
+                                $SprintEpic = DB::table('sprint_report')->where('epic_init_id',$init->initiative_id)->where('epic_prog','=',100)->where('epic_remove','=','Added')->where('q_id',$sprint)->get();
+                                $Sprints = DB::table('sprint')->where('id',$sprint)->first();
+
                                 @endphp
                                 @foreach($SprintEpic as $epic)
                                 @if($init->initiative_key_id == $id)
+                                @php
+                                $diff = Carbon\Carbon::parse($Sprints->start_data)->diffInDays($epic->epic_trash);
 
+                                @endphp
                                 
                                     <tr>
                                         <td>
@@ -127,10 +135,14 @@ $var_objective = 'Report-'.$type;
                                                     </clipPath>
                                                 </defs>
                                             </svg>
-                                            <span class="ml-2">SSP-{{$k->id}}</span>
+                                            <span class="ml-2">SSP-{{$epic->epic_id}}</span>
                                         </td>
                                         <td class="cell-20-percent">{{$epic->epic_name}}</td>
+                                        @if($diff > 0)
                                         <td>Added</td>
+                                        @else
+                                        <td></td>
+                                        @endif
                                         <td>{{$epic->epic_date}}</td>
                                         <td>{{\Carbon\Carbon::parse($epic->epic_done)->format('M d,Y')}}</td>
                                         <td>Done</td>
@@ -196,11 +208,14 @@ $var_objective = 'Report-'.$type;
                                    
                                 @foreach($SprintInit as $init)
                                 @php
-                                $SprintEpic = DB::table('sprint_report')->where('epic_init_id',$init->initiative_id)->where('epic_prog','!=',100)->where('epic_trash','=',NULL)->where('q_id',$sprint)->get();
+                                $SprintEpic = DB::table('sprint_report')->where('epic_init_id',$init->initiative_id)->where('epic_prog','!=',100)->where('epic_remove','=','Added')->where('q_id',$sprint)->get();
                                 @endphp
                                 @foreach($SprintEpic as $epic)
                                 @if($init->initiative_key_id == $id)
+                                @php
+                                $diff = Carbon\Carbon::parse($Sprints->start_data)->diffInDays($epic->epic_trash);
 
+                                @endphp
                                 
                                     <tr>
                                         <td>
@@ -215,10 +230,14 @@ $var_objective = 'Report-'.$type;
                                                     </clipPath>
                                                 </defs>
                                             </svg>
-                                            <span class="ml-2">SSP-{{$k->id}}</span>
+                                            <span class="ml-2">SSP-{{$epic->epic_id}}</span>
                                         </td>
                                         <td class="cell-20-percent">{{$epic->epic_name}}</td>
+                                        @if($diff > 0)
                                         <td>Added</td>
+                                        @else
+                                        <td></td>
+                                        @endif
                                         <td>{{$epic->epic_date}}</td>
                                        
                                         <td>{{$epic->epic_status}}</td>
@@ -284,7 +303,7 @@ $var_objective = 'Report-'.$type;
                                 <tbody>
                                    @foreach($SprintInit as $init)
                                 @php
-                                $SprintEpic = DB::table('sprint_report')->where('epic_init_id',$init->initiative_id)->where('epic_trash','!=',NULL)->where('q_id',$sprint)->get();
+                                $SprintEpic = DB::table('sprint_report')->where('epic_init_id',$init->initiative_id)->where('epic_remove','=','remove')->where('q_id',$sprint)->get();
                                 @endphp
                                 @foreach($SprintEpic as $epic)
                                 @if($init->initiative_key_id == $id)
@@ -303,7 +322,7 @@ $var_objective = 'Report-'.$type;
                                                     </clipPath>
                                                 </defs>
                                             </svg>
-                                            <span class="ml-2">SSP-{{$k->id}}</span>
+                                            <span class="ml-2">SSP-{{$epic->epic_id}}</span>
                                         </td>
                                         <td class="cell-20-percent">{{$epic->epic_name}}</td>
                                         <td>Added</td>

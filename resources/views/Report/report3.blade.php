@@ -40,11 +40,15 @@ $var_objective = 'Report-'.$type;
                                                 <table class="table table-borde table-sm">
                                                     <thead>
                                                         <tr>
+                                                   
                                                             <td class="key-result-cell">Key Results</td>
-                                                            <td class="text-center">At the start of the Quarter</td>
-                                                            <td>Planned</td>
+                                                            <td  class="text-center">Started</td>
+                                                            <td>Target</td>
                                                             <td>Actual</td>
-                                                            <td>Percentage</td>
+                                                            <td>Achieved</td>
+                                                            <td>Target</td>
+                        
+                                                            <td>Progress</td>
                                                         </tr>
                                                     </thead>
 
@@ -70,7 +74,7 @@ $var_objective = 'Report-'.$type;
                                                        $id++;
                                                        @endphp
                                                         <tr>
-                                                            <td class="key-result-cell">
+                                                            <td class="key-result-cell" >
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                                                   <g clip-path="url(#clip0_2266_571)">
                                                                     <path d="M24 12C24 5.37258 18.6274 0 12 0C5.37258 0 0 5.37258 0 12C0 18.6274 5.37258 24 12 24C18.6274 24 24 18.6274 24 12Z" fill="#3699FF"/>
@@ -84,10 +88,26 @@ $var_objective = 'Report-'.$type;
                                                                 </svg>
                                                                 <span class="ml-2"><a href="{{url('dashboard/organization/report-2/'.$k->id.'/'.$report->id.'/'.$type)}}"> {{ $id }}.{{$k->key_name}}</span></a>
                                                             </td>
-                                                            <td class="text-center">@if($KEYChart){{$KEYChart->quarter_value}}@endif</td>
-                                                            <td class="center">@if($keyR){{$keyR->target_number}}@endif</td>
+                                                            <td class="text-center">@if($keyR){{$keyR->init_value}}@endif</td>
+                                                            <td class="center"> @if($KEYChart){{$KEYChart->quarter_value}}@endif</td>
                                                             <td class="center">@if($keyvalue){{$keyvalue->value}}@endif</td>
-                                                            <td class="center text-success">100%</td>
+                                                            @php
+                                                            $result = 0;
+                                                            $progress = 0;
+                                                            if($KEYChart && $keyvalue)
+                                                            {
+                                                            $result = ($keyvalue->value / $KEYChart->quarter_value * 100);
+                                                            $progress = ($keyvalue->value / $keyR->target_number * 100);
+                                                            }
+
+                                                          
+                                                            
+                                                        
+                                                            @endphp
+                                                            <td class="center text-success">{{ round($result,2) }}%</td>
+                                                            <td class="center">@if($keyR){{$keyR->target_number}}@endif</td>
+                                                            <td class="center">{{ round($progress,2) }}%</td>
+
                                                         </tr>
                                                           @endif
                                                           @endforeach

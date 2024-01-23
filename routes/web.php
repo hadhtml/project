@@ -42,6 +42,8 @@ Route::get('Okr-report-3/{id}/{type}', [App\Http\Controllers\OrganizationControl
 Route::get('dashboard/organization/Okr-report-all/{sprint}/{type}', [App\Http\Controllers\OrganizationController::class,'AllEpicReport']);
 Route::get('dashboard/organization/report-init/{init}/{sprint}/{type}', [App\Http\Controllers\OrganizationController::class,'AllInitReport']);
 Route::get('dashboard/organization/Okr-report-allepic/{sprint}/{type}', [App\Http\Controllers\OrganizationController::class,'AllsprintEpicReport']);
+Route::get('dashboard/organization/Okr-report-NC/{sprint}/{type}', [App\Http\Controllers\OrganizationController::class,'NCEpicReport']);
+Route::get('dashboard/organization/Okr-report-remove/{sprint}/{type}', [App\Http\Controllers\OrganizationController::class,'RemoveEpicReport']);
 
 Route::post('update-sprint', [App\Http\Controllers\OrganizationController::class,'UpdateSprintQuarter']);
 Route::post('delete-report', [App\Http\Controllers\OrganizationController::class,'DeleteSprintQuarter']);
@@ -202,8 +204,6 @@ Route::get('get-jira-project', [App\Http\Controllers\JiraController::class,'Jira
 
 Route::get('get-month', [App\Http\Controllers\MemberController::class,'GetMonth']);
 Route::get('Updatejira', [App\Http\Controllers\JiraController::class,'UpdateBujira']);
-//BackLogTeam
-
 Route::post('assign-teambacklog-epic', [App\Http\Controllers\TeamController::class,'AssignTeamBacklogEpic']);
 Route::post('update-teambacklog-epic', [App\Http\Controllers\TeamController::class,'UpdateTeamBacklogEpic']);
 Route::post('delete-team-backlog', [App\Http\Controllers\TeamController::class,'DeleteTeamBacklogEpic']);
@@ -276,6 +276,7 @@ Route::name('epicbacklog.')->namespace('App\Http\Controllers')->prefix('dashboar
     Route::POST('updateflagstatus', 'EpicBacklogController@updateflagstatus');
     Route::POST('flagupdate', 'EpicBacklogController@flagupdate');       
     Route::POST('showdataintable', 'EpicBacklogController@showdataintable');
+    // Route::POST('orderbycomment', 'EpicController@orderbycomment');
     // Route::POST('sortchilditem', 'EpicController@sortchilditem');
     // Route::POST('deletechilditem', 'EpicController@deletechilditem');
     // Route::POST('orderbychilditem', 'EpicController@orderbychilditem');
