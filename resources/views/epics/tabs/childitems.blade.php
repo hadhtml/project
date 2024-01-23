@@ -289,7 +289,7 @@ function getOrder(){
                                 <span class="material-symbols-outlined">task</span> <span style="position:absolute;margin-left: 5px;">{{ $s->StoryID }}</span> 
                                 @endif
                                 @if($s->story_type == 'Story')
-                                <span class="material-symbols-outlined">cycle</span> <span style="position:absolute;margin-left: 5px;">{{ $s->StoryID }}</span> 
+                                <span class="material-symbols-outlined">auto_stories</span> <span style="position:absolute;margin-left: 5px;">{{ $s->StoryID }}</span> 
                                 @endif
                             </div>
                         </div>
@@ -383,6 +383,12 @@ function getOrder(){
                                         <option @if($s->story_type == 'Bug') selected @endif value="Bug">Bug</option>
                                          <option @if($s->story_type == 'Story') selected @endif value="Story">Story</option>
                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group mb-0">
+                                        <label for="epic_story_name">Description</label>
+                                        <input value="{{ $s->description }}" type="text" class="form-control edit_story_description{{ $s->id }}" required>
                                     </div>
                                 </div>
                             </div>
@@ -526,6 +532,7 @@ function updatestory(s_id) {
     var title = $('#edit_story_title' + s_id).val();
     var story_status = $('.edit_story_status' + s_id).val();
     var story_type = $('.edit_story_type' + s_id).val();
+    var story_description = $('.edit_story_description'+s_id).val();
     var story_assign = $('#edit_story_assign' + s_id).val();
     var key = $('#edit_epic_key').val();
     var obj = $('#edit_epic_obj').val();
@@ -541,6 +548,7 @@ function updatestory(s_id) {
                 title: title,
                 story_status: story_status,
                 story_type: story_type,
+                story_description: story_description,
                 story_assign: story_assign,
                 key: key,
                 obj: obj
@@ -573,10 +581,15 @@ function deletechilditem(id) {
         }
     });
 }
-function changeitemstatus(status , id) {
-    var title = $('#edit_story_title' + id).val();
-    var story_status = $('.edit_story_status' + id).val();
-    var story_assign = $('#edit_story_assign' + id).val();
+function changeitemstatus(status , s_id) {
+    var title = $('#edit_story_title' + s_id).val();
+    var story_status = $('.edit_story_status' + s_id).val();
+    var story_type = $('.edit_story_type' + s_id).val();
+    var story_description = $('.edit_story_description'+s_id).val();
+    var story_assign = $('#edit_story_assign' + s_id).val();
+    var key = $('#edit_epic_key').val();
+    var obj = $('#edit_epic_obj').val();
+
     $.ajax({
         type: "POST",
         url: "{{ url('update-story') }}",
@@ -584,11 +597,14 @@ function changeitemstatus(status , id) {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         data: {
-            s_id: id,
+            s_id: s_id,
             title: title,
             story_status: status,
-            story_assign: story_assign
-
+            story_type: story_type,
+            story_description: story_description,
+            story_assign: story_assign,
+            key: key,
+            obj: obj
         },
         success: function(res) {
             showtabwithoutloader('{{$epic->id}}' , 'childitems');

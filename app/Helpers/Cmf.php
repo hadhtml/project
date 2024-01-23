@@ -44,6 +44,10 @@ class Cmf
     {
         return date('d M Y, h:s a ', strtotime($data));
     }
+    public static function date_format_time($data)
+    {
+        return date('h:s a ', strtotime($data));
+    }
     public static function date_format_new($data)
     {
         return date('d M Y', strtotime($data));

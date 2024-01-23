@@ -12,24 +12,24 @@
                     <li id="general" onclick="showtab({{$data->id}} , 'general')" class="tabsclass active">
                         <span class="material-symbols-outlined"> edit_square </span> General
                     </li>
-                    <li id="childitems" onclick="showtab({{$data->id}} , 'childitems')" class="tabsclass">
+                    <li id="childitems" @if($data->epic_title)  onclick="showtab({{$data->id}} , 'childitems')" @else data-toggle="tooltip" title="" data-original-title="Please Fill General Details" @endif class="tabsclass">
                         <span class="material-symbols-outlined">toc</span> Child Items
                     </li>
-                    <li id="comments" onclick="showtab({{$data->id}} , 'comments')" class="tabsclass">
+                    <li id="comments" @if($data->epic_title)  onclick="showtab({{$data->id}} , 'comments')" @else data-toggle="tooltip" title="" data-original-title="Please Fill General Details" @endif class="tabsclass">
                         <span class="material-symbols-outlined">comment</span> Comments
                     </li>
-                    <li id="activites" onclick="showtab({{$data->id}} , 'activites')" class="tabsclass">
+                    <li id="activites"@if($data->epic_title)  onclick="showtab({{$data->id}} , 'activites')" @else data-toggle="tooltip" title="" data-original-title="Please Fill General Details" @endif class="tabsclass">
                        <span class="material-symbols-outlined">browse_activity</span> Activities
                     </li>
-                    <li id="attachment" onclick="showtab({{$data->id}} , 'attachment')" class="tabsclass">
+                    <li id="attachment" @if($data->epic_title)  onclick="showtab({{$data->id}} , 'attachment')" @else data-toggle="tooltip" title="" data-original-title="Please Fill General Details" @endif class="tabsclass">
                         <span class="material-symbols-outlined"> attachment </span> Attachments</li>
-                    <li id="flags" onclick="showtab({{$data->id}} , 'flags')" class="tabsclass">
+                    <li id="flags" @if($data->epic_title)  onclick="showtab({{$data->id}} , 'flags')" @else data-toggle="tooltip" title="" data-original-title="Please Fill General Details" @endif class="tabsclass">
                         <span class="material-symbols-outlined">flag</span> Flags
                     </li>
-                    <li id="teams" onclick="showtab({{$data->id}} , 'teams')" class="tabsclass">
-                        <span class="material-symbols-outlined"> group </span> Team
+                    <li id="teams" @if($data->epic_title)  onclick="showtab({{$data->id}} , 'teams')" @else data-toggle="tooltip" title="" data-original-title="Please Fill General Details" @endif class="tabsclass">
+                        <span class="material-symbols-outlined"> group </span> Teams
                     </li>
-                    <li id="asign" onclick="showtab({{$data->id}} , 'asign')" class="tabsclass">
+                    <li id="asign" @if($data->epic_title)  onclick="showtab({{$data->id}} , 'asign')" @else data-toggle="tooltip" title="" data-original-title="Please Fill General Details" @endif class="tabsclass">
                         <span class="material-symbols-outlined">person_check</span> Asign
                     </li>
                 </ul>
@@ -115,6 +115,9 @@
     </div>
 </div>
 <script type="text/javascript">
+     $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
     function deleteflagshow(id) {
         $('#flagdelete'+id).slideToggle();
     }
@@ -191,6 +194,7 @@
             success: function(res){
                 showheaderbacklog('{{ $data->id }}')
                 $('#updatebutton').html('Save Changes');
+                showdataintable()
             }
         });
     }));

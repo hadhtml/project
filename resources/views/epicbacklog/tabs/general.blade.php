@@ -105,6 +105,7 @@
             success: function(res){
                 showheaderbacklog('{{ $data->id }}')
                 $('.updatebuttonepicbackloggeneral').html('Save Changes');
+                showdataintable();
             }
         });
     }));

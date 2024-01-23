@@ -32,9 +32,15 @@ class EpicController extends Controller
         $data = Epic::find($request->epic_id);
         if($data->epic_name != $request->epic_name)
         {
-            $rand = rand(123456789 , 987654321);
-            $activity = 'has updated Title Field <a href="javascript:void(0)" onclick="showdetailsofactivity('.$rand.')">See Details</a> <div class="activitydetalbox deletecomment" id="activitydetalbox'.$rand.'"><div class="row"> <div class="col-md-10"> <h4>Title Update</h4> </div> <div class="col-md-2"> <img onclick="showdetailsofactivity('.$rand.')" src="'.url("public/assets/svg/crossdelete.svg").'"> </div> </div><p style="margin-bottom:0px;">'.$data->epic_name.'</p><div class="text-center mt-2 mb-2"><span class="material-symbols-outlined"> arrow_downward </span></div><p>'.$request->epic_name.'</p></div>';
-            Cmf::save_activity(Auth::id() , $activity,'epics',$request->epic_id, 'edit');
+            if($data->epic_name)
+            {
+                $rand = rand(123456789 , 987654321);
+                $activity = 'has updated Title Field <a href="javascript:void(0)" onclick="showdetailsofactivity('.$rand.')">See Details</a> <div class="activitydetalbox deletecomment" id="activitydetalbox'.$rand.'"><div class="row"> <div class="col-md-10"> <h4>Title Update</h4> </div> <div class="col-md-2"> <img onclick="showdetailsofactivity('.$rand.')" src="'.url("public/assets/svg/crossdelete.svg").'"> </div> </div><p style="margin-bottom:0px;">'.$data->epic_name.'</p><div class="text-center mt-2 mb-2"><span class="material-symbols-outlined"> arrow_downward </span></div><p>'.$request->epic_name.'</p></div>';
+                Cmf::save_activity(Auth::id() , $activity,'epics',$request->epic_id, 'edit');
+            }else{
+                $activity = 'Added a Epic Tittle';
+                Cmf::save_activity(Auth::id() , $activity,'epics',$request->epic_id, 'edit');
+            }
         }
         if($data->epic_detail != $request->epic_detail)
         {
@@ -80,11 +86,11 @@ class EpicController extends Controller
         {
             $update = Epic::find($request->epic_id);
             $update->trash = $data->created_at;
-            $update->save(); 
+            $update->save();
         }else{
             $update = Epic::find($request->epic_id);
             $update->trash = Null;
-            $update->save(); 
+            $update->save();
         }
         $currentDate = Carbon::now();
         $currentYear = $currentDate->year;
@@ -220,7 +226,7 @@ class EpicController extends Controller
         if($request->tab == 'childitems')
         {
             $epic = Epic::find($request->id);
-            $epicstory = DB::table('epics_stroy')->where('epic_id',$epic->id)->orderby('sort_order' , 'asc')->get();
+            $epicstory = DB::table('epics_stroy')->where('epic_type' , 'orignal')->where('epic_id',$epic->id)->orderby('sort_order' , 'asc')->get();
             $html = view('epics.tabs.childitems', compact('epic','epicstory'))->render();
             return $html;
         }
@@ -320,7 +326,7 @@ class EpicController extends Controller
             $item->save();
         }
         $epic = Epic::find($request->epic_id);
-        $epicstory = DB::table('epics_stroy')->where('epic_id',$epic->id)->orderby('id' , 'desc')->get();
+        $epicstory = DB::table('epics_stroy')->where('epic_id',$epic->id)->where('epic_type' , 'orignal')->orderby('id' , 'desc')->get();
         $html = view('epics.tabs.childitems', compact('epic','epicstory'))->render();
         return $html;
     }
@@ -380,7 +386,7 @@ class EpicController extends Controller
     {
         foreach ($request->checkbox as $r) {
             $total = 0;
-            $epicid = DB::table("epics_stroy")->where("id", $r)->first();
+            $epicid = DB::table("epics_stroy")->where('epic_type' , 'orignal')->where("id", $r)->first();
             DB::table("epics_stroy")->where("id", $r)->delete();
             $epicstory = DB::table("epics_stroy")->where("epic_id", $epicid->epic_id)->get();
             $epicprogress = DB::table("epics_stroy")->where("epic_id", $epicid->epic_id)->sum("progress");
@@ -884,7 +890,7 @@ class EpicController extends Controller
     {
         $orderby = $request->order;
         $epic = Epic::find($request->epic_id);
-        $epicstory = DB::table('epics_stroy')->where('epic_id',$epic->epic_id)->orderByRaw(DB::raw("FIELD(story_status, 'To Do', 'In progress', 'Done')"))->get();
+        $epicstory = DB::table('epics_stroy')->where('epic_type' , 'orignal')->where('epic_id',$epic->epic_id)->orderByRaw(DB::raw("FIELD(story_status, 'To Do', 'In progress', 'Done')"))->get();
         $html = view('epics.tabs.childitems', compact('orderby','epic','epicstory'))->render();
         return $html;   
     }
@@ -912,7 +918,7 @@ class EpicController extends Controller
     }
     public function sortchilditem(Request $request)
     {
-        $flagcount = epics_stroy::where('epic_id' , $request->epic_id)->count();
+        $flagcount = epics_stroy::where('epic_id' , $request->epic_id)->where('epic_type' , 'orignal')->count();
         $i = 0;
         foreach ($request->order as $key=>$r) {
             $test = $key+1;
@@ -937,11 +943,11 @@ class EpicController extends Controller
     public function deletechilditem(Request $request)
     {
         $total = 0;
-        $epicid = DB::table("epics_stroy")->where("id", $request->id)->first();
-        DB::table("epics_stroy")->where("id", $request->id)->delete();
+        $epicid = DB::table("epics_stroy")->where('epic_type' , 'orignal')->where("id", $request->id)->first();
+        DB::table("epics_stroy")->where('epic_type' , 'orignal')->where("id", $request->id)->delete();
         $epicstory = DB::table("epics_stroy")->where("epic_id", $epicid->epic_id)->get();
-        $epicprogress = DB::table("epics_stroy")->where("epic_id", $epicid->epic_id)->sum("progress");
-        $count = DB::table("epics_stroy")->where("epic_id", $epicid->epic_id)->count();
+        $epicprogress = DB::table("epics_stroy")->where('epic_type' , 'orignal')->where("epic_id", $epicid->epic_id)->sum("progress");
+        $count = DB::table("epics_stroy")->where('epic_type' , 'orignal')->where("epic_id", $epicid->epic_id)->count();
         if ($count > 0) {
             $total = round($epicprogress / $count, 2);
         }
@@ -1118,6 +1124,12 @@ class EpicController extends Controller
         $update->epic_start_date = $date;
         $update->epic_end_date = $date;
         $update->save();
+
+        $activity = 'Created the Epic on '.Cmf::date_format_new($update->created_at).' at '.Cmf::date_format_time($update->created_at);
+
+        Cmf::save_activity(Auth::id() , $activity,'epics',$update->id , 'image');
+
+
         return $createepic->id;
     }
     public function showlatestepicdatainmodal(Request $request)
@@ -1154,5 +1166,30 @@ class EpicController extends Controller
             $html = view('epics.tabs.comments', compact('comments','data','orderby'))->render();
             return $html;
         }
+    }
+    public function showepicincard(Request $request)
+    {
+        $e = DB::table('epics')->where('id',$request->epic_id)->first();
+        if ($e->epic_type == "unit") {
+            $organization = DB::table("business_units")->where("id", $e->buisness_unit_id)->first();
+        }
+        if ($e->epic_type == "stream") {
+        
+            $organization = DB::table("value_stream")->where("id", $e->buisness_unit_id)->first();
+        }
+        if ($e->epic_type == "BU") {
+            $organization = DB::table("unit_team")->where("id", $e->buisness_unit_id)->first();
+        }
+        if ($e->epic_type == "VS") {
+            $organization = DB::table("value_team")->where("id", $e->buisness_unit_id)->first();
+        }
+        if ($e->epic_type == "org") {
+            $organization = DB::table("organization")->where("id", $e->buisness_unit_id)->first();
+        }
+        if ($e->epic_type == "orgT") {
+            $organization = DB::table("org_team")->where("id", $e->buisness_unit_id)->first();
+        }
+        $html = view('epics.showepicinboard', compact('e','organization'))->render();
+        return $html;
     }
 }

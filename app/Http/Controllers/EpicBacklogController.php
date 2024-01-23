@@ -105,14 +105,12 @@ class EpicBacklogController extends Controller
     }
     public function updategeneral(Request $request)
     {
-
         $data = team_backlog::find($request->epic_id);
         $data->epic_title = $request->epic_name;
         $data->epic_start_date = $request->epic_start_date;
         $data->epic_end_date = $request->epic_end_date;
         $data->epic_detail = $request->epic_detail;
         $data->save();
-
         if(!$request->epic_name)
         {
             $update = team_backlog::find($request->epic_id);
@@ -123,9 +121,33 @@ class EpicBacklogController extends Controller
             $update->trash = Null;
             $update->save(); 
         }
-
-
         $html = view('epicbacklog.tabs.general', compact('data'))->render();
+        return $html;
+    }
+    public function showdataintable(Request $request)
+    {
+        if($request->type == 'BU')
+        {
+            $organization = DB::table('unit_team')->where('slug',$request->id)->first();        
+            $Backlog  =  DB::table('team_backlog')->where('trash' , Null)->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
+        }
+        if($request->type == 'VS')
+        {
+            $organization = DB::table('value_team')->where('slug',$request->id)->first();        
+            $Backlog  =  DB::table('team_backlog')->where('trash' , Null)->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
+        }
+        if($request->type == 'org')
+        {
+            $organization = DB::table('organization')->where('slug',$request->id)->first();        
+            $Backlog  =  DB::table('team_backlog')->where('trash' , Null)->where('type' , 'org')->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
+        }
+        if($request->type == 'orgT')
+        {
+            $organization = DB::table('org_team')->where('slug',$request->id)->first();        
+            $Backlog  =  DB::table('team_backlog')->where('trash' , Null)->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
+        }
+        $type = $request->type;
+        $html = view('epicbacklog.indexappend',compact('Backlog','organization','type'));
         return $html;
     }
     public function createchilditem(Request $request)

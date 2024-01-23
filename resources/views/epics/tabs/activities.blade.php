@@ -41,8 +41,21 @@
         <div class="activity-feed">
             @foreach($activity as $r)
             <div class="activity">
-              <div class="profile-image-container">
+              <div class="profile-image-container" @if($r->icon == 'image') style="padding:0px !important;" @endif>
+                @if($r->icon == 'image')
+                    @php
+                        $user = DB::table('users')->where('id' , $r->user_id)->first();
+                    @endphp
+
+                    @if($user->image)
+                    <img src="{{asset('public/assets/images/'.$user->image)}}">
+                    @else
+                    <img src="{{ Avatar::create($user->name.' '.$user->last_name)->toBase64() }}">
+                    @endif
+
+                @else
                 <span style="font-size:18px;" class="material-symbols-outlined"> {{ $r->icon }} </span>
+                @endif
               </div>
               <div class="dotted-line"></div>
               <div class="activity-content">

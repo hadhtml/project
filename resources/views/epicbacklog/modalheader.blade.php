@@ -134,6 +134,7 @@ $.ajax({
     },
     success: function(res) {
         showheaderbacklog(id);
+        showdataintable();
     },
     error: function(error) {
         

@@ -288,6 +288,31 @@ function selectteamforepic(id , epic_id) {
             {
                 showtabwithoutloader(epic_id , 'teams');    
             }
+            showepicincard();
+        },
+        error: function(error) {
+            
+        }
+    });
+}
+function showepicincard() {
+    var epic_id = '{{ $data->id }}';
+    var org_id = '{{ $data->buisness_unit_id }}';
+    var org_type = '{{ $data->epic_type }}';
+    var key_id = '{{ $data->key_id }}';
+    var objective_id = '{{ $data->obj_id }}';
+    var initiative_id = '{{ $data->initiative_id }}';
+    $.ajax({
+        type: "POST",
+        url: "{{ url('dashboard/epics/showepicincard') }}",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+            epic_id:epic_id,
+        },
+        success: function(res) {
+            $('#epic-'+epic_id+'-'+org_type+'-'+org_id+'-'+objective_id+'-'+key_id+'-'+initiative_id+'').html(res)
         },
         error: function(error) {
             

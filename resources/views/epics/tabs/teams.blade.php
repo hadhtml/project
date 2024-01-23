@@ -127,6 +127,7 @@
             success: function(res) {
                 $('.secondportion').html(res);
                 showheader('{{ $data->id }}');
+                showepicincard();
             }
         });
     }

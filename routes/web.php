@@ -274,7 +274,7 @@ Route::name('epicbacklog.')->namespace('App\Http\Controllers')->prefix('dashboar
     Route::POST('saveepicflag', 'EpicBacklogController@saveepicflag');
     Route::POST('updateflagstatus', 'EpicBacklogController@updateflagstatus');
     Route::POST('flagupdate', 'EpicBacklogController@flagupdate');       
-    // Route::POST('orderbycomment', 'EpicController@orderbycomment');
+    Route::POST('showdataintable', 'EpicBacklogController@showdataintable');
     // Route::POST('sortchilditem', 'EpicController@sortchilditem');
     // Route::POST('deletechilditem', 'EpicController@deletechilditem');
     // Route::POST('orderbychilditem', 'EpicController@orderbychilditem');
@@ -312,6 +312,7 @@ Route::name('epics.')->namespace('App\Http\Controllers')->prefix('dashboard/epic
     Route::POST('showlatestepicdatainmodal', 'EpicController@showlatestepicdatainmodal');
     Route::POST('saveepicflag', 'EpicController@saveepicflag');    
     Route::POST('removeteamfromepic', 'EpicController@removeteamfromepic');
+    Route::POST('showepicincard', 'EpicController@showepicincard');
     
 });
 
