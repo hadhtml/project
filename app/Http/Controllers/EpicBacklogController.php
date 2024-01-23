@@ -252,9 +252,10 @@ class EpicBacklogController extends Controller
         $add->value_id = $request->value_id;
         $add->save();
         Cmf::save_activity(Auth::id() , 'Added a New Attachment','epicbacklog',$request->value_id , 'attach_file');
+        $extensions = attachments::where('value_id' , $request->value_id)->groupBy('extension')->where('type' , 'epicbacklog')->orderby('id' , 'desc')->get();
         $attachments = attachments::where('value_id' , $request->value_id)->where('type' , 'epicbacklog')->orderby('id' , 'desc')->get();
         $data = team_backlog::find($request->value_id);
-        $html = view('epicbacklog.tabs.attachments', compact('attachments','data'))->render();
+        $html = view('epicbacklog.tabs.attachments', compact('attachments','data','extensions'))->render();
         return $html;
     }
     public function deleteattachment(Request $request)
@@ -263,8 +264,9 @@ class EpicBacklogController extends Controller
         attachments::where('id',$request->id)->delete();
         $attachments = attachments::where('value_id' , $attachment->value_id)->where('type' , 'epicbacklog')->orderby('id' , 'desc')->get();
         Cmf::save_activity(Auth::id() , 'Delete a Attachment','epicbacklog',$attachment->value_id , 'delete');
-        $data = team_backlog::find($request->value_id);
-        $html = view('epicbacklog.tabs.attachments', compact('attachments','data'))->render();
+        $data = team_backlog::find($attachment->value_id);
+        $extensions = attachments::where('value_id' , $attachment->value_id)->groupBy('extension')->where('type' , 'epicbacklog')->orderby('id' , 'desc')->get();
+        $html = view('epicbacklog.tabs.attachments', compact('attachments','data','extensions'))->render();
         return $html;
     }
     public function selectteamforepic(Request $request)

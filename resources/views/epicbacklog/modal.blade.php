@@ -194,7 +194,11 @@
             success: function(res){
                 showheaderbacklog('{{ $data->id }}')
                 $('#updatebutton').html('Save Changes');
-                showdataintable()
+                showdataintable();
+
+                @if(!$data->epic_title)
+                    $('#edit-backlog-epic-modal-new').modal('hide');
+                @endif
             }
         });
     }));
