@@ -4,99 +4,96 @@ $var_objective = "V-Stream";
 @extends('components.main-layout')
 <title>Value Stream</title>
 @section('content')
-
+@if(count($Stream) > 0)
 <div class="row">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-body p-6">
-                <table class="table data-table">
-                    <thead>
-                        <tr>
-                            <td>
-                                <label class="form-checkbox">
-                                    <input type="checkbox" id="checkAll">
-                                    <span class="checkbox-label"></span>
-                                </label>
-                            </td>
-                            <td>Value Stream</td>
-                            <td>Business Unit</td>
-                            <td>Lead</td>
-                            <td>Teams</td>
-                            
-                            <!--<td class="text-center">Backlog</td>-->
-                            <!--<td class="text-center">OKRs</td>-->
-                            <td>Action</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    @if (session('message'))
-                       <div class="alert alert-success mt-1" role="alert">
-                        {{ session('message') }}
-                      </div>
-                       @endif
-                       
-                       @if(count($Stream) > 0)
-                       @foreach($Stream as $stream)
-                       @php
-                        $TeamCount = DB::table('value_team')->where('org_id',$stream->id)->count();
-                       @endphp
-                        <tr>
-                            <td>
-                                <label class="form-checkbox">
-                                    <input type="checkbox">
-                                    <span class="checkbox-label"></span>
-                                </label>
-                            </td>
-                            <td> <a  href="{{url('dashboard/organization/'.$stream->slug.'/dashboard/'.$stream->type)}}" class="nav-link text-black">{{$stream->value_name}}</a></td>
-                            <td>{{$stream->business_name}}</td>
-                            @if($stream->Lead_id)
-                            @foreach(DB::table('members')->get() as $r)
-                            @if($r->id == $stream->Lead_id)
-                            @php
-                            $name = $r->name.' '.$r->last_name;
-                            @endphp
-                            <td class="image-cell">
-                                @if($r->image != NULL)
-                                <img src="{{asset('public/assets/images/'.$r->image)}}" alt="Example Image">
-                                @else
-                                <img src="{{ Avatar::create($name)->toBase64() }}" alt="Example Image">
-                                @endif
-                                <div>
-                                    <div class="title">{{$r->name}} {{$r->last_name}}</div>
+@foreach($Stream as $stream)
+   @php
+    $TeamCount = DB::table('value_team')->where('org_id',$stream->id)->count();
+   @endphp
+    <div class="col-md-3">
+        <div class="card business-card">
+            <div class="card-body">
+                <div class="d-flex flex-row justify-content-between">
+                    <div>
+                        <h3>
+                            <a class="d-flex" href="{{url('dashboard/organization/'.$stream->slug.'/dashboard/'.$stream->type)}}"><span style="font-size:22px" class="material-symbols-outlined mr-2">layers</span> <span>{{ \Illuminate\Support\Str::limit($stream->value_name,25, $end='...') }}</span></a>
+                        </h3>
+                    </div>
+                    <div>
+                        <div class="dropdown d-flex">
+                            <button class="btn btn-circle dropdown-toggle btn-tolbar bg-transparent" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img src="{{ url('public/assets/svg/dropdowndots.svg') }}">
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item"  data-toggle="modal" data-target="#edit{{$stream->ID}}">Edit</a>
+                                <a class="dropdown-item" data-toggle="modal" data-target="#delete{{$stream->ID}}">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-section">
+                    <div class="row">
+                        <div class="col-md-12 mb-2">
+                            <div class="d-flex align-items-center">
+                                <div class="mr-1">
+                                    <span style="font-size:22px" class="material-symbols-outlined">folder_supervised</span>
                                 </div>
-                            </td>
-                    
-                            @endif
-                            @endforeach
+                                <a href="{{ url('dashboard/organization') }}/{{ $stream->slug }}/portfolio/stream">
+                                    <small>Objectives ({{DB::table('objectives')->where('unit_id' , $stream->id)->where('type' , 'stream')->count()}})</small>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="d-flex align-items-center">
+                                <div class="mr-1">
+                                    <ion-icon style="font-size: 18px;" name="people-outline"></ion-icon>
+                                </div>
+                                <a href="{{ url('dashboard/organization') }}/{{ $stream->slug }}/VS-TEAMS">
+                                    <small>Teams ({{DB::table('value_team')->where('org_id' , $stream->id)->count()}})</small>
+                                </a>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="d-flex flex-column">
+                    <!-- <div>
+                        <small>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard </small>
+                    </div> -->
+
+                    <div class="d-flex flex-row align-items-center leader-section">
+
+                        @if($stream->Lead_id)
+                        @foreach(DB::table('members')->get() as $r)
+                        @if($r->id == $stream->Lead_id)
+                        <div class="mr-2">
+                            @if($r->image != NULL)
+                            <img src="{{asset('public/assets/images/'.$r->image)}}" alt="lead">
                             @else
-                            <td>N/A</td>
+                            <img src="{{ Avatar::create($r->name.' '.$r->last_name)->toBase64() }}" alt="lead">
                             @endif
-                            <td>{{$TeamCount}}</td>
-                            <!--<td class="text-center">-->
-                            <!--    <a href="{{url('backlog/'.$stream->slug)}}" class="btn btn-default">-->
-                            <!--        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">-->
-                            <!--            <path d="M11.6667 5.62533H8.33341C7.53341 5.62533 6.04175 5.62533 6.04175 3.33366C6.04175 1.04199 7.53341 1.04199 8.33341 1.04199H11.6667C12.4667 1.04199 13.9584 1.04199 13.9584 3.33366C13.9584 4.13366 13.9584 5.62533 11.6667 5.62533ZM8.33341 2.29199C7.50841 2.29199 7.29175 2.29199 7.29175 3.33366C7.29175 4.37533 7.50841 4.37533 8.33341 4.37533H11.6667C12.7084 4.37533 12.7084 4.15866 12.7084 3.33366C12.7084 2.29199 12.4917 2.29199 11.6667 2.29199H8.33341Z" fill="#292D32" />-->
-                            <!--            <path d="M11.6667 18.9582H7.5C2.81667 18.9582 1.875 16.8082 1.875 13.3332V8.33318C1.875 4.53318 3.25 2.90818 6.63333 2.73318C6.96667 2.71652 7.275 2.97485 7.29167 3.32485C7.30833 3.67485 7.04167 3.95818 6.7 3.97485C4.33333 4.10818 3.125 4.81652 3.125 8.33318V13.3332C3.125 16.4165 3.73333 17.7082 7.5 17.7082H11.6667C12.0083 17.7082 12.2917 17.9915 12.2917 18.3332C12.2917 18.6749 12.0083 18.9582 11.6667 18.9582Z" fill="#292D32" />-->
-                            <!--            <path d="M17.4999 13.1253C17.1583 13.1253 16.8749 12.842 16.8749 12.5003V8.33368C16.8749 4.81702 15.6666 4.10868 13.2999 3.97535C12.9583 3.95868 12.6916 3.65868 12.7083 3.31702C12.7249 2.97535 13.0333 2.70868 13.3666 2.72535C16.7499 2.90868 18.1249 4.53368 18.1249 8.32535V12.492C18.1249 12.842 17.8416 13.1253 17.4999 13.1253Z" fill="#292D32" />-->
-                            <!--            <path d="M17.5 18.958H15C14.6583 18.958 14.375 18.6747 14.375 18.333C14.375 17.9913 14.6583 17.708 15 17.708H16.875V15.833C16.875 15.4913 17.1583 15.208 17.5 15.208C17.8417 15.208 18.125 15.4913 18.125 15.833V18.333C18.125 18.6747 17.8417 18.958 17.5 18.958Z" fill="#292D32" />-->
-                            <!--            <path d="M17.4668 18.9245C17.3084 18.9245 17.1501 18.8662 17.0251 18.7412L12.0584 13.7745C11.8168 13.5329 11.8168 13.1329 12.0584 12.8912C12.3001 12.6495 12.7001 12.6495 12.9418 12.8912L17.9084 17.8579C18.1501 18.0995 18.1501 18.4995 17.9084 18.7412C17.7834 18.8579 17.6251 18.9245 17.4668 18.9245Z" fill="#292D32" />-->
-                            <!--        </svg>-->
-                            <!--        Backlog</a>-->
-                            <!--</td>-->
-                            <!--  <td class="text-center">-->
-                            <!--    <a  href="{{url('objective/'.$stream->slug.'/'.$stream->type)}}" class="btn btn-default">Portfolio</a>-->
-                            <!--</td>-->
-                            <td>
-                                <button class="btn-circle btn-tolbar" data-toggle="modal" data-target="#edit{{$stream->ID}}">
-                                    <img src="{{asset('public/assets/images/icons/edit.svg')}}"  data-toggle="tooltip" data-placement="top" data-original-title="Edit">
-                                </button>
-                                <button class="btn-circle btn-tolbar" data-toggle="modal" data-target="#delete{{$stream->ID}}">
-                                    <img src="{{asset('public/assets/images/icons/delete.svg')}}" data-toggle="tooltip" data-placement="top" data-original-title="Delete">
-                                </button>
-                            </td>
-                        </tr>
-                       
-                         <div class="modal fade" id="delete{{$stream->ID}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        </div>
+
+                        <div class="d-flex flex-column">
+                            <div>
+                                <span class="text-primary">Lead</span>
+                            </div>
+                            <div>
+                                <span>{{$r->name}} {{ $r->last_name }}</span>
+                            </div>
+                        </div>
+                
+                        @endif
+                        @endforeach
+                        @else
+                        <td>N/A</td>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="delete{{$stream->ID}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                       
                           <div class="modal-content">
@@ -195,16 +192,21 @@ $var_objective = "V-Stream";
                     </div>
                 </div>
             </div>
-                        @endforeach
-                        @endif
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+    @endforeach
 </div>
-    
-    <!-- Create Business Unit -->
+<!-- Create Business Unit -->
+
+<!-- Create Business Unit -->
+@else
+<div style="position:absolute;right:27%;top:40%;" class="text-center">
+<img src="{{asset('public/business-unit.svg')}}"  width="120" height="120">
+<div><h6 class="text-center">No Records Found</h6></div>
+<div><p class="text-center">You may create a business unit by clicking the button below.</p></div>
+<button class="btn btn-primary btn-lg btn-theme btn-block ripple ml-32" style="width:40%" type="button" data-toggle="modal" data-target="#add-business-value">
+    Add Business Unit
+</button>
+</div>
+@endif
 <div class="modal fade" id="add-business-value" tabindex="-1" role="dialog" aria-labelledby="add-business-unit" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="width: 526px !important;">
@@ -286,9 +288,6 @@ $var_objective = "V-Stream";
         </div>
     </div>
 </div>
-<!-- Create Business Unit -->
-
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script>

@@ -31,7 +31,7 @@ $var_objective = "Org-Unit";
                     <div class="d-flex flex-row justify-content-between">
                         <div>
                             <h3>
-                                <a href="{{url('dashboard/organization/'.$unit->slug.'/dashboard/'.$unit->type)}}">{{$unit->business_name}}</a>
+                                <a class="d-flex" href="{{url('dashboard/organization/'.$unit->slug.'/dashboard/'.$unit->type)}}"><span style="font-size:22px" class="material-symbols-outlined mr-2">domain</span> <span>{{ \Illuminate\Support\Str::limit($unit->business_name,25, $end='...') }}</span></a>
                             </h3>
                         </div>
                         <div>
@@ -53,9 +53,9 @@ $var_objective = "Org-Unit";
                                     <div class="mr-1">
                                         <ion-icon style="font-size: 18px;" name="layers-outline"></ion-icon>
                                     </div>
-                                    <div>
+                                    <a href="{{ url('dashboard/organization') }}/{{ $unit->slug }}/Value-Streams">
                                         <small>Value Streams ({{$ValueCount}})</small>
-                                    </div>
+                                    </a>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -63,9 +63,9 @@ $var_objective = "Org-Unit";
                                     <div class="mr-1">
                                         <ion-icon style="font-size: 18px;" name="people-outline"></ion-icon>
                                     </div>
-                                    <div>
+                                    <a href="{{ url('dashboard/organization') }}/{{ $unit->slug }}/BU-TEAMS">
                                         <small>Teams ({{$TeamCount}})</small>
-                                    </div>
+                                    </a>
                                 </div>
                             </div>
                             

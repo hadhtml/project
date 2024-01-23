@@ -9,7 +9,7 @@ $var_objective = 'Report-'.$type;
         <div class="d-flex flex-row justify-content-between">
             <div class="d-flex flex-column">
                 <div>
-                    <h4 class="pb-0 mb-0">Completed Epic</h4>
+                    <h4 class="pb-0 mb-0">Epics Completed</h4>
                 </div>
                 <div class="d-flex flex-row">
                     <div>
@@ -18,6 +18,8 @@ $var_objective = 'Report-'.$type;
                     </div>
                     @php
                    $SprintInit = DB::table('sprint_report')->where('initiative_name','!=',NULL)->where('q_id',$sprint)->get();
+                   $Sprints = DB::table('sprint')->where('id',$sprint)->first();
+
                     @endphp
                     <div>
                         <div class="dropdown">
@@ -31,7 +33,10 @@ $var_objective = 'Report-'.$type;
                             </svg>
                           </button>
                           <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                            <a class="dropdown-item"href="{{url('dashboard/organization/Okr-report-allepic/'.$sprint.'/'.$type)}}">All</a>
+                            <a class="dropdown-item" href="{{url('dashboard/organization/Okr-report-allepic/'.$sprint.'/'.$type)}}">All</a>
+                            <a class="dropdown-item" href="{{url('dashboard/organization/Okr-report-all/'.$sprint.'/'.$type)}}">Completed</a>
+                            <a class="dropdown-item" href="{{url('dashboard/organization/Okr-report-NC/'.$sprint.'/'.$type)}}">Not Completed</a>
+                            <a class="dropdown-item" href="{{url('dashboard/organization/Okr-report-remove/'.$sprint.'/'.$type)}}">Removed</a>
 
                          </div>
                         </div>
@@ -91,7 +96,7 @@ $var_objective = 'Report-'.$type;
                            
                             
                                 @php
-                                $SprintEpic = DB::table('sprint_report')->where('epic_prog','=',100)->where('epic_trash','=',NULL)->where('q_id',$sprint)->get();
+                                $SprintEpic = DB::table('sprint_report')->where('epic_prog','=',100)->where('epic_remove','=','Added')->where('q_id',$sprint)->get();
                                
                                 @endphp
                                 @foreach($SprintEpic as $epic)
@@ -99,6 +104,8 @@ $var_objective = 'Report-'.$type;
 
                                 @php
                                 $SprintInit = DB::table('sprint_report')->where('initiative_id',$epic->epic_init_id)->where('q_id',$sprint)->first();
+                                $diff = Carbon\Carbon::parse($Sprints->start_data)->diffInDays($epic->epic_trash);
+
                                 @endphp
                                     <tr>
                                         <td>
@@ -113,10 +120,14 @@ $var_objective = 'Report-'.$type;
                                                     </clipPath>
                                                 </defs>
                                             </svg>
-                                            <span class="ml-2">SSP-@if($SprintInit){{$SprintInit->initiative_key_id}}@endif</span>
+                                            <span class="ml-2">SSP-{{$epic->epic_id}}</span>
                                         </td>
                                         <td class="cell-20-percent">{{$epic->epic_name}}</td>
+                                        @if($diff > 0)
                                         <td>Added</td>
+                                        @else
+                                        <td></td>
+                                        @endif
                                         <td>{{$epic->epic_date}}</td>
                                         <td>{{\Carbon\Carbon::parse($epic->epic_done)->format('M d,Y')}}</td>
                                         <td>Done</td>

@@ -16,8 +16,11 @@ $var_objective = 'Report-'.$type;
                       
                    
                     </div>
+                    @php
+                    $SprintInit = DB::table('sprint_report')->where('initiative_name','!=',NULL)->where('q_id',$sprint)->get();
+                     @endphp
                     <div>
-                        {{-- <div class="dropdown">
+                        <div class="dropdown">
                           <button class="btn bg-white btn-circle dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g id="vuesax/outline/arrow-down">
@@ -28,13 +31,14 @@ $var_objective = 'Report-'.$type;
                             </svg>
                           </button>
                           <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                 ALL
+                            <a class="dropdown-item"href="{{url('dashboard/organization/Okr-report-allepic/'.$sprint.'/'.$type)}}">All</a>
+
                     </div>
-                        </div> --}}
+                        </div>
                     </div>
                 </div>
             </div>
-            {{-- <div class="d-flex flex-row align-items-center">
+            <div class="d-flex flex-row align-items-center">
                 <div>
                     <small>Choose Initiative</small>
                 </div>
@@ -43,12 +47,12 @@ $var_objective = 'Report-'.$type;
                         All
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
+                        @foreach($SprintInit as $keyInt)
+                        <a class="dropdown-item"href="{{url('dashboard/organization/report-init/'.$keyInt->initiative_id.'/'.$sprint.'/'.$type)}}">{{$keyInt->initiative_name}}</a>
+                        @endforeach  
                     </div>
                 </div>
-            </div> --}}
+            </div>
         </div>
     </div>
 </div>
@@ -85,7 +89,7 @@ $var_objective = 'Report-'.$type;
                            
                             
                                 @php
-                                $SprintEpic = DB::table('sprint_report')->where('epic_init_id',$init)->where('epic_prog','=',100)->where('epic_trash','=',NULL)->where('q_id',$sprint)->get();
+                                $SprintEpic = DB::table('sprint_report')->where('epic_init_id',$init)->where('epic_prog','=',100)->where('epic_remove','=','Added')->where('q_id',$sprint)->get();
                                
                                 @endphp
                                 @foreach($SprintEpic as $epic)
@@ -107,7 +111,7 @@ $var_objective = 'Report-'.$type;
                                                     </clipPath>
                                                 </defs>
                                             </svg>
-                                            <span class="ml-2">SSP-@if($SprintInit){{$SprintInit->initiative_key_id}}@endif</span>
+                                            <span class="ml-2">SSP-{{$epic->epic_id}}</span>
                                         </td>
                                         <td class="cell-20-percent">{{$epic->epic_name}}</td>
                                         <td>Added</td>
@@ -177,7 +181,7 @@ $var_objective = 'Report-'.$type;
                                    
                                
                                 @php
-                                $SprintEpic = DB::table('sprint_report')->where('epic_init_id',$init)->where('epic_prog','!=',100)->where('epic_trash','=',NULL)->where('q_id',$sprint)->get();
+                                $SprintEpic = DB::table('sprint_report')->where('epic_init_id',$init)->where('epic_prog','!=',100)->where('epic_remove','=','Added')->where('q_id',$sprint)->get();
                                 @endphp
                             
                                  @foreach($SprintEpic as $epic)
@@ -197,7 +201,7 @@ $var_objective = 'Report-'.$type;
                                                     </clipPath>
                                                 </defs>
                                             </svg>
-                                            <span class="ml-2">SSP-@if($SprintInit){{$SprintInit->initiative_key_id}}@endif</span>
+                                            <span class="ml-2">SSP-{{$epic->epic_id}}</span>
                                         </td>
                                         <td class="cell-20-percent">{{$epic->epic_name}}</td>
                                         <td>Added</td>
@@ -264,7 +268,7 @@ $var_objective = 'Report-'.$type;
                                 <tbody>
                                 
                                 @php
-                                $SprintEpic = DB::table('sprint_report')->where('epic_init_id',$init)->where('epic_trash','!=',NULL)->where('q_id',$sprint)->get();
+                                $SprintEpic = DB::table('sprint_report')->where('epic_init_id',$init)->where('epic_remove','=','remove')->where('q_id',$sprint)->get();
                                 @endphp
                               
 
@@ -285,7 +289,7 @@ $var_objective = 'Report-'.$type;
                                                     </clipPath>
                                                 </defs>
                                             </svg>
-                                            <span class="ml-2">SSP-@if($SprintInit){{$SprintInit->initiative_key_id}}@endif</span>
+                                            <span class="ml-2">SSP-{{$epic->epic_id}}</span>
                                         </td>
                                         <td class="cell-20-percent">{{$epic->epic_name}}</td>
                                         <td>Added</td>
