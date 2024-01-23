@@ -194,9 +194,15 @@ class FlagController extends Controller
         $update = flags::find($request->id);
         if($update->flag_title != $request->flag_title)
         {
-            $rand = rand(123456789 , 987654321);
-            $activity = 'has updated Title Field <a href="javascript:void(0)" onclick="showdetailsofactivity('.$rand.')">See Details</a> <div class="activitydetalbox deletecomment" id="activitydetalbox'.$rand.'"><div class="row"> <div class="col-md-10"> <h4>Title Update</h4> </div> <div class="col-md-2"> <img onclick="showdetailsofactivity('.$rand.')" src="'.url("public/assets/svg/crossdelete.svg").'"> </div> </div><p style="margin-bottom:0px;">'.$update->flag_title.'</p><div class="text-center mt-2 mb-2"><span class="material-symbols-outlined"> arrow_downward </span></div><p>'.$request->flag_title.'</p></div>';
-            Cmf::save_activity(Auth::id() , $activity,'flags',$request->id, 'edit');
+            if($update->flag_title)
+            {
+                $rand = rand(123456789 , 987654321);
+                $activity = 'has updated Title Field <a href="javascript:void(0)" onclick="showdetailsofactivity('.$rand.')">See Details</a> <div class="activitydetalbox deletecomment" id="activitydetalbox'.$rand.'"><div class="row"> <div class="col-md-10"> <h4>Title Update</h4> </div> <div class="col-md-2"> <img onclick="showdetailsofactivity('.$rand.')" src="'.url("public/assets/svg/crossdelete.svg").'"> </div> </div><p style="margin-bottom:0px;">'.$update->flag_title.'</p><div class="text-center mt-2 mb-2"><span class="material-symbols-outlined"> arrow_downward </span></div><p>'.$request->flag_title.'</p></div>';
+                Cmf::save_activity(Auth::id() , $activity,'flags',$request->id, 'edit');
+            }else{
+                $activity = 'Added a Flag Tittle';
+                Cmf::save_activity(Auth::id() , $activity,'flags',$request->id, 'edit');
+            }
         }
         if($update->flag_description != $request->flag_description)
         {
@@ -257,6 +263,11 @@ class FlagController extends Controller
         $flag->flag_status = 'todoflag';
         $flag->board_type = $request->type;
         $flag->save();
+
+        $activity = 'Created the '.$request->flag_type.' Flag on '.Cmf::date_format_new($flag->created_at).' at '.Cmf::date_format_time($flag->created_at);
+        Cmf::save_activity(Auth::id() , $activity,'flags',$flag->id , 'image');
+
+
         return $flag->id;
     }
     public function getepicflag(Request $request)

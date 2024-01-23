@@ -326,6 +326,7 @@ $('#saveepicflag').on('submit',(function(e) {
         contentType: false,
         processData: false,
         success: function(data){
+            showepicincard();
             showtabwithoutloader('{{$data->id}}' , 'flags');
         }
     });
@@ -355,6 +356,7 @@ function updateflagstatus(id,status) {
         },
         success: function(data) {
             showtabwithoutloader('{{$data->id}}' , 'flags');
+            showepicincard();
         },
         error: function(error) {
           console.log('Error updating card position:', error);
@@ -374,6 +376,7 @@ function deleteflag(id) {
         },
         success: function(data) {
             showtabwithoutloader('{{$data->id}}' , 'flags');
+            showepicincard();
         },
         error: function(error) {
           console.log('Error updating card position:', error);

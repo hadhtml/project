@@ -393,7 +393,7 @@ function archiveflag(id) {
         },
         success: function(res) {
             viewboards($('#viewboards').val());
-            editflag(id);
+            $('#edit-epic').modal('hide');
         },
         error: function(error) {
             console.log('Error updating card position:', error);

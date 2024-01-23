@@ -31,10 +31,12 @@
                     <img src="{{ url('public/assets/images/searchiconsvg.svg') }}">
                 </div>
                 @if($data->epic_id)
-                <div class="selectepic">
-                    <p>{{ DB::Table('epics')->where('id' , $data->epic_id)->first()->epic_name }}</p>
-                    <a onclick="removeepic({{ $data->id }})" href="javascript:void(0)"><img class="closeimage" src="{{url('public/assets/svg/cross.svg')}}"></a>
-                </div>
+                    @if(DB::Table('epics')->where('id' , $data->epic_id)->first())
+                    <div class="selectepic">
+                        <p>{{ DB::Table('epics')->where('id' , $data->epic_id)->first()->epic_name }}</p>
+                        <a onclick="removeepic({{ $data->id }})" href="javascript:void(0)"><img class="closeimage" src="{{url('public/assets/svg/cross.svg')}}"></a>
+                    </div>
+                    @endif
                 @endif
             </div>
             <div class="searchepic-box">

@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Organization;
 use App\Models\epics_stroy;
 use App\Models\Epic;
+use App\Models\flags;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use DB;
@@ -2397,6 +2398,7 @@ if($objcount > 0)
 
     public function DeleteEpic(Request $request)
     {
+        DB::table('flags')->where('epic_id' ,  $request->epicid)->delete();
 
         DB::table("epics")
             ->where("id", $request->epicid)

@@ -324,12 +324,8 @@
                     $('#updateflagmodalbuton').html('<i class="fa fa-check"></i> Success');
                     $("#updateflagmodalbuton" ).prop("disabled", false);
                     $('#updateflagmodalbuton').css('background-color', 'green');
-                    $('#parentCollapsible').html(res);
-                    $("#nestedCollapsible" + flag_epic_obj).collapse('toggle');
-                    $("#key-result" + flag_epic_key).collapse('toggle');
-                    $("#initiative" + flag_ini_epic_id).collapse('toggle');
+                    showepicincard();
                     rasiseflag()
-                    handleDivClick(flag_ini_epic_id);
                     showheader(flag_epic_id);
                     if($('#modaltab').val() == 'flags')
                     {
@@ -2103,12 +2099,12 @@
 
             },
             success: function(res) {
-                $('#success-sprint').html('<div class="alert alert-success" role="alert">Sprint Added successfully</div>');
+                $('#success-sprint').html('<div class="alert alert-success" role="alert">'+title+' has been Started</div>');
                 setTimeout(function() {
                     $('#create-report').modal('hide');
                     $('#success-sprint').html('');
                     $('#sprint-error').html('');
-                }, 1000);
+                }, 2000);
                 $('#savequarterbutton').html('Start');
                 $("#savequarterbutton" ).prop("disabled", false);
                 $('#sprint-end').html('<button class="button mr-1" onclick="endquarter();">End Quarter</button>');
