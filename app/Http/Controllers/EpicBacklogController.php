@@ -28,22 +28,22 @@ class EpicBacklogController extends Controller
         if($type == 'BU')
         {
             $organization = DB::table('unit_team')->where('slug',$id)->first();        
-            $Backlog  =  DB::table('team_backlog')->where('trash' , Null)->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
+            $Backlog  =  DB::table('team_backlog')->where('trash' , Null)->where('type' , 'BU')->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
         }
         if($type == 'VS')
         {
             $organization = DB::table('value_team')->where('slug',$id)->first();        
-            $Backlog  =  DB::table('team_backlog')->where('trash' , Null)->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
+            $Backlog  =  DB::table('team_backlog')->where('trash' , Null)->where('type' , 'VS')->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
         }
         if($type == 'org')
         {
-            $organization = DB::table('organization')->where('slug',$id)->first();        
+            $organization = DB::table('organization')->where('slug',$id)->first();     
             $Backlog  =  DB::table('team_backlog')->where('trash' , Null)->where('type' , 'org')->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
         }
         if($type == 'orgT')
         {
             $organization = DB::table('org_team')->where('slug',$id)->first();        
-            $Backlog  =  DB::table('team_backlog')->where('trash' , Null)->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
+            $Backlog  =  DB::table('team_backlog')->where('trash' , Null)->where('unit_id',$organization->id)->where('type' , 'orgT')->orderby('position')->where('assign_status',NULL)->get();
         }
 
         if($type == 'unit')
@@ -160,12 +160,12 @@ class EpicBacklogController extends Controller
         if($request->type == 'BU')
         {
             $organization = DB::table('unit_team')->where('slug',$request->id)->first();        
-            $Backlog  =  DB::table('team_backlog')->where('trash' , Null)->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
+            $Backlog  =  DB::table('team_backlog')->where('trash' , Null)->where('type' , 'BU')->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
         }
         if($request->type == 'VS')
         {
             $organization = DB::table('value_team')->where('slug',$request->id)->first();        
-            $Backlog  =  DB::table('team_backlog')->where('trash' , Null)->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
+            $Backlog  =  DB::table('team_backlog')->where('trash' , Null)->where('type' , 'VS')->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
         }
         if($request->type == 'org')
         {
@@ -175,7 +175,7 @@ class EpicBacklogController extends Controller
         if($request->type == 'orgT')
         {
             $organization = DB::table('org_team')->where('slug',$request->id)->first();        
-            $Backlog  =  DB::table('team_backlog')->where('trash' , Null)->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
+            $Backlog  =  DB::table('team_backlog')->where('trash' , Null)->where('type' , 'orgT')->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
         }
         if($request->type == 'unit')
         {

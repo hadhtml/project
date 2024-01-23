@@ -62,7 +62,7 @@ $Impediments = DB::table('flags')->where('business_units',$organization->id)->wh
             <div class="col-md-3 mb-4">
                 <div class="dashboard-card">
                     <div class="card-svg">
-                        <a href="{{url('dashboard/organization/'.$organization->slug.'/BT-Backlog/'.$organization->type)}}"> 
+                        <a href="{{url('dashboard/epicbacklog/'.$organization->slug.'/'.$organization->type)}}"> 
                             <span class="material-symbols-outlined key_visualizer">key_visualizer</span>
                         </a>
                     </div>

@@ -74,35 +74,78 @@
                         @php
                             $teammember = DB::table('unit_team')->where('org_id',$data->buisness_unit_id)->where('type' , 'BU')->get();
                         @endphp
+                        @foreach($teammember as $r)
+                            <div class="col-md-12 memberprofile" onclick="selectteamforepic({{$r->id}} , {{$data->id}})">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="memberprofileimage">
+                                            <img class="gixie" data-item-id="{{ $r->id }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="membername">{{ $r->team_title }}</div>
+                                        <div class="memberdetail">Lead:{{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
+                                    </div>
+                                    <div class="col-md-2 text-center mt-3">
+                                        @if($data->team_id == $r->id)
+                                        <img class="tickimage" src="{{ url('public/assets/svg/smalltick.svg') }}">
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
                     @endif
                     @if($data->type == 'org')
                         @php
                             $teammember = DB::table('org_team')->where('org_id',$data->unit_id)->where('type' , 'orgT')->get();
                         @endphp
-                    @endif
-                    @if($data->type == 'stream')
-                        $teammember = DB::table('value_team')->where('org_id',$data->unit_id)->where('type' , 'VS')->get();
-                    @endif
-                    @foreach($teammember as $r)
-                        <div class="col-md-12 memberprofile" onclick="selectteamforepic({{$r->id}} , {{$data->id}})">
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <div class="memberprofileimage">
-                                        <img class="gixie" data-item-id="{{ $r->id }}">
+                        @foreach($teammember as $r)
+                            <div class="col-md-12 memberprofile" onclick="selectteamforepic({{$r->id}} , {{$data->id}})">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="memberprofileimage">
+                                            <img class="gixie" data-item-id="{{ $r->id }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="membername">{{ $r->team_title }}</div>
+                                        <div class="memberdetail">Lead:{{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
+                                    </div>
+                                    <div class="col-md-2 text-center mt-3">
+                                        @if($data->team_id == $r->id)
+                                        <img class="tickimage" src="{{ url('public/assets/svg/smalltick.svg') }}">
+                                        @endif
                                     </div>
                                 </div>
-                                <div class="col-md-8">
-                                    <div class="membername">{{ $r->team_title }}</div>
-                                    <div class="memberdetail">Lead:{{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
-                                </div>
-                                <div class="col-md-2 text-center mt-3">
-                                    @if($data->team_id == $r->id)
-                                    <img class="tickimage" src="{{ url('public/assets/svg/smalltick.svg') }}">
-                                    @endif
+                            </div>
+                        @endforeach
+                    @endif
+                    @if($data->type == 'stream')
+                        @php
+                            $teammember = DB::table('value_team')->where('org_id',$data->unit_id)->where('type' , 'VS')->get();
+                        @endphp
+                        @foreach($teammember as $r)
+                            <div class="col-md-12 memberprofile" onclick="selectteamforepic({{$r->id}} , {{$data->id}})">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="memberprofileimage">
+                                            <img class="gixie" data-item-id="{{ $r->id }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="membername">{{ $r->team_title }}</div>
+                                        <div class="memberdetail">Lead:{{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
+                                    </div>
+                                    <div class="col-md-2 text-center mt-3">
+                                        @if($data->team_id == $r->id)
+                                        <img class="tickimage" src="{{ url('public/assets/svg/smalltick.svg') }}">
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    @endif
+                    
                 </div>
             </div>
         </div>
