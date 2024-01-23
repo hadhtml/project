@@ -1,0 +1,12 @@
+1-> Remove All Extra Pages  , Blogs , Posts , Categories , Tags EtC
+2-> Make Footer and Header Same for all Pages in Sarck Solution
+3-> Replace Home => Consulting Services (Litttle More Prominent like New Badge Something)
+4-> In Consulting Services Use This Homepage https://sarcksolution.com/home-4/
+5-> There are 8 Consulting Services 
+6-> Consulting Services and WEb Development SErvices are Diffrent also Shows Diffrent Pattrens 
+7-> Increase Logo Width
+8-> Make REsponsive on All Devices all Pages
+9-> Portfolio Link in Header and also Create a Page for Portfolio
+10-> Replace Portfolio => Case Studies Every Whole Website
+11-> Add Product System Where we Sell Online Applications , Themes , Website Source Codes ETC. 
+12-> 

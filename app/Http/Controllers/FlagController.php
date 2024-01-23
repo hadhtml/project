@@ -588,9 +588,10 @@ class FlagController extends Controller
         $add->value_id = $request->value_id;
         $add->save();
         Cmf::save_activity(Auth::id() , 'Added a New Attachment','flags',$request->value_id, 'attach_file');
+        $extensions = attachments::where('value_id' , $request->value_id)->groupBy('extension')->where('type' , 'flags')->orderby('id' , 'desc')->get();
         $attachments = attachments::where('value_id' , $request->value_id)->where('type' , 'flags')->orderby('id' , 'desc')->get();
         $data = flags::find($request->value_id);
-        $html = view('flags.tabs.attachments', compact('attachments','data'))->render();
+        $html = view('flags.tabs.attachments', compact('attachments','data','extensions'))->render();
         return $html;
     }
     public function deleteattachment(Request $request)
