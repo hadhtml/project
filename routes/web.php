@@ -203,7 +203,7 @@ Route::get('get-jira-project', [App\Http\Controllers\JiraController::class,'Jira
 Route::get('get-month', [App\Http\Controllers\MemberController::class,'GetMonth']);
 Route::get('Updatejira', [App\Http\Controllers\JiraController::class,'UpdateBujira']);
 //BackLogTeam
-Route::get('dashboard/organization/{id}/BT-Backlog/{type}', [App\Http\Controllers\TeamController::class, 'TeamBacklog'])->middleware('auth');
+
 Route::post('assign-teambacklog-epic', [App\Http\Controllers\TeamController::class,'AssignTeamBacklogEpic']);
 Route::post('update-teambacklog-epic', [App\Http\Controllers\TeamController::class,'UpdateTeamBacklogEpic']);
 Route::post('delete-team-backlog', [App\Http\Controllers\TeamController::class,'DeleteTeamBacklogEpic']);
@@ -256,6 +256,7 @@ Route::name('linking.')->namespace('App\Http\Controllers')->prefix('dashboard')-
 });
 
 Route::name('epicbacklog.')->namespace('App\Http\Controllers')->prefix('dashboard/epicbacklog')->group(function () {
+    Route::get('{id}/{type}', 'EpicBacklogController@index');
     Route::POST('getepic', 'EpicBacklogController@getepicmodal');
     Route::POST('showheader', 'EpicBacklogController@showheader');
     Route::POST('showtab', 'EpicBacklogController@showtab');

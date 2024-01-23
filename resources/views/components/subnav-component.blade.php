@@ -70,7 +70,7 @@
                         </a>
                     </li>
                     <li class="mb-1">
-                        <a href="{{url('dashboard/organization/'.$organization->slug.'/BT-Backlog/org')}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/BT-Backlog/org')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
+                        <a href="{{ url('dashboard/epicbacklog/' . $organization->slug . '/org') }}" @if (url()->current() == url('dashboard/epicbacklog/' . $organization->slug . '/org')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
                             <div class="mr-2">
                                  <span style="font-size:22px" class="material-symbols-outlined">key_visualizer</span>
                             </div>

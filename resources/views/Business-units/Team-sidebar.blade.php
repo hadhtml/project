@@ -257,7 +257,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
 
             @if($organization->type == 'BU')
             <li class="mb-1">
-                <a href="{{url('dashboard/organization/'.$organization->slug.'/BT-Backlog/BU')}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/BT-Backlog/BU')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
+                <a href="{{ url('dashboard/epicbacklog/' . $organization->slug . '/BU') }}" @if (url()->current() == url('dashboard/epicbacklog/' . $organization->slug . '/BU')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
                     <div class="mr-2">
                          <span style="font-size:22px" class="material-symbols-outlined">key_visualizer</span>
                     </div>
@@ -270,7 +270,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
             @endif
             @if($organization->type == 'VS')
             <li class="mb-1">
-                <a href="{{url('dashboard/organization/'.$organization->slug.'/BT-Backlog/VS')}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/BT-Backlog/VS')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
+                <a href="{{ url('dashboard/epicbacklog/' . $organization->slug . '/VS') }}" @if (url()->current() == url('dashboard/epicbacklog/' . $organization->slug . '/VS')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
                     <div class="mr-2">
                          <span style="font-size:22px" class="material-symbols-outlined">key_visualizer</span>
                     </div>
@@ -285,7 +285,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
        
 
             <li class="mb-1">
-                <a href="{{url('dashboard/organization/'.$organization->slug.'/BT-Backlog/orgT')}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/BT-Backlog/orgT')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
+                <a href="{{url('dashboard/epicbacklog/' . $organization->slug . '/orgT')}}" @if (url()->current() == url('dashboard/epicbacklog/' . $organization->slug . '/orgT')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
                     <div class="mr-2">
                          <span style="font-size:22px" class="material-symbols-outlined">key_visualizer</span>
                     </div>

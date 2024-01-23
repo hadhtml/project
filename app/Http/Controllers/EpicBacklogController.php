@@ -23,6 +23,37 @@ use Carbon\Carbon;
 
 class EpicBacklogController extends Controller
 {
+    public function index($id,$type)
+    {
+        if($type == 'BU')
+        {
+            $organization = DB::table('unit_team')->where('slug',$id)->first();        
+            $Backlog  =  DB::table('team_backlog')->where('trash' , Null)->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
+        }
+        if($type == 'VS')
+        {
+            $organization = DB::table('value_team')->where('slug',$id)->first();        
+            $Backlog  =  DB::table('team_backlog')->where('trash' , Null)->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
+        }
+        if($type == 'org')
+        {
+            $organization = DB::table('organization')->where('slug',$id)->first();        
+            $Backlog  =  DB::table('team_backlog')->where('trash' , Null)->where('type' , 'org')->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
+        }
+        if($type == 'orgT')
+        {
+            $organization = DB::table('org_team')->where('slug',$id)->first();        
+            $Backlog  =  DB::table('team_backlog')->where('trash' , Null)->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
+        }
+
+        if($type == 'unit')
+        {
+            $organization = DB::table('business_units')->where('slug',$id)->first();        
+            $Backlog  =  DB::table('team_backlog')->where('trash' , Null)->where('unit_id',$organization->id)->where('type' , 'unit')->orderby('position')->where('assign_status',NULL)->get();
+        }
+
+        return view('epicbacklog.index',compact('Backlog','organization','type'));  
+    }
     public function getepicmodal(Request $request)
     {
         $data = team_backlog::find($request->id);
@@ -145,6 +176,11 @@ class EpicBacklogController extends Controller
         {
             $organization = DB::table('org_team')->where('slug',$request->id)->first();        
             $Backlog  =  DB::table('team_backlog')->where('trash' , Null)->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
+        }
+        if($request->type == 'unit')
+        {
+            $organization = DB::table('business_units')->where('slug',$request->id)->first();        
+            $Backlog  =  DB::table('team_backlog')->where('trash' , Null)->where('unit_id',$organization->id)->where('type' , 'unit')->orderby('position')->where('assign_status',NULL)->get();
         }
         $type = $request->type;
         $html = view('epicbacklog.indexappend',compact('Backlog','organization','type'));
