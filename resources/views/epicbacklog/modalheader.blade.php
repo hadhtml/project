@@ -106,6 +106,78 @@
                 </div>
             </div>
         </div>
+        <div class="epic-header-buttons raise-flag-button">
+            <a onclick="rasiseflag({{$data->id}})" href="javascript:void(0)"  id="showboardbutton">
+                <img src="{{url('public/assets/svg/btnflagsvg.svg')}}" width="20"> Flag @if(DB::table('flags')->where('epic_type' , 'backlog')->where('epic_id'  ,$data->id)->count() > 0) ({{ DB::table('flags')->where('epic_id'  ,$data->id)->count() }}) @endif
+            </a>
+            <div class="raiseflag-box hidepopupall">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Flag</h4>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <img onclick="rasiseflag()" class="memberclose" src="{{url('public/assets/svg/memberclose.svg')}}">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="needs-validation saveepicflagheader" action="{{ url('dashboard/epicbacklog/saveepicflag') }}" method="POST">
+                            @csrf
+                            <input type="hidden" value="{{ $data->id }}" name="flag_epic_id">
+                            <input type="hidden" value="{{ $data->unit_id }}" name="business_units">
+                            <input type="hidden" value="{{ $data->type }}" name="board_type">
+                            <div class="row">        
+                                <div class="col-md-12 col-lg-12 col-xl-12">
+                                    <div class="form-group mb-0">
+                                        <label for="flag_type">Flag Type <small class="text-danger">*</small></label>
+                                       <select required class="form-control" name="flag_type" id="flag_type" >
+                                           <option value="">Select Type</option>
+                                           <option value="Risk">Risk</option>
+                                           <option value="Impediment">Impediment</option>
+                                           <option value="Blocker">Blocker</option>
+                                           <option value="Action">Action</option>
+                                       </select>
+                                        
+                                    </div>
+                                </div>
+                                 <div class="col-md-12 col-lg-12 col-xl-12">
+                                    <div class="form-group mb-0">
+                                        <label for="flag_assignee">Assignee <small class="text-danger">*</small></label>
+                                        <select required class="form-control" id="flag_assignee" name="flag_assign">
+                                            <option value="">Select Assignee</option>
+                                            @foreach(DB::table('members')->where('org_user',Auth::id())->get() as $r)
+                                              <option value="{{ $r->id }}">{{ $r->name }} {{ $r->last_name }}</option>
+                                            @endforeach
+                                        </select>
+                                        
+                                    </div>
+                                </div>
+                                 <div class="col-md-12 col-lg-12 col-xl-12">
+                                    <div class="form-group mb-0">
+                                        <label for="small-description">Title <small class="text-danger">*</small></label>
+                                        <input required type="text" class="form-control"  name="flag_title" >
+                                        
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-lg-12 col-xl-12">
+                                    <div class="form-group mb-0">
+                                        <label for="small-description">Description</label>
+                                        <textarea name="flag_description" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <span onclick="rasiseflag()" class="btn btn-default btn-sm">Cancel</span>
+                                    
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <button type="submit" class="saveepicflagbuttonheader btn btn-primary btn-sm">Save</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="moverightside">
             <h1 class="epic-percentage">@if($data->progress){{ $data->progress }} % Completed @endif</h1>
         </div>
@@ -121,6 +193,31 @@
     <img data-dismiss="modal" class="closeimage" aria-label="Close" src="{{url('public/assets/svg/cross.svg')}}">
 </div>
 <script type="text/javascript">
+$('.saveepicflagheader').on('submit',(function(e) {
+    $('.saveepicflagbuttonheader').html('<i class="fa fa-spin fa-spinner"></i>');
+    $(".saveepicflagbuttonheader" ).prop("disabled", true);
+    e.preventDefault();
+    var formData = new FormData(this);
+    var cardid = $('#cardid').val();
+    $.ajax({
+        type:'POST',
+        url: $(this).attr('action'),
+        data:formData,
+        cache:false,
+        contentType: false,
+        processData: false,
+        success: function(data){
+            $('.saveepicflagbuttonheader').html('<i class="fa fa-check"></i> Success');
+            $(".saveepicflagbuttonheader" ).prop("disabled", false);
+            $('.saveepicflagbuttonheader').css('background-color', 'green');
+            showheaderbacklog('{{$data->id}}');
+            if($('#modaltab').val() == 'flags')
+            {
+                showtabwithoutloader('{{$data->id}}' , 'flags');
+            }   
+        }
+    });
+}));
 function changeepicstatus(status , id) {
 $.ajax({
     type: "POST",
