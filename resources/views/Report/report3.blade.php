@@ -94,7 +94,7 @@ $var_objective = 'Report-'.$type;
                                                             @php
                                                             $result = 0;
                                                             $progress = 0;
-                                                            if($KEYChart && $keyvalue)
+                                                            if($KEYChart && $keyvalue && $keyR)
                                                             {
                                                             $result = ($keyvalue->value / $KEYChart->quarter_value * 100);
                                                             $progress = ($keyvalue->value / $keyR->target_number * 100);
