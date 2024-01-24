@@ -17,8 +17,8 @@
                         <span class="checkbox-label"></span>
                         </label>
                      </td>
+                     <td>Epic ID</td>
                      <td>Title</td>
-                     <!-- <td>Quarter</td> -->
                      <td>Start/End Date</td>
                      <td>Status</td>
                      <td>Progress</td>
@@ -35,7 +35,12 @@
                         </label>
                      </td>
                      <td class="draggable">
-                        <img src="{{ url('public/assets/svg/impedimentbacklog.svg') }}">
+                        <div class="epic_id">
+                           <img src="{{ url('public/assets/svg/arrow.svg') }}">
+                           OE-{{ $backlog->id }}
+                       </div>
+                     </td>
+                     <td class="draggable">
                         {{ $backlog->epic_title }}
                      </td>
                      <!-- <td>

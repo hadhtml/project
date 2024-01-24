@@ -1721,3 +1721,7 @@ button:focus {
     margin-bottom: 0;
     padding-top: 3px;
 }
+.epic_id{
+    font-weight: 600;
+    font-size: 15px;
+}

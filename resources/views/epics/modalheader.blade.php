@@ -5,6 +5,10 @@
         </h5>
     </div>
     <div class="col-md-12 displayflex">
+        <div class="epic_id mr-3 mt-1">
+            <img src="{{ url('public/assets/svg/arrow.svg') }}">
+            OE-{{ $data->id }}
+        </div>
         <div class="btn-group epicheaderborderleft">
             <button type="button" class="btn btn-default statuschangebutton @if($data->epic_status == 'To Do') todo-button-color @endif @if($data->epic_status == 'In progress') inprogress-button-color @endif @if($data->epic_status == 'Done') done-button-color @endif" id="showboardbutton">
                 @if($data->epic_status == 'To Do')

@@ -2,15 +2,16 @@
        <div class="card card-epic border-radius" style="margin-bottom:0px !important">
             <div class="card-header bg-white border-bottom-radius pt-2 pl-4 pr-4 pb-2">
                <div class="d-flex">
-                  <div style="width:35%;">
-                     <img src="{{ url('public/assets/svg/objectives/four.svg') }}">
-                  </div>
-                  <div style="width:65%;">
+                  <div style="width: 55%;" class="epic_id">
+                       <img src="{{ url('public/assets/svg/arrow.svg') }}">
+                        OE-{{ $e->id }}
+                   </div>
+                  <div style="width: 45%;">
                      @if($e->epic_status == 'Done')
                      <span class="badge-cs-small success">{{$e->epic_status}}</span>
                      @endif
                      @if($e->epic_status == 'In progress')
-                     <span class="badge-cs-small warning w-100">{{$e->epic_status}}</span>
+                     <span style="padding: 3px 3px !important;" class="badge-cs-small warning w-100">{{$e->epic_status}}</span>
                      @endif 
                      @if($e->epic_status == 'To Do')
                      <span class="badge-cs-small bg-secondary ">{{$e->epic_status}}</span>

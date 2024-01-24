@@ -292,7 +292,10 @@ class FlagController extends Controller
         $member->member_id = $request->flag_assign;
         $member->flag_id = $flag->id;
         $member->save();
-        
+         
+        $activity = 'Created the '.$request->flag_type.' Flag on '.Cmf::date_format_new($flag->created_at).' at '.Cmf::date_format_time($flag->created_at);
+        Cmf::save_activity(Auth::id() , $activity,'flags',$flag->id , 'image');
+
         DB::table('epics')->where('id',$request->flag_epic_id)->update(['flag_assign' => 1]);
         if($request->type == 'unit')
         {

@@ -3,10 +3,10 @@
         <div class="d-flex flex-row" onclick="editflag({{$r->id}})">
             <div class="d-flex flex-row mb-2">
                 @if($r->epic_id)
-                <a href="javascript:void(0)">
+                <div class="epic_id">
                     <img src="{{ url('public/assets/svg/arrow.svg') }}">
-                     EPIC{{ $r->epic_id }}
-                </a>
+                     OE-{{ $r->epic_id }}
+                </div>
                 @endif
             </div>
             @php
