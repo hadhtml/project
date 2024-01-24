@@ -12,24 +12,24 @@
                     <li id="general" onclick="showtab({{$data->id}} , 'general')" class="tabsclass active">
                         <span class="material-symbols-outlined"> edit_square </span> General
                     </li>
-                    <li id="childitems" onclick="showtab({{$data->id}} , 'childitems')" class="tabsclass">
+                    <li id="childitems" @if($data->epic_name)  onclick="showtab({{$data->id}} , 'childitems')" @else data-toggle="tooltip" title="" data-original-title="Please Fill General Details" @endif class="tabsclass">
                         <span class="material-symbols-outlined">toc</span> Child Items
                     </li>
-                    <li id="comments" onclick="showtab({{$data->id}} , 'comments')" class="tabsclass">
+                    <li id="comments" @if($data->epic_name)  onclick="showtab({{$data->id}} , 'comments')" @else data-toggle="tooltip" title="" data-original-title="Please Fill General Details" @endif class="tabsclass">
                         <span class="material-symbols-outlined">comment</span> Comments
                     </li>
-                    <li id="activites" onclick="showtab({{$data->id}} , 'activites')" class="tabsclass">
+                    <li id="activites"@if($data->epic_name)  onclick="showtab({{$data->id}} , 'activites')" @else data-toggle="tooltip" title="" data-original-title="Please Fill General Details" @endif class="tabsclass">
                        <span class="material-symbols-outlined">browse_activity</span> Activities
                     </li>
                     <!-- <li id="checkins" onclick="showtab({{$data->id}} , 'checkins')" class="tabsclass">
                         <span class="material-symbols-outlined">checklist</span> Check-Ins
                     </li> -->
-                    <li id="attachment" onclick="showtab({{$data->id}} , 'attachment')" class="tabsclass">
+                    <li id="attachment" @if($data->epic_name)  onclick="showtab({{$data->id}} , 'attachment')" @else data-toggle="tooltip" title="" data-original-title="Please Fill General Details" @endif class="tabsclass">
                         <span class="material-symbols-outlined"> attachment </span> Attachments</li>
-                    <li id="flags" onclick="showtab({{$data->id}} , 'flags')" class="tabsclass">
+                    <li id="flags" @if($data->epic_name)  onclick="showtab({{$data->id}} , 'flags')" @else data-toggle="tooltip" title="" data-original-title="Please Fill General Details" @endif class="tabsclass">
                         <span class="material-symbols-outlined">flag</span> Flags
                     </li>
-                    <li id="teams" onclick="showtab({{$data->id}} , 'teams')" class="tabsclass">
+                    <li id="teams" @if($data->epic_name)  onclick="showtab({{$data->id}} , 'teams')" @else data-toggle="tooltip" title="" data-original-title="Please Fill General Details" @endif class="tabsclass">
                         <span class="material-symbols-outlined"> group </span> Teams
                     </li>
                 </ul>
@@ -38,7 +38,7 @@
                     <!-- <li><img src="{{ url('public/assets/svg/archive-action.svg') }}"> Archive</li> -->
                     <!-- <li><span class="material-symbols-outlined">share</span> Share</li> -->
                     <!-- <li><img src="{{ url('public/assets/svg/arrow-right-action.svg') }}"> Move</li> -->
-                    <li onclick="deleteflagshow({{$data->id}})"><span class="material-symbols-outlined">delete</span> Delete</li>
+                    <li @if($data->epic_name) onclick="deleteflagshow({{$data->id}})"  @else data-toggle="tooltip" title="" data-original-title="Please Fill General Details" @endif><span class="material-symbols-outlined">delete</span> Delete</li>
                     <div class="deleteflag deleteepiccard hidepopupall" id="flagdelete{{ $data->id }}">
                         <div class="row">
                             <div class="col-md-10">
@@ -112,6 +112,9 @@
     </div>
 </div>
 <script type="text/javascript">
+     $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
     $( document ).ready(function() {
         var mindate = '{{ DB::table("initiative")->where("id" , $data->initiative_id)->first()->initiative_start_date }}';
         var maxdate = '{{ DB::table("initiative")->where("id" , $data->initiative_id)->first()->initiative_end_date }}';
@@ -250,9 +253,8 @@
                 $("#initiative{{ $data->initiative_id }}").collapse('toggle');                
                 showheader('{{ $data->id }}')
                 $('#updatebuttonepic').html('Save Changes');
-
                 @if(!$data->epic_name)
-                $('#edit-epic-modal-new').modal('hide');
+                    $('#edit-epic-modal-new').modal('hide');
                 @endif
             }
         });

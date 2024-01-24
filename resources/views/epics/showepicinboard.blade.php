@@ -112,6 +112,18 @@
             </div>
          </div>
       </div>
+      @if($organization->type == 'org')
+      @foreach(DB::table('org_team')->where('org_id',$organization->id)->get() as $r)
+      @if($e->team_id == $r->id)
+      <div class="ml-5" style="font-size:12px;">
+         <b>
+         <img src="{{ url('public/assets/svg/objectives/five.svg') }}">
+         {{$r->team_title}}
+         </b>
+      </div>
+      @endif
+      @endforeach
+      @endif
       @if($organization->type == 'stream')
       @foreach(DB::table('value_team')->where('org_id',$organization->id)->get() as $r)
       @if($e->team_id == $r->id)

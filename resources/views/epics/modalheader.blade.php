@@ -4,9 +4,6 @@
             <img src="{{ url('public/assets/svg/epicheaderheader.svg') }}">@if($data->epic_name) {{ $data->epic_name }} @else Enter Epic Tittle @endif
         </h5>
     </div>
-    <!-- <div class="col-md-12 marginleftthirty newmodalsubtittle">
-        <p>{{ DB::table('objectives')->where('id' , $data->obj_id)->first()->objective_name }}/{{ DB::table('key_result')->where('id' , $data->key_id)->first()->key_name }}/{{ DB::table('initiative')->where('id' , $data->initiative_id)->first()->initiative_name }}</p>    
-    </div> -->
     <div class="col-md-12 displayflex">
         <div class="btn-group epicheaderborderleft">
             <button type="button" class="btn btn-default statuschangebutton @if($data->epic_status == 'To Do') todo-button-color @endif @if($data->epic_status == 'In progress') inprogress-button-color @endif @if($data->epic_status == 'Done') done-button-color @endif" id="showboardbutton">
@@ -39,57 +36,17 @@
                 @endif
             </div>
         </div>
-        @if($data->epic_start_date)
-        <a href="javascript:void(0)" class="epic-datepicker" id="showboardbutton">
-            <img src="{{url('public/assets/svg/note-text.svg')}}" width="20">
-            <input readonly type="text" name="daterange" value="{{ date('m/d/Y', strtotime($data->epic_start_date)) }} - {{ date('m/d/Y', strtotime($data->epic_end_date)) }}" />
-        </a>
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-        <script>
-        $(function() {
-          $('input[name="daterange"]').daterangepicker({
-            opens: 'right'
-          }, function(start, end, label) {
-            console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-            $.ajax({
-                type: "POST",
-                url: "{{ url('dashboard/epics/changeepicdate') }}",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: {
-                    epic_id:'{{ $data->id }}',
-                    start:start.format('YYYY-MM-DD'),
-                    end:end.format('YYYY-MM-DD'),
-                },
-                success: function(res) {
-                    var modaltab = $('#modaltab').val();
-                    if(modaltab == 'general')
-                    {
-                        editepic('{{ $data->id }}');
-                    }
-                },
-                error: function(error) {
-                    
-                }
-            });
-          });
-        });
-        </script>
-        @endif
         @if($data->team_id)
         <div class="members-list">
             <div id="members">
-                <a onclick="showmemberbox()" href="javascript:void(0)" class="epic-header-buttons" id="showboardbutton">
+                <a style="width: 90px;" onclick="showmemberbox()" href="javascript:void(0)" class="epic-header-buttons epicheaderteambutton" id="showboardbutton">
                     <img src="{{url('public/assets/svg/profile-2user.svg')}}" width="20"> 1
                 </a>
             </div>
         </div>
         @else
-        <a href="javascript:void(0)" onclick="showmemberbox()" class="epic-header-buttons" id="showboardbutton">
-            <img src="{{url('public/assets/svg/btnteamsvg.svg')}}" width="20">Team
+        <a href="javascript:void(0)" onclick="showmemberbox()" class="epic-header-buttons epicheaderteambutton" id="showboardbutton">
+            <img src="{{url('public/assets/svg/btnteamsvg.svg')}}" width="20"> Team
         </a>
         @endif
         <div class="memberlistposition">
@@ -116,7 +73,7 @@
                     @if($data->epic_type == 'unit')
                         @if(DB::table('unit_team')->where('org_id',$data->buisness_unit_id)->where('type' , 'BU')->count() > 0)
                             @foreach(DB::table('unit_team')->where('org_id',$data->buisness_unit_id)->where('type' , 'BU')->get() as $r)
-                                <div class="col-md-12 memberprofile" onclick="selectteamforepic({{$r->id}} , {{$data->id}})">
+                                <div class="col-md-12 memberprofile memberprofilecontroleight" onclick="selectteamforepic({{$r->id}} , {{$data->id}})">
                                     <div class="row">
                                         <div class="col-md-2">
                                             <div class="memberprofileimage">
@@ -125,11 +82,11 @@
                                         </div>
                                         <div class="col-md-8">
                                             <div class="membername">{{ $r->team_title }}</div>
-                                            <div class="memberdetail">Lead:{{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
+                                            <div class="memberdetail">Lead: {{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
                                         </div>
                                         <div class="col-md-2 text-center mt-3">
                                             @if($data->team_id == $r->id)
-                                            <img class="tickimage" src="{{ url('public/assets/svg/smalltick.svg') }}">
+                                            <span class="material-symbols-outlined">cancel</span>
                                             @endif
                                         </div>
                                     </div>
@@ -142,7 +99,7 @@
                     @if($data->epic_type == 'org')
                         @if(DB::table('org_team')->where('org_id',$data->buisness_unit_id)->where('type' , 'orgT')->count() > 0)
                             @foreach(DB::table('org_team')->where('org_id',$data->buisness_unit_id)->where('type' , 'orgT')->get() as $r)
-                                <div class="col-md-12 memberprofile" onclick="selectteamforepic({{$r->id}} , {{$data->id}})">
+                                <div class="col-md-12 memberprofile memberprofilecontroleight" onclick="selectteamforepic({{$r->id}} , {{$data->id}})">
                                     <div class="row">
                                         <div class="col-md-2">
                                             <div class="memberprofileimage">
@@ -151,11 +108,11 @@
                                         </div>
                                         <div class="col-md-8">
                                             <div class="membername">{{ $r->team_title }}</div>
-                                            <div class="memberdetail">Lead:{{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
+                                            <div class="memberdetail">Lead: {{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
                                         </div>
                                         <div class="col-md-2 text-center mt-3">
                                             @if($data->team_id == $r->id)
-                                            <img class="tickimage" src="{{ url('public/assets/svg/smalltick.svg') }}">
+                                            <span class="material-symbols-outlined">cancel</span>
                                             @endif
                                         </div>
                                     </div>
@@ -168,7 +125,7 @@
                     @if($data->epic_type == 'stream')
                         @if(DB::table('value_team')->where('org_id',$data->buisness_unit_id)->where('type' , 'VS')->count() > 0)
                             @foreach(DB::table('value_team')->where('org_id',$data->buisness_unit_id)->where('type' , 'VS')->get() as $r)
-                                <div class="col-md-12 memberprofile" onclick="selectteamforepic({{$r->id}} , {{$data->id}})">
+                                <div class="col-md-12 memberprofile memberprofilecontroleight" onclick="selectteamforepic({{$r->id}} , {{$data->id}})">
                                     <div class="row">
                                         <div class="col-md-2">
                                             <div class="memberprofileimage">
@@ -178,11 +135,11 @@
                                         </div>
                                         <div class="col-md-8">
                                             <div class="membername">{{ $r->team_title }}</div>
-                                            <div class="memberdetail">Lead:{{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
+                                            <div class="memberdetail">Lead: {{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
                                         </div>
                                         <div class="col-md-2 text-center mt-3">
                                             @if($data->team_id == $r->id)
-                                            <img class="tickimage" src="{{ url('public/assets/svg/smalltick.svg') }}">
+                                                <span class="material-symbols-outlined">cancel</span>
                                             @endif
                                         </div>
                                     </div>
@@ -194,7 +151,7 @@
                     @endif
                     @if($data->epic_type == 'stream')
                         @foreach(DB::table('value_team')->where('org_id',$data->buisness_unit_id)->where('type' , 'VS')->get() as $r)
-                            {{-- <div class="col-md-12 memberprofile" onclick="selectteamforepic({{$r->id}} , {{$data->id}})">
+                            {{-- <div class="col-md-12 memberprofile memberprofilecontroleight" onclick="selectteamforepic({{$r->id}} , {{$data->id}})">
                                 <div class="row">
                                     <div class="col-md-2">
                                         <div class="memberprofileimage">
@@ -299,8 +256,11 @@
     </div>
 </div>
 <div class="rightside" >
-    <span id="maximizeimage" onclick="maximizemodal()">
-        <img src="{{url('public/assets/svg/maximize.svg')}}">
+    <span onclick="maximizemodal()" id="open_in_full">
+        <span class="material-symbols-outlined">open_in_full</span>
+    </span>
+    <span onclick="maximizemodal()" class="d-none" id="close_fullscreen">
+        <span class="material-symbols-outlined">close_fullscreen</span>
     </span>
     <img data-dismiss="modal" class="closeimage" aria-label="Close" src="{{url('public/assets/svg/cross.svg')}}">
 </div>
@@ -310,11 +270,6 @@ function showmemberbox() {
 }
 function rasiseflag() {
     $('.raiseflag-box').slideToggle();
-}
-function maximizemodal() {
-    $('#modaldialogepic').toggleClass('modalfullscreen');
-    $('#maximizeimage').html('<span class="material-symbols-outlined"> close_fullscreen </span>');
-    $('#edit-epic-modal-new').css('padding-right' , '0px')
 }
 function selectteamforepic(id , epic_id) {
     $.ajax({
@@ -333,6 +288,31 @@ function selectteamforepic(id , epic_id) {
             {
                 showtabwithoutloader(epic_id , 'teams');    
             }
+            showepicincard();
+        },
+        error: function(error) {
+            
+        }
+    });
+}
+function showepicincard() {
+    var epic_id = '{{ $data->id }}';
+    var org_id = '{{ $data->buisness_unit_id }}';
+    var org_type = '{{ $data->epic_type }}';
+    var key_id = '{{ $data->key_id }}';
+    var objective_id = '{{ $data->obj_id }}';
+    var initiative_id = '{{ $data->initiative_id }}';
+    $.ajax({
+        type: "POST",
+        url: "{{ url('dashboard/epics/showepicincard') }}",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+            epic_id:epic_id,
+        },
+        success: function(res) {
+            $('#epic-'+epic_id+'-'+org_type+'-'+org_id+'-'+objective_id+'-'+key_id+'-'+initiative_id+'').html(res)
         },
         error: function(error) {
             

@@ -149,7 +149,7 @@ $var_objective = 'Report-'.$type;
                                                                         </div>
                                                                         <div class="d-flex flex-row">
                                                                             <div class="mr-2"><a href="{{url('Okr-report/'.$r->id.'/'.$type)}}" class="btn btn-default">See Report</a></div>
-                                                                            <div><button class="btn btn-default">Download</button></div>
+                                                                            {{-- <div><button class="btn btn-default">Download</button></div> --}}
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -177,7 +177,7 @@ $var_objective = 'Report-'.$type;
                                                                             <div class="mr-2"> 
                                                                              <a href="{{url('dashboard/organization/Okr-report-all/'.$r->id.'/'.$type)}}" class="btn btn-default">See Report</a>
                                                                             </div>
-                                                                            <div><button class="btn btn-default">Download</button></div>
+                                                                            {{-- <div><button class="btn btn-default">Download</button></div> --}}
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -204,7 +204,7 @@ $var_objective = 'Report-'.$type;
                                                                         </div>
                                                                         <div class="d-flex flex-row">
                                                                             <div class="mr-2"><a href="{{url('Okr-report-3/'.$r->id.'/'.$type)}}" class="btn btn-default">See Report</a></div>
-                                                                            <div><button class="btn btn-default">Download</button></div>
+                                                                            {{-- <div><button class="btn btn-default">Download</button></div> --}}
                                                                         </div>
                                                                     </div>
                                                                 </div>
