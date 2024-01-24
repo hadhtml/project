@@ -21,7 +21,7 @@
                     </div>
                 @endif
                 @else
-                    {{$check_escalate->first()->id}}
+                    
                 @endif
             @endif
         </div>

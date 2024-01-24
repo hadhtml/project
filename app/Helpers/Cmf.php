@@ -8,6 +8,8 @@ use Auth;
 use Carbon\Carbon;
 use App\Models\orders;
 use App\Models\orderdetails;
+use App\Models\flags;
+use App\Models\escalate_cards;
 use Twilio\Rest\Client;
 use App\Models\orderstatus;
 use App\Models\activities;
@@ -18,6 +20,19 @@ use Illuminate\Support\Facades\Http;
 use OneSignal;
 class Cmf
 { 
+
+    public static function gerescalatedmainid($id)
+    {
+        $data = flags::find($id);
+        if($data->escalate)
+        {
+            $escalated = escalate_cards::where('id' , $data->escalate)->first();
+            $data = flags::find($escalated->flag_id);
+        }else{
+            $data = flags::find($id);
+        }
+        return $data->id;
+    }
     public static function get_file_extension($file_name) {
         return substr(strrchr($file_name,'.'),1);
     }

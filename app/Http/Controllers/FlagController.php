@@ -184,7 +184,8 @@ class FlagController extends Controller
     }
     public function getflagmodal(Request $request)
     {
-        $data = flags::find($request->id);
+        echo Cmf::gerescalatedmainid($request->id);exit;
+        $data = flags::find(Cmf::gerescalatedmainid($request->id));
         $comments = flag_comments::where('flag_id' , $request->id)->wherenull('comment_id')->orderby('id' , 'desc')->get();
         $html = view('flags.editmodal', compact('data','comments'))->render();
         return $html;
@@ -447,7 +448,6 @@ class FlagController extends Controller
             $addescalateflag->escalate = $add->id;
             $addescalateflag->save();
         }
-        
         if($flag->board_type == 'unit')
         {
             $business_units = DB::table('business_units')->where('id' , $flag->business_units)->first();
@@ -473,8 +473,6 @@ class FlagController extends Controller
             $addescalateflag->escalate = $add->id;
             $addescalateflag->save();
         }
-
-
     }
     public function savecomment(Request $request)
     {

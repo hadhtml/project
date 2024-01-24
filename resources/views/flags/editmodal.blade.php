@@ -57,7 +57,6 @@
                             </div>
                             <button id="moveflagbutton" type="submit" class="btn btn-primary btn-block">Move</button>
                         </form>
-                        
                     </div>
                     <div class="deleteflag" id="flagdelete{{ $data->id }}">
                         <div class="row">
