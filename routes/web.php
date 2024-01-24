@@ -66,6 +66,7 @@ Route::get('dashboard/organization/{id}/portfolio/{type}', [App\Http\Controllers
 Route::post('save-objective', [App\Http\Controllers\ObjectiveController::class, 'SaveObjective']);
 Route::post('update-objective', [App\Http\Controllers\ObjectiveController::class, 'UpdateObjective']);
 Route::post('Delete-objective', [App\Http\Controllers\ObjectiveController::class, 'DeleteObjective']);
+Route::get('get-obj-key-weight', [App\Http\Controllers\ObjectiveController::class, 'AllObjKeyWeight']);
 
 
 Route::post('save-objective-key', [App\Http\Controllers\ObjectiveController::class, 'SaveKeyObjective']);
@@ -204,8 +205,6 @@ Route::get('get-jira-project', [App\Http\Controllers\JiraController::class,'Jira
 
 Route::get('get-month', [App\Http\Controllers\MemberController::class,'GetMonth']);
 Route::get('Updatejira', [App\Http\Controllers\JiraController::class,'UpdateBujira']);
-//BackLogTeam
-Route::get('dashboard/organization/{id}/BT-Backlog/{type}', [App\Http\Controllers\TeamController::class, 'TeamBacklog'])->middleware('auth');
 Route::post('assign-teambacklog-epic', [App\Http\Controllers\TeamController::class,'AssignTeamBacklogEpic']);
 Route::post('update-teambacklog-epic', [App\Http\Controllers\TeamController::class,'UpdateTeamBacklogEpic']);
 Route::post('delete-team-backlog', [App\Http\Controllers\TeamController::class,'DeleteTeamBacklogEpic']);
@@ -258,6 +257,7 @@ Route::name('linking.')->namespace('App\Http\Controllers')->prefix('dashboard')-
 });
 
 Route::name('epicbacklog.')->namespace('App\Http\Controllers')->prefix('dashboard/epicbacklog')->group(function () {
+    Route::get('{id}/{type}', 'EpicBacklogController@index');
     Route::POST('getepic', 'EpicBacklogController@getepicmodal');
     Route::POST('showheader', 'EpicBacklogController@showheader');
     Route::POST('showtab', 'EpicBacklogController@showtab');
@@ -276,6 +276,8 @@ Route::name('epicbacklog.')->namespace('App\Http\Controllers')->prefix('dashboar
     Route::POST('saveepicflag', 'EpicBacklogController@saveepicflag');
     Route::POST('updateflagstatus', 'EpicBacklogController@updateflagstatus');
     Route::POST('flagupdate', 'EpicBacklogController@flagupdate');       
+    Route::POST('showdataintable', 'EpicBacklogController@showdataintable');
+    Route::get('clone/{id}/{type}', 'EpicBacklogController@cloneepic');
     // Route::POST('orderbycomment', 'EpicController@orderbycomment');
     // Route::POST('sortchilditem', 'EpicController@sortchilditem');
     // Route::POST('deletechilditem', 'EpicController@deletechilditem');
@@ -314,6 +316,7 @@ Route::name('epics.')->namespace('App\Http\Controllers')->prefix('dashboard/epic
     Route::POST('showlatestepicdatainmodal', 'EpicController@showlatestepicdatainmodal');
     Route::POST('saveepicflag', 'EpicController@saveepicflag');    
     Route::POST('removeteamfromepic', 'EpicController@removeteamfromepic');
+    Route::POST('showepicincard', 'EpicController@showepicincard');
     
 });
 
@@ -366,7 +369,7 @@ Route::post('delete-key-link', [App\Http\Controllers\TeamController::class,'Dele
 Route::get('get-obj-link', [App\Http\Controllers\TeamController::class,'GetValueLink']);
 Route::post('delete-obj-link', [App\Http\Controllers\TeamController::class,'DeleteTeamLinkObj']);
 Route::get('search-epic-team', [App\Http\Controllers\TeamController::class,'EpicTeamSearch']);
-Route::get('epic-clone/{id}/{type}', [App\Http\Controllers\MemberController::class,'clonEpic']);
+
 Route::get('dashboard/organization/{slug}/Unit-Team/dashboard', [App\Http\Controllers\TeamController::class,'BUTeamDashboard']);
 Route::get('dashboard/organization/{slug}/Unit-Team/dashboard', [App\Http\Controllers\TeamController::class,'BUTeamDashboard']);
 
