@@ -276,6 +276,7 @@ Route::name('epicbacklog.')->namespace('App\Http\Controllers')->prefix('dashboar
     Route::POST('updateflagstatus', 'EpicBacklogController@updateflagstatus');
     Route::POST('flagupdate', 'EpicBacklogController@flagupdate');       
     Route::POST('showdataintable', 'EpicBacklogController@showdataintable');
+    Route::get('clone/{id}/{type}', 'EpicBacklogController@cloneepic');
     // Route::POST('orderbycomment', 'EpicController@orderbycomment');
     // Route::POST('sortchilditem', 'EpicController@sortchilditem');
     // Route::POST('deletechilditem', 'EpicController@deletechilditem');
@@ -367,7 +368,7 @@ Route::post('delete-key-link', [App\Http\Controllers\TeamController::class,'Dele
 Route::get('get-obj-link', [App\Http\Controllers\TeamController::class,'GetValueLink']);
 Route::post('delete-obj-link', [App\Http\Controllers\TeamController::class,'DeleteTeamLinkObj']);
 Route::get('search-epic-team', [App\Http\Controllers\TeamController::class,'EpicTeamSearch']);
-Route::get('epic-clone/{id}/{type}', [App\Http\Controllers\MemberController::class,'clonEpic']);
+
 Route::get('dashboard/organization/{slug}/Unit-Team/dashboard', [App\Http\Controllers\TeamController::class,'BUTeamDashboard']);
 Route::get('dashboard/organization/{slug}/Unit-Team/dashboard', [App\Http\Controllers\TeamController::class,'BUTeamDashboard']);
 

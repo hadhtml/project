@@ -398,128 +398,35 @@ class EpicBacklogController extends Controller
         $flags->flag_status = $request->status;
         $flags->save();
     }
-    public function clonEpic($id,$type)
+    public function cloneepic($id,$type)
     {
-          
-   if($type == 'unit')
-   {    
-        $log = DB::table('backlog_unit')->where('id',$id)->first();
-        $count = DB::table('backlog_unit')->where('backlog_id',$id)->count();
-        $Pos = DB::table('backlog_unit')->orderby('id','DESC')->where('user_id',Auth::id())->first();
+        $log = DB::table('team_backlog')->where('id',$id)->first();
+        $count = DB::table('team_backlog')->where('backlog_id',$id)->count();
+        $Pos = DB::table('team_backlog')->orderby('id','DESC')->where('user_id',Auth::id())->first();
         $counterepic = 1;
         if($count > 0)
         {
             $counterepic = $count ++;
         }
         $counter = $Pos->position + 1;
-    DB::table('backlog_unit')->insertGetId([
- 
-        'epic_status' => $log->epic_status,
-        'epic_title' => $log->epic_title. '-Copy('.$counterepic.')',
-        'epic_detail' => $log->epic_detail,
-        'epic_start_date' => $log->epic_start_date,
-        'epic_end_date' => $log->epic_end_date,
-        'unit_id' => $log->unit_id,
-        'assign_status' => $log->assign_status,
-        'jira_id' => $log->jira_id,
-        'quarter' => $log->quarter,
-        'jira_project' => $log->jira_project,
-        'team_id' => $log->team_id,
-        'position' => $counter,
-        'account_id' => $log->account_id,
-        'user_id'  => Auth::id(),
-        'backlog_id'  => $id,
-    
-    
-        ]);
-
- 
-   }
-
-   if($type == 'stream')
-   {    
-   $log = DB::table('backlog')->where('id',$id)->first();
-//    $EpicId = DB::table('epic_clone')->where('backlog_id',$id)->first();
-   $Pos = DB::table('backlog')->orderby('id','DESC')->where('user_id',Auth::id())->first();
-   $count = DB::table('backlog')->where('backlog_id',$id)->count();
-
-   $counterepic = 1;
-   if($count > 0)
-   {
-    $counterepic = $count ++;
-   }
-   
-
-   $counter = $Pos->position + 1;
-    DB::table('backlog')->insertGetId([
- 
-     
-        'epic_status' => $log->epic_status,
-        'epic_title' => $log->epic_title. '-Copy('.$counterepic.')',
-        'epic_detail' => $log->epic_detail,
-        'epic_start_date' => $log->epic_start_date,
-        'epic_end_date' => $log->epic_end_date,
-        'unit_id' => $log->unit_id,
-        'assign_status' => $log->assign_status,
-        'jira_id' => $log->jira_id,
-        'quarter' => $log->quarter,
-        'jira_project' => $log->jira_project,
-        'team_id' => $log->team_id,
-        'position' => $counter,
-        'account_id' => $log->account_id,
-        'user_id'  => Auth::id(),
-        'stream_id' => $log->unit_id,
-        'backlog_id' => $id,
-    
-    
-    
-        ]);
-   
-   }
-
-   if($type == 'BU' || $type == 'org' || $type == 'orgT' || $type == 'VS' )
-   {    
-   $log = DB::table('team_backlog')->where('id',$id)->first();
-   $Pos = DB::table('team_backlog')->orderby('id','DESC')->where('user_id',Auth::id())->first();
-   $count = DB::table('team_backlog')->where('backlog_id',$id)->count();
-   $counterepic = 1;
-   if($count > 0)
-   {
-    $counterepic = $count ++;
-   }
-   
-   $counter = $Pos->position + 1;
-    DB::table('team_backlog')->insertGetId([
- 
-     
-        'epic_status' => $log->epic_status,
-        'epic_title' => $log->epic_title. '-Copy('.$counterepic.')',
-        'epic_detail' => $log->epic_detail,
-        'epic_start_date' => $log->epic_start_date,
-        'epic_end_date' => $log->epic_end_date,
-        'unit_id' => $log->unit_id,
-        'assign_status' => $log->assign_status,
-        'jira_id' => $log->jira_id,
-        'quarter' => $log->quarter,
-        'jira_project' => $log->jira_project,
-        'team_id' => $log->team_id,
-        'position' => $counter,
-        'account_id' => $log->account_id,
-        'user_id'  => Auth::id(),
-        'type' => $type,
-        'backlog_id' => $id,
-     
-    
-    
-    
-        ]);
-   
-   }
-
-
-    
-
-         return redirect()->back()->with('message', 'Epic Clone Successfully');
-
-  }
+        $add = new team_backlog();
+        $add->epic_status = $log->epic_status;
+        $add->epic_title = $log->epic_title. '-Copy('.$counterepic.')';
+        $add->epic_detail = $log->epic_detail;
+        $add->epic_start_date = $log->epic_start_date;
+        $add->epic_end_date = $log->epic_end_date;
+        $add->unit_id = $log->unit_id;
+        $add->assign_status = $log->assign_status;
+        $add->jira_id = $log->jira_id;
+        $add->quarter = $log->quarter;
+        $add->jira_project = $log->jira_project;
+        $add->team_id = $log->team_id;
+        $add->position = $counter;
+        $add->account_id = $log->account_id;
+        $add->type = $log->type;
+        $add->user_id = Auth::id();
+        $add->backlog_id = $id;
+        $add->save();
+        return redirect()->back()->with('message', 'Epic Clone Successfully');
+    }
 }

@@ -285,11 +285,11 @@ $var_objective = 'TBaclog-' . $type;
                         </button>
                         @if ($backlog->backlog_id == NULL)
                         <button class="btn-circle btn-tolbar">
-                           <a href="{{url('epic-clone/'.$backlog->id.'/'.$organization->type)}}" class="material-symbols-outlined" data-toggle="tooltip" data-placement="top" data-original-title="Clone Backlog" style="font-size: 18px;text-decoration: none;color: #3e413e;"> cyclone </a>
+                           <a href="{{url('dashboard/epicbacklog/clone/'.$backlog->id.'/'.$organization->type)}}" class="material-symbols-outlined" data-toggle="tooltip" data-placement="top" data-original-title="Clone Backlog" style="font-size: 18px;text-decoration: none;color: #3e413e;"> cyclone </a>
                         </button>
                         @else
                         <button class="btn-circle btn-tolbar">
-                           <a href="{{url('epic-clone/'.$backlog->backlog_id.'/'.$organization->type)}}" class="material-symbols-outlined" data-toggle="tooltip" data-placement="top" data-original-title="Clone Backlog" style="font-size: 18px;text-decoration: none;color: #3e413e;"> cyclone </a>
+                           <a href="{{url('dashboard/epicbacklog/clone/'.$backlog->backlog_id.'/'.$organization->type)}}" class="material-symbols-outlined" data-toggle="tooltip" data-placement="top" data-original-title="Clone Backlog" style="font-size: 18px;text-decoration: none;color: #3e413e;"> cyclone </a>
                         </button>
                         @endif   
                      </td>
