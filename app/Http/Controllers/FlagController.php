@@ -184,8 +184,7 @@ class FlagController extends Controller
     }
     public function getflagmodal(Request $request)
     {
-        echo Cmf::gerescalatedmainid($request->id);exit;
-        $data = flags::find(Cmf::gerescalatedmainid($request->id));
+        $data = flags::find($request->id);
         $comments = flag_comments::where('flag_id' , $request->id)->wherenull('comment_id')->orderby('id' , 'desc')->get();
         $html = view('flags.editmodal', compact('data','comments'))->render();
         return $html;
@@ -348,6 +347,13 @@ class FlagController extends Controller
     public function escalateflag(Request $request)
     {
         $flag = flags::find($request->id);
+        if($flag->escalate)
+        {
+            $escalated = escalate_cards::where('id' , $flag->escalate)->first();
+            $orignal_flag_id = $escalated->orignal_flag_id;
+        }else{
+            $orignal_flag_id = $request->id;
+        }
         if($flag->board_type == 'orgT')
         {
             $getteam = DB::table('org_team')->where('id' , $flag->business_units)->first();
@@ -357,6 +363,7 @@ class FlagController extends Controller
             $add->from = 'org_team';
             $add->to = 'organization';
             $add->from_id = $getteam->id;
+            $add->orignal_flag_id = $orignal_flag_id;
             $add->to_id = $unit->id;
             $add->save();
             // Save Flag to Escalate
@@ -382,6 +389,7 @@ class FlagController extends Controller
             $add->from = 'unit_team';
             $add->to = 'business_units';
             $add->from_id = $getteam->id;
+            $add->orignal_flag_id = $orignal_flag_id;
             $add->to_id = $unit->id;
             $add->save();
             // Save Flag to Escalate
@@ -407,6 +415,7 @@ class FlagController extends Controller
             $add->from = 'value_team';
             $add->to = 'value_stream';
             $add->from_id = $getstream->id;
+            $add->orignal_flag_id = $orignal_flag_id;
             $add->to_id = $unit->id;
             $add->save();
             // Save Flag to Escalate
@@ -432,6 +441,7 @@ class FlagController extends Controller
             $add->from = 'value_stream';
             $add->to = 'business_units';
             $add->from_id = $getstream->id;
+            $add->orignal_flag_id = $orignal_flag_id;
             $add->to_id = $unit->id;
             $add->save();
             // Save Flag to Escalate
@@ -457,6 +467,7 @@ class FlagController extends Controller
             $add->from = 'business_units';
             $add->to = 'organization';
             $add->from_id = $business_units->id;
+            $add->orignal_flag_id = $orignal_flag_id;
             $add->to_id = $organization->id;
             $add->save();
             // Save Flag to Escalate
@@ -532,29 +543,29 @@ class FlagController extends Controller
     {
         if($request->tab == 'general')
         {
-            $data = flags::find($request->id);
+            $data = flags::find(Cmf::gerescalatedmainid($request->id));
             $html = view('flags.tabs.general', compact('data'))->render();
             return $html;
         }
         if($request->tab == 'comment')
         {
-            $comments = flag_comments::where('flag_id' , $request->id)->wherenull('comment_id')->orderby('id' , 'desc')->get();
+            $comments = flag_comments::where('flag_id' , Cmf::gerescalatedmainid($request->id))->wherenull('comment_id')->orderby('id' , 'desc')->get();
             $data = flags::find($request->id);
             $html = view('flags.tabs.comments', compact('comments','data'))->render();
             return $html;
         }
         if($request->tab == 'activites')
         {
-            $activity = activities::where('value_id' , $request->id)->where('type' , 'flags')->orderby('id' , 'desc')->get();
-            $data = flags::find($request->id);
+            $activity = activities::where('value_id' , Cmf::gerescalatedmainid($request->id))->where('type' , 'flags')->orderby('id' , 'desc')->get();
+            $data = flags::find(Cmf::gerescalatedmainid($request->id));
             $html = view('flags.tabs.activities', compact('activity','data'))->render();
             return $html;
         }
         if($request->tab == 'attachment')
         {
-            $extensions = attachments::where('value_id' , $request->id)->groupBy('extension')->where('type' , 'flags')->orderby('id' , 'desc')->get();
-            $attachments = attachments::where('value_id' , $request->id)->where('type' , 'flags')->orderby('id' , 'desc')->get();
-            $data = flags::find($request->id);
+            $extensions = attachments::where('value_id' , Cmf::gerescalatedmainid($request->id))->groupBy('extension')->where('type' , 'flags')->orderby('id' , 'desc')->get();
+            $attachments = attachments::where('value_id' , Cmf::gerescalatedmainid($request->id))->where('type' , 'flags')->orderby('id' , 'desc')->get();
+            $data = flags::find(Cmf::gerescalatedmainid($request->id));
             $html = view('flags.tabs.attachments', compact('attachments','data','extensions'))->render();
             return $html;
         }

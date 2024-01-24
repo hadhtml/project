@@ -27,11 +27,11 @@ class Cmf
         if($data->escalate)
         {
             $escalated = escalate_cards::where('id' , $data->escalate)->first();
-            $data = flags::find($escalated->flag_id);
+            $data =  $escalated->orignal_flag_id;
         }else{
-            $data = flags::find($id);
+            $data =  $id;
         }
-        return $data->id;
+        return $data;
     }
     public static function get_file_extension($file_name) {
         return substr(strrchr($file_name,'.'),1);
