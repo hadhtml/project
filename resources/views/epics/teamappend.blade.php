@@ -1,5 +1,5 @@
 @foreach($teams as $r)
-<div class="col-md-12 memberprofile" onclick="selectteamforepic({{ $r->id }},{{ $update->id }})">
+<div class="col-md-12 memberprofile memberprofilecontroleight" onclick="selectteamforepic({{ $r->id }},{{ $update->id }})">
     <div class="row">
         <div class="col-md-2">
             <div class="memberprofileimage">
@@ -12,7 +12,7 @@
         </div>
         <div class="col-md-2 text-center mt-3">
             @if($update->team_id == $r->id)
-                <img class="tickimage" src="{{ url('public/assets/svg/smalltick.svg') }}">
+                <span class="material-symbols-outlined">cancel</span>
             @endif
         </div>
     </div>
@@ -25,4 +25,14 @@
         var imageData = new GIXI(300).getImage(); 
         element.setAttribute('src', imageData);
     });
+    @if(!$update->team_id)
+       $( document ).ready(function() {
+            $('.epicheaderteambutton').html("<img src='{{ url('public/assets/svg/btnteamsvg.svg') }}'' width='20'> Team");
+        }); 
+    @else
+        $( document ).ready(function() {
+            $('.epicheaderteambutton').html("<img src='{{ url('public/assets/svg/btnteamsvg.svg') }}'' width='20'> 1");
+            $('.epicheaderteambutton').css("width" , '90px');
+        }); 
+    @endif
 </script>

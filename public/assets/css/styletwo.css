@@ -1716,3 +1716,8 @@ button:focus {
 .customoption .d-flex {
     margin: 10px;
 }
+.memberprofilecontroleight{
+    height: 50px;
+    margin-bottom: 0;
+    padding-top: 3px;
+}

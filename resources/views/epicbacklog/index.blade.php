@@ -5,6 +5,9 @@ $var_objective = 'TBaclog-' . $type;
 if ($type == 'VS') {
 $var_objective = 'TBaclog-' . $type;
 }
+if ($type == 'stream') {
+$var_objective = 'TBaclog-' . $type;
+}
 if ($type == 'org') {
 $var_objective = 'TBaclog-' . $type;
 }

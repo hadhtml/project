@@ -39,14 +39,14 @@
         @if($data->team_id)
         <div class="members-list">
             <div id="members">
-                <a onclick="showmemberbox()" href="javascript:void(0)" class="epic-header-buttons" id="showboardbutton">
+                <a style="width: 90px;" onclick="showmemberbox()" href="javascript:void(0)" class="epic-header-buttons epicheaderteambutton" id="showboardbutton">
                     <img src="{{url('public/assets/svg/profile-2user.svg')}}" width="20"> 1
                 </a>
             </div>
         </div>
         @else
-        <a href="javascript:void(0)" onclick="showmemberbox()" class="epic-header-buttons" id="showboardbutton">
-            <img src="{{url('public/assets/svg/btnteamsvg.svg')}}" width="20">Team
+        <a href="javascript:void(0)" onclick="showmemberbox()" class="epic-header-buttons epicheaderteambutton" id="showboardbutton">
+            <img src="{{url('public/assets/svg/btnteamsvg.svg')}}" width="20"> Team
         </a>
         @endif
         <div class="memberlistposition">
@@ -73,7 +73,7 @@
                     @if($data->epic_type == 'unit')
                         @if(DB::table('unit_team')->where('org_id',$data->buisness_unit_id)->where('type' , 'BU')->count() > 0)
                             @foreach(DB::table('unit_team')->where('org_id',$data->buisness_unit_id)->where('type' , 'BU')->get() as $r)
-                                <div class="col-md-12 memberprofile" onclick="selectteamforepic({{$r->id}} , {{$data->id}})">
+                                <div class="col-md-12 memberprofile memberprofilecontroleight" onclick="selectteamforepic({{$r->id}} , {{$data->id}})">
                                     <div class="row">
                                         <div class="col-md-2">
                                             <div class="memberprofileimage">
@@ -86,7 +86,7 @@
                                         </div>
                                         <div class="col-md-2 text-center mt-3">
                                             @if($data->team_id == $r->id)
-                                            <img class="tickimage" src="{{ url('public/assets/svg/smalltick.svg') }}">
+                                            <span class="material-symbols-outlined">cancel</span>
                                             @endif
                                         </div>
                                     </div>
@@ -99,7 +99,7 @@
                     @if($data->epic_type == 'org')
                         @if(DB::table('org_team')->where('org_id',$data->buisness_unit_id)->where('type' , 'orgT')->count() > 0)
                             @foreach(DB::table('org_team')->where('org_id',$data->buisness_unit_id)->where('type' , 'orgT')->get() as $r)
-                                <div class="col-md-12 memberprofile" onclick="selectteamforepic({{$r->id}} , {{$data->id}})">
+                                <div class="col-md-12 memberprofile memberprofilecontroleight" onclick="selectteamforepic({{$r->id}} , {{$data->id}})">
                                     <div class="row">
                                         <div class="col-md-2">
                                             <div class="memberprofileimage">
@@ -112,7 +112,7 @@
                                         </div>
                                         <div class="col-md-2 text-center mt-3">
                                             @if($data->team_id == $r->id)
-                                            <img class="tickimage" src="{{ url('public/assets/svg/smalltick.svg') }}">
+                                            <span class="material-symbols-outlined">cancel</span>
                                             @endif
                                         </div>
                                     </div>
@@ -125,7 +125,7 @@
                     @if($data->epic_type == 'stream')
                         @if(DB::table('value_team')->where('org_id',$data->buisness_unit_id)->where('type' , 'VS')->count() > 0)
                             @foreach(DB::table('value_team')->where('org_id',$data->buisness_unit_id)->where('type' , 'VS')->get() as $r)
-                                <div class="col-md-12 memberprofile" onclick="selectteamforepic({{$r->id}} , {{$data->id}})">
+                                <div class="col-md-12 memberprofile memberprofilecontroleight" onclick="selectteamforepic({{$r->id}} , {{$data->id}})">
                                     <div class="row">
                                         <div class="col-md-2">
                                             <div class="memberprofileimage">
@@ -139,7 +139,7 @@
                                         </div>
                                         <div class="col-md-2 text-center mt-3">
                                             @if($data->team_id == $r->id)
-                                            <img class="tickimage" src="{{ url('public/assets/svg/smalltick.svg') }}">
+                                                <span class="material-symbols-outlined">cancel</span>
                                             @endif
                                         </div>
                                     </div>
@@ -151,7 +151,7 @@
                     @endif
                     @if($data->epic_type == 'stream')
                         @foreach(DB::table('value_team')->where('org_id',$data->buisness_unit_id)->where('type' , 'VS')->get() as $r)
-                            {{-- <div class="col-md-12 memberprofile" onclick="selectteamforepic({{$r->id}} , {{$data->id}})">
+                            {{-- <div class="col-md-12 memberprofile memberprofilecontroleight" onclick="selectteamforepic({{$r->id}} , {{$data->id}})">
                                 <div class="row">
                                     <div class="col-md-2">
                                         <div class="memberprofileimage">

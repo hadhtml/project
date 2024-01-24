@@ -246,6 +246,12 @@
             @include('Business-units.Team-sidebar')
             @endif
 
+            @if ($var_objective == 'TBaclog-stream')
+            @include('member.navbar')
+            @endif
+
+            
+
             @if ($var_objective == 'Org-Unit-dashboard')
                  
             @include('Business-units.unit-sidebar')
@@ -484,6 +490,9 @@
                 @include('Team.Team-breadcrumb')
                 @endif
                 @if ($var_objective == 'TBaclog-unit')
+                @include('Team.Team-breadcrumb')
+                @endif
+                @if ($var_objective == 'TBaclog-stream')
                 @include('Team.Team-breadcrumb')
                 @endif
 
