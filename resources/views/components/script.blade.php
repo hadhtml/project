@@ -385,6 +385,7 @@ $(function() {
 $('.flag-search').val('');
  $('.flag-search').multiselect({
    includeSelectAllOption:true,
+   numberDisplayed: 0
  });
 
 

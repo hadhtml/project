@@ -107,7 +107,6 @@ $var_objective = 'Report-'.$type;
                                 $diff = Carbon\Carbon::parse($Sprints->start_data)->diffInDays($epic->epic_trash);
 
                                 @endphp
-                                  @if($SprintInit)
                                     <tr>
                                         <td>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
@@ -139,7 +138,6 @@ $var_objective = 'Report-'.$type;
                                         @endphp
                                         <td class="cell-30-percent"><a href="{{url('dashboard/organization/report-init/'.$epic->epic_init_id.'/'.$sprint.'/'.$type)}}">@if($SprintInit){{$SprintInit->initiative_name}}@endif</a></td>
                                     </tr>
-                                    @endif
                               
                                    
                                     @endforeach
@@ -206,7 +204,6 @@ $var_objective = 'Report-'.$type;
                                 $diff = Carbon\Carbon::parse($Sprints->start_data)->diffInDays($epic->epic_trash);
 
                                @endphp
-                                 @if($SprintInit)
                                     <tr>
                                         <td>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
@@ -235,7 +232,6 @@ $var_objective = 'Report-'.$type;
                                        
                                         <td class="cell-30-percent"><a href="{{url('dashboard/organization/report-init/'.$epic->epic_init_id.'/'.$sprint.'/'.$type)}}">@if($SprintInit){{$SprintInit->initiative_name}}@endif</a></td>
                                     </tr>
-                                    @endif
                           
                                     @endforeach
                                   
@@ -302,7 +298,6 @@ $var_objective = 'Report-'.$type;
                                   $diff = Carbon\Carbon::parse($Sprints->start_data)->diffInDays($epic->epic_trash);
 
                                   @endphp
-                                    @if($SprintInit)
                                     <tr>
                                         <td>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
@@ -332,7 +327,6 @@ $var_objective = 'Report-'.$type;
                                         <td class="cell-30-percent"><a href="{{url('dashboard/organization/report-init/'.$epic->epic_init_id.'/'.$sprint.'/'.$type)}}">@if($SprintInit){{$SprintInit->initiative_name}}@endif</a></td>
 
                                     </tr>
-                                    @endif
                                     
                                     @endforeach
                                     

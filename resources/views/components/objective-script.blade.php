@@ -324,12 +324,8 @@
                     $('#updateflagmodalbuton').html('<i class="fa fa-check"></i> Success');
                     $("#updateflagmodalbuton" ).prop("disabled", false);
                     $('#updateflagmodalbuton').css('background-color', 'green');
-                    $('#parentCollapsible').html(res);
-                    $("#nestedCollapsible" + flag_epic_obj).collapse('toggle');
-                    $("#key-result" + flag_epic_key).collapse('toggle');
-                    $("#initiative" + flag_ini_epic_id).collapse('toggle');
+                    showepicincard();
                     rasiseflag()
-                    handleDivClick(flag_ini_epic_id);
                     showheader(flag_epic_id);
                     if($('#modaltab').val() == 'flags')
                     {
@@ -453,6 +449,33 @@
         $('#edit_obj_status').val(obj_status);
 
         getobjlink(obj_id);
+        getobjkeyweight(obj_id);
+    }
+
+    function getobjkeyweight(id) {
+
+    var type = "{{ $organization->type }}";
+    var unit_id = "{{ $organization->id }}";
+    $.ajax({
+    type: "GET",
+    url: "{{ url('get-obj-key-weight') }}",
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    data: {
+        id:id,
+        type:type,
+        unit_id:unit_id
+
+    },
+    success: function(res) {
+
+    $('#key-weight-data-obj').html(res);
+
+
+    }
+    });
+
     }
 
     function UpdateObjective() {
@@ -579,14 +602,17 @@
 
 
 
-    $(document).ready(function() {
-        $(document).on('input', '.range-slider__range-two', function() {
+    // $(document).ready(function() {
+    //     $(document).on('input', '.range-slider__range-two', function() {
             // console.log($(this).val());
-            $('.range-slider__range-two').val($(this).val());
-            $('#sliderValue').val($(this).val());
-            var slider = $('#sliderValue').val();
-            var obj = $('#key_obj_id').val();
-            var key_id = $('#key_id_weight_tab').val();
+
+            function slider_vale(key_id,weight,obj){
+            // console.log(key_id);
+            $('.range-slider__range-two' + key_id).val(weight);
+            $('#sliderValue' + key_id).val(weight);
+            var slider = $('#sliderValue' + key_id).val();
+            // var obj = $('#key_obj_id').val();
+            // var key_id = $('#key_id_weight_tab').val();
             $.ajax({
                 type: "GET",
                 url: "{{ url('check-key-weight') }}",
@@ -596,7 +622,7 @@
                 data: {
                     obj: obj,
                     slider: slider,
-                    key_id: key_id,
+                    key_id:key_id,
                 },
                 success: function(res) {
                     
@@ -608,9 +634,10 @@
                     }
                 }
             });
+        }
 
-        });
-    });
+    //     });
+    // });
 
 
     function saveKeyObjective() {
@@ -2103,12 +2130,12 @@
 
             },
             success: function(res) {
-                $('#success-sprint').html('<div class="alert alert-success" role="alert">Sprint Added successfully</div>');
+                $('#success-sprint').html('<div class="alert alert-success" role="alert">'+title+' has been Started</div>');
                 setTimeout(function() {
                     $('#create-report').modal('hide');
                     $('#success-sprint').html('');
                     $('#sprint-error').html('');
-                }, 1000);
+                }, 2000);
                 $('#savequarterbutton').html('Start');
                 $("#savequarterbutton" ).prop("disabled", false);
                 $('#sprint-end').html('<button class="button mr-1" onclick="endquarter();">End Quarter</button>');

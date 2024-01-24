@@ -472,13 +472,15 @@
                             </div>
                         </div>
 
-                        <div class="row ml-1">
+                        {{-- <div class="row ml-1">
                             <div class="col-md-12 link-data-obj">
                          
                                        
                                   
                             </div>
-                        </div>
+                        </div> --}}
+
+                        <div class="" id="key-weight-data-obj"></div>
 
                         <div class="col-md-12">
                             <button onclick="UpdateObjective();" id="updateobjectivebutton" type="button" class="btn btn-primary btn-lg btn-theme btn-block ripple">Update Objective</button>
