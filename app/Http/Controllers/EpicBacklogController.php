@@ -318,7 +318,12 @@ class EpicBacklogController extends Controller
     public function selectteamforepic(Request $request)
     {
         $update = team_backlog::find($request->epic_id);
-        $update->team_id = $request->id;
+        if($update->team_id == $request->id)
+        {
+            $update->team_id = Null;
+        }else{
+            $update->team_id = $request->id;
+        }
         $update->save();
         if($update->type == 'unit')
         {
