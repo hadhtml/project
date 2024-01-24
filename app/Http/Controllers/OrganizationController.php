@@ -387,7 +387,7 @@ class OrganizationController extends Controller
              $masterkey = array();
              $tempkey = array(); 
              $keyid = []; 
-             $key = DB::table('key_result')->whereIn('obj_id',$objid)->where('key_name','!=',NULL)->get();
+             $key = DB::table('key_result')->whereIn('obj_id',$objid)->get();
              foreach($key as $kk)
              {
              $keyid[] = $kk->id;  

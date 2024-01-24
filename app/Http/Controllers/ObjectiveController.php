@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Organization;
 use App\Models\epics_stroy;
 use App\Models\Epic;
+use App\Models\flags;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use DB;
@@ -2401,6 +2402,7 @@ if($objcount > 0)
 
     public function DeleteEpic(Request $request)
     {
+        DB::table('flags')->where('epic_id' ,  $request->epicid)->delete();
 
         DB::table("epics")
             ->where("id", $request->epicid)
@@ -2706,6 +2708,7 @@ if($objcount > 0)
         $childitem = epics_stroy::find($request->s_id);
         $childitem->epic_story_name = $request->title;
         $childitem->story_status = $request->story_status;
+        $childitem->description = $request->story_description;
         $childitem->story_type = $request->story_type;
         $childitem->story_assign = $request->story_assign;
         if($request->story_status == "Done")
@@ -3103,8 +3106,10 @@ if($objcount > 0)
     }
     public function checkkeyweight(Request $request)
     {
-        $nkey = DB::table("key_result")->where("obj_id", $request->obj)->sum("weight");
+        
+        $nkey = DB::table("key_result")->where("obj_id",$request->obj)->sum("weight");
         $keyid = DB::table("key_result")->where("id", $request->key_id)->first();
+      
         $oldsum = $nkey - $keyid->weight;
         $newvalue = $oldsum + $request->slider;
      
@@ -4674,6 +4679,22 @@ if($objcount > 0)
 }
 
 
+    }
+
+    public function AllObjKeyWeight(Request $request)
+    {
+        $keyid = DB::table("key_result")
+            ->where("obj_id", $request->id)
+            ->get();
+
+            $count = DB::table("key_result")
+            ->where("obj_id", $request->id)
+            ->count();
+
+        return view(
+            "objective.all-key-weight",
+            compact("keyid",'count')
+        );
     }
 
     public function getMonthEndDate($monthName)
