@@ -86,7 +86,7 @@ $var_objective = 'Report-'.$type;
                                                                     </clipPath>
                                                                   </defs>
                                                                 </svg>
-                                                                <span class="ml-2"><a href="{{url('dashboard/organization/report-2/'.$k->id.'/'.$report->id.'/'.$type)}}"> {{ $id }}.{{$k->key_name}}</span></a>
+                                                                <span class="ml-2"> {{ $id }}.{{$k->key_name}}</span>
                                                             </td>
                                                             <td class="text-center">@if($keyR){{$keyR->init_value}}@endif</td>
                                                             <td class="center"> @if($KEYChart){{$KEYChart->quarter_value}}@endif</td>

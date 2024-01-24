@@ -449,6 +449,33 @@
         $('#edit_obj_status').val(obj_status);
 
         getobjlink(obj_id);
+        getobjkeyweight(obj_id);
+    }
+
+    function getobjkeyweight(id) {
+
+    var type = "{{ $organization->type }}";
+    var unit_id = "{{ $organization->id }}";
+    $.ajax({
+    type: "GET",
+    url: "{{ url('get-obj-key-weight') }}",
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    data: {
+        id:id,
+        type:type,
+        unit_id:unit_id
+
+    },
+    success: function(res) {
+
+    $('#key-weight-data-obj').html(res);
+
+
+    }
+    });
+
     }
 
     function UpdateObjective() {
@@ -575,14 +602,17 @@
 
 
 
-    $(document).ready(function() {
-        $(document).on('input', '.range-slider__range-two', function() {
+    // $(document).ready(function() {
+    //     $(document).on('input', '.range-slider__range-two', function() {
             // console.log($(this).val());
-            $('.range-slider__range-two').val($(this).val());
-            $('#sliderValue').val($(this).val());
-            var slider = $('#sliderValue').val();
-            var obj = $('#key_obj_id').val();
-            var key_id = $('#key_id_weight_tab').val();
+
+            function slider_vale(key_id,weight,obj){
+            // console.log(key_id);
+            $('.range-slider__range-two' + key_id).val(weight);
+            $('#sliderValue' + key_id).val(weight);
+            var slider = $('#sliderValue' + key_id).val();
+            // var obj = $('#key_obj_id').val();
+            // var key_id = $('#key_id_weight_tab').val();
             $.ajax({
                 type: "GET",
                 url: "{{ url('check-key-weight') }}",
@@ -592,7 +622,7 @@
                 data: {
                     obj: obj,
                     slider: slider,
-                    key_id: key_id,
+                    key_id:key_id,
                 },
                 success: function(res) {
                     
@@ -604,9 +634,10 @@
                     }
                 }
             });
+        }
 
-        });
-    });
+    //     });
+    // });
 
 
     function saveKeyObjective() {

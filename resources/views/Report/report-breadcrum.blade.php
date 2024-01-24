@@ -28,9 +28,42 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                         <!--begin::Info-->
                         <div class="d-flex align-items-start flex-column flex-wrap mr-2">
                             <!--begin::Page Title-->
-                            <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
-                                Reports
-                            </h5>
+                           
+                        @if (url()->current() == url('Okr-report/'.$Sid.'/'.$organization->type))
+                         <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
+                            OKR Epics
+                        </h5>
+                        @elseif(url()->current() == url('Okr-report-3/'.$Sid.'/'.$organization->type))
+                        <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
+                            OKR Figures
+                        </h5>                                          
+                        @elseif(url()->current() == url('dashboard/organization/Okr-report-all/'.$Sid.'/'.$organization->type))
+                        <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
+                            Epics Completed
+                        </h5>
+                        @elseif(url()->current() == url('dashboard/organization/Okr-report-NC/'.$Sid.'/'.$organization->type))
+                        <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
+                            Epics Not Completed
+                        </h5>
+                        @elseif(url()->current() == url('dashboard/organization/Okr-report-remove/'.$Sid.'/'.$organization->type))
+                        <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
+                            Epics Removed
+                        </h5>
+                        @elseif(url()->current() == url('dashboard/organization/Okr-report-allepic/'.$Sid.'/'.$organization->type))
+                        <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
+                            All Epics
+                        </h5>    
+                        @else
+                        <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
+                            Report
+                        </h5> 
+                        @endif
+                       
+                                                                   
+
+                        
+                                                                
+                    
                             <div class="d-flex flex-row page-sub-titles">
                                 <div class="mr-2">
                                    @if($organization->type == 'unit')
@@ -107,9 +140,9 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                                                    <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->organization_name}}</a>
                                                    @endif --}}
                                                </div>
-                                               <div class="mr-2">
+                                               {{-- <div class="mr-2">
                                                    <p>Reports</p>
-                                               </div>
+                                               </div> --}}
                                                
                                                @if (url()->current() == url('Okr-report/'.$Sid.'/'.$organization->type))
                                                <div class="mr-2">

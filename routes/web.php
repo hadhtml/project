@@ -66,6 +66,7 @@ Route::get('dashboard/organization/{id}/portfolio/{type}', [App\Http\Controllers
 Route::post('save-objective', [App\Http\Controllers\ObjectiveController::class, 'SaveObjective']);
 Route::post('update-objective', [App\Http\Controllers\ObjectiveController::class, 'UpdateObjective']);
 Route::post('Delete-objective', [App\Http\Controllers\ObjectiveController::class, 'DeleteObjective']);
+Route::get('get-obj-key-weight', [App\Http\Controllers\ObjectiveController::class, 'AllObjKeyWeight']);
 
 
 Route::post('save-objective-key', [App\Http\Controllers\ObjectiveController::class, 'SaveKeyObjective']);

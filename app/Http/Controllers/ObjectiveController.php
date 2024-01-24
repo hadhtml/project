@@ -3106,8 +3106,10 @@ if($objcount > 0)
     }
     public function checkkeyweight(Request $request)
     {
-        $nkey = DB::table("key_result")->where("obj_id", $request->obj)->sum("weight");
+        
+        $nkey = DB::table("key_result")->where("obj_id",$request->obj)->sum("weight");
         $keyid = DB::table("key_result")->where("id", $request->key_id)->first();
+      
         $oldsum = $nkey - $keyid->weight;
         $newvalue = $oldsum + $request->slider;
      
@@ -4677,6 +4679,22 @@ if($objcount > 0)
 }
 
 
+    }
+
+    public function AllObjKeyWeight(Request $request)
+    {
+        $keyid = DB::table("key_result")
+            ->where("obj_id", $request->id)
+            ->get();
+
+            $count = DB::table("key_result")
+            ->where("obj_id", $request->id)
+            ->count();
+
+        return view(
+            "objective.all-key-weight",
+            compact("keyid",'count')
+        );
     }
 
     public function getMonthEndDate($monthName)
