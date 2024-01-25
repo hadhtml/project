@@ -204,7 +204,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                       <option value="Impediment">Impediment</option>
                        <option value="Blocker">Blocker</option>
                       <option value="Action">Action</option>
-                      <option value="null">No Flag</option>
+                      <option value="0">No Flag</option>
                      
                     </select>
                        <button class="btn-circle btn-tolbar bg-transparent" type="button" onclick="GetFagEpic();" >

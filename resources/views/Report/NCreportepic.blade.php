@@ -93,7 +93,9 @@ $var_objective = 'Report-'.$type;
                            
                             
                                 @php
-                                $SprintEpic = DB::table('sprint_report')->where('epic_prog','!=',100)->where('epic_remove','=','Added')->where('q_id',$sprint)->get();
+                                $SprintEpic = DB::table('sprint_report')->where('epic_prog','!=',100)->where('epic_remove','=','Added')->where('q_id',$sprint)->limit(10)->get();
+                                $SprintEpicCount = DB::table('sprint_report')->where('epic_prog','!=',100)->where('epic_remove','=','Added')->where('q_id',$sprint)->count();
+
                                 $Sprints = DB::table('sprint')->where('id',$sprint)->first();
 
                                 @endphp
@@ -137,20 +139,23 @@ $var_objective = 'Report-'.$type;
                                         <td class="cell-30-percent"><a href="{{url('dashboard/organization/report-init/'.$epic->epic_init_id.'/'.$sprint.'/'.$type)}}">@if($SprintInit){{$SprintInit->initiative_name}}@endif</a></td>
                                     </tr>
                                     @endif
-                              
-                                   
+                                    @php
+                                    $last_id = $epic->id;
+                                    @endphp                
                                     @endforeach
                                   
                                 </tbody>
+                                <tbody class="load-more">
+                                </tbody>    
                             </table>
                         </div>
                     </div>
                 </div>
 
-                @if(count($SprintEpic) > 10 )
-                <div class="row">
+                @if($SprintEpicCount > 10 )
+                <div class="row" id="see-less">
                     <div class="col-md-12 text-center">
-                        <button class="btn btn-default">
+                        <button class="btn btn-default" type="button" onclick="load_data({{$last_id}},'{{$sprint}}')">
                             See More
                         </button>
                     </div>
@@ -161,7 +166,57 @@ $var_objective = 'Report-'.$type;
     </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
+<script>
+
+ function load_data(id,sprint){
+  var type = "{{$type}}";
+  var page = 'NC-Epic';
+    $.ajax({
+        type: "POST",
+        url: "{{ url('loadmore') }}",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+        id:id,sprint:sprint,type:type,page:page
+        },
+        success: function(res) {
+           $('.load-more').html(res);
+           $('#see-less').html('<div class="col-md-12 text-center"><button class="btn btn-default" type="button" onclick="see_less('+id+','+"'"+sprint+"'"+')" >See Less</button></div>');
+
+
+        }
+        });
+ }
+
+ function see_less(id,sprint){
+  var type = "{{$type}}";
+  var org = "{{$organization->id}}";
+  var page = 'NC-Epic';
+    $.ajax({
+        type: "POST",
+        url: "{{ url('see-less-epic') }}",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+        sprint:sprint,type:type,org:org,page:page
+        },
+        success: function(res) {
+           $('.load-more').html(res);
+          $('#see-less').html('<div class="col-md-12 text-center"><button class="btn btn-default" type="button" onclick="load_data('+id+','+"'"+sprint+"'"+')" >See More</button></div>');
+
+
+        }
+        });
+ }
+ 
+
+
+
+</script>
 
 
     @endsection            
