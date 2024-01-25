@@ -144,10 +144,10 @@ $var_objective = "Org-Unit";
                 <form method="POST">
                  @csrf   
                  <input type="hidden" name="delete_id" id="delete_id" value="{{$unit->id}}">
-               
-                 <div id="show-error"></div>
+              
                 <div class="modal-body">
-                  
+                    <div class="modal-body-error">
+                    </div>
                 
                 <input type="text" name="bu_name"  id="bu_name{{$unit->id}}" class="form-control" placeholder="Write business unit name and hit confirm" required>
 
@@ -268,12 +268,12 @@ $var_objective = "Org-Unit";
                         <div class="col-md-12 col-lg-12 col-xl-12">
                             <div class="form-group mb-0">
                                 <select class="form-control" name="lead_manager" required>
-                                    <option value="NULL">Select Lead </option>
+                                    <option value="">Select Lead </option>
                                     <?php foreach(DB::table('members')->where('org_user',Auth::id())->get() as $r){ ?>
                                       <option value="{{ $r->id }}">{{ $r->name }} {{ $r->last_name }}</option>
                                     <?php }  ?>
                                 </select>
-                                <label for="lead-manager">Lead</label>
+                                <label for="lead-manager" style="bottom:72px">Lead</label>
                             </div>
                         </div>
                         @if($memberCount == 0)
@@ -339,12 +339,15 @@ $var_objective = "Org-Unit";
         success: function(res) {
          if(res == 1)
          {
-         $('#show-error').html('<div class="alert alert-danger" role="alert"> Please Enter Correct Business Units Name</div>');    
+         $('.modal-body-error').html('<div class="alert alert-danger" role="alert"> Please Enter Correct Business Units Name</div>');    
              
          }else
          {
-         $('#show-error').html('<div class="alert alert-success" role="alert"> Business Units Deleted Successfully</div>');
-         location.reload();
+         $('.modal-body-error').html('<div class="alert alert-success" role="alert"> Business Units Deleted Successfully</div>');
+        
+         setTimeout(function() {
+        location.reload();
+                }, 2000);
          } 
 
 
