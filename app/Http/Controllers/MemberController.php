@@ -144,6 +144,8 @@ class MemberController extends Controller
             $User  = User::find($request->user_id);;
             $User->name = $request->name;
             $User->status = $request->status;
+            $User->role = $request->role;
+
             $User->save();
         
         
@@ -1404,12 +1406,15 @@ $updateData = [
         $oldemail = User::where('id',$request->member)->first();
         $email = User::where('email',$request->email)->first();
 
-        if($oldemail->email == $email->email)
+        if($oldemail->email && !$email)
         {
         echo 1;     
-        }else
+        }elseif($oldemail->email == $request->email)
         {
         echo 2;    
+        }else
+        {
+         echo 3;   
         }
 
     }
@@ -1429,132 +1434,7 @@ $updateData = [
 
     }
     
-  public function clonEpic($id,$type)
-  {
-          
-   if($type == 'unit')
-   {    
-   $log = DB::table('backlog_unit')->where('id',$id)->first();
-//    $EpicId = DB::table('epic_clone')->where('backlog_id',$id)->first();
-     $count = DB::table('backlog_unit')->where('backlog_id',$id)->count();
-     $Pos = DB::table('backlog_unit')->orderby('id','DESC')->where('user_id',Auth::id())->first();
-   $counterepic = 1;
-   if($count > 0)
-   {
-    $counterepic = $count ++;
-   }
-   
-     $counter = $Pos->position + 1;
-    DB::table('backlog_unit')->insertGetId([
- 
-        'epic_status' => $log->epic_status,
-        'epic_title' => $log->epic_title. '-Copy('.$counterepic.')',
-        'epic_detail' => $log->epic_detail,
-        'epic_start_date' => $log->epic_start_date,
-        'epic_end_date' => $log->epic_end_date,
-        'unit_id' => $log->unit_id,
-        'assign_status' => $log->assign_status,
-        'jira_id' => $log->jira_id,
-        'quarter' => $log->quarter,
-        'jira_project' => $log->jira_project,
-        'team_id' => $log->team_id,
-        'position' => $counter,
-        'account_id' => $log->account_id,
-        'user_id'  => Auth::id(),
-        'backlog_id'  => $id,
-    
-    
-        ]);
 
- 
-   }
-
-   if($type == 'stream')
-   {    
-   $log = DB::table('backlog')->where('id',$id)->first();
-//    $EpicId = DB::table('epic_clone')->where('backlog_id',$id)->first();
-   $Pos = DB::table('backlog')->orderby('id','DESC')->where('user_id',Auth::id())->first();
-   $count = DB::table('backlog')->where('backlog_id',$id)->count();
-
-   $counterepic = 1;
-   if($count > 0)
-   {
-    $counterepic = $count ++;
-   }
-   
-
-   $counter = $Pos->position + 1;
-    DB::table('backlog')->insertGetId([
- 
-     
-        'epic_status' => $log->epic_status,
-        'epic_title' => $log->epic_title. '-Copy('.$counterepic.')',
-        'epic_detail' => $log->epic_detail,
-        'epic_start_date' => $log->epic_start_date,
-        'epic_end_date' => $log->epic_end_date,
-        'unit_id' => $log->unit_id,
-        'assign_status' => $log->assign_status,
-        'jira_id' => $log->jira_id,
-        'quarter' => $log->quarter,
-        'jira_project' => $log->jira_project,
-        'team_id' => $log->team_id,
-        'position' => $counter,
-        'account_id' => $log->account_id,
-        'user_id'  => Auth::id(),
-        'stream_id' => $log->unit_id,
-        'backlog_id' => $id,
-    
-    
-    
-        ]);
-   
-   }
-
-   if($type == 'BU' || $type == 'org' || $type == 'orgT' || $type == 'VS' )
-   {    
-   $log = DB::table('team_backlog')->where('id',$id)->first();
-   $Pos = DB::table('team_backlog')->orderby('id','DESC')->where('user_id',Auth::id())->first();
-   $count = DB::table('team_backlog')->where('backlog_id',$id)->count();
-   $counterepic = 1;
-   if($count > 0)
-   {
-    $counterepic = $count ++;
-   }
-   
-   $counter = $Pos->position + 1;
-    DB::table('team_backlog')->insertGetId([
- 
-     
-        'epic_status' => $log->epic_status,
-        'epic_title' => $log->epic_title. '-Copy('.$counterepic.')',
-        'epic_detail' => $log->epic_detail,
-        'epic_start_date' => $log->epic_start_date,
-        'epic_end_date' => $log->epic_end_date,
-        'unit_id' => $log->unit_id,
-        'assign_status' => $log->assign_status,
-        'jira_id' => $log->jira_id,
-        'quarter' => $log->quarter,
-        'jira_project' => $log->jira_project,
-        'team_id' => $log->team_id,
-        'position' => $counter,
-        'account_id' => $log->account_id,
-        'user_id'  => Auth::id(),
-        'type' => $type,
-        'backlog_id' => $id,
-     
-    
-    
-    
-        ]);
-   
-   }
-
-
-    
-
-         return redirect()->back()->with('message', 'Epic Clone Successfully');
-
-  }
 
     public function BUDashboard($id,$type)
     {
