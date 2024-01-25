@@ -109,7 +109,7 @@ $var_objective = "Member";
                                     </div>
                                     <div class="col-md-12 col-lg-12 col-xl-12">
                                        <div class="form-group mb-0">
-                                          <input type="email" class="form-control" onchange="checkemailedit(this.value)" value="{{$member->email}}" id="email_edit">
+                                          <input type="email" class="form-control" onfocusout="checkemailedit(this.value)" value="{{$member->email}}" id="email_edit">
                                           <label for="email" style="bottom:72px;">Email</label>
                                        </div>
                                     </div>
@@ -494,15 +494,19 @@ $var_objective = "Member";
    
            },
            success: function(res) {
-     
+         
            if(res == 1)
            {
          
            $('#edit-memeber').attr('disabled',false);
            $('.email-error-member').html('');
-           }else
+           }else if(res == 2)
            {
          
+            $('#edit-memeber').attr('disabled',false); 
+         //   $('.email-error-member').html('<strong class="text-danger">Email Already Taken</strong>');
+           }else
+           {
            $('#edit-memeber').attr('disabled',true); 
            $('.email-error-member').html('<strong class="text-danger">Email Already Taken</strong>');
            }
