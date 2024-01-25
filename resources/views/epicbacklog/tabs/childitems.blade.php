@@ -256,42 +256,6 @@ function getOrder(){
             </style>
 
             @if($epicstory->count() > 0)
-            <!-- <div class="rows">
-                <div class="child-items">
-                    <div class="child-item-chekbox-portions">
-                        <label class="form-checkboxs">
-                            <input class="form-check-inputs" id="bulkeditcheckbox" type="checkbox" onclick="bulkeditcheckbox()">
-                            <span class="checkbox-labels"></span>
-                        </label>
-                    </div>
-                    <div class="dropdown firstdropdownofcomments">
-                      <span class="dropdown-toggle orderbybutton bulkedit" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Bulk Actions
-                        <svg xmlns="http://www.w3.org/2000/svg" width="11" height="7" viewBox="0 0 11 7" fill="none">
-                          <path d="M10.8339 0.644857C10.6453 0.456252 10.3502 0.439106 10.1422 0.593419L10.0826 0.644857L5.49992 5.2273L0.917236 0.644857C0.72863 0.456252 0.433494 0.439106 0.225519 0.593419L0.165935 0.644857C-0.0226701 0.833463 -0.0398163 1.1286 0.114497 1.33657L0.165935 1.39616L5.12427 6.35449C5.31287 6.5431 5.60801 6.56024 5.81599 6.40593L5.87557 6.35449L10.8339 1.39616C11.0414 1.18869 11.0414 0.852323 10.8339 0.644857Z" fill="#787878"/>
-                        </svg> 
-                      </span>
-                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" onclick="deletechilditemsbulk()" href="javascript:void(0)">Delete</a>
-                        <a class="dropdown-item" onclick="deletechilditemsbulk()" href="javascript:void(0)">Bulk Edit</a>
-                      </div>
-                    </div>
-                </div>                
-            </div> -->
-            
-            <form method="POST" action="{{ url('dashboard/epics/bulkupdate') }}" id="bulkupdateform" class="sortable">
-                @csrf
-                <input type="hidden" value="{{ $epic->key_id }}" name="key_id">
-                <input type="hidden" value="{{ $epic->obj_id }}" name="obj_id">
-                <div class="rows deletealert" style="display:none;">
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <strong>Attention!</strong> Do you want to delete these Child Item? You won’t be able to undo this action.
-                    <div class="mt-3">
-                          <button type="submit" class="btn btn-primary btn-sm mr-2" id="submitBtn">Yes! Delete It</button>
-                          <button type="button" class="btn btn-default btn-sm" data-dismiss="alert">Cancel</button>
-                        </div>
-                    </div>         
-                </div>
                 @foreach($epicstory as $s)
                 <div class="row ui-state-default" style="cursor: pointer;" id="{{ $s->id }}">
                     <div class="child-item">
@@ -375,63 +339,98 @@ function getOrder(){
                         </div>
                     </div>
                     <div class="card comment-card storyaddcard editstorycard editstory{{$s->id}}">
-                        <div class="card-body"  >
+                        <div class="card-body">
+
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group mb-0">
-                                        <label for="objective-name">Title</label>
-                                        <input type="text" class="form-control" value="{{$s->epic_story_name}}" id="edit_story_title{{$s->id}}" required>
+                                        <label for="epic_story_name">Title</label>
+                                        <input type="text" name="epic_story_name" id="epic_story_name" class="form-control" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group mb-0">
-                                        <label for="small-description">Assignee</label>
-                                        <select class="form-control" id="edit_story_assign{{$s->id}}">
+                                        <label for="small-description">Assignee (optional)</label>
+                                        <select class="form-control" name="story_assign" id="story_assign">
                                             <option value="">Select Assignee</option>
-                                            <?php foreach(DB::table('members')->where('org_user',Auth::id())->get() as $r){ ?>
-                                              <option @if($r->id == $s->story_assign) selected @endif value="{{ $r->id }}">{{ $r->name }} {{ $r->last_name }}</option>
-                                            <?php }  ?>
+                                            @foreach(DB::table('members')->where('org_user',Auth::id())->get() as $r)
+                                              <option value="{{ $r->id }}">{{ $r->name }} {{ $r->last_name }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Type</label>
+                                        <div class="fieldouter">
+                                          <div class="inputfield">
+                                            <div class="selectbox">
+                                                <div id="selectedoptionsasdasdas" class="selected">
+                                                    <div class="d-flex sdasdasd">
+                                                        <span class="material-symbols-outlined">checklist</span> 
+                                                        <span class="ml-2">Select Type</span>
+                                                    </div>
+                                                </div>
+                                                <i class="selectarrow">&nbsp;</i>
+                                                <div class="selectOptionsbox">
+                                                    <div class="customoption" onclick="selectoption('task')">
+                                                        <div class="d-flex">
+                                                            <span class="material-symbols-outlined">task</span> 
+                                                            <span class="ml-2">Task</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="customoption" onclick="selectoption('story')">
+                                                        <div class="d-flex">
+                                                            <span class="material-symbols-outlined">auto_stories</span> 
+                                                            <span class="ml-2">Story</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="customoption" onclick="selectoption('bug')">
+                                                        <div class="d-flex">
+                                                            <span class="material-symbols-outlined">bug_report</span> 
+                                                            <span class="ml-2">Bug</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" value="Task" required class="story_type_asign_select" name="story_type">
+                                </div>
+                                <div class="col-md-12">
                                     <div class="form-group mb-0">
-                                       <label for="small-description">Type</label>
-                                       <select required class="form-control edit_story_type{{$s->id}}">
-                                        <option @if($s->story_type == 'Task') selected @endif  value="Task">Task</option>
-                                        <option @if($s->story_type == 'Bug') selected @endif value="Bug">Bug</option>
-                                         <option @if($s->story_type == 'Story') selected @endif value="Story">Story</option>
-                                       </select>
+                                        <label for="epic_story_name">Description</label>
+                                        <input type="text" name="description" class="form-control" required>
                                     </div>
                                 </div>
                             </div>
-                            <input type="hidden" value="{{ $s->story_status }}" id="storystatus{{$s->id}}" class="edit_story_status{{$s->id}}">
+                            <input type="hidden" value="To Do" id="storystatusnew" name="story_status">
                             <div class="row mt-3">
                                 <div class="col-md-6">
                                     <div class="dropdown firstdropdownofcomments">
-                                      <span class="dropdown-toggle" type="button" id="dropdown{{$s->id}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Status {{ $s->story_status }}
+                                      <span class="dropdown-toggle" type="button" id="dropdownnew" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Status To Do
                                         <svg xmlns="http://www.w3.org/2000/svg" width="11" height="7" viewBox="0 0 11 7" fill="none">
                                           <path d="M10.8339 0.644857C10.6453 0.456252 10.3502 0.439106 10.1422 0.593419L10.0826 0.644857L5.49992 5.2273L0.917236 0.644857C0.72863 0.456252 0.433494 0.439106 0.225519 0.593419L0.165935 0.644857C-0.0226701 0.833463 -0.0398163 1.1286 0.114497 1.33657L0.165935 1.39616L5.12427 6.35449C5.31287 6.5431 5.60801 6.56024 5.81599 6.40593L5.87557 6.35449L10.8339 1.39616C11.0414 1.18869 11.0414 0.852323 10.8339 0.644857Z" fill="#787878"/>
                                         </svg> 
                                       </span>
                                       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" onclick="selectstorystatus('To Do' , {{$s->id}})" href="javascript:void(0)">To Do</a>
-                                        <a class="dropdown-item" onclick="selectstorystatus('In progress' , {{$s->id}})" href="javascript:void(0)">In Progress</a>
-                                        <a class="dropdown-item" onclick="selectstorystatus('Done' , {{$s->id}})" href="javascript:void(0)">Done</a>
+                                        <a class="dropdown-item" onclick="selectstorystatus('To Do' , 'new')" href="javascript:void(0)">To Do</a>
+                                        <a class="dropdown-item" onclick="selectstorystatus('In progress' , 'new')" href="javascript:void(0)">In Progress</a>
+                                        <a class="dropdown-item" onclick="selectstorystatus('Done' , 'new')" href="javascript:void(0)">Done</a>
                                       </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6 text-right">
-                                    <span onclick="editstorynew({{$s->id}})" class="btn btn-default btn-sm">Cancel</span>
-                                    <span type="button" onclick="updatestory({{$s->id}});" id="updateitembutton{{ $s->id }}" class="btn btn-primary btn-sm">Update</span>
+                                    <span onclick="additem()" class="btn btn-default btn-sm">Cancel</span>
+                                    <button type="submit" class="btn btn-primary btn-sm createitembutton">Save</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 @endforeach
-            </form>
             @else
                 <div class="nodatafound">
                     <h4>No Child Items</h4>    
