@@ -430,15 +430,15 @@ elements.forEach(function(element) {
     element.setAttribute('src', imageData);
 });
 
-$('.simpleform').on('submit', function(e) {
+// $('.simpleform').on('submit', function(e) {
 
-if($('div.checkbox-group.required :checkbox:checked').length > 0)
-{
-this.submit(); 
-}else{
- return false;  
-}
-});
+// if($('div.checkbox-group.required :checkbox:checked').length > 0)
+// {
+// this.submit(); 
+// }else{
+//  return false;  
+// }
+// });
 
 </script>                    
     
