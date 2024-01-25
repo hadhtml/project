@@ -167,8 +167,11 @@ class KeyresultController extends Controller
         }
         if($request->tab == 'weighttab')
         {
-            $data = key_result::find($request->id);
-            $html = view('keyresult.tabs.weight', compact('data'))->render();
+            // $data = key_result::find($request->id);
+            $InitData = DB::table('initiative')->where('key_id',$request->id)->get();
+            $InitDataCount = DB::table('initiative')->where('key_id',$request->id)->count();
+
+            $html = view('keyresult.tabs.init-weight', compact('InitData','InitDataCount'))->render();
             return $html;
         }
         if($request->tab == 'charts')
@@ -200,7 +203,7 @@ class KeyresultController extends Controller
           'value' => $request->value,
         ]);
         $data = key_result::find($request->id);
-        $report = DB::table('sprint')->where('user_id',Auth::id())->where('status',NULL)->where('value_unit_id',$data->unit_id)->first();
+        $report = DB::table('sprint')->where('user_id',Auth::id())->where('status',NULL)->where('value_unit_id',$data->unit_id)->where('type',$data->type)->first();
         $KEYChart =  DB::table('key_chart')->where('key_id',$request->id)->where('IndexCount',$report->IndexCount)->first();
         $key = key_result::find($request->id);
         $keyQAll = DB::table('key_chart')->where('key_id',$request->id)->get();    

@@ -3212,11 +3212,19 @@ if($objcount > 0)
 
     public function checkinitiativeweighteditfirst(Request $request)
     {
-        $key = DB::table("initiative")->where("key_id", $request->key)->sum("initiative_weight");
+        $key = DB::table("initiative")->where("key_id",$request->key)->sum("initiative_weight");
         $keyid = DB::table("initiative")->where("id", $request->init)->first();
+
         $oldsum = $key - $keyid->initiative_weight;
         $newvalue = $oldsum + $request->sliderValue;
-        return response()->json(["key" => $newvalue, "keyid" => $keyid]);
+     
+        if($newvalue <= 100.0)
+        {
+            DB::table('initiative')->where('id' , $request->init)->update(array('initiative_weight' => $request->sliderValue));
+        }
+
+       
+        return response()->json(["key" => $newvalue]);
     }
 
     public function UpdateEpicFlag(Request $request)

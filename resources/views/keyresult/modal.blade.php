@@ -18,9 +18,9 @@
                     <li id="values" onclick="showtab({{$data->id}} , 'values')" class="tabsclass">
                         <span class="material-symbols-outlined"> database </span> Values
                     </li>
-                    {{-- <li id="weighttab" onclick="showtab({{$data->id}} , 'weighttab')" class="tabsclass">
+                    <li id="weighttab" onclick="showtab({{$data->id}} , 'weighttab')" class="tabsclass">
                         <span class="material-symbols-outlined"> weight </span> Weight
-                    </li> --}}
+                    </li>
                     <!-- <li id="charts" onclick="showtab({{$data->id}} , 'charts')" class="tabsclass">
                         <span class="material-symbols-outlined">monitoring</span> Charts
                     </li> -->

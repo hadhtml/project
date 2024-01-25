@@ -552,7 +552,7 @@
                         <span id="initiative-feild-error" class="text-danger"></span>
                     </div>
                 </div>
-                <!-- <div class="row">
+                {{-- <div class="row">
                     <div class="col-md-12">
                         <label class="checkbox checkbox-lg mb-3 ml-4">
 
@@ -564,7 +564,7 @@
 
                         </label>
                     </div>
-                </div> -->
+                </div> --}}
                 <div class="row">
                     <div class="col-md-12">
                         <form class="needs-validation" method="POST" action="#" novalidate>
