@@ -37,7 +37,7 @@ class FlagController extends Controller
         {
             $flagtype = 'Blocker';
         }
-        if($flagtype == 'impediment')
+        if($flagtype == 'impediments')
         {
             $flagtype = 'Impediment';
         }
