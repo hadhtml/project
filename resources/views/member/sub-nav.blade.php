@@ -119,9 +119,36 @@ $Unit = DB::table('business_units')->where('user_id',Auth::id())->where('id',$or
                 <div class="mr-2">
                     Impediments
                 </div>
-                <!-- <div>
-                    <span class="badge btn-circle-xs badge-warning text-sm">2</span>
-                </div> -->
+            </a>
+        </li>
+        <li class="mb-1">
+            <a href="{{url('dashboard/flags/'.$organization->slug.'/risk/stream')}}" @if (url()->current() == url('dashboard/flags/'.$organization->slug.'/risk/stream')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
+                <div class="mr-2">
+                    <span style="font-size:22px" class="material-symbols-outlined">emergency</span>
+                </div>
+                <div class="mr-2">
+                    Risk
+                </div>
+            </a>
+        </li>
+        <li class="mb-1">
+            <a href="{{url('dashboard/flags/'.$organization->slug.'/blocker/stream')}}" @if (url()->current() == url('dashboard/flags/'.$organization->slug.'/blocker/stream')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
+                <div class="mr-2">
+                    <span style="font-size:22px" class="material-symbols-outlined">block</span>
+                </div>
+                <div class="mr-2">
+                    Blocker
+                </div>
+            </a>
+        </li>
+        <li class="mb-1">
+            <a href="{{url('dashboard/flags/'.$organization->slug.'/action/stream')}}" @if (url()->current() == url('dashboard/flags/'.$organization->slug.'/action/stream')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
+                <div class="mr-2">
+                    <span style="font-size:22px" class="material-symbols-outlined">call_to_action</span>
+                </div>
+                <div class="mr-2">
+                    Action
+                </div>
             </a>
         </li>
 
