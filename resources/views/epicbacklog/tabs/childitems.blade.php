@@ -208,53 +208,10 @@ function getOrder(){
             }
         });
     }));
-
 </script>
 <div class="row mt-5">
     <div class="activity-feed  col-md-12">
         <div class="col-md-12 col-lg-12 col-xl-12" style="position: relative;">
-            <style type="text/css">
-                .rows {
-                    display: flex;
-                    flex-wrap: wrap;
-                    margin-right: -15px;
-                    margin-left: -15px;
-                }
-                .child-items {
-                    display: flex;
-                    width: 100%;
-                    margin-top: 10px;
-                    margin-bottom: 3px;
-                    padding-bottom: 10px;
-                    border-bottom: 1px dotted #ddd;
-                }
-                .child-item-chekbox-portions {
-                    width: 7%;
-                    display: flex;
-                    margin-top: 5px;
-                }
-                .form-checkboxs{
-                display: flex;
-                margin-bottom: 0.5rem;
-                }
-                input[type="checkbox"]:checked {
-                    background-color: #3661EC;
-                }
-                .child-items-id {
-                    margin-right: 45px;
-                    margin-left: 20px;
-                }
-                .child-items-tittle {
-                    width: 40%;
-                    text-align: center;
-                }
-                .child-items-actions {
-                    width: 35%;
-                    text-align: center;
-                }
-
-            </style>
-
             @if($epicstory->count() > 0)
                 @foreach($epicstory as $s)
                 <div class="row ui-state-default" style="cursor: pointer;" id="{{ $s->id }}">
@@ -272,7 +229,7 @@ function getOrder(){
                                 <span class="material-symbols-outlined">task</span> <span style="position:absolute;margin-left: 5px;">{{ $s->StoryID }}</span> 
                                 @endif
                                 @if($s->story_type == 'Story')
-                                <span class="material-symbols-outlined">cycle</span> <span style="position:absolute;margin-left: 5px;">{{ $s->StoryID }}</span> 
+                                <span class="material-symbols-outlined">auto_stories</span> <span style="position:absolute;margin-left: 5px;">{{ $s->StoryID }}</span> 
                                 @endif
                             </div>
                         </div>
@@ -340,93 +297,122 @@ function getOrder(){
                     </div>
                     <div class="card comment-card storyaddcard editstorycard editstory{{$s->id}}">
                         <div class="card-body">
-
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group mb-0">
-                                        <label for="epic_story_name">Title</label>
-                                        <input type="text" name="epic_story_name" id="epic_story_name" class="form-control" required>
+                            <form class="updatechlditem{{ $s->id }}" method="POST" action="{{ url('dashboard/epicbacklog/updatechlditem') }}">
+                                @csrf
+                                <input type="hidden" value="{{ $s->id }}" name="id">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group mb-0">
+                                            <label for="epic_story_name">Title</label>
+                                            <input type="text" value="{{ $s->epic_story_name }}" name="epic_story_name" id="epic_story_name" class="form-control" required>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group mb-0">
-                                        <label for="small-description">Assignee (optional)</label>
-                                        <select class="form-control" name="story_assign" id="story_assign">
-                                            <option value="">Select Assignee</option>
-                                            @foreach(DB::table('members')->where('org_user',Auth::id())->get() as $r)
-                                              <option value="{{ $r->id }}">{{ $r->name }} {{ $r->last_name }}</option>
-                                            @endforeach
-                                        </select>
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-0">
+                                            <label for="small-description">Assignee (optional)</label>
+                                            <select class="form-control" name="story_assign" id="story_assign">
+                                                <option value="">Select Assignee</option>
+                                                @foreach(DB::table('members')->where('org_user',Auth::id())->get() as $r)
+                                                  <option @if($s->story_assign == $r->id) selected @endif value="{{ $r->id }}">{{ $r->name }} {{ $r->last_name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Type</label>
-                                        <div class="fieldouter">
-                                          <div class="inputfield">
-                                            <div class="selectbox">
-                                                <div id="selectedoptionsasdasdas" class="selected">
-                                                    <div class="d-flex sdasdasd">
-                                                        <span class="material-symbols-outlined">checklist</span> 
-                                                        <span class="ml-2">Select Type</span>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Type</label>
+                                            <div class="fieldouter">
+                                              <div class="inputfield">
+                                                <div class="selectbox">
+                                                    <div id="selectedoptionsasdasdas" class="selected">
+                                                        <div class="d-flex sdasdasd{{ $s->id }}">
+                                                            @if($s->story_type == 'Bug')
+                                                            <span class="material-symbols-outlined">bug_report</span>
+                                                            @endif
+                                                            @if($s->story_type == 'Task')
+                                                            <span class="material-symbols-outlined">task</span>
+                                                            @endif
+                                                            @if($s->story_type == 'Story')
+                                                            <span class="material-symbols-outlined">auto_stories</span>
+                                                            @endif
+                                                            <span class="ml-2">{{ $s->story_type }}</span>
+                                                        </div>
+                                                    </div>
+                                                    <i class="selectarrow">&nbsp;</i>
+                                                    <div class="selectOptionsbox">
+                                                        <div class="customoption" onclick="selectoptionedit('task' , {{$s->id}})">
+                                                            <div class="d-flex">
+                                                                <span class="material-symbols-outlined">task</span> 
+                                                                <span class="ml-2">Task</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="customoption" onclick="selectoptionedit('story', {{$s->id}})">
+                                                            <div class="d-flex">
+                                                                <span class="material-symbols-outlined">auto_stories</span> 
+                                                                <span class="ml-2">Story</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="customoption" onclick="selectoptionedit('bug', {{$s->id}})">
+                                                            <div class="d-flex">
+                                                                <span class="material-symbols-outlined">bug_report</span> 
+                                                                <span class="ml-2">Bug</span>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <i class="selectarrow">&nbsp;</i>
-                                                <div class="selectOptionsbox">
-                                                    <div class="customoption" onclick="selectoption('task')">
-                                                        <div class="d-flex">
-                                                            <span class="material-symbols-outlined">task</span> 
-                                                            <span class="ml-2">Task</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="customoption" onclick="selectoption('story')">
-                                                        <div class="d-flex">
-                                                            <span class="material-symbols-outlined">auto_stories</span> 
-                                                            <span class="ml-2">Story</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="customoption" onclick="selectoption('bug')">
-                                                        <div class="d-flex">
-                                                            <span class="material-symbols-outlined">bug_report</span> 
-                                                            <span class="ml-2">Bug</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                              </div>
                                             </div>
+                                        </div>
+                                        <input type="hidden" value="{{ $s->story_type }}" required class="story_type_asign_select{{ $s->id }}" name="story_type">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group mb-0">
+                                            <label for="epic_story_name">Description</label>
+                                            <input type="text" value="{{ $s->description }}" name="description" class="form-control" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="hidden" value="{{ $s->story_status }}" id="storystatus{{ $s->id }}" name="story_status">
+                                <div class="row mt-3">
+                                    <div class="col-md-6">
+                                        <div class="dropdown firstdropdownofcomments">
+                                          <span class="dropdown-toggle" type="button" id="dropdown{{ $s->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Status {{ $s->story_status }}
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="7" viewBox="0 0 11 7" fill="none">
+                                              <path d="M10.8339 0.644857C10.6453 0.456252 10.3502 0.439106 10.1422 0.593419L10.0826 0.644857L5.49992 5.2273L0.917236 0.644857C0.72863 0.456252 0.433494 0.439106 0.225519 0.593419L0.165935 0.644857C-0.0226701 0.833463 -0.0398163 1.1286 0.114497 1.33657L0.165935 1.39616L5.12427 6.35449C5.31287 6.5431 5.60801 6.56024 5.81599 6.40593L5.87557 6.35449L10.8339 1.39616C11.0414 1.18869 11.0414 0.852323 10.8339 0.644857Z" fill="#787878"/>
+                                            </svg> 
+                                          </span>
+                                          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" onclick="selectstorystatus('To Do' , {{ $s->id }})" href="javascript:void(0)">To Do</a>
+                                            <a class="dropdown-item" onclick="selectstorystatus('In progress' , {{ $s->id }})" href="javascript:void(0)">In Progress</a>
+                                            <a class="dropdown-item" onclick="selectstorystatus('Done' ,{{ $s->id }})" href="javascript:void(0)">Done</a>
                                           </div>
                                         </div>
                                     </div>
-                                    <input type="hidden" value="Task" required class="story_type_asign_select" name="story_type">
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group mb-0">
-                                        <label for="epic_story_name">Description</label>
-                                        <input type="text" name="description" class="form-control" required>
+                                    <div class="col-md-6 text-right">
+                                        <span onclick="additem()" class="btn btn-default btn-sm">Cancel</span>
+                                        <button type="submit" class="btn btn-primary btn-sm createitembutton{{ $s->id }}">Save</button>
                                     </div>
                                 </div>
-                            </div>
-                            <input type="hidden" value="To Do" id="storystatusnew" name="story_status">
-                            <div class="row mt-3">
-                                <div class="col-md-6">
-                                    <div class="dropdown firstdropdownofcomments">
-                                      <span class="dropdown-toggle" type="button" id="dropdownnew" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Status To Do
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="11" height="7" viewBox="0 0 11 7" fill="none">
-                                          <path d="M10.8339 0.644857C10.6453 0.456252 10.3502 0.439106 10.1422 0.593419L10.0826 0.644857L5.49992 5.2273L0.917236 0.644857C0.72863 0.456252 0.433494 0.439106 0.225519 0.593419L0.165935 0.644857C-0.0226701 0.833463 -0.0398163 1.1286 0.114497 1.33657L0.165935 1.39616L5.12427 6.35449C5.31287 6.5431 5.60801 6.56024 5.81599 6.40593L5.87557 6.35449L10.8339 1.39616C11.0414 1.18869 11.0414 0.852323 10.8339 0.644857Z" fill="#787878"/>
-                                        </svg> 
-                                      </span>
-                                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" onclick="selectstorystatus('To Do' , 'new')" href="javascript:void(0)">To Do</a>
-                                        <a class="dropdown-item" onclick="selectstorystatus('In progress' , 'new')" href="javascript:void(0)">In Progress</a>
-                                        <a class="dropdown-item" onclick="selectstorystatus('Done' , 'new')" href="javascript:void(0)">Done</a>
-                                      </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 text-right">
-                                    <span onclick="additem()" class="btn btn-default btn-sm">Cancel</span>
-                                    <button type="submit" class="btn btn-primary btn-sm createitembutton">Save</button>
-                                </div>
-                            </div>
+                            </form>
+                            <script type="text/javascript">
+                                $('.updatechlditem{{ $s->id }}').on('submit',(function(e) {
+                                    $('.createitembutton{{ $s->id }}').html('<i class="fa fa-spin fa-spinner"></i>');
+                                    e.preventDefault();
+                                    var formData = new FormData(this);
+                                    $.ajax({
+                                        type:'POST',
+                                        url: $(this).attr('action'),
+                                        data:formData,
+                                        cache:false,
+                                        contentType: false,
+                                        processData: false,
+                                        success: function(data){
+                                            $('.secondportion').html(data);
+                                        }
+                                    });
+                                }));
+                            </script>
                         </div>
                     </div>
                 </div>
@@ -534,47 +520,13 @@ function childcheckbox() {
         $('#bulkeditcheckbox').prop("checked", false);
     }
 }
-
-
-function updatestory(s_id) {
-    $('#updateitembutton'+s_id).html('<i class="fa fa-spin fa-spinner"></i>');
-    // var title = $('#title'+s_id).val();
-    var title = $('#edit_story_title' + s_id).val();
-    var story_status = $('.edit_story_status' + s_id).val();
-    var story_type = $('.edit_story_type' + s_id).val();
-    var story_assign = $('#edit_story_assign' + s_id).val();
-    var key = $('#edit_epic_key').val();
-    var obj = $('#edit_epic_obj').val();
-    if (title != '') {
-        $.ajax({
-            type: "POST",
-            url: "{{ url('update-story') }}",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: {
-                s_id: s_id,
-                title: title,
-                story_status: story_status,
-                story_type: story_type,
-                story_assign: story_assign,
-                key: key,
-                obj: obj
-
-            },
-            success: function(res) {
-                showtabwithoutloader('{{$epic->id}}' , 'childitems');
-            }
-        });
-    }
-}
 function deletechilditem(id) {
     $('#deletebutton'+id).html('<i class="fa fa-spin fa-spinner"></i>');
     var key = '{{ $epic->key_id }}';
     var obj = '{{ $epic->obj_id }}';
     $.ajax({
         type: "POST",
-        url: "{{ url('dashboard/epics/deletechilditem') }}",
+        url: "{{ url('dashboard/epicbacklog/deletechilditem') }}",
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
@@ -585,7 +537,6 @@ function deletechilditem(id) {
         },
         success: function(res) {
             showtabwithoutloader('{{$epic->id}}' , 'childitems');
-            $('#deletebutton'+id).html('Delete');
         }
     });
 }
@@ -650,10 +601,26 @@ function selectoption(id) {
         $('.sdasdasd').html('<div class="d-flex"><span class="material-symbols-outlined">bug_report</span><span class="ml-2">Bug</span></div>');
         $('.story_type_asign_select').val('Bug');
     }
-
     $('.selectOptionsbox').toggleClass('active');
-
-
+}
+function selectoptionedit(id , value) {
+    if(id == 'task')
+    {
+        $('.sdasdasd'+value).html('<span class="material-symbols-outlined">task</span><span class="ml-2">Task</span>');
+        $('.story_type_asign_select'+value).val('Task');
+    }
+    if(id == 'story')
+    {
+        $('.sdasdasd'+value).html('<div class="d-flex"><span class="material-symbols-outlined">auto_stories</span><span class="ml-2">Story</span></div>');
+        $('.story_type_asign_select'+value).val('Story');
+        
+    }
+    if(id == 'bug')
+    {
+        $('.sdasdasd'+value).html('<div class="d-flex"><span class="material-symbols-outlined">bug_report</span><span class="ml-2">Bug</span></div>');
+        $('.story_type_asign_select'+value).val('Bug');
+    }
+    $('.selectOptionsbox').toggleClass('active');
 }
 $(document).ready( function(touch) {
   $('.selectbox .selected').click(function(){

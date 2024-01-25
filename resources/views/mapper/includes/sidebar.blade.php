@@ -14,7 +14,7 @@
             </li>
             <li>
                 <a href="{{ url('dashboard/okr-mapper') }}"  @if (url()->current() == url('okr-mapper')) class="active-link" @else class="nav-link"  @endif  title="" data-toggle="tooltip" data-placement="right" data-original-title="OKR Mapper">
-                    <span class="material-symbols-outlined">action_key</span>
+                    <span class="material-symbols-outlined">link</span>
                 </a>
             </li>
         </ul>

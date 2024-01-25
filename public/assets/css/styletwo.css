@@ -1725,3 +1725,8 @@ button:focus {
     font-weight: 600;
     font-size: 15px;
 }
+.flagsdisplayonepic{
+    color: #ff54ff !important;
+    font-size:12px;
+    font-weight: 600;
+}

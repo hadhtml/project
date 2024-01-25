@@ -30,7 +30,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
         <div class="d-flex align-items-start flex-column flex-wrap mr-2">
             <!--begin::Page Title-->
             <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
-                Impediments
+                {{ $flagtype }}
             </h5>
             <!-- Breadcrum Items -->
            <div class="d-flex flex-row page-sub-titles">
@@ -47,7 +47,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                     <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->business_name}}</a>
                 </div>
                 <div class="mr-2">
-                    <p>Impediments </p>
+                    <p>{{ $flagtype }} </p>
                 </div>
                 @endif
                 @if($type == 'stream')
@@ -63,7 +63,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                     <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->value_name}}</a>
                 </div>
                 <div class="mr-2">
-                    <p>Impediments </p>
+                    <p>{{ $flagtype }} </p>
                 </div>
                 @endif
                 @if($type == 'BU')
@@ -74,7 +74,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                     <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->team_title}}</a>
                 </div>
                 <div class="mr-2">
-                    <p>Impediments </p>
+                    <p>{{ $flagtype }} </p>
                 </div>
                 @endif
 
@@ -91,7 +91,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                     <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->team_title}}</a>
                 </div>
                 <div class="mr-2">
-                    <p>Impediments </p>
+                    <p>{{ $flagtype }} </p>
                 </div>
                 @endif
 
@@ -100,7 +100,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                     <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->team_title}}</a>
                 </div>
                 <div class="mr-2">
-                    <p>Impediments</p>
+                    <p>{{ $flagtype }}</p>
                 </div>
                 @endif
 
@@ -111,7 +111,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                 </div>
                 @endif --}}
                 <div class="mr-2">
-                    <p>Impediments</p>
+                    <p>{{ $flagtype }}</p>
                 </div>
                 @endif
             </div>
@@ -186,7 +186,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                     <a class="dropdown-item" href="javascript:void(0)" onclick="viewboards('archived')">Archived</a>
                   </div>
                 </div>
-                <button onclick="addnewflag({{ $organization->id }} , '{{$organization->type}}' , 'Impediment')" class="btn btn-primary">Add New</button>
+                <button onclick="addnewflag({{ $organization->id }} , '{{$organization->type}}' , '{{ $flagtype }}')" class="btn btn-primary">Add New</button>
                 <input id="viewboards" value="all" type="hidden" name="">
             </div>
         </div>
@@ -454,6 +454,7 @@ function viewboards(id) {
             id:id,
             slug:slug,
             type:'{{ $type }}',
+            flagtype:'{{ $flagtype }}',
         },
         success: function(res) {
             if(id == 'all')

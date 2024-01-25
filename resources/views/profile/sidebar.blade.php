@@ -24,11 +24,11 @@
                 </a>
             </li> -->
 
-            <!-- <li>
-                <a href="{{ url('dashboard/okr-mapper') }}"  class="nav-link"  title="" data-toggle="tooltip" data-placement="right" data-original-title="OKR Mapper">
-                    <span class="material-symbols-outlined">action_key</span>
+            <li>
+                <a href="javascript:void(0)"  class="nav-link"  title="" data-toggle="tooltip" data-placement="right" data-original-title="OKR Mapper">
+                    <span class="material-symbols-outlined">link</span>
                 </a>
-            </li> -->
+            </li>
         </ul>
         <div class="align-items-center mx-auto mb-3 text-center">
             <ul class="bottom-bar">

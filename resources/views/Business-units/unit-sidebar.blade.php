@@ -26,8 +26,8 @@
             </li> -->
 
             <li>
-                <a href="#"  class="nav-link"  title="" data-toggle="tooltip" data-placement="right" data-original-title="OKR Mapper">
-                    <span class="material-symbols-outlined">action_key</span>
+                <a href="javascript:void(0)"  class="nav-link"  title="" data-toggle="tooltip" data-placement="right" data-original-title="OKR Mapper">
+                    <span class="material-symbols-outlined">link</span>
                 </a>
             </li>
 

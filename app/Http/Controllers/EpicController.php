@@ -901,6 +901,11 @@ class EpicController extends Controller
         $update->flag_title = $request->flag_title;
         $update->flag_description = $request->flag_description;
         $update->save();
+        flag_members::where('flag_id' , $update->id)->delete();
+        $member = new flag_members();
+        $member->member_id = $request->flag_assign;
+        $member->flag_id = $update->id;
+        $member->save();
     }
     public function orderbychilditem(Request $request)
     {

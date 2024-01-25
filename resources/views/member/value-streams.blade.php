@@ -39,7 +39,7 @@ $var_objective = "V-Stream";
                                     <span style="font-size:22px" class="material-symbols-outlined">folder_supervised</span>
                                 </div>
                                 <a href="{{ url('dashboard/organization') }}/{{ $stream->slug }}/portfolio/stream">
-                                    <small>Objectives ({{DB::table('objectives')->where('unit_id' , $stream->id)->where('type' , 'stream')->count()}})</small>
+                                    <small>Objectives ({{DB::table('objectives')->wherenull('trash')->where('unit_id' , $stream->id)->where('type' , 'stream')->count()}})</small>
                                 </a>
                             </div>
                         </div>

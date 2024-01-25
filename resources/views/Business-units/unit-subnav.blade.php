@@ -43,16 +43,16 @@
                     </div>
                 </a>
             </li>
-            {{-- <li class="mb-1">
-                <a href="{{url('dashboard/linking/'.$organization->slug.'/'.$organization->type)}}" @if (url()->current() == url('dashboard/linking/'.$organization->slug.'/'.$organization->type)) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
+            <li class="mb-1">
+                <a href="javascript::void(0)" class="d-flex flex-row align-items-center">
                     <div class="mr-2">
-                         <span style="font-size:22px" class="material-symbols-outlined">map</span>
+                         <span style="font-size:22px" class="material-symbols-outlined">link</span>
                     </div>
                     <div class="mr-2">
                         OKR Mapper
                     </div>
                 </a>
-            </li> --}}
+            </li>
             <!-- Portfolio -->
 
             <li class="mb-1">

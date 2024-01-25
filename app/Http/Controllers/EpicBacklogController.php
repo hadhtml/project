@@ -218,8 +218,33 @@ class EpicBacklogController extends Controller
         }
         $epic = team_backlog::find($request->epic_id);
         $epicstory = DB::table('epics_stroy')->where('epic_id',$epic->id)->where('epic_type' , 'backlog')->orderby('id' , 'desc')->get();
-        $html = view('epics.tabs.childitems', compact('epic','epicstory'))->render();
+        $html = view('epicbacklog.tabs.childitems', compact('epic','epicstory'))->render();
         return $html;
+    }
+    public function updatechlditem(Request $request)
+    {
+        $item = epics_stroy::find($request->id);
+        $item->epic_story_name = $request->epic_story_name;
+        $item->story_assign = $request->story_assign;
+        $item->story_type = $request->story_type;
+        $item->description = $request->description;
+        $item->story_status = $request->story_status;
+        $item->save();
+        if($request->story_status == 'Done')
+        {
+            $item = epics_stroy::find($item->id);
+            $item->progress =  100;
+            $item->save();
+        }
+        $epic = team_backlog::find($item->epic_id);
+        $epicstory = DB::table('epics_stroy')->where('epic_id',$epic->id)->where('epic_type' , 'backlog')->orderby('id' , 'desc')->get();
+        $html = view('epicbacklog.tabs.childitems', compact('epic','epicstory'))->render();
+        return $html;
+    }
+
+    public function deletechilditem(Request $request)
+    {
+        epics_stroy::where('id' , $request->id)->delete();
     }
     public function sortchilditem(Request $request)
     {

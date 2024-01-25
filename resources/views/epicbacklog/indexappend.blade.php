@@ -17,7 +17,7 @@
                         <span class="checkbox-label"></span>
                         </label>
                      </td>
-                     <td>Epic ID</td>
+                     <td>ID</td>
                      <td>Title</td>
                      <td>Start/End Date</td>
                      <td>Status</td>
@@ -254,18 +254,18 @@
                      </td>
                      <td>
                         <button class="btn-circle btn-tolbar" onclick="editbacklogepic({{ $backlog->id }} , 'team_backlog')">
-                           <span class="material-symbols-outlined" data-toggle="tooltip" data-placement="top" data-original-title="Edit Backlog" style="font-size: 18px;"> edit </span>
+                           <span class="material-symbols-outlined" data-toggle="tooltip" data-placement="top" data-original-title="Edit" style="font-size: 18px;"> edit </span>
                         </button>
                         <button class="btn-circle btn-tolbar" data-toggle="modal" data-target="#delete{{ $backlog->id }}">
-                           <span class="material-symbols-outlined" data-toggle="tooltip" data-placement="top" data-original-title="Delete Backlog" style="font-size: 18px;"> delete </span>
+                           <span class="material-symbols-outlined" data-toggle="tooltip" data-placement="top" data-original-title="Delete" style="font-size: 18px;"> delete </span>
                         </button>
                         @if ($backlog->backlog_id == NULL)
                         <button class="btn-circle btn-tolbar">
-                           <a href="{{url('dashboard/epicbacklog/clone/'.$backlog->id.'/'.$organization->type)}}" class="material-symbols-outlined" data-toggle="tooltip" data-placement="top" data-original-title="Clone Backlog" style="font-size: 18px;text-decoration: none;color: #3e413e;"> cyclone </a>
+                           <a href="{{url('dashboard/epicbacklog/clone/'.$backlog->id.'/'.$organization->type)}}" class="material-symbols-outlined" data-toggle="tooltip" data-placement="top" data-original-title="Clone" style="font-size: 18px;text-decoration: none;color: #3e413e;"> cyclone </a>
                         </button>
                         @else
                         <button class="btn-circle btn-tolbar">
-                           <a href="{{url('dashboard/epicbacklog/clone/'.$backlog->backlog_id.'/'.$organization->type)}}" class="material-symbols-outlined" data-toggle="tooltip" data-placement="top" data-original-title="Clone Backlog" style="font-size: 18px;text-decoration: none;color: #3e413e;"> cyclone </a>
+                           <a href="{{url('dashboard/epicbacklog/clone/'.$backlog->backlog_id.'/'.$organization->type)}}" class="material-symbols-outlined" data-toggle="tooltip" data-placement="top" data-original-title="Clone" style="font-size: 18px;text-decoration: none;color: #3e413e;"> cyclone </a>
                         </button>
                         @endif   
                      </td>

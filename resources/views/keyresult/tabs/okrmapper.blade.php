@@ -28,6 +28,29 @@
                             <input type="hidden" value="{{ $data->unit_id }}" name="bussiness_unit_id">
                             <input type="hidden" value="{{ $data->obj_id }}" name="bussiness_obj_id">
                             <div class="row">
+                                <div class="col-md-12 col-lg-12 col-xl-12" id="epicinputtoshow">
+                                    <input type="hidden" id="epic_id" value="{{ $data->epic_id }}" name="epic_id">
+                                    <div class="form-group mb-0 positionrelative">
+                                        <label for="objective-name">Search Team Objectives</label>
+                                        <input onkeyup="searchepic(this.value)" type="text" placeholder="Search Epic" class="form-control">
+                                        <div class="searchiconforinput">
+                                            <img src="{{ url('public/assets/images/searchiconsvg.svg') }}">
+                                        </div>
+                                        @if($data->epic_id)
+                                            @if(DB::Table('epics')->where('id' , $data->epic_id)->first())
+                                            <div class="selectepic">
+                                                <p>{{ DB::Table('epics')->where('id' , $data->epic_id)->first()->epic_name }}</p>
+                                                <a onclick="removeepic({{ $data->id }})" href="javascript:void(0)"><img class="closeimage" src="{{url('public/assets/svg/cross.svg')}}"></a>
+                                            </div>
+                                            @endif
+                                        @endif
+                                    </div>
+                                    <div class="searchepic-box">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-md-12 col-lg-12 col-xl-12">
                                     <div class="form-group mb-0">
                                         <label for="key_name">Select Team</label>
