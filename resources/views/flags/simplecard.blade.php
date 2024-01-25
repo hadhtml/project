@@ -2,7 +2,10 @@
     <div class="d-flex flex-column">
         <div class="d-flex flex-row" onclick="editflag({{$r->id}})">
             <div class="d-flex flex-row mb-2">
-                @if($r->epic_id)
+                @php
+                    $flagtittle = DB::table('flags')->where('id'  , Cmf::gerescalatedmainid($r->id))->first();
+                @endphp
+                @if($flagtittle->epic_id)
                 <div class="epic_id">
                     <img src="{{ url('public/assets/svg/arrow.svg') }}">
                      OE-{{ $r->epic_id }}
@@ -37,12 +40,15 @@
         </a>
         @endif
         @php
-            $str = strlen($r->flag_title);
-            $strl = strlen($r->flag_description);
+                $flagtittle = DB::table('flags')->where('id'  , Cmf::gerescalatedmainid($r->id))->first();
+            @endphp
+        @php
+            $str = strlen($flagtittle->flag_title);
+            $strl = strlen($flagtittle->flag_description);
         @endphp
         <div onclick="editflag({{$r->id}})">
             <h5>
-                {{ \Illuminate\Support\Str::limit($r->flag_title,40, $end='') }}
+                {{ \Illuminate\Support\Str::limit($flagtittle->flag_title,40, $end='') }}
                 @if($str > 40)
                     <a href="javascript:void(0);" onclick="loadmore({{$r->id}});" id="toggle-button{{$r->id}}" class="" style="font-size:10px;">More</a>
                 @endif
@@ -50,27 +56,27 @@
         </div>
         <div onclick="editflag({{$r->id}})">
             <p class="content show-read-more" id="show-read{{$r->id}}">
-               {{ \Illuminate\Support\Str::limit(strip_tags($r->flag_description),122, $end='') }}
+               {{ \Illuminate\Support\Str::limit(strip_tags($flagtittle->flag_description),122, $end='') }}
                 @if($strl > 122 )
                 <a href="javascript:void(0);" onclick="loadmoretext({{$r->id}});" id="toggle-button-text{{$r->id}}" class="" style="font-size:10px;">More</a>
                 @endif
 
             </p>
             <p class="content show-read-more-text" id="show-read-more{{$r->id}}" style="display:none">
-                {{$r->flag_description}}
+                {{$flagtittle->flag_description}}
                 <a href="javascript:void(0);" onclick="seelesstext({{$r->id}});" id="toggle-button-less-text{{$r->id}}" class="" style="font-size:10px">Less</a>
             </p>
         </div>
         <div class="d-flex flex-row justify-content-between align-items-center">
             <div class="d-flex flex-row align-items-center">
-                @if(DB::table('flag_members')->where('flag_id' , $r->id)->first())
+                @if(DB::table('flag_members')->where('flag_id' , Cmf::gerescalatedmainid($r->id))->first())
                 <div onclick="editflag({{$r->id}})" class="d-flex flex-row align-items-center image-cont pr-3">
                     <div class="pr-1 d-flex">
                         @php
-                            $member_id = DB::table('flag_members')->where('flag_id' , $r->id)->orderby('id' , 'desc')->limit(3)->get();
+                            $member_id = DB::table('flag_members')->where('flag_id' , Cmf::gerescalatedmainid($r->id))->orderby('id' , 'desc')->limit(3)->get();
                         @endphp
                         @php
-                            $totalmember = DB::table('flag_members')->where('flag_id' , $r->id)->count();
+                            $totalmember = DB::table('flag_members')->where('flag_id' , Cmf::gerescalatedmainid($r->id))->count();
                         @endphp
                         @foreach($member_id as $m)
                             @php
@@ -93,7 +99,7 @@
                 <div class="vertical-line pr-2"></div>
                 <div onclick="editflag({{$r->id}})" data-toggle="tooltip" title="" data-original-title="Flag Comments" class="d-flex flex-row align-items-center">
                     <div class="pr-1">
-                        <small>{{ DB::Table('flag_comments')->where('flag_id' , $r->id)->where('type' , 'comment')->count() }}</small>
+                        <small>{{ DB::Table('flag_comments')->where('flag_id' , Cmf::gerescalatedmainid($r->id))->where('type' , 'comment')->count() }}</small>
                     </div>
                     <div>
                         <img src="{{ url('public/assets/svg/comments.svg') }}">

@@ -4,7 +4,11 @@
     <div class="col-md-12">
         <h5 class="modal-title newmodaltittle marginleftthirty" id="create-epic">
             <img src="{{ url('public/assets/svg/traffic-cone-svgrepo-com.svg') }}">
-        @if($data->flag_title) {{ $data->flag_title }} @else Enter Tittle @endif</h5>
+
+            @php
+                $flagtittle = DB::table('flags')->where('id'  , Cmf::gerescalatedmainid($data->id))->first();
+            @endphp
+        @if($flagtittle) {{ $flagtittle->flag_title }} @else Enter Tittle @endif</h5>
     </div>
     <div class="col-md-12 marginleftthirty newmodalsubtittle">
         <p class="text-danger">This card has been archived, to un archive <a onclick="unarchiveflag({{$data->id}})" href="javascript:void(0)">Click here</a>.</p>
@@ -12,8 +16,12 @@
     @else
     <div class="col-md-12 mb-5">
         <h5 class="modal-title newmodaltittle epic-tittle-header marginleftthirty" id="create-epic">
-            <img src="{{ url('public/assets/svg/traffic-cone-svgrepo-com.svg') }}">@if($data->flag_title) {{ $data->flag_title }} @else Enter Tittle @endif
-        </h5>
+            <img src="{{ url('public/assets/svg/traffic-cone-svgrepo-com.svg') }}">
+
+            @php
+                $flagtittle = DB::table('flags')->where('id'  , Cmf::gerescalatedmainid($data->id))->first();
+            @endphp
+        @if($flagtittle) {{ $flagtittle->flag_title }} @else Enter Tittle @endif</h5>
     </div>
     @endif
     <div class="col-md-12 displayflex">
@@ -51,9 +59,9 @@
         <div class="members-list">
             <div id="members">
                 @php
-                    $totalmember = DB::table('flag_members')->where('flag_id' , $data->id)->count();
+                    $totalmember = DB::table('flag_members')->where('flag_id' , Cmf::gerescalatedmainid($data->id))->count();
                 @endphp
-                @foreach(DB::table('flag_members')->where('flag_id' , $data->id)->orderby('id' , 'desc')->limit(3)->get() as $r)
+                @foreach(DB::table('flag_members')->where('flag_id' , Cmf::gerescalatedmainid($data->id))->orderby('id' , 'desc')->limit(3)->get() as $r)
                 @php
                     $member = DB::table('members')->where('id' , $r->member_id)->first();
                 @endphp
@@ -128,7 +136,7 @@
                     </div>
                     <div class="row" id="memberstoshow">
                         @foreach(DB::table('members')->where('org_user' , Auth::id())->limit(8)->get() as $r)
-                        <div class="col-md-12 memberprofile" onclick="savemember({{$r->id}} , {{$data->id}})">
+                        <div class="col-md-12 memberprofile" onclick="savemember({{$r->id}} , {{Cmf::gerescalatedmainid($data->id)}})">
                             <div class="row">
                                 <div class="col-md-2">
                                     <div class="memberprofileimage">
@@ -144,7 +152,7 @@
                                     <div class="memberdetail">{{ DB::table('users')->where('id' , $r->user_id)->first()->role }}</div>
                                 </div>
                                 <div class="col-md-2 text-center mt-3">
-                                    @if(DB::table('flag_members')->where('flag_id' , $data->id)->where('member_id' , $r->id)->count() > 0)
+                                    @if(DB::table('flag_members')->where('flag_id' , Cmf::gerescalatedmainid($data->id))->where('member_id' , $r->id)->count() > 0)
                                     <img class="tickimage" src="{{ url('public/assets/svg/smalltick.svg') }}">
                                     @endif
                                 </div>
@@ -174,7 +182,7 @@
         $('#profilepopup'+id).slideToggle();
     }
     function removefromflag(id) {
-        var flag_id = '{{ $data->id }}';
+        var flag_id = '{{ Cmf::gerescalatedmainid($data->id) }}';
         $.ajax({
             type: "POST",
             url: "{{ url('dashboard/flags/removefromflag') }}",

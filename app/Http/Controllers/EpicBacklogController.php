@@ -394,7 +394,7 @@ class EpicBacklogController extends Controller
         $update->epic_end_date = $date;
         $update->save();
 
-        $activity = 'Created the Epic Backlog on '.Cmf::date_format_new($update->created_at).' at '.Cmf::date_format_time($update->created_at);
+        $activity = 'Created the Epic on '.Cmf::date_format_new($update->created_at).' at '.Cmf::date_format_time($update->created_at);
         Cmf::save_activity(Auth::id() , $activity,'epicbacklog',$update->id , 'image');
         return $add->id;
     }
