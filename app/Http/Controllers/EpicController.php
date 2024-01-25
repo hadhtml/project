@@ -72,6 +72,8 @@ class EpicController extends Controller
         $data->save();
 
 
+        $Olddata = Epic::find($request->epic_id);
+   
 
 
 
@@ -81,6 +83,7 @@ class EpicController extends Controller
         $quarterMonthtoselect  = DB::table('quarter_month')->where('year' , $year)->where('month' , $month)->where('initiative_id' , $data->initiative_id)->first();
         $data = Epic::find($request->epic_id);
         $data->month_id = $quarterMonthtoselect->id;
+        $data->quarter_id = $quarterMonthtoselect->quarter_id;
         $data->save();
         if(!$request->epic_name)
         {
@@ -92,6 +95,19 @@ class EpicController extends Controller
             $update->trash = Null;
             $update->save();
         }
+
+        if($Olddata->quarter_id ==  $data->quarter_id)    
+        {
+          DB::table("epics")
+        ->where("id", $request->epic_id)
+        ->update(['old_date' => NULL]);
+        }else
+        {
+          DB::table("epics")
+        ->where("id",  $request->epic_id)
+        ->update(['old_date' => $Olddata->epic_end_date]);
+        }
+
         $currentDate = Carbon::now();
         $currentYear = $currentDate->year;
         $currentMonth = $currentDate->month;

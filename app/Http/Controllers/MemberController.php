@@ -144,6 +144,8 @@ class MemberController extends Controller
             $User  = User::find($request->user_id);;
             $User->name = $request->name;
             $User->status = $request->status;
+            $User->role = $request->role;
+
             $User->save();
         
         
@@ -1404,12 +1406,15 @@ $updateData = [
         $oldemail = User::where('id',$request->member)->first();
         $email = User::where('email',$request->email)->first();
 
-        if($oldemail->email == $email->email)
+        if($oldemail->email && !$email)
         {
         echo 1;     
-        }else
+        }elseif($oldemail->email == $request->email)
         {
         echo 2;    
+        }else
+        {
+         echo 3;   
         }
 
     }
