@@ -327,6 +327,7 @@ $('#saveepicflag').on('submit',(function(e) {
         processData: false,
         success: function(data){
             showepicincard();
+            showheader('{{$data->id}}');
             showtabwithoutloader('{{$data->id}}' , 'flags');
         }
     });

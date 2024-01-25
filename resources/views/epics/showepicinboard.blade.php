@@ -19,11 +19,10 @@
                   </div>
                </div>
             @php
-               $flag = DB::table('flags')->where('epic_id' , $e->id)->first();
-               $flagscount = DB::table('flags')->where('epic_id' , $e->id)->count();
+               $flag = DB::table('flags')->where('flag_status' , '!=' , 'doneflag')->where('epic_id' , $e->id)->first();
+               $flagscount = DB::table('flags')->where('epic_id' , $e->id)->where('flag_status' , '!=' , 'doneflag')->count();
             @endphp
             @if($flag)
-            @if($flag->flag_status != 'doneflag')
             <div>
                <div class="d-flex flex-row align-items-center">
                   <div class="mr-1">
@@ -38,7 +37,6 @@
                   </div>
                </div>
             </div>
-            @endif
             @endif
          </div>
          @php
