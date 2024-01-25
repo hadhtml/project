@@ -44,6 +44,8 @@ Route::get('dashboard/organization/report-init/{init}/{sprint}/{type}', [App\Htt
 Route::get('dashboard/organization/Okr-report-allepic/{sprint}/{type}', [App\Http\Controllers\OrganizationController::class,'AllsprintEpicReport']);
 Route::get('dashboard/organization/Okr-report-NC/{sprint}/{type}', [App\Http\Controllers\OrganizationController::class,'NCEpicReport']);
 Route::get('dashboard/organization/Okr-report-remove/{sprint}/{type}', [App\Http\Controllers\OrganizationController::class,'RemoveEpicReport']);
+Route::post('loadmore', [App\Http\Controllers\OrganizationController::class,'LoadNCEpic']);
+Route::post('see-less-epic', [App\Http\Controllers\OrganizationController::class,'LoadLessNCEpic']);
 
 Route::post('update-sprint', [App\Http\Controllers\OrganizationController::class,'UpdateSprintQuarter']);
 Route::post('delete-report', [App\Http\Controllers\OrganizationController::class,'DeleteSprintQuarter']);
