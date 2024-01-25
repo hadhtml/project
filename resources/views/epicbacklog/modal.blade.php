@@ -9,22 +9,28 @@
                 <h4>Menu</h4>
                 <input type="hidden" id="modaltab" value="general">
                 <ul>
-                    <li id="general" onclick="showtab({{$data->id}} , 'general','{{$table}}')" class="tabsclass active">
+                    <li id="general" onclick="showtab({{$data->id}} , 'general')" class="tabsclass active">
                         <span class="material-symbols-outlined"> edit_square </span> General
                     </li>
-                    <li id="asign" onclick="showtab({{$data->id}} , 'asign','{{$table}}')" class="tabsclass">
-                        <span class="material-symbols-outlined">person_check</span> Asign
+                    <li id="childitems" @if($data->epic_title)  onclick="showtab({{$data->id}} , 'childitems')" @else data-toggle="tooltip" title="" data-original-title="Please Fill General Details" @endif class="tabsclass">
+                        <span class="material-symbols-outlined">toc</span> Child Items
                     </li>
-                    <!-- <li id="comments" onclick="showtab({{$data->id}} , 'comments','{{$table}}')" class="tabsclass">
+                    <li id="comments" @if($data->epic_title)  onclick="showtab({{$data->id}} , 'comments')" @else data-toggle="tooltip" title="" data-original-title="Please Fill General Details" @endif class="tabsclass">
                         <span class="material-symbols-outlined">comment</span> Comments
                     </li>
-                    <li id="activites" onclick="showtab({{$data->id}} , 'activites','{{$table}}')" class="tabsclass">
+                    <li id="activites"@if($data->epic_title)  onclick="showtab({{$data->id}} , 'activites')" @else data-toggle="tooltip" title="" data-original-title="Please Fill General Details" @endif class="tabsclass">
                        <span class="material-symbols-outlined">browse_activity</span> Activities
                     </li>
-                    <li id="attachment" onclick="showtab({{$data->id}} , 'attachment','{{$table}}')" class="tabsclass">
-                        <span class="material-symbols-outlined"> attachment </span> Attachments</li> -->
-                    <li id="teams" onclick="showtab({{$data->id}} , 'teams','{{$table}}')" class="tabsclass">
-                        <span class="material-symbols-outlined"> group </span> Team
+                    <li id="attachment" @if($data->epic_title)  onclick="showtab({{$data->id}} , 'attachment')" @else data-toggle="tooltip" title="" data-original-title="Please Fill General Details" @endif class="tabsclass">
+                        <span class="material-symbols-outlined"> attachment </span> Attachments</li>
+                    <li id="flags" @if($data->epic_title)  onclick="showtab({{$data->id}} , 'flags')" @else data-toggle="tooltip" title="" data-original-title="Please Fill General Details" @endif class="tabsclass">
+                        <span class="material-symbols-outlined">flag</span> Flags
+                    </li>
+                    <li id="teams" @if($data->epic_title)  onclick="showtab({{$data->id}} , 'teams')" @else data-toggle="tooltip" title="" data-original-title="Please Fill General Details" @endif class="tabsclass">
+                        <span class="material-symbols-outlined"> group </span> Teams
+                    </li>
+                    <li id="asign" @if($data->epic_title)  onclick="showtab({{$data->id}} , 'asign')" @else data-toggle="tooltip" title="" data-original-title="Please Fill General Details" @endif class="tabsclass">
+                        <span class="material-symbols-outlined">person_check</span> Asign
                     </li>
                 </ul>
                 <h4>Action</h4>
@@ -42,8 +48,12 @@
                                 <img onclick="deleteflagshow({{$data->id}})" src="{{ url('public/assets/svg/crossdelete.svg') }}">
                             </div>
                         </div>
+                        <form method="POST" action="{{ url('delete-team-backlog') }}">
+                        @csrf
+                        <input type="hidden" name="delete_id" value="{{$data->id}}">
                         <p>All actions will be removed from the activity feed and you won’t be able to re-open the card. There is no undo.</p>
-                        <button class="btn btn-danger btn-block">Delete</button>
+                        <button type="submit" class="btn btn-danger btn-block">Delete</button>
+                        </form>
                     </div>
                 </ul>
             </div>
@@ -66,7 +76,6 @@
             <form id="updategeneral" class="needs-validation" action="{{ url('dashboard/epicbacklog/updategeneral') }}" method="POST" novalidate>
                 @csrf
                 <input type="hidden" value="{{ $data->id }}" name="epic_id">
-                <input type="hidden" name="table" value="{{ $table }}">
                 <div class="row">
                     <div class="col-md-12 col-lg-12 col-xl-12">
                         <div class="form-group mb-0">
@@ -106,6 +115,9 @@
     </div>
 </div>
 <script type="text/javascript">
+     $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
     function deleteflagshow(id) {
         $('#flagdelete'+id).slideToggle();
     }
@@ -131,7 +143,7 @@
             }
         });
     }
-    function showtab(id , tab , table) {
+    function showtab(id , tab) {
         $('#modaltab').val(tab);
         $('.secondportion').addClass('loaderdisplay');
         $('.secondportion').html('<i class="fa fa-spin fa-spinner"></i>');
@@ -144,7 +156,6 @@
             data: {
                 id:id,
                 tab:tab,
-                table: table,
             },
             success: function(res) {
                 $('.secondportion').removeClass('loaderdisplay');
@@ -181,8 +192,13 @@
             contentType: false,
             processData: false,
             success: function(res){
-                showheaderbacklog('{{ $data->id }}' , '{{ $table }}')
+                showheaderbacklog('{{ $data->id }}')
                 $('#updatebutton').html('Save Changes');
+                showdataintable();
+
+                @if(!$data->epic_title)
+                    $('#edit-backlog-epic-modal-new').modal('hide');
+                @endif
             }
         });
     }));

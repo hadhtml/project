@@ -40,7 +40,6 @@
                 <form id="uploadattachementform" enctype="multipart/form-data" method="post" action="{{ url('dashboard/epicbacklog/uploadattachment') }}">
                   @csrf
                   <input type="hidden" value="{{ $data->id }}" name="value_id">
-                  <input type="hidden" value="{{ $table }}" name="table">
                     <label class="dropzonelabel">
                         Drop a file or click to select one
                         <input accept=".doc,.docx,.jpg,.png,.txt,.pdf" onchange="submitform()" class="dropzoneinput" type="file" multiple name="file">
@@ -156,7 +155,6 @@
     $('#uploadattachementform').submit();
   }
 function deleteattachment(id) {
-    var table = '{{ $table }}';
     $.ajax({
       type: "POST",
       url: "{{ url('dashboard/epicbacklog/deleteattachment') }}",
@@ -165,7 +163,6 @@ function deleteattachment(id) {
       },
       data: {
           id:id,
-          table:table,
       },
       success: function(data) {
           $('.secondportion').html(data);

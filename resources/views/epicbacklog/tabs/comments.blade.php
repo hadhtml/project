@@ -42,7 +42,7 @@
     <div class="activity-feed @if($comments->count() == 0) col-md-12 @endif">
         <div class="col-md-12 col-lg-12 col-xl-12 writecomment">
             <div class="d-flex flex-column">
-                <form method="POST" id="savecomment{{ $data->id }}" action="{{ url('dashboard/epics/savecomment') }}">
+                <form method="POST" class="savecomment{{ $data->id }}" action="{{ url('dashboard/epicbacklog/savecomment') }}">
                 @csrf
                 <input type="hidden" value="{{ $data->id }}" name="flag_id">
                 <input type="hidden" value="{{ Auth::user()->id }}" name="user_id">
@@ -51,7 +51,7 @@
                         <textarea id="textarea" style="height:100% !important;" class="form-control mention" name="comment" rows="5"></textarea>
                     </div>
                     <span onclick="writecomment()" class="btn btn-default btn-sm">Cancel</span>
-                    <button type="submit" id="savecommentbutton{{ $data->id }}" class="btn btn-primary btn-sm">Save</button>
+                    <button type="submit" class="savecommentbutton{{ $data->id }} btn btn-primary btn-sm">Save</button>
                 </form>
             </div>
         </div>
@@ -82,7 +82,7 @@
                 $user = DB::table('users')->where('id',$r->user_id)->first();
             @endphp
             <div class="card comment-card-new">
-                <div class="deletecomment" id="commentdelete{{ $r->id }}">
+                <div class="deletecomment commentdelete{{ $r->id }}">
                     <div class="row">
                         <div class="col-md-10">
                             <h4>Delete Comment</h4>
@@ -94,8 +94,8 @@
                     <p>Do you want to delete your comment ? You won’t be able to undo this action.</p>
                     <button onclick="deletecomment({{ $r->id }})" class="btn btn-danger btn-block">Delete</button>
                 </div>
-                <div class="commentedit" id="commentedit{{ $r->id }}">
-                    <form method="POST" id="updatecomment{{ $r->id }}" action="{{ url('dashboard/epics/updatecomment') }}">
+                <div class="commentedit commentedit{{ $r->id }}">
+                    <form method="POST" class="updatecomment{{ $r->id }}" action="{{ url('dashboard/epicbacklog/updatecomment') }}">
                         @csrf
                         <input type="hidden" value="{{ $r->id }}" name="comment_id">
                         <div class="row mt-3">
@@ -108,7 +108,7 @@
                                     </div>
                                     <div>
                                         <span onclick="editcommenthide({{$r->id}})" class="btn btn-default btn-sm">Cancel</span>
-                                        <button type="submit" id="updatecommentbutton{{ $r->id }}" class="btn btn-primary btn-sm">Update</button>
+                                        <button type="submit"  class="btn btn-primary btn-sm updatecommentbutton{{ $r->id }}">Update</button>
                                     </div>
                                 </div>
                             </div>
@@ -152,7 +152,7 @@
                             <button onclick="replycomment({{$r->id}})" class="btn btn-default btn-sm">Reply</button>
                         </div>
                         <div class="replycard{{ $r->id }}" style="display: none;" >
-                            <form id="savereply{{ $r->id }}" method="POST" action="{{ url('dashboard/epics/savereply') }}">
+                            <form class="savereply{{ $r->id }}" method="POST" action="{{ url('dashboard/epicbacklog/savereply') }}">
                                 @csrf
                                 <input type="hidden" value="{{ $r->flag_id }}" name="flag_id">
                                 <input type="hidden" value="{{ Auth::user()->id }}" name="user_id">
@@ -166,14 +166,14 @@
                                     </div>
                                     <div>
                                         <span onclick="replycomment({{$r->id}})" class="btn btn-default btn-sm">Cancel</span>
-                                        <button type="submit" id="savereplybutton{{ $r->id }}" class="btn btn-primary btn-sm">Save</button>
+                                        <button type="submit" class="btn btn-primary btn-sm savereplybutton{{ $r->id }}">Save</button>
                                     </div>
                                 </div>
                             </form>
                         </div>
                         <script type="text/javascript">
-                            $('#savereply{{ $r->id }}').on('submit',(function(e) {
-                                $('#savereplybutton{{ $r->id }}').html('<i class="fa fa-spin fa-spinner"></i>');
+                            $('.savereply{{ $r->id }}').on('submit',(function(e) {
+                                $('.savereplybutton{{ $r->id }}').html('<i class="fa fa-spin fa-spinner"></i>');
                                 e.preventDefault();
                                 var formData = new FormData(this);
                                 $.ajax({
@@ -184,7 +184,7 @@
                                     contentType: false,
                                     processData: false,
                                     success: function(data){
-                                        $('#savereplybutton{{ $r->id }}').html('Save');
+                                        $('.savereplybutton{{ $r->id }}').html('Save');
                                         $('.secondportion').html(data);
                                     }
                                 });
@@ -210,8 +210,8 @@
                         <p>Do you want to delete your comment ? You won’t be able to undo this action.</p>
                         <button onclick="deletecomment({{ $p->id }})" class="btn btn-danger btn-block">Delete</button>
                     </div>
-                    <div class="commentedit" id="commentedit{{ $p->id }}">
-                        <form method="POST" id="updatecomment{{ $p->id }}" action="{{ url('dashboard/epics/updatecomment') }}">
+                    <div class="commentedit commentedit{{ $p->id }}">
+                        <form method="POST" class="updatecomment{{ $p->id }}" action="{{ url('dashboard/epicbacklog/updatecomment') }}">
                             @csrf
                             <input type="hidden" value="{{ $p->id }}" name="comment_id">
                             <div class="row mt-3">
@@ -224,7 +224,7 @@
                                         </div>
                                         <div>
                                             <span onclick="editcommenthide({{$p->id}})" class="btn btn-default btn-sm">Cancel</span>
-                                            <button type="submit" id="updatecommentbutton{{ $p->id }}" class="btn btn-primary btn-sm">Update</button>
+                                            <button type="submit" class="updatecommentbutton{{ $p->id }} btn btn-primary btn-sm">Update</button>
                                         </div>
                                     </div>
                                 </div>
@@ -268,8 +268,8 @@
                     </div>
                 </div>
                 <script type="text/javascript">
-                    $('#updatecomment{{ $p->id }}').on('submit',(function(e) {
-                        $('#updatecommentbutton{{ $p->id }}').html('<i class="fa fa-spin fa-spinner"></i>');
+                    $('.updatecomment{{ $p->id }}').on('submit',(function(e) {
+                        $('.updatecommentbutton{{ $p->id }}').html('<i class="fa fa-spin fa-spinner"></i>');
                         e.preventDefault();
                         var formData = new FormData(this);
                         $.ajax({
@@ -280,7 +280,7 @@
                             contentType: false,
                             processData: false,
                             success: function(data){
-                                $('#updatecommentbutton{{ $p->id }}').html('Save');
+                                $('.updatecommentbutton{{ $p->id }}').html('Save');
                                 $('.secondportion').html(data);
                             }
                         });
@@ -288,8 +288,8 @@
                 </script>
             @endforeach
             <script type="text/javascript">
-                $('#updatecomment{{ $r->id }}').on('submit',(function(e) {
-                    $('#updatecommentbutton{{ $r->id }}').html('<i class="fa fa-spin fa-spinner"></i>');
+                $('.updatecomment{{ $r->id }}').on('submit',(function(e) {
+                    $('.updatecommentbutton{{ $r->id }}').html('<i class="fa fa-spin fa-spinner"></i>');
                     e.preventDefault();
                     var formData = new FormData(this);
                     $.ajax({
@@ -300,7 +300,7 @@
                         contentType: false,
                         processData: false,
                         success: function(data){
-                            $('#updatecommentbutton{{ $r->id }}').html('Save');
+                            $('.updatecommentbutton{{ $r->id }}').html('Save');
                             $('.secondportion').html(data);
                         }
                     });
@@ -347,8 +347,8 @@ function showorderby(id,flag_id,table) {
         }
     });
 }
-$('#savecomment{{ $data->id }}').on('submit',(function(e) {
-    $('#savecommentbutton{{ $data->id }}').html('<i class="fa fa-spin fa-spinner"></i>');
+$('.savecomment{{ $data->id }}').on('submit',(function(e) {
+    $('.savecommentbutton{{ $data->id }}').html('<i class="fa fa-spin fa-spinner"></i>');
     e.preventDefault();
     var formData = new FormData(this);
     var cardid = $('#cardid').val();
@@ -360,9 +360,8 @@ $('#savecomment{{ $data->id }}').on('submit',(function(e) {
         contentType: false,
         processData: false,
         success: function(data){
-            $('#savecommentbutton{{ $data->id }}').html('Save');
-            $("#savecomment{{ $data->id }}")[0].reset();
-            $('#updateflag{{ $data->id }}').submit();
+            $('.savecommentbutton{{ $data->id }}').html('Save');
+            $(".savecomment{{ $data->id }}")[0].reset();
             $('.secondportion').html(data);
         }
     });
@@ -374,18 +373,18 @@ function replycomment(id) {
     $('.replycard'+id).slideToggle();
 }
 function editcommentshow(id) {
-    $('#commentedit'+id).show();
+    $('.commentedit'+id).show();
 }
 function editcommenthide(id) {
-    $('#commentedit'+id).hide();
+    $('.commentedit'+id).hide();
 }
 function deletecommentshow(id) {
-    $('#commentdelete'+id).slideToggle();
+    $('.commentdelete'+id).slideToggle();
 }
 function deletecomment(id) {
     $.ajax({
         type: "POST",
-        url: "{{ url('dashboard/epics/deletecomment') }}",
+        url: "{{ url('dashboard/epicbacklog/deletecomment') }}",
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },

@@ -12,7 +12,7 @@
         </div>
     </div>
 </div>
-<form id="updategeneral" class="needs-validation" action="{{ url('dashboard/epicbacklog/updategeneral') }}" method="POST" novalidate>
+<form class="needs-validation savedataingeneraltab" action="{{ url('dashboard/epicbacklog/updategeneral') }}" method="POST">
                 @csrf
 <input type="hidden" value="{{ $data->id }}" name="epic_id">
 <div class="row">
@@ -39,19 +39,19 @@
         <div class="form-group mb-0">
             <label for="editor{{ $data->id }}">Description</label>
             <div class="textareaformcontrol">
-                <textarea name="epic_detail" id="editor{{ $data->id }}">{{ $data->epic_detail }}</textarea> 
+                <textarea name="epic_detail" class="backlogepicdescription">{{ $data->epic_detail }}</textarea> 
             </div>
         </div>
     </div>
 </div>
 <div class="row margintopfourtypixel">
     <div class="col-md-12 text-right">
-        <button type="submit" class="btn btn-primary btn-theme ripple savechangebutton" id="updatebutton">@if($data->epic_title) Save Changes @else Save Epic @endif</button>
+        <button type="submit" class="btn btn-primary btn-theme ripple savechangebutton updatebuttonepicbackloggeneral" id="updatebutton">@if($data->epic_title) Save Changes @else Save Epic @endif</button>
     </div>
 </div>
 </form>
 <script type="text/javascript">
-    function showtab(id , tab , table) {
+    function showtab(id , tab) {
         $('#modaltab').val(tab);
         $('.secondportion').addClass('loaderdisplay');
         $('.secondportion').html('<i class="fa fa-spin fa-spinner"></i>');
@@ -64,7 +64,6 @@
             data: {
                 id:id,
                 tab:tab,
-                table: table,
             },
             success: function(res) {
                 $('.secondportion').removeClass('loaderdisplay');
@@ -77,20 +76,23 @@
             }
         });
     }
-    $('#editor{{ $data->id }}').summernote({
-        height: 180,
-        toolbar: [
-            ['style', ['bold', 'italic', 'underline', 'clear']],
-            ['font', ['strikethrough', 'superscript', 'subscript']],
-            ['fontsize', ['fontsize']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['height', ['height']],
-            ['view', ['fullscreen', 'codeview']],
-        ],
+    $( document ).ready(function() {
+        $('.backlogepicdescription').summernote({
+            height: 180,
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['height', ['height']],
+                ['view', ['fullscreen', 'codeview']],
+            ],
+        });
     });
-    $('#updategeneral').on('submit',(function(e) {
-        $('#updatebutton').html('<i class="fa fa-spin fa-spinner"></i>');
+    
+    $('.savedataingeneraltab').on('submit',(function(e) {
+        $('.updatebuttonepicbackloggeneral').html('<i class="fa fa-spin fa-spinner"></i>');
         e.preventDefault();
         var formData = new FormData(this);
         $.ajax({
@@ -101,8 +103,9 @@
             contentType: false,
             processData: false,
             success: function(res){
-                showheaderbacklog('{{ $data->id }}' , '{{ $table }}')
-                $('#updatebutton').html('Save Changes');
+                showheaderbacklog('{{ $data->id }}')
+                $('.updatebuttonepicbackloggeneral').html('Save Changes');
+                showdataintable();
             }
         });
     }));
