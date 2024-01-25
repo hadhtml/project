@@ -109,12 +109,12 @@ $valuestream = DB::table('value_stream')->where('unit_id',$organization->id)->co
             <div class="col-md-3 mb-4">
                 <div class="dashboard-card">
                     <div class="card-svg">
-                        <a href="{{url('organization/'.$organization->slug.'/Value-Streams')}}" > 
+                        <a href="{{url('dashboard/organization/'.$organization->slug.'/Value-Streams')}}" > 
                             <span class="material-symbols-outlined warning_off">layers</span>
                         </a>                     
                     </div>
                     <div class="dashboard-card-tittle">
-                        <h4>Value Stream</h4>
+                        <h4>Value Streams</h4>
                     </div>
                     <div class="dashboard-card-number">
                         <h3>{{$valuestream}}</h3>

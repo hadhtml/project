@@ -1461,16 +1461,23 @@
     }
 
 
-    $(document).on('input', '.range-slider__range_init', function() {
+    // $(document).on('input', '.range-slider__range_init', function() {
 
-        var sliderValue = $(this).val();
+        function slider_value_Init(init,weight,key)
+        {
 
+        
+        // var sliderValue = $(this).val();
+        
         // Update the corresponding text input
-        $(this).closest('.col-md-8').next('.col-md-4').find('#sliderValueEditinit').val(sliderValue);
-        var weightedit = $('#sliderValueEditinit').val();
-        var key = $('#edit_id_initiative_key').val();
-        var init = $('#edit_id_initiative').val();
-        $('#init_weight' + init).val(sliderValue);
+        // $(this).closest('.col-md-8').next('.col-md-4').find('#sliderValueEditinit').val(sliderValue);
+        // var weightedit = $('#sliderValueEditinit').val();
+        $('.range-slider__range_init' + init).val(weight);
+        $('#sliderValueinit' + init).val(weight);
+        var sliderValue = $('#sliderValueinit' + init).val();
+        // var key = $('#edit_id_initiative_key').val();
+        // var init = $('#edit_id_initiative').val();
+        // $('#init_weight' + init).val(sliderValue);
 
         $.ajax({
             type: "GET",
@@ -1479,28 +1486,27 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             data: {
-                init: init,
+                init:init,
                 sliderValue: sliderValue,
-                key: key
+                key:key
 
             },
             success: function(res) {
 
 
                 if (res.key > 100) {
-                    $('#wieght-error-edit-init').html(
-                        '<small class="text-danger ml-2">Combined weight percentage must not be greater than 100</small>'
-                        );
-
-                } else {
-                    $('#wieght-error-edit-init').html('');
-                }
+                        var setvalue  = parseInt(res.key)-100;
+                        $('#wieght-error').html('<div class="row"> <div class="col-md-12"><small class="text-danger ml-2">Combined weight Percentage not be greater than 100%. You Can Set Weight Value of This Key Result is <b>'+setvalue+'</b></small></div></div>');
+                    } else {
+                        $('#wieght-error').html('');
+                    }
 
 
 
             }
         });
-    });
+    }
+    // });
 
     function UpdateKeyinitiative() {
 
