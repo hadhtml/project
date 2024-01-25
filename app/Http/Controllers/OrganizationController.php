@@ -1030,6 +1030,104 @@ public function AllsprintEpicReport($sprint,$type)
 
 
 }
+
+function LoadNCEpic(Request $request)
+    {
+      
+    
+     
+      $report = DB::table('sprint')->where('id',$request->sprint)->first();
+        $Sid = $request->sprint;
+        $sprint = $request->sprint;
+        $type = $request->type;
+        $page = $request->page;
+    if($request->page == 'NC-Epic' || $request->page == 'All-Epic')
+    {
+    $SprintEpic = DB::table('sprint_report')
+    ->where('id','>', $request->id)
+    ->where('epic_prog','!=',100)
+    ->where('epic_remove','=','Added')
+    ->where('epic_id','!=',NULL)
+    ->where('q_id',$request->sprint)->get();
+
+    }
+
+    if( $request->page == 'C-Epic')
+    {
+    $SprintEpic = DB::table('sprint_report')
+    ->where('id','>', $request->id)
+    ->where('epic_prog','=',100)
+    ->where('epic_remove','=','Added')
+    ->where('epic_id','!=',NULL)
+    ->where('q_id',$request->sprint)->get();
+
+    }
+    
+    $more = 'load-more';
+
+    return view('Report.load-more',compact('report','sprint','Sid','SprintEpic','type','more','page'));
+
+
+    }
+
+    function LoadLessNCEpic(Request $request)
+    {
+     
+      $report = DB::table('sprint')->where('id',$request->sprint)->first();
+        $Sid = $request->sprint;
+        $sprint = $request->sprint;
+        $type = $request->type;
+        if($request->page == 'NC-Epic' || $request->page == 'All-Epic')
+        {
+        $SprintEpic = DB::table('sprint_report')
+        ->where('epic_prog','!=',100)
+        ->where('epic_remove','=','Added')
+        ->where('epic_id','!=',NULL)
+        ->where('q_id',$request->sprint)->get();
+    
+        }
+    
+        if( $request->page == 'C-Epic')
+        {
+        $SprintEpic = DB::table('sprint_report')
+        ->where('epic_prog','=',100)
+        ->where('epic_remove','=','Added')
+        ->where('epic_id','!=',NULL)
+        ->where('q_id',$request->sprint)->get();
+    
+        }
+
+    if($type == 'unit')
+    {
+    $organization = DB::table('business_units')->where('id',$request->org)->first();
+    }
+    if($type == 'stream')
+    {
+    $organization = DB::table('value_stream')->where('id',$request->org)->first();
+    }
+    if($type == 'BU')
+    {
+    $organization = DB::table('unit_team')->where('id',$request->org)->first();        
+    }
+    if($type == 'VS')
+    {
+    $organization = DB::table('value_team')->where('id',$request->org)->first();        
+    }
+    if($type == 'org')
+    {
+    $organization = DB::table('organization')->where('id',$request->org)->first();        
+    }
+
+    if($type == 'orgT')
+    {
+    $organization = DB::table('org_team')->where('id',$request->org)->first();        
+    }
+
+    $more = 'load-less';
+    return view('Report.load-more',compact('report','sprint','Sid','SprintEpic','type','more'));
+
+
+    }
     
 
 

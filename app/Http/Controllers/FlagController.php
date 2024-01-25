@@ -194,9 +194,15 @@ class FlagController extends Controller
         $update = flags::find($request->id);
         if($update->flag_title != $request->flag_title)
         {
-            $rand = rand(123456789 , 987654321);
-            $activity = 'has updated Title Field <a href="javascript:void(0)" onclick="showdetailsofactivity('.$rand.')">See Details</a> <div class="activitydetalbox deletecomment" id="activitydetalbox'.$rand.'"><div class="row"> <div class="col-md-10"> <h4>Title Update</h4> </div> <div class="col-md-2"> <img onclick="showdetailsofactivity('.$rand.')" src="'.url("public/assets/svg/crossdelete.svg").'"> </div> </div><p style="margin-bottom:0px;">'.$update->flag_title.'</p><div class="text-center mt-2 mb-2"><span class="material-symbols-outlined"> arrow_downward </span></div><p>'.$request->flag_title.'</p></div>';
-            Cmf::save_activity(Auth::id() , $activity,'flags',$request->id, 'edit');
+            if($update->flag_title)
+            {
+                $rand = rand(123456789 , 987654321);
+                $activity = 'has updated Title Field <a href="javascript:void(0)" onclick="showdetailsofactivity('.$rand.')">See Details</a> <div class="activitydetalbox deletecomment" id="activitydetalbox'.$rand.'"><div class="row"> <div class="col-md-10"> <h4>Title Update</h4> </div> <div class="col-md-2"> <img onclick="showdetailsofactivity('.$rand.')" src="'.url("public/assets/svg/crossdelete.svg").'"> </div> </div><p style="margin-bottom:0px;">'.$update->flag_title.'</p><div class="text-center mt-2 mb-2"><span class="material-symbols-outlined"> arrow_downward </span></div><p>'.$request->flag_title.'</p></div>';
+                Cmf::save_activity(Auth::id() , $activity,'flags',$request->id, 'edit');
+            }else{
+                $activity = 'Added a Flag Tittle';
+                Cmf::save_activity(Auth::id() , $activity,'flags',$request->id, 'edit');
+            }
         }
         if($update->flag_description != $request->flag_description)
         {
@@ -257,6 +263,11 @@ class FlagController extends Controller
         $flag->flag_status = 'todoflag';
         $flag->board_type = $request->type;
         $flag->save();
+
+        $activity = 'Created the '.$request->flag_type.' Flag on '.Cmf::date_format_new($flag->created_at).' at '.Cmf::date_format_time($flag->created_at);
+        Cmf::save_activity(Auth::id() , $activity,'flags',$flag->id , 'image');
+
+
         return $flag->id;
     }
     public function getepicflag(Request $request)
@@ -281,8 +292,11 @@ class FlagController extends Controller
         $member->member_id = $request->flag_assign;
         $member->flag_id = $flag->id;
         $member->save();
-        
-        DB::table('epics')->where('id',$request->flag_epic_id)->update(['flag_assign' => 1]);
+         
+        $activity = 'Created the '.$request->flag_type.' Flag on '.Cmf::date_format_new($flag->created_at).' at '.Cmf::date_format_time($flag->created_at);
+        Cmf::save_activity(Auth::id() , $activity,'flags',$flag->id , 'image');
+
+        DB::table('epics')->where('id',$request->flag_epic_id)->update(['flag_assign' => $request->flag_type]);
         if($request->type == 'unit')
         {
             $organization  = DB::table('business_units')->where('slug',$request->slug)->first();
@@ -336,6 +350,13 @@ class FlagController extends Controller
     public function escalateflag(Request $request)
     {
         $flag = flags::find($request->id);
+        if($flag->escalate)
+        {
+            $escalated = escalate_cards::where('id' , $flag->escalate)->first();
+            $orignal_flag_id = $escalated->orignal_flag_id;
+        }else{
+            $orignal_flag_id = $request->id;
+        }
         if($flag->board_type == 'orgT')
         {
             $getteam = DB::table('org_team')->where('id' , $flag->business_units)->first();
@@ -345,6 +366,7 @@ class FlagController extends Controller
             $add->from = 'org_team';
             $add->to = 'organization';
             $add->from_id = $getteam->id;
+            $add->orignal_flag_id = $orignal_flag_id;
             $add->to_id = $unit->id;
             $add->save();
             // Save Flag to Escalate
@@ -370,6 +392,7 @@ class FlagController extends Controller
             $add->from = 'unit_team';
             $add->to = 'business_units';
             $add->from_id = $getteam->id;
+            $add->orignal_flag_id = $orignal_flag_id;
             $add->to_id = $unit->id;
             $add->save();
             // Save Flag to Escalate
@@ -395,6 +418,7 @@ class FlagController extends Controller
             $add->from = 'value_team';
             $add->to = 'value_stream';
             $add->from_id = $getstream->id;
+            $add->orignal_flag_id = $orignal_flag_id;
             $add->to_id = $unit->id;
             $add->save();
             // Save Flag to Escalate
@@ -420,6 +444,7 @@ class FlagController extends Controller
             $add->from = 'value_stream';
             $add->to = 'business_units';
             $add->from_id = $getstream->id;
+            $add->orignal_flag_id = $orignal_flag_id;
             $add->to_id = $unit->id;
             $add->save();
             // Save Flag to Escalate
@@ -436,7 +461,6 @@ class FlagController extends Controller
             $addescalateflag->escalate = $add->id;
             $addescalateflag->save();
         }
-        
         if($flag->board_type == 'unit')
         {
             $business_units = DB::table('business_units')->where('id' , $flag->business_units)->first();
@@ -446,6 +470,7 @@ class FlagController extends Controller
             $add->from = 'business_units';
             $add->to = 'organization';
             $add->from_id = $business_units->id;
+            $add->orignal_flag_id = $orignal_flag_id;
             $add->to_id = $organization->id;
             $add->save();
             // Save Flag to Escalate
@@ -462,8 +487,6 @@ class FlagController extends Controller
             $addescalateflag->escalate = $add->id;
             $addescalateflag->save();
         }
-
-
     }
     public function savecomment(Request $request)
     {
@@ -523,29 +546,29 @@ class FlagController extends Controller
     {
         if($request->tab == 'general')
         {
-            $data = flags::find($request->id);
+            $data = flags::find(Cmf::gerescalatedmainid($request->id));
             $html = view('flags.tabs.general', compact('data'))->render();
             return $html;
         }
         if($request->tab == 'comment')
         {
-            $comments = flag_comments::where('flag_id' , $request->id)->wherenull('comment_id')->orderby('id' , 'desc')->get();
+            $comments = flag_comments::where('flag_id' , Cmf::gerescalatedmainid($request->id))->wherenull('comment_id')->orderby('id' , 'desc')->get();
             $data = flags::find($request->id);
             $html = view('flags.tabs.comments', compact('comments','data'))->render();
             return $html;
         }
         if($request->tab == 'activites')
         {
-            $activity = activities::where('value_id' , $request->id)->where('type' , 'flags')->orderby('id' , 'desc')->get();
-            $data = flags::find($request->id);
+            $activity = activities::where('value_id' , Cmf::gerescalatedmainid($request->id))->where('type' , 'flags')->orderby('id' , 'desc')->get();
+            $data = flags::find(Cmf::gerescalatedmainid($request->id));
             $html = view('flags.tabs.activities', compact('activity','data'))->render();
             return $html;
         }
         if($request->tab == 'attachment')
         {
-            $extensions = attachments::where('value_id' , $request->id)->groupBy('extension')->where('type' , 'flags')->orderby('id' , 'desc')->get();
-            $attachments = attachments::where('value_id' , $request->id)->where('type' , 'flags')->orderby('id' , 'desc')->get();
-            $data = flags::find($request->id);
+            $extensions = attachments::where('value_id' , Cmf::gerescalatedmainid($request->id))->groupBy('extension')->where('type' , 'flags')->orderby('id' , 'desc')->get();
+            $attachments = attachments::where('value_id' , Cmf::gerescalatedmainid($request->id))->where('type' , 'flags')->orderby('id' , 'desc')->get();
+            $data = flags::find(Cmf::gerescalatedmainid($request->id));
             $html = view('flags.tabs.attachments', compact('attachments','data','extensions'))->render();
             return $html;
         }
@@ -577,9 +600,10 @@ class FlagController extends Controller
         $add->value_id = $request->value_id;
         $add->save();
         Cmf::save_activity(Auth::id() , 'Added a New Attachment','flags',$request->value_id, 'attach_file');
+        $extensions = attachments::where('value_id' , $request->value_id)->groupBy('extension')->where('type' , 'flags')->orderby('id' , 'desc')->get();
         $attachments = attachments::where('value_id' , $request->value_id)->where('type' , 'flags')->orderby('id' , 'desc')->get();
         $data = flags::find($request->value_id);
-        $html = view('flags.tabs.attachments', compact('attachments','data'))->render();
+        $html = view('flags.tabs.attachments', compact('attachments','data','extensions'))->render();
         return $html;
     }
     public function deleteattachment(Request $request)
