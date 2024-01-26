@@ -22,7 +22,7 @@
                         @if($check_escalate->count() > 0)
                             <li><span class="material-symbols-outlined"> escalator </span> Escalated</li>
                         @else
-                            <li onclick="escalateflag({{$data->id}})"><span class="material-symbols-outlined"> escalator </span> Escalate</li>
+                            <li id="escalateflag" onclick="escalateflag({{$data->id}})"><span class="material-symbols-outlined"> escalator </span> Escalate</li>
                         @endif
                     @endif
                     <!-- <li><span class="material-symbols-outlined">share</span> Share</li> -->

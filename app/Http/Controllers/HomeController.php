@@ -36,7 +36,7 @@ class HomeController extends Controller
     public function index()
     {
         $organization  = Organization::where('user_id',Auth::id())->where('trash',NULL)->first();
-        return view('organizations.index',compact('organization'));
+        return view('organizations.dashboard',compact('organization'));
 
     }
 }

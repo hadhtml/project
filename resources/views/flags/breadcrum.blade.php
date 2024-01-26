@@ -258,7 +258,8 @@ function escalateflag(id) {
             id:id,
         },
         success: function(res) {
-            viewboards($('#viewboards').val())
+            viewboards($('#viewboards').val());
+            $('#escalateflag').html('<span class="material-symbols-outlined"> escalator </span> Escalated')
         }
     });
 }
