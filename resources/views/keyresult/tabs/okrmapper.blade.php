@@ -32,7 +32,7 @@
                                     <input type="hidden" id="epic_id" value="{{ $data->epic_id }}" name="epic_id">
                                     <div class="form-group mb-0 positionrelative">
                                         <label for="objective-name">Search Objectives</label>
-                                        <input onkeyup="searchobjectives(this.value)" type="text" placeholder="Search Epic" class="form-control">
+                                        <input onkeyup="searchobjectives(this.value)" type="text" placeholder="Search Objectives" class="form-control">
                                         <div class="searchiconforinput">
                                             <img src="{{ url('public/assets/images/searchiconsvg.svg') }}">
                                         </div>
