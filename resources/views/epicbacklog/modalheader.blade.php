@@ -5,6 +5,10 @@
         </h5>
     </div>
     <div class="col-md-12 displayflex">
+        <div class="epic_id mr-3 mt-1">
+            <img src="{{ url('public/assets/svg/arrow.svg') }}">
+            OE-{{ $data->id }}
+        </div>
         <div class="btn-group epicheaderborderleft">
             <button type="button" class="btn btn-default statuschangebutton @if($data->epic_status == 'To Do') todo-button-color @endif @if($data->epic_status == 'In progress') inprogress-button-color @endif @if($data->epic_status == 'Done') done-button-color @endif" id="showboardbutton">
                 @if($data->epic_status == 'To Do')
@@ -84,7 +88,7 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="membername">{{ $r->team_title }}</div>
-                                        <div class="memberdetail">Lead:{{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
+                                        <div class="memberdetail">Lead: {{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
                                     </div>
                                     <div class="col-md-2 text-center mt-3">
                                         @if($data->team_id == $r->id)
@@ -109,7 +113,7 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="membername">{{ $r->team_title }}</div>
-                                        <div class="memberdetail">Lead:{{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
+                                        <div class="memberdetail">Lead: {{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
                                     </div>
                                     <div class="col-md-2 text-center mt-3">
                                         @if($data->team_id == $r->id)
@@ -134,7 +138,7 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="membername">{{ $r->team_title }}</div>
-                                        <div class="memberdetail">Lead:{{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
+                                        <div class="memberdetail">Lead: {{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
                                     </div>
                                     <div class="col-md-2 text-center mt-3">
                                         @if($data->team_id == $r->id)

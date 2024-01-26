@@ -247,7 +247,7 @@ function getOrder(){
                             </div>
                              <div class="col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group mb-0">
-                                    <label for="lead-manager">Flag Assignee <small class="text-danger">*</small></label>
+                                    <label for="lead-manager">Assignee <small class="text-danger">*</small></label>
                                     <select class="form-control" name="flag_assign">
                                         @foreach(DB::table('members')->where('org_user',Auth::id())->get() as $m)
                                           <option @if(DB::table('flag_members')->where('flag_id' , $r->id)->first())  @if(DB::table('flag_members')->where('flag_id' , $r->id)->first()->member_id == $m->id) selected @endif  @endif value="{{ $m->id }}">{{ $m->name }} {{ $m->last_name }}</option>
