@@ -62,7 +62,7 @@
     $organization = DB::table('organization')->where('id' , $org_team->org_id)->first();
 @endphp
 @if($org_team && $organization)
-<div onclick="selectobjective({{$r->id}})" class="epic">
+<div onclick="selectobjective({{$r->id}})" id="cloneid{{ $r->id }}" class="epic">
     <div class="epic-tittle">{{ $r->type }} | {{ $r->objective_name }}</div>
     <div class="epic-detail okrmappersearchdetail">
         <span style="font-size:22px" class="material-symbols-outlined mr-2">layers</span>
@@ -74,3 +74,9 @@
 @endif
 @endif
 @endforeach
+
+<script type="text/javascript">
+    function selectobjective(id) {
+       var clone =  $("p").clone().html("body");
+    }
+</script>
