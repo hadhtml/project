@@ -9,7 +9,7 @@ $var_objective = 'Report-'.$type;
         <div class="d-flex flex-row justify-content-between">
             <div class="d-flex flex-column">
                 <div>
-                    <h4 class="pb-0 mb-0">{{$InitName->initiative_name}}</h4>
+                    {{-- <h4 class="pb-0 mb-0">{{$InitName->initiative_name}}</h4> --}}
                 </div>
                 <div class="d-flex flex-row">
                     <div>
@@ -17,22 +17,33 @@ $var_objective = 'Report-'.$type;
                    
                     </div>
                     @php
-                    $SprintInit = DB::table('sprint_report')->where('initiative_name','!=',NULL)->where('q_id',$sprint)->get();
+                    $SprintInit = DB::table('sprint_report')->where('initiative_name','!=',NULL)->where('initiative_id','!=',$init)->where('q_id',$sprint)->get();
                      @endphp
                     <div>
                         <div class="dropdown">
-                          <button class="btn bg-white btn-circle dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                          <button class="btn bg-white btn-circle dropdown-toggle w-100" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            @if(session()->has('key'))
+                            
+                              {{session()->get('key')}}  
+                            @endif
+
                             <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g id="vuesax/outline/arrow-down">
                                     <g id="arrow-down">
                                         <path id="Vector" d="M8.00001 11.7004C7.53335 11.7004 7.06668 11.5204 6.71335 11.1671L2.36668 6.82042C2.17335 6.62708 2.17335 6.30708 2.36668 6.11375C2.56001 5.92042 2.88001 5.92042 3.07335 6.11375L7.42001 10.4604C7.74001 10.7804 8.26001 10.7804 8.58001 10.4604L12.9267 6.11375C13.12 5.92042 13.44 5.92042 13.6333 6.11375C13.8267 6.30708 13.8267 6.62708 13.6333 6.82042L9.28668 11.1671C8.93335 11.5204 8.46668 11.7004 8.00001 11.7004Z" fill="#292D32" />
                                     </g>
                                 </g>
+                             
                             </svg>
+                       
                           </button>
                           <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                            <a class="dropdown-item"href="{{url('dashboard/organization/Okr-report-allepic/'.$sprint.'/'.$type)}}">All</a>
-
+                
+                            <a class="dropdown-item" href="{{url('dashboard/organization/Okr-report-allepic/'.$sprint.'/'.$type)}}">All</a>
+                            <a class="dropdown-item" href="{{url('dashboard/organization/Okr-report-all/'.$sprint.'/'.$type)}}">Completed</a>
+                            <a class="dropdown-item" href="{{url('dashboard/organization/Okr-report-NC/'.$sprint.'/'.$type)}}">Not Completed</a>
+                            <a class="dropdown-item" href="{{url('dashboard/organization/Okr-report-remove/'.$sprint.'/'.$type)}}">Removed</a>
                     </div>
                         </div>
                     </div>
@@ -44,10 +55,11 @@ $var_objective = 'Report-'.$type;
                 </div>
                 <div class="dropdown dropleft ml-3">
                     <button class="btn btn-default bg-white dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        All
+                       {{$InitName->initiative_name}}
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         @foreach($SprintInit as $keyInt)
+    
                         <a class="dropdown-item"href="{{url('dashboard/organization/report-init/'.$keyInt->initiative_id.'/'.$sprint.'/'.$type)}}">{{$keyInt->initiative_name}}</a>
                         @endforeach  
                     </div>

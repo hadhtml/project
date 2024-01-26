@@ -9,7 +9,7 @@ $var_objective = 'Report-'.$type;
         <div class="d-flex flex-row justify-content-between">
             <div class="d-flex flex-column">
                 <div>
-                    <h4 class="pb-0 mb-0">Epics Completed</h4>
+                    {{-- <h4 class="pb-0 mb-0">Epics Completed</h4> --}}
                 </div>
                 <div class="d-flex flex-row">
                     <div>
@@ -17,13 +17,26 @@ $var_objective = 'Report-'.$type;
                    
                     </div>
                     @php
+                    $InitName = 'All';
+                    $name = 'Epics Completed';
+                    session()->put('key',$name);
                    $SprintInit = DB::table('sprint_report')->where('initiative_name','!=',NULL)->where('q_id',$sprint)->get();
                    $Sprints = DB::table('sprint')->where('id',$sprint)->first();
 
+                     
+                   if(session()->has('init'))
+                    {
+                    $InitName = DB::table('sprint_report')->where('initiative_id','=',session()->get('init'))->where('q_id',$sprint)->first();
+
+                    }
                     @endphp
                     <div>
                         <div class="dropdown">
-                          <button class="btn bg-white btn-circle dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <button class="btn bg-white btn-circle dropdown-toggle w-100" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            @if(session()->has('key'))
+                            
+                            {{session()->get('key')}}  
+                          @endif
                             <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g id="vuesax/outline/arrow-down">
                                     <g id="arrow-down">
@@ -51,7 +64,11 @@ $var_objective = 'Report-'.$type;
                 </div>
                 <div class="dropdown dropleft ml-3">
                     <button class="btn btn-default bg-white dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @if(session()->has('init'))
+                        {{$InitName->initiative_name}}
+                        @else
                         All
+                        @endif
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         @foreach($SprintInit as $keyInt)
@@ -96,7 +113,14 @@ $var_objective = 'Report-'.$type;
                            
                             
                                 @php
-                                $SprintEpic = DB::table('sprint_report')->where('epic_prog','=',100)->where('epic_remove','=','Added')->where('q_id',$sprint)->limit(10)->get();
+                                if(session()->has('init'))
+                                {
+                                    $SprintEpic = DB::table('sprint_report')->where('epic_init_id',session()->get('init'))->where('epic_prog','=',100)->where('epic_remove','=','Added')->where('q_id',$sprint)->get();
+                                }else
+                                {
+                                    $SprintEpic = DB::table('sprint_report')->where('epic_prog','=',100)->where('epic_remove','=','Added')->where('q_id',$sprint)->limit(10)->get();
+
+                                }
                                 $SprintEpicCount = DB::table('sprint_report')->where('epic_prog','=',100)->where('epic_remove','=','Added')->where('q_id',$sprint)->count();
 
                                 @endphp
@@ -104,7 +128,9 @@ $var_objective = 'Report-'.$type;
                              
 
                                 @php
+                              
                                 $SprintInit = DB::table('sprint_report')->where('initiative_id',$epic->epic_init_id)->where('q_id',$sprint)->first();
+                        
                                 $diff = Carbon\Carbon::parse($Sprints->start_data)->diffInDays($epic->epic_trash);
 
                                 @endphp
