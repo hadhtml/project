@@ -144,6 +144,7 @@ class MemberController extends Controller
             $User  = User::find($request->user_id);;
             $User->name = $request->name;
             $User->status = $request->status;
+            $User->email = $request->email;
             $User->role = $request->role;
 
             $User->save();
