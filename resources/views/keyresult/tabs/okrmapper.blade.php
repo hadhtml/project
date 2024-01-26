@@ -31,27 +31,18 @@
                                 <div class="col-md-12 col-lg-12 col-xl-12" id="epicinputtoshow">
                                     <input type="hidden" id="epic_id" value="{{ $data->epic_id }}" name="epic_id">
                                     <div class="form-group mb-0 positionrelative">
-                                        <label for="objective-name">Search Team Objectives</label>
-                                        <input onkeyup="searchepic(this.value)" type="text" placeholder="Search Epic" class="form-control">
+                                        <label for="objective-name">Search Objectives</label>
+                                        <input onkeyup="searchobjectives(this.value)" type="text" placeholder="Search Epic" class="form-control">
                                         <div class="searchiconforinput">
                                             <img src="{{ url('public/assets/images/searchiconsvg.svg') }}">
                                         </div>
-                                        @if($data->epic_id)
-                                            @if(DB::Table('epics')->where('id' , $data->epic_id)->first())
-                                            <div class="selectepic">
-                                                <p>{{ DB::Table('epics')->where('id' , $data->epic_id)->first()->epic_name }}</p>
-                                                <a onclick="removeepic({{ $data->id }})" href="javascript:void(0)"><img class="closeimage" src="{{url('public/assets/svg/cross.svg')}}"></a>
-                                            </div>
-                                            @endif
-                                        @endif
                                     </div>
                                     <div class="searchepic-box">
-                                        
+                
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                
+                            <!-- <div class="row">
                                 <div class="col-md-12 col-lg-12 col-xl-12">
                                     <div class="form-group mb-0">
                                         <label for="key_name">Select Team</label>
@@ -83,7 +74,7 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="row mt-3">
                                 <div class="col-md-12 text-right">
                                     <button type="submit" class="btn btn-primary btn-theme" id="saveokrmapperbutton">Add</button>
@@ -163,6 +154,32 @@
     </div>
 </div>
 <script type="text/javascript">
+    function searchobjectives(id) {
+        var type = '{{ $data->type }}';
+        $.ajax({
+            type: "POST",
+            url: "{{ url('dashboard/keyresult/searchobjectives') }}",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                id:id,
+                type:type
+            },
+            success: function(res) {
+                if(id == '')
+                {
+                    $('.searchepic-box').hide();
+                }else{
+                    $('.searchepic-box').show();
+                    $('.searchepic-box').html(res);
+                }
+            },
+            error: function(error) {
+                
+            }
+        });
+    }
     function deletelinking(id) {
         var key_id = '{{ $data->id }}';
         $.ajax({

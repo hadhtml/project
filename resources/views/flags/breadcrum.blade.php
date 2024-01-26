@@ -515,7 +515,6 @@ function searchepic(id) {
                 $('.searchepic-box').show();
                 $('.searchepic-box').html(res);
             }
-            
         },
         error: function(error) {
             console.log('Error updating card position:', error);

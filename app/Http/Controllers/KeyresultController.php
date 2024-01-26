@@ -366,4 +366,17 @@ class KeyresultController extends Controller
         $html = view('keyresult.tabs.okrmapper', compact('data','linking'))->render();
         return $html;
     }
+    public function searchobjectives(Request $request)
+    {
+        if($request->type == 'org')
+        {
+            $objectives = DB::table('objectives')->wherenull('trash')->where('type' , '!=' , 'org')->where('objective_name', 'LIKE', "%$request->id%")->get();
+        }
+        if($request->type == 'unit')
+        {
+            $objectives = DB::table('objectives')->wherenull('trash')->where('type' , '!=' , 'org')->where('type' , '!=' , 'unit')->where('objective_name', 'LIKE', "%$request->id%")->get();
+        }
+        $html = view('keyresult.objectiveappend', compact('objectives'))->render();
+        return $html;
+    }
 }

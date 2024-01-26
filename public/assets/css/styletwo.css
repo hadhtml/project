@@ -255,6 +255,11 @@
     font-size: 14px;
     color: #b5b5b5;
 }
+
+
+.okrmappersearchdetail{
+    display: flex;
+}
 .searchepic-box .epic .epic-tittle{
     font-size: 16px;
     color: #000;

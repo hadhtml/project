@@ -338,7 +338,7 @@ Route::name('keyresult.')->namespace('App\Http\Controllers')->prefix('dashboard/
     Route::POST('okrmapperform', 'KeyresultController@okrmapperform');
     Route::POST('checkkeyresultlink', 'KeyresultController@checkkeyresultlink');
     Route::POST('deletelinking', 'KeyresultController@deletelinking');
-    
+    Route::POST('searchobjectives', 'KeyresultController@searchobjectives');
 
 
 });
