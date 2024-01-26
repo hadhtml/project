@@ -24,10 +24,9 @@ $var_objective = 'Report-'.$type;
                    $Sprints = DB::table('sprint')->where('id',$sprint)->first();
 
                      
-                   if(session()->has('init'))
+                   if(session())
                     {
                     $InitName = DB::table('sprint_report')->where('initiative_id','=',session()->get('init'))->where('q_id',$sprint)->first();
-
                     }
                     @endphp
                     <div>
@@ -64,7 +63,7 @@ $var_objective = 'Report-'.$type;
                 </div>
                 <div class="dropdown dropleft ml-3">
                     <button class="btn btn-default bg-white dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        @if(session()->has('init'))
+                        @if($InitName)
                         {{$InitName->initiative_name}}
                         @else
                         All
@@ -167,6 +166,7 @@ $var_objective = 'Report-'.$type;
                                     </tr>
                                     @endif
                                     @php
+                                     $last_id = '';
                                     $last_id = $epic->id;
                                     @endphp  
                                     @endforeach

@@ -17,11 +17,11 @@ $var_objective = 'Report-'.$type;
                    
                     </div>
                     @php
-                    $InitName = '';
+                    $InitName = 'All';
                      $name = 'Epics Removed';
                     session()->put('key',$name);
                    $SprintInit = DB::table('sprint_report')->where('initiative_name','!=',NULL)->where('q_id',$sprint)->get();
-                   if(session()->has('init'))
+                   if(session())
                     {
                     $InitName = DB::table('sprint_report')->where('initiative_id','=',session()->get('init'))->where('q_id',$sprint)->first();
     
@@ -61,10 +61,9 @@ $var_objective = 'Report-'.$type;
                 </div>
                 <div class="dropdown dropleft ml-3">
                     <button class="btn btn-default bg-white dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        @if(session()->has('init'))
+                        @if($InitName)
                         {{$InitName->initiative_name}}
-                        @else
-                        All
+                       
                         @endif
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">

@@ -50,7 +50,7 @@ $var_objective = 'Report-'.$type;
                  $name = 'All Epics';
                  session()->put('key',$name);
             $SprintInit = DB::table('sprint_report')->where('initiative_name','!=',NULL)->where('q_id',$sprint)->get();
-            if(session()->has('init'))
+            if(session())
                     {
                     $InitName = DB::table('sprint_report')->where('initiative_id','=',session()->get('init'))->where('q_id',$sprint)->first();
     
@@ -62,12 +62,11 @@ $var_objective = 'Report-'.$type;
                 </div>
                 <div class="dropdown dropleft ml-3">
                     <button class="btn btn-default bg-white dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        @if(session()->has('init'))
+                        @if($InitName)
                         {{$InitName->initiative_name}}
                         @else
                         All
                         @endif
-
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         @foreach($SprintInit as $keyInt)
@@ -220,16 +219,18 @@ $var_objective = 'Report-'.$type;
                                    
                                
                                 @php
-
+                         
                                 if(session()->has('init'))
                                 {
                                     $SprintEpic = DB::table('sprint_report')->where('epic_init_id',session()->get('init'))->where('epic_prog','!=',100)->where('epic_remove','=','Added')->where('q_id',$sprint)->get();
+                                    $SprintEpicCount = DB::table('sprint_report')->where('epic_init_id',session()->get('init'))->where('epic_prog','!=',100)->where('epic_remove','=','Added')->where('q_id',$sprint)->count();
+
                                 }else
                                 {
                                     $SprintEpic = DB::table('sprint_report')->where('epic_prog','!=',100)->where('epic_remove','=','Added')->where('q_id',$sprint)->limit(10)->get();
+                                    $SprintEpicCount = DB::table('sprint_report')->where('epic_prog','!=',100)->where('epic_remove','=','Added')->where('q_id',$sprint)->count();
 
                                 }
-                                $SprintEpicCount = DB::table('sprint_report')->where('epic_prog','!=',100)->where('epic_remove','=','Added')->where('q_id',$sprint)->count();
 
                                @endphp
                             
@@ -269,6 +270,7 @@ $var_objective = 'Report-'.$type;
                                     </tr>
                           
                                     @php
+                                    $last_id = '';
                                     $last_id = $epic->id;
                                     @endphp                
                                     @endforeach
