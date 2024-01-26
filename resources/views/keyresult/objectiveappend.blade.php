@@ -77,6 +77,6 @@
 
 <script type="text/javascript">
     function selectobjective(id) {
-       alert(id)
+       
     }
 </script>
