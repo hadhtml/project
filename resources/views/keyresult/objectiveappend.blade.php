@@ -1,7 +1,7 @@
 @foreach($objectives as $r)
 @if($r->type == 'unit')
 <div onclick="selectobjective({{$r->id}})" class="epic">
-    <div class="epic-tittle">{{ $r->type }}|{{ $r->objective_name }}</div>
+    <div class="epic-tittle">{{ $r->type }} | {{ $r->objective_name }}</div>
     <div class="epic-detail okrmappersearchdetail">
         <span style="font-size:22px" class="material-symbols-outlined mr-2">domain</span>
         <span>{{ DB::table('business_units')->where('id' , $r->unit_id)->first()->business_name }}</span>
@@ -14,7 +14,7 @@
 @endphp
 @if($valuestream)
 <div onclick="selectobjective({{$r->id}})" class="epic">
-    <div class="epic-tittle">{{ $r->type }}|{{ $r->objective_name }}</div>
+    <div class="epic-tittle">{{ $r->type }} | {{ $r->objective_name }}</div>
     <div class="epic-detail okrmappersearchdetail">
         <span style="font-size:22px" class="material-symbols-outlined mr-2">layers</span>
         <span>{{ $valuestream->value_name }}</span>
@@ -25,16 +25,33 @@
 @if($r->type == 'VS')
 @php
     $valueteam = DB::table('value_team')->where('id' , $r->unit_id)->first();
-@endphp
-@if($valueteam)
-@php
     $valuestream = DB::table('value_stream')->where('id' , $valueteam->org_id)->first();
 @endphp
+@if($valueteam && $valuestream)
 <div onclick="selectobjective({{$r->id}})" class="epic">
-    <div class="epic-tittle">{{ $r->type }}|{{ $r->objective_name }}</div>
+    <div class="epic-tittle">{{ $r->type }} | {{ $r->objective_name }}</div>
     <div class="epic-detail okrmappersearchdetail">
         <span style="font-size:22px" class="material-symbols-outlined mr-2">layers</span>
         <span>{{ $valuestream->value_name }}</span>
+        <span style="font-size:22px" class="material-symbols-outlined mr-2 ml-2">groups</span>
+        <span>{{ $valueteam->team_title }}</span>
+    </div>
+</div>
+@endif
+@endif
+@if($r->type == 'BU')
+@php
+    $businessteam = DB::table('unit_team')->where('id' , $r->unit_id)->first();
+    $business_units = DB::table('business_units')->where('id' , $businessteam->org_id)->first();
+@endphp
+@if($businessteam && $business_units)
+<div onclick="selectobjective({{$r->id}})" class="epic">
+    <div class="epic-tittle">{{ $r->type }} | {{ $r->objective_name }}</div>
+    <div class="epic-detail okrmappersearchdetail">
+        <span style="font-size:22px" class="material-symbols-outlined mr-2">layers</span>
+        <span>{{ $business_units->business_name }}</span>
+        <span style="font-size:22px" class="material-symbols-outlined mr-2 ml-2">groups</span>
+        <span>{{ $businessteam->team_title }}</span>
     </div>
 </div>
 @endif
