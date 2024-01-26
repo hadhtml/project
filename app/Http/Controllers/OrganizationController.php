@@ -511,7 +511,8 @@ class OrganizationController extends Controller
           $report  =  DB::table('sprint')->where('value_unit_id',$organization->id)->where('type','orgT')->get();
           }
           
-          
+          // session()->forget('key');
+          // session()->forget('init');
           return view('Report.Bu-report',compact('report','organization','type','Sid'));
 
     }
@@ -559,6 +560,9 @@ class OrganizationController extends Controller
       $count = count($key);   
       }
       }
+
+      session()->forget('key');
+      session()->forget('init');
       
     return view('Report.report3',compact('sprint','obj','key','report','organization','type','count','Sid'));
 
@@ -604,6 +608,9 @@ class OrganizationController extends Controller
           $key =   json_decode($sprint->key_result);   
           }
           }
+
+          session()->forget('key');
+          session()->forget('init');
           
         return view('Report.report',compact('sprint','obj','key','report','organization','type','Sid'));
 
@@ -678,6 +685,8 @@ class OrganizationController extends Controller
         $organization = DB::table('org_team')->where('id',$report->value_unit_id)->first();        
         }
 
+        // session()->forget('key');
+        // session()->forget('init');
         return view('Report.allreportepic',compact('report','sprint','type','organization','Sid'));
 
     
@@ -687,7 +696,7 @@ class OrganizationController extends Controller
     {
         $report = DB::table('sprint')->where('id',$sprint)->first();
         $Sid = $sprint;
-
+        session()->put('init',$init);
         if($type == 'unit')
         {
         $organization = DB::table('business_units')->where('id',$report->value_unit_id)->first();
@@ -716,7 +725,7 @@ class OrganizationController extends Controller
 
         $InitName = DB::table('sprint_report')->where('initiative_id',$init)->where('q_id',$sprint)->first();        
         $type = $organization->type;
-        return view('Report.init-report',compact('report','sprint','type','organization','init','InitName','Sid'));
+        return view('Report.init-report',compact('report','sprint','type','organization','init','InitName','Sid','init'));
 
     
     }

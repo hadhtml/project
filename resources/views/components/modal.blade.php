@@ -639,8 +639,8 @@
                 </button>
             </div>
             
-            <div id="wieght-error-edit-init"></div>
-            <div class="row mt-3 mb-2" id="initiative-edit-weight"></div>
+            {{-- <div id="wieght-error-edit-init"></div>
+            <div class="row mt-3 mb-2" id="initiative-edit-weight"></div> --}}
                  
             <div class="modal-body">
                <div class="row">
