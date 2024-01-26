@@ -220,15 +220,15 @@ $var_objective = 'Report-'.$type;
                                
                                 @php
                          
-                                if(session()->has('init'))
+                              if(session()->has('init'))
                                 {
-                                    $SprintEpic = DB::table('sprint_report')->where('epic_init_id',session()->get('init'))->where('epic_prog','!=',100)->where('epic_remove','=','Added')->where('q_id',$sprint)->get();
-                                    $SprintEpicCount = DB::table('sprint_report')->where('epic_init_id',session()->get('init'))->where('epic_prog','!=',100)->where('epic_remove','=','Added')->where('q_id',$sprint)->count();
-
-                                }else
+                                $SprintEpic = DB::table('sprint_report')->where('epic_init_id',session()->get('init'))->where('epic_prog','!=',100)->where('epic_remove','=','Added')->where('q_id',$sprint)->limit(10)->get();
+                                $SprintEpicCount = DB::table('sprint_report')->where('epic_init_id',session()->get('init'))->where('epic_prog','!=',100)->where('epic_remove','=','Added')->where('q_id',$sprint)->count();
+   
+                            }else
                                 {
-                                    $SprintEpic = DB::table('sprint_report')->where('epic_prog','!=',100)->where('epic_remove','=','Added')->where('q_id',$sprint)->limit(10)->get();
-                                    $SprintEpicCount = DB::table('sprint_report')->where('epic_prog','!=',100)->where('epic_remove','=','Added')->where('q_id',$sprint)->count();
+                                $SprintEpic = DB::table('sprint_report')->where('epic_prog','!=',100)->where('epic_remove','=','Added')->where('q_id',$sprint)->limit(10)->get();
+                                $SprintEpicCount = DB::table('sprint_report')->where('epic_prog','!=',100)->where('epic_remove','=','Added')->where('q_id',$sprint)->count();
 
                                 }
 

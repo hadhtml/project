@@ -110,12 +110,12 @@ $var_objective = 'Report-'.$type;
                             
                                 @php
                                 
-                                  if(session()->has('init'))
+                            if(session()->has('init'))
                                 {
                                 $SprintEpic = DB::table('sprint_report')->where('epic_init_id',session()->get('init'))->where('epic_prog','!=',100)->where('epic_remove','=','Added')->where('q_id',$sprint)->limit(10)->get();
                                 $SprintEpicCount = DB::table('sprint_report')->where('epic_init_id',session()->get('init'))->where('epic_prog','!=',100)->where('epic_remove','=','Added')->where('q_id',$sprint)->count();
    
-                            }else
+                               }else
                                 {
                                 $SprintEpic = DB::table('sprint_report')->where('epic_prog','!=',100)->where('epic_remove','=','Added')->where('q_id',$sprint)->limit(10)->get();
                                 $SprintEpicCount = DB::table('sprint_report')->where('epic_prog','!=',100)->where('epic_remove','=','Added')->where('q_id',$sprint)->count();
@@ -123,7 +123,7 @@ $var_objective = 'Report-'.$type;
                                 }
 
                                 $Sprints = DB::table('sprint')->where('id',$sprint)->first();
-
+                               
                                 @endphp
                                 @foreach($SprintEpic as $epic)
                              
@@ -135,7 +135,7 @@ $var_objective = 'Report-'.$type;
                                 $diff = Carbon\Carbon::parse($Sprints->start_data)->diffInDays($epic->epic_trash);
 
                                 @endphp
-                                @if($SprintInit)
+                            
                                     <tr>
                                         <td>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
@@ -166,7 +166,7 @@ $var_objective = 'Report-'.$type;
                                         @endphp
                                         <td class="cell-30-percent"><a href="{{url('dashboard/organization/report-init/'.$epic->epic_init_id.'/'.$sprint.'/'.$type)}}">@if($SprintInit){{$SprintInit->initiative_name}}@endif</a></td>
                                     </tr>
-                                    @endif
+                               
                                     @php
                                      $last_id = '';
                                     $last_id = $epic->id;

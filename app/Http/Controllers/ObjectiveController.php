@@ -363,7 +363,7 @@ class ObjectiveController extends Controller
             ->delete();
 
         DB::table("epics")
-            ->where("obj_id", $request->delete_obj_id)
+            ->where("obj_id",$request->delete_obj_id)
             ->delete();
 
         if ($request->type == "unit") {
@@ -733,8 +733,10 @@ class ObjectiveController extends Controller
             ->delete();
 
         DB::table("epics")
-            ->where("key_id", $request->key_delete_id)
-            ->delete();   
+            ->where("key_id",$request->key_delete_id)
+            ->delete();  
+            
+          
 
             $Quartertotal = 0;
             $totalinitiative = 0;
