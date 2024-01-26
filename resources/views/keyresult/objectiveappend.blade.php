@@ -56,4 +56,21 @@
 </div>
 @endif
 @endif
+@if($r->type == 'orgT')
+@php
+    $org_team = DB::table('org_team')->where('id' , $r->unit_id)->first();
+    $organization = DB::table('organization')->where('id' , $org_team->org_id)->first();
+@endphp
+@if($org_team && $organization)
+<div onclick="selectobjective({{$r->id}})" class="epic">
+    <div class="epic-tittle">{{ $r->type }} | {{ $r->objective_name }}</div>
+    <div class="epic-detail okrmappersearchdetail">
+        <span style="font-size:22px" class="material-symbols-outlined mr-2">layers</span>
+        <span>{{ $organization->organization_name }}</span>
+        <span style="font-size:22px" class="material-symbols-outlined mr-2 ml-2">groups</span>
+        <span>{{ $org_team->team_title }}</span>
+    </div>
+</div>
+@endif
+@endif
 @endforeach

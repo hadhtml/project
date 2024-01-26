@@ -376,6 +376,10 @@ class KeyresultController extends Controller
         {
             $objectives = DB::table('objectives')->wherenull('trash')->where('type' , '!=' , 'org')->where('type' , '!=' , 'unit')->where('objective_name', 'LIKE', "%$request->id%")->get();
         }
+        if($request->type == 'stream')
+        {
+            $objectives = DB::table('objectives')->wherenull('trash')->where('type' , '!=' , 'stream')->where('type' , '!=' , 'org')->where('type' , '!=' , 'unit')->where('objective_name', 'LIKE', "%$request->id%")->get();
+        }
         $html = view('keyresult.objectiveappend', compact('objectives'))->render();
         return $html;
     }
