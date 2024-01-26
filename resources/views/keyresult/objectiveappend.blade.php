@@ -77,6 +77,6 @@
 
 <script type="text/javascript">
     function selectobjective(id) {
-       var clone =  $("p").clone().html("body");
+       alert(id)
     }
 </script>
