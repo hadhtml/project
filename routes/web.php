@@ -251,6 +251,8 @@ Route::name('flags.')->namespace('App\Http\Controllers')->prefix('dashboard/flag
     
 });
 Route::name('linking.')->namespace('App\Http\Controllers')->prefix('dashboard')->group(function () {
+    
+    Route::get('mapper/{url}/{type}', 'MapperController@mapperbytype');
     Route::get('okr-mapper', 'MapperController@index');
     Route::POST('linking/saveteamlevellinking', 'MapperController@saveteamlevellinking');
     Route::POST('linking/checkkeyresultmapper', 'MapperController@checkkeyresultmapper');

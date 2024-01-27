@@ -73,4 +73,15 @@ class MapperController extends Controller
         $objective = DB::table('key_result')->where('obj_id',$request->id)->get();
         return $objective;
     }
+    public function mapperbytype($url , $type)
+    {
+        if($type == 'unit')
+        {
+            $organization = DB::table('business_units')->where('slug'  , $url)->first();
+            $data = DB::table('business_units')->where('slug'  , $url)->first();
+            $valuestream = DB::table('value_stream')->where('unit_id'  , $data->id)->get();
+            $buteam = DB::table('unit_team')->where('org_id'  , $data->id)->get();
+            return view('mapper.unit.index',compact('data','valuestream','buteam','organization')); 
+        }
+    }
 }
