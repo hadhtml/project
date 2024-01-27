@@ -339,6 +339,7 @@ Route::name('keyresult.')->namespace('App\Http\Controllers')->prefix('dashboard/
     Route::POST('checkkeyresultlink', 'KeyresultController@checkkeyresultlink');
     Route::POST('deletelinking', 'KeyresultController@deletelinking');
     Route::POST('searchobjectives', 'KeyresultController@searchobjectives');
+    Route::POST('selectobjective', 'KeyresultController@selectobjective');
 
 
 });

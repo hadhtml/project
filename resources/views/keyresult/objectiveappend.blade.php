@@ -1,4 +1,5 @@
 @foreach($objectives as $r)
+@if(DB::table('team_link_child')->where('linked_objective_id'  ,$r->id)->count() == 0)
 @if($r->type == 'unit')
 <div onclick="selectobjective({{$r->id}})" class="epic">
     <div class="epic-tittle">{{ $r->type }} | {{ $r->objective_name }}</div>
@@ -48,7 +49,7 @@
 <div onclick="selectobjective({{$r->id}})" class="epic">
     <div class="epic-tittle">{{ $r->type }} | {{ $r->objective_name }}</div>
     <div class="epic-detail okrmappersearchdetail">
-        <span style="font-size:22px" class="material-symbols-outlined mr-2">layers</span>
+        <span style="font-size:22px" class="material-symbols-outlined mr-2">domain</span>
         <span>{{ $business_units->business_name }}</span>
         <span style="font-size:22px" class="material-symbols-outlined mr-2 ml-2">groups</span>
         <span>{{ $businessteam->team_title }}</span>
@@ -65,7 +66,7 @@
 <div onclick="selectobjective({{$r->id}})" id="cloneid{{ $r->id }}" class="epic">
     <div class="epic-tittle">{{ $r->type }} | {{ $r->objective_name }}</div>
     <div class="epic-detail okrmappersearchdetail">
-        <span style="font-size:22px" class="material-symbols-outlined mr-2">layers</span>
+        <span style="font-size:22px" class="material-symbols-outlined mr-2">auto_stories</span>
         <span>{{ $organization->organization_name }}</span>
         <span style="font-size:22px" class="material-symbols-outlined mr-2 ml-2">groups</span>
         <span>{{ $org_team->team_title }}</span>
@@ -73,10 +74,30 @@
 </div>
 @endif
 @endif
+@endif
 @endforeach
 
 <script type="text/javascript">
     function selectobjective(id) {
-       
+        $('#objectiveid').val(id);
+       $.ajax({
+            type: "POST",
+            url: "{{ url('dashboard/keyresult/selectobjective') }}",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                id: id
+            },
+            success: function(res) {
+                $('#searchobjective').attr('disabled' , true)
+                $('.searchepic-box').hide();
+                $('.selectepic').show();
+                $('.selectepic').html(res);
+            },
+            error: function(error) {
+                
+            }
+        });
     }
 </script>

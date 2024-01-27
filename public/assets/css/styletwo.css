@@ -1735,3 +1735,7 @@ button:focus {
     font-size:12px;
     font-weight: 600;
 }
+.epic-tittle img{
+    width: 22px;
+    height: 22px;
+}
