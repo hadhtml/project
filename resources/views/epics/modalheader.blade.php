@@ -53,6 +53,7 @@
             <img src="{{url('public/assets/svg/btnteamsvg.svg')}}" width="20"> Team
         </a>
         @endif
+        @if($data->epic_type == 'unit' || $data->epic_type == 'stream' || $data->epic_type == 'org')
         <div class="memberlistposition">
             <div class="memberadd-box team-select-box hidepopupall">
                 <div class="row mb-3">
@@ -178,6 +179,7 @@
                 </div>
             </div>
         </div>
+        @endif
         <div class="epic-header-buttons raise-flag-button">
 
             <a onclick="rasiseflag({{$data->id}})" href="javascript:void(0)"  id="showboardbutton">
