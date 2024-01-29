@@ -25,6 +25,22 @@ class FlagController extends Controller
     }
     public function flags($organizationid , $flagtype , $type)
     {
+        if($flagtype == 'risk')
+        {
+            $flagtype = 'Risk';
+        }
+        if($flagtype == 'action')
+        {
+            $flagtype = 'Action';
+        }
+        if($flagtype == 'blocker')
+        {
+            $flagtype = 'Blocker';
+        }
+        if($flagtype == 'impediments')
+        {
+            $flagtype = 'Impediment';
+        }
         if($type == 'stream')
         {
             $organization = DB::table('value_stream')->where('slug',$organizationid)->first();
@@ -50,11 +66,11 @@ class FlagController extends Controller
         {
             $organization = DB::table('org_team')->where('slug',$organizationid)->first();
         }
-        $doneflag = flags::where('business_units' , $organization->id)->where('board_type' , $organization->type)->where('archived' , 2)->where('flag_status' , 'doneflag')->orderby('board_order' , 'asc')->get();
-        $inprogress = flags::where('business_units' , $organization->id)->where('board_type' , $organization->type)->where('archived' , 2)->where('flag_status' , 'inprogress')->orderby('board_order' , 'asc')->get();
-        $todoflag = flags::where('business_units' , $organization->id)->where('board_type' , $organization->type)->where('archived' , 2)->where('flag_status' , 'todoflag')->orderby('board_order' , 'asc')->get();
+        $doneflag = flags::where('business_units' , $organization->id)->where('flag_type' , $flagtype)->where('board_type' , $organization->type)->where('archived' , 2)->where('flag_status' , 'doneflag')->orderby('board_order' , 'asc')->get();
+        $inprogress = flags::where('business_units' , $organization->id)->where('flag_type' , $flagtype)->where('board_type' , $organization->type)->where('archived' , 2)->where('flag_status' , 'inprogress')->orderby('board_order' , 'asc')->get();
+        $todoflag = flags::where('business_units' , $organization->id)->where('flag_type' , $flagtype)->where('board_type' , $organization->type)->where('archived' , 2)->where('flag_status' , 'todoflag')->orderby('board_order' , 'asc')->get();
         $epics = DB::table('epics')->where('buisness_unit_id' , $organization->id)->where('trash' , Null)->get();
-    	return view('flags.index',compact('organization','doneflag','inprogress','todoflag','type','epics')); 
+    	return view('flags.index',compact('organization','doneflag','inprogress','todoflag','type','epics','flagtype')); 
     }
     public function viewboards(Request $request)
     {
@@ -84,15 +100,15 @@ class FlagController extends Controller
         }
         if($request->id == 'all')
         {
-            $doneflag = flags::where('business_units' , $organization->id)->where('board_type' , $organization->type)->where('archived',2)->where('flag_status' , 'doneflag')->orderby('board_order' , 'asc')->get();
-            $inprogress = flags::where('business_units' , $organization->id)->where('board_type' , $organization->type)->where('archived',2)->where('flag_status' , 'inprogress')->orderby('board_order' , 'asc')->get();
-            $todoflag = flags::where('business_units' , $organization->id)->where('board_type' , $organization->type)->where('archived',2)->where('flag_status' , 'todoflag')->orderby('board_order' , 'asc')->get();
+            $doneflag = flags::where('business_units' , $organization->id)->where('flag_type' , $request->flagtype)->where('board_type' , $organization->type)->where('archived',2)->where('flag_status' , 'doneflag')->orderby('board_order' , 'asc')->get();
+            $inprogress = flags::where('business_units' , $organization->id)->where('flag_type' , $request->flagtype)->where('board_type' , $organization->type)->where('archived',2)->where('flag_status' , 'inprogress')->orderby('board_order' , 'asc')->get();
+            $todoflag = flags::where('business_units' , $organization->id)->where('flag_type' , $request->flagtype)->where('board_type' , $organization->type)->where('archived',2)->where('flag_status' , 'todoflag')->orderby('board_order' , 'asc')->get();
         }
         if($request->id == 'archived')
         {
-            $doneflag = flags::where('business_units' , $organization->id)->where('board_type' , $organization->type)->where('archived' , 1)->where('flag_status' , 'doneflag')->orderby('board_order' , 'asc')->get();
-            $inprogress = flags::where('business_units' , $organization->id)->where('board_type' , $organization->type)->where('archived' , 1)->where('flag_status' , 'inprogress')->orderby('board_order' , 'asc')->get();
-            $todoflag = flags::where('business_units' , $organization->id)->where('board_type' , $organization->type)->where('archived' , 1)->where('flag_status' , 'todoflag')->orderby('board_order' , 'asc')->get();
+            $doneflag = flags::where('business_units' , $organization->id)->where('flag_type' , $request->flagtype)->where('board_type' , $organization->type)->where('archived' , 1)->where('flag_status' , 'doneflag')->orderby('board_order' , 'asc')->get();
+            $inprogress = flags::where('business_units' , $organization->id)->where('flag_type' , $request->flagtype)->where('board_type' , $organization->type)->where('archived' , 1)->where('flag_status' , 'inprogress')->orderby('board_order' , 'asc')->get();
+            $todoflag = flags::where('business_units' , $organization->id)->where('flag_type' , $request->flagtype)->where('board_type' , $organization->type)->where('archived' , 1)->where('flag_status' , 'todoflag')->orderby('board_order' , 'asc')->get();
         }
         $epics = DB::table('epics')->where('buisness_unit_id' , $organization->id)->where('trash' , Null)->get();
         $type = $request->type;
@@ -200,7 +216,7 @@ class FlagController extends Controller
                 $activity = 'has updated Title Field <a href="javascript:void(0)" onclick="showdetailsofactivity('.$rand.')">See Details</a> <div class="activitydetalbox deletecomment" id="activitydetalbox'.$rand.'"><div class="row"> <div class="col-md-10"> <h4>Title Update</h4> </div> <div class="col-md-2"> <img onclick="showdetailsofactivity('.$rand.')" src="'.url("public/assets/svg/crossdelete.svg").'"> </div> </div><p style="margin-bottom:0px;">'.$update->flag_title.'</p><div class="text-center mt-2 mb-2"><span class="material-symbols-outlined"> arrow_downward </span></div><p>'.$request->flag_title.'</p></div>';
                 Cmf::save_activity(Auth::id() , $activity,'flags',$request->id, 'edit');
             }else{
-                $activity = 'Added a Flag Tittle';
+                $activity = 'Added a Tittle';
                 Cmf::save_activity(Auth::id() , $activity,'flags',$request->id, 'edit');
             }
         }
