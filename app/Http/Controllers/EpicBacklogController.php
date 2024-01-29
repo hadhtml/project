@@ -466,6 +466,12 @@ class EpicBacklogController extends Controller
         $flags->flag_status = $request->status;
         $flags->save();
     }
+    public function changeitemstatus(Request $request)
+    {
+        $item = epics_stroy::find($request->id);
+        $item->story_status = $request->status;
+        $item->save();
+    }
     public function cloneepic($id,$type)
     {
         $log = DB::table('team_backlog')->where('id',$id)->first();

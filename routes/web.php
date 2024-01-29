@@ -290,7 +290,7 @@ Route::name('epicbacklog.')->namespace('App\Http\Controllers')->prefix('dashboar
     Route::POST('showdataintable', 'EpicBacklogController@showdataintable');
     Route::get('clone/{id}/{type}', 'EpicBacklogController@cloneepic');
     Route::POST('updatechlditem', 'EpicBacklogController@updatechlditem');
-    // Route::POST('sortchilditem', 'EpicController@sortchilditem');
+    Route::POST('changeitemstatus', 'EpicBacklogController@changeitemstatus');
     Route::POST('deletechilditem', 'EpicBacklogController@deletechilditem');
     // Route::POST('orderbychilditem', 'EpicController@orderbychilditem');
 });
