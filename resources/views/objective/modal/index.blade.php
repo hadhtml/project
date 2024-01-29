@@ -12,6 +12,9 @@
                     <li id="general" onclick="showtabobjective({{$data->id}} , 'general')" class="tabsclass active">
                         <span class="material-symbols-outlined"> edit_square </span> General
                     </li>
+                    <li id="activites"@if($data->objective_name)  onclick="showtabobjective({{$data->id}} , 'activites')" @else data-toggle="tooltip" title="" data-original-title="Please Fill General Details" @endif class="tabsclass">
+                       <span class="material-symbols-outlined">browse_activity</span> Activities
+                    </li>
                 </ul>
                 <h4>Action</h4>
                 <ul class="positionrelative">

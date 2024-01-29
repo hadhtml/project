@@ -8,6 +8,7 @@ use App\Models\Organization;
 use App\Models\epics_stroy;
 use App\Models\Epic;
 use App\Models\flags;
+use App\Models\activities;
 use App\Models\objectives;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -117,6 +118,13 @@ class ObjectiveController extends Controller
         {
             $data = objectives::find($request->id);
             $html = view('objective.modal.tabs.general', compact('data'))->render();
+            return $html;
+        }
+        if($request->tab == 'activites')
+        {
+            $activity = activities::where('value_id' , $request->id)->where('type' , 'objective')->orderby('id' , 'desc')->get();
+            $data = objectives::find($request->id);
+            $html = view('objective.modal.tabs.activities', compact('activity','data'))->render();
             return $html;
         }
     }
