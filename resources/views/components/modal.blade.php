@@ -238,7 +238,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" id="deleteobjectivebutton" onclick="DeleteObjective();" class="btn btn-danger">Confirm</button>
+          <button type="button" id="deleteobjectivebutton" onclick="deleteobjectivemain();" class="btn btn-danger">Confirm</button>
         </div>
         </form>
       </div>

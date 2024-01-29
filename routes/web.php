@@ -65,7 +65,6 @@ Route::post('update-organization', [App\Http\Controllers\OrganizationController:
 Route::post('delete-mutiple-organization', [App\Http\Controllers\OrganizationController::class, 'DeleteOrganizationAll']);
 
 Route::get('dashboard/organization/{id}/portfolio/{type}', [App\Http\Controllers\ObjectiveController::class, 'Objectives'])->middleware('auth');
-Route::post('Delete-objective', [App\Http\Controllers\ObjectiveController::class, 'DeleteObjective']);
 Route::get('get-obj-key-weight', [App\Http\Controllers\ObjectiveController::class, 'AllObjKeyWeight']);
 
 
@@ -216,7 +215,8 @@ Route::name('objectives.')->namespace('App\Http\Controllers')->prefix('dashboard
     Route::POST('updategeneral', 'ObjectiveController@updategeneral');
     Route::POST('showtabobjective', 'ObjectiveController@showtabobjective');
     Route::POST('addnewobjective', 'ObjectiveController@addnewobjective');
-
+    Route::POST('deleteobjective', 'ObjectiveController@deleteobjective');
+    Route::POST('changeobjectivestatus', 'ObjectiveController@changeobjectivestatus');
     
 });
 

@@ -15,18 +15,18 @@
                 </ul>
                 <h4>Action</h4>
                 <ul class="positionrelative">
-                    <li @if($data->objective_name) onclick="deleteflagshow({{$data->id}})"  @else data-toggle="tooltip" title="" data-original-title="Please Fill General Details" @endif><span class="material-symbols-outlined">delete</span> Delete</li>
-                    <div class="deleteflag deleteepiccard hidepopupall" id="flagdelete{{ $data->id }}">
+                    <li @if($data->objective_name) onclick="deleteobjectiveshow({{$data->id}})"  @else data-toggle="tooltip" title="" data-original-title="Please Fill General Details" @endif><span class="material-symbols-outlined">delete</span> Delete</li>
+                    <div class="deleteflag deleteepiccard hidepopupall" id="deleteobjective{{ $data->id }}">
                         <div class="row">
                             <div class="col-md-10">
                                 <h4>Delete Objective</h4>
                             </div>
                             <div class="col-md-2">
-                                <img onclick="deleteflagshow({{$data->id}})" src="{{ url('public/assets/svg/crossdelete.svg') }}">
+                                <img onclick="deleteobjectiveshow({{$data->id}})" src="{{ url('public/assets/svg/crossdelete.svg') }}">
                             </div>
                         </div>
                         <p>All actions will be removed from the activity feed and you won’t be able to re-open the card. There is no undo.</p>
-                        <button onclick="DeleteEpic({{$data->id}},{{ $data->initiative_id }},{{ $data->key_id }},{{ $data->obj_id }})" class="btn btn-danger btn-block">Delete</button>
+                        <button onclick="deleteobjective({{$data->id}})" class="btn btn-danger btn-block">Delete</button>
                     </div>
                 </ul>
             </div>
