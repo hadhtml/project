@@ -4,31 +4,91 @@
         <div class="d-flex align-items-start flex-column flex-wrap mr-2">
             <!--begin::Page Title-->
             <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
-                @if(isset($organization))
-                {{ DB::table('business_units')->where('id' , $organization->id)->first()->business_name }}
+                @if($var_objective == 'mapper-unit')
+                    OKR Mapper
                 @else
-                Business Units
+                @if(isset($organization))
+                <div class="d-flex flex-row">
+                    <div>
+                        <span style="font-size:22px" class="material-symbols-outlined">domain</span>
+                    </div>
+                    <div>
+                        <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
+                            {{ DB::table('business_units')->where('id' , $organization->id)->first()->business_name }}
+
+                        </h5>
+                    </div>
+                </div>
+                @else
+                
+            <div class="d-flex flex-row">
+                <div>
+                    <span style="font-size:22px" class="material-symbols-outlined">domain</span>
+                </div>
+                <div>
+                    <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
+                        Business Units
+                    </h5>
+                </div>
+            </div>
+                @endif
                 @endif
             </h5>
             <!-- Breadcrum Items -->
             <div class="d-flex flex-row page-sub-titles">
                 <div class="mr-2">
-                    <a href="{{route('home')}}">Dashboard</a>
+                    <div class="d-flex flex-row">
+                        <div>
+                            <span style="font-size:22px" class="material-symbols-outlined">auto_stories</span>
+                        </div>
+                        <div>
+                            <a href="{{route('home')}}">Dashboard</a>
+
+                        </div>
+                    </div>
                 </div>
-               
-              
                 @if(isset($organization))
                 <div class="mr-2">
-                    <p>{{ DB::table('business_units')->where('id' , $organization->id)->first()->business_name }}</p>
+                    <div class="d-flex flex-row">
+                        <div>
+                            <span style="font-size:22px" class="material-symbols-outlined">domain</span>
+                        </div>
+                        <div>
+                            <p>{{ DB::table('business_units')->where('id' , $organization->id)->first()->business_name }}</p>
+
+
+                        </div>
+                    </div>
                 </div>
                 @endif
-
-                @if(isset($organization))
-                <div class="mr-2">
-                    <a href="{{url('dashboard/organization/Business-Units')}}">BU-Dashboard</a>
-                </div>
+                @if($var_objective == 'mapper-unit')
+                    <div class="mr-2">
+                        <p>OKR Mapper</p>
+                    </div>
                 @else
-                <a href="{{url('dashboard/organization/Business-Units')}}">Business Units</a>
+                    @if(isset($organization))
+                    <div class="mr-2">
+                        <div class="d-flex flex-row">
+                            <div>
+                                <span style="font-size:22px" class="material-symbols-outlined">auto_stories</span>
+                            </div>
+                            <div>
+                                <a href="{{url('dashboard/organization/Business-Units')}}">BU-Dashboard</a>
+    
+                            </div>
+                        </div>
+                    </div>
+                    @else
+                    <div class="d-flex flex-row">
+                        <div>
+                            <span style="font-size:22px" class="material-symbols-outlined">domain</span>
+                        </div>
+                        <div>
+                            <a href="{{url('dashboard/organization/Business-Units')}}">Business Units</a>
+
+                        </div>
+                    </div>
+                    @endif
                 @endif
             </div>
             <!--End Breadcrum Items -->

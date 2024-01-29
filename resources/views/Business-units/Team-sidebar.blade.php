@@ -44,8 +44,8 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
             </li> -->
 
             <li>
-                <a href="#"  class="nav-link"  title="" data-toggle="tooltip" data-placement="right" data-original-title="OKR Mapper">
-                    <span class="material-symbols-outlined">action_key</span>
+                <a href="javascript::void(0)"  class="nav-link"  title="" data-toggle="tooltip" data-placement="right" data-original-title="OKR Mapper">
+                    <span class="material-symbols-outlined">link</span>
                 </a>
             </li>
 
@@ -361,6 +361,36 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                     </div>
                 </a>
             </li>
+            <li class="mb-1">
+                <a href="{{url('dashboard/flags/'.$organization->slug.'/risk/VS')}}" @if (url()->current() == url('dashboard/flags/'.$organization->slug.'/risk/VS')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
+                    <div class="mr-2">
+                         <span style="font-size:22px" class="material-symbols-outlined">emergency</span>
+                    </div>
+                    <div class="mr-2">
+                        Risk
+                    </div>
+                </a>
+            </li>
+            <li class="mb-1">
+                <a href="{{url('dashboard/flags/'.$organization->slug.'/blocker/VS')}}" @if (url()->current() == url('dashboard/flags/'.$organization->slug.'/blocker/VS')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
+                    <div class="mr-2">
+                         <span style="font-size:22px" class="material-symbols-outlined">block</span>
+                    </div>
+                    <div class="mr-2">
+                        Blocker
+                    </div>
+                </a>
+            </li>
+            <li class="mb-1">
+                <a href="{{url('dashboard/flags/'.$organization->slug.'/action/VS')}}" @if (url()->current() == url('dashboard/flags/'.$organization->slug.'/action/VS')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
+                    <div class="mr-2">
+                         <span style="font-size:22px" class="material-symbols-outlined">call_to_action</span>
+                    </div>
+                    <div class="mr-2">
+                        Action
+                    </div>
+                </a>
+            </li>
             @endif
             @if($organization->type == 'BU')
             <li class="mb-1">
@@ -370,6 +400,36 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                     </div>
                     <div class="mr-2">
                         Impediments
+                    </div>
+                </a>
+            </li>
+            <li class="mb-1">
+                <a href="{{url('dashboard/flags/'.$organization->slug.'/risk/BU')}}" @if (url()->current() == url('dashboard/flags/'.$organization->slug.'/risk/BU')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
+                    <div class="mr-2">
+                         <span style="font-size:22px" class="material-symbols-outlined">emergency</span>
+                    </div>
+                    <div class="mr-2">
+                        Risk
+                    </div>
+                </a>
+            </li>
+            <li class="mb-1">
+                <a href="{{url('dashboard/flags/'.$organization->slug.'/blocker/BU')}}" @if (url()->current() == url('dashboard/flags/'.$organization->slug.'/blocker/BU')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
+                    <div class="mr-2">
+                         <span style="font-size:22px" class="material-symbols-outlined">block</span>
+                    </div>
+                    <div class="mr-2">
+                        Blocker
+                    </div>
+                </a>
+            </li>
+            <li class="mb-1">
+                <a href="{{url('dashboard/flags/'.$organization->slug.'/action/BU')}}" @if (url()->current() == url('dashboard/flags/'.$organization->slug.'/action/BU')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
+                    <div class="mr-2">
+                         <span style="font-size:22px" class="material-symbols-outlined">call_to_action</span>
+                    </div>
+                    <div class="mr-2">
+                        Action
                     </div>
                 </a>
             </li>
@@ -383,6 +443,36 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                     </div>
                     <div class="mr-2">
                         Impediments
+                    </div>
+                </a>
+            </li>
+            <li class="mb-1">
+                <a href="{{url('dashboard/flags/'.$organization->slug.'/risk/orgT')}}" @if (url()->current() == url('dashboard/flags/'.$organization->slug.'/risk/orgT')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
+                    <div class="mr-2">
+                         <span style="font-size:22px" class="material-symbols-outlined">emergency</span>
+                    </div>
+                    <div class="mr-2">
+                        Risk
+                    </div>
+                </a>
+            </li>
+            <li class="mb-1">
+                <a href="{{url('dashboard/flags/'.$organization->slug.'/blocker/orgT')}}" @if (url()->current() == url('dashboard/flags/'.$organization->slug.'/blocker/orgT')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
+                    <div class="mr-2">
+                         <span style="font-size:22px" class="material-symbols-outlined">block</span>
+                    </div>
+                    <div class="mr-2">
+                        Blocker
+                    </div>
+                </a>
+            </li>
+            <li class="mb-1">
+                <a href="{{url('dashboard/flags/'.$organization->slug.'/action/orgT')}}" @if (url()->current() == url('dashboard/flags/'.$organization->slug.'/action/orgT')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
+                    <div class="mr-2">
+                         <span style="font-size:22px" class="material-symbols-outlined">call_to_action</span>
+                    </div>
+                    <div class="mr-2">
+                        Action
                     </div>
                 </a>
             </li>

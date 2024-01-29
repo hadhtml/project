@@ -43,16 +43,16 @@
                     </div>
                 </a>
             </li>
-            {{-- <li class="mb-1">
-                <a href="{{url('dashboard/linking/'.$organization->slug.'/'.$organization->type)}}" @if (url()->current() == url('dashboard/linking/'.$organization->slug.'/'.$organization->type)) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
+            <li class="mb-1">
+                <a href="{{url('dashboard/mapper/'.$organization->slug.'/unit')}}" @if (url()->current() == url('dashboard/mapper/'.$organization->slug.'/unit')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
                     <div class="mr-2">
-                         <span style="font-size:22px" class="material-symbols-outlined">map</span>
+                         <span style="font-size:22px" class="material-symbols-outlined">link</span>
                     </div>
                     <div class="mr-2">
                         OKR Mapper
                     </div>
                 </a>
-            </li> --}}
+            </li>
             <!-- Portfolio -->
 
             <li class="mb-1">
@@ -103,6 +103,36 @@
                     </div>
                     <div class="mr-2">
                         Impediments
+                    </div>
+                </a>
+            </li>
+            <li class="mb-1">
+                <a href="{{url('dashboard/flags/'.$organization->slug.'/risk/unit')}}" @if (url()->current() == url('dashboard/flags/'.$organization->slug.'/risk/unit')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
+                    <div class="mr-2">
+                        <span style="font-size:22px" class="material-symbols-outlined">emergency</span>
+                    </div>
+                    <div class="mr-2">
+                        Risk
+                    </div>
+                </a>
+            </li>
+            <li class="mb-1">
+                <a href="{{url('dashboard/flags/'.$organization->slug.'/blocker/unit')}}" @if (url()->current() == url('dashboard/flags/'.$organization->slug.'/blocker/unit')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
+                    <div class="mr-2">
+                        <span style="font-size:22px" class="material-symbols-outlined">block</span>
+                    </div>
+                    <div class="mr-2">
+                        Blocker
+                    </div>
+                </a>
+            </li>
+            <li class="mb-1">
+                <a href="{{url('dashboard/flags/'.$organization->slug.'/action/unit')}}" @if (url()->current() == url('dashboard/flags/'.$organization->slug.'/action/unit')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
+                    <div class="mr-2">
+                        <span style="font-size:22px" class="material-symbols-outlined">call_to_action</span>
+                    </div>
+                    <div class="mr-2">
+                        Action
                     </div>
                 </a>
             </li>

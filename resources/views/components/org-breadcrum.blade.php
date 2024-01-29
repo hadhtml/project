@@ -18,7 +18,16 @@ $organization  = DB::table('organization')->where('user_id',Auth::id())->first()
                             <!-- Breadcrum Items -->
                             <div class="d-flex flex-row page-sub-titles">
                                 <div class="mr-2">
-                                    <a href="{{route('home')}}">Dashboard</a>
+                                    <div class="d-flex">
+                                        <div>
+                                            <span style="font-size:22px" class="material-symbols-outlined">auto_stories</span>
+                                         
+                                        </div>
+                                        <div>
+                                            <a href="{{route('home')}}">Dashboard</a>
+                                        </div>
+                                    </div>
+                                 
                                 </div>
                                 
                             </div>
