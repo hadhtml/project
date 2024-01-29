@@ -341,6 +341,7 @@ class EpicController extends Controller
             $item->progress =  100;
             $item->save();
         }
+        Cmf::save_activity(Auth::id() , 'Added a New Child Item','epics',$request->epic_id , 'toc');
         $epic = Epic::find($request->epic_id);
         $epicstory = DB::table('epics_stroy')->where('epic_id',$epic->id)->where('epic_type' , 'orignal')->orderby('id' , 'desc')->get();
         $html = view('epics.tabs.childitems', compact('epic','epicstory'))->render();
