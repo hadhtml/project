@@ -151,8 +151,8 @@ class ObjectiveController extends Controller
         $createobjective->save();
         $update = objectives::find($createobjective->id);
         $update->trash = $createobjective->created_at;
-        $update->start_date = $date;
-        $update->end_date = $date;
+        $update->start_date = $createobjective->created_at;
+        $update->end_date = $createobjective->created_at;
         $update->save();
         $activity = 'Created the Objective on '.Cmf::date_format_new($update->created_at).' at '.Cmf::date_format_time($update->created_at);
         Cmf::save_activity(Auth::id() , $activity,'objective',$update->id , 'image');
