@@ -210,7 +210,8 @@
            window.history.pushState("data","Title",new_url);
         });
     });
-     function editobjectivekey(id) {
+     function editobjectivekey(event,id) {
+        event.stopPropagation();
         $.ajax({
             type: "POST",
             url: "{{ url('dashboard/keyresult/getkeyresult') }}",
@@ -223,6 +224,7 @@
             success: function(res) {
                 var new_url="{{ url()->current() }}?keyresult="+id;
                 window.history.pushState("data","Title",new_url);
+               
                 $('#newmodalcontent').html(res);
                 $('#edit-key-result-new').modal('show');
             }
@@ -827,11 +829,18 @@
         }
     }
 
-    function deleteobjkey(key_id, obj) {
+    function deleteobjkey(event,key_id, obj) {
+
+        event.stopPropagation();
         $('#key_delete_id').val(key_id);
         $('#key_delete_obj_id').val(obj);
 
+        $('#delete-objective-key').modal('show');
+      
+
     }
+
+ 
     function deletekeyresult(delete_id , objec_id) {
         var key_delete_id = delete_id;
         var org_id = "{{ $organization->org_id }}";

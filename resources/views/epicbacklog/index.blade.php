@@ -37,7 +37,7 @@ $var_objective = 'TBaclog-' . $type;
                {{ session('message') }}
             </div>
             @endif
-            <table class="table data-table" id="olddata">
+            <table class="table data-table example" id="olddata">
                <thead>
                   <tr>
                      <td>
@@ -710,7 +710,7 @@ $var_objective = 'TBaclog-' . $type;
            },
            "columnDefs": [{
                    "orderable": false,
-                   "targets": [0, 6]
+                   "targets": [6]
                } // Disable ordering for the first and third columns
            ]
        });

@@ -157,6 +157,8 @@ $var_objective = 'Report-'.$type;
                                         @else
                                         <td></td>
                                         @endif
+
+                                  
                                         <td>{{$epic->epic_date}}</td>
                     
                                         <td>{{$epic->epic_status}}</td>

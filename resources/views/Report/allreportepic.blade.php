@@ -155,6 +155,7 @@ $var_objective = 'Report-'.$type;
                                         @else
                                         <td></td>
                                         @endif
+                                 
                                         <td>{{$epic->epic_date}}</td>
                                         <td>{{\Carbon\Carbon::parse($epic->epic_done)->format('M d,Y')}}</td>
                                         <td>Done</td>

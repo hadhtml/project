@@ -108,7 +108,17 @@ $var_objective = 'Report-'.$type;
                            
                             
                                 @php
+                               if(session()->has('init'))
+                                {
+                                $SprintEpic = DB::table('sprint_report')->where('epic_init_id',session()->get('init'))->where('epic_prog','!=',100)->where('epic_remove','=','remove')->where('q_id',$sprint)->limit(10)->get();
+                                $SprintEpicCount = DB::table('sprint_report')->where('epic_init_id',session()->get('init'))->where('epic_prog','!=',100)->where('epic_remove','=','remove')->where('q_id',$sprint)->count();
+   
+                               }else
+                                {
                                 $SprintEpic = DB::table('sprint_report')->where('epic_prog','!=',100)->where('epic_remove','=','remove')->where('q_id',$sprint)->get();
+                                $SprintEpicCount = DB::table('sprint_report')->where('epic_prog','!=',100)->where('epic_remove','=','remove')->where('q_id',$sprint)->count();
+
+                                }
                                 $Sprints = DB::table('sprint')->where('id',$sprint)->first();
 
                                 @endphp
@@ -142,6 +152,7 @@ $var_objective = 'Report-'.$type;
                                         @else
                                         <td></td>
                                         @endif
+                               
                                         <td>{{$epic->epic_date}}</td>
                     
                                         <td>{{$epic->epic_status}}</td>
@@ -162,7 +173,7 @@ $var_objective = 'Report-'.$type;
                     </div>
                 </div>
 
-                @if(count($SprintEpic) > 10 )
+                @if($SprintEpicCount > 10 )
                 <div class="row">
                     <div class="col-md-12 text-center">
                         <button class="btn btn-default">
