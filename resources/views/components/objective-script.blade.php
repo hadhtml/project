@@ -129,15 +129,20 @@
             handleDivClick('{{ $epicforcollapse->initiative_id }}');
         @endif
         $("#edit-epic-modal-new").on('hidden.bs.modal', function(){
-           // if($('#flag_tittle').val() == '')
-           // {
-           //      var cardid = $('#cardid').val();
-           //      $('#'+cardid).remove();
-           //      deleteflag($('#cardid').val())
-           // }
            var new_url="{{ url()->current() }}";
            window.history.pushState("data","Title",new_url);
         });
+
+
+        @if(isset($_GET['objective']))
+            editobjective("{{ $_GET['objective'] }}" , '{{ $organization->slug }}');
+        @endif
+
+        $("#objectivemodalnew").on('hidden.bs.modal', function(){
+           var new_url="{{ url()->current() }}";
+           window.history.pushState("data","Title",new_url);
+        });
+
     });
 
     function addnewquartervalue(id, key_chart_id, sprint_id) {
@@ -349,235 +354,6 @@
         var newDateStr = selectedDate.toISOString().slice(0, 10);
         $('#' + id).attr('min', val);
     }
-
-
-    function saveObjective() {
-        
-        var objective_name = $('#objective_name').val();
-        var start_date = $('#start_date').val();
-        var end_date = $('#end_date').val();
-        var detail = $('#obj_small_description').val();
-        var org_id = "{{ $organization->org_id }}";
-        var slug = "{{ $organization->slug }}";
-        var unit_id = "{{ $organization->id }}";
-        var type = "{{ $organization->type }}";
-        var objective_status = $('#obj_status').val();
-
-
-        if ($('#objective_name').val() == '' ||  $('#end_date').val() == '') {
-            $('#obj-feild-error').html('Please fill out all required fields.');
-            return false;
-        }
-
-        var unitid = [];
-        $('.unitobj').each(function() {
-            unitid.push($(this).val());
-        });
-
-        var unitObj = [];
-        $('.bu-obj').each(function() {
-            unitObj.push($(this).val());
-        });
-
-        var unitObjkey = [];
-        $('.key-BU').each(function() {
-            unitObjkey.push($(this).val());
-        });
-
-
-        $('#saveobjectivebutton').html('<i class="fa fa-spin fa-spinner"></i>');
-        $("#saveobjectivebutton" ).prop("disabled", true);
-        $.ajax({
-            type: "POST",
-            url: "{{ url('save-objective') }}",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: {
-                objective_name: objective_name,
-                start_date: start_date,
-                end_date: end_date,
-                detail: detail,
-                org_id: org_id,
-                slug: slug,
-                unit_id: unit_id,
-                type: type,
-                objective_status: objective_status,
-                unitid: unitid,
-                unitObj: unitObj,
-                unitObjkey: unitObjkey,
-
-
-            },
-            success: function(res) {
-                // if (res == 1) {
-
-                //     $('#obj-name-error').html(
-                //         '<strong class="text-danger">Ojective Name Already Taken</strong>');
-
-                // } else {
-                $('#obj-name-error').html('');
-                $('#objective_name').val('');
-                $('#start_date').val('');
-                $('#end_date').val('');
-                $('#obj_small_description').val('');
-                $('#success-obj').html(
-                    '<div class="alert alert-success" role="alert"> Objective Created successfully</div>'
-                );
-                $('#obj-feild-error').html('');
-                $('#saveobjectivebutton').html('Save Objective');
-                $("#saveobjectivebutton" ).prop("disabled", false);
-                setTimeout(function() {
-                    $('#create-objective').modal('hide');
-                    $('#success-obj').html('');
-                }, 1000);
-                $('#parentCollapsible').html(res);
-
-                // }
-
-            }
-        });
-
-    }
-
-    function editobjective(obj_id, obj_name, obj_start_date, obj_end_date, obj_detail, obj_status) {
-        $('#edit_obj_id').val(obj_id);
-        $('#edit_objective_name').val(obj_name);
-        $('#edit_start_date').val(obj_start_date);
-        $('#edit_end_date').val(obj_end_date);
-        $('#edit_obj_small_description').val(obj_detail);
-        $('#edit_obj_status').val(obj_status);
-
-        getobjlink(obj_id);
-        getobjkeyweight(obj_id);
-    }
-
-    function getobjkeyweight(id) {
-
-    var type = "{{ $organization->type }}";
-    var unit_id = "{{ $organization->id }}";
-    $.ajax({
-    type: "GET",
-    url: "{{ url('get-obj-key-weight') }}",
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    },
-    data: {
-        id:id,
-        type:type,
-        unit_id:unit_id
-
-    },
-    success: function(res) {
-
-    $('#key-weight-data-obj').html(res);
-
-
-    }
-    });
-
-    }
-
-    function UpdateObjective() {
-
-        var edit_obj_id = $('#edit_obj_id').val();
-        var edit_objective_name = $('#edit_objective_name').val();
-        var edit_start_date = $('#edit_start_date').val();
-        var edit_end_date = $('#edit_end_date').val();
-        var edit_obj_small_description = $('#edit_obj_small_description').val();
-        var org_id = "{{ $organization->org_id }}";
-        var slug = "{{ $organization->slug }}";
-        var unit_id = "{{ $organization->id }}";
-        var status = $('#edit_obj_status').val();
-        var type = "{{ $organization->type }}";
-
-
-        if ($('#edit_objective_name').val() != '' || $('#edit_start_date').val() != '' || $('#edit_end_date').val() !=
-            '') {
-            $('#updateobjectivebutton').html('<i class="fa fa-spin fa-spinner"></i>');
-            $("#updateobjectivebutton" ).prop("disabled", true);
-            $.ajax({
-                type: "POST",
-                url: "{{ url('update-objective') }}",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: {
-                    edit_objective_name: edit_objective_name,
-                    edit_start_date: edit_start_date,
-                    edit_end_date: edit_end_date,
-                    edit_obj_small_description: edit_obj_small_description,
-                    edit_obj_id: edit_obj_id,
-                    org_id: org_id,
-                    slug: slug,
-                    status: status,
-                    unit_id: unit_id,
-                    type: type
-                },
-                success: function(res) {
-                    $('#success-obj-edit').html('<div class="alert alert-success" role="alert"> Objective Updated successfully</div>');
-                    $('#oobj-feild-error-edit').html('');
-                    $('#updateobjectivebutton').html('Update Objective');
-                    $("#updateobjectivebutton" ).prop("disabled", false);
-                    setTimeout(function() {
-                        $('#edit-objective').modal('hide');
-                        $('#success-obj-edit').html('');
-                    }, 1000);
-                    $('#parentCollapsible').html(res);
-                    $("#nestedCollapsible" + edit_obj_id).collapse('toggle');
-                }
-            });
-        } else {
-
-            $('#obj-feild-error-edit').html('Please fill out all required fields.');
-
-        }
-    }
-
-
-    function deleteobj(obj_id) {
-        $('#obj_delete_id').val(obj_id);
-
-    }
-
-    function DeleteObjective() {
-        var delete_obj_id = $('#obj_delete_id').val();
-        var org_id = "{{ $organization->org_id }}";
-        var slug = "{{ $organization->slug }}";
-        var unit_id = "{{ $organization->id }}";
-        var type = "{{ $organization->type }}";
-        $('#deleteobjectivebutton').html('<i class="fa fa-spin fa-spinner"></i>');
-        $("#deleteobjectivebutton" ).prop("disabled", true);
-        $.ajax({
-            type: "POST",
-            url: "{{ url('Delete-objective') }}",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: {
-                delete_obj_id: delete_obj_id,
-                org_id: org_id,
-                slug: slug,
-                unit_id: unit_id,
-                type: type
-            },
-            success: function(res) {
-                $('#success-obj-delete').html('<div class="alert alert-success" role="alert"> Objective Deleted successfully</div>');
-                setTimeout(function() {
-                    $('#delete-objective').modal('hide');
-                    $('#success-obj-delete').html('');
-                }, 1000);
-                $('#deleteobjectivebutton').html('Confirm');
-                $("#deleteobjectivebutton" ).prop("disabled", false);
-                $('#parentCollapsible').html(res);
-                $("#nestedCollapsible" + delete_obj_id).collapse('toggle');
-            }
-        });
-
-    }
-
-
-
     
 
     $(document).ready(function() {
@@ -2982,31 +2758,7 @@
     }
 
     
-    function getobjlink(id) {
-
-    var type = "{{ $organization->type }}";
-    var unit_id = "{{ $organization->id }}";
-    $.ajax({
-    type: "GET",
-    url: "{{ url('get-obj-link') }}",
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    },
-    data: {
-        id:id,
-        type:type,
-        unit_id:unit_id
-
-    },
-    success: function(res) {
-
-    $('.link-data-obj').html(res);
-
-
-    }
-    });
-
-    }
+    
 
 
     function deletelinkvalue(id) {

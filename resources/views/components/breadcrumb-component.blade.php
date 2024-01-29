@@ -225,7 +225,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
             </div>
             @endif
             <div>
-                <button class="button" data-toggle="modal" data-target="#create-objective">Add New</button>
+                <button class="button" onclick="addnewobjective({{$organization->id}} , '{{ $organization->type }}', '{{ $organization->slug }}')">Add New</button>
             </div>
         </div>
         <!--end::Toolbar-->

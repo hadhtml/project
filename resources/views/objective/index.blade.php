@@ -264,7 +264,7 @@ $var_objective = 'PageT-'.$type;
                         $trimmedStringobj = trim($objedit);
                         @endphp
                         <div class="action ml-0">
-                           <button class="btn btn-icon btn-circle btn-tolbar ml-auto " onclick="editobjective({{$obj->id}},'{{$obj->objective_name}}','{{$obj->start_date}}','{{$obj->end_date}}','{{$trimmedStringobj}}','{{$obj->status}}')" data-toggle="modal" data-target="#edit-objective">
+                           <button class="btn btn-icon btn-circle btn-tolbar ml-auto " onclick="editobjective({{$obj->id}} , '{{$organization->slug}}')">
                            <img src="{{ asset('public/assets/images/icons/edit.svg') }}" alt="Edit"
                               style="border-radius: 50%; width: 18px; height: 18px;">
                            </button>

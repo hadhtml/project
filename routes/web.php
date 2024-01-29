@@ -65,8 +65,6 @@ Route::post('update-organization', [App\Http\Controllers\OrganizationController:
 Route::post('delete-mutiple-organization', [App\Http\Controllers\OrganizationController::class, 'DeleteOrganizationAll']);
 
 Route::get('dashboard/organization/{id}/portfolio/{type}', [App\Http\Controllers\ObjectiveController::class, 'Objectives'])->middleware('auth');
-Route::post('save-objective', [App\Http\Controllers\ObjectiveController::class, 'SaveObjective']);
-Route::post('update-objective', [App\Http\Controllers\ObjectiveController::class, 'UpdateObjective']);
 Route::post('Delete-objective', [App\Http\Controllers\ObjectiveController::class, 'DeleteObjective']);
 Route::get('get-obj-key-weight', [App\Http\Controllers\ObjectiveController::class, 'AllObjKeyWeight']);
 
@@ -212,6 +210,15 @@ Route::post('update-teambacklog-epic', [App\Http\Controllers\TeamController::cla
 Route::post('delete-team-backlog', [App\Http\Controllers\TeamController::class,'DeleteTeamBacklogEpic']);
 Route::get('get-assign-epic-all', [App\Http\Controllers\TeamController::class,'AssignEpicAll']);
 
+Route::name('objectives.')->namespace('App\Http\Controllers')->prefix('dashboard/objectives')->group(function () {
+    Route::POST('getobjective', 'ObjectiveController@getobjective');
+    Route::POST('showobjectiveheader', 'ObjectiveController@showobjectiveheader');
+    Route::POST('updategeneral', 'ObjectiveController@updategeneral');
+    Route::POST('showtabobjective', 'ObjectiveController@showtabobjective');
+    Route::POST('addnewobjective', 'ObjectiveController@addnewobjective');
+
+    
+});
 
 Route::name('flags.')->namespace('App\Http\Controllers')->prefix('dashboard/flags')->group(function () {
     Route::get('{organizationid}/{flagtype}/{type}', 'FlagController@flags');

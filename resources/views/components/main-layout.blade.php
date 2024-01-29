@@ -34,7 +34,7 @@
 
     <script src="{{url('public/assets/Random-Pixel/dist/gixi-min.js')}}"></script> 
 
-    
+    <input type="hidden" value="{{ url('') }}" id="mainurl">
     <title>Dashboard</title>
     <style type="text/css">
     </style>

@@ -77,13 +77,11 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
          $trimmedStringobj = trim($objedit);
          @endphp
          <div class="action ml-0">
-            <button class="btn btn-icon btn-circle btn-tolbar ml-auto " onclick="editobjective({{$obj->id}},'{{$obj->objective_name}}','{{$obj->start_date}}','{{$obj->end_date}}','{{$trimmedStringobj}}','{{$obj->status}}')" data-toggle="modal" data-target="#edit-objective">
-            <img src="{{ asset('public/assets/images/icons/edit.svg') }}" alt="Edit"
-               style="border-radius: 50%; width: 18px; height: 18px;">
+            <button class="btn btn-icon btn-circle btn-tolbar ml-auto " onclick="editobjective({{$obj->id}})">
+            <img src="{{ asset('public/assets/images/icons/edit.svg') }}" alt="Edit" style="border-radius: 50%; width: 18px; height: 18px;">
             </button>
             <button class="btn btn-icon btn-circle btn-tolbar delete-obj mr-2" onclick="deleteobj({{$obj->id}})" data-toggle="modal" data-target="#delete-objective">
-            <img src="{{ asset('public/assets/images/icons/delete.svg') }}" alt="Delete"
-               style="border-radius: 50%; width: 18px; height: 18px;">
+            <img src="{{ asset('public/assets/images/icons/delete.svg') }}" alt="Delete" style="border-radius: 50%; width: 18px; height: 18px;">
             </button>
          </div>
       </div>

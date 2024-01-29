@@ -8,6 +8,7 @@ use App\Models\Organization;
 use App\Models\epics_stroy;
 use App\Models\Epic;
 use App\Models\flags;
+use App\Models\objectives;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use DB;
@@ -23,7 +24,86 @@ class ObjectiveController extends Controller
     {
         $this->middleware("auth");
     }
+    public function getobjective(Request $request)
+    {
+        $data = objectives::find($request->id);
+        $html = view('objective.modal.index', compact('data'))->render();
+        return $html;
+    }
+    public function showobjectiveheader(Request $request)
+    {
+        $data = objectives::find($request->id);
+        $html = view('objective.modal.modalheader', compact('data'))->render();
+        return $html;
+    }
+    public function updategeneral(Request $request)
+    {
+        $updateobj = objectives::find($request->id);
+        $updateobj->objective_name = $request->objective_name;
+        $updateobj->start_date = $request->start_date;
+        $updateobj->end_date = $request->end_date;
+        $updateobj->detail = $request->detail;
+        $updateobj->save();
 
+        if ($updateobj->type == "unit") {
+            $organization = DB::table("business_units")->where("id", $updateobj->unit_id)->first();
+            $objective = DB::table("objectives")->where("org_id", $request->org_id)->where("unit_id", $updateobj->unit_id)->where("trash", null)->where("type", "unit")->orderby('IndexCount')->get();
+        }
+        if ($updateobj->type == "stream") {
+            $organization = DB::table("value_stream")->where("id", $updateobj->unit_id)->first();
+            $objective = DB::table("objectives")->where("org_id", $request->org_id)->where("unit_id", $updateobj->unit_id)->where("trash", null)->where("type", "stream")->orderby('IndexCount')->get();
+        }
+        if ($updateobj->type == "BU") {
+            $organization = DB::table("unit_team")->where("id", $updateobj->unit_id)->first();
+            $objective = DB::table("objectives")->where("org_id", $request->org_id)->where("unit_id", $updateobj->unit_id)->where("trash", null)->where("type", "BU")->orderby('IndexCount')->get();
+        }
+        if ($updateobj->type == "VS") {
+            $organization = DB::table("value_team")->where("id", $updateobj->unit_id)->first();
+            $objective = DB::table("objectives")->where("org_id", $request->org_id)->where("unit_id", $updateobj->unit_id)->where("trash", null)->where("type", "VS")->orderby('IndexCount')->get();
+        }
+        if ($updateobj->type == "org") {
+            $organization = DB::table("organization")->where("id", $updateobj->unit_id)->first();
+            $objective = DB::table("objectives")->where("unit_id", $updateobj->unit_id)->where("trash", null)->where("type", "org")->orderby('IndexCount') ->get();
+        }
+        if ($updateobj->type == "orgT") {
+            $organization = DB::table("org_team")->where("id", $updateobj->unit_id)->first();
+            $objective = DB::table("objectives")->where("unit_id", $updateobj->unit_id)->where("trash", null)->where("type", "orgT")->orderby('IndexCount')->get();
+        }
+        return view("objective.objective-render",compact("organization", "objective"));
+    }
+    public function showtabobjective(Request $request)
+    {
+        if($request->tab == 'general')
+        {
+            $data = objectives::find($request->id);
+            $html = view('objective.modal.tabs.general', compact('data'))->render();
+            return $html;
+        }
+    }
+    public function addnewobjective(Request $request)
+    {
+        $year =  date('Y');
+        $month =  $request->month;
+        $day =  date('d');
+        $date = $year . "-" . str_pad($month, 2, "0", STR_PAD_LEFT) . "-" . str_pad($day, 2, "0", STR_PAD_LEFT);
+        $createobjective = new objectives();
+        $createobjective->status = 'To Do';
+        $createobjective->user_id = Auth::id();
+        $createobjective->obj_prog = 0;
+        $createobjective->q_obj_prog = 0;
+        $createobjective->unit_id = $request->obj_id;
+        $createobjective->type = $request->key_id;
+        $createobjective->IndexCount = $request->buisness_unit_id;
+        $createobjective->save();
+        $update = objectives::find($createobjective->id);
+        $update->trash = $createepic->created_at;
+        $update->epic_start_date = $date;
+        $update->epic_end_date = $date;
+        $update->save();
+        $activity = 'Created the Objective on '.Cmf::date_format_new($update->created_at).' at '.Cmf::date_format_time($update->created_at);
+        Cmf::save_activity(Auth::id() , $activity,'objective',$update->id , 'image');
+        return $createepic->id;
+    }
     public function Objectives($id, $type)
     {
         // $organization  = Organization::where('slug',$id)->where('trash',NULL)->first();
@@ -109,247 +189,6 @@ class ObjectiveController extends Controller
             compact("organization", "objective", "type")
         );
     }
-    public function SaveObjective(Request $request)
-    {
-        $objective_name = DB::table("objectives")
-            ->where("objective_name", $request->objective_name)
-            ->first();
-
-        // if($objective_name)
-        // {
-        // echo 1;
-        // }else
-        // {
-
-            $counter = 1;
-            $pos = DB::table('objectives')->orderby('id','DESC')->where('unit_id',$request->unit_id)->first();
-            if($pos)
-            {
-            $counter = $pos->IndexCount + 1; 
-            }
-
-        $OBJ = DB::table("objectives")->insertGetId([
-            "objective_name" => $request->objective_name,
-            "org_id" => $request->org_id,
-            "start_date" => $request->start_date,
-            "end_date" => $request->end_date,
-            "detail" => $request->detail,
-            "user_id" => Auth::id(),
-            "unit_id" => $request->unit_id,
-            "type" => $request->type,
-            "status" => $request->objective_status,
-            'IndexCount' => $counter,
-        ]);
-
-        if ($request->has("unitid")) {
-            foreach ($request->unitid as $key => $value) {
-                if($request->type == 'BU')
-                {
-                    $linkingtype = 'unit';
-                }
-                if($request->type == 'orgT')
-                {
-                    $linkingtype = 'org';
-                }
-                if($request->type == 'VS')
-                {
-                    $linkingtype = 'stream';
-                }
-                DB::table("team_link_child")->insert([
-                    "team_id" => $request->unit_id,
-                    "team_obj_id" => $OBJ,
-                    "bussiness_unit_id" => $request->unitid[$key],
-                    "bussiness_obj_id" => $request->unitObj[$key],
-                    "bussiness_key_id" => $request->unitObjkey[$key],
-                    "type" => $linkingtype,
-                ]);
-            }
-        }
-
-        // $organization  = Organization::where('slug',$request->slug)->where('trash',NULL)->first();
-        // $objective =  DB::table('objectives')->where('user_id',Auth::id())->where('org_id',$request->org_id)->where('trash',NULL)->get();
-        if ($request->type == "unit") {
-            $organization = DB::table("business_units")
-                ->where("slug", $request->slug)
-                ->first();
-            $objective = DB::table("objectives")
-                ->where("org_id", $request->org_id)
-                ->where("unit_id", $request->unit_id)
-                ->where("trash", null)
-                ->where("type", "unit")
-                ->orderby('IndexCount')
-                ->get();
-        }
-
-        if ($request->type == "stream") {
-            $organization = DB::table("value_stream")
-                ->where("slug", $request->slug)
-                ->first();
-            $objective = DB::table("objectives")
-                ->where("org_id", $request->org_id)
-                ->where("unit_id", $request->unit_id)
-                ->where("trash", null)
-                ->where("type", "stream")
-                ->orderby('IndexCount')
-                ->get();
-        }
-
-        if ($request->type == "BU") {
-            $organization = DB::table("unit_team")
-                ->where("slug", $request->slug)
-                ->first();
-            $objective = DB::table("objectives")
-                ->where("org_id", $request->org_id)
-                ->where("unit_id", $request->unit_id)
-                ->where("trash", null)
-                ->where("type", "BU")
-                ->orderby('IndexCount')
-                ->get();
-        }
-
-        if ($request->type == "VS") {
-            $organization = DB::table("value_team")
-                ->where("slug", $request->slug)
-                ->first();
-            $objective = DB::table("objectives")
-                ->where("org_id", $request->org_id)
-                ->where("unit_id", $request->unit_id)
-                ->where("trash", null)
-                ->where("type", "VS")
-                ->orderby('IndexCount')
-                ->get();
-        }
-
-        if ($request->type == "org") {
-            $organization = DB::table("organization")
-                ->where("slug", $request->slug)
-                ->first();
-            $objective = DB::table("objectives")
-                ->where("unit_id", $request->unit_id)
-                ->where("trash", null)
-                ->where("type", "org")
-                ->orderby('IndexCount')
-                ->get();
-        }
-
-        if ($request->type == "orgT") {
-            $organization = DB::table("org_team")
-                ->where("slug", $request->slug)
-                ->first();
-            $objective = DB::table("objectives")
-                ->where("unit_id", $request->unit_id)
-                ->where("trash", null)
-                ->where("type", "orgT")
-                ->orderby('IndexCount')
-                ->get();
-        }
-
-        return view(
-            "objective.objective-render",
-            compact("organization", "objective")
-        );
-
-        // }
-    }
-
-    public function UpdateObjective(Request $request)
-    {
-        DB::table("objectives")
-            ->where("id", $request->edit_obj_id)
-            ->update([
-                "objective_name" => $request->edit_objective_name,
-                "start_date" => $request->edit_start_date,
-                "end_date" => $request->edit_end_date,
-                "detail" => $request->edit_obj_small_description,
-                "user_id" => Auth::id(),
-                "status" => $request->status,
-                "type" => $request->type,
-                "unit_id" => $request->unit_id,
-            ]);
-
-        if ($request->type == "unit") {
-            $organization = DB::table("business_units")
-                ->where("slug", $request->slug)
-                ->first();
-            $objective = DB::table("objectives")
-                ->where("org_id", $request->org_id)
-                ->where("unit_id", $request->unit_id)
-                ->where("trash", null)
-                ->where("type", "unit")
-                ->orderby('IndexCount')
-                ->get();
-        }
-
-        if ($request->type == "stream") {
-            $organization = DB::table("value_stream")
-                ->where("slug", $request->slug)
-                ->first();
-            $objective = DB::table("objectives")
-                ->where("org_id", $request->org_id)
-                ->where("unit_id", $request->unit_id)
-                ->where("trash", null)
-                ->where("type", "stream")
-                ->orderby('IndexCount')
-                ->get();
-        }
-
-        if ($request->type == "BU") {
-            $organization = DB::table("unit_team")
-                ->where("slug", $request->slug)
-                ->first();
-            $objective = DB::table("objectives")
-                ->where("org_id", $request->org_id)
-                ->where("unit_id", $request->unit_id)
-                ->where("trash", null)
-                ->where("type", "BU")
-                ->orderby('IndexCount')
-                ->get();
-        }
-
-        if ($request->type == "VS") {
-            $organization = DB::table("value_team")
-                ->where("slug", $request->slug)
-                ->first();
-            $objective = DB::table("objectives")
-                ->where("org_id", $request->org_id)
-                ->where("unit_id", $request->unit_id)
-                ->where("trash", null)
-                ->where("type", "VS")
-                ->orderby('IndexCount')
-                ->get();
-        }
-
-        if ($request->type == "org") {
-            $organization = DB::table("organization")
-                ->where("slug", $request->slug)
-                ->first();
-            $objective = DB::table("objectives")
-                ->where("unit_id", $request->unit_id)
-                ->where("trash", null)
-                ->where("type", "org")
-                ->orderby('IndexCount')
-                ->get();
-        }
-
-        if ($request->type == "orgT") {
-            $organization = DB::table("org_team")
-                ->where("slug", $request->slug)
-                ->first();
-            $objective = DB::table("objectives")
-                ->where("unit_id", $request->unit_id)
-                ->where("trash", null)
-                ->where("type", "orgT")
-                ->orderby('IndexCount')
-                ->get();
-        }
-
-
-        return view(
-            "objective.objective-render",
-            compact("organization", "objective")
-        );
-    }
-
     public function DeleteObjective(Request $request)
     {
         DB::table("objectives")
