@@ -33,7 +33,9 @@ $keyqvalue = $keyqfirst->value;
   </div>
 </div>
 @else
-{{-- <div class="ml-2 text-danger mt-2" role="alert">First Start Quarter</div> --}}
+<div class="ml-2 text-danger mt-2" role="alert">
+    Define Quarterly Target for Current Quarter
+    </div>
 @endif
 <div class="row field_wrapper_key">
   <div class="col-md-12">

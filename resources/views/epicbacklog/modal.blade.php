@@ -79,7 +79,7 @@
                 <div class="row">
                     <div class="col-md-12 col-lg-12 col-xl-12">
                         <div class="form-group mb-0">
-                            <label for="epic_name">Epic Title</label>
+                            <label for="epic_name">Title</label>
                             <input type="text" required='true' value="{{ $data->epic_title }}" class="form-control" name="epic_name" id="epic_title">
                         </div>
                     </div>

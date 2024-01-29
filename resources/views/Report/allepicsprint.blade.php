@@ -11,6 +11,10 @@ $var_objective = 'Report-'.$type;
                 <div>
                     {{-- <h4 class="pb-0 mb-0">All Epics</h4> --}}
                 </div>
+                @php
+                  $name = 'All Epics';
+                 session()->put('key',$name);
+                @endphp
                 <div class="d-flex flex-row">
                     <div>
                       
@@ -20,7 +24,7 @@ $var_objective = 'Report-'.$type;
                     <div>
                         <div class="dropdown">
                           <button class="btn bg-white btn-circle dropdown-toggle w-100" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            @if(session()->has('key'))
+                           @if(session()->has('key'))
                             
                             {{session()->get('key')}}  
                           @endif
@@ -334,7 +338,7 @@ $var_objective = 'Report-'.$type;
                                 $SprintEpic = DB::table('sprint_report')->where('epic_init_id',session()->get('init'))->where('epic_remove','=','remove')->where('q_id',$sprint)->get();
                                 }else
                                 {
-                                    $SprintEpic = DB::table('sprint_report')->where('epic_remove','=','remove')->where('q_id',$sprint)->get();
+                                $SprintEpic = DB::table('sprint_report')->where('epic_remove','=','remove')->where('q_id',$sprint)->get();
 
                                 }
                                 @endphp

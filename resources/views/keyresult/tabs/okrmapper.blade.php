@@ -21,46 +21,31 @@
             <div class="d-flex flex-column">
                 <div class="card comment-card storyaddcard">
                     <div class="card-body">
-                        <form id="okrmapperform" class="needs-validation" action="{{ url('dashboard/keyresult/okrmapperform') }}" method="POST">
+                        <form id="okrmapperform" action="{{ url('dashboard/keyresult/okrmapperform') }}" method="POST">
                             @csrf
                             <input type="hidden" value="{{ $data->id }}" name="bussiness_key_id">
                             <input type="hidden" value="{{ $data->type }}" name="type">
                             <input type="hidden" value="{{ $data->unit_id }}" name="bussiness_unit_id">
                             <input type="hidden" value="{{ $data->obj_id }}" name="bussiness_obj_id">
-                            <div class="row">
-                                <div class="col-md-12 col-lg-12 col-xl-12">
-                                    <div class="form-group mb-0">
-                                        <label for="key_name">Select Team</label>
-                                        <select id="selectedteamid" required name="team_id" onchange="selectteamokrmapper(this.value , '{{ $data->type }}')" class="form-control">
-                                            <option value="">Select Team</option>
-                                            @if($data->type == 'org')
-                                            @foreach(DB::table('org_team')->where('org_id' , $data->unit_id)->get() as $r)
-                                            <option value="{{ $r->id }}">{{ $r->team_title }}</option>
-                                            @endforeach
-                                            @endif
-                                            @if($data->type == 'unit')
-                                            @foreach(DB::table('unit_team')->where('org_id' , $data->unit_id)->get() as $r)
-                                            <option value="{{ $r->id }}">{{ $r->team_title }}</option>
-                                            @endforeach
-                                            @endif
-                                            @if($data->type == 'stream')
-                                            @foreach(DB::table('value_team')->where('org_id' , $data->unit_id)->get() as $r)
-                                            <option value="{{ $r->id }}">{{ $r->team_title }}</option>
-                                            @endforeach
-                                            @endif
-                                        </select>
+                            <input type="hidden" required  id="objectiveid" name="objectiveid">
+                            <div class="row mb-5">
+                                <div class="col-md-12 col-lg-12 col-xl-12" id="epicinputtoshow">
+                                    <div class="form-group mb-0 positionrelative">
+                                        <label for="objective-name">Search Objectives</label>
+                                        <input required style="height: 70px !important;" id="searchobjective" onkeyup="searchobjectives(this.value)" type="text" placeholder="Search Objectives" name="objective_id" class="form-control">
+                                        <div class="searchiconforinput">
+                                            <img src="{{ url('public/assets/images/searchiconsvg.svg') }}">
+                                        </div>
+                                        <div class="selectepic" style="display: none;height: 58px;">
+                                            
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-12 col-lg-12 col-xl-12">
-                                    <div class="form-group mb-0">
-                                        <label for="key_name">Select Objective <small id="objectiveerror" class="text-danger"></small></label>
-                                        <select onchange="checkkeyresultlink()" required name="team_obj_id" id="select_objective" class="form-control">
-                                            <option value="">Select Objective</option>
-                                        </select>
+                                    <div class="searchepic-box">
+                
                                     </div>
                                 </div>
                             </div>
-                            <div class="row mt-3">
+                            <div class="row mt-5">
                                 <div class="col-md-12 text-right">
                                     <button type="submit" class="btn btn-primary btn-theme" id="saveokrmapperbutton">Add</button>
                                 </div>
@@ -91,28 +76,78 @@
                     <div class="col-md-10">
                         <div class="row">
                             <div class="col-md-12">
-                                @if($r->type == 'org')
-                                    {{ DB::table('org_team')->where('id' , $r->team_id)->first()->team_title }} -> {{ DB::table('objectives')->where('id' , $r->team_obj_id)->first()->objective_name }}
+                                @if($r->to == 'BU')
+                                    @php
+                                        $objective = DB::table('objectives')->where('id' , $r->linked_objective_id)->first();
+                                        $businessteam = DB::table('unit_team')->where('id' , $objective->unit_id)->first();
+                                        $business_units = DB::table('business_units')->where('id' , $businessteam->org_id)->first();
+                                    @endphp
+                                    <div class="epic">
+                                        <div class="epic-tittle"><img class="mr-1" src="{{ url('public/assets/svg/objectives/one.svg') }}"> {{ $objective->objective_name }}</div>
+                                        <div class="epic-detail okrmappersearchdetail mt-2">
+                                            <span style="font-size:22px" class="material-symbols-outlined mr-2">domain</span>
+                                            <span>{{ $business_units->business_name }}</span>
+                                            <span style="font-size:22px" class="material-symbols-outlined mr-2 ml-2">groups</span>
+                                            <span>{{ $businessteam->team_title }}</span>
+                                        </div>
+                                    </div>
                                 @endif
-                                @if($r->type == 'unit')
-                                    {{ DB::table('unit_team')->where('id' , $r->team_id)->first()->team_title }} -> {{ DB::table('objectives')->where('id' , $r->team_obj_id)->first()->objective_name }}
+                                @if($r->to == 'orgT')
+                                @php
+                                    $objective = DB::table('objectives')->where('id' , $r->linked_objective_id)->first();
+                                    $org_team = DB::table('org_team')->where('id' , $objective->unit_id)->first();
+                                    $organization = DB::table('organization')->where('id' , $org_team->org_id)->first();
+                                @endphp
+                                <div class="epic">
+                                    <div class="epic-tittle"><img class="mr-1" src="{{ url('public/assets/svg/objectives/one.svg') }}"> {{ $objective->objective_name }}</div>
+                                    <div class="epic-detail okrmappersearchdetail mt-2">
+                                        <span style="font-size:22px" class="material-symbols-outlined mr-2">auto_stories</span>
+                                        <span>{{ $organization->organization_name }}</span>
+                                        <span style="font-size:22px" class="material-symbols-outlined mr-2 ml-2">groups</span>
+                                        <span>{{ $org_team->team_title }}</span>
+                                    </div>
+                                </div>
                                 @endif
-                                @if($r->type == 'stream')
-                                    {{ DB::table('value_team')->where('id' , $r->team_id)->first()->team_title }} -> {{ DB::table('objectives')->where('id' , $r->team_obj_id)->first()->objective_name }}
+                                @if($r->to == 'unit')
+                                @php
+                                    $objective = DB::table('objectives')->where('id' , $r->linked_objective_id)->first();
+                                @endphp
+                                <div class="epic">
+                                    <div class="epic-tittle"><img class="mr-1" src="{{ url('public/assets/svg/objectives/one.svg') }}"> {{ $objective->objective_name }}</div>
+                                    <div class="epic-detail okrmappersearchdetail mt-2">
+                                        <span style="font-size:22px" class="material-symbols-outlined mr-2">domain</span>
+                                        <span>{{ DB::table('business_units')->where('id' , $objective->unit_id)->first()->business_name }}</span>
+                                    </div>
+                                </div>
                                 @endif
-                            </div>
-                            <div class="col-md-12">
-                                <span class="material-symbols-outlined">link</span>
-                            </div>
-                            <div class="col-md-12">
-                                @if($r->type == 'org')
-                                    {{ DB::table('organization')->where('id' , $r->bussiness_unit_id)->first()->organization_name }} -> {{ DB::table('objectives')->where('id' , $r->bussiness_obj_id)->first()->objective_name }} -> {{ DB::table('key_result')->where('id' , $r->bussiness_key_id)->first()->key_name }}
+                                @if($r->to == 'stream')
+                                @php
+                                    $objective = DB::table('objectives')->where('id' , $r->linked_objective_id)->first();
+                                    $valuestream = DB::table('value_stream')->where('id' , $objective->unit_id)->first();
+                                @endphp
+                                <div class="epic">
+                                    <div class="epic-tittle"><img class="mr-1" src="{{ url('public/assets/svg/objectives/one.svg') }}"> {{ $objective->objective_name }}</div>
+                                    <div class="epic-detail okrmappersearchdetail mt-2">
+                                        <span style="font-size:22px" class="material-symbols-outlined mr-2">layers</span>
+                                        <span>{{ $valuestream->value_name }}</span>
+                                    </div>
+                                </div>
                                 @endif
-                                @if($r->type == 'unit')
-                                    {{ DB::table('business_units')->where('id' , $r->bussiness_unit_id)->first()->business_name }} -> {{ DB::table('objectives')->where('id' , $r->bussiness_obj_id)->first()->objective_name }} -> {{ DB::table('key_result')->where('id' , $r->bussiness_key_id)->first()->key_name }}
-                                @endif
-                                @if($r->type == 'stream')
-                                    {{ DB::table('value_stream')->where('id' , $r->bussiness_unit_id)->first()->value_name }} -> {{ DB::table('objectives')->where('id' , $r->bussiness_obj_id)->first()->objective_name }} -> {{ DB::table('key_result')->where('id' , $r->bussiness_key_id)->first()->key_name }}
+                                @if($r->to == 'VS')
+                                @php
+                                    $objective = DB::table('objectives')->where('id' , $r->linked_objective_id)->first();
+                                    $valueteam = DB::table('value_team')->where('id' , $objective->unit_id)->first();
+                                    $valuestream = DB::table('value_stream')->where('id' , $valueteam->org_id)->first();
+                                @endphp
+                                <div class="epic">
+                                    <div class="epic-tittle"><img class="mr-1" src="{{ url('public/assets/svg/objectives/one.svg') }}"> {{ $objective->objective_name }}</div>
+                                    <div class="epic-detail okrmappersearchdetail mt-2">
+                                        <span style="font-size:22px" class="material-symbols-outlined mr-2">layers</span>
+                                        <span>{{ $valuestream->value_name }}</span>
+                                        <span style="font-size:22px" class="material-symbols-outlined mr-2 ml-2">groups</span>
+                                        <span>{{ $valueteam->team_title }}</span>
+                                    </div>
+                                </div>
                                 @endif
                             </div>
                         </div>
@@ -139,6 +174,39 @@
     </div>
 </div>
 <script type="text/javascript">
+    function removeobjective(id) {
+         $('#objectiveid').val('');
+        $('.selectepic').hide();
+        $('.selectepic').html('');
+        $('#searchobjective').val('');
+        $('#searchobjective').attr('disabled' , false)
+    }
+    function searchobjectives(id) {
+        var type = '{{ $data->type }}';
+        $.ajax({
+            type: "POST",
+            url: "{{ url('dashboard/keyresult/searchobjectives') }}",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                id:id,
+                type:type
+            },
+            success: function(res) {
+                if(id == '')
+                {
+                    $('.searchepic-box').hide();
+                }else{
+                    $('.searchepic-box').show();
+                    $('.searchepic-box').html(res);
+                }
+            },
+            error: function(error) {
+                
+            }
+        });
+    }
     function deletelinking(id) {
         var key_id = '{{ $data->id }}';
         $.ajax({

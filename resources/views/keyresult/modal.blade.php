@@ -28,8 +28,18 @@
                     <!-- <li id="teams" onclick="showtab({{$data->id}} , 'teams')" class="tabsclass">
                         <span class="material-symbols-outlined"> group </span> Teams
                     </li> -->
+                    @if($data->type == 'org')
                     <li id="okrmapper" onclick="showtab({{$data->id}} , 'okrmapper')" class="tabsclass">
                         <span class="material-symbols-outlined"> link </span> OKR Mapper</li>
+                    @endif
+                    @if($data->type == 'unit')
+                    <li id="okrmapper" onclick="showtab({{$data->id}} , 'okrmapper')" class="tabsclass">
+                        <span class="material-symbols-outlined"> link </span> OKR Mapper</li>
+                    @endif
+                    @if($data->type == 'stream')
+                    <li id="okrmapper" onclick="showtab({{$data->id}} , 'okrmapper')" class="tabsclass">
+                        <span class="material-symbols-outlined"> link </span> OKR Mapper</li>
+                    @endif
                 </ul>
                 <h4>Action</h4>
                 <ul class="positionrelative">

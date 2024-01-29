@@ -102,14 +102,18 @@ $var_objective = 'Report-'.$type;
                             
                                 @php
                                 $SprintEpic = DB::table('sprint_report')->where('epic_init_id',$init)->where('epic_prog','=',100)->where('epic_remove','=','Added')->where('q_id',$sprint)->get();
-                               
+                                $Sprints = DB::table('sprint')->where('id',$sprint)->first();
+
                                 @endphp
                                 @foreach($SprintEpic as $epic)
                              
                                 
                                 @php
                                 $SprintInit = DB::table('sprint_report')->where('initiative_id',$epic->epic_init_id)->where('q_id',$sprint)->first();
-                                @endphp
+
+                                $diff = Carbon\Carbon::parse($Sprints->start_data)->diffInDays($epic->epic_trash);
+
+                               @endphp
                                     <tr>
                                         <td>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
@@ -126,7 +130,11 @@ $var_objective = 'Report-'.$type;
                                             <span class="ml-2">SSP-{{$epic->epic_id}}</span>
                                         </td>
                                         <td class="cell-20-percent">{{$epic->epic_name}}</td>
+                                        @if($diff > 0)
                                         <td>Added</td>
+                                        @else
+                                        <td></td>
+                                        @endif
                                         <td>{{$epic->epic_date}}</td>
                                         <td>{{\Carbon\Carbon::parse($epic->epic_done)->format('M d,Y')}}</td>
                                         <td>Done</td>
@@ -199,7 +207,9 @@ $var_objective = 'Report-'.$type;
                                  @foreach($SprintEpic as $epic)
                                  @php
                                 $SprintInit = DB::table('sprint_report')->where('initiative_id',$epic->epic_init_id)->where('q_id',$sprint)->first();
-                                @endphp
+                                $diff = Carbon\Carbon::parse($Sprints->start_data)->diffInDays($epic->epic_trash);
+
+                               @endphp
                                     <tr>
                                         <td>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
@@ -216,7 +226,11 @@ $var_objective = 'Report-'.$type;
                                             <span class="ml-2">SSP-{{$epic->epic_id}}</span>
                                         </td>
                                         <td class="cell-20-percent">{{$epic->epic_name}}</td>
+                                        @if($diff > 0)
                                         <td>Added</td>
+                                        @else
+                                        <td></td>
+                                        @endif
                                         <td>{{$epic->epic_date}}</td>
                                        
                                         <td>{{$epic->epic_status}}</td>
@@ -287,6 +301,8 @@ $var_objective = 'Report-'.$type;
                                   @foreach($SprintEpic as $epic)
                                   @php
                                   $SprintInit = DB::table('sprint_report')->where('initiative_id',$epic->epic_init_id)->where('q_id',$sprint)->first();
+                                  $diff = Carbon\Carbon::parse($Sprints->start_data)->diffInDays($epic->epic_trash);
+
                                   @endphp
                                     <tr>
                                         <td>
@@ -304,7 +320,11 @@ $var_objective = 'Report-'.$type;
                                             <span class="ml-2">SSP-{{$epic->epic_id}}</span>
                                         </td>
                                         <td class="cell-20-percent">{{$epic->epic_name}}</td>
+                                        @if($diff > 0)
                                         <td>Added</td>
+                                        @else
+                                        <td></td>
+                                        @endif
                                         <td>{{$epic->epic_date}}</td>
                                     
                                         <td>{{$epic->epic_status}}</td>
