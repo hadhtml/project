@@ -28,55 +28,28 @@ class TeamController extends Controller
         if($type == 'BU')
         {
             $organization = DB::table('unit_team')->where('slug',$id)->first();        
-            $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
+            $Backlog  =  DB::table('team_backlog')->where('trash' , Null)->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
         }
         if($type == 'VS')
         {
             $organization = DB::table('value_team')->where('slug',$id)->first();        
-            $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
+            $Backlog  =  DB::table('team_backlog')->where('trash' , Null)->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
         }
         if($type == 'org')
         {
             $organization = DB::table('organization')->where('slug',$id)->first();        
-            $Backlog  =  DB::table('team_backlog')->where('type' , 'org')->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
+            $Backlog  =  DB::table('team_backlog')->where('trash' , Null)->where('type' , 'org')->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
         }
         if($type == 'orgT')
         {
             $organization = DB::table('org_team')->where('slug',$id)->first();        
-            $Backlog  =  DB::table('team_backlog')->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
+            $Backlog  =  DB::table('team_backlog')->where('trash' , Null)->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
         }
         return view('epicbacklog.index',compact('Backlog','organization','type'));  
         
     }
 
-    public function SaveTeamBacklogEpic(Request $request)
-    {
-
-        $counter = 0;
-        $data = DB::table('team_backlog')->orderby('id','DESC')->where('user_id',Auth::id())->first();
-        if($data)
-        {
-        $counter = $data->position + 1; 
-        }
-
-        DB::table('team_backlog')
-        ->insert([
-            'epic_title' => $request->epic_name,
-            'epic_start_date' => $request->epic_start_date,
-            'epic_end_date' => $request->epic_end_date,
-            'epic_status' => $request->epic_status,
-            'epic_detail' => $request->epic_description,
-            'unit_id' => $request->unit_id,
-            'type' => $request->type,
-            'position' => $counter,
-            'user_id' => Auth::id(),
-            
-            ]);
-      
-       
-        return redirect()->back()->with('message', 'Backlog Epic Added Successfully');
-
-    }
+    
 
     public function AssignTeamBacklogEpic(Request $request)
     {
@@ -109,6 +82,7 @@ class TeamController extends Controller
                     'jira_id' =>  $log->jira_id,
                     'account_id' => $log->account_id,
                     'jira_project' =>  $log->jira_project,
+                    'epic_progress' =>  $log->progress,
                 ]);
             }
             foreach($request->end_date  as $k => $value)
