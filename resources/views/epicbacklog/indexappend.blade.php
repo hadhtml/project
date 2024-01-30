@@ -8,7 +8,7 @@
                {{ session('message') }}
             </div>
             @endif
-            <table class="table data-table" id="olddata">
+            <table class="table data-table example" id="olddata">
                <thead>
                   <tr>
                      <td>
@@ -394,3 +394,32 @@
    </button>
 </div>
 @endif
+<script type="text/javascript">
+   $(document).ready(function() {
+      $('#editorbacklog').summernote({
+        height: 180,
+        toolbar: [
+            ['style', ['bold', 'italic', 'underline', 'clear']],
+            ['font', ['strikethrough', 'superscript', 'subscript']],
+            ['fontsize', ['fontsize']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['height', ['height']],
+            ['view', ['fullscreen', 'codeview']],
+        ],
+    });
+       var table = $('.example').DataTable({
+           "pagingType": "full_numbers",
+           "language": {
+               "paginate": {
+                   "previous": "&lsaquo;", // Custom previous arrow
+                   "next": "&rsaquo;" // Custom next arrow
+               }
+           },
+           "columnDefs": [{
+                   "orderable": false,
+                   "targets": [6]
+               } // Disable ordering for the first and third columns
+           ]
+       });
+</script>
