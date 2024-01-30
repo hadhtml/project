@@ -77,7 +77,7 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
                            <img src="{{ asset('public/assets/images/icons/edit.svg') }}" alt="Edit"
                               style="border-radius: 50%; width: 18px; height: 18px;">
                            </button>
-                           <button class="btn btn-icon btn-circle btn-tolbar delete-obj mr-2" onclick="deleteobj({{$obj->id}})" data-toggle="modal" data-target="#delete-objective">
+                           <button class="btn btn-icon btn-circle btn-tolbar delete-obj mr-2" onclick="deleteobj(event ,{{$obj->id}})" data-toggle="modal" data-target="#delete-objective">
                            <img src="{{ asset('public/assets/images/icons/delete.svg') }}" alt="Delete"
                               style="border-radius: 50%; width: 18px; height: 18px;">
                            </button>
