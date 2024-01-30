@@ -37,14 +37,14 @@
             </div>
         </div>
     </div>
-</div>
+</div> 
 <div class="row">
     <div class="activity-feed @if($comments->count() == 0) col-md-12 @endif">
         <div class="col-md-12 col-lg-12 col-xl-12 writecomment">
             <div class="d-flex flex-column">
                 <form method="POST" id="savecomment{{ $data->id }}" action="{{ url('dashboard/flags/savecomment') }}">
                 @csrf
-                <input type="hidden" value="{{ $data->id }}" name="flag_id">
+                <input type="hidden" value="{{ Cmf::gerescalatedmainid($data->id) }}" name="flag_id">
                 <input type="hidden" value="{{ Auth::user()->id }}" name="user_id">
                     <div class="form-group mb-8">
                         <label for="objective-name">Write Comment</label>

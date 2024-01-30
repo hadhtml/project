@@ -1,30 +1,69 @@
 <div class="row positionrelative">
-
     @if($data->archived == 1)
     <div class="col-md-12">
-        <h5 class="modal-title newmodaltittle marginleftthirty" id="create-epic">
-            <img src="{{ url('public/assets/svg/traffic-cone-svgrepo-com.svg') }}">
-
-            @php
-                $flagtittle = DB::table('flags')->where('id'  , Cmf::gerescalatedmainid($data->id))->first();
-            @endphp
-        @if($flagtittle) {{ $flagtittle->flag_title }} @else Enter Tittle @endif</h5>
+        @php
+            $flagtittle = DB::table('flags')->where('id'  , Cmf::gerescalatedmainid($data->id))->first();
+        @endphp
+        <h5 class="modal-title newmodaltittle" id="create-epic" style="display:flex;">
+            @if($flagtittle->flag_type == 'Impediment')
+            <span style="font-size:22px;margin-top: 4px;" class="material-symbols-outlined">warning_off</span>
+            @endif
+            @if($flagtittle->flag_type == 'Risk')
+            <span style="font-size:22px;margin-top: 4px;" class="material-symbols-outlined">emergency</span>
+            @endif
+            @if($flagtittle->flag_type == 'Blocker')
+            <span style="font-size:22px;margin-top: 4px;" class="material-symbols-outlined">block</span>
+            @endif
+            @if($flagtittle->flag_type == 'Action')
+            <span style="font-size:22px;margin-top: 4px;" class="material-symbols-outlined">call_to_action</span>
+            @endif
+            <span class="ml-2">@if($flagtittle->flag_title) {{ $flagtittle->flag_title }} @else Enter Tittle @endif</span>
+        </h5>
     </div>
     <div class="col-md-12 marginleftthirty newmodalsubtittle">
         <p class="text-danger">This card has been archived, to un archive <a onclick="unarchiveflag({{$data->id}})" href="javascript:void(0)">Click here</a>.</p>
     </div>
     @else
     <div class="col-md-12 mb-5">
-        <h5 class="modal-title newmodaltittle epic-tittle-header marginleftthirty" id="create-epic">
-            <img src="{{ url('public/assets/svg/traffic-cone-svgrepo-com.svg') }}">
-
+        <h5 class="modal-title newmodaltittle epic-tittle-header" id="create-epic" style="display: flex;">
             @php
                 $flagtittle = DB::table('flags')->where('id'  , Cmf::gerescalatedmainid($data->id))->first();
             @endphp
-        @if($flagtittle) {{ $flagtittle->flag_title }} @else Enter Tittle @endif</h5>
+            @if($flagtittle->flag_type == 'Impediment')
+            <span style="font-size:22px;margin-top: 4px;" class="material-symbols-outlined">warning_off</span>
+            @endif
+            @if($flagtittle->flag_type == 'Risk')
+            <span style="font-size:22px;margin-top: 4px;" class="material-symbols-outlined">emergency</span>
+            @endif
+            @if($flagtittle->flag_type == 'Blocker')
+            <span style="font-size:22px;margin-top: 4px;" class="material-symbols-outlined">block</span>
+            @endif
+            @if($flagtittle->flag_type == 'Action')
+            <span style="font-size:22px;margin-top: 4px;" class="material-symbols-outlined">call_to_action</span>
+            @endif
+            <span class="ml-2">@if($flagtittle->flag_title) {{ $flagtittle->flag_title }} @else Enter {{$flagtittle->flag_type}} Tittle @endif</span>
+        </h5>
     </div>
     @endif
     <div class="col-md-12 displayflex">
+        <div class="epic_id mr-3 mt-1" style="display: flex;">
+            @if($data->flag_type == 'Impediment')
+            <span style="font-size:18px" class="material-symbols-outlined mr-1">warning_off</span>
+            IM-{{ $data->id }}
+            @endif
+            @if($data->flag_type == 'Risk')
+            <span style="font-size:18px" class="material-symbols-outlined mr-1">emergency</span>
+            RI-{{ $data->id }}
+            @endif
+            @if($data->flag_type == 'Blocker')
+            <span style="font-size:18px" class="material-symbols-outlined mr-1">block</span>
+            BL-{{ $data->id }}
+            @endif
+            @if($data->flag_type == 'Action')
+            <span style="font-size:18px" class="material-symbols-outlined mr-1">call_to_action</span>
+            AC-{{ $data->id }}
+            @endif
+        </div>
         <div class="btn-group">
             <button type="button" class="btn btn-default statuschangebutton @if($data->flag_status == 'todoflag') todo-button-color @endif @if($data->flag_status == 'inprogress') inprogress-button-color @endif @if($data->flag_status == 'doneflag') done-button-color @endif" id="showboardbutton">
                 @if($data->flag_status == 'todoflag')

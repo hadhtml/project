@@ -11,6 +11,24 @@
                      OE-{{ $r->epic_id }}
                 </div>
                 @endif
+                <div class="epic_id ml-5" style="display: flex;">
+                    @if($r->flag_type == 'Impediment')
+                    <span style="font-size:22px" class="material-symbols-outlined">warning_off</span>
+                    IM-{{ $r->id }}
+                    @endif
+                    @if($r->flag_type == 'Risk')
+                    <span style="font-size:22px" class="material-symbols-outlined">emergency</span>
+                    RI-{{ $r->id }}
+                    @endif
+                    @if($r->flag_type == 'Blocker')
+                    <span style="font-size:22px" class="material-symbols-outlined">block</span>
+                    BL-{{ $r->id }}
+                    @endif
+                    @if($r->flag_type == 'Action')
+                    <span style="font-size:22px" class="material-symbols-outlined">call_to_action</span>
+                    AC-{{ $r->id }}
+                    @endif
+                </div>
             </div>
             @php
                 $check_escalate = DB::table('escalate_cards')->where('flag_id' , $r->id)

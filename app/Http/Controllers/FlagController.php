@@ -308,11 +308,9 @@ class FlagController extends Controller
         $member->member_id = $request->flag_assign;
         $member->flag_id = $flag->id;
         $member->save();
-         
         $activity = 'Created the '.$request->flag_type.' Flag on '.Cmf::date_format_new($flag->created_at).' at '.Cmf::date_format_time($flag->created_at);
         Cmf::save_activity(Auth::id() , $activity,'flags',$flag->id , 'image');
-
-        DB::table('epics')->where('id',$request->flag_epic_id)->update(['flag_assign' => 1]);
+        DB::table('epics')->where('id',$request->flag_epic_id)->update(['flag_assign' => $request->flag_type]);
         if($request->type == 'unit')
         {
             $organization  = DB::table('business_units')->where('slug',$request->slug)->first();
@@ -398,6 +396,8 @@ class FlagController extends Controller
             $addescalateflag->board_type = 'unit';
             $addescalateflag->escalate = $add->id;
             $addescalateflag->save();
+            $activity = 'Escalated '.$flag->flag_type.' To Organization Level';
+            Cmf::save_activity(Auth::id() , $activity,'flags',$request->id, 'escalator');
         }
         if($flag->board_type == 'BU')
         {
@@ -424,6 +424,8 @@ class FlagController extends Controller
             $addescalateflag->board_type = 'unit';
             $addescalateflag->escalate = $add->id;
             $addescalateflag->save();
+            $activity = 'Escalated '.$flag->flag_type.' To Business unit Level';
+            Cmf::save_activity(Auth::id() , $activity,'flags',$request->id, 'escalator');
         }
         if($flag->board_type == 'VS')
         {
@@ -450,6 +452,8 @@ class FlagController extends Controller
             $addescalateflag->board_type = 'stream';
             $addescalateflag->escalate = $add->id;
             $addescalateflag->save();
+            $activity = 'Escalated '.$flag->flag_type.' To Value Stream Level';
+            Cmf::save_activity(Auth::id() , $activity,'flags',$request->id, 'escalator');
         }
         if($flag->board_type == 'stream')
         {
@@ -476,6 +480,8 @@ class FlagController extends Controller
             $addescalateflag->board_type = 'unit';
             $addescalateflag->escalate = $add->id;
             $addescalateflag->save();
+            $activity = 'Escalated '.$flag->flag_type.' To Business unit Level';
+            Cmf::save_activity(Auth::id() , $activity,'flags',$request->id, 'escalator');
         }
         if($flag->board_type == 'unit')
         {
@@ -502,6 +508,8 @@ class FlagController extends Controller
             $addescalateflag->board_type = 'org';
             $addescalateflag->escalate = $add->id;
             $addescalateflag->save();
+            $activity = 'Escalated '.$flag->flag_type.' To Organization Level';
+            Cmf::save_activity(Auth::id() , $activity,'flags',$request->id, 'escalator');
         }
     }
     public function savecomment(Request $request)

@@ -187,6 +187,26 @@ function getOrder(){
                         </div>
                     </div>
                     <div class="col-md-3">
+                        <div class="epic_id" style="display: flex;">
+                            @if($r->flag_type == 'Impediment')
+                            <span style="font-size:22px" class="material-symbols-outlined">warning_off</span>
+                            IM-{{ $r->id }}
+                            @endif
+                            @if($r->flag_type == 'Risk')
+                            <span style="font-size:22px" class="material-symbols-outlined">emergency</span>
+                            RI-{{ $r->id }}
+                            @endif
+                            @if($r->flag_type == 'Blocker')
+                            <span style="font-size:22px" class="material-symbols-outlined">block</span>
+                            BL-{{ $r->id }}
+                            @endif
+                            @if($r->flag_type == 'Action')
+                            <span style="font-size:22px" class="material-symbols-outlined">call_to_action</span>
+                            AC-{{ $r->id }}
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-md-3">
                         @if($r->flag_status == 'todoflag')
                         <div class="flagstatusbadge todo-button-color">To Do</div>
                         @endif
@@ -199,7 +219,7 @@ function getOrder(){
                         
                     </div>
                     @if(DB::table('flag_members')->where('flag_id' , $r->id)->first())
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="d-flex flex-row align-items-center image-cont pr-3">
                             <div class="pr-1">
                                 @php
@@ -218,8 +238,8 @@ function getOrder(){
                         </div>
                     </div>
                     @endif
-                    <div class="col-md-4">
-                        <div class="flag-type-new @if($r->flag_type == 'Risk') risk-color @endif @if($r->flag_type == 'Impediment') impediment-color @endif">
+                    <div class="col-md-2">
+                        <div style="width: 113px;" class="flag-type-new @if($r->flag_type == 'Risk') risk-color @endif @if($r->flag_type == 'Impediment') impediment-color @endif">
                             {{ $r->flag_type }}
                         </div>
                     </div>
