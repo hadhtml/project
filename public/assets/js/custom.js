@@ -36,28 +36,11 @@ function addnewobjective(id , type , slug) {
             type: type,
         },
         success: function(res) {
-            editobjective(res , slug)
+            editobjective(event , res , slug)
         }
     });
 }
-function editobjective(id , slug) {
-    var new_url=""+main_url()+"/dashboard/organization/"+slug+"/portfolio/org?objective="+id;
-    window.history.pushState("data","Title",new_url);
-    $.ajax({
-        type: "POST",
-        url: main_url()+"/dashboard/objectives/getobjective",
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        data: {
-            id: id,
-        },
-        success: function(res) {
-            $('#objective-modal-content').html(res);
-            $('#objectivemodalnew').modal('show');
-        }
-    });
-}
+
 function showobjectiveheader(id) {
     $.ajax({
         type: "POST",
@@ -101,9 +84,7 @@ function showtabobjective(id , tab) {
         }
     });
 }
-function deleteobj(obj_id) {
-    $('#obj_delete_id').val(obj_id);
-}
+
 function changeobjectivestatus(status , id) {
     $.ajax({
         type: "POST",

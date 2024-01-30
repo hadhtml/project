@@ -13,7 +13,7 @@
                 obj_id: obj_id,
             },
             success: function(res) {
-                editobjectivekey(res);
+                editobjectivekey(event,res);
             }
         });
     }
@@ -135,7 +135,7 @@
 
 
         @if(isset($_GET['objective']))
-            editobjective("{{ $_GET['objective'] }}" , '{{ $organization->slug }}');
+            editobjective(event , "{{ $_GET['objective'] }}" , '{{ $organization->slug }}');
         @endif
 
         $("#objectivemodalnew").on('hidden.bs.modal', function(){
@@ -192,7 +192,7 @@
     }
     $(document).ready(function() {
         @if(isset($_GET['keyresult']))
-            editobjectivekey("{{ $_GET['keyresult'] }}");
+            editobjectivekey(event , "{{ $_GET['keyresult'] }}");
             @php
                 $objective_id = DB::table('key_result')->where('id' , $_GET['keyresult'])->first()->obj_id;
             @endphp
@@ -210,7 +210,8 @@
            window.history.pushState("data","Title",new_url);
         });
     });
-     function editobjectivekey(id) {
+     function editobjectivekey(event,id) {
+        event.stopPropagation();
         $.ajax({
             type: "POST",
             url: "{{ url('dashboard/keyresult/getkeyresult') }}",
@@ -827,7 +828,25 @@
 
         }
     }
-
+    function editobjective(event , id , slug) {
+        event.stopPropagation();
+        var new_url=""+main_url()+"/dashboard/organization/"+slug+"/portfolio/org?objective="+id;
+        window.history.pushState("data","Title",new_url);
+        $.ajax({
+            type: "POST",
+            url: main_url()+"/dashboard/objectives/getobjective",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                id: id,
+            },
+            success: function(res) {
+                $('#objective-modal-content').html(res);
+                $('#objectivemodalnew').modal('show');
+            }
+        });
+    }
     function deleteobjkey(event,key_id, obj) {
 
         event.stopPropagation();
@@ -837,6 +856,11 @@
         $('#delete-objective-key').modal('show');
       
 
+    }
+    function deleteobj(event , obj_id) {
+        event.stopPropagation();
+        $('#obj_delete_id').val(obj_id);
+        $('#delete-objective').modal('show');
     }
 
  
