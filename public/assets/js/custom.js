@@ -1,3 +1,6 @@
+function main_url() {
+    return $('#mainurl').val();
+}
 $(document).mouseup(function(e) 
 {
     var hidepopupall = $(".hidepopupall");
@@ -21,3 +24,173 @@ function maximizemodal() {
     $("#open_in_full").toggleClass("d-none");
     $('#close_fullscreen').toggleClass('d-none');
 }
+function addnewobjective(event,id , type , slug) {
+  $.ajax({
+        type: "POST",
+        url: main_url()+"/dashboard/objectives/addnewobjective",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+            unit_id: id,
+            type: type,
+        },
+        success: function(res) {
+            editobjective(event , res , slug)
+        }
+    });
+}
+
+function showobjectiveheader(id) {
+    $.ajax({
+        type: "POST",
+        url: main_url()+"/dashboard/objectives/showobjectiveheader",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+            id:id,
+        },
+        success: function(res) {
+            $('.modalheaderforapend').html(res);
+        },
+        error: function(error) {
+            
+        }
+    });
+}
+function showtabobjective(id , tab) {
+    $('#modaltab').val(tab);
+    $('.secondportion').addClass('loaderdisplay');
+    $('.secondportion').html('<i class="fa fa-spin fa-spinner"></i>');
+    $.ajax({
+        type: "POST",
+        url: main_url()+"/dashboard/objectives/showtabobjective",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+            id:id,
+            tab:tab,
+        },
+        success: function(res) {
+            $('.secondportion').removeClass('loaderdisplay');
+            $('.secondportion').html(res);
+            $('.tabsclass').removeClass('active');
+            $('#'+tab).addClass('active');
+        },
+        error: function(error) {
+            
+        }
+    });
+}
+
+function changeobjectivestatus(status , id) {
+    $.ajax({
+        type: "POST",
+        url: main_url()+"/dashboard/objectives/changeobjectivestatus",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+            id: id,
+            status: status,
+        },
+        success: function(res) {
+            showobjectiveheader(id)
+            $('#parentCollapsible').html(res);
+        },
+        error: function(error) {
+            
+        }
+    });
+}
+function deleteobjectiveshow(id) {
+    $('#deleteobjective'+id).slideToggle();
+}
+function deleteobjectivemain() {
+    var id = $('#obj_delete_id').val();
+    deleteobjective(id);
+}
+function deleteobjective(id) {
+    $('#deleteobjectivebutton').html('<i class="fa fa-spin fa-spinner"></i>');
+    $("#deleteobjectivebutton" ).prop("disabled", true);
+    $.ajax({
+        type: "POST",
+        url: main_url()+"/dashboard/objectives/deleteobjective",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+            id: id
+        },
+        success: function(res) {
+            $('#success-obj-delete').html('<div class="alert alert-success" role="alert"> Objective Deleted successfully</div>');
+            setTimeout(function() {
+                $('#delete-objective').modal('hide');
+                $('#success-obj-delete').html('');
+            }, 1000);
+            $('#deleteobjectivebutton').html('Confirm');
+            $("#deleteobjectivebutton" ).prop("disabled", false);
+            $('#parentCollapsible').html(res);
+            $("#nestedCollapsible" + id).collapse('toggle');
+            $('#objectivemodalnew').modal('hide');
+        }
+    });
+}
+function getobjkeyweight(id) {
+
+    var type = "{{ $organization->type }}";
+    var unit_id = "{{ $organization->id }}";
+    $.ajax({
+    type: "GET",
+    url: "{{ url('get-obj-key-weight') }}",
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    data: {
+        id:id,
+        type:type,
+        unit_id:unit_id
+
+    },
+    success: function(res) {
+
+    $('#key-weight-data-obj').html(res);
+
+
+    }
+    });
+
+    }
+
+
+    
+
+    
+
+    function getobjlink(id) {
+
+    var type = "{{ $organization->type }}";
+    var unit_id = "{{ $organization->id }}";
+    $.ajax({
+    type: "GET",
+    url: "{{ url('get-obj-link') }}",
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    data: {
+        id:id,
+        type:type,
+        unit_id:unit_id
+
+    },
+    success: function(res) {
+
+    $('.link-data-obj').html(res);
+
+
+    }
+    });
+
+    }
