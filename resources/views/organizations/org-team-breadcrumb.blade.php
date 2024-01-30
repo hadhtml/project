@@ -4,13 +4,28 @@
         <!--begin::Info-->
         <div class="d-flex align-items-start flex-column flex-wrap mr-2">
             <!--begin::Page Title-->
-            <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
-                Teams
-            </h5>
+          
+            <div class="d-flex flex-row">
+                <div>
+                    <span style="font-size:22px" class="material-symbols-outlined">groups</span>
+                </div>
+                <div>
+                    <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
+                        Teams
+                    </h5>
+                </div>
+            </div>
             <!-- Breadcrum Items -->
            <div class="d-flex flex-row page-sub-titles">
                 <div class="mr-2">
-                    <a  href="{{url('dashboard/organizations')}}" style="text-decoration: none;" >Dashboard</a>
+                    <div class="d-flex">
+                        <div>
+                            <span style="font-size:19px" class="material-symbols-outlined">auto_stories</span>
+                        </div>
+                        <div>
+                            <a  href="{{url('dashboard/organizations')}}" style="text-decoration: none;" >Dashboard</a>
+                        </div>
+                    </div>
 
                 </div>
 
@@ -21,7 +36,16 @@
                 @endif --}}
              
                 <div class="mr-2">
-                    <p>Teams</p>
+                    <div class="d-flex">
+                        <div>
+                            <span style="font-size:19px" class="material-symbols-outlined">groups</span>
+                        </div>
+                        <div>
+                            <p>Teams</p>
+                        </div>
+                    </div>
+
+             
                 </div>
             </div>
             <!--End Breadcrum Items -->
