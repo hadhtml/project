@@ -199,10 +199,21 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                                     @endif
                                 </div>
                             
+                           
+                                @if($organization->type == 'unit')
+                                <div class="d-flex">
+                                    <div>
+                                        <span style="font-size:22px" class="material-symbols-outlined">groups</span>
+                                    </div>
+                                    <div>
+                                        <p>Teams</p>                
+                                    </div>
+                                </div>
+                                @else
                                 <div class="mr-2">
                                     <div class="d-flex">
                                         <div>
-                                            <span style="font-size:22px" class="material-symbols-outlined">groups</span>
+                                            <span style="font-size:22px" class="material-symbols-outlined">folder_supervised</span>
                                         </div>
                                         <div>
                                             <p>Teams</p>                
@@ -210,6 +221,8 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                                     </div>
                                  
                                 </div>
+                                @endif
+
                             </div>
                             <!--End Breadcrum Items -->
                         </div>
