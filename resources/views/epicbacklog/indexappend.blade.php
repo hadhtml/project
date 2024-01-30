@@ -35,10 +35,10 @@
                         </label>
                      </td>
                      <td class="draggable">
-                        <div class="epic_id">
-                           <img src="{{ url('public/assets/svg/arrow.svg') }}">
-                           OE-{{ $backlog->id }}
-                       </div>
+                        <div class="epic_id mr-3 mt-1" style="display: flex;">
+                           <span style="font-size:18px" class="material-symbols-outlined mr-1">key_visualizer</span>
+                           EB-{{ $backlog->id }}
+                        </div>
                      </td>
                      <td class="draggable">
                         {{ $backlog->epic_title }}

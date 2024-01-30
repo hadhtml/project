@@ -1,12 +1,13 @@
 <div class="row positionrelative">
     <div class="col-md-12 mb-5">
-        <h5 class="modal-title newmodaltittle epic-tittle-header marginleftthirty" id="create-epic">
-            <img src="{{ url('public/assets/svg/epicheaderheader.svg') }}">@if($data->epic_title) {{ $data->epic_title }} @else Enter Epic Backlog Tittle @endif
+        <h5 class="modal-title newmodaltittle epic-tittle-header" id="create-epic" style="display: flex;">
+            <span style="font-size:22px;margin-top: 4px;" class="material-symbols-outlined">key_visualizer</span>
+            <span class="ml-2">@if($data->epic_title) {{ $data->epic_title }} @else Enter Epic Backlog Tittle @endif</span>
         </h5>
     </div>
     <div class="col-md-12 displayflex">
-        <div class="epic_id mr-3 mt-1">
-            <img src="{{ url('public/assets/svg/arrow.svg') }}">
+        <div class="epic_id mr-3 mt-1" style="display: flex;">
+            <span style="font-size:18px" class="material-symbols-outlined mr-1">key_visualizer</span>
             OE-{{ $data->id }}
         </div>
         <div class="btn-group epicheaderborderleft">

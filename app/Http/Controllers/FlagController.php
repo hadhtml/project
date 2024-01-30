@@ -280,7 +280,36 @@ class FlagController extends Controller
         $flag->board_type = $request->type;
         $flag->save();
 
-        $activity = 'Created the '.$request->flag_type.' Flag on '.Cmf::date_format_new($flag->created_at).' at '.Cmf::date_format_time($flag->created_at);
+        if($flag->board_type == 'VS')
+        {
+            $organizationlevel = 'Value Stream Team';
+        }
+        if($flag->board_type == 'BU')
+        {
+            $organizationlevel = 'Business Unit Team';
+        }
+        if($flag->board_type == 'org')
+        {
+            $organizationlevel = 'Organization';
+        }
+        if($flag->board_type == 'orgT')
+        {
+            $organizationlevel = 'Organization Team';
+        }
+        if($flag->board_type == 'unit')
+        {
+            $organizationlevel = 'Business Unit';
+        }
+        if($flag->board_type == 'stream')
+        {
+            $organizationlevel = 'Value Stream';
+        }
+        if($flag->board_type == 'stream')
+        {
+            $organizationlevel = 'Value Stream';
+        }
+
+        $activity = 'Created the '.$request->flag_type.' Flag at the '.$organizationlevel.' on '.Cmf::date_format_new($flag->created_at).' at '.Cmf::date_format_time($flag->created_at);
         Cmf::save_activity(Auth::id() , $activity,'flags',$flag->id , 'image');
 
 
