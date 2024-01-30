@@ -442,13 +442,19 @@
 
     }
 
-    function editobjective(obj_id, obj_name, obj_start_date, obj_end_date, obj_detail, obj_status) {
+    function editobjective(event,obj_id, obj_name, obj_start_date, obj_end_date, obj_detail, obj_status) {
+        event.stopPropagation();
+
+       
+
         $('#edit_obj_id').val(obj_id);
         $('#edit_objective_name').val(obj_name);
         $('#edit_start_date').val(obj_start_date);
         $('#edit_end_date').val(obj_end_date);
         $('#edit_obj_small_description').val(obj_detail);
         $('#edit_obj_status').val(obj_status);
+
+        $('#edit-objective').modal('show');
 
         getobjlink(obj_id);
         getobjkeyweight(obj_id);
@@ -537,8 +543,11 @@
     }
 
 
-    function deleteobj(obj_id) {
+    function deleteobj(event,obj_id) {
+        event.stopPropagation();
+
         $('#obj_delete_id').val(obj_id);
+        $('#delete-objective').modal('show');
 
     }
 
@@ -1311,10 +1320,12 @@
     }
 
 
-    function deletekeyinitiative(initiative_id, key_id, obj_id) {
+    function deletekeyinitiative(event,initiative_id, key_id, obj_id) {
+        event.stopPropagation();
         $('#initiative_delete_id').val(initiative_id);
         $('#initiative_delete_key_id').val(key_id);
         $('#initiative_delete_obj_id').val(obj_id);
+        $('#delete-initiative-key').modal('show');
 
     }
 
@@ -1367,9 +1378,9 @@
 
     }
 
-    function editinitiative(initiative_id, initiative_name, initiative_start_date, initiative_end_date,
+    function editinitiative(event,initiative_id, initiative_name, initiative_start_date, initiative_end_date,
         initiative_detail, initiative_weight, initiative_key, initiative_obj,end_date) {
-
+            event.stopPropagation();
 
         $('#edit_id_initiative').val(initiative_id);
         $('#edit_initiative_name').val(initiative_name);
@@ -1381,6 +1392,7 @@
 
         $('.edit_initiative_start_date').attr('min', initiative_start_date);
         $('#edit_initiative_end_date').attr('max', end_date);
+        $('#edit-initiative').modal('show');
         getinitiativweight(initiative_id);
         $('#wieght-error-edit-init').html('');
 
