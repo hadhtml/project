@@ -138,6 +138,14 @@ class EpicBacklogController extends Controller
     public function changeepicstatus(Request $request)
     {
         team_backlog::where('id' , $request->id)->update(array('epic_status' =>$request->status));
+        if($request->status == 'Done')
+        {
+         team_backlog::where('id' , $request->id)->update(array('progress' => 100));  
+        }else
+        {
+            team_backlog::where('id' , $request->id)->update(array('progress' => 0));  
+
+        }
     }
     public function updategeneral(Request $request)
     {
