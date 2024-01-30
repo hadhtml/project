@@ -210,8 +210,7 @@
            window.history.pushState("data","Title",new_url);
         });
     });
-     function editobjectivekey(event,id) {
-        event.stopPropagation();
+     function editobjectivekey(id) {
         $.ajax({
             type: "POST",
             url: "{{ url('dashboard/keyresult/getkeyresult') }}",
