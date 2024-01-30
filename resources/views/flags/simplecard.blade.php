@@ -167,6 +167,27 @@
                     </div>
                 </div>
             </div>
+            
+        </div>
+        <div class="d-flex mt-3">
+            @if($r->board_type == 'VS')
+                <span style="font-size:22px" class="material-symbols-outlined">groups</span> {{ DB::table('value_team')->where('id' , $r->business_units)->first()->team_title }}
+            @endif
+            @if($r->board_type == 'stream')
+                <span style="font-size:22px" class="material-symbols-outlined">layers</span> {{ DB::table('value_stream')->where('id' , $r->business_units)->first()->value_name }}
+            @endif
+            @if($r->board_type == 'unit')
+                <span style="font-size:22px" class="material-symbols-outlined">domain</span> {{ DB::table('business_units')->where('id' , $r->business_units)->first()->business_name }}
+            @endif
+            @if($r->board_type == 'BU')
+                <span style="font-size:22px" class="material-symbols-outlined">groups</span> {{ DB::table('unit_team')->where('id' , $r->business_units)->first()->team_title }}
+            @endif
+            @if($r->board_type == 'org')
+                <span style="font-size:22px" class="material-symbols-outlined">auto_stories</span> {{ DB::table('organization')->where('id' , $r->business_units)->first()->organization_name }}
+            @endif
+            @if($r->board_type == 'orgT')
+                <span style="font-size:22px" class="material-symbols-outlined">groups</span> {{ DB::table('org_team')->where('id' , $r->business_units)->first()->team_title }}
+            @endif
         </div>
     </div>
 </div>
