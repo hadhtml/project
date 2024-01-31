@@ -43,7 +43,7 @@
     <div class="activity-feed @if($attachments->count() == 0) col-md-12 @endif">
         <div class="col-md-12 col-lg-12 col-xl-12 uploadattachment">
             <div class="d-flex flex-column">
-                <form id="uploadattachementform" enctype="multipart/form-data" method="post" action="{{ url('dashboard/epicbacklog/uploadattachment') }}">
+                <form id="uploadattachementform" enctype="multipart/form-data" method="post" action="{{ url('dashboard/epics/uploadattachment') }}">
                   @csrf
                   <input type="hidden" value="{{ $data->id }}" name="value_id">
                     <label class="dropzonelabel">
