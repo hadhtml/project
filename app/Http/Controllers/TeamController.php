@@ -203,7 +203,7 @@ class TeamController extends Controller
     DB::table('objectives')->where('id',$request->locstate)->update(['q_obj_prog' => $QuartertotalObj]);
 
 
-          return redirect()->back()->with('message', 'Backlog Assign Successfully');
+    return redirect()->back()->with('message', 'Backlog Assign Successfully');
 
     }
 

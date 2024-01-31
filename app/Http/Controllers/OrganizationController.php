@@ -17,6 +17,21 @@ class OrganizationController extends Controller
   {
       $this->middleware('auth');
   }
+
+  public function indexHome()
+  {
+    if(Auth::id())
+    {
+      $organization  = Organization::where('user_id',Auth::id())->where('trash',NULL)->first();
+      return redirect('dashboard/organizations');
+    }else
+    {
+      return view('welcome');
+      
+    }
+      
+
+  }
     public function Organization()
     {
         $organization  = Organization::where('user_id',Auth::id())->where('type','org')->where('trash',NULL)->Paginate(10);
@@ -24,11 +39,21 @@ class OrganizationController extends Controller
 
     }
 
+    
+
     public function OrgTeam($id)
     {
-    $organization = DB::table('organization')->where('slug',$id)->first();
+    $organization = DB::table('organization')->where('slug',$id)->where('user_id',Auth::id())->first();
+
+    if($organization)
+    {
     $Team = DB::table('org_team')->where('org_id',$organization->id)->get();
-    return view('organizations.Team',compact('organization','Team'));  
+    return view('organizations.Team',compact('organization','Team'));
+    }else
+    {
+    
+    echo "You're not authorized to access this Link <a href= ".url('dashboard/organizations').">Back</a>";   
+    }   
         
     }
 

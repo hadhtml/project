@@ -198,13 +198,22 @@ class MemberController extends Controller
      public function ObjectivesValue($id)
     {
         
-    $organization = DB::table('business_units')->where('slug',$id)->first();    
-    $Stream = DB::table('value_stream')->where('value_stream.user_id',Auth::id())
-              ->join('business_units','value_stream.unit_id','=','business_units.id')
-              ->where('value_stream.unit_id',$organization->id)
-              ->select('business_units.*','value_stream.*','value_stream.lead_id AS Lead_id','value_stream.id AS ID','value_stream.detail AS DETAIL')
-              ->get();
-     return view('member.value-streams',compact('Stream','organization'));  
+    $organization = DB::table('business_units')->where('slug',$id)->where('user_id',Auth::id())->first();
+    if($organization)
+    {
+        $Stream = DB::table('value_stream')->where('value_stream.user_id',Auth::id())
+        ->join('business_units','value_stream.unit_id','=','business_units.id')
+        ->where('value_stream.unit_id',$organization->id)
+        ->select('business_units.*','value_stream.*','value_stream.lead_id AS Lead_id','value_stream.id AS ID','value_stream.detail AS DETAIL')
+        ->get();
+        return view('member.value-streams',compact('Stream','organization'));  
+
+    }else
+    {
+    
+    echo "You're not authorized to access this Link <a href= ".url('dashboard/organizations').">Back</a>";   
+    }     
+  
         
     }
  
@@ -784,10 +793,17 @@ class MemberController extends Controller
       public function ObjectivesValueTeam($id)
     {
         
-    $organization = DB::table('value_stream')->where('slug',$id)->first();
-    
-    $Team = DB::table('value_team')->where('org_id',$organization->id)->get();
-    return view('member.value-streams-team',compact('organization','Team'));  
+    $organization = DB::table('value_stream')->where('slug',$id)->where('user_id',Auth::id())->first();
+    if($organization)
+    {
+        $Team = DB::table('value_team')->where('org_id',$organization->id)->get();
+        return view('member.value-streams-team',compact('organization','Team'));  
+    }else
+    {
+       
+    echo "You're not authorized to access this Link <a href= ".url('dashboard/organizations').">Back</a>";   
+    } 
+   
         
     }
     
@@ -836,9 +852,18 @@ class MemberController extends Controller
     
     public function ObjectivesUnitTeam($id)
     {
-    $organization = DB::table('business_units')->where('slug',$id)->first();
-    $Team = DB::table('unit_team')->where('org_id',$organization->id)->get();
-    return view('Business-units.unit-team',compact('organization','Team'));  
+    $organization = DB::table('business_units')->where('slug',$id)->where('user_id',Auth::id())->first();
+  
+    
+    if($organization)
+    {
+        $Team = DB::table('unit_team')->where('org_id',$organization->id)->get();
+        return view('Business-units.unit-team',compact('organization','Team')); 
+    }else
+    {
+       
+    echo "You're not authorized to access this Link <a href= ".url('dashboard/organizations').">Back</a>";   
+    } 
         
     }
     
@@ -1440,38 +1465,88 @@ $updateData = [
     public function BUDashboard($id,$type)
     {
     
+        
+    
     if($type == 'unit')
     {
-    $organization = DB::table('business_units')->where('slug',$id)->first();
+
+    $organization = DB::table('business_units')->where('slug',$id)->where('user_id',Auth::id())->first();
+    if($organization)
+    {
     return view('Business-units.dashboard',compact('organization'));  
+    }else
+    {
+       
+        echo "You're not authorized to access this Link <a href= ".url('dashboard/organizations').">Back</a>";   
+    }
+    
         
     }
 
     if($type == 'stream')
     {
-    $organization = DB::table('value_stream')->where('slug',$id)->first();
-    return view('member.dashboard',compact('organization'));  
+    $organization = DB::table('value_stream')->where('slug',$id)->where('user_id',Auth::id())->first();
+
+    if($organization)
+    {
+    return view('member.dashboard',compact('organization'));
+    }else
+    {
+       
+    echo "You're not authorized to access this Link <a href= ".url('dashboard/organizations').">Back</a>";   
+    }  
       
     }
 
     if($type == 'BU')
     {
-        $organization = DB::table('unit_team')->where('slug',$id)->first();
-        return view('Business-units.team-dashboard',compact('organization','type'));  
+        $org = DB::table('unit_team')->where('slug',$id)->first();
+        $organizationData = DB::table('business_units')->where('id',$org->org_id)->where('user_id',Auth::id())->first();
+        if($organizationData)
+        {
+        $organization = DB::table('unit_team')->where('org_id',$organizationData->id)->first();
+        return view('Business-units.team-dashboard',compact('organization','type'));
+        }else
+        {
+           
+        echo "You're not authorized to access this Link <a href= ".url('dashboard/organizations').">Back</a>";   
+        }    
       
     }
 
     if($type == 'VS')
     {
-    $organization = DB::table('value_team')->where('slug',$id)->first();
-    return view('Business-units.team-dashboard',compact('organization','type'));  
+    $org = DB::table('value_team')->where('slug',$id)->first();
+    $organizationData = DB::table('value_stream')->where('id',$org->org_id)->where('user_id',Auth::id())->first();
+   
+   
+    if($organizationData)
+    {
+    $organization = DB::table('value_team')->where('org_id',$organizationData->id)->first();    
+    return view('Business-units.team-dashboard',compact('organization','type'));
+    }else
+    {
+       
+    echo "You're not authorized to access this Link <a href= ".url('dashboard/organizations').">Back</a>";   
+    }    
       
     }
 
     if($type == 'orgT')
     {
-    $organization = DB::table('org_team')->where('slug',$id)->first();
-    return view('Business-units.team-dashboard',compact('organization','type'));  
+    
+    $org = DB::table('org_team')->where('slug',$id)->first();
+    $organizationData = DB::table('organization')->where('id',$org->org_id)->where('user_id',Auth::id())->first();
+
+    if($organizationData)
+    {
+        $organization = DB::table('org_team')->where('org_id',$organizationData->id)->first();
+    return view('Business-units.team-dashboard',compact('organization','type'));
+    }else
+    {
+       
+    echo "You're not authorized to access this Link <a href= ".url('dashboard/organizations').">Back</a>";   
+    }     
       
     }
     
