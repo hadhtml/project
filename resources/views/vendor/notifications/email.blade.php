@@ -164,7 +164,7 @@
          <tr>
          <td align="center" bgcolor="#2F67F6" role="presentation" style="border:none;border-radius:3px;color:#ffffff;cursor:auto;padding:15px 25px;" valign="middle">
          <a href="{{ $actionUrl }}">
-         <p style="background:#2F67F6;color:#ffffff;font-family:'Helvetica Neue',Arial,sans-serif;font-size:15px;font-weight:normal;line-height:120%;Margin:0;text-decoration:none;text-transform:none;">
+         <p style="background:#ffffff;color:#2F67F6;font-family:'Helvetica Neue',Arial,sans-serif;font-size:15px;font-weight:normal;line-height:120%;Margin:0;text-decoration:none;text-transform:none;">
          Verify Your Account
          </p>
          </a>
@@ -182,8 +182,8 @@
          <tr>
          <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
          <div style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:14px;line-height:20px;text-align:left;color:white;">
-         Best regards,<br><br> Csaba Kissi<br>Elerion ltd., CEO and Founder<br>
-         <a href="{{ url('') }}" style="color:#2F67F6">{{ url('') }}</a>
+         Best regards,<br><br> Hadilton Barbosa<br>Agileprolific, CEO and Founder<br>
+         {{-- <a href="{{ url('') }}" style="color:#2F67F6">{{ url('') }}</a> --}}
          </div>
          </td>
          </tr>
