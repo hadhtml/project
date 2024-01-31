@@ -18,10 +18,11 @@ use Illuminate\Support\Facades\Route;
 Auth::routes(['verify' => true]);
 
 Route::get('/dashboard/organizations', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\OrganizationController::class, 'indexHome']);
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 
 
@@ -65,9 +66,6 @@ Route::post('update-organization', [App\Http\Controllers\OrganizationController:
 Route::post('delete-mutiple-organization', [App\Http\Controllers\OrganizationController::class, 'DeleteOrganizationAll']);
 
 Route::get('dashboard/organization/{id}/portfolio/{type}', [App\Http\Controllers\ObjectiveController::class, 'Objectives'])->middleware('auth');
-Route::post('save-objective', [App\Http\Controllers\ObjectiveController::class, 'SaveObjective']);
-Route::post('update-objective', [App\Http\Controllers\ObjectiveController::class, 'UpdateObjective']);
-Route::post('Delete-objective', [App\Http\Controllers\ObjectiveController::class, 'DeleteObjective']);
 Route::get('get-obj-key-weight', [App\Http\Controllers\ObjectiveController::class, 'AllObjKeyWeight']);
 
 
@@ -212,6 +210,16 @@ Route::post('update-teambacklog-epic', [App\Http\Controllers\TeamController::cla
 Route::post('delete-team-backlog', [App\Http\Controllers\TeamController::class,'DeleteTeamBacklogEpic']);
 Route::get('get-assign-epic-all', [App\Http\Controllers\TeamController::class,'AssignEpicAll']);
 
+Route::name('objectives.')->namespace('App\Http\Controllers')->prefix('dashboard/objectives')->group(function () {
+    Route::POST('getobjective', 'ObjectiveController@getobjective');
+    Route::POST('showobjectiveheader', 'ObjectiveController@showobjectiveheader');
+    Route::POST('updategeneral', 'ObjectiveController@updategeneral');
+    Route::POST('showtabobjective', 'ObjectiveController@showtabobjective');
+    Route::POST('addnewobjective', 'ObjectiveController@addnewobjective');
+    Route::POST('deleteobjective', 'ObjectiveController@deleteobjective');
+    Route::POST('changeobjectivestatus', 'ObjectiveController@changeobjectivestatus');
+    
+});
 
 Route::name('flags.')->namespace('App\Http\Controllers')->prefix('dashboard/flags')->group(function () {
     Route::get('{organizationid}/{flagtype}/{type}', 'FlagController@flags');
@@ -251,6 +259,8 @@ Route::name('flags.')->namespace('App\Http\Controllers')->prefix('dashboard/flag
     
 });
 Route::name('linking.')->namespace('App\Http\Controllers')->prefix('dashboard')->group(function () {
+    
+    Route::get('mapper/{url}/{type}', 'MapperController@mapperbytype');
     Route::get('okr-mapper', 'MapperController@index');
     Route::POST('linking/saveteamlevellinking', 'MapperController@saveteamlevellinking');
     Route::POST('linking/checkkeyresultmapper', 'MapperController@checkkeyresultmapper');
@@ -280,9 +290,9 @@ Route::name('epicbacklog.')->namespace('App\Http\Controllers')->prefix('dashboar
     Route::POST('flagupdate', 'EpicBacklogController@flagupdate');       
     Route::POST('showdataintable', 'EpicBacklogController@showdataintable');
     Route::get('clone/{id}/{type}', 'EpicBacklogController@cloneepic');
-    // Route::POST('orderbycomment', 'EpicController@orderbycomment');
-    // Route::POST('sortchilditem', 'EpicController@sortchilditem');
-    // Route::POST('deletechilditem', 'EpicController@deletechilditem');
+    Route::POST('updatechlditem', 'EpicBacklogController@updatechlditem');
+    Route::POST('changeitemstatus', 'EpicBacklogController@changeitemstatus');
+    Route::POST('deletechilditem', 'EpicBacklogController@deletechilditem');
     // Route::POST('orderbychilditem', 'EpicController@orderbychilditem');
 });
 
@@ -338,7 +348,8 @@ Route::name('keyresult.')->namespace('App\Http\Controllers')->prefix('dashboard/
     Route::POST('okrmapperform', 'KeyresultController@okrmapperform');
     Route::POST('checkkeyresultlink', 'KeyresultController@checkkeyresultlink');
     Route::POST('deletelinking', 'KeyresultController@deletelinking');
-    
+    Route::POST('searchobjectives', 'KeyresultController@searchobjectives');
+    Route::POST('selectobjective', 'KeyresultController@selectobjective');
 
 
 });
