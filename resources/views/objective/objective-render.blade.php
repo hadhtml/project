@@ -77,11 +77,13 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
          $trimmedStringobj = trim($objedit);
          @endphp
          <div class="action ml-0">
-            <button class="btn btn-icon btn-circle btn-tolbar ml-auto " onclick="editobjective(event,{{$obj->id}})">
-            <img src="{{ asset('public/assets/images/icons/edit.svg') }}" alt="Edit" style="border-radius: 50%; width: 18px; height: 18px;">
+            <button class="btn btn-icon btn-circle btn-tolbar ml-auto " onclick="editobjective(event,{{$obj->id}} , '{{$organization->slug}}')">
+            <img src="{{ asset('public/assets/images/icons/edit.svg') }}" alt="Edit"
+               style="border-radius: 50%; width: 18px; height: 18px;">
             </button>
-            <button class="btn btn-icon btn-circle btn-tolbar delete-obj mr-2" onclick="deleteobj(event,{{$obj->id}})" data-toggle="modal" data-target="#delete-objective">
-            <img src="{{ asset('public/assets/images/icons/delete.svg') }}" alt="Delete" style="border-radius: 50%; width: 18px; height: 18px;">
+            <button class="btn btn-icon btn-circle btn-tolbar delete-obj mr-2" onclick="deleteobj(event ,{{$obj->id}})">
+            <img src="{{ asset('public/assets/images/icons/delete.svg') }}" alt="Delete"
+               style="border-radius: 50%; width: 18px; height: 18px;">
             </button>
          </div>
       </div>
@@ -175,7 +177,7 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
                                  alt="Edit"
                                  style="border-radius: 50%; width: 18px; height: 18px;">
                               </button>
-                              <button class="btn btn-icon btn-circle bg-white btn-tolbar" onclick="deleteobjkey(event,{{$key->id}},'{{$obj->id}}')" data-toggle="modal" data-target="#delete-objective-key">
+                              <button class="btn btn-icon btn-circle bg-white btn-tolbar"  onclick="deleteobjkey(event,{{$key->id}},'{{$obj->id}}')" data-toggle="modal" data-target="#delete-objective-key">
                               <img src="{{ asset('public/assets/images/icons/delete.svg') }}"
                                  alt="Delete"
                                  style="border-radius: 50%; width: 18px; height: 18px;">
@@ -272,13 +274,13 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
                                              @endphp
                                              <div class="action ml-0">
                                                 <button
-                                                   class="btn btn-icon btn-circle bg-white btn-tolbar ml-auto" onclick="editinitiative(event,{{$initiative->id}},'{{$initiative->initiative_name}}','{{$initiative->initiative_start_date}}','{{$initiative->initiative_end_date}}','{{$trimmedStringinit}}','{{$initiative->initiative_weight}}','{{$key->id}}','{{$obj->id}}','{{$key->key_end_date}}')" data-toggle="modal" data-target="#edit-initiative">
+                                                   class="btn btn-icon btn-circle bg-white btn-tolbar ml-auto" onclick="editinitiative({{$initiative->id}},'{{$initiative->initiative_name}}','{{$initiative->initiative_start_date}}','{{$initiative->initiative_end_date}}','{{$trimmedStringinit}}','{{$initiative->initiative_weight}}','{{$key->id}}','{{$obj->id}}','{{$key->key_end_date}}')" data-toggle="modal" data-target="#edit-initiative">
                                                 <img src="{{ asset('public/assets/images/icons/edit.svg') }}"
                                                    alt="Edit"
                                                    style="border-radius: 50%; width: 18px; height: 18px;">
                                                 </button>
                                                 <button
-                                                   class="btn btn-icon btn-circle bg-white btn-tolbar" onclick="deletekeyinitiative(event,{{$initiative->id}},'{{$key->id}}','{{$obj->id}}')" data-toggle="modal" data-target="#delete-initiative-key">
+                                                   class="btn btn-icon btn-circle bg-white btn-tolbar" onclick="deletekeyinitiative({{$initiative->id}},'{{$key->id}}','{{$obj->id}}')" data-toggle="modal" data-target="#delete-initiative-key">
                                                 <img src="{{ asset('public/assets/images/icons/delete.svg') }}"
                                                    alt="Delete"
                                                    style="border-radius: 50%; width: 18px; height: 18px;">
