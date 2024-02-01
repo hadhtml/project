@@ -1115,7 +1115,7 @@ div[role="circleprogressbar"]::before {
     padding: 20px;
     border-radius: 12px;
     background: var(--white, #FFF);
-    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.05);
+/*    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.05);*/
     border: transparent !important;
 }
 .buisnessunit .mainheading h4{
