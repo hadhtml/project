@@ -26,7 +26,6 @@
   position: relative;
   width: 300px;
   min-height: 100vh;
-  margin: 8px;
   border-right: 1px solid lightgray;
 
 }
@@ -70,8 +69,8 @@ text-align: center;
 .cards {
   list-style-type: none;
   float: left;
-  width: 100%;
-  padding: 14px;
+  width: 97%;
+  padding: 0px;
 }
 .card {
   float: left;

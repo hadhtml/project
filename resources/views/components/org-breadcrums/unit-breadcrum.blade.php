@@ -8,7 +8,7 @@
                     OKR Mapper
                 @else
                 @if(isset($organization))
-                <div class="d-flex flex-row">
+                <div class="d-flex flex-row align-items-center">
                     <div>
                         <span style="font-size:22px" class="material-symbols-outlined">domain</span>
                     </div>
@@ -21,12 +21,12 @@
                 </div>
                 @else
                 
-            <div class="d-flex flex-row">
+            <div class="d-flex flex-row align-items-center">
                 <div>
                     <span style="font-size:22px" class="material-symbols-outlined">domain</span>
                 </div>
                 <div>
-                    <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
+                    <h5 class="text-dark font-weight-bold ml-2">
                         Business Units
                     </h5>
                 </div>
@@ -37,9 +37,9 @@
             <!-- Breadcrum Items -->
             <div class="d-flex flex-row page-sub-titles">
                 <div class="mr-2">
-                    <div class="d-flex flex-row">
+                    <div class="d-flex flex-row align-items-center">
                         <div>
-                            <span style="font-size:22px" class="material-symbols-outlined">auto_stories</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">auto_stories</span>
                         </div>
                         <div>
                             <a href="{{route('home')}}">Dashboard</a>
@@ -49,9 +49,9 @@
                 </div>
                 @if(isset($organization))
                 <div class="mr-2">
-                    <div class="d-flex flex-row">
+                    <div class="d-flex flex-row align-items-center">
                         <div>
-                            <span style="font-size:22px" class="material-symbols-outlined">domain</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">domain</span>
                         </div>
                         <div>
                             <p>{{ DB::table('business_units')->where('id' , $organization->id)->first()->business_name }}</p>
@@ -68,9 +68,9 @@
                 @else
                     @if(isset($organization))
                     <div class="mr-2">
-                        <div class="d-flex flex-row">
+                        <div class="d-flex flex-row align-items-center">
                             <div>
-                                <span style="font-size:22px" class="material-symbols-outlined">auto_stories</span>
+                                <span style="font-size:17px" class="material-symbols-outlined">auto_stories</span>
                             </div>
                             <div>
                                 <a href="{{url('dashboard/organization/Business-Units')}}">BU-Dashboard</a>
@@ -79,9 +79,9 @@
                         </div>
                     </div>
                     @else
-                    <div class="d-flex flex-row">
+                    <div class="d-flex flex-row align-items-center">
                         <div>
-                            <span style="font-size:22px" class="material-symbols-outlined">domain</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">domain</span>
                         </div>
                         <div>
                             <a href="{{url('dashboard/organization/Business-Units')}}">Business Units</a>
