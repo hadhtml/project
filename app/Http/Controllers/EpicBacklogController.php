@@ -150,15 +150,18 @@ class EpicBacklogController extends Controller
     public function updategeneral(Request $request)
     {
         $data = team_backlog::find($request->epic_id);
-    
         if($data->epic_title != $request->epic_name)
         {
-            $rand = rand(123456789 , 987654321);
-            $activity = 'has updated Title Field <a href="javascript:void(0)" onclick="showdetailsofactivity('.$rand.')">See Details</a> <div class="activitydetalbox deletecomment" id="activitydetalbox'.$rand.'"><div class="row"> <div class="col-md-10"> <h4>Title Update</h4> </div> <div class="col-md-2"> <img onclick="showdetailsofactivity('.$rand.')" src="'.url("public/assets/svg/crossdelete.svg").'"> </div> </div><p style="margin-bottom:0px;">'.$data->epic_title.'</p><div class="text-center mt-2 mb-2"><span class="material-symbols-outlined"> arrow_downward </span></div><p>'.$request->epic_name.'</p></div>';
-            Cmf::save_activity(Auth::id() , $activity,'epicbacklog',$request->epic_id, 'edit');
-            
+            if($data->epic_title)
+            {
+                $rand = rand(123456789 , 987654321);
+                $activity = 'has updated Title Field <a href="javascript:void(0)" onclick="showdetailsofactivity('.$rand.')">See Details</a> <div class="activitydetalbox deletecomment" id="activitydetalbox'.$rand.'"><div class="row"> <div class="col-md-10"> <h4>Title Update</h4> </div> <div class="col-md-2"> <img onclick="showdetailsofactivity('.$rand.')" src="'.url("public/assets/svg/crossdelete.svg").'"> </div> </div><p style="margin-bottom:0px;">'.$data->epic_title.'</p><div class="text-center mt-2 mb-2"><span class="material-symbols-outlined"> arrow_downward </span></div><p>'.$request->epic_name.'</p></div>';
+                Cmf::save_activity(Auth::id() , $activity,'epicbacklog',$request->epic_id, 'edit');
+            }else{
+                $activity = 'Added a Epic Tittle';
+                Cmf::save_activity(Auth::id() , $activity,'epicbacklog',$request->epic_id, 'edit');
+            }
         }
-
         if($data->epic_detail != $request->epic_detail)
         {
             if($data->epic_detail)
@@ -182,16 +185,21 @@ class EpicBacklogController extends Controller
             $activity = 'has updated End Date From '.Cmf::date_format_new($data->epic_end_date).' To '.Cmf::date_format_new($request->epic_end_date).' ';
             Cmf::save_activity(Auth::id() , $activity,'epicbacklog',$request->epic_id, 'edit');
         }
-
-            
-        $data = team_backlog::find($request->epic_id);
         $data->epic_title = $request->epic_name;
         $data->epic_start_date = $request->epic_start_date;
         $data->epic_end_date = $request->epic_end_date;
         $data->epic_detail = $request->epic_detail;
         $data->save();
-
-      
+        if(!$request->epic_name)
+        {
+            $update = team_backlog::find($request->epic_id);
+            $update->trash = $data->created_at;
+            $update->save(); 
+        }else{
+            $update = team_backlog::find($request->epic_id);
+            $update->trash = Null;
+            $update->save(); 
+        }
         $html = view('epicbacklog.tabs.general', compact('data'))->render();
         return $html;
     }
@@ -233,6 +241,7 @@ class EpicBacklogController extends Controller
     }
     public function createchilditem(Request $request)
     {
+  
         $item = new epics_stroy();
         $item->epic_id = $request->epic_id;
         $item->epic_story_name = $request->epic_story_name;
@@ -247,10 +256,28 @@ class EpicBacklogController extends Controller
         $item->save();
         if($request->story_status == 'Done')
         {
-            $item = epics_stroy::find($item->id);
-            $item->progress =  100;
-            $item->save();
+            $items = epics_stroy::find($item->id);
+            $items->progress =  100;
+            $items->save();
         }
+
+        $epicprogress = DB::table("epics_stroy")->where("epic_id", $request->epic_id)->sum("progress");
+        $count = DB::table("epics_stroy")->where("epic_id", $request->epic_id)->count();
+        if($count > 0)
+        {
+        $total = round($epicprogress / $count, 2);
+        if($total == 100)
+        {
+        DB::table("team_backlog")->where("id", $request->epic_id)->update(["progress" => $total,"epic_status" => 'Done']);
+            
+        }else
+        {
+        DB::table("team_backlog")->where("id", $request->epic_id)->update(["progress" => $total,"epic_status" => 'To Do']);
+    
+        }
+        }
+
+        Cmf::save_activity(Auth::id() , 'Added a New Child Item','epicbacklog',$request->epic_id , 'toc');
         $epic = team_backlog::find($request->epic_id);
         $epicstory = DB::table('epics_stroy')->where('epic_id',$epic->id)->where('epic_type' , 'backlog')->orderby('id' , 'desc')->get();
         $html = view('epicbacklog.tabs.childitems', compact('epic','epicstory'))->render();
@@ -267,9 +294,31 @@ class EpicBacklogController extends Controller
         $item->save();
         if($request->story_status == 'Done')
         {
-            $item = epics_stroy::find($item->id);
-            $item->progress =  100;
-            $item->save();
+            $items = epics_stroy::find($item->id);
+            $items->progress =  100;
+            $items->save();
+        }else
+        {
+            $items = epics_stroy::find($item->id);
+            $items->progress =  0;
+            $items->save();
+        }
+
+        $epicid = DB::table("epics_stroy")->where("id", $request->id)->first();
+        $epicprogress = DB::table("epics_stroy")->where("epic_id", $epicid->epic_id)->sum("progress");
+        $count = DB::table("epics_stroy")->where("epic_id", $epicid->epic_id)->count();
+        if($count > 0)
+        {
+        $total = round($epicprogress / $count, 2);
+        if($total == 100)
+        {
+        DB::table("team_backlog")->where("id", $epicid->epic_id)->update(["progress" => $total,"epic_status" => 'Done']);
+            
+        }else
+        {
+        DB::table("team_backlog")->where("id", $epicid->epic_id)->update(["progress" => $total,"epic_status" => 'To Do']);
+    
+        }
         }
         $epic = team_backlog::find($item->epic_id);
         $epicstory = DB::table('epics_stroy')->where('epic_id',$epic->id)->where('epic_type' , 'backlog')->orderby('id' , 'desc')->get();
@@ -465,6 +514,42 @@ class EpicBacklogController extends Controller
         $flags->flag_status = $request->status;
         $flags->save();
     }
+    public function changeitemstatus(Request $request)
+    {
+        $item = epics_stroy::find($request->id);
+        $item->story_status = $request->status;
+        $item->save();
+
+        if($request->status == 'Done')
+        {
+            $items = epics_stroy::find($item->id);
+            $items->progress =  100;
+            $items->save();
+        }else
+        {
+            $items = epics_stroy::find($item->id);
+            $items->progress =  0;
+            $items->save();
+        }
+
+        $epicid = DB::table("epics_stroy")->where("id", $request->id)->first();
+        $epicprogress = DB::table("epics_stroy")->where("epic_id", $epicid->epic_id)->sum("progress");
+        $count = DB::table("epics_stroy")->where("epic_id", $epicid->epic_id)->count();
+        if($count > 0)
+        {
+        $total = round($epicprogress / $count, 2);
+        if($total == 100)
+        {
+        DB::table("team_backlog")->where("id", $epicid->epic_id)->update(["progress" => $total,"epic_status" => 'Done']);
+            
+        }else
+        {
+        DB::table("team_backlog")->where("id", $epicid->epic_id)->update(["progress" => $total,"epic_status" => 'To Do']);
+    
+        }
+        }
+       
+    }
     public function cloneepic($id,$type)
     {
         $log = DB::table('team_backlog')->where('id',$id)->first();
@@ -494,6 +579,96 @@ class EpicBacklogController extends Controller
         $add->user_id = Auth::id();
         $add->backlog_id = $id;
         $add->save();
+        foreach (epics_stroy::where('epic_id' , $id)->where('epic_type' , 'epicbacklog')->get() as $r) {
+            $item = new epics_stroy();
+            $item->epic_id = $add->id;
+            $item->epic_story_name = $r->epic_story_name;
+            $item->story_assign = $r->story_assign;
+            $item->story_type = $r->story_type;
+            $item->description = $r->description;
+            $item->story_status = $r->story_status;
+            $item->StoryID = $r->StoryID;
+            $item->epic_type = $r->epic_type;
+            $item->R_id = $r->R_id;
+            $item->user_id =  $r->user_id;
+            $item->save();
+            if($r->story_status == 'Done')
+            {
+                $item = epics_stroy::find($item->id);
+                $item->progress =  100;
+                $item->save();
+            }
+        }
+        foreach(activities::where('value_id' , $id)->get() as $r) {
+            $activity = new activities();
+            $activity->user_id = $r->user_id;
+            $activity->activity = $r->activity;
+            $activity->is_read = $r->is_read;
+            $activity->value_id = $add->id;
+            $activity->type = $r->type;
+            $activity->icon = $r->icon;
+            $activity->created_at = $r->created_at;
+            $activity->updated_at = $r->updated_at;
+            $activity->save();
+        }
+        foreach(epics_stroy::where('epic_id' , $id)->get() as $r) {
+            $item = new epics_stroy();
+            $item->epic_id = $add->id;
+            $item->epic_story_name = $r->epic_story_name;
+            $item->story_assign = $r->story_assign;
+            $item->story_type = $r->story_type;
+            $item->description = $r->description;
+            $item->story_status = $r->story_status;
+            $item->StoryID = $r->StoryID;
+            $item->epic_type = $r->epic_type;
+            $item->progress =  $r->progress;
+            $item->R_id = $r->R_id;
+            $item->user_id =  $r->user_id;
+            $item->save();
+        }
+        foreach(flag_comments::where('flag_id' , $id)->get() as $r) {
+            $comment = new flag_comments();
+            $comment->flag_id = $add->id;
+            $comment->user_id = $r->user_id;
+            $comment->comment = $r->comment;
+            $comment->type = $r->type;
+            $comment->comment_id = $r->comment_id;
+            $comment->comment_type = $r->comment_type;
+            $comment->created_at = $r->created_at;
+            $comment->updated_at = $r->updated_at;
+            $comment->save();
+        }
+        foreach(attachments::where('value_id' , $id)->get() as $r) {
+            $attachment = new attachments();
+            $attachment->user_id = $r->user_id;
+            $attachment->attachment = $r->attachment;
+            $attachment->file_name = $r->file_name;
+            $attachment->extension = $r->extension;
+            $attachment->type = $r->type;
+            $attachment->value_id = $add->id;
+            $attachment->created_at = $r->created_at;
+            $attachment->updated_at = $r->updated_at;
+            $attachment->save();
+        }
+        foreach(flags::where('epic_id' , $id)->where('epic_type' , 'epicbacklog')->get() as $r) {
+            $flag = new flags();
+            $flag->epic_id = $add->id;
+            $flag->business_units = $r->business_units;
+            $flag->flag_type = $r->flag_type;
+            $flag->flag_title = $r->flag_title;
+            $flag->flag_description = $r->flag_description;
+            $flag->flag_status = $r->flag_status;
+            $flag->flag_order = $r->flag_order;
+            $flag->archived = $r->archived;
+            $flag->board_type = $r->board_type;
+            $flag->board_order = $r->board_order;
+            $flag->escalate = $r->escalate;
+            $flag->flag_assign = $r->flag_assign;
+            $flag->epic_type = $r->epic_type;
+            $flag->created_at = $r->created_at;
+            $flag->updated_at = $r->updated_at;
+            $flag->save();
+        }
         return redirect()->back()->with('message', 'Epic Clone Successfully');
     }
 }
