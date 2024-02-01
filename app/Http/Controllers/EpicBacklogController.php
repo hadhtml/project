@@ -578,6 +578,7 @@ class EpicBacklogController extends Controller
         $add->type = $log->type;
         $add->user_id = Auth::id();
         $add->backlog_id = $id;
+        $add->progress = $log->progress;;
         $add->save();
         foreach (epics_stroy::where('epic_id' , $id)->where('epic_type' , 'epicbacklog')->get() as $r) {
             $item = new epics_stroy();
@@ -637,6 +638,10 @@ class EpicBacklogController extends Controller
             $comment->created_at = $r->created_at;
             $comment->updated_at = $r->updated_at;
             $comment->save();
+
+            $commentReply = flag_comments::where('flag_id',$comment->flag_id)->where('type','comment')->first();
+            flag_comments::where('flag_id',$comment->flag_id)->where('type','reply')->update(['comment_id' => $commentReply->id ]);
+
         }
         foreach(attachments::where('value_id' , $id)->get() as $r) {
             $attachment = new attachments();
@@ -650,7 +655,7 @@ class EpicBacklogController extends Controller
             $attachment->updated_at = $r->updated_at;
             $attachment->save();
         }
-        foreach(flags::where('epic_id' , $id)->where('epic_type' , 'epicbacklog')->get() as $r) {
+        foreach(flags::where('epic_id' , $id)->where('epic_type' , 'backlog')->get() as $r) {
             $flag = new flags();
             $flag->epic_id = $add->id;
             $flag->business_units = $r->business_units;
@@ -670,5 +675,25 @@ class EpicBacklogController extends Controller
             $flag->save();
         }
         return redirect()->back()->with('message', 'Epic Clone Successfully');
+    }
+
+    public function orderbychilditembacklog(Request $request)
+    {
+        $orderby = $request->order;
+        $epic = team_backlog::find($request->epic_id);
+        if($request->order == 'To Do')
+        {
+            $epicstory = DB::table('epics_stroy')->where('epic_id',$request->epic_id)->where('epic_type' , 'backlog')->orderByRaw(DB::raw("FIELD(story_status, 'To Do', 'In progress', 'Done')"))->get();   
+        }
+        if($request->order == 'In progress')
+        {
+            $epicstory = DB::table('epics_stroy')->where('epic_id',$request->epic_id)->where('epic_type' , 'backlog')->orderByRaw(DB::raw("FIELD(story_status, 'In progress', 'To Do', 'Done')"))->get();   
+        }
+        if($request->order == 'Done')
+        {
+            $epicstory = DB::table('epics_stroy')->where('epic_id',$request->epic_id)->where('epic_type' , 'backlog')->orderByRaw(DB::raw("FIELD(story_status, 'Done', 'In progress', 'To Do')"))->get();   
+        }
+        $html = view('epicbacklog.tabs.childitems', compact('epic','epicstory'))->render();
+        return $html;   
     }
 }
