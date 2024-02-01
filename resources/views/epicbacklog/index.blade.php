@@ -65,10 +65,10 @@ $var_objective = 'TBaclog-' . $type;
                         </label>
                      </td>
                      <td class="draggable">
-                        <div class="epic_id">
-                           <img src="{{ url('public/assets/svg/arrow.svg') }}">
+                        <div class="epic_id mr-3 mt-1" style="display: flex;">
+                           <span style="font-size:18px" class="material-symbols-outlined mr-1">key_visualizer</span>
                            OE-{{ $backlog->id }}
-                       </div>
+                        </div>
                      </td>
                      <td class="draggable">
                         {{ $backlog->epic_title }}

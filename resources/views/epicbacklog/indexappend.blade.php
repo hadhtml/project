@@ -8,7 +8,7 @@
                {{ session('message') }}
             </div>
             @endif
-            <table class="table data-table" id="olddata">
+            <table class="table data-table example" id="olddata">
                <thead>
                   <tr>
                      <td>
@@ -35,10 +35,10 @@
                         </label>
                      </td>
                      <td class="draggable">
-                        <div class="epic_id">
-                           <img src="{{ url('public/assets/svg/arrow.svg') }}">
-                           OE-{{ $backlog->id }}
-                       </div>
+                        <div class="epic_id mr-3 mt-1" style="display: flex;">
+                           <span style="font-size:18px" class="material-symbols-outlined mr-1">key_visualizer</span>
+                           EB-{{ $backlog->id }}
+                        </div>
                      </td>
                      <td class="draggable">
                         {{ $backlog->epic_title }}
@@ -394,3 +394,22 @@
    </button>
 </div>
 @endif
+<script type="text/javascript">
+   $(document).ready(function() {
+         var table = $('.example').DataTable({
+           "pagingType": "full_numbers",
+           "language": {
+               "paginate": {
+                   "previous": "&lsaquo;", // Custom previous arrow
+                   "next": "&rsaquo;" // Custom next arrow
+               }
+           },
+           "columnDefs": [{
+                   "orderable": false,
+                   "targets": [6]
+               } // Disable ordering for the first and third columns
+           ]
+       });
+    });
+       
+</script>

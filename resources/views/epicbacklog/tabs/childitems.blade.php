@@ -205,6 +205,7 @@ function getOrder(){
             processData: false,
             success: function(data){
                 $('.secondportion').html(data);
+                showheaderbacklog('{{$epic->id}}');
             }
         });
     }));
@@ -409,6 +410,7 @@ function getOrder(){
                                         processData: false,
                                         success: function(data){
                                             $('.secondportion').html(data);
+                                            showheaderbacklog('{{$epic->id}}');
                                         }
                                     });
                                 }));
@@ -537,29 +539,25 @@ function deletechilditem(id) {
         },
         success: function(res) {
             showtabwithoutloader('{{$epic->id}}' , 'childitems');
+            
         }
     });
 }
 function changeitemstatus(status , id) {
-    var title = $('#edit_story_title' + id).val();
-    var story_status = $('.edit_story_status' + id).val();
-    var story_assign = $('#edit_story_assign' + id).val();
     $.ajax({
         type: "POST",
-        url: "{{ url('update-story') }}",
+        url: "{{ url('dashboard/epicbacklog/changeitemstatus') }}",
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         data: {
-            s_id: id,
-            title: title,
-            story_status: status,
-            story_assign: story_assign
+            id: id,
+            status: status
 
         },
         success: function(res) {
             showtabwithoutloader('{{$epic->id}}' , 'childitems');
-            showheader('{{$epic->id}}')
+            showheaderbacklog('{{$epic->id}}');
         }
     });
 }
