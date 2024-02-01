@@ -20,7 +20,7 @@ const dataToImport = {
                     },
                     "pos_x": 10,
                     "pos_y": 100
-                }
+                },
             }
         }
     }
