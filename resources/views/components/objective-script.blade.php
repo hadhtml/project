@@ -955,6 +955,8 @@
         $('#initiative_start_date').attr('min', start_date);
         $('#initiative_start_date').attr('max', end_date);
         $('#initiative_end_date').attr('max', end_date);
+        $('#initiative_start_date').val(start_date);
+
         // var currentDate = new Date();
 
         // var firstDayOfMonth = new Date(currentDate.getFullYear(), month, 1);

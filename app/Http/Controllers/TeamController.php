@@ -82,6 +82,7 @@ class TeamController extends Controller
                     'jira_id' =>  $log->jira_id,
                     'account_id' => $log->account_id,
                     'jira_project' =>  $log->jira_project,
+                    'epic_progress' =>  $log->progress,
                 ]);
             }
             foreach($request->end_date  as $k => $value)
@@ -202,7 +203,7 @@ class TeamController extends Controller
     DB::table('objectives')->where('id',$request->locstate)->update(['q_obj_prog' => $QuartertotalObj]);
 
 
-          return redirect()->back()->with('message', 'Backlog Assign Successfully');
+    return redirect()->back()->with('message', 'Backlog Assign Successfully');
 
     }
 

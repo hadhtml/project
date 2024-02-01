@@ -6,14 +6,14 @@
                     <span class="material-symbols-outlined">weight</span>
                 </div>
                 <div>
-                    <h4>Set Weight (Optional)</h4>
+                    <h4>Set Initiative’s weight (Optional)</h4>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-
+@if(count($InitData) > 0)
 <div class="row mt-5 ml-3">
     <div class="col-md-1">
         <label class="checkbox checkbox-lg">
@@ -29,21 +29,22 @@
         <div id="wieght-error"></div>    
     </div>
 </div>
+
 @foreach($InitData as $data)
 <div class="row weightvalue ml-3 mb-2"   style="display:none;" >
     <div class="col-md-4">
    
-        <input class="form-control" readonly value="{{$data->initiative_name}}" >
+       <h6 class="mt-4">{{$data->initiative_name}}</h6>
 
         </div>
     <div class="col-md-6">
-        <input class="range-slider__range_init{{$data->id}} form-control" id="" onchange="slider_value_Init({{$data->id}},this.value,'{{$data->key_id}}')" type="range"@if($data->initiative_weight == 0) value="0.1" @else value="{{ $data->initiative_weight }}" @endif min="0" max="100" >
+        <input class="range-slider__range_init{{$data->id}} form-control" id="" onchange="slider_value_Init({{$data->id}},this.value,'{{$data->key_id}}')" type="range"@if($data->initiative_weight == 0) value="0" @else value="{{ $data->initiative_weight }}" @endif min="0" max="100" >
     </div>
     <div class="col-md-2">
         <input  id="sliderValueinit{{ $data->id }}" onchange="slider_value_Init({{$data->id}},this.value,'{{$data->key_id}}')" @if($data->initiative_weight == 0) value="0" @else value="{{ $data->initiative_weight }}" @endif class="form-control range-slider__range_init"  type="text" min="0" >
     </div>
 </div>
-@endforeach
+
 
 <div class="row ml-3 mb-2" style="display:none;" id="key_count">
     <div class="col-md-6">
@@ -53,13 +54,17 @@
         <span></span>
     </div>
 </div>
+@endforeach
+@else
+<span class="ml-5">No Initiative found</span>
+@endif
 
 <script type="text/javascript">
     $(document).ready(function() {
         $('.check').on('click', function() {
             var isChecked = $(this).is(':checked');
             if (isChecked) {
-                var id = '{{ $data->id }}';
+                var id = '';
                 var weight = $('#sliderValue').val();
                $.ajax({
                     type: "POST",
@@ -80,7 +85,7 @@
                     }
                 });
             } else {
-                var id = '{{ $data->id }}';
+                var id = '';
                 $.ajax({
                     type: "POST",
                     url: "{{ url('dashboard/keyresult/removeweight') }}",

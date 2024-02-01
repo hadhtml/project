@@ -377,17 +377,48 @@
                                         Add Users
                                     </div>
                                     <div>
-                                        <input type="text" class="form-control input-sm"
-                                            onkeyup="search_member(this.value);" placeholder="Search..." name="">
+                                        <input  id="myInput" type="search" class="form-control input-sm"
+                                             placeholder="Search..." name="">
+
                                     </div>
                                 </div>
                                 <hr>
                             </div>
                             <div class="col-md-12 col-lg-12 col-xl-12 member-area" id="member-old">
-                                @foreach (DB::table('members')->where('org_user', Auth::id())->get() as $r)
                                     <div class="d-flex flex-row align-items-center justify-content-between single-member">
                                         <div class="d-flex flex-row align-items-center ">
-                                            <div>
+                                            <table class="table">
+                                                {{-- <thead>
+                                                  <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">First</th>
+                                                    <th scope="col">Last</th>
+                                                    <th scope="col">Handle</th>
+                                                  </tr>
+                                                </thead> --}}
+                                                <tbody id="myTable">
+                                                    @foreach (DB::table('members')->where('org_user', Auth::id())->get() as $r)
+                                                  <tr>
+                                                    <div>
+                                                    <th scope="row"> 
+                                                        @if ($r->image != null)
+                                                        <img width="45px" height="45px"
+                                                            src="{{ asset('public/assets/images/' . $r->image) }}"
+                                                            alt="Example Image">
+                                                    @else
+                                                    <img width="45px" height="45px" src="{{ Avatar::create($r->name.' '.$r->last_name)->toBase64() }}" alt="Example Image">
+                                                    @endif</th>
+                                                    <td><p>{{ $r->name }} {{ $r->last_name }}</p></td>
+                                                    <td><small>{{ $r->email }}</small></td>
+                                                    <td>
+                                                    <input type="checkbox" class="check" value="{{ $r->id }}" name="member[]">
+                                                    </td>
+                                                  </tr>
+                                                  @endforeach
+                                             
+                                                </tbody>
+                                              </table>
+                                            {{-- <div>
                                                 @if ($r->image != null)
                                                     <img width="45px" height="45px"
                                                         src="{{ asset('public/assets/images/' . $r->image) }}"
@@ -404,17 +435,16 @@
                                         </div>
                                         <div>
                                             <input type="checkbox" class="check" value="{{ $r->id }}" name="member[]">
-                                        </div>
+                                        </div> --}}
                                     </div>
-                                @endforeach
 
                             </div>
-                            <div class="col-md-12 col-lg-12 col-xl-12 member-area" style="display:none" id="member">
-                            </div>    
-                            <div class="col-md-12">
-                                <button class="btn btn-primary btn-lg btn-theme btn-block ripple" type="submit">Create
-                                    Team</button>
-                            </div>
+                        
+                           
+                        </div>
+                        <div class="col-md-12">
+                            <button class="btn btn-primary btn-lg btn-theme btn-block ripple" type="submit">Create
+                                Team</button>
                         </div>
                     </form>
                 </div>
@@ -475,5 +505,14 @@
                 }
 
             })
+
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
     </script>
 @endsection
