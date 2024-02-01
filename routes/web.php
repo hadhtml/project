@@ -293,7 +293,7 @@ Route::name('epicbacklog.')->namespace('App\Http\Controllers')->prefix('dashboar
     Route::POST('updatechlditem', 'EpicBacklogController@updatechlditem');
     Route::POST('changeitemstatus', 'EpicBacklogController@changeitemstatus');
     Route::POST('deletechilditem', 'EpicBacklogController@deletechilditem');
-    // Route::POST('orderbychilditem', 'EpicController@orderbychilditem');
+    Route::POST('orderbychilditembacklog', 'EpicBacklogController@orderbychilditembacklog');
 });
 
 
