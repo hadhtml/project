@@ -296,7 +296,7 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
                                        $quarter  = DB::table('quarter')->where('initiative_id',$initiative->id)->get();
                                        @endphp
                                        <div id="initiative{{$initiative->id}}" class="collapse" >
-                                          <div class="container-fluid py-7" style="width: 96%; margin: 0px auto;">
+                                          <div class="container-fluid" style="width: 100%; margin: 0px auto;">
                                              <div class="row">
                                                 <div class="col-md-12">
                                                    <div class="card">

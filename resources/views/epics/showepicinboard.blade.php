@@ -1,12 +1,12 @@
 <div onclick="editepic({{$e->id}})" class="card" style="width:102.7%">
        <div class="card card-epic border-radius" style="margin-bottom:0px !important">
             <div class="card-header bg-white border-bottom-radius pt-2 pl-4 pr-4 pb-2">
-               <div class="d-flex">
-                  <div style="width: 55%;" class="epic_id">
-                       <img src="{{ url('public/assets/svg/arrow.svg') }}">
+               <div class="d-flex flex-md-row flex-sm-column justify-content-between align-items-center">
+                  <div class="epic_id">
+                       <img src="{{ url('public/assets/svg/arrow.svg') }}" width="16px">
                         OE-{{ $e->id }}
                    </div>
-                  <div style="width: 45%;">
+                  <div>
                      @if($e->epic_status == 'Done')
                      <span class="badge-cs-small success">{{$e->epic_status}}</span>
                      @endif

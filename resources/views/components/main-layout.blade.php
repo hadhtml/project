@@ -41,6 +41,10 @@
 </head>
 
 <body class="bg-light-gray">
+
+    <div class="pre-loader" id="preLoader">
+        <div class="loader"></div>
+    </div>
     <div class="d-flex flex-column flex-root">
         <!-- begin topbar -->
           @include('components.topbar-component')
@@ -539,6 +543,15 @@
             </div>
         </div>
     </div>
+
+
+        <!-- Preloader -->
+        <script type="text/javascript">
+            document.addEventListener("DOMContentLoaded", function () {
+                // Your website content is now loaded, hide the pre-loader
+                document.getElementById("preLoader").style.display = "none";
+            });
+        </script>
        @include('components.script')
 </body>
 <!-- MDB -->

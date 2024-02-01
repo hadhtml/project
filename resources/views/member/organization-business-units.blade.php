@@ -27,23 +27,19 @@ $var_objective = "Org-Unit";
 
         <div class="col-md-3">
             <div class="card business-card">
-                <div class="card-body">
+                <div class="card-body pb-0">
                     <div class="d-flex flex-row justify-content-between">
                         <div>
                             <h3>
-                                <a class="d-flex" href="{{url('dashboard/organization/'.$unit->slug.'/dashboard/'.$unit->type)}}"><span style="font-size:22px" class="material-symbols-outlined mr-2">domain</span> <span>{{ \Illuminate\Support\Str::limit($unit->business_name,25, $end='...') }}</span></a>
+                                <a class="d-flex flex-row align-items-center" href="{{url('dashboard/organization/'.$unit->slug.'/dashboard/'.$unit->type)}}">
+                                    <div>
+                                        <span class="module-icon material-symbols-outlined mr-2">domain</span>
+                                    </div>
+                                    <div>
+                                        <span>{{ \Illuminate\Support\Str::limit($unit->business_name,25, $end='...') }}</span>
+                                    </div>
+                                </a>
                             </h3>
-                        </div>
-                        <div>
-                            <div class="dropdown d-flex">
-                                <button class="btn btn-circle dropdown-toggle btn-tolbar bg-transparent" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <img src="{{ url('public/assets/svg/dropdowndots.svg') }}">
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item"  data-toggle="modal" data-target="#edit{{$unit->id}}">Edit</a>
-                                    <a class="dropdown-item" data-toggle="modal" data-target="#delete{{$unit->id}}">Delete</a>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <div class="content-section">
@@ -71,13 +67,11 @@ $var_objective = "Org-Unit";
                             
                         </div>
                     </div>
-                    <div class="d-flex flex-column">
-                        <!-- <div>
-                            <small>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard </small>
-                        </div> -->
-
+                    
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex flex-row align-items-center justify-content-between">
                         <div class="d-flex flex-row align-items-center leader-section">
-
                             @if($member > 0)
                             @if($unit->lead_id)
                             @foreach(DB::table('members')->get() as $r)
@@ -90,7 +84,6 @@ $var_objective = "Org-Unit";
                                 <img src="{{ Avatar::create($r->name.' '.$r->last_name)->toBase64() }}" alt="lead">
                                 @endif
                             </div>
-
                             <div class="d-flex flex-column">
                                 <div>
                                     <span class="text-primary">Lead</span>
@@ -99,18 +92,30 @@ $var_objective = "Org-Unit";
                                     <span>{{$r->name}} {{ $r->last_name }}</span>
                                 </div>
                             </div>
-
                             @endif
                             @endforeach
                             @else
-                            <!-- <td>N/A</td> -->
+
                             @endif
                             @else
                               <div>
-                                    
-                                <a class="nav-link" href="{{url('dashboard/organization/users')}}"><button class="btn btn-primary">Assign</button></a>
+                                <a class="nav-link" href="{{url('dashboard/organization/users')}}">
+                                    <button class="btn btn-primary">Assign</button>
+                                </a>
                             </div>
                             @endif
+                        </div>
+
+                        <div>
+                            <div class="dropdown d-flex">
+                                <button class="btn btn-circle dropdown-toggle btn-tolbar bg-transparent" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <img src="{{ url('public/assets/svg/dropdowndots.svg') }}">
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item"  data-toggle="modal" data-target="#edit{{$unit->id}}">Edit</a>
+                                    <a class="dropdown-item" data-toggle="modal" data-target="#delete{{$unit->id}}">Delete</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -35,20 +35,20 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
         <!--begin::Info-->
         <div class="d-flex align-items-start flex-column flex-wrap mr-2">
             <!--begin::Page Title-->
-            <div class="d-flex flex-row">
+            <div class="d-flex flex-row align-items-center">
                 <div>
                     <span style="font-size:22px" class="material-symbols-outlined">folder_supervised</span>
                 </div>
                 <div>
-                    <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
+                    <h5 class="text-dark font-weight-bold ml-2">
                         OKR Planner
                     </h5>
                 </div>
             </div>
             <div class="d-flex flex-row page-sub-titles">
-                 <div class="mr-2">
+                 <div>
                     @if($organization->type == 'unit')
-                    <div class="d-flex">
+                    <div class="d-flex align-items-center">
                         <div>
                             <span style="font-size:19px" class="material-symbols-outlined">auto_stories</span>
                         </div>
@@ -59,7 +59,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                     @endif
 
                     @if($organization->type == 'stream')
-                    <div class="d-flex">
+                    <div class="d-flex align-items-center">
                         <div>
                             <span style="font-size:19px" class="material-symbols-outlined">auto_stories</span>
                         </div>
@@ -69,7 +69,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                     </div>
                     @endif
                     @if($organization->type == 'BU')
-                    <div class="d-flex">
+                    <div class="d-flex align-items-center">
                         <div>
                             <span style="font-size:19px" class="material-symbols-outlined">auto_stories</span>
                         </div>
@@ -79,7 +79,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                     </div>
                     @endif
                     @if($organization->type == 'VS')
-                    <div class="d-flex">
+                    <div class="d-flex align-items-center">
                         <div>
                             <span style="font-size:19px" class="material-symbols-outlined">auto_stories</span>
                         </div>
@@ -89,7 +89,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                     </div>
                     @endif
                     @if($organization->type == 'org')
-                    <div class="d-flex">
+                    <div class="d-flex align-items-center">
                         <div>
                             <span style="font-size:19px" class="material-symbols-outlined">auto_stories</span>
                         </div>
@@ -99,7 +99,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                     </div>
                     @endif
                     @if($organization->type == 'orgT')
-                    <div class="d-flex">
+                    <div class="d-flex align-items-center">
                         <div>
                             <span style="font-size:19px" class="material-symbols-outlined">auto_stories</span>
                         </div>
@@ -113,7 +113,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                    
                     <div class="mr-2">
                         @if($organization->type == 'stream')
-                        <div class="d-flex">
+                        <div class="d-flex align-items-center">
                             <div>
                                 <span style="font-size:19px" class="material-symbols-outlined">domain</span>
                             </div>
@@ -126,7 +126,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
 
            
                         @if($organization->type == 'BU')
-                        <div class="d-flex">
+                        <div class="d-flex align-items-center">
                             <div>
                                 <span style="font-size:19px" class="material-symbols-outlined">domain</span>
                             </div>
@@ -138,7 +138,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
      
 
                     @if($organization->type == 'VS')
-                    <div class="d-flex">
+                    <div class="d-flex align-items-center">
                         <div>
                             <span style="font-size:19px" class="material-symbols-outlined">domain</span>
                         </div>
@@ -153,7 +153,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                     @endif
 
                     @if($organization->type == 'VS')
-                    <div class="d-flex">
+                    <div class="d-flex align-items-center">
                         <div>
                             <span style="font-size:19px" class="material-symbols-outlined">layers</span>
                         </div>
@@ -171,7 +171,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                              
                                 <div class="mr-2">
                                     @if($organization->type == 'stream')
-                                    <div class="d-flex">
+                                    <div class="d-flex align-items-center">
                                         <div>
                                             <span style="font-size:19px" class="material-symbols-outlined">layers</span>
                                         </div>
@@ -182,7 +182,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                                     @endif
                                     
                                      @if($organization->type == 'unit')
-                                     <div class="d-flex">
+                                     <div class="d-flex align-items-center">
                                         <div>
                                             <span style="font-size:19px" class="material-symbols-outlined">domain</span>
                                         </div>
@@ -193,7 +193,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                                     @endif
 
                                     @if($organization->type == 'BU')
-                                    <div class="d-flex">
+                                    <div class="d-flex align-items-center">
                                         <div>
                                             <span style="font-size:19px" class="material-symbols-outlined">groups</span>
                                         </div>
@@ -203,7 +203,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                                     </div>
                                     @endif
                                     @if($organization->type == 'VS')
-                                    <div class="d-flex">
+                                    <div class="d-flex align-items-center">
                                         <div>
                                             <span style="font-size:19px" class="material-symbols-outlined">groups</span>
                                         </div>
@@ -213,7 +213,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                                     </div>
                                     @endif
                                     @if($organization->type == 'orgT')
-                                    <div class="d-flex">
+                                    <div class="d-flex align-items-center">
                                         <div>
                                             <span style="font-size:19px" class="material-symbols-outlined">home</span>
                                         </div>
@@ -228,7 +228,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                                    --}}
                                 </div>
                                 <div class="mr-2">
-                                    <div class="d-flex">
+                                    <div class="d-flex align-items-center">
                                         <div>
                                             <span style="font-size:19px" class="material-symbols-outlined">folder_supervised</span>
                                         </div>
@@ -246,7 +246,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
             <div class="d-flex flex-row organization-drop align-items-center mr-3">
                 @if($type == 'unit')  
                 <div class="d-flex flex-column mr-3">
-                    <div style="padding:20px">
+                    <div>
                     Team
                   
                     <select class="chkveg" multiple="multiple" >
@@ -267,7 +267,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
 
                 @if($type == 'stream')  
                 <div class="d-flex flex-column mr-3">
-                    <div style="padding:20px">
+                    <div >
                     Team
                   
                     <select class="chkveg" multiple="multiple" >
@@ -289,7 +289,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
 
                 @if($type == 'org')  
                 <div class="d-flex flex-column mr-3">
-                    <div style="padding:20px">
+                    <div >
                     Team
                   
                     <select class="chkveg" multiple="multiple" >
@@ -312,7 +312,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
  
                 
                 <div class="d-flex flex-column mr-3">
-                    <div style="padding:20px">
+                    <div >
                           Flag
                     <select class="flag-search" multiple="multiple" >
                       <option value="Risk">Risk</option>
