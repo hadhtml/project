@@ -74,7 +74,7 @@ function getOrder(){
     <div class="col-md-12">
         <div class="card comment-card storyaddcard">
             <div class="card-body">
-                <form id="saveepicflag" class="needs-validation" action="{{ url('dashboard/epics/saveepicflag') }}" method="POST">
+                <form class="needs-validation saveepicflagnewform" action="{{ url('dashboard/epics/saveepicflag') }}" method="POST">
                     @csrf
                     <input type="hidden" value="{{ $data->id }}" name="flag_epic_id">
                     <input type="hidden" value="{{ $data->buisness_unit_id }}" name="business_units">
@@ -121,7 +121,7 @@ function getOrder(){
                         </div>
                         <div class="col-md-6">
                             <span onclick="uploadattachment()" class="btn btn-default btn-sm">Cancel</span>
-                            <button id="saveepicflagbutton" type="submit" class="btn btn-primary btn-sm">Save</button>
+                            <button type="submit" class="saveepicflagbuttonasdsadsad btn btn-primary btn-sm">Save</button>
                         </div>
                     </div>
                 </form>
@@ -187,6 +187,26 @@ function getOrder(){
                         </div>
                     </div>
                     <div class="col-md-3">
+                        <div class="epic_id" style="display: flex;">
+                            @if($r->flag_type == 'Impediment')
+                            <span style="font-size:22px" class="material-symbols-outlined">warning_off</span>
+                            IM-{{ $r->id }}
+                            @endif
+                            @if($r->flag_type == 'Risk')
+                            <span style="font-size:22px" class="material-symbols-outlined">emergency</span>
+                            RI-{{ $r->id }}
+                            @endif
+                            @if($r->flag_type == 'Blocker')
+                            <span style="font-size:22px" class="material-symbols-outlined">block</span>
+                            BL-{{ $r->id }}
+                            @endif
+                            @if($r->flag_type == 'Action')
+                            <span style="font-size:22px" class="material-symbols-outlined">call_to_action</span>
+                            AC-{{ $r->id }}
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-md-3">
                         @if($r->flag_status == 'todoflag')
                         <div class="flagstatusbadge todo-button-color">To Do</div>
                         @endif
@@ -199,7 +219,7 @@ function getOrder(){
                         
                     </div>
                     @if(DB::table('flag_members')->where('flag_id' , $r->id)->first())
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="d-flex flex-row align-items-center image-cont pr-3">
                             <div class="pr-1">
                                 @php
@@ -218,8 +238,8 @@ function getOrder(){
                         </div>
                     </div>
                     @endif
-                    <div class="col-md-4">
-                        <div class="flag-type-new @if($r->flag_type == 'Risk') risk-color @endif @if($r->flag_type == 'Impediment') impediment-color @endif">
+                    <div class="col-md-2">
+                        <div style="width: 113px;" class="flag-type-new @if($r->flag_type == 'Risk') risk-color @endif @if($r->flag_type == 'Impediment') impediment-color @endif">
                             {{ $r->flag_type }}
                         </div>
                     </div>
@@ -230,7 +250,7 @@ function getOrder(){
         <div class="uploadattachment{{ $r->id }} displaynone">
             <div class="card comment-card storyaddcard">
                 <div class="card-body">
-                    <form id="updateflag{{ $r->id }}" class="needs-validation" action="{{ url('dashboard/epics/flagupdate') }}" method="POST" novalidate>
+                    <form class="needs-validation updateflag{{ $r->id }}" action="{{ url('dashboard/epics/flagupdate') }}" method="POST" novalidate>
                         @csrf
                         <input type="hidden" value="{{ $r->id }}" name="flag_id">
                         <div class="row">        
@@ -249,7 +269,7 @@ function getOrder(){
                             </div>
                              <div class="col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group mb-0">
-                                    <label for="lead-manager">Flag Assignee <small class="text-danger">*</small></label>
+                                    <label for="lead-manager">Assignee <small class="text-danger">*</small></label>
                                     <select class="form-control" name="flag_assign">
                                         @foreach(DB::table('members')->where('org_user',Auth::id())->get() as $m)
                                           <option @if(DB::table('flag_members')->where('flag_id' , $r->id)->first())  @if(DB::table('flag_members')->where('flag_id' , $r->id)->first()->member_id == $m->id) selected @endif  @endif value="{{ $m->id }}">{{ $m->name }} {{ $m->last_name }}</option>
@@ -274,7 +294,7 @@ function getOrder(){
                             </div>
                             <div class="col-md-6">
                                 <span onclick="showupdatecard({{ $r->id }})" class="btn btn-default btn-sm">Cancel</span>
-                                <button id="updateflagmodalbuton{{ $r->id }}" type="submit" class="btn btn-primary btn-sm">Save</button>
+                                <button type="submit" class="btn btn-primary btn-sm updateflagmodalbuton{{ $r->id }}">Save</button>
                             </div>
                         </div>
                     </form>
@@ -282,8 +302,8 @@ function getOrder(){
             </div>
         </div>
         <script type="text/javascript">
-            $('#updateflag{{ $r->id }}').on('submit',(function(e) {
-                $('#updateflagmodalbuton{{ $r->id }}').html('<i class="fa fa-spin fa-spinner"></i>');
+            $('.updateflag{{ $r->id }}').on('submit',(function(e) {
+                $('.updateflagmodalbuton{{ $r->id }}').html('<i class="fa fa-spin fa-spinner"></i>');
                 e.preventDefault();
                 var formData = new FormData(this);
                 var cardid = $('#cardid').val();
@@ -313,8 +333,8 @@ function getOrder(){
 <script src="https://unpkg.com/dragula@3.7.2/dist/dragula.js"></script>
 <script src="https://unpkg.com/dom-autoscroller@2.2.3/dist/dom-autoscroller.js"></script>
 <script type="text/javascript">
-$('#saveepicflag').on('submit',(function(e) {
-    $('#saveepicflagbutton').html('<i class="fa fa-spin fa-spinner"></i>');
+$('.saveepicflagnewform').on('submit',(function(e) {
+    $('.saveepicflagbuttonasdsadsad').html('<i class="fa fa-spin fa-spinner"></i>');
     e.preventDefault();
     var formData = new FormData(this);
     var cardid = $('#cardid').val();
@@ -327,6 +347,7 @@ $('#saveepicflag').on('submit',(function(e) {
         processData: false,
         success: function(data){
             showepicincard();
+            showheader('{{$data->id}}');
             showtabwithoutloader('{{$data->id}}' , 'flags');
         }
     });

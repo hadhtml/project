@@ -95,13 +95,13 @@
       <div class="col-md-6 col-lg-6 col-xl-6">
          <div class="form-group mb-0">
             <label for="start-date">Start Date</label>
-            <input type="date" class="form-control" name="start_date[]" @if ($data->epic_start_date) value="{{ $data->epic_start_date }}" @else value="{{ date('Y-m-d') }}" @endif required>
+            <input type="date" class="form-control" name="start_date[]" @if ($data->epic_start_date) value="{{ $data->epic_start_date }}" @else value="{{ date('Y-m-d') }}" @endif min="{{ date('Y-m-d') }}"  required>
          </div>
       </div>
       <div class="col-md-6 col-lg-6 col-xl-6">
          <div class="form-group mb-0">
             <label for="start-date">End Date</label>
-            <input type="date" class="form-control" name="end_date[]" @if ($data->epic_end_date) value="{{ $data->epic_end_date }}" @else value="{{ date('Y-m-d') }}" @endif required>
+            <input type="date" class="form-control" name="end_date[]" @if ($data->epic_end_date) value="{{ $data->epic_end_date }}" @else value="{{ date('Y-m-d') }}" @endif min="{{ date('Y-m-d') }}" required>
             
          </div>
       </div>

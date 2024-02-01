@@ -11,6 +11,24 @@
                      OE-{{ $r->epic_id }}
                 </div>
                 @endif
+                <div class="epic_id ml-5" style="display: flex;">
+                    @if($r->flag_type == 'Impediment')
+                    <span style="font-size:22px" class="material-symbols-outlined">warning_off</span>
+                    IM-{{ $r->id }}
+                    @endif
+                    @if($r->flag_type == 'Risk')
+                    <span style="font-size:22px" class="material-symbols-outlined">emergency</span>
+                    RI-{{ $r->id }}
+                    @endif
+                    @if($r->flag_type == 'Blocker')
+                    <span style="font-size:22px" class="material-symbols-outlined">block</span>
+                    BL-{{ $r->id }}
+                    @endif
+                    @if($r->flag_type == 'Action')
+                    <span style="font-size:22px" class="material-symbols-outlined">call_to_action</span>
+                    AC-{{ $r->id }}
+                    @endif
+                </div>
             </div>
             @php
                 $check_escalate = DB::table('escalate_cards')->where('flag_id' , $r->id)
@@ -149,6 +167,27 @@
                     </div>
                 </div>
             </div>
+            
+        </div>
+        <div class="d-flex mt-3">
+            @if($r->board_type == 'VS')
+                <span style="font-size:22px" class="material-symbols-outlined">groups</span> {{ DB::table('value_team')->where('id' , $r->business_units)->first()->team_title }}
+            @endif
+            @if($r->board_type == 'stream')
+                <span style="font-size:22px" class="material-symbols-outlined">layers</span> {{ DB::table('value_stream')->where('id' , $r->business_units)->first()->value_name }}
+            @endif
+            @if($r->board_type == 'unit')
+                <span style="font-size:22px" class="material-symbols-outlined">domain</span> {{ DB::table('business_units')->where('id' , $r->business_units)->first()->business_name }}
+            @endif
+            @if($r->board_type == 'BU')
+                <span style="font-size:22px" class="material-symbols-outlined">groups</span> {{ DB::table('unit_team')->where('id' , $r->business_units)->first()->team_title }}
+            @endif
+            @if($r->board_type == 'org')
+                <span style="font-size:22px" class="material-symbols-outlined">auto_stories</span> {{ DB::table('organization')->where('id' , $r->business_units)->first()->organization_name }}
+            @endif
+            @if($r->board_type == 'orgT')
+                <span style="font-size:22px" class="material-symbols-outlined">groups</span> {{ DB::table('org_team')->where('id' , $r->business_units)->first()->team_title }}
+            @endif
         </div>
     </div>
 </div>

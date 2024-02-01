@@ -193,7 +193,7 @@
                     </div>
                 </div>
             </div>
-            @foreach(DB::table('flag_comments')->where('type' , 'reply')->where('comment_id' , $r->id)->orderby('id' , 'desc')->get() as $p)
+            @foreach(DB::table('flag_comments')->where('type','reply')->where('flag_id' , $r->flag_id)->where('comment_id' , $r->id)->orderby('id' , 'desc')->get() as $p)
             @php
                 $puser = DB::table('users')->where('id',$p->user_id)->first();
             @endphp

@@ -19,54 +19,24 @@
                   </div>
                </div>
             @php
-               $flag = DB::table('flags')->where('epic_id' , $e->id)->first();
-               $flagscount = DB::table('flags')->where('epic_id' , $e->id)->count();
+               $flag = DB::table('flags')->where('flag_status' , '!=' , 'doneflag')->where('epic_id' , $e->id)->first();
+               $flagscount = DB::table('flags')->where('epic_id' , $e->id)->where('flag_status' , '!=' , 'doneflag')->count();
             @endphp
             @if($flag)
-            @if($flag->flag_status != 'doneflag')
             <div>
-               @if($flag->flag_type == 'Risk')
                <div class="d-flex flex-row align-items-center">
                   <div class="mr-1">
-                     <img src="{{ url('public/assets/svg/svgrisk.svg') }}">
+                     <span class="material-symbols-outlined flagsdisplayonepic">flag</span>
                   </div>
                   <div>
-                     <span onclick="editepic({{$e->id}})" style="color:#fa9bcf !important; font-size:12px">{{$flag->flag_type}} @if($flagscount > 1) +{{$flagscount}} @endif</span>
+                     @if($flagscount == 1)
+                     <span onclick="editepic({{$e->id}})" class="flagsdisplayonepic">Flag ({{$flagscount}})</span>
+                     @else
+                     <span onclick="editepic({{$e->id}})" class="flagsdisplayonepic">Flags ({{$flagscount}})</span>
+                     @endif
                   </div>
                </div>
-               @endif
-               @if($flag->flag_type == 'Impediment')
-               <div class="d-flex flex-row flex-row align-items-center">
-                  <div class="mr-1">
-                     <img src="{{ url('public/assets/svg/svgeight.svg') }}">
-                  </div>
-                  <div>
-                     <span onclick="editepic({{$e->id}})" style="color:#fa9bcf !important; font-size:12px">{{$flag->flag_type}} @if($flagscount > 1) +{{$flagscount}} @endif</span>
-                  </div>
-               </div>
-               @endif 
-               @if($flag->flag_type == 'Blocker')
-               <div class="d-flex flex-row flex-row align-items-center">
-                  <div class="mr-1">
-                     <img src="{{ url('public/assets/svg/svgnine.svg') }}">
-                  </div>
-                  <div>
-                     <span onclick="editepic({{$e->id}})" style="color:#fa9bcf !important; font-size:12px">{{$flag->flag_type}} @if($flagscount > 1) +{{$flagscount}} @endif</span>
-                  </div>
-               </div>
-               @endif 
-               @if($flag->flag_type == 'Action')
-               <div class="d-flex flex-row flex-row align-items-center">
-                  <div class="mr-1">
-                     <img src="{{ url('public/assets/svg/svgten.svg') }}">
-                  </div>
-                  <div>
-                     <span onclick="editepic({{$e->id}})" style="color:#fa9bcf !important; font-size:12px">{{$flag->flag_type}} @if($flagscount > 1) +{{$flagscount}} @endif</span>
-                  </div>
-               </div>
-               @endif 
             </div>
-            @endif
             @endif
          </div>
          @php

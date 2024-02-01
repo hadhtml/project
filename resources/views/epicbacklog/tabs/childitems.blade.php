@@ -29,7 +29,7 @@ function getOrder(){
 }
 </script>
 @php
-    $epicstory = DB::table("epics_stroy")->where("epic_id", $epic->id)->where('epic_type' , 'backlog')->orderby('sort_order' , 'asc')->get();
+    // $epicstory = DB::table("epics_stroy")->where("epic_id", $epic->id)->where('epic_type' , 'backlog')->orderby('sort_order' , 'asc')->get();
     $epicprogress = DB::table("epics_stroy")->where('epic_type' , 'backlog')->where("epic_id", $epic->id)->sum("progress");
     $count = DB::table("epics_stroy")->where('epic_type' , 'backlog')->where("epic_id", $epic->id)->count();
     if($count > 0)
@@ -431,7 +431,7 @@ function getOrder(){
 function orderbychilditem(order,epic_id) {
     $.ajax({
         type: "POST",
-        url: "{{ url('dashboard/epics/orderbychilditem') }}",
+        url: "{{ url('dashboard/epicbacklog/orderbychilditembacklog') }}",
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
