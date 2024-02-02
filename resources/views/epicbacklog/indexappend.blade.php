@@ -187,7 +187,7 @@
                                           <div class="form-group mb-0">
                                              <input type="date" class="form-control"
                                              name="start_date[]"
-                                             @if ($backlog->epic_start_date) value="{{ $backlog->epic_start_date }}" @else value="{{ date('Y-m-d') }}" @endif
+                                             @if ($backlog->epic_start_date) value="{{ $backlog->epic_start_date }}" @else value="{{ date('Y-m-d') }}" min="{{ date('Y-m-d') }}" @endif
                                              required>
                                              <label for="start-date">Start Date</label>
                                           </div>
@@ -196,7 +196,7 @@
                                           <div class="form-group mb-0">
                                              <input type="date" class="form-control"
                                              name="end_date[]"
-                                             @if ($backlog->epic_end_date) value="{{ $backlog->epic_end_date }}" @else value="{{ date('Y-m-d') }}" @endif
+                                             @if ($backlog->epic_end_date) value="{{ $backlog->epic_end_date }}" @else value="{{ date('Y-m-d') }}" min="{{ date('Y-m-d') }}" @endif
                                              required>
                                              <label for="start-date">End Date</label>
                                           </div>
@@ -327,13 +327,13 @@
                                     </div>
                                     <div class="col-md-6 col-lg-6 col-xl-6">
                                        <div class="form-group mb-0">
-                                          <input type="date" class="form-control"  name="epic_start_date" value="{{$backlog->epic_start_date}}">
+                                          <input type="date" class="form-control"  name="epic_start_date" value="{{$backlog->epic_start_date}}" min="{{ date('Y-m-d') }}">
                                           <label for="start-date">Start Date</label>
                                        </div>
                                     </div>
                                     <div class="col-md-6 col-lg-6 col-xl-6">
                                        <div class="form-group mb-0">
-                                          <input type="date" class="form-control"  name="epic_end_date" value="{{$backlog->epic_end_date}}">
+                                          <input type="date" class="form-control"  name="epic_end_date" value="{{$backlog->epic_end_date}}" min="{{ date('Y-m-d') }}">
                                           <label for="end-date">End Date</label>
                                        </div>
                                     </div>

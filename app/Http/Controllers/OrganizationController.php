@@ -1162,6 +1162,42 @@ function LoadNCEpic(Request $request)
 
 
     }
+
+
+    public function AllsprintInitReport($sprint,$type)
+{
+    $report = DB::table('sprint')->where('id',$sprint)->first();
+    $Sid = $sprint;
+    if($type == 'unit')
+    {
+    $organization = DB::table('business_units')->where('id',$report->value_unit_id)->first();
+    }
+    if($type == 'stream')
+    {
+    $organization = DB::table('value_stream')->where('id',$report->value_unit_id)->first();
+    }
+    if($type == 'BU')
+    {
+    $organization = DB::table('unit_team')->where('id',$report->value_unit_id)->first();        
+    }
+    if($type == 'VS')
+    {
+    $organization = DB::table('value_team')->where('id',$report->value_unit_id)->first();        
+    }
+    if($type == 'org')
+    {
+    $organization = DB::table('organization')->where('id',$report->value_unit_id)->first();        
+    }
+
+    if($type == 'orgT')
+    {
+    $organization = DB::table('org_team')->where('id',$report->value_unit_id)->first();        
+    }
+
+    return view('Report.All-Init',compact('report','sprint','type','organization','Sid'));
+
+
+}
     
 
 

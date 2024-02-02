@@ -47,6 +47,7 @@ Route::get('dashboard/organization/Okr-report-NC/{sprint}/{type}', [App\Http\Con
 Route::get('dashboard/organization/Okr-report-remove/{sprint}/{type}', [App\Http\Controllers\OrganizationController::class,'RemoveEpicReport']);
 Route::post('loadmore', [App\Http\Controllers\OrganizationController::class,'LoadNCEpic']);
 Route::post('see-less-epic', [App\Http\Controllers\OrganizationController::class,'LoadLessNCEpic']);
+Route::get('dashboard/organization/report-init-all/{sprint}/{type}', [App\Http\Controllers\OrganizationController::class,'AllsprintInitReport']);
 
 Route::post('update-sprint', [App\Http\Controllers\OrganizationController::class,'UpdateSprintQuarter']);
 Route::post('delete-report', [App\Http\Controllers\OrganizationController::class,'DeleteSprintQuarter']);
@@ -293,7 +294,7 @@ Route::name('epicbacklog.')->namespace('App\Http\Controllers')->prefix('dashboar
     Route::POST('updatechlditem', 'EpicBacklogController@updatechlditem');
     Route::POST('changeitemstatus', 'EpicBacklogController@changeitemstatus');
     Route::POST('deletechilditem', 'EpicBacklogController@deletechilditem');
-    // Route::POST('orderbychilditem', 'EpicController@orderbychilditem');
+    Route::POST('orderbychilditembacklog', 'EpicBacklogController@orderbychilditembacklog');
 });
 
 

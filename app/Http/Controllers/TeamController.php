@@ -83,6 +83,11 @@ class TeamController extends Controller
                     'account_id' => $log->account_id,
                     'jira_project' =>  $log->jira_project,
                     'epic_progress' =>  $log->progress,
+                    'epic_type' =>  $request->team_type,
+                    'buisness_unit_id' =>  $log->unit_id,
+                    'obj_id' =>  $request->locstate,
+                    'key_id' =>  $request->lockey,
+
                 ]);
             }
             foreach($request->end_date  as $k => $value)
