@@ -77,7 +77,7 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
          $trimmedStringobj = trim($objedit);
          @endphp
          <div class="action ml-0">
-            <button class="btn btn-icon btn-circle btn-tolbar ml-auto " onclick="editobjective({{$obj->id}})">
+            <button class="btn btn-icon btn-circle btn-tolbar ml-auto " onclick="editobjective(event , {{$obj->id}} , '{{$organization->slug}}')">
             <img src="{{ asset('public/assets/images/icons/edit.svg') }}" alt="Edit" style="border-radius: 50%; width: 18px; height: 18px;">
             </button>
             <button class="btn btn-icon btn-circle btn-tolbar delete-obj mr-2" onclick="deleteobj({{$obj->id}})" data-toggle="modal" data-target="#delete-objective">
