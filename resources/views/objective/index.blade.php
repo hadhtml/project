@@ -264,7 +264,7 @@ $var_objective = 'PageT-'.$type;
                         $trimmedStringobj = trim($objedit);
                         @endphp
                         <div class="action ml-0">
-                           <button class="btn btn-icon btn-circle btn-tolbar ml-auto " onclick="editobjective(event,{{$obj->id}} , '{{$organization->slug}}')">
+                           <button class="btn btn-icon btn-circle btn-tolbar ml-auto " onclick="editobjective(event , {{$obj->id}} , '{{$organization->slug}}')">
                            <img src="{{ asset('public/assets/images/icons/edit.svg') }}" alt="Edit"
                               style="border-radius: 50%; width: 18px; height: 18px;">
                            </button>
@@ -479,9 +479,9 @@ $var_objective = 'PageT-'.$type;
                                                       $quarter = DB::table('quarter')->where('initiative_id',$initiative->id)->get();
                                                       @endphp
                                                       <div id="initiative{{$initiative->id}}" class="collapse" >
-                                                         <div class="container-fluid py-7" style="width: 96%; margin: 0px auto;">
+                                                         <div class="container-fluid">
                                                             <div class="row">
-                                                               <div class="col-md-12">
+                                                               <div class="col-md-12 p-0">
                                                                   <div class="card">
                                                                      <div class="card-body" style="overflow-x:auto">
                                                                         <div class="board-kanban">
@@ -539,7 +539,7 @@ $var_objective = 'PageT-'.$type;
                                                                                        <div class="board-body"
                                                                                           style="height:80vh">
                                                                                           <div
-                                                                                             class="board-cards{{$q->id}} p-5" id="">
+                                                                                             class="board-cards{{$q->id}} p-2" id="">
                                                                                              <div
                                                                                                 id="scroller">
                                                                                                 @if(count($quarterMonth) > 0)    
@@ -547,7 +547,7 @@ $var_objective = 'PageT-'.$type;
                                                                                                 @php
                                                                                                 $epic  = DB::table('epics')->where('month_id',$month->id)->where('trash',NULL)->get();
                                                                                                 @endphp
-                                                                                                <div  @if($CurrentQuarter) @if($q->id < $CurrentQuarter->quarter_id) class="board" @endif @endif class="board boardI"  style="width:236px"
+                                                                                                <div  @if($CurrentQuarter) @if($q->id < $CurrentQuarter->quarter_id) class="board" @endif @endif class="board boardI"  style="width:33%"
                                                                                                 id="{{$month->id}}">
                                                                                                 {{-- Month name --}}
                                                                                                 <header class="noselect" id="month-{{$month->id}}-{{$organization->type}}-{{$organization->id}}-{{$obj->id}}-{{$key->id}}-{{$initiative->id}}">
