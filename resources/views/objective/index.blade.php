@@ -441,11 +441,11 @@ $var_objective = 'PageT-'.$type;
                                                                   @endif
                                                                </div>
                                                                <div class="content-item" style="width:10%">
-                                                                  @if($initiative->q_initiative_prog > 0)
+                                                                  {{-- @if($initiative->q_initiative_prog > 0) --}}
                                                                   <div role="progressbar" id="qcomp{{$initiative->id}}" aria-valuenow="{{$initiative->q_initiative_prog}}" aria-valuemin="0" aria-valuemax="100" style="--value:{{round($initiative->q_initiative_prog,0)}}"></div>
-                                                                  @else
+                                                                  {{-- @else
                                                                   <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="--value:0"></div>
-                                                                  @endif  
+                                                                  @endif   --}}
                                                                </div>
                                                                <div class="content-item" style="width:10%">
                                                                   @if($initiative->initiative_prog > 0)
