@@ -11,13 +11,13 @@ const dataToImport = {
                     "typenode": false,
                     "inputs": {},
                     "outputs": {
-                        @foreach(DB::table('objectives')->where('type' , 'unit')->where('unit_id'  ,$data->id)->get() as $o)
-                        @foreach(DB::table('key_result')->where('obj_id' , $o->id)->get() as $key_result)
+                        @foreach(DB::table('team_link_child')->where('type' , 'unit')->where('unit_id'  ,$data->id)->get() as $o)
+                        @foreach(DB::table('key_result')->where('obj_id' , $o->id)->get() as $keyresult=> $key_result)
                         @if(DB::table('team_link_child')->where('bussiness_key_id' , $key_result->id)->count() > 0)
                         @php
                             $connectionid = DB::table('team_link_child')->where('bussiness_key_id' , $key_result->id)->where('bussiness_obj_id' , $o->id)->first();
                         @endphp
-                        "output_{{ $connectionid->id }}": {
+                        "output_{{ $keyresult+1 }}": {
                             "connections": [{
                                 "node": "{{ $o->type }}{{ $o->unit_id }}",
                                 "output": "input_{{ $connectionid->id }}"
