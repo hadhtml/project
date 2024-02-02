@@ -69,7 +69,9 @@ $var_objective = 'Report-'.$type;
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         @foreach($SprintInit as $keyInt)
                         <a class="dropdown-item"href="{{url('dashboard/organization/report-init/'.$keyInt->initiative_id.'/'.$sprint.'/'.$type)}}">{{$keyInt->initiative_name}}</a>
-                        @endforeach  
+                        @endforeach
+                        <a class="dropdown-item"href="{{url('dashboard/organization/report-init-all/'.$sprint.'/'.$type)}}">All</a>
+  
                     </div>
                 </div>
             </div>
@@ -147,11 +149,13 @@ $var_objective = 'Report-'.$type;
                                             <span class="ml-2">SSP-{{$epic->epic_id}}</span>
                                         </td>
                                         <td class="cell-20-percent">{{$epic->epic_name}}</td>
-                                        @if($diff > 0)
+                                        {{-- @if($diff > 0)
                                         <td>Added</td>
                                         @else
                                         <td></td>
-                                        @endif
+                                        @endif --}}
+                                        <td></td>
+
                                
                                         <td>{{$epic->epic_date}}</td>
                     

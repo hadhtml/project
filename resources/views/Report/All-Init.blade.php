@@ -9,7 +9,7 @@ $var_objective = 'Report-'.$type;
         <div class="d-flex flex-row justify-content-between">
             <div class="d-flex flex-column">
                 <div>
-                    {{-- <h4 class="pb-0 mb-0">Epics Not Completed</h4> --}}
+                    {{-- <h4 class="pb-0 mb-0">{{$InitName->initiative_name}}</h4> --}}
                 </div>
                 <div class="d-flex flex-row">
                     <div>
@@ -17,43 +17,33 @@ $var_objective = 'Report-'.$type;
                    
                     </div>
                     @php
-                    $InitName = 'All';
-                    $name = 'Epics Not Completed';
-                    session()->put('key',$name);
                     $SprintInit = DB::table('sprint_report')->where('initiative_name','!=',NULL)->where('q_id',$sprint)->get();
-                    
-                    if(session())
-                    {
-                    $InitName = DB::table('sprint_report')->where('initiative_id','=',session()->get('init'))->where('q_id',$sprint)->first();
-    
-                    }
-                    @endphp
+                     @endphp
                     <div>
                         <div class="dropdown">
+
                           <button class="btn bg-white btn-circle dropdown-toggle w-100" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            @if(session()->has('key'))
-                            
-                            {{session()->get('key')}}  
-                          @endif
+                            All Epics
+
                             <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g id="vuesax/outline/arrow-down">
                                     <g id="arrow-down">
                                         <path id="Vector" d="M8.00001 11.7004C7.53335 11.7004 7.06668 11.5204 6.71335 11.1671L2.36668 6.82042C2.17335 6.62708 2.17335 6.30708 2.36668 6.11375C2.56001 5.92042 2.88001 5.92042 3.07335 6.11375L7.42001 10.4604C7.74001 10.7804 8.26001 10.7804 8.58001 10.4604L12.9267 6.11375C13.12 5.92042 13.44 5.92042 13.6333 6.11375C13.8267 6.30708 13.8267 6.62708 13.6333 6.82042L9.28668 11.1671C8.93335 11.5204 8.46668 11.7004 8.00001 11.7004Z" fill="#292D32" />
                                     </g>
                                 </g>
+                             
                             </svg>
+                       
                           </button>
                           <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                
                             <a class="dropdown-item" href="{{url('dashboard/organization/Okr-report-allepic/'.$sprint.'/'.$type)}}">All</a>
                             <a class="dropdown-item" href="{{url('dashboard/organization/Okr-report-all/'.$sprint.'/'.$type)}}">Completed</a>
                             <a class="dropdown-item" href="{{url('dashboard/organization/Okr-report-NC/'.$sprint.'/'.$type)}}">Not Completed</a>
                             <a class="dropdown-item" href="{{url('dashboard/organization/Okr-report-remove/'.$sprint.'/'.$type)}}">Removed</a>
-
-                         </div>
+                    </div>
                         </div>
                     </div>
-
-                    
                 </div>
             </div>
             <div class="d-flex flex-row align-items-center">
@@ -62,17 +52,13 @@ $var_objective = 'Report-'.$type;
                 </div>
                 <div class="dropdown dropleft ml-3">
                     <button class="btn btn-default bg-white dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        @if($InitName)
-                        {{$InitName->initiative_name}}
-                       
-                        @endif
+                    All
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         @foreach($SprintInit as $keyInt)
+    
                         <a class="dropdown-item"href="{{url('dashboard/organization/report-init/'.$keyInt->initiative_id.'/'.$sprint.'/'.$type)}}">{{$keyInt->initiative_name}}</a>
-                        @endforeach
-                        <a class="dropdown-item"href="{{url('dashboard/organization/report-init-all/'.$sprint.'/'.$type)}}">All</a>
-  
+                        @endforeach  
                     </div>
                 </div>
             </div>
@@ -83,61 +69,33 @@ $var_objective = 'Report-'.$type;
     <div class="col-md-12">
         <div class="card report-card mb-3">
             <div class="card-body">
-                <div class="row">
+                {{-- <div class="row">
                     <div class="col-md-12">
                         <div class="d-flex flex-row align-items-center report-header">
-                            <h4>
-                               Not Completed
+                             <h4>
+                                Completed
                             </h4>
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <div class="row">
                     <div class="col-md-12">
                         <div class="table-responsive">
                             <table class="table table-borde table-sm">
                                 <thead>
                                     <tr>
-                                        <td>Key</td>
-                                        <td class="cell-20-percent">Summary</td>
-                                        <td>Added</td>
-                                        <td>Due Date</td>
-                                        <td>Status</td>
+                                       
                                         <td>Initiative Key</td>
                                         <td class="cell-30-percent">Initiative Title</td>
                                     </tr>
                                 </thead>
                                 <tbody>
                            
-                            
-                                @php
-                                
-                            if(session()->has('init'))
-                                {
-                                $SprintEpic = DB::table('sprint_report')->where('epic_init_id',session()->get('init'))->where('epic_prog','!=',100)->where('epic_remove','=','Added')->where('q_id',$sprint)->limit(10)->get();
-                                $SprintEpicCount = DB::table('sprint_report')->where('epic_init_id',session()->get('init'))->where('epic_prog','!=',100)->where('epic_remove','=','Added')->where('q_id',$sprint)->count();
-   
-                               }else
-                                {
-                                $SprintEpic = DB::table('sprint_report')->where('epic_prog','!=',100)->where('epic_remove','=','Added')->where('q_id',$sprint)->limit(10)->get();
-                                $SprintEpicCount = DB::table('sprint_report')->where('epic_prog','!=',100)->where('epic_remove','=','Added')->where('q_id',$sprint)->count();
-
-                                }
-
-                                $Sprints = DB::table('sprint')->where('id',$sprint)->first();
-                               
-                                @endphp
-                                @foreach($SprintEpic as $epic)
+                         
+                                    @foreach($SprintInit as $keyInt)
                              
-
-                                @php
-                              
-                                $SprintInit = DB::table('sprint_report')->where('initiative_id',$epic->epic_init_id)->where('q_id',$sprint)->first();
                                 
-                                $diff = Carbon\Carbon::parse($Sprints->start_data)->diffInDays($epic->epic_trash);
-
-                                @endphp
-                            
+                        
                                     <tr>
                                         <td>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
@@ -151,108 +109,29 @@ $var_objective = 'Report-'.$type;
                                                     </clipPath>
                                                 </defs>
                                             </svg>
-                                            <span class="ml-2">SSP-{{$epic->epic_id}}</span>
+                                            <span class="ml-2">IN-{{$keyInt->initiative_id}}</span>
                                         </td>
-                                        <td class="cell-20-percent">{{$epic->epic_name}}</td>
-                                        {{-- @if($diff > 0)
-                                        <td>Added</td>
-                                        @else
-                                        <td></td>
-                                        @endif --}}
-
-                                        <td>Added</td>
-
-
-                                  
-                                        <td>{{$epic->epic_date}}</td>
-                    
-                                        <td>{{$epic->epic_status}}</td>
-                                        <td>IN{{$epic->epic_init_id}}</td>
-                                        @php
-                                        $SprintInit = DB::table('sprint_report')->where('initiative_id',$epic->epic_init_id)->where('q_id',$sprint)->first();
-                                        @endphp
-                                        <td class="cell-30-percent"><a href="{{url('dashboard/organization/report-init/'.$epic->epic_init_id.'/'.$sprint.'/'.$type)}}">@if($SprintInit){{$SprintInit->initiative_name}}@endif</a></td>
+                                 
+                                       
+                                
+                                        <td class="cell-30-percent"><a class="btn" href="{{url('dashboard/organization/report-init/'.$keyInt->initiative_id.'/'.$sprint.'/'.$type)}}">{{$keyInt->initiative_name}}</a>
+                                        </td>                               
                                     </tr>
-                               
-                                    @php
-                                     $last_id = '';
-                                    $last_id = $epic->id;
-                                    @endphp                
+                              
+                                   
                                     @endforeach
                                   
                                 </tbody>
-                                <tbody class="load-more">
-                                </tbody>    
                             </table>
                         </div>
                     </div>
                 </div>
 
-                @if($SprintEpicCount > 10 )
-                <div class="row" id="see-less">
-                    <div class="col-md-12 text-center">
-                        <button class="btn btn-default" type="button" onclick="load_data({{$last_id}},'{{$sprint}}')">
-                            See More
-                        </button>
-                    </div>
-                </div>
-                @endif
+           
             </div>
         </div>
     </div>
 </div>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-
-<script>
-
- function load_data(id,sprint){
-  var type = "{{$type}}";
-  var page = 'NC-Epic';
-    $.ajax({
-        type: "POST",
-        url: "{{ url('loadmore') }}",
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        data: {
-        id:id,sprint:sprint,type:type,page:page
-        },
-        success: function(res) {
-           $('.load-more').html(res);
-           $('#see-less').html('<div class="col-md-12 text-center"><button class="btn btn-default" type="button" onclick="see_less('+id+','+"'"+sprint+"'"+')" >See Less</button></div>');
-
-
-        }
-        });
- }
-
- function see_less(id,sprint){
-  var type = "{{$type}}";
-  var org = "{{$organization->id}}";
-  var page = 'NC-Epic';
-    $.ajax({
-        type: "POST",
-        url: "{{ url('see-less-epic') }}",
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        data: {
-        sprint:sprint,type:type,org:org,page:page
-        },
-        success: function(res) {
-           $('.load-more').html(res);
-          $('#see-less').html('<div class="col-md-12 text-center"><button class="btn btn-default" type="button" onclick="load_data('+id+','+"'"+sprint+"'"+')" >See More</button></div>');
-
-
-        }
-        });
- }
- 
-
-
-
-</script>
 
 
     @endsection            
