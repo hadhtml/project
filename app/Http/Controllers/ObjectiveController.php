@@ -163,157 +163,82 @@ class ObjectiveController extends Controller
         if ($type == "unit") {
             $organization = DB::table("business_units")
                 ->where("slug", $id)
-                ->where('user_id',Auth::id())
                 ->first();
-                if($organization)
-                {
-                $objective = DB::table("objectives")
+            $objective = DB::table("objectives")
                 ->where("unit_id", $organization->id)
                 ->where("trash", null)
                 ->where("type", "unit")
                 ->orderby('IndexCount')
                 ->get();
-                return view(
-                    "objective.index",
-                    compact("organization", "objective", "type")
-                );
-                }else
-                {
-                
-                echo "You're not authorized to access this Link <a href= ".url('dashboard/organizations').">Back</a>";   
-                }  
-          
         }
 
         if ($type == "stream") {
             $organization = DB::table("value_stream")
                 ->where("slug", $id)
-                ->where('user_id',Auth::id())
                 ->first();
-                if($organization)
-                {
-                $objective = DB::table("objectives")
+            $objective = DB::table("objectives")
                 ->where("unit_id", $organization->id)
                 ->where("trash", null)
                 ->where("type", "stream")
                 ->orderby('IndexCount')
                 ->get();
-                return view(
-                    "objective.index",
-                    compact("organization", "objective", "type")
-                );
-                }else
-                {
-                
-                echo "You're not authorized to access this Link <a href= ".url('dashboard/organizations').">Back</a>";   
-                }  
-        
         }
 
         if ($type == "BU") {
             $organization = DB::table("unit_team")
                 ->where("slug", $id)
                 ->first();
-                if($organization)
-                {
-                $objective = DB::table("objectives")
+            $objective = DB::table("objectives")
                 ->where("unit_id", $organization->id)
                 ->where("trash", null)
                 ->where("type", "BU")
                 ->orderby('IndexCount')
                 ->get();
-                return view(
-                    "objective.index",
-                    compact("organization", "objective", "type")
-                );
-                }else
-                {
-                
-                echo "You're not authorized to access this Link <a href= ".url('dashboard/organizations').">Back</a>";   
-                } 
-       
         }
 
         if ($type == "VS") {
             $organization = DB::table("value_team")
                 ->where("slug", $id)
                 ->first();
-                if($organization)
-                {
-                $objective = DB::table("objectives")
+            $objective = DB::table("objectives")
                 ->where("unit_id", $organization->id)
                 ->where("trash", null)
                 ->where("type", "VS")
                 ->orderby('IndexCount')
                 ->get();
-                return view(
-                    "objective.index",
-                    compact("organization", "objective", "type")
-                );
-                }else
-                {
-                
-                echo "You're not authorized to access this Link <a href= ".url('dashboard/organizations').">Back</a>";   
-                } 
-        
         }
 
         if ($type == "org") {
             $organization = DB::table("organization")
                 ->where("slug", $id)
-                ->where('user_id',Auth::id())
                 ->first();
-                if($organization)
-                {
-                    $objective = DB::table("objectives")
-                    ->where("unit_id", $organization->id)
-                    ->where("trash", null)
-                    ->where("type", "org")
-                    ->orderby('IndexCount')
-                    ->get();
-                return view(
-                    "objective.index",
-                    compact("organization", "objective", "type")
-                );
-                }else
-                {
-                
-                echo "You're not authorized to access this Link <a href= ".url('dashboard/organizations').">Back</a>";   
-                } 
-           
+            $objective = DB::table("objectives")
+                ->where("unit_id", $organization->id)
+                ->where("trash", null)
+                ->where("type", "org")
+                ->orderby('IndexCount')
+                ->get();
         }
 
         if ($type == "orgT") {
             $organization = DB::table("org_team")
                 ->where("slug", $id)
                 ->first();
-                if($organization)
-                {
-                    $objective = DB::table("objectives")
-                    ->where("unit_id", $organization->id)
-                    ->where("trash", null)
-                    ->where("type", "orgT")
-                    ->orderby('IndexCount')
-                    ->get();
-                return view(
-                    "objective.index",
-                    compact("organization", "objective", "type")
-                );
-                }else
-                {
-                
-                echo "You're not authorized to access this Link <a href= ".url('dashboard/organizations').">Back</a>";   
-                } 
-           
+            $objective = DB::table("objectives")
+                ->where("unit_id", $organization->id)
+                ->where("trash", null)
+                ->where("type", "orgT")
+                ->orderby('IndexCount')
+                ->get();
         }
 
 
-        // Jira::UpdateEpicjira();
+        Jira::UpdateEpicjira();
 
-        // return view(
-        //     "objective.index",
-        //     compact("organization", "objective", "type")
-        // );
+        return view(
+            "objective.index",
+            compact("organization", "objective", "type")
+        );
     }
     public function deleteobjective(Request $request)
     {
@@ -805,26 +730,24 @@ DB::table("objectives")
                     ->where("epic_progress", "=", 100)
                     ->where("trash", null)
                     ->count();
-
-                    if ($QuarterCount > 0) {
-                        $Quartertotal = round(($Quarterprogress / $QuarterCount) * 100, 2);
-                        DB::table("quarter")
-                            ->where("id", $CurrentQuarter->quarter_id)
-                            ->update(["quarter_progress" => $Quartertotal]);
-                        DB::table("initiative")
-                            ->where("id", $CurrentQuarter->initiative_id)
-                            ->update(["q_initiative_prog" => $Quartertotal]);
-                    }else
-                    {
-                        DB::table("quarter")
-                        ->where("id", $CurrentQuarter->quarter_id)
-                        ->update(["quarter_progress" => 0]);
-                    DB::table("initiative")
-                        ->where("id", $CurrentQuarter->initiative_id)
-                        ->update(["q_initiative_prog" => 0]); 
-                    }
             }
-           
+            if ($QuarterCount > 0) {
+                $Quartertotal = round(($Quarterprogress / $QuarterCount) * 100, 2);
+                DB::table("quarter")
+                    ->where("id", $CurrentQuarter->quarter_id)
+                    ->update(["quarter_progress" => $Quartertotal]);
+                DB::table("initiative")
+                    ->where("id", $CurrentQuarter->initiative_id)
+                    ->update(["q_initiative_prog" => $Quartertotal]);
+            }else
+            {
+                DB::table("quarter")
+                ->where("id", $CurrentQuarter->quarter_id)
+                ->update(["quarter_progress" => 0]);
+            DB::table("initiative")
+                ->where("id", $CurrentQuarter->initiative_id)
+                ->update(["q_initiative_prog" => 0]); 
+            }
 
             
         
@@ -954,7 +877,6 @@ if ($objwcount == 100) {
 }
 }
 
-$QuarterprogressObj = 0;
 $objcount = DB::table("key_result")
 ->where("obj_id", $request->initiative_delete_obj_id)
 ->count();
@@ -985,7 +907,7 @@ if($objcount > 0)
     ->where("id", $request->initiative_delete_obj_id)
     ->update(["obj_prog" => 0]);
     
-    // $QuartertotalObj = round(($QuarterprogressObj / $objcount) * 100, 2);
+    $QuartertotalObj = round(($QuarterprogressObj / $objcount) * 100, 2);
     DB::table("objectives")
     ->where("id", $request->initiative_delete_obj_id)
     ->update(["q_obj_prog" => 0]);
