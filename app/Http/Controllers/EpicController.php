@@ -900,6 +900,8 @@ class EpicController extends Controller
         $update = flags::find($request->flag_id);
         $update->flag_type = $request->flag_type;
         $update->flag_title = $request->flag_title;
+        $update->flag_status = $request->story_status;
+
         $update->flag_description = $request->flag_description;
         $update->save();
         flag_members::where('flag_id' , $update->id)->delete();
