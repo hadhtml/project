@@ -369,15 +369,15 @@ class KeyresultController extends Controller
     {
         if($request->type == 'org')
         {
-            $objectives = DB::table('objectives')->wherenull('trash')->where('type' , '!=' , 'org')->where('objective_name', 'LIKE', "%$request->id%")->get();
+            $objectives = DB::table('objectives')->where('user_id' , Auth::id())->wherenull('trash')->where('type' , '!=' , 'org')->where('objective_name', 'LIKE', "%$request->id%")->get();
         }
         if($request->type == 'unit')
         {
-            $objectives = DB::table('objectives')->wherenull('trash')->where('type' , '!=' , 'org')->where('type' , '!=' , 'unit')->where('objective_name', 'LIKE', "%$request->id%")->get();
+            $objectives = DB::table('objectives')->where('user_id' , Auth::id())->wherenull('trash')->where('type' , '!=' , 'org')->where('type' , '!=' , 'unit')->where('objective_name', 'LIKE', "%$request->id%")->get();
         }
         if($request->type == 'stream')
         {
-            $objectives = DB::table('objectives')->wherenull('trash')->where('type' , '!=' , 'stream')->where('type' , '!=' , 'org')->where('type' , '!=' , 'unit')->where('objective_name', 'LIKE', "%$request->id%")->get();
+            $objectives = DB::table('objectives')->where('user_id' , Auth::id())->wherenull('trash')->where('type' , '!=' , 'stream')->where('type' , '!=' , 'org')->where('type' , '!=' , 'unit')->where('objective_name', 'LIKE', "%$request->id%")->get();
         }
         $html = view('keyresult.objectiveappend', compact('objectives'))->render();
         return $html;
