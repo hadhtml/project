@@ -730,24 +730,25 @@ DB::table("objectives")
                     ->where("epic_progress", "=", 100)
                     ->where("trash", null)
                     ->count();
+                    if ($QuarterCount > 0) {
+                        $Quartertotal = round(($Quarterprogress / $QuarterCount) * 100, 2);
+                        DB::table("quarter")
+                            ->where("id", $CurrentQuarter->quarter_id)
+                            ->update(["quarter_progress" => $Quartertotal]);
+                        DB::table("initiative")
+                            ->where("id", $CurrentQuarter->initiative_id)
+                            ->update(["q_initiative_prog" => $Quartertotal]);
+                    }else
+                    {
+                        DB::table("quarter")
+                        ->where("id", $CurrentQuarter->quarter_id)
+                        ->update(["quarter_progress" => 0]);
+                    DB::table("initiative")
+                        ->where("id", $CurrentQuarter->initiative_id)
+                        ->update(["q_initiative_prog" => 0]); 
+                    }
             }
-            if ($QuarterCount > 0) {
-                $Quartertotal = round(($Quarterprogress / $QuarterCount) * 100, 2);
-                DB::table("quarter")
-                    ->where("id", $CurrentQuarter->quarter_id)
-                    ->update(["quarter_progress" => $Quartertotal]);
-                DB::table("initiative")
-                    ->where("id", $CurrentQuarter->initiative_id)
-                    ->update(["q_initiative_prog" => $Quartertotal]);
-            }else
-            {
-                DB::table("quarter")
-                ->where("id", $CurrentQuarter->quarter_id)
-                ->update(["quarter_progress" => 0]);
-            DB::table("initiative")
-                ->where("id", $CurrentQuarter->initiative_id)
-                ->update(["q_initiative_prog" => 0]); 
-            }
+         
 
             
         
