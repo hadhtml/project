@@ -396,17 +396,11 @@
 @endif
 <script type="text/javascript">
    $(document).ready(function() {
-         var table = $('.example').DataTable({
-           "pagingType": "full_numbers",
-           "language": {
-               "paginate": {
-                   "previous": "&lsaquo;", // Custom previous arrow
-                   "next": "&rsaquo;" // Custom next arrow
-               }
-           },
+      var table = $('.example').DataTable({
+         'order':[],
            "columnDefs": [{
                    "orderable": false,
-                   "targets": [6]
+                   "targets": [0,6],
                } // Disable ordering for the first and third columns
            ]
        });
