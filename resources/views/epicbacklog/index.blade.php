@@ -215,7 +215,7 @@ $var_objective = 'TBaclog-' . $type;
                                        </div>
                                        <div class="col-md-6 col-lg-6 col-xl-6">
                                           <div class="form-group mb-0">
-                                             <input type="date" class="form-control"
+                                             <input type="date" class="form-control" min="{{ date('Y-m-d') }}"
                                              name="start_date[]"
                                              @if ($backlog->epic_start_date) value="{{ $backlog->epic_start_date }}" @else value="{{ date('Y-m-d') }}" @endif
                                              required>
@@ -224,7 +224,7 @@ $var_objective = 'TBaclog-' . $type;
                                        </div>
                                        <div class="col-md-6 col-lg-6 col-xl-6">
                                           <div class="form-group mb-0">
-                                             <input type="date" class="form-control"
+                                             <input type="date" class="form-control" min="{{ date('Y-m-d') }}"
                                              name="end_date[]"
                                              @if ($backlog->epic_end_date) value="{{ $backlog->epic_end_date }}" @else value="{{ date('Y-m-d') }}" @endif
                                              required>
@@ -515,14 +515,14 @@ $var_objective = 'TBaclog-' . $type;
                   </div>
                   <div class="col-md-6 col-lg-6 col-xl-6">
                      <div class="form-group mb-0">
-                        <input type="date" class="form-control" name="start_date[]"
-                           value="{{ date('Y-m-d') }}" required>
+                        <input type="date" class="form-control"  name="start_date[]"
+                           value="{{ date('Y-m-d') }}" min="{{ date('Y-m-d') }}" required>
                         <label for="start-date">Start Date</label>
                      </div>
                   </div>
                   <div class="col-md-6 col-lg-6 col-xl-6">
                      <div class="form-group mb-0">
-                        <input type="date" class="form-control" name="end_date[]" required>
+                        <input type="date" class="form-control" min="{{ date('Y-m-d') }}" name="end_date[]" required>
                         <label for="start-date">End Date</label>
                      </div>
                   </div>
@@ -701,19 +701,16 @@ $var_objective = 'TBaclog-' . $type;
         ],
     });
        var table = $('.example').DataTable({
-           "pagingType": "full_numbers",
-           "language": {
-               "paginate": {
-                   "previous": "&lsaquo;", // Custom previous arrow
-                   "next": "&rsaquo;" // Custom next arrow
-               }
-           },
+         'order':[],
            "columnDefs": [{
                    "orderable": false,
-                   "targets": [6]
+                   "targets": [0,6],
                } // Disable ordering for the first and third columns
            ]
        });
+
+  
+       
    
        // Check All checkbox functionality
        $('#checkAll').change(function() {

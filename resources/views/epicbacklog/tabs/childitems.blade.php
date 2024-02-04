@@ -29,7 +29,7 @@ function getOrder(){
 }
 </script>
 @php
-    $epicstory = DB::table("epics_stroy")->where("epic_id", $epic->id)->where('epic_type' , 'backlog')->orderby('sort_order' , 'asc')->get();
+    // $epicstory = DB::table("epics_stroy")->where("epic_id", $epic->id)->where('epic_type' , 'backlog')->orderby('sort_order' , 'asc')->get();
     $epicprogress = DB::table("epics_stroy")->where('epic_type' , 'backlog')->where("epic_id", $epic->id)->sum("progress");
     $count = DB::table("epics_stroy")->where('epic_type' , 'backlog')->where("epic_id", $epic->id)->count();
     if($count > 0)
@@ -205,6 +205,7 @@ function getOrder(){
             processData: false,
             success: function(data){
                 $('.secondportion').html(data);
+                showheaderbacklog('{{$epic->id}}');
             }
         });
     }));
@@ -409,6 +410,7 @@ function getOrder(){
                                         processData: false,
                                         success: function(data){
                                             $('.secondportion').html(data);
+                                            showheaderbacklog('{{$epic->id}}');
                                         }
                                     });
                                 }));
@@ -429,7 +431,7 @@ function getOrder(){
 function orderbychilditem(order,epic_id) {
     $.ajax({
         type: "POST",
-        url: "{{ url('dashboard/epics/orderbychilditem') }}",
+        url: "{{ url('dashboard/epicbacklog/orderbychilditembacklog') }}",
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
@@ -537,6 +539,7 @@ function deletechilditem(id) {
         },
         success: function(res) {
             showtabwithoutloader('{{$epic->id}}' , 'childitems');
+            
         }
     });
 }
@@ -554,6 +557,7 @@ function changeitemstatus(status , id) {
         },
         success: function(res) {
             showtabwithoutloader('{{$epic->id}}' , 'childitems');
+            showheaderbacklog('{{$epic->id}}');
         }
     });
 }

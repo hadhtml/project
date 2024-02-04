@@ -130,11 +130,12 @@ $var_objective = 'Report-'.$type;
                                             <span class="ml-2">SSP-{{$epic->epic_id}}</span>
                                         </td>
                                         <td class="cell-20-percent">{{$epic->epic_name}}</td>
-                                        @if($diff > 0)
+                                        {{-- @if($diff > 0)
                                         <td>Added</td>
                                         @else
                                         <td></td>
-                                        @endif
+                                        @endif --}}
+                                        <td></td>
                                         <td>{{$epic->epic_date}}</td>
                                         <td>{{\Carbon\Carbon::parse($epic->epic_done)->format('M d,Y')}}</td>
                                         <td>Done</td>
@@ -226,11 +227,13 @@ $var_objective = 'Report-'.$type;
                                             <span class="ml-2">SSP-{{$epic->epic_id}}</span>
                                         </td>
                                         <td class="cell-20-percent">{{$epic->epic_name}}</td>
-                                        @if($diff > 0)
+                                        {{-- @if($diff > 0)
                                         <td>Added</td>
                                         @else
                                         <td></td>
-                                        @endif
+                                        @endif --}}
+                                        <td>Added</td>
+
                                         <td>{{$epic->epic_date}}</td>
                                        
                                         <td>{{$epic->epic_status}}</td>
@@ -320,11 +323,13 @@ $var_objective = 'Report-'.$type;
                                             <span class="ml-2">SSP-{{$epic->epic_id}}</span>
                                         </td>
                                         <td class="cell-20-percent">{{$epic->epic_name}}</td>
-                                        @if($diff > 0)
+                                        {{-- @if($diff > 0)
                                         <td>Added</td>
                                         @else
                                         <td></td>
-                                        @endif
+                                        @endif --}}
+                                        <td></td>
+
                                         <td>{{$epic->epic_date}}</td>
                                     
                                         <td>{{$epic->epic_status}}</td>

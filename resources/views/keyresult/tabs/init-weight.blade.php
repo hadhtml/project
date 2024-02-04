@@ -17,7 +17,7 @@
 <div class="row mt-5 ml-3">
     <div class="col-md-1">
         <label class="checkbox checkbox-lg">
-            <input  class="check" type="checkbox" />
+            <input  class="check" @if($Weight  > 0) checked  @endif type="checkbox" />
         </label>
     </div>
     <div class="col-md-6">
@@ -31,7 +31,7 @@
 </div>
 
 @foreach($InitData as $data)
-<div class="row weightvalue ml-3 mb-2"   style="display:none;" >
+<div class="row weightvalue ml-3 mb-2"  @if($Weight  > 0)  @else style="display:none;" @endif >
     <div class="col-md-4">
    
        <h6 class="mt-4">{{$data->initiative_name}}</h6>

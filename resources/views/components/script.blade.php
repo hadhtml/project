@@ -308,6 +308,7 @@ function handleDivClick(x)
         var type = el.id.split("-")[2];
         var slug = el.id.split("-")[3];
         var Init = el.id.split("-")[6];
+
     
         $.ajax({
         type: "POST",
@@ -332,11 +333,27 @@ function handleDivClick(x)
 
         },
         success: function(response) {
+         
+            if(response.message == 1)
+            {
+        
+
+            $('#proginit'+response.initiative.id).attr('aria-valuenow',response.initiative.initiative_prog);
+            $('#proginit'+response.initiative.id).css('--value',response.initiative.initiative_prog);
+            $('#qcomp'+response.initiative.id).attr('aria-valuenow',response.initiative.q_initiative_prog);
+            $('#qcomp'+response.initiative.id).css('--value',response.initiative.q_initiative_prog);
+
+
+
+            }else
+            {
             console.log('Card position updated successfully.');
             $('#parentCollapsible').html(response);
             $("#nestedCollapsible" + el.id.split("-")[4]).collapse('toggle');
             $("#key-result" + el.id.split("-")[5]).collapse('toggle');
             $("#initiative" + el.id.split("-")[6]).collapse('toggle');
+            }
+           
                 },
         error: function(error) {
             console.log('Error updating card position:', error);

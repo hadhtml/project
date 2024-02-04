@@ -1,8 +1,9 @@
+@if($objectives->count() > 0)
 @foreach($objectives as $r)
 @if(DB::table('team_link_child')->where('linked_objective_id'  ,$r->id)->count() == 0)
 @if($r->type == 'unit')
 <div onclick="selectobjective({{$r->id}})" class="epic">
-    <div class="epic-tittle">{{ $r->type }} | {{ $r->objective_name }}</div>
+    <div class="epic-tittle">{{ $r->objective_name }}</div>
     <div class="epic-detail okrmappersearchdetail">
         <span style="font-size:22px" class="material-symbols-outlined mr-2">domain</span>
         <span>{{ DB::table('business_units')->where('id' , $r->unit_id)->first()->business_name }}</span>
@@ -15,7 +16,7 @@
 @endphp
 @if($valuestream)
 <div onclick="selectobjective({{$r->id}})" class="epic">
-    <div class="epic-tittle">{{ $r->type }} | {{ $r->objective_name }}</div>
+    <div class="epic-tittle">{{ $r->objective_name }}</div>
     <div class="epic-detail okrmappersearchdetail">
         <span style="font-size:22px" class="material-symbols-outlined mr-2">layers</span>
         <span>{{ $valuestream->value_name }}</span>
@@ -30,7 +31,7 @@
 @endphp
 @if($valueteam && $valuestream)
 <div onclick="selectobjective({{$r->id}})" class="epic">
-    <div class="epic-tittle">{{ $r->type }} | {{ $r->objective_name }}</div>
+    <div class="epic-tittle">{{ $r->objective_name }}</div>
     <div class="epic-detail okrmappersearchdetail">
         <span style="font-size:22px" class="material-symbols-outlined mr-2">layers</span>
         <span>{{ $valuestream->value_name }}</span>
@@ -47,7 +48,7 @@
 @endphp
 @if($businessteam && $business_units)
 <div onclick="selectobjective({{$r->id}})" class="epic">
-    <div class="epic-tittle">{{ $r->type }} | {{ $r->objective_name }}</div>
+    <div class="epic-tittle">{{ $r->objective_name }}</div>
     <div class="epic-detail okrmappersearchdetail">
         <span style="font-size:22px" class="material-symbols-outlined mr-2">domain</span>
         <span>{{ $business_units->business_name }}</span>
@@ -64,7 +65,7 @@
 @endphp
 @if($org_team && $organization)
 <div onclick="selectobjective({{$r->id}})" id="cloneid{{ $r->id }}" class="epic">
-    <div class="epic-tittle">{{ $r->type }} | {{ $r->objective_name }}</div>
+    <div class="epic-tittle">{{ $r->objective_name }}</div>
     <div class="epic-detail okrmappersearchdetail">
         <span style="font-size:22px" class="material-symbols-outlined mr-2">auto_stories</span>
         <span>{{ $organization->organization_name }}</span>
@@ -101,3 +102,7 @@
         });
     }
 </script>
+@else
+
+    No Objective Found
+@endif

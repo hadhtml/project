@@ -77,11 +77,13 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
          $trimmedStringobj = trim($objedit);
          @endphp
          <div class="action ml-0">
-            <button class="btn btn-icon btn-circle btn-tolbar ml-auto " onclick="editobjective({{$obj->id}})">
-            <img src="{{ asset('public/assets/images/icons/edit.svg') }}" alt="Edit" style="border-radius: 50%; width: 18px; height: 18px;">
+            <button class="btn btn-icon btn-circle btn-tolbar ml-auto " onclick="editobjective(event , {{$obj->id}} , '{{$organization->slug}}')">
+            <img src="{{ asset('public/assets/images/icons/edit.svg') }}" alt="Edit"
+               style="border-radius: 50%; width: 18px; height: 18px;">
             </button>
-            <button class="btn btn-icon btn-circle btn-tolbar delete-obj mr-2" onclick="deleteobj({{$obj->id}})" data-toggle="modal" data-target="#delete-objective">
-            <img src="{{ asset('public/assets/images/icons/delete.svg') }}" alt="Delete" style="border-radius: 50%; width: 18px; height: 18px;">
+            <button class="btn btn-icon btn-circle btn-tolbar delete-obj mr-2" onclick="deleteobj(event ,{{$obj->id}})">
+            <img src="{{ asset('public/assets/images/icons/delete.svg') }}" alt="Delete"
+               style="border-radius: 50%; width: 18px; height: 18px;">
             </button>
          </div>
       </div>
@@ -175,7 +177,7 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
                                  alt="Edit"
                                  style="border-radius: 50%; width: 18px; height: 18px;">
                               </button>
-                              <button class="btn btn-icon btn-circle bg-white btn-tolbar" onclick="deleteobjkey(event,{{$key->id}},'{{$obj->id}}')" data-toggle="modal" data-target="#delete-objective-key">
+                              <button class="btn btn-icon btn-circle bg-white btn-tolbar"  onclick="deleteobjkey(event,{{$key->id}},'{{$obj->id}}')" data-toggle="modal" data-target="#delete-objective-key">
                               <img src="{{ asset('public/assets/images/icons/delete.svg') }}"
                                  alt="Delete"
                                  style="border-radius: 50%; width: 18px; height: 18px;">
@@ -290,9 +292,9 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
                                        $quarter = DB::table('quarter')->where('initiative_id',$initiative->id)->get();
                                        @endphp
                                        <div id="initiative{{$initiative->id}}" class="collapse" >
-                                          <div class="container-fluid py-7" style="width: 96%; margin: 0px auto;">
+                                          <div class="container-fluid">
                                              <div class="row">
-                                                <div class="col-md-12">
+                                                <div class="col-md-12 p-0">
                                                    <div class="card">
                                                       <div class="card-body" style="overflow-x:auto">
                                                          <div class="board-kanban">
@@ -350,7 +352,7 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
                                                                         <div class="board-body"
                                                                            style="height:80vh">
                                                                            <div
-                                                                              class="board-cards{{$q->id}} p-5" id="">
+                                                                              class="board-cards{{$q->id}} p-2" id="">
                                                                               <div
                                                                                  id="scroller">
                                                                                  @if(count($quarterMonth) > 0)    
@@ -358,7 +360,7 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
                                                                                  @php
                                                                                  $epic  = DB::table('epics')->where('month_id',$month->id)->where('trash',NULL)->get();
                                                                                  @endphp
-                                                                                 <div  @if($CurrentQuarter) @if($q->id < $CurrentQuarter->quarter_id) class="board" @endif @endif class="board boardI"  style="width:236px"
+                                                                                 <div  @if($CurrentQuarter) @if($q->id < $CurrentQuarter->quarter_id) class="board" @endif @endif class="board boardI"  style="width:33%"
                                                                                  id="{{$month->id}}">
                                                                                  {{-- Month name --}}
                                                                                  <header class="noselect" id="month-{{$month->id}}-{{$organization->type}}-{{$organization->id}}-{{$obj->id}}-{{$key->id}}-{{$initiative->id}}">
@@ -643,11 +645,25 @@ var containers = Array.from(document.getElementsByClassName("boardI"));
 
         },
         success: function(response) {
+         if(response.message == 1)
+            {
+        
+
+            $('#proginit'+response.initiative.id).attr('aria-valuenow',response.initiative.initiative_prog);
+            $('#proginit'+response.initiative.id).css('--value',response.initiative.initiative_prog);
+            $('#qcomp'+response.initiative.id).attr('aria-valuenow',response.initiative.q_initiative_prog);
+            $('#qcomp'+response.initiative.id).css('--value',response.initiative.q_initiative_prog);
+
+
+
+            }else
+            {
             console.log('Card position updated successfully.');
             $('#parentCollapsible').html(response);
             $("#nestedCollapsible" + el.id.split("-")[4]).collapse('toggle');
             $("#key-result" + el.id.split("-")[5]).collapse('toggle');
             $("#initiative" + el.id.split("-")[6]).collapse('toggle');
+            }
                 },
         error: function(error) {
             console.log('Error updating card position:', error);
