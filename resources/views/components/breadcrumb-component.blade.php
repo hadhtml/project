@@ -46,7 +46,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                 </div>
             </div>
             <div class="d-flex flex-row page-sub-titles">
-                 <div>
+                 <div   >
                     @if($organization->type == 'unit')
                     <div class="d-flex align-items-center">
                         <div>
