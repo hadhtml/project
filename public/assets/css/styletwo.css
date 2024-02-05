@@ -24,6 +24,8 @@
 }
 .rightside{
     display: flex;
+    margin-top: -23px;
+    margin-right: -26px;
 }
 .rightside span{
     padding: 15px;
@@ -723,6 +725,7 @@
 }
 .modalheaderforapend{
     padding-top: 5px !important;
+    padding-bottom: 10px;
 }
 .modalfullscreen{
     max-width: 100%;

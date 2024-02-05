@@ -19054,7 +19054,7 @@ option {
     font-style: normal;
     font-weight: 500 !important;
     line-height: normal;
-/*    margin-bottom: 2px !important;*/
+    margin-bottom: 0px !important;
     margin-top: 0px !important;
 }
 
@@ -22243,7 +22243,7 @@ div[role="circleprogressbar"]::before {
 
 .body-content {
     margin-left: 15%;
-    width: 84%;
+    width: 85%;
     padding: 0px;
 }
 
