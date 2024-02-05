@@ -58,7 +58,24 @@
                     @endif
 
                 @else
-                <span style="font-size:18px;" class="material-symbols-outlined"> {{ $r->icon }} </span>
+                @if($data->board_type == 'stream')
+                <span style="font-size:18px;" class="material-symbols-outlined">layers</span>
+                @endif
+                @if($data->board_type == 'unit')
+                <span style="font-size:18px;" class="material-symbols-outlined">domain</span>
+                @endif
+                @if($data->board_type == 'org')
+                <span style="font-size:18px;" class="material-symbols-outlined">network_node</span>
+                @endif
+                @if($data->board_type == 'BU')
+                <span style="font-size:18px;" class="material-symbols-outlined">groups</span>
+                @endif
+                @if($data->board_type == 'VS')
+                <span style="font-size:18px;" class="material-symbols-outlined">groups</span>
+                @endif
+                @if($data->board_type == 'orgT')
+                <span style="font-size:18px;" class="material-symbols-outlined">groups</span>
+                @endif
                 @endif
               </div>
               <div class="dotted-line"></div>
