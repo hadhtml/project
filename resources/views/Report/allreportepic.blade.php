@@ -63,7 +63,7 @@ $var_objective = 'Report-'.$type;
                 </div>
                 <div class="dropdown dropleft ml-3">
                     <button class="btn btn-default bg-white dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        @if($InitName)
+                        @if(session()->has('init'))
                         {{$InitName->initiative_name}}
                         @else
                         All

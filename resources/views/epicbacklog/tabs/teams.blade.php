@@ -23,6 +23,12 @@
     if($data->type == 'stream'){
         $team = DB::table('value_team')->where('id'  ,$data->team_id)->first();
     }
+    if($data->type == 'VS'){
+        $team = DB::table('value_team')->where('id'  ,$data->team_id)->first();
+    }
+    if($data->type == 'BU'){
+        $team = DB::table('unit_team')->where('id'  ,$data->team_id)->first();
+    }
     $dataArray = explode(',', $team->member);
     $dataCount = count($dataArray);
     $firstTwoIds = array_slice($dataArray, 0, 2);

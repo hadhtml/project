@@ -9,7 +9,7 @@ $Portfolio = DB::table('objectives')->where('type','unit')->where('unit_id',$org
 $Performance = DB::table('kpi_setting')->where('stream_id',$organization->id)->where('type','unit')->count();
 $Teams = DB::table('unit_team')->where('org_id',$organization->id)->count();
 $Reporting = DB::table('sprint')->where('value_unit_id',$organization->id)->where('type','unit')->count();
-$EpicsBacklog = DB::table('backlog_unit')->where('unit_id',$organization->id)->count();
+$EpicsBacklog = DB::table('team_backlog')->where('unit_id',$organization->id)->where('type','unit')->count();
 $Impediments = DB::table('flags')->where('business_units',$organization->id)->where('flag_type' , 'Impediment')->where('flag_title','!=',NULL)->where('board_type','unit')->count();
 $valuestream = DB::table('value_stream')->where('unit_id',$organization->id)->count();
 @endphp

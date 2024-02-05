@@ -630,7 +630,6 @@ DB::table("objectives")
                 ->where("slug", $request->slug)
                 ->first();
             $objective = DB::table("objectives")
-                ->where("org_id", $request->org_id)
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "BU")
@@ -643,7 +642,6 @@ DB::table("objectives")
                 ->where("slug", $request->slug)
                 ->first();
             $objective = DB::table("objectives")
-                ->where("org_id", $request->org_id)
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "VS")
@@ -730,24 +728,25 @@ DB::table("objectives")
                     ->where("epic_progress", "=", 100)
                     ->where("trash", null)
                     ->count();
+                    if ($QuarterCount > 0) {
+                        $Quartertotal = round(($Quarterprogress / $QuarterCount) * 100, 2);
+                        DB::table("quarter")
+                            ->where("id", $CurrentQuarter->quarter_id)
+                            ->update(["quarter_progress" => $Quartertotal]);
+                        DB::table("initiative")
+                            ->where("id", $CurrentQuarter->initiative_id)
+                            ->update(["q_initiative_prog" => $Quartertotal]);
+                    }else
+                    {
+                        DB::table("quarter")
+                        ->where("id", $CurrentQuarter->quarter_id)
+                        ->update(["quarter_progress" => 0]);
+                    DB::table("initiative")
+                        ->where("id", $CurrentQuarter->initiative_id)
+                        ->update(["q_initiative_prog" => 0]); 
+                    }
             }
-            if ($QuarterCount > 0) {
-                $Quartertotal = round(($Quarterprogress / $QuarterCount) * 100, 2);
-                DB::table("quarter")
-                    ->where("id", $CurrentQuarter->quarter_id)
-                    ->update(["quarter_progress" => $Quartertotal]);
-                DB::table("initiative")
-                    ->where("id", $CurrentQuarter->initiative_id)
-                    ->update(["q_initiative_prog" => $Quartertotal]);
-            }else
-            {
-                DB::table("quarter")
-                ->where("id", $CurrentQuarter->quarter_id)
-                ->update(["quarter_progress" => 0]);
-            DB::table("initiative")
-                ->where("id", $CurrentQuarter->initiative_id)
-                ->update(["q_initiative_prog" => 0]); 
-            }
+         
 
             
         
@@ -948,7 +947,6 @@ if($objcount > 0)
                 ->where("slug", $request->slug)
                 ->first();
             $objective = DB::table("objectives")
-                ->where("org_id", $request->org_id)
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "BU")
@@ -961,7 +959,6 @@ if($objcount > 0)
                 ->where("slug", $request->slug)
                 ->first();
             $objective = DB::table("objectives")
-                ->where("org_id", $request->org_id)
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "VS")

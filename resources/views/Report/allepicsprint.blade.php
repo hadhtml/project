@@ -54,7 +54,7 @@ $var_objective = 'Report-'.$type;
                  $name = 'All Epics';
                  session()->put('key',$name);
             $SprintInit = DB::table('sprint_report')->where('initiative_name','!=',NULL)->where('q_id',$sprint)->get();
-            if(session())
+                   if(session())
                     {
                     $InitName = DB::table('sprint_report')->where('initiative_id','=',session()->get('init'))->where('q_id',$sprint)->first();
     
@@ -66,7 +66,7 @@ $var_objective = 'Report-'.$type;
                 </div>
                 <div class="dropdown dropleft ml-3">
                     <button class="btn btn-default bg-white dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        @if($InitName)
+                        @if(session()->has('init'))
                         {{$InitName->initiative_name}}
                         @else
                         All
@@ -97,13 +97,27 @@ $var_objective = 'Report-'.$type;
                         </div>
                     </div>
                 </div>
+                @php
+                if(session()->has('init'))
+                {
+                $SprintEpic = DB::table('sprint_report')->where('epic_init_id',session()->get('init'))->where('epic_prog','=',100)->where('epic_remove','=','Added')->where('q_id',$sprint)->get();
+                }else
+                {
+                $SprintEpic = DB::table('sprint_report')->where('epic_prog','=',100)->where('epic_remove','=','Added')->where('q_id',$sprint)->get();
+                }    
+
+                @endphp
                 <div class="row">
                     <div class="col-md-12">
                         <div class="table-responsive">
                             <table class="table table-borde table-sm">
                                 <thead>
                                     <tr>
+                                        @if(count($SprintEpic) > 0)
                                         <td>Key</td>
+                                        @else
+                                        <td class="pr-14">Key</td>
+                                        @endif
                                         <td class="cell-20-percent">Summary</td>
                                         <td>Added</td>
                                         <td>Due Date</td>
@@ -194,6 +208,7 @@ $var_objective = 'Report-'.$type;
     </div>
 </div>
 
+
 <div class="row mb-3">
     <div class="col-md-12">
         <div class="card report-card mb-3">
@@ -207,17 +222,36 @@ $var_objective = 'Report-'.$type;
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                @php
+                         
+                        if(session()->has('init'))
+                        {
+                        $SprintEpicCount = DB::table('sprint_report')->where('epic_init_id',session()->get('init'))->where('epic_prog','!=',100)->where('epic_remove','=','Added')->where('q_id',$sprint)->count();
+
+                        }else
+                        {
+                        $SprintEpicCount = DB::table('sprint_report')->where('epic_prog','!=',100)->where('epic_remove','=','Added')->where('q_id',$sprint)->count();
+
+                        }
+
+                        @endphp
+                                       
+                    <div class="row">
                     <div class="col-md-12">
                         <div class="table-responsive">
                             <table class="table table-borde table-sm">
                                 <thead>
                                     <tr>
-                                        <td>Key</td>
+                                        @if($SprintEpicCount > 0)
+                                        <td >Key</td>
+                                        @else
+                                        <td class="pr-14">Key</td>
+                                        @endif
                                         <td class="cell-20-percent">Summary</td>
                                         <td>Added</td>
                                         <td>Due Date</td>
-                                
+                                        <td>Completed Date</td>
+
                                         <td>Status</td>
                                         <td>Initiative Key</td>
                                         <td class="cell-30-percent">Initiative Title</td>
@@ -271,7 +305,7 @@ $var_objective = 'Report-'.$type;
                                         @endif --}}
                                         <td>Added</td>
                                         <td>{{$epic->epic_date}}</td>
-                                       
+                                        <td></td>
                                         <td>{{$epic->epic_status}}</td>
                                         <td>IN{{$epic->epic_init_id}}</td>
                                        
@@ -319,17 +353,33 @@ $var_objective = 'Report-'.$type;
                         </div>
                     </div>
                 </div>
+                @php
+                if(session()->has('init'))
+                {
+                $SprintEpic = DB::table('sprint_report')->where('epic_init_id',session()->get('init'))->where('epic_remove','=','remove')->where('q_id',$sprint)->get();
+                }else
+                {
+                $SprintEpic = DB::table('sprint_report')->where('epic_remove','=','remove')->where('q_id',$sprint)->get();
+
+                }
+                @endphp
+              
                 <div class="row">
                     <div class="col-md-12">
                         <div class="table-responsive">
                             <table class="table table-borde table-sm">
                                 <thead>
                                     <tr>
+                                        @if(count($SprintEpic) > 0)
                                         <td>Key</td>
+                                        @else
+                                        <td class="pr-14">Key</td>
+                                        @endif
                                         <td class="cell-20-percent">Summary</td>
                                         <td>Added</td>
                                         <td>Due Date</td>
-                                      
+                                        <td>Completed Date</td>
+
                                         <td>Status</td>
                                         <td>Initiative Key</td>
                                         <td class="cell-30-percent">Initiative Title</td>
@@ -378,7 +428,7 @@ $var_objective = 'Report-'.$type;
                                         @endif --}}
                                         <td></td>
                                         <td>{{$epic->epic_date}}</td>
-                                    
+                                        <td></td>
                                         <td>{{$epic->epic_status}}</td>
                                         <td>IN{{$epic->epic_init_id}}</td>
                                      
