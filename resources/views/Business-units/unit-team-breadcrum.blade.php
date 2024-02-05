@@ -216,7 +216,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                                             <span style="font-size:22px" class="material-symbols-outlined">folder_supervised</span>
                                         </div>
                                         <div>
-                                            <p>Teams</p>                
+                                            <p>Dashboard</p>                
                                         </div>
                                     </div>
                                  
