@@ -153,7 +153,9 @@
 
                     @if($data->type == 'VS')
                     @php
-                        $teammember = DB::table('value_team')->where('id',$data->unit_id)->where('type' , 'VS')->get();
+                        $team = DB::table('value_team')->where('id',$data->unit_id)->where('type' , 'VS')->first();
+                        $teammember = DB::table('value_team')->where('org_id',$team->org_id)->where('type' , 'VS')->get();
+                 
                     @endphp
                     @foreach($teammember as $r)
                         <div class="col-md-12 memberprofile memberprofilecontroleight" onclick="selectteamforepic({{$r->id}} , {{$data->id}})">
@@ -179,7 +181,8 @@
 
                 @if($data->type == 'BU')
                 @php
-                    $teammember = DB::table('unit_team')->where('id',$data->unit_id)->where('type' , 'BU')->get();
+                    $team = DB::table('unit_team')->where('id',$data->unit_id)->where('type' , 'BU')->first();
+                    $teammember = DB::table('unit_team')->where('org_id',$team->org_id)->where('type' , 'BU')->get();
                 @endphp
                 @foreach($teammember as $r)
                     <div class="col-md-12 memberprofile memberprofilecontroleight" onclick="selectteamforepic({{$r->id}} , {{$data->id}})">
@@ -202,6 +205,33 @@
                     </div>
                 @endforeach
             @endif
+
+            @if($data->type == 'orgT')
+            @php
+                $team = DB::table('org_team')->where('id',$data->unit_id)->where('type' , 'orgT')->first();
+                $teammember = DB::table('org_team')->where('org_id',$team->org_id)->where('type' , 'orgT')->get();
+            @endphp
+            @foreach($teammember as $r)
+                <div class="col-md-12 memberprofile memberprofilecontroleight" onclick="selectteamforepic({{$r->id}} , {{$data->id}})">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="memberprofileimage">
+                                <img class="gixie" data-item-id="{{ $r->id }}">
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="membername">{{ $r->team_title }}</div>
+                            <div class="memberdetail">Lead: {{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
+                        </div>
+                        <div class="col-md-2 text-center mt-3">
+                            @if($data->team_id == $r->id)
+                            <span class="material-symbols-outlined">cancel</span>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        @endif
                     
                 </div>
             </div>
