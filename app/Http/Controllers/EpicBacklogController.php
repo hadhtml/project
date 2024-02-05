@@ -446,6 +446,14 @@ class EpicBacklogController extends Controller
         {
             $teams = DB::table('value_team')->where('org_id',$update->unit_id)->where('type' , 'VS')->get();
         }
+        if($update->type == 'VS')
+        {
+            $teams = DB::table('value_team')->where('id',$update->unit_id)->where('type' , 'VS')->get();
+        }
+        if($update->type == 'BU')
+        {
+            $teams = DB::table('unit_team')->where('id',$update->unit_id)->where('type' , 'BU')->get();
+        }
         $update = $update;
         $html = view('epics.teamappend', compact('teams','update'))->render();
         return $html;                 
