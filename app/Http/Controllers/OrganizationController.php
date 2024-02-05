@@ -536,8 +536,8 @@ class OrganizationController extends Controller
           $report  =  DB::table('sprint')->where('value_unit_id',$organization->id)->where('type','orgT')->get();
           }
           
-          // session()->forget('key');
-          // session()->forget('init');
+          session()->forget('key');
+          session()->forget('init');
           return view('Report.Bu-report',compact('report','organization','type','Sid'));
 
     }
