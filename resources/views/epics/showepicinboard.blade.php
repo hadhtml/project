@@ -1,12 +1,12 @@
 <div onclick="editepic({{$e->id}})" class="card" style="width:102.7%">
        <div class="card card-epic border-radius" style="margin-bottom:0px !important">
             <div class="card-header bg-white border-bottom-radius pt-2 pl-4 pr-4 pb-2">
-               <div class="d-flex">
-                  <div style="width: 55%;" class="epic_id">
-                       <img src="{{ url('public/assets/svg/arrow.svg') }}">
+               <div class="d-flex flex-md-row flex-sm-column justify-content-between align-items-center">
+                  <div class="epic_id">
+                       <img src="{{ url('public/assets/svg/arrow.svg') }}" width="16px">
                         OE-{{ $e->id }}
                    </div>
-                  <div style="width: 45%;">
+                  <div>
                      @if($e->epic_status == 'Done')
                      <span class="badge-cs-small success">{{$e->epic_status}}</span>
                      @endif
@@ -72,7 +72,7 @@
                {{$epic_detail}}
                <a href="javascript:void(0);" onclick="seelesstext({{$e->id}});" id="toggle-button-less-text{{$e->id}}" class="" style="font-size:10px">Less</a>
             </p>
-            <div
+            {{-- <div
                class="progress">
                <div  @if($e->epic_status == 'Done') class="progress-bar bg-primary" @endif @if($e->epic_status == 'In progress') class="progress-bar bg-warning" @endif @if($e->epic_status == 'To Do') class="progress-bar bg-success" @endif
                role="progressbar"
@@ -81,7 +81,12 @@
                aria-valuemin="0"
                aria-valuemax="100" id="progepic{{$e->id}}">
             </div>
-         </div>
+         </div> --}}
+         <div class="progress" @if($e->epic_status == 'Done') class="progress-bar bg-primary" @endif @if($e->epic_status == 'In progress') class="progress-bar bg-warning" @endif @if($e->epic_status == 'To Do') class="progress-bar bg-success" @endif>
+            <div class="progress-bar color-547AFF" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width:{{$e->epic_progress}}%">
+           
+            </div>
+        </div>
       </div>
       @if($organization->type == 'org')
       @foreach(DB::table('org_team')->where('org_id',$organization->id)->get() as $r)
