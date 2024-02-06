@@ -11,20 +11,13 @@ const dataToImport = {
                     "typenode": false,
                     "inputs": {},
                     "outputs": {
-                        @foreach(DB::table('team_link_child')->where('type' , 'unit')->where('unit_id'  ,$data->id)->get() as $o)
-                        @foreach(DB::table('key_result')->where('obj_id' , $o->id)->get() as $keyresult=> $key_result)
-                        @if(DB::table('team_link_child')->where('bussiness_key_id' , $key_result->id)->count() > 0)
-                        @php
-                            $connectionid = DB::table('team_link_child')->where('bussiness_key_id' , $key_result->id)->where('bussiness_obj_id' , $o->id)->first();
-                        @endphp
-                        "output_{{ $keyresult+1 }}": {
+                        @foreach(DB::table('team_link_child')->where('from' , 'unit')->where('bussiness_unit_id'  ,$data->id)->get() as $key=> $t)
+                        "output_{{$key+1}}": {
                             "connections": [{
-                                "node": "{{ $o->type }}{{ $o->unit_id }}",
-                                "output": "input_{{ $connectionid->id }}"
+                                "node": "10{{$key+1}}",
+                                "output": "input_1"
                             }]
                         },
-                        @endif
-                        @endforeach
                         @endforeach
                     },
                     "pos_x": 10,
@@ -47,7 +40,7 @@ const dataToImport = {
                     }
                 @endphp
                 "{{ 100+$v->id }}": {
-                    "id": 1,
+                    "id": {{ 100+$v->id }},
                     "name": "personalized",
                     "data": {},
                     "class": "buisnessunit-tab-value-stream-objective",
@@ -55,12 +48,10 @@ const dataToImport = {
                     "typenode": false,
                     "inputs": {
                         "input_1": {
-                            "connections": [
-                                {
-                                    "node": "unit1",
-                                    "input": "output_38"
-                                }
-                            ]
+                            "connections": [{
+                                "node": "1",
+                                "input": "output_1"
+                            }]
                         }
                     },
                     "outputs": {},
