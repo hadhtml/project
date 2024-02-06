@@ -341,6 +341,23 @@ class EpicController extends Controller
             $item->progress =  100;
             $item->save();
         }
+
+        $epicprogress = DB::table("epics_stroy")->where("epic_id", $request->epic_id)->sum("progress");
+        $count = DB::table("epics_stroy")->where("epic_id", $request->epic_id)->count();
+        if($count > 0)
+        {
+        $total = round($epicprogress / $count, 2);
+        if($total == 100)
+        {
+        DB::table("epics")->where("id", $request->epic_id)->update(["epic_progress" => $total,"epic_status" => 'Done']);
+            
+        }else
+        {
+        DB::table("epics")->where("id", $request->epic_id)->update(["epic_progress" => $total,"epic_status" => 'To Do']);
+    
+        }
+        }
+
         Cmf::save_activity(Auth::id() , 'Added a New Child Item','epics',$request->epic_id , 'toc');
         $epic = Epic::find($request->epic_id);
         $epicstory = DB::table('epics_stroy')->where('epic_id',$epic->id)->where('epic_type' , 'orignal')->orderby('id' , 'desc')->get();
