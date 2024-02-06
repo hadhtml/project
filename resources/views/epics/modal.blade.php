@@ -8,6 +8,7 @@
             <div class="menuettitle">
                 <h4>Menu</h4>
                 <input type="hidden" id="modaltab" value="general">
+                <input type="hidden" id="tabs" value="">
                 <ul>
                     <li id="general" onclick="showtab({{$data->id}} , 'general')" class="tabsclass active">
                         <span class="material-symbols-outlined"> edit_square </span> General
@@ -128,7 +129,7 @@
     }
     function changeepicstatus(status , id) {
 
-        var tab = $('#modaltab').val();
+        var tab = $('#tabs').val();
         $.ajax({
             type: "POST",
             url: "{{ url('dashboard/epics/changeepicstatus') }}",
@@ -150,7 +151,8 @@
             },
             success: function(res) {
                 showheader(id);
-                showtab(id,tab);
+               
+                showtabwithoutloader(id ,tab);
                 $('#parentCollapsible').html(res);
                 $("#nestedCollapsible{{ $data->obj_id }}").collapse('toggle');
                 $("#key-result{{ $data->key_id }}").collapse('toggle');
@@ -202,7 +204,9 @@
         });
     }
     function showtab(id , tab) {
+
         $('#modaltab').val(tab);
+        $('#tabs').val(tab);
         $('.secondportion').addClass('loaderdisplay');
         $('.secondportion').html('<i class="fa fa-spin fa-spinner"></i>');
         $.ajax({
