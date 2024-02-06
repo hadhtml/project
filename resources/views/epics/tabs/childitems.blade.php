@@ -607,11 +607,14 @@ function changeitemstatus(status , s_id) {
             obj: obj
         },
         success: function(res) {
-            console.log(res);
+          
             showtabwithoutloader('{{$epic->id}}' , 'childitems');
             showheader('{{$epic->id}}')
-            // $('#epic-status' + '{{$epic->id}}').html(res.epic_progress+ '%');
-            $('#epic-status' + '{{$epic->id}}').width(res.epic_progress + '%');
+            $('#epic-status' + '{{$epic->id}}').width(res.epic.epic_progress + '%');
+            $('#proginit'+res.initiativeProgress.id).attr('aria-valuenow',res.initiativeProgress.initiative_prog);
+            $('#proginit'+res.initiativeProgress.id).css('--value',res.initiativeProgress.initiative_prog);
+            $('#qcomp'+res.initiativeProgress.id).attr('aria-valuenow',res.initiativeProgress.q_initiative_prog);
+            $('#qcomp'+res.initiativeProgress.id).css('--value',res.initiativeProgress.q_initiative_prog);
         }
     });
 }

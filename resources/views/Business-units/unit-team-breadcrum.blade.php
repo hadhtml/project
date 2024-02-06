@@ -26,12 +26,28 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                           
                             <div class="d-flex flex-row">
                                 <div>
+                                    @if($organization->type == 'unit' || $organization->type == 'stream')
                                     <span style="font-size:22px" class="material-symbols-outlined">groups</span>
+
+                                    @endif
+
+                                    @if($organization->type == 'BU' || $organization->type == 'VS' )
+                                    <span style="font-size:22px" class="material-symbols-outlined">folder_supervised</span>
+
+                                    @endif
                                 </div>
                                 <div>
+                                    @if($organization->type == 'unit' || $organization->type == 'stream')
                                     <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
                                         Teams
                                     </h5>
+                                    @endif
+
+                                    @if($organization->type == 'BU' || $organization->type == 'VS' )
+                                    <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
+                                        Dashboard
+                                    </h5>
+                                    @endif
                                 </div>
                             </div>
                             <!-- Breadcrum Items -->

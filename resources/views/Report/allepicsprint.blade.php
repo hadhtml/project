@@ -12,7 +12,7 @@ $var_objective = 'Report-'.$type;
                     {{-- <h4 class="pb-0 mb-0">All Epics</h4> --}}
                 </div>
                 @php
-                  $name = 'All Epics';
+                  $name = 'All Statuses';
                  session()->put('key',$name);
                 @endphp
                 <div class="d-flex flex-row">
@@ -37,7 +37,7 @@ $var_objective = 'Report-'.$type;
                             </svg>
                           </button>
                           <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                            <a class="dropdown-item" href="{{url('dashboard/organization/Okr-report-allepic/'.$sprint.'/'.$type)}}">All</a>
+                            <a class="dropdown-item" href="{{url('dashboard/organization/Okr-report-allepic/'.$sprint.'/'.$type)}}">All Statuses</a>
                             <a class="dropdown-item" href="{{url('dashboard/organization/Okr-report-all/'.$sprint.'/'.$type)}}">Completed</a>
                             <a class="dropdown-item" href="{{url('dashboard/organization/Okr-report-NC/'.$sprint.'/'.$type)}}">Not Completed</a>
                             <a class="dropdown-item" href="{{url('dashboard/organization/Okr-report-remove/'.$sprint.'/'.$type)}}">Removed</a>
@@ -51,8 +51,7 @@ $var_objective = 'Report-'.$type;
             </div>
             @php
                 $InitName = 'All';
-                 $name = 'All Epics';
-                 session()->put('key',$name);
+              
             $SprintInit = DB::table('sprint_report')->where('initiative_name','!=',NULL)->where('q_id',$sprint)->get();
                    if(session())
                     {

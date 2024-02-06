@@ -21,7 +21,7 @@ $var_objective = 'Report-'.$type;
                     <div>
                         <div class="dropdown">
                           <button class="btn bg-white btn-circle dropdown-toggle w-100" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            All Epics
+                            All Statuses
                             <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g id="vuesax/outline/arrow-down">
                                     <g id="arrow-down">
@@ -31,7 +31,7 @@ $var_objective = 'Report-'.$type;
                             </svg>
                           </button>
                           <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                            <a class="dropdown-item" href="{{url('dashboard/organization/Okr-report-allepic/'.$sprint.'/'.$type)}}">All</a>
+                            <a class="dropdown-item" href="{{url('dashboard/organization/Okr-report-allepic/'.$sprint.'/'.$type)}}">All Statuses</a>
                             <a class="dropdown-item" href="{{url('dashboard/organization/Okr-report-all/'.$sprint.'/'.$type)}}">Completed</a>
                             <a class="dropdown-item" href="{{url('dashboard/organization/Okr-report-NC/'.$sprint.'/'.$type)}}">Not Completed</a>
                             <a class="dropdown-item" href="{{url('dashboard/organization/Okr-report-remove/'.$sprint.'/'.$type)}}">Removed</a>

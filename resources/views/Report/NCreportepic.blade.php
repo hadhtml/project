@@ -44,7 +44,7 @@ $var_objective = 'Report-'.$type;
                             </svg>
                           </button>
                           <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                            <a class="dropdown-item" href="{{url('dashboard/organization/Okr-report-allepic/'.$sprint.'/'.$type)}}">All</a>
+                            <a class="dropdown-item" href="{{url('dashboard/organization/Okr-report-allepic/'.$sprint.'/'.$type)}}">All Statuses</a>
                             <a class="dropdown-item" href="{{url('dashboard/organization/Okr-report-all/'.$sprint.'/'.$type)}}">Completed</a>
                             <a class="dropdown-item" href="{{url('dashboard/organization/Okr-report-NC/'.$sprint.'/'.$type)}}">Not Completed</a>
                             <a class="dropdown-item" href="{{url('dashboard/organization/Okr-report-remove/'.$sprint.'/'.$type)}}">Removed</a>

@@ -1504,7 +1504,7 @@ $updateData = [
         $organizationData = DB::table('business_units')->where('id',$org->org_id)->where('user_id',Auth::id())->first();
         if($organizationData)
         {
-        $organization = DB::table('unit_team')->where('org_id',$organizationData->id)->first();
+        $organization = DB::table('unit_team')->where('slug',$id)->first();
         return view('Business-units.team-dashboard',compact('organization','type'));
         }else
         {
@@ -1522,7 +1522,7 @@ $updateData = [
    
     if($organizationData)
     {
-    $organization = DB::table('value_team')->where('org_id',$organizationData->id)->first();    
+    $organization = DB::table('value_team')->where('slug',$id)->first();    
     return view('Business-units.team-dashboard',compact('organization','type'));
     }else
     {
@@ -1540,7 +1540,7 @@ $updateData = [
 
     if($organizationData)
     {
-        $organization = DB::table('org_team')->where('org_id',$organizationData->id)->first();
+        $organization = DB::table('org_team')->where('slug',$id)->first();
     return view('Business-units.team-dashboard',compact('organization','type'));
     }else
     {
