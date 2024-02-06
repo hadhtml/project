@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEscalateCardsTable extends Migration
+class CreateFlowChartScriptsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateEscalateCardsTable extends Migration
      */
     public function up()
     {
-        Schema::create('escalate_cards', function (Blueprint $table) {
+        Schema::create('flow_chart_scripts', function (Blueprint $table) {
             $table->id();
-            $table->string('flag_id');
-            $table->string('from');
-            $table->string('to');
+            $table->string('unit_id')->nullable();
+            $table->string('type')->nullable();
+            $table->longtext('script')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateEscalateCardsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('escalate_cards');
+        Schema::dropIfExists('flow_chart_scripts');
     }
 }
