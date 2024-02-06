@@ -607,8 +607,11 @@ function changeitemstatus(status , s_id) {
             obj: obj
         },
         success: function(res) {
+            console.log(res);
             showtabwithoutloader('{{$epic->id}}' , 'childitems');
             showheader('{{$epic->id}}')
+            // $('#epic-status' + '{{$epic->id}}').html(res.epic_progress+ '%');
+            $('#epic-status' + '{{$epic->id}}').width(res.epic_progress + '%');
         }
     });
 }

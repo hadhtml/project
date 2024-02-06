@@ -1194,6 +1194,8 @@ function LoadNCEpic(Request $request)
     $organization = DB::table('org_team')->where('id',$report->value_unit_id)->first();        
     }
 
+          session()->forget('init');
+
     return view('Report.All-Init',compact('report','sprint','type','organization','Sid'));
 
 

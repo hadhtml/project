@@ -2283,7 +2283,13 @@ if($objcount > 0)
         $epicprogress = DB::table("epics_stroy")->where("epic_id", $epicid->epic_id)->sum("progress");
         $count = DB::table("epics_stroy")->where("epic_id", $epicid->epic_id)->count();
         $total = round($epicprogress / $count, 2);
-        DB::table("epics")->where("id", $epicid->epic_id)->update(["epic_progress" => $total,"updated_at" => Carbon::now(),]);
+        if($total == 100)
+        {
+        DB::table("epics")->where("id", $epicid->epic_id)->update(["epic_progress" => $total,"updated_at" => Carbon::now(),"epic_status" => 'Done']);
+        }else
+        {
+            DB::table("epics")->where("id", $epicid->epic_id)->update(["epic_progress" => $total,"updated_at" => Carbon::now(),"epic_status" => 'To Do']); 
+        }
 
         $backlog = DB::table("epics")->where("id", $epicid->epic_id)->where("trash", null)->first();
 
@@ -2408,8 +2414,9 @@ if($objcount > 0)
 
         $epic = Epic::find($childitem->epic_id);
         $epicstory = DB::table('epics_stroy')->where('epic_id',$epic->id)->orderby('id' , 'desc')->get();
-        $html = view('epics.tabs.childitems', compact('epic','epicstory'))->render();
-        return $html;
+        // $html = view('epics.tabs.childitems', compact('epic','epicstory'))->render();
+        // return $html;
+        return  $epic;
     }
 
     public function DeleteStory(Request $request)

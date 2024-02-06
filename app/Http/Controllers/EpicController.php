@@ -583,35 +583,45 @@ class EpicController extends Controller
             ->update([
                 "epic_status" => $request->edit_epic_status,
             ]);
-        if ($request->edit_epic_status == "Done") {
-            DB::table("epics")
-                ->where("id", $request->edit_epic_id)
-                ->update([
-                    "epic_progress" => 100,
-                    "updated_at" => Carbon::now(),
-                ]);
-        }
+            if ($request->edit_epic_status == "Done") {
+                DB::table("epics")
+                    ->where("id", $request->edit_epic_id)
+                    ->update([
+                        "epic_progress" => 100,
+                        "updated_at" => Carbon::now(),
+                    ]);
+                    DB::table("epics_stroy")
+                    ->where("epic_id", $request->edit_epic_id)
+                    ->update(["progress" => 100,'story_status' => 'Done']);
+            }
+    
+            if ($request->edit_epic_status == "To Do") {
+                DB::table("epics")
+                    ->where("id", $request->edit_epic_id)
+                    ->update([
+                        "epic_progress" => 0,
+                        "updated_at" => Carbon::now(),
+                    ]);
+    
+                    DB::table("epics_stroy")
+                    ->where("epic_id", $request->edit_epic_id)
+                    ->update(["progress" => 0,'story_status' => 'To Do']);
+    
+            }
+    
+            if ($request->edit_epic_status == "In progress") {
+                DB::table("epics")
+                    ->where("id", $request->edit_epic_id)
+                    ->update([
+                        "epic_progress" => 0,
+                        "updated_at" => Carbon::now(),
+                    ]);
+    
+                    DB::table("epics_stroy")
+                    ->where("epic_id", $request->edit_epic_id)
+                    ->update(["progress" => 0]);
+            }
 
-        if ($request->edit_epic_status == "To Do") {
-            DB::table("epics")
-                ->where("id", $request->edit_epic_id)
-                ->update([
-                    "epic_progress" => 0,
-                    "updated_at" => Carbon::now(),
-                ]);
-        }
-
-        if ($request->edit_epic_status == "In progress") {
-            DB::table("epics")
-                ->where("id", $request->edit_epic_id)
-                ->update([
-                    "epic_progress" => 0,
-                    "updated_at" => Carbon::now(),
-                ]);
-        }
-        DB::table("epics_stroy")
-            ->where("epic_id", $request->edit_epic_id)
-            ->update(["progress" => 100]);
         $epicid = DB::table("epics")
             ->where("id", $request->edit_epic_id)
             ->first();
