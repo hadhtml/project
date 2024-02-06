@@ -542,28 +542,28 @@ class EpicController extends Controller
 
         if($previousstatus == 'In progress')
         {
-            $from_status = '<b style="background-color: #E1DB3F; color: white; border-radius: 10px; padding-left: 5px; padding-right: 5px; ">In Progress</b>';
+            $from_status = '<b style="background-color: #E1DB3F; color: white; border-radius: 10px; padding:10px 7px; font-weight:400 ">In Progress</b>';
         }
         if($previousstatus == 'Done')
         {
-            $from_status = '<b style="background-color: #3fe1a7; color: white; border-radius: 10px; padding-left: 5px; padding-right: 5px; ">Done</b>';
+            $from_status = '<b style="background-color: #3fe1a7; color: white; border-radius: 10px; padding:10px 7px; font-weight:400 ">Done</b>';
         }
         if($previousstatus == 'To Do')
         {
-            $from_status = '<b style="background-color: #6c757d; color: white; border-radius: 10px; padding-left: 5px; padding-right: 5px; ">To Do</b>';
+            $from_status = '<b style="background-color: #6c757d; color: white; border-radius: 10px; padding:10px 7px; font-weight:400 ">To Do</b>';
         }
 
         if($request->edit_epic_status == 'To Do')
         {
-            $tostatus = '<b style="background-color: #6c757d; color: white; border-radius: 10px; padding-left: 5px; padding-right: 5px; ">To Do</b>';
+            $tostatus = '<b style="background-color: #6c757d; color: white; border-radius: 10px; padding:10px 7px; font-weight:400 ">To Do</b>';
         }
         if($request->edit_epic_status == 'Done')
         {
-            $tostatus = '<b style="background-color: #3fe1a7; color: white; border-radius: 10px; padding-left: 5px; padding-right: 5px; ">Done</b>';
+            $tostatus = '<b style="background-color: #3fe1a7; color: white; border-radius: 10px; padding:10px 7px; font-weight:400 ">Done</b>';
         }
         if($request->edit_epic_status == 'In progress')
         {
-            $tostatus = '<b style="background-color: #E1DB3F; color: white; border-radius: 10px; padding-left: 5px; padding-right: 5px; ">In Progress</b>';
+            $tostatus = '<b style="background-color: #E1DB3F; color: white; border-radius: 10px; padding:10px 7px; font-weight:400 ">In Progress</b>';
         }
         $notification = "Status Changed From ".$from_status .' To '.$tostatus;
         Cmf::save_activity(Auth::id() , $notification,'epics',$request->edit_epic_id , 'detector_status');
@@ -583,35 +583,45 @@ class EpicController extends Controller
             ->update([
                 "epic_status" => $request->edit_epic_status,
             ]);
-        if ($request->edit_epic_status == "Done") {
-            DB::table("epics")
-                ->where("id", $request->edit_epic_id)
-                ->update([
-                    "epic_progress" => 100,
-                    "updated_at" => Carbon::now(),
-                ]);
-        }
+            if ($request->edit_epic_status == "Done") {
+                DB::table("epics")
+                    ->where("id", $request->edit_epic_id)
+                    ->update([
+                        "epic_progress" => 100,
+                        "updated_at" => Carbon::now(),
+                    ]);
+                    DB::table("epics_stroy")
+                    ->where("epic_id", $request->edit_epic_id)
+                    ->update(["progress" => 100,'story_status' => 'Done']);
+            }
+    
+            if ($request->edit_epic_status == "To Do") {
+                DB::table("epics")
+                    ->where("id", $request->edit_epic_id)
+                    ->update([
+                        "epic_progress" => 0,
+                        "updated_at" => Carbon::now(),
+                    ]);
+    
+                    DB::table("epics_stroy")
+                    ->where("epic_id", $request->edit_epic_id)
+                    ->update(["progress" => 0,'story_status' => 'To Do']);
+    
+            }
+    
+            if ($request->edit_epic_status == "In progress") {
+                DB::table("epics")
+                    ->where("id", $request->edit_epic_id)
+                    ->update([
+                        "epic_progress" => 0,
+                        "updated_at" => Carbon::now(),
+                    ]);
+    
+                    DB::table("epics_stroy")
+                    ->where("epic_id", $request->edit_epic_id)
+                    ->update(["progress" => 0]);
+            }
 
-        if ($request->edit_epic_status == "To Do") {
-            DB::table("epics")
-                ->where("id", $request->edit_epic_id)
-                ->update([
-                    "epic_progress" => 0,
-                    "updated_at" => Carbon::now(),
-                ]);
-        }
-
-        if ($request->edit_epic_status == "In progress") {
-            DB::table("epics")
-                ->where("id", $request->edit_epic_id)
-                ->update([
-                    "epic_progress" => 0,
-                    "updated_at" => Carbon::now(),
-                ]);
-        }
-        DB::table("epics_stroy")
-            ->where("epic_id", $request->edit_epic_id)
-            ->update(["progress" => 100]);
         $epicid = DB::table("epics")
             ->where("id", $request->edit_epic_id)
             ->first();
