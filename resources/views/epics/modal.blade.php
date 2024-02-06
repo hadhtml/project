@@ -127,6 +127,8 @@
         $('#flagdelete'+id).slideToggle();
     }
     function changeepicstatus(status , id) {
+
+        var tab = $('#modaltab').val();
         $.ajax({
             type: "POST",
             url: "{{ url('dashboard/epics/changeepicstatus') }}",
@@ -148,6 +150,7 @@
             },
             success: function(res) {
                 showheader(id);
+                showtab(id,tab);
                 $('#parentCollapsible').html(res);
                 $("#nestedCollapsible{{ $data->obj_id }}").collapse('toggle');
                 $("#key-result{{ $data->key_id }}").collapse('toggle');

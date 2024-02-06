@@ -83,7 +83,7 @@
             </div>
          </div> --}}
          <div class="progress" @if($e->epic_status == 'Done') class="progress-bar bg-primary" @endif @if($e->epic_status == 'In progress') class="progress-bar bg-warning" @endif @if($e->epic_status == 'To Do') class="progress-bar bg-success" @endif>
-            <div class="progress-bar color-547AFF" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width:{{$e->epic_progress}}%">
+            <div class="progress-bar color-547AFF" id="epic-status{{$e->id}}" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width:{{$e->epic_progress}}%">
            
             </div>
         </div>

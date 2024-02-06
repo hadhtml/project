@@ -61,7 +61,9 @@ $var_objective = 'Report-'.$type;
                         @foreach($SprintInit as $keyInt)
     
                         <a class="dropdown-item"href="{{url('dashboard/organization/report-init/'.$keyInt->initiative_id.'/'.$sprint.'/'.$type)}}">{{$keyInt->initiative_name}}</a>
-                        @endforeach  
+                        @endforeach 
+                        <a class="dropdown-item"href="{{url('dashboard/organization/report-init-all/'.$sprint.'/'.$type)}}">All</a>
+ 
                     </div>
                 </div>
             </div>
