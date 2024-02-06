@@ -448,11 +448,18 @@ class EpicBacklogController extends Controller
         }
         if($update->type == 'VS')
         {
-            $teams = DB::table('value_team')->where('id',$update->unit_id)->where('type' , 'VS')->get();
+            $team = DB::table('value_team')->where('id',$update->unit_id)->where('type' , 'VS')->first();
+            $teams = DB::table('value_team')->where('org_id',$team->org_id)->where('type' , 'VS')->get();
         }
         if($update->type == 'BU')
         {
-            $teams = DB::table('unit_team')->where('id',$update->unit_id)->where('type' , 'BU')->get();
+            $team = DB::table('unit_team')->where('id',$update->unit_id)->where('type' , 'BU')->first();
+            $teams = DB::table('unit_team')->where('org_id',$team->org_id)->where('type' , 'BU')->get();
+        }
+        if($update->type == 'orgT')
+        {
+            $team = DB::table('org_team')->where('id',$update->unit_id)->where('type' , 'orgT')->first();
+            $teams = DB::table('org_team')->where('org_id',$team->org_id)->where('type' , 'orgT')->get();
         }
         $update = $update;
         $html = view('epics.teamappend', compact('teams','update'))->render();
