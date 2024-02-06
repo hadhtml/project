@@ -24,6 +24,7 @@
             ->count();
         $EpicsBacklog = DB::table('team_backlog')
             ->where('unit_id', $organization->id)
+            ->where('epic_title','!=',NULL)
             ->where('type', 'org')
             ->count();
         $Impediments = DB::table('flags')
