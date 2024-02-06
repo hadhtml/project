@@ -129,7 +129,7 @@
     }
     function changeepicstatus(status , id) {
 
-        var tab = $('#tabs').val();
+        var tabs = $('#tabs').val();
         $.ajax({
             type: "POST",
             url: "{{ url('dashboard/epics/changeepicstatus') }}",
@@ -152,7 +152,7 @@
             success: function(res) {
                 showheader(id);
                
-                showtabwithoutloader(id ,tab);
+                 showtab(id ,tabs);
                 $('#parentCollapsible').html(res);
                 $("#nestedCollapsible{{ $data->obj_id }}").collapse('toggle');
                 $("#key-result{{ $data->key_id }}").collapse('toggle');
