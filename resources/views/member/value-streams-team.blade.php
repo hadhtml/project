@@ -21,8 +21,8 @@ $var_objective = "Stream-team";
 
                                
      $ObjResultcount  = DB::table('objectives')->where('unit_id',$team->id)->where('type','VS')->where('trash',NULL)->count();
-     $EpicResultcount  = DB::table('epics')->where('buisness_unit_id',$team->id)->where('epic_type','VS')->where('trash',NULL)->count();
- 
+     $EpicResultcount  = DB::table('team_backlog')->where('epic_title','!=',NULL)->where('unit_id',$team->id)->where('type','VS')->count();
+
      @endphp
  <div class="col-md-4">
      <div class="card business-card">
