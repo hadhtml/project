@@ -34,7 +34,7 @@ $valuestream = DB::table('value_stream')->where('unit_id',$organization->id)->co
             <div class="col-md-3 mb-4">
                 <div class="dashboard-card">
                     <div class="card-svg">
-                        <a href="{{url('dashboard/organization/'.$organization->slug.'/BU-Backlog')}}"> 
+                        <a href="{{url('dashboard/epicbacklog/'.$organization->slug.'/unit')}}"> 
                             <span class="material-symbols-outlined key_visualizer">key_visualizer</span>
                         </a>
                     </div>
