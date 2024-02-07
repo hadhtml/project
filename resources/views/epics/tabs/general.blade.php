@@ -55,6 +55,7 @@
     function showtab(id , tab) {
         $('.secondportion').addClass('loaderdisplay');
         $('.secondportion').html('<i class="fa fa-spin fa-spinner"></i>');
+        
         $.ajax({
             type: "POST",
             url: "{{ url('dashboard/epics/showtab') }}",
@@ -70,6 +71,7 @@
                 $('.secondportion').html(res);
                 $('.tabsclass').removeClass('active');
                 $('#'+tab).addClass('active');
+                $('#tabs').val(tab);
             },
             error: function(error) {
                 
