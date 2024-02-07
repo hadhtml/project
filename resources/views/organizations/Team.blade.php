@@ -31,11 +31,12 @@
                         ->where('type', 'orgT')
                         ->where('trash',NULL)
                         ->count();
-                    $EpicResultcount = DB::table('epics')
-                        ->where('buisness_unit_id',$team->id)
-                        ->where('trash',NULL)
-                        ->where('epic_type','orgT')
+                    $EpicResultcount = DB::table('team_backlog')
+                        ->where('unit_id',$team->id)
+                        ->where('epic_title','!=',NULL)
+                        ->where('type','orgT')
                         ->count();
+
 
                 @endphp
                 <div class="col-md-4">
