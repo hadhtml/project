@@ -561,5 +561,5 @@
 <!-- Create Objective -->
 <!-- Create Initiative -->
 
-
+@yield('scripts')
 </html>

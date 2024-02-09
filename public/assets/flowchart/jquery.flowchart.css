@@ -105,10 +105,11 @@
 
 .flowchart-operator {
     position: absolute;
-    width: 140px;
+    width: 300px;
     border: 1px solid #CCCCCC;
     background: #FAFAFA;
     pointer-events: auto;
+    border-radius: 12px;
 }
 
 .flowchart-operator.hover {
@@ -133,6 +134,8 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     cursor: move;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
 }
 
 .flowchart-operator .flowchart-operator-inputs-outputs {
@@ -146,6 +149,24 @@
     display: table-cell;
     width: 50%;
 }
+
+
+.buisnessunit-tab .flowchart-operator-inputs{
+    width: 0 !important;
+}
+
+.buisnessunit-tab .flowchart-operator-outputs .flowchart-operator-connector-label{
+    text-align: left !important;
+    padding-left: 10px;
+}
+
+.value-stream-tab .flowchart-operator-outputs{
+    width: 0 !important;
+}
+.value-stream-tab .flowchart-operator-inputs{
+    width: 100% !important;
+}
+
 
 /*
  * flowchart-vertical
