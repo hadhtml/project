@@ -128,11 +128,11 @@
     <td>{{$s->story_status}}</td>
     <td>
         <button class="btn-circle btn-tolbar" data-toggle="collapse" data-target="#EditStory{{$s->id}}" type="button" onclick="editstorynew({{$s->id}});">
-            <img src="{{ url('public/assets/images/icons/edit.svg') }}">
+            <span class="material-symbols-outlined">edit</span>
         </button>
           
         <button class="btn-circle btn-tolbar" type="button" onclick="deletestory({{$s->id}});">
-            <img src="{{ url('public/assets/images/icons/delete.svg') }}">
+            <span class="material-symbols-outlined">delete</span>
         </button>
     </td>
 </tr>

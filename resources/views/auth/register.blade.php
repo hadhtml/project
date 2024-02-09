@@ -119,7 +119,7 @@
                                        <div class="col-md-12">
                                      <div id="popover-password" style="display:none;">
 
-                                    <ul class="list-unstyled mt-2" style="font-size:14px">
+                                    <ul class="list-unstyled" style="font-size:12px">
                                         <li class="">
                                             <span class="low-upper-case">
                                                 <i class="fas fa-check" aria-hidden="true"></i>

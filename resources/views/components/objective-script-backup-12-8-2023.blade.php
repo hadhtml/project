@@ -2701,8 +2701,8 @@
                 $('#edit-button-val' + id).html(
                     '<button class="btn-circle btn-tolbar" type="button" onclick="editquartervalue(' +
                     id + ',' + "'" + title + "'" +
-                    ')"><img src="{{ url('public/assets/images/icons/edit.svg') }}"></button>  <button class="btn-circle btn-tolbar" type="button" onclick="deletequartervalue(' +
-                    id + ')"><img src="{{ url('public/assets/images/icons/delete.svg') }}"></button>');
+                    ')"><span class="material-symbols-outlined">edit</span></button>  <button class="btn-circle btn-tolbar" type="button" onclick="deletequartervalue(' +
+                    id + ')"><span class="material-symbols-outlined">delete</span></button>');
 
                 $('#q-value' + res.key_chart_id).html(res.value);
 

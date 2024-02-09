@@ -130,7 +130,7 @@ $var_objective = "Org-Unit";
 
         <div class="modal fade" id="delete{{$unit->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
-              <div class="modal-content" style="padding: 6px !important;">
+              <div class="modal-content" style="padding: 12px !important;">
                 <div class="modal-header">
                     <div class="d-flex flex-column">
                         <div>
@@ -169,7 +169,7 @@ $var_objective = "Org-Unit";
 
   <div class="modal fade" id="edit{{$unit->id}}" tabindex="-1" role="dialog" aria-labelledby="add-business-unit" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-content" style="width: 526px !important; padding: 6px !important;">
+            <div class="modal-content" style="width: 526px !important; padding: 12px !important;">
                 <div class="modal-header">
                     <div class="row">
                         <div class="col-md-12">
@@ -242,7 +242,7 @@ $var_objective = "Org-Unit";
 <!-- Create Business Unit -->
 <div class="modal fade" id="add-business-unit" tabindex="-1" role="dialog" aria-labelledby="add-business-unit" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content" style="width: 526px !important; padding: 6px !important;">
+        <div class="modal-content" style="width: 526px !important; padding: 12px !important;">
             <div class="modal-header">
                 <div class="row">
                     <div class="col-md-12">

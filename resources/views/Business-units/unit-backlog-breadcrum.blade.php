@@ -8,7 +8,7 @@
                                 Epic Backlog
                             </h5>
                             <!-- Breadcrum Items -->
-                            <div class="d-flex flex-row page-sub-titles">
+                            <div class="d-flex flex-row page-sub-titles align-items-center">
                                 <div class="mr-2">
                                     @if($organization->type == 'unit')
                                     <a  href="{{url('dashboard/organization/'.$organization->slug.'/dashboard/'.$organization->type)}}" style="text-decoration: none;" >Dashboard</a>

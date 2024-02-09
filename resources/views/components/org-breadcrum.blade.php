@@ -18,7 +18,7 @@ $organization  = DB::table('organization')->where('user_id',Auth::id())->first()
                                 <div class="mr-2">
                                     <div class="d-flex">
                                         <div>
-                                            <span style="font-size:19px" class="material-symbols-outlined">auto_stories</span>
+                                            <span style="font-size:17px" class="material-symbols-outlined">auto_stories</span>
                                          
                                         </div>
                                         <div>

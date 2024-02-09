@@ -8,7 +8,7 @@
                             <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
                                 Performance Dashboard
                             </h5>
-                          <div class="d-flex flex-row page-sub-titles">
+                          <div class="d-flex flex-row page-sub-titles align-items-center">
                              <div class="mr-2">
                                 @if($organization->type == 'unit')
                                 <a  href="{{url('dashboard/organization/'.$organization->slug.'/dashboard/'.$organization->type)}}" style="text-decoration: none;" >Dashboard</a>

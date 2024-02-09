@@ -34,73 +34,131 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
          </div>
      </div>
          <div class="d-flex flex-row page-sub-titles">
-            <div class="mr-2">
+            <div class="mr-2 d-flex align-items-center">
                @if($organization->type == 'org')
-               <span style="font-size:19px" class="material-symbols-outlined">auto_stories</span>
-               <a href="{{url('dashboard/organizations')}}" style="text-decoration: none;" >Dashboard</a>
-               <span style="font-size:19px" class="material-symbols-outlined">key_visualizer</span>
-               <a  href="javascript::void(0)" style="text-decoration: none;cursor: auto;" >Epic Backlog</a>
+               <div class="d-flex align-items-center mr-2">
+                  <span style="font-size:19px" class="material-symbols-outlined">auto_stories</span>
+                  <a href="{{url('dashboard/organizations')}}" style="text-decoration: none;" >Dashboard</a>
+               </div>
+
+               <div class="d-flex align-items-center mr-2">
+                  <span style="font-size:19px" class="material-symbols-outlined">key_visualizer</span>
+                  <a  href="javascript::void(0)" style="text-decoration: none;cursor: auto;" >Epic Backlog</a>
+               </div>
                @endif
+
                @if($organization->type == 'unit')
-               <span style="font-size:19px" class="material-symbols-outlined">auto_stories</span>
-               <a href="{{url('dashboard/organizations')}}" style="text-decoration: none;" >Dashboard</a>
-               <span style="font-size:19px" class="material-symbols-outlined">domain</span>
-               <a  href="{{url('dashboard/organization/'.$organization->slug.'/dashboard/'.$organization->type)}}" style="text-decoration: none;" >{{ $organization->business_name }}</a>
-               <span style="font-size:19px" class="material-symbols-outlined">key_visualizer</span>
-               <a  href="javascript::void(0)" style="text-decoration: none;cursor: auto;" >Epic Backlog</a>
+               <div class="d-flex align-items-center mr-2">
+                  <span style="font-size:19px" class="material-symbols-outlined">auto_stories</span>
+                  <a href="{{url('dashboard/organizations')}}" style="text-decoration: none;" >Dashboard</a>
+               </div>
+               
+               <div class="d-flex align-items-center mr-2">
+                  <span style="font-size:19px" class="material-symbols-outlined">domain</span>
+                  <a  href="{{url('dashboard/organization/'.$organization->slug.'/dashboard/'.$organization->type)}}" style="text-decoration: none;" >{{ $organization->business_name }}</a>
+               </div>
+
+               <div class="d-flex align-items-center mr-2">
+                  <span style="font-size:19px" class="material-symbols-outlined">key_visualizer</span>
+                  <a  href="javascript::void(0)" style="text-decoration: none;cursor: auto;" >Epic Backlog</a>
+               </div>
                @endif
+
                @if($organization->type == 'stream')
                @php
                   $businesunit = DB::table('business_units')->where('id' , $organization->unit_id)->first();
                @endphp
                
-               <span style="font-size:19px" class="material-symbols-outlined">auto_stories</span>
-               <a href="{{url('dashboard/organizations')}}" style="text-decoration: none;" >Dashboard</a>
-               <span style="font-size:19px" class="material-symbols-outlined">domain</span>
-               <a  href="{{url('dashboard/organization/'.$businesunit->slug.'/dashboard/'.$businesunit->type)}}" style="text-decoration: none;" >{{ $businesunit->business_name }}</a>
-               <span style="font-size:19px" class="material-symbols-outlined">layers</span>
-               <a  href="{{url('dashboard/organization/'.$organization->slug.'/dashboard/'.$organization->type)}}" style="text-decoration: none;" >{{ $organization->value_name }}</a>
-               <span style="font-size:19px" class="material-symbols-outlined">key_visualizer</span>
-               <a  href="javascript::void(0)" style="text-decoration: none;cursor: auto;" >Epic Backlog</a>
+               <div class="d-flex align-items-center mr-2">
+                  <span style="font-size:19px" class="material-symbols-outlined">auto_stories</span>
+                  <a href="{{url('dashboard/organizations')}}" style="text-decoration: none;" >Dashboard</a>
+               </div>
+
+               <div class="d-flex align-items-center mr-2">
+                  <span style="font-size:19px" class="material-symbols-outlined">domain</span>
+                  <a  href="{{url('dashboard/organization/'.$businesunit->slug.'/dashboard/'.$businesunit->type)}}" style="text-decoration: none;" >{{ $businesunit->business_name }}</a>
+               </div>
+
+               <div class="d-flex align-items-center mr-2">
+                  <span style="font-size:19px" class="material-symbols-outlined">layers</span>
+                  <a  href="{{url('dashboard/organization/'.$organization->slug.'/dashboard/'.$organization->type)}}" style="text-decoration: none;" >{{ $organization->value_name }}</a>
+               </div>
+
+               <div class="d-flex align-items-center mr-2">
+                  <span style="font-size:19px" class="material-symbols-outlined">key_visualizer</span>
+                  <a  href="javascript::void(0)" style="text-decoration: none;cursor: auto;" >Epic Backlog</a>
+               </div>
+
                @endif
                @if($organization->type == 'orgT')
-               <span style="font-size:19px" class="material-symbols-outlined">auto_stories</span>
-               <a href="{{url('dashboard/organizations')}}" style="text-decoration: none;" >Dashboard</a>
-               <span style="font-size:19px" class="material-symbols-outlined">home</span>
-               <a  href="{{url('dashboard/organization/'.$organization->slug.'/dashboard/'.$organization->type)}}" style="text-decoration: none;" >{{ $organization->team_title }}</a>
-               <span style="font-size:19px" class="material-symbols-outlined">key_visualizer</span>
-               <a  href="javascript::void(0)" style="text-decoration: none;cursor: auto;" >Epic Backlog</a>
+               <div class="d-flex align-items-center mr-2">
+                  <span style="font-size:19px" class="material-symbols-outlined">auto_stories</span>
+                  <a href="{{url('dashboard/organizations')}}" style="text-decoration: none;" >Dashboard</a>
+               </div>
+
+               <div class="d-flex align-items-center mr-2">
+                  <span style="font-size:19px" class="material-symbols-outlined">home</span>
+                  <a  href="{{url('dashboard/organization/'.$organization->slug.'/dashboard/'.$organization->type)}}" style="text-decoration: none;" >{{ $organization->team_title }}</a>
+               </div>
+
+               <div class="d-flex align-items-center mr-2">
+                  <span style="font-size:19px" class="material-symbols-outlined">key_visualizer</span>
+                  <a  href="javascript::void(0)" style="text-decoration: none;cursor: auto;" >Epic Backlog</a>
+               </div>
                @endif
                @if($organization->type == 'BU')
                @php
                   $businesunit = DB::table('business_units')->where('id' , $organization->org_id)->first();
                 
                @endphp
-                 <span style="font-size:19px" class="material-symbols-outlined">auto_stories</span>
-               <a href="{{url('dashboard/organizations')}}" style="text-decoration: none;" >Dashboard</a>
-               <span style="font-size:19px" class="material-symbols-outlined">domain</span>
-               <a  href="{{url('dashboard/organization/'.$businesunit->slug.'/dashboard/'.$businesunit->type)}}" style="text-decoration: none;" >{{ $businesunit->business_name }}</a>
-               <span style="font-size:19px" class="material-symbols-outlined">groups</span>
-               <a  href="{{url('dashboard/organization/'.$organization->slug.'/dashboard/'.$organization->type)}}" style="text-decoration: none;" >{{ $organization->team_title }}</a>
-               <span style="font-size:19px" class="material-symbols-outlined">key_visualizer</span>
-               <a  href="javascript::void(0)" style="text-decoration: none;cursor: auto;" >Epic Backlog</a>
+                 <div class="d-flex align-items-center mr-2">
+                    <span style="font-size:19px" class="material-symbols-outlined">auto_stories</span>
+                     <a href="{{url('dashboard/organizations')}}" style="text-decoration: none;" >Dashboard</a>
+                 </div>
+               <div class="d-flex align-items-center mr-2">
+                  <span style="font-size:19px" class="material-symbols-outlined">domain</span>
+                  <a  href="{{url('dashboard/organization/'.$businesunit->slug.'/dashboard/'.$businesunit->type)}}" style="text-decoration: none;" >{{ $businesunit->business_name }}</a>
+               </div>
+
+               <div class="d-flex align-items-center mr-2">
+                  <span style="font-size:19px" class="material-symbols-outlined">groups</span>
+                  <a  href="{{url('dashboard/organization/'.$organization->slug.'/dashboard/'.$organization->type)}}" style="text-decoration: none;" >{{ $organization->team_title }}</a>
+               </div>
+
+               <div class="d-flex align-items-center mr-2">
+                  <span style="font-size:19px" class="material-symbols-outlined">key_visualizer</span>
+                  <a  href="javascript::void(0)" style="text-decoration: none;cursor: auto;" >Epic Backlog</a>
+               </div>
+
                @endif
                @if($organization->type == 'VS')
                @php
                   $valuestream = DB::table('value_stream')->where('id' , $organization->org_id)->first();
                   $businesunit = DB::table('business_units')->where('id' , $valuestream->unit_id)->first();
                @endphp
-                <span style="font-size:19px" class="material-symbols-outlined">auto_stories</span>
-               <a href="{{url('dashboard/organizations')}}" style="text-decoration: none;" >Dashboard</a>
-               <span style="font-size:19px" class="material-symbols-outlined">domain</span>
-               <a  href="{{url('dashboard/organization/'.$businesunit->slug.'/dashboard/'.$businesunit->type)}}" style="text-decoration: none;" >{{ $businesunit->business_name }}</a>
-               <span style="font-size:19px" class="material-symbols-outlined">layers</span>
-               <a  href="{{url('dashboard/organization/'.$valuestream->slug.'/dashboard/'.$valuestream->type)}}" style="text-decoration: none;" >{{ $valuestream->value_name }}</a>
-               <span style="font-size:19px" class="material-symbols-outlined">groups</span>
-               <a  href="{{url('dashboard/organization/'.$organization->slug.'/dashboard/'.$organization->type)}}" style="text-decoration: none;" >{{ $organization->team_title }}</a>
-               <span style="font-size:19px" class="material-symbols-outlined">key_visualizer</span>
+                <div class="d-flex align-items-center mr-2">
+                   <span style="font-size:19px" class="material-symbols-outlined">auto_stories</span>
+                  <a href="{{url('dashboard/organizations')}}" style="text-decoration: none;" >Dashboard</a>
+                </div>
 
-               <a  href="javascript::void(0)" style="text-decoration: none;cursor: auto;" >Epic Backlog</a>
+               <div class="d-flex align-items-center mr-2">
+                  <span style="font-size:19px" class="material-symbols-outlined">domain</span>
+                  <a  href="{{url('dashboard/organization/'.$businesunit->slug.'/dashboard/'.$businesunit->type)}}" style="text-decoration: none;" >{{ $businesunit->business_name }}</a>
+               </div>
+
+               <div class="d-flex align-items-center mr-2">
+                  <span style="font-size:19px" class="material-symbols-outlined">layers</span>
+                  <a  href="{{url('dashboard/organization/'.$valuestream->slug.'/dashboard/'.$valuestream->type)}}" style="text-decoration: none;" >{{ $valuestream->value_name }}</a>
+               </div>
+
+               <div class="d-flex align-items-center mr-2">
+                  <span style="font-size:19px" class="material-symbols-outlined">groups</span>
+                  <a  href="{{url('dashboard/organization/'.$organization->slug.'/dashboard/'.$organization->type)}}" style="text-decoration: none;" >{{ $organization->team_title }}</a>
+               </div>
+               <div class="d-flex align-items-center mr-2">
+                  <span style="font-size:19px" class="material-symbols-outlined">key_visualizer</span>
+                  <a  href="javascript::void(0)" style="text-decoration: none;cursor: auto;" >Epic Backlog</a>
+               </div>
                @endif
             </div>
          </div>
@@ -118,7 +176,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                <a class="dropdown-item" href="javascript:void(0)" onclick="assign_epic('all');">All</a>
             </div>
          </div>
-         <div>
+         <div class="d-flex align-items-center">
             <button class="button" id="backlog-assign" data-toggle="modal" style="display:none" onclick="get_epic();" data-target="#">Assign</button>
             <button class="button" onclick="addnewbacklogepic()">Add New</button>
             <button class="button" data-toggle="modal"  data-target="#create-jira-epic">Connect Jira</button>

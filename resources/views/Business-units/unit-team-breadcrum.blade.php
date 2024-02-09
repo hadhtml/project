@@ -51,7 +51,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                                 </div>
                             </div>
                             <!-- Breadcrum Items -->
-                           <div class="d-flex flex-row page-sub-titles">
+                           <div class="d-flex flex-row page-sub-titles align-items-center">
                                 <div class="mr-2">
                                     @if($organization->type == 'BU')
                                     <div class="d-flex">

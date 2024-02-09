@@ -215,23 +215,21 @@ $var_objective = 'Backlog';
                      </td>
                      <td>
                         <button class="btn-circle btn-tolbar" onclick="editbacklogepic({{ $backlog->id }} , 'backlog')">
-                        <img src="{{ asset('public/assets/images/icons/edit.svg') }}"
-                           data-toggle="tooltip" data-placement="top"
-                           data-original-title="Edit">
+                        <span class="material-symbols-outlined" data-toggle="tooltip"
+                            data-placement="top" data-original-title="Edit">edit</span>
                         </button>
                         <button class="btn-circle btn-tolbar" data-toggle="modal"
                            data-target="#delete{{ $backlog->id }}">
-                        <img src="{{ asset('public/assets/images/icons/delete.svg') }}"
-                           data-toggle="tooltip" data-placement="top"
-                           data-original-title="Delete">
+                        <span class="material-symbols-outlined" data-toggle="tooltip"
+                            data-placement="top" data-original-title="Delete">delete</span>
                         </button>
                         @if ($backlog->backlog_id == NULL)
                         <a class="btn-circle btn-tolbar" href="{{url('epic-clone/'.$backlog->id.'/'.$organization->type)}}">
-                           <span class="material-symbols-outlined"> content_copy </span>
+                           <span class="material-symbols-outlined"> copy_all </span>
                                                    </a>
                         @else
                         <a class="btn-circle btn-tolbar" href="{{url('epic-clone/'.$backlog->backlog_id.'/'.$organization->type)}}">
-                           <span class="material-symbols-outlined"> content_copy </span>
+                           <span class="material-symbols-outlined"> copy_all </span>
                                                    </a>   
                         @endif   
                      </td>
@@ -481,7 +479,7 @@ $var_objective = 'Backlog';
 <div class="modal fade" id="create-jira-epic" tabindex="-1" role="dialog" aria-labelledby="create-epic"
    aria-hidden="true">
    <div class="modal-dialog" role="document">
-      <div class="modal-content" style="width: 526px !important;">
+      <div class="modal-content" style="width: 526px !important; padding: 12px !important;">
          <div class="modal-header">
             <div class="row">
                <div class="col-md-12">
@@ -502,7 +500,7 @@ $var_objective = 'Backlog';
          ->where('user_id', Auth::id())
          ->count();
          @endphp
-         <div class="modal-body">
+         <div class="modal-body p-0">
             <form class="needs-validation" action="{{ url('assign-jira-epic') }}" method="POST">
                @csrf
                <input type="hidden" name="backlog_id" value="{{ $organization->id }}">

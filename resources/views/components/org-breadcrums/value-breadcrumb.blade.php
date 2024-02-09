@@ -16,11 +16,11 @@
                                 </div>
                             </div>
                             <!-- Breadcrum Items -->
-                            <div class="d-flex flex-row page-sub-titles">
+                            <div class="d-flex flex-row page-sub-titles align-items-center">
                                 <div class="mr-2">
                                     <div class="d-flex">
                                         <div>
-                                            <span style="font-size:19px" class="material-symbols-outlined">auto_stories</span>
+                                            <span style="font-size:17px" class="material-symbols-outlined">auto_stories</span>
                                         </div>
                                         <div>
                                             <a  href="{{url('dashboard/organization/'.$organization->slug.'/dashboard/'.$organization->type)}}" style="text-decoration: none;" >Dashboard</a>
@@ -33,7 +33,7 @@
                                     @if($organization->type == 'unit')
                                     <div class="d-flex">
                                         <div>
-                                            <span style="font-size:19px" class="material-symbols-outlined">domain</span>
+                                            <span style="font-size:17px" class="material-symbols-outlined">domain</span>
                                         </div>
                                         <div>
                                             <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->business_name}}</a>
@@ -44,7 +44,7 @@
                                 <div class="mr-2">
                                     <div class="d-flex">
                                         <div>
-                                            <span style="font-size:19px" class="material-symbols-outlined">layers</span>
+                                            <span style="font-size:17px" class="material-symbols-outlined">layers</span>
                                         </div>
                                         <div>
                                             <p>Value Streams</p>                                       

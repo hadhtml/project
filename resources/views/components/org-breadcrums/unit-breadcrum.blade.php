@@ -35,7 +35,7 @@
                 @endif
             </h5>
             <!-- Breadcrum Items -->
-            <div class="d-flex flex-row page-sub-titles">
+            <div class="d-flex flex-row page-sub-titles align-items-center">
                 <div class="mr-2">
                     <div class="d-flex flex-row align-items-center">
                         <div>

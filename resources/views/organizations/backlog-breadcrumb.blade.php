@@ -8,7 +8,7 @@
                 Backlog
             </h5>
             <!-- Breadcrum Items -->
-            <div class="d-flex flex-row page-sub-titles">
+            <div class="d-flex flex-row page-sub-titles align-items-center">
                 <div class="mr-2">
                     <p>Dashboard</p>
                 </div>
@@ -41,7 +41,9 @@
             <div>
                 <button class="btn btn-default" data-toggle="modal" onclick="get_epic();" data-target="#assign">Assign</button>
                 <button class="button" data-toggle="modal" data-target="#create-unitbacklog-epic">New Epic</button>
-                <button class="button" data-toggle="modal"  data-target="#create-jira-epic">Download From Jira</button>
+                <button class="button" data-toggle="modal"  data-target="#create-jira-epic">
+                    <img src="https://cdn.iconscout.com/icon/free/png-256/free-jira-2296055-1912014.png?f=webp&w=128" width="20">&nbsp; Download
+                </button>
             </div>
         </div>
         

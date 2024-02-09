@@ -188,7 +188,6 @@
 }
 .menuettitle ul{
     list-style-type: none;
-    padding-left: 10px;
 }
 .menuettitle ul li{
     color: #b2b2b2;
@@ -662,15 +661,15 @@
 .deleteflag{
     cursor: auto;
     position: absolute;
-    border-radius: 5px;
+    border-radius: 10px;
     display: none; 
     width: 285px;
     z-index: 1111;
     top: 140;
     left: 80px;
-    padding: 10px;
+    padding: 15px;
     background-color: white;
-    box-shadow: 0px 2px 2px 4px rgb(87 106 134 / 20%);
+    box-shadow: 0px 2px 32px 4px rgb(87 106 134 / 20%);
 }
 .deleteflag img{
     cursor: pointer;
@@ -681,8 +680,8 @@
     color: #47495b;
 }
 .deleteflag button{
-    height: 41px;
-    border-radius: 5px !important;
+    height: 36px;
+    border-radius: 45px !important;
 }
 
 .deleteflag p{
@@ -701,7 +700,7 @@
     left: 80px;
     padding: 10px;
     background-color: white;
-    box-shadow: 0px 2px 2px 4px rgb(87 106 134 / 20%);
+    box-shadow: 0px 2px 32px 4px rgb(87 106 134 / 20%);
 }
 .moveflag img{
     cursor: pointer;
@@ -1313,7 +1312,7 @@ button:focus {
     top: 125%;
     padding: 20px;
     background-color: white;
-    box-shadow: 0px 2px 2px 4px rgb(87 106 134 / 20%);
+    box-shadow: 0px 2px 32px 4px rgb(87 106 134 / 20%);
 }
 .deletechildstory img {
     cursor: pointer;
@@ -1472,8 +1471,12 @@ button:focus {
 .organization-drop .multiselect{
     width: 110px;
     font-size: 12px !important;
-    padding-left: 0px !important;
-    padding-right: 0px !important;
+    padding: 10px 2px !important;
+    height: 35px;
+}
+.organization-drop .multiselect span
+{
+    font-size: 11px;
 }
 .organization-drop .multiselect-container{
     min-width: 200px;
