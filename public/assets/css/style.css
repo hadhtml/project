@@ -22436,3 +22436,46 @@ line-height: normal;
     padding-bottom: 15px;
     border-top: 1px dashed var(--Border, #d3d3d38a);
 }
+
+
+
+@media only screen and (max-width: 600px) {
+  .main-topbar{
+    padding: 6px 15px;
+  }
+  .subheader
+  {
+    margin-top: 14%;
+    width: 100%;
+    padding: 8px 15px;
+  }
+  .breadcrums h5
+  {
+    font-size: 14px;
+  }
+
+  .body-inner-content
+  {
+    padding: 15px  !important;
+  }
+
+  .aside
+  {
+    display: none !important;
+  }
+  .sub-nav{
+    display: none !important;
+  }
+  .content{
+    margin-left: 0px;
+  }
+  .body-content
+  {
+    margin-left: 0%;
+    width: 100%;
+  }
+
+/* Mobile sidebar */
+
+
+}
