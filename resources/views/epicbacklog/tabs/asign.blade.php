@@ -18,12 +18,17 @@
    <input type="hidden" name="team_type" value="{{ $data->type }}">
    <div class="row">
       @if ($data->type == 'BU')
+
+      @php 
+      $stream  = DB::table('unit_team')->where('id',$data->unit_id)->first();
+      $streamTeam  = DB::table('business_units')->where('id',$stream->org_id)->first();
+      @endphp
       <div class="col-md-12 col-lg-12 col-xl-12">
          <div class="form-group mb-0">
             <label for="small-description">Choose Team</label>
             <select class="form-control category" id="" name="stream_obj" required>
                <option value="">Select Business Team</option>
-               @foreach(DB::table('unit_team')->where('org_id',$data->unit_id)->get() as $r)
+               @foreach(DB::table('unit_team')->where('org_id',$streamTeam->id)->get() as $r)
                <option value="{{ $r->id }}">{{ $r->team_title }}</option>
                @endforeach
             </select>
@@ -31,12 +36,18 @@
       </div>
       @endif
       @if ($data->type == 'VS')
+      @php 
+      $stream  = DB::table('value_team')->where('id',$data->unit_id)->first();
+      $streamTeam  = DB::table('value_stream')->where('id',$stream->org_id)->first();
+
+      @endphp
       <div class="col-md-12 col-lg-12 col-xl-12">
          <div class="form-group mb-0">
             <label for="small-description">Choose Team</label>
             <select class="form-control category" id="" name="stream_obj" required>
                <option value="">Select Value Team</option>
-               @foreach(DB::table('value_team')->where('org_id',$data->unit_id)->get() as $r)
+               @foreach(DB::table('value_team')->where('org_id',$streamTeam->id)->get() as $r)
+             
                <option value="{{ $r->id }}">{{ $r->team_title }}</option>
                @endforeach
             </select>
@@ -57,13 +68,46 @@
       </div>
       @endif
       @if ($data->type == 'orgT')
+      @php 
+      $stream  = DB::table('org_team')->where('id',$data->unit_id)->first();
+      $streamTeam  = DB::table('organization')->where('id',$stream->org_id)->first();
+
+      @endphp
       <div class="col-md-12 col-lg-12 col-xl-12">
          <div class="form-group mb-0">
             <label for="small-description">Choose Team</label>
             <select class="form-control category" id="" name="stream_obj" required>
                <option value="">Select Organization Team </option>
-               @foreach(DB::table('org_team')->where('org_id',$data->unit_id)->get() as $r)
+               @foreach(DB::table('org_team')->where('org_id',$streamTeam->id)->get() as $r)
                <option value="{{ $r->id }}">{{ $r->team_title }}</option>
+               @endforeach
+            </select>
+         </div>
+      </div>
+      @endif
+
+      @if ($data->type == 'unit')
+      <div class="col-md-12 col-lg-12 col-xl-12">
+         <div class="form-group mb-0">
+            <label for="small-description">Choose Business Units</label>
+            <select class="form-control category" id="" name="stream_obj" required>
+               <option value="">Select Business Units</option>
+               @foreach(DB::table('business_units')->where('id',$data->unit_id)->get() as $r)
+               <option value="{{ $r->id }}">{{ $r->business_name }}</option>
+               @endforeach
+            </select>
+         </div>
+      </div>
+      @endif
+
+      @if ($data->type == 'stream')
+      <div class="col-md-12 col-lg-12 col-xl-12">
+         <div class="form-group mb-0">
+            <label for="small-description">Choose Value Stream</label>
+            <select class="form-control category" id="" name="stream_obj" required>
+               <option value="">Select Value Stream</option>
+               @foreach(DB::table('value_stream')->where('id',$data->unit_id)->get() as $r)
+               <option value="{{ $r->id }}">{{ $r->value_name }}</option>
                @endforeach
             </select>
          </div>
