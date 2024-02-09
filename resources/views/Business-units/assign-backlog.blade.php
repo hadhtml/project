@@ -239,13 +239,13 @@
                 <td>
                     <button class="btn-circle btn-tolbar" data-toggle="modal"
                         data-target="#create{{ $backlog->id }}">
-                        <img src="{{ asset('public/assets/images/icons/edit.svg') }}" data-toggle="tooltip"
-                            data-placement="top" data-original-title="Edit">
+                        <span class="material-symbols-outlined" data-toggle="tooltip"
+                            data-placement="top" data-original-title="Edit">edit</span>
                     </button>
                     <button class="btn-circle btn-tolbar" data-toggle="modal"
                         data-target="#delete{{ $backlog->id }}">
-                        <img src="{{ asset('public/assets/images/icons/delete.svg') }}" data-toggle="tooltip"
-                            data-placement="top" data-original-title="Delete">
+                        <span class="material-symbols-outlined" data-toggle="tooltip"
+                            data-placement="top" data-original-title="Delete">delete</span>
                     </button>
                     <a class="btn-circle btn-tolbar"
                         href="{{ url('epic-clone/' . $backlog->id . '/' . $organization->type) }}">

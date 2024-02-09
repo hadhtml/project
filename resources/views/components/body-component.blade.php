@@ -36,10 +36,10 @@
                                     </div>
                                     <div class="action ml-0">
                                         <button class="btn btn-icon btn-circle btn-tolbar ml-auto">
-                                            <img src="{{asset('public/assets/images/icons/edit.svg')}}" alt="Edit" style="border-radius: 50%; width: 18px; height: 18px;" data-toggle="tooltip" data-placement="top" data-original-title="Edit">
+                                            <span class="material-symbols-outlined" data-toggle="tooltip" data-placement="top" data-original-title="Edit">edit</span>
                                         </button>
                                         <button class="btn btn-icon btn-circle btn-tolbar">
-                                            <img src="{{asset('public/assets/images/icons/delete.svg')}}" alt="Delete" style="border-radius: 50%; width: 18px; height: 18px;" data-toggle="tooltip" data-placement="top" data-original-title="Delete">
+                                            <span class="material-symbols-outlined" data-toggle="tooltip" data-placement="top" data-original-title="Delete">delete</span>
                                         </button>
                                     </div>
                                 </div>
@@ -81,10 +81,10 @@
                                                             </div>
                                                             <div class="action ml-0">
                                                                 <button class="btn btn-icon btn-circle bg-white btn-tolbar ml-auto">
-                                                                    <img src="{{asset('public/assets/images/icons/edit.svg')}}" alt="Edit" style="border-radius: 50%; width: 18px; height: 18px;">
+                                                                    <span class="material-symbols-outlined" data-toggle="tooltip" data-placement="top" data-original-title="Edit">edit</span>
                                                                 </button>
                                                                 <button class="btn btn-icon btn-circle bg-white btn-tolbar">
-                                                                    <img src="{{asset('public/assets/images/icons/delete.svg')}}" alt="Delete" style="border-radius: 50%; width: 18px; height: 18px;">
+                                                                    <span class="material-symbols-outlined" data-toggle="tooltip" data-placement="top" data-original-title="Delete">delete</span>
                                                                 </button>
                                                             </div>
                                                         </div>
@@ -126,10 +126,10 @@
                                                                                     </div>
                                                                                     <div class="action ml-0">
                                                                                         <button class="btn btn-icon btn-circle bg-white btn-tolbar ml-auto">
-                                                                                            <img src="{{asset('public/assets/images/icons/edit.svg')}}" alt="Edit" style="border-radius: 50%; width: 18px; height: 18px;">
+                                                                                            <span class="material-symbols-outlined" data-toggle="tooltip" data-placement="top" data-original-title="Edit">edit</span>
                                                                                         </button>
                                                                                         <button class="btn btn-icon btn-circle bg-white btn-tolbar">
-                                                                                            <img src="{{asset('public/assets/images/icons/delete.svg')}}" alt="Delete" style="border-radius: 50%; width: 18px; height: 18px;">
+                                                                                            <span class="material-symbols-outlined" data-toggle="tooltip" data-placement="top" data-original-title="Delete">delete</span>
                                                                                         </button>
                                                                                     </div>
                                                                                 </div>

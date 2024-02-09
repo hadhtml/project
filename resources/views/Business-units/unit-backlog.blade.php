@@ -52,7 +52,7 @@ $var_objective = "Backlog-Unit";
                      </td>
                      <div class="modal fade" id="assign-unitbacklog-epic{{$backlog->id}}" tabindex="-1" role="dialog" aria-labelledby="create-epic" aria-hidden="true">
                         <div class="modal-dialog" role="document">
-                           <div class="modal-content" style="width: 526px !important;">
+                           <div class="modal-content" style="width: 526px !important; padding: 12px !important;">
                               <div class="modal-header">
                                  <div class="row">
                                     <div class="col-md-12">
@@ -172,10 +172,12 @@ $var_objective = "Backlog-Unit";
                      </td>
                      <td>
                         <button class="btn-circle btn-tolbar" onclick="editbacklogepic({{ $backlog->id }} , 'backlog_unit')">
-                        <img src="{{asset('public/assets/images/icons/edit.svg')}}" data-toggle="tooltip" data-placement="top" data-original-title="Edit">
+                        <span class="material-symbols-outlined" data-toggle="tooltip"
+                            data-placement="top" data-original-title="Edit">edit</span>
                         </button>
                         <button class="btn-circle btn-tolbar" data-toggle="modal" data-target="#delete{{$backlog->id}}">
-                        <img src="{{asset('public/assets/images/icons/delete.svg')}}" data-toggle="tooltip" data-placement="top" data-original-title="Delete">
+                        <span class="material-symbols-outlined" data-toggle="tooltip"
+                            data-placement="top" data-original-title="Delete">delete</span>
                         </button>
                         @if ($backlog->backlog_id == NULL)
                         <a class="btn-circle btn-tolbar" href="{{url('epic-clone/'.$backlog->id.'/'.$organization->type)}}">
@@ -346,7 +348,7 @@ $var_objective = "Backlog-Unit";
 </div>
 <div class="modal fade" id="assign-unitbacklog-epic" tabindex="-1" role="dialog" aria-labelledby="create-epic" aria-hidden="true">
    <div class="modal-dialog" role="document">
-      <div class="modal-content" style="width: 526px !important;">
+      <div class="modal-content" style="width: 526px !important; padding: 12px !important;">
          <div class="modal-header">
             <div class="row">
                <div class="col-md-12">
@@ -362,7 +364,7 @@ $var_objective = "Backlog-Unit";
             <img src="{{asset('public/assets/images/icons/minus.svg')}}">
             </button>
          </div>
-         <div class="modal-body">
+         <div class="modal-body p-0">
             <form class="needs-validation" action="{{url('assign-unitbacklog-epic')}}" method="POST">
                @csrf   
                <input type="hidden" name="backlog_id" id="values">
@@ -429,7 +431,7 @@ $var_objective = "Backlog-Unit";
 </div>
 <div class="modal fade" id="create-jira-epic" tabindex="-1" role="dialog" aria-labelledby="create-epic" aria-hidden="true">
    <div class="modal-dialog" role="document">
-      <div class="modal-content" style="width: 526px !important;">
+      <div class="modal-content" style="width: 526px !important;     padding: 12px !important;">
          <div class="modal-header">
             <div class="row">
                <div class="col-md-12">

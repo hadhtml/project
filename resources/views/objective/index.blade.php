@@ -265,12 +265,10 @@ $var_objective = 'PageT-'.$type;
                         @endphp
                         <div class="action ml-0">
                            <button class="btn btn-icon btn-circle btn-tolbar ml-auto " onclick="editobjective(event , {{$obj->id}} , '{{$organization->slug}}')">
-                           <img src="{{ asset('public/assets/images/icons/edit.svg') }}" alt="Edit"
-                              style="border-radius: 50%; width: 18px; height: 18px;">
+                           <span class="material-symbols-outlined">edit</span>
                            </button>
                            <button class="btn btn-icon btn-circle btn-tolbar delete-obj mr-2" onclick="deleteobj(event ,{{$obj->id}})">
-                           <img src="{{ asset('public/assets/images/icons/delete.svg') }}" alt="Delete"
-                              style="border-radius: 50%; width: 18px; height: 18px;">
+                           <span class="material-symbols-outlined">delete</span>
                            </button>
                         </div>
                      </div>
@@ -360,14 +358,10 @@ $var_objective = 'PageT-'.$type;
                                           @endphp
                                           <div class="action ml-0">
                                              <button class="btn btn-icon btn-circle bg-white btn-tolbar ml-auto" onclick="editobjectivekey(event,{{$key->id}})">
-                                             <img src="{{ asset('public/assets/images/icons/edit.svg') }}"
-                                                alt="Edit"
-                                                style="border-radius: 50%; width: 18px; height: 18px;">
+                                             <span class="material-symbols-outlined">edit</span>
                                              </button>
                                              <button class="btn btn-icon btn-circle bg-white btn-tolbar"  onclick="deleteobjkey(event,{{$key->id}},'{{$obj->id}}')" data-toggle="modal" data-target="#delete-objective-key">
-                                             <img src="{{ asset('public/assets/images/icons/delete.svg') }}"
-                                                alt="Delete"
-                                                style="border-radius: 50%; width: 18px; height: 18px;">
+                                             <span class="material-symbols-outlined">delete</span>
                                              </button>
                                           </div>
                                        </div>
@@ -462,15 +456,11 @@ $var_objective = 'PageT-'.$type;
                                                             <div class="action ml-0">
                                                                <button
                                                                   class="btn btn-icon btn-circle bg-white btn-tolbar ml-auto" onclick="editinitiative({{$initiative->id}},'{{$initiative->initiative_name}}','{{$initiative->initiative_start_date}}','{{$initiative->initiative_end_date}}','{{$trimmedStringinit}}','{{$initiative->initiative_weight}}','{{$key->id}}','{{$obj->id}}','{{$key->key_end_date}}')" data-toggle="modal" data-target="#edit-initiative">
-                                                               <img src="{{ asset('public/assets/images/icons/edit.svg') }}"
-                                                                  alt="Edit"
-                                                                  style="border-radius: 50%; width: 18px; height: 18px;">
+                                                               <span class="material-symbols-outlined">edit</span>
                                                                </button>
                                                                <button
                                                                   class="btn btn-icon btn-circle bg-white btn-tolbar" onclick="deletekeyinitiative({{$initiative->id}},'{{$key->id}}','{{$obj->id}}')" data-toggle="modal" data-target="#delete-initiative-key">
-                                                               <img src="{{ asset('public/assets/images/icons/delete.svg') }}"
-                                                                  alt="Delete"
-                                                                  style="border-radius: 50%; width: 18px; height: 18px;">
+                                                               <span class="material-symbols-outlined">delete</span>
                                                                </button>
                                                             </div>
                                                          </div>

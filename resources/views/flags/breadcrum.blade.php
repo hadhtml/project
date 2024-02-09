@@ -55,11 +55,11 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                 </div>
             </div>
             <!-- Breadcrum Items -->
-           <div class="d-flex flex-row page-sub-titles">
+           <div class="d-flex flex-row page-sub-titles align-items-center">
                 <div class="mr-2">
-                    <div class="d-flex">
+                    <div class="d-flex align-items-center">
                         <div>
-                            <span style="font-size:19px" class="material-symbols-outlined">auto_stories</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">auto_stories</span>
                         </div>
                         <div>
                             <a style="text-decoration: none;" href="{{ url('dashboard/organizations') }}">Dashboard</a>
@@ -73,9 +73,9 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                     </a>
                 </div> --}}
                 <div class="mr-2">
-                    <div class="d-flex">
+                    <div class="d-flex align-items-center">
                         <div>
-                            <span style="font-size:19px" class="material-symbols-outlined">domain</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">domain</span>
                         </div>
                         <div>
                             <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->business_name}}</a>
@@ -84,19 +84,19 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                     
                 </div>
                 <div class="mr-2">
-                    <div class="d-flex">
+                    <div class="d-flex align-items-center">
                         <div>
                             @if($flagtype == 'Impediment')
-                            <span style="font-size:22px" class="material-symbols-outlined">warning_off</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">warning_off</span>
                             @endif
                             @if($flagtype == 'Risk')
-                            <span style="font-size:22px" class="material-symbols-outlined">emergency</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">emergency</span>
                             @endif
                             @if($flagtype == 'Blocker')
-                            <span style="font-size:22px" class="material-symbols-outlined">block</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">block</span>
                             @endif
                             @if($flagtype == 'Action')
-                            <span style="font-size:22px" class="material-symbols-outlined">call_to_action</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">call_to_action</span>
                             @endif
                         </div>
                         <div>
@@ -111,9 +111,9 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                 @endphp
                 <div class="mr-2">
                     @if($organization->type == 'stream')
-                    <div class="d-flex">
+                    <div class="d-flex align-items-center">
                         <div>
-                            <span style="font-size:19px" class="material-symbols-outlined">domain</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">domain</span>
                         </div>
                         <div>
                             <a  href="{{url('dashboard/organization/'.$team->slug.'/portfolio/'.$team->type)}}" style="text-decoration: none;" >{{$team->business_name}}</a>
@@ -122,9 +122,9 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                     @endif
                 </div>
                 <div class="mr-2">
-                    <div class="d-flex">
+                    <div class="d-flex align-items-center">
                         <div>
-                            <span style="font-size:19px" class="material-symbols-outlined">layers</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">layers</span>
                         </div>
                         <div>
                             <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->value_name}}</a>
@@ -132,19 +132,19 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                     </div>
                 </div>
                 <div class="mr-2">
-                    <div class="d-flex">
+                    <div class="d-flex align-items-center">
                         <div>
                             @if($flagtype == 'Impediment')
-                            <span style="font-size:22px" class="material-symbols-outlined">warning_off</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">warning_off</span>
                             @endif
                             @if($flagtype == 'Risk')
-                            <span style="font-size:22px" class="material-symbols-outlined">emergency</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">emergency</span>
                             @endif
                             @if($flagtype == 'Blocker')
-                            <span style="font-size:22px" class="material-symbols-outlined">block</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">block</span>
                             @endif
                             @if($flagtype == 'Action')
-                            <span style="font-size:22px" class="material-symbols-outlined">call_to_action</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">call_to_action</span>
                             @endif
                         </div>
                         <div>
@@ -155,9 +155,9 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                 @endif
                 @if($type == 'BU')
                 <div class="mr-2">
-                    <div class="d-flex">
+                    <div class="d-flex align-items-center">
                         <div>
-                            <span style="font-size:19px" class="material-symbols-outlined">domain</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">domain</span>
                         </div>
                         <div>
                             <a  href="{{url('dashboard/organization/'.$team->slug.'/portfolio/'.$team->type)}}" style="text-decoration: none;" >{{$team->business_name}}</a>
@@ -165,9 +165,9 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                     </div>
                 </div>
                 <div class="mr-2">
-                    <div class="d-flex">
+                    <div class="d-flex align-items-center">
                         <div>
-                            <span style="font-size:19px" class="material-symbols-outlined">groups</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">groups</span>
                         </div>
                         <div>
                             <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->team_title}}</a>
@@ -175,19 +175,19 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                     </div>
                 </div>
                 <div class="mr-2">
-                    <div class="d-flex">
+                    <div class="d-flex align-items-center">
                         <div>
                             @if($flagtype == 'Impediment')
-                            <span style="font-size:22px" class="material-symbols-outlined">warning_off</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">warning_off</span>
                             @endif
                             @if($flagtype == 'Risk')
-                            <span style="font-size:22px" class="material-symbols-outlined">emergency</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">emergency</span>
                             @endif
                             @if($flagtype == 'Blocker')
-                            <span style="font-size:22px" class="material-symbols-outlined">block</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">block</span>
                             @endif
                             @if($flagtype == 'Action')
-                            <span style="font-size:22px" class="material-symbols-outlined">call_to_action</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">call_to_action</span>
                             @endif
                         </div>
                         <div>
@@ -199,9 +199,9 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
 
                 @if($type == 'VS')
                 <div class="mr-2">
-                    <div class="d-flex">
+                    <div class="d-flex align-items-center">
                         <div>
-                            <span style="font-size:19px" class="material-symbols-outlined">domain</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">domain</span>
                         </div>
                         <div>
                             <a  href="{{url('dashboard/organization/'.$Unit->slug.'/portfolio/'.$Unit->type)}}" style="text-decoration: none;" >{{$Unit->business_name}}</a>
@@ -210,9 +210,9 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
       
                 </div>
                 <div class="mr-2">
-                    <div class="d-flex">
+                    <div class="d-flex align-items-center">
                         <div>
-                            <span style="font-size:19px" class="material-symbols-outlined">layers</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">layers</span>
                         </div>
                         <div>
                             <a  href="{{url('dashboard/organization/'.$team->slug.'/portfolio/'.$team->type)}}" style="text-decoration: none;" >{{$team->value_name}}</a>
@@ -221,9 +221,9 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
        
                 </div>
                 <div class="mr-2">
-                    <div class="d-flex">
+                    <div class="d-flex align-items-center">
                         <div>
-                            <span style="font-size:19px" class="material-symbols-outlined">groups</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">groups</span>
                         </div>
                         <div>
                             <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->team_title}}</a>
@@ -231,19 +231,19 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                     </div>
                 </div>
                 <div class="mr-2">
-                    <div class="d-flex">
+                    <div class="d-flex align-items-center">
                         <div>
                             @if($flagtype == 'Impediment')
-                            <span style="font-size:22px" class="material-symbols-outlined">warning_off</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">warning_off</span>
                             @endif
                             @if($flagtype == 'Risk')
-                            <span style="font-size:22px" class="material-symbols-outlined">emergency</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">emergency</span>
                             @endif
                             @if($flagtype == 'Blocker')
-                            <span style="font-size:22px" class="material-symbols-outlined">block</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">block</span>
                             @endif
                             @if($flagtype == 'Action')
-                            <span style="font-size:22px" class="material-symbols-outlined">call_to_action</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">call_to_action</span>
                             @endif                        </div>
                         <div>
                             <p>{{ $flagtype }} </p>                        
@@ -256,9 +256,9 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
 
                 @if($type == 'orgT')
                 <div class="mr-2">
-                    <div class="d-flex">
+                    <div class="d-flex align-items-center">
                         <div>
-                            <span style="font-size:19px" class="material-symbols-outlined">home</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">home</span>
                         </div>
                         <div>
                             <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->team_title}}</a>
@@ -266,19 +266,19 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                     </div>
                 </div>
                 <div class="mr-2">
-                    <div class="d-flex">
+                    <div class="d-flex align-items-center">
                         <div>
                             @if($flagtype == 'Impediment')
-                            <span style="font-size:22px" class="material-symbols-outlined">warning_off</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">warning_off</span>
                             @endif
                             @if($flagtype == 'Risk')
-                            <span style="font-size:22px" class="material-symbols-outlined">emergency</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">emergency</span>
                             @endif
                             @if($flagtype == 'Blocker')
-                            <span style="font-size:22px" class="material-symbols-outlined">block</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">block</span>
                             @endif
                             @if($flagtype == 'Action')
-                            <span style="font-size:22px" class="material-symbols-outlined">call_to_action</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">call_to_action</span>
                             @endif
                         </div>
                         <div>
@@ -295,19 +295,19 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                 </div>
                 @endif --}}
                 <div class="mr-2">
-                    <div class="d-flex">
+                    <div class="d-flex align-items-center">
                         <div>
                             @if($flagtype == 'Impediment')
-                            <span style="font-size:22px" class="material-symbols-outlined">warning_off</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">warning_off</span>
                             @endif
                             @if($flagtype == 'Risk')
-                            <span style="font-size:22px" class="material-symbols-outlined">emergency</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">emergency</span>
                             @endif
                             @if($flagtype == 'Blocker')
-                            <span style="font-size:22px" class="material-symbols-outlined">block</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">block</span>
                             @endif
                             @if($flagtype == 'Action')
-                            <span style="font-size:22px" class="material-symbols-outlined">call_to_action</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">call_to_action</span>
                             @endif
                         </div>
                         <div>
@@ -323,9 +323,9 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
         <!--begin::Toolbar-->
         <div class="d-flex align-items-center toolbar">
             @if($type == 'unit')
-            <div class="d-flex flex-row organization-drop align-items-center mr-3">
+            <div class="d-flex flex-row organization-drop align-items-center">
                 <div class="d-flex flex-column mr-3">
-                    <div style="padding:20px">
+                    <div>
                         Team
                         <select class="chkveg" multiple="multiple" >
                         @foreach(DB::table('value_team')->where('org_id',$organization->id)->get() as $r)
@@ -340,9 +340,9 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
             </div>
             @endif
             @if($type == 'stream')
-            <div class="d-flex flex-row organization-drop align-items-center mr-3">
+            <div class="d-flex flex-row organization-drop align-items-center">
                 <div class="d-flex flex-column mr-3">
-                    <div style="padding:20px">
+                    <div>
                         Team
                         <select class="chkveg" multiple="multiple" >
                         @foreach(DB::table('value_team')->where('org_id',$organization->id)->get() as $r)
@@ -357,9 +357,9 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
             </div>
             @endif
             @if($type == 'org')
-            <div class="d-flex flex-row organization-drop align-items-center mr-3">
+            <div class="d-flex flex-row organization-drop align-items-center">
                 <div class="d-flex flex-column mr-3">
-                    <div style="padding:20px">
+                    <div>
                         Team
                         <select class="chkveg" multiple="multiple" >
                         @foreach(DB::table('value_team')->where('org_id',$organization->id)->get() as $r)
@@ -375,12 +375,9 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
             @endif
             <div>
                 <div class="btn-group">
-                  <button type="button" class="btn btn-default" style="border-top-right-radius:0px !important; border-bottom-right-radius:0px !important;" id="showboardbutton"> 
-                        <img src="{{url('public/assets/images/icons/filter.svg')}}" width="20">
-                        View All
-                    </button>
-                  <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split archivebeardcimbgbutton" style=""  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src="{{url('public/assets/images/icons/angle-down.svg')}}" width="20">
+                  <button type="button" class="btn btn-default btn-sm" style="border-top-right-radius:0px !important; border-bottom-right-radius:0px !important; padding-right: 0px !important; min-width: 80px !important; padding-left: 0px !important;" id="showboardbutton">View All</button>
+                  <button type="button" style="padding-right: 5px !important;" class="btn btn-danger dropdown-toggle dropdown-toggle-split archivebeardcimbgbutton" style=""  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="{{url('public/assets/images/icons/angle-down.svg')}}" width="17">
                     <span class="sr-only">Toggle Dropdown</span>
                   </button>
                   <div class="dropdown-menu">
@@ -388,7 +385,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                     <a class="dropdown-item" href="javascript:void(0)" onclick="viewboards('archived')">Archived</a>
                   </div>
                 </div>
-                <button onclick="addnewflag({{ $organization->id }} , '{{$organization->type}}' , '{{ $flagtype }}')" class="btn btn-primary">Add New</button>
+                <button onclick="addnewflag({{ $organization->id }} , '{{$organization->type}}' , '{{ $flagtype }}')" class="button">Add New</button>
                 <input id="viewboards" value="all" type="hidden" name="">
             </div>
         </div>

@@ -1,19 +1,21 @@
 <div class="card-body ui-state-default" id="{{ $r->id }}">
     <div class="d-flex flex-column">
         <div class="d-flex flex-row" onclick="editflag({{$r->id}})">
-            <div class="d-flex flex-row mb-2">
+            <div class="d-flex flex-row mb-2 align-items-center">
                 @php
                     $flagtittle = DB::table('flags')->where('id'  , Cmf::gerescalatedmainid($r->id))->first();
                 @endphp
                 @if($flagtittle->epic_id)
-                <div class="epic_id">
+                <div class="epic_id" data-toggle="tooltip"
+                            data-placement="top" data-original-title="Epic ID">
                     <img src="{{ url('public/assets/svg/arrow.svg') }}">
                      OE-{{ $r->epic_id }}
                 </div>
                 @endif
-                <div class="epic_id ml-5" style="display: flex;">
+                <div class="epic_id d-flex align-items-center mr-2" data-toggle="tooltip"
+                            data-placement="top" data-original-title="Flag ID">
                     @if($r->flag_type == 'Impediment')
-                    <span style="font-size:22px" class="material-symbols-outlined">warning_off</span>
+                    <span style="font-size:18px" class="material-symbols-outlined">warning_off</span>
                     IM-{{ $r->id }}
                     @endif
                     @if($r->flag_type == 'Risk')
@@ -29,22 +31,46 @@
                     AC-{{ $r->id }}
                     @endif
                 </div>
-            </div>
-            @php
+
+                <div class="epic_id d-flex align-items-center mr-2" data-toggle="tooltip"
+                            data-placement="top" data-original-title="Owner">
+                    @if($r->board_type == 'VS')
+                        <span style="font-size:18px" class="material-symbols-outlined mr-1">groups</span> {{ DB::table('value_team')->where('id' , $r->business_units)->first()->team_title }}
+                    @endif
+                    @if($r->board_type == 'stream')
+                        <span style="font-size:18px" class="material-symbols-outlined mr-1">layers</span> {{ DB::table('value_stream')->where('id' , $r->business_units)->first()->value_name }}
+                    @endif
+                    @if($r->board_type == 'unit')
+                        <span style="font-size:18px" class="material-symbols-outlined mr-1">domain</span> {{ DB::table('business_units')->where('id' , $r->business_units)->first()->business_name }}
+                    @endif
+                    @if($r->board_type == 'BU')
+                        <span style="font-size:18px" class="material-symbols-outlined mr-1">groups</span> {{ DB::table('unit_team')->where('id' , $r->business_units)->first()->team_title }}
+                    @endif
+                    @if($r->board_type == 'org')
+                        <span style="font-size:18px" class="material-symbols-outlined mr-1">auto_stories</span> {{ DB::table('organization')->where('id' , $r->business_units)->first()->organization_name }}
+                    @endif
+                    @if($r->board_type == 'orgT')
+                        <span style="font-size:18px" class="material-symbols-outlined mr-1">groups</span> {{ DB::table('org_team')->where('id' , $r->business_units)->first()->team_title }}
+                    @endif
+                </div>
+
+                @php
                 $check_escalate = DB::table('escalate_cards')->where('flag_id' , $r->id)
-            @endphp
-            @if($check_escalate->count() > 0)
-                @if(DB::table('flags')->where('escalate' , $check_escalate->first()->id)->first())
-                @if(DB::table('flags')->where('escalate' , $check_escalate->first()->id)->first()->flag_status == 'doneflag')
-                    <div class="un-blocked ml-2">
-                        <img src="{{ url('public/assets/svg/unblocked.svg') }}">
-                        Unblocked
-                    </div>
-                @endif
-                @else
-                    
-                @endif
-            @endif
+                    @endphp
+                    @if($check_escalate->count() > 0)
+                        @if(DB::table('flags')->where('escalate' , $check_escalate->first()->id)->first())
+                        @if(DB::table('flags')->where('escalate' , $check_escalate->first()->id)->first()->flag_status == 'doneflag')
+                            <div class="epic_id">
+                                <span class="material-symbols-outlined mr-1">check_circle</span>
+                                Unblocked
+                            </div>
+                        @endif
+                        @else
+                            
+                        @endif
+                    @endif
+            </div>
+            
         </div>
         @if($r->archived == 1)
         <a onclick="unarchiveflag({{$r->id}})" href="javascript:void(0)">
@@ -168,26 +194,6 @@
                 </div>
             </div>
             
-        </div>
-        <div class="d-flex mt-3">
-            @if($r->board_type == 'VS')
-                <span style="font-size:22px" class="material-symbols-outlined">groups</span> {{ DB::table('value_team')->where('id' , $r->business_units)->first()->team_title }}
-            @endif
-            @if($r->board_type == 'stream')
-                <span style="font-size:22px" class="material-symbols-outlined">layers</span> {{ DB::table('value_stream')->where('id' , $r->business_units)->first()->value_name }}
-            @endif
-            @if($r->board_type == 'unit')
-                <span style="font-size:22px" class="material-symbols-outlined">domain</span> {{ DB::table('business_units')->where('id' , $r->business_units)->first()->business_name }}
-            @endif
-            @if($r->board_type == 'BU')
-                <span style="font-size:22px" class="material-symbols-outlined">groups</span> {{ DB::table('unit_team')->where('id' , $r->business_units)->first()->team_title }}
-            @endif
-            @if($r->board_type == 'org')
-                <span style="font-size:22px" class="material-symbols-outlined">auto_stories</span> {{ DB::table('organization')->where('id' , $r->business_units)->first()->organization_name }}
-            @endif
-            @if($r->board_type == 'orgT')
-                <span style="font-size:22px" class="material-symbols-outlined">groups</span> {{ DB::table('org_team')->where('id' , $r->business_units)->first()->team_title }}
-            @endif
         </div>
     </div>
 </div>

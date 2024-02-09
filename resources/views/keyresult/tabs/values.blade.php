@@ -60,10 +60,10 @@ $keyqvalue = $keyqfirst->value;
                     <td class="text-center" id="edit-val{{$val->id}}">{{$val->value}}</td>
                     <td class="text-right" id="edit-button-val{{$val->id}}">
                         <button class="btn-circle btn-tolbar" type="button" onclick="editquartervalue({{$val->id}},'{{$val->value}}')">
-                            <img src="{{ url('public/assets/images/icons/edit.svg') }}">
+                            <span class="material-symbols-outlined">edit</span>
                         </button>
                         <button class="btn-circle btn-tolbar" type="button" onclick="deletequartervalue({{$val->id}})">
-                            <img src="{{ url('public/assets/images/icons/delete.svg') }}">
+                            <span class="material-symbols-outlined">delete</span>
                         </button>
                     </td>
                 </tr>

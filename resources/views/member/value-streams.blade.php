@@ -12,86 +12,93 @@ $var_objective = "V-Stream";
    @endphp
     <div class="col-md-3">
         <div class="card business-card">
-            <div class="card-body">
-                <div class="d-flex flex-row justify-content-between">
-                    <div>
-                        <h3>
-                            <a class="d-flex" href="{{url('dashboard/organization/'.$stream->slug.'/dashboard/'.$stream->type)}}"><span style="font-size:22px" class="material-symbols-outlined mr-2">layers</span> <span>{{ \Illuminate\Support\Str::limit($stream->value_name,25, $end='...') }}</span></a>
-                        </h3>
-                    </div>
-                    <div>
-                        <div class="dropdown d-flex">
-                            <button class="btn btn-circle dropdown-toggle btn-tolbar bg-transparent" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="{{ url('public/assets/svg/dropdowndots.svg') }}">
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item"  data-toggle="modal" data-target="#edit{{$stream->ID}}">Edit</a>
-                                <a class="dropdown-item" data-toggle="modal" data-target="#delete{{$stream->ID}}">Delete</a>
-                            </div>
+                <div class="card-body pb-0">
+                    <div class="d-flex flex-row justify-content-between">
+                        <div>
+                            <h3>
+                                <a class="d-flex flex-row align-items-center" href="{{url('dashboard/organization/'.$stream->slug.'/dashboard/'.$stream->type)}}">
+                                    <div>
+                                        <span class="module-icon material-symbols-outlined mr-2">layers</span>
+                                    </div>
+                                    <div>
+                                        <span>{{ \Illuminate\Support\Str::limit($stream->value_name,25, $end='...') }}</span>
+                                    </div>
+                                </a>
+                            </h3>
                         </div>
                     </div>
+                    <div class="content-section">
+                        <div class="row">
+                            <div class="col-md-12 mb-2">
+                                <div class="d-flex align-items-center">
+                                    <div class="mr-1">
+                                        <span style="font-size:22px" class="material-symbols-outlined">folder_supervised</span>
+                                    </div>
+                                    <a href="{{ url('dashboard/organization') }}/{{ $stream->slug }}/portfolio/stream">
+                                        <small>Objectives ({{DB::table('objectives')->wherenull('trash')->where('unit_id' , $stream->id)->where('type' , 'stream')->count()}})</small>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="d-flex align-items-center">
+                                    <div class="mr-1">
+                                        <ion-icon style="font-size: 18px;" name="people-outline"></ion-icon>
+                                    </div>
+                                    <a href="{{ url('dashboard/organization') }}/{{ $stream->slug }}/VS-TEAMS">
+                                        <small>Teams ({{DB::table('value_team')->where('org_id' , $stream->id)->count()}})</small>
+                                    </a>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
                 </div>
-                <div class="content-section">
-                    <div class="row">
-                        <div class="col-md-12 mb-2">
-                            <div class="d-flex align-items-center">
-                                <div class="mr-1">
-                                    <span style="font-size:22px" class="material-symbols-outlined">folder_supervised</span>
+                <div class="card-footer">
+                    <div class="d-flex flex-row align-items-center justify-content-between">
+                         <div class="d-flex flex-row align-items-center leader-section">
+
+                                @if($stream->Lead_id)
+                                @foreach(DB::table('members')->get() as $r)
+                                @if($r->id == $stream->Lead_id)
+                                <div class="mr-2">
+                                    @if($r->image != NULL)
+                                    <img src="{{asset('public/assets/images/'.$r->image)}}" alt="lead">
+                                    @else
+                                    <img src="{{ Avatar::create($r->name.' '.$r->last_name)->toBase64() }}" alt="lead">
+                                    @endif
                                 </div>
-                                <a href="{{ url('dashboard/organization') }}/{{ $stream->slug }}/portfolio/stream">
-                                    <small>Objectives ({{DB::table('objectives')->wherenull('trash')->where('unit_id' , $stream->id)->where('type' , 'stream')->count()}})</small>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="d-flex align-items-center">
-                                <div class="mr-1">
-                                    <ion-icon style="font-size: 18px;" name="people-outline"></ion-icon>
+
+                                <div class="d-flex flex-column">
+                                    <div>
+                                        <span class="text-primary">Lead</span>
+                                    </div>
+                                    <div>
+                                        <span>{{$r->name}} {{ $r->last_name }}</span>
+                                    </div>
                                 </div>
-                                <a href="{{ url('dashboard/organization') }}/{{ $stream->slug }}/VS-TEAMS">
-                                    <small>Teams ({{DB::table('value_team')->where('org_id' , $stream->id)->count()}})</small>
-                                </a>
-                            </div>
-                        </div>
                         
-                    </div>
-                </div>
-                <div class="d-flex flex-column">
-                    <!-- <div>
-                        <small>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard </small>
-                    </div> -->
+                                @endif
+                                @endforeach
+                                @else
+                                <td>N/A</td>
+                                @endif
+                            </div>                                                                                            
 
-                    <div class="d-flex flex-row align-items-center leader-section">
-
-                        @if($stream->Lead_id)
-                        @foreach(DB::table('members')->get() as $r)
-                        @if($r->id == $stream->Lead_id)
-                        <div class="mr-2">
-                            @if($r->image != NULL)
-                            <img src="{{asset('public/assets/images/'.$r->image)}}" alt="lead">
-                            @else
-                            <img src="{{ Avatar::create($r->name.' '.$r->last_name)->toBase64() }}" alt="lead">
-                            @endif
-                        </div>
-
-                        <div class="d-flex flex-column">
-                            <div>
-                                <span class="text-primary">Lead</span>
-                            </div>
-                            <div>
-                                <span>{{$r->name}} {{ $r->last_name }}</span>
+                        <div>
+                            <div class="dropdown d-flex">
+                                <button class="btn btn-circle dropdown-toggle btn-tolbar bg-transparent" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <img src="{{ url('public/assets/svg/dropdowndots.svg') }}">
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item"  data-toggle="modal" data-target="#edit{{$stream->ID}}">Edit</a>
+                                    <a class="dropdown-item" data-toggle="modal" data-target="#delete{{$stream->ID}}">Delete</a>
+                                </div>
                             </div>
                         </div>
-                
-                        @endif
-                        @endforeach
-                        @else
-                        <td>N/A</td>
-                        @endif
                     </div>
                 </div>
             </div>
-        </div>
     </div>
     <div class="modal fade" id="delete{{$stream->ID}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">

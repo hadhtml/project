@@ -66,10 +66,12 @@ $var_objective = "Member";
                      </td>
                      <td style="width: 100px;">
                         <button class="btn-circle btn-tolbar" data-toggle="modal" data-target="#edit-member{{$member->ID}}">
-                        <img src="{{asset('public/assets/images/icons/edit.svg')}}" data-toggle="tooltip" data-placement="top" data-original-title="Edit">
+                        <span class="material-symbols-outlined" data-toggle="tooltip"
+                            data-placement="top" data-original-title="Edit">edit</span>
                         </button>
                         <button class="btn-circle btn-tolbar" data-toggle="modal" onclick="deletemember({{$member->ID}},'{{$member->u_id}}')" data-target="#delete-member">
-                        <img src="{{asset('public/assets/images/icons/delete.svg')}}" data-toggle="tooltip" data-placement="top" data-original-title="Delete">
+                        <span class="material-symbols-outlined" data-toggle="tooltip"
+                            data-placement="top" data-original-title="Delete">delete</span>
                         </button>
                      </td>
                   </tr>

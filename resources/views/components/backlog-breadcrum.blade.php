@@ -17,7 +17,7 @@ $team  = DB::table('business_units')->where('id',$organization->unit_id)->first(
             <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
                 Epic Backlog
             </h5>
-               <div class="d-flex flex-row page-sub-titles">
+               <div class="d-flex flex-row page-sub-titles align-items-center">
                 <div class="mr-2">
                     @if($organization->type == 'stream')
                     <a  href="{{url('dashboard/organization/'.$organization->slug.'/dashboard/'.$organization->type)}}" style="text-decoration: none;" >Dashboard</a>
@@ -54,7 +54,9 @@ $team  = DB::table('business_units')->where('id',$organization->unit_id)->first(
             <div>
                 <button class="button" data-toggle="modal" id="backlog-assign" data-toggle="modal" style="display:none" onclick="get_epic();" data-target="#assign">Assign</button>
                 <button class="button" data-toggle="modal" data-target="#create-backlog-epic">Add New</button>
-                <button class="button" data-toggle="modal"  data-target="#create-jira-epic">Connect Jira</button>
+                <button class="button" data-toggle="modal"  data-target="#create-jira-epic">
+                   <img src="https://cdn.iconscout.com/icon/free/png-256/free-jira-2296055-1912014.png?f=webp&w=128" width="20">&nbsp; Download
+                </button>
             </div>
         </div>
     </div>

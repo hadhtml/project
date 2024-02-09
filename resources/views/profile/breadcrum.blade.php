@@ -8,7 +8,7 @@ $organization  = DB::table('organization')->where('user_id',Auth::id())->first()
               @if(url()->current() == url('change-password')) Change Password @endif
               @if(url()->current() == url('profile-setting')) My Profile @endif
             </h5>
-            <div class="d-flex flex-row page-sub-titles">
+            <div class="d-flex flex-row page-sub-titles align-items-center">
                 <div class="mr-2">
                     <a href="{{route('home')}}">Dashboard</a>
                 </div>

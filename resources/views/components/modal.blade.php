@@ -254,11 +254,8 @@
                         <h5 class="modal-title" id="create-initiative">Create Initiative</h5>
                     </div>
                     <div class="col-md-12">
-                        <p>Fill out the form, submit and hit the save button.</p>
+                        <p class="mb-0">Fill out the form, submit and hit the save button.</p>
                     </div>
-                    
-                    
-
                 </div>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <img src="{{asset('public/assets/images/icons/minus.svg')}}">
@@ -270,7 +267,7 @@
               
              </div>
                 
-            <div class="modal-body">
+            <div class="modal-body pb-0">
                 <div class="row">
                     <div class="col-md-12">
                         <div id="success-initiative"  role="alert"></div>
