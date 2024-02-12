@@ -1920,6 +1920,8 @@
         var enddate = $('#q_end_date').val();
         var title = $('#q_title').val();
         var detail = $('#q_description').val();
+        var q_name = $('#q_name').val();
+        var q_year = $('#q_year').val();
 
         if ($('#q_title').val() == '' || $('#q_start_date').val() == '') {
             $('#sprint-error').html('Please fill out all required fields.');
@@ -1943,6 +1945,9 @@
                 slug: slug,
                 unit_id: unit_id,
                 type: type,
+                q_name:q_name,
+                q_year:q_year,
+
 
             },
             success: function(res) {
@@ -1954,12 +1959,17 @@
                 }, 2000);
                 $('#savequarterbutton').html('Start');
                 $("#savequarterbutton" ).prop("disabled", false);
-                $('#sprint-end').html('<button class="button mr-1" onclick="endquarter();">End Quarter</button>');
+                $('#sprint-end').html(title +'  '+ q_year +' '+ q_name + ' <button class="btn btn-warning mb-2 text-white" disabled  style="height: 35px">In progress</button><button class="btn btn-primary ml-2 mb-2" style="height: 35px" id="endquarterbutton" data-toggle="modal" data-target="#" onclick="Finishquarter('+"'"+q_name+"'"+','+"'"+q_year+"'"+')">Finish Quarter</button>');
             }
         });
 
     }
 
+    function Finishquarter(q_name,q_year) 
+    {
+    $('#end-report').modal('show');
+    $('#end-quartr').html('<h5 class="modal-title">Finish ' +q_name+'  '+ q_year +'</h5>');
+    }
 
     function endquarter() {
         $('#endquarterbutton').html('<i class="fa fa-spin fa-spinner"></i>');
@@ -1967,6 +1977,7 @@
         $('#endquarterbutton').css('min-width' , '100px;');
         var unit_id = "{{ $organization->id }}";
         var type = "{{ $organization->type }}";
+        var slug = "{{ $organization->slug }}";
         $.ajax({
             type: "POST",
             url: "{{ url('end-sprint') }}",
@@ -1975,14 +1986,18 @@
             },
             data: {
                 unit_id: unit_id,
-                type: type
+                type: type,
+                slug:slug
             },
             success: function(res) {
-                $('#endquarterbutton').html('End Quater');
-                $("#endquarterbutton" ).prop("disabled", false);
-                $('#sprint-end').html(
-                    '<button class="button mr-1" data-toggle="modal" data-target="#create-report">Start Quarter</button>'
-                    );
+                $('#parentCollapsible').html(res);
+                // $('#endquarterbutton').html('Finish Quater');
+                // $("#endquarterbutton" ).prop("disabled", false);
+                // $('#sprint-end').html(
+                //     '<button class="btn btn-secondary mb-2" disabled  style="height: 35px">Not Started</button><button class="btn btn-primary mb-2"  style="height: 35px"  onclick="startquarter()">Start Quarter</button>'
+                //     );
+                
+                $('#end-report').modal('hide');    
 
 
 
@@ -1992,6 +2007,44 @@
 
 
     }
+
+    
+function Restartquarter(id) 
+{
+
+
+var org_id = "{{ $organization->org_id }}";
+var slug = "{{ $organization->slug }}";
+var unit_id = "{{ $organization->id }}";
+var type = "{{ $organization->type }}";
+
+
+
+$('#savequarterbutton').html('<i class="fa fa-spin fa-spinner"></i>');
+$("#savequarterbutton" ).prop("disabled", true);
+$.ajax({
+    type: "POST",
+    url: "{{ url('restart-sprint') }}",
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    data: {
+        id:id,
+        org_id: org_id,
+        slug: slug,
+        unit_id: unit_id,
+        type: type,
+       
+
+
+    },
+    success: function(res) {
+    
+    $('#sprint-end').html(res.title +'  '+ res.quarter_name +' '+ res.quarter_year + ' <button class="btn btn-warning mb-2 text-white" disabled  style="height: 35px">In progress</button><button class="btn btn-primary ml-2 mb-2" style="height: 35px" id="endquarterbutton" data-toggle="modal" data-target="#" onclick="Finishquarter('+"'"+res.quarter_name+"'"+','+"'"+res.quarter_year+"'"+')">Finish Quarter</button>');
+    }
+});
+
+}
 
     function onlyNumberKey(evt) {
 
@@ -2324,8 +2377,8 @@
                 $('#edit-button-val' + id).html(
                     '<button class="btn-circle btn-tolbar" type="button" onclick="editquartervalue(' +
                     id + ',' + "'" + title + "'" +
-                    ')"><img src="{{ url('public/assets/images/icons/edit.svg') }}"></button>  <button class="btn-circle btn-tolbar" type="button" onclick="deletequartervalue(' +
-                    id + ')"><img src="{{ url('public/assets/images/icons/delete.svg') }}"></button>');
+                    ')"><span class="material-symbols-outlined">edit</span></button>  <button class="btn-circle btn-tolbar" type="button" onclick="deletequartervalue(' +
+                    id + ')"><span class="material-symbols-outlined">delete</span></button>');
 
                 $('#q-value' + res.key_chart_id).html(res.value);
 
@@ -2521,7 +2574,7 @@
                 $('#edit-button-qval' + id).html(
                     '<button class="btn-circle btn-tolbar" type="button" onclick="editkeyqvalue(' + id +
                     ',' + "'" + title + "'" +
-                    ')"><img src="{{ url('public/assets/images/icons/edit.svg') }}"></button> ');
+                    ')"><span class="material-symbols-outlined">edit</span></button> ');
                 $('#q-sprint' + res.id).html(res.quarter_value);
 
 
