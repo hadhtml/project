@@ -245,7 +245,21 @@ class ObjectiveController extends Controller
         $updateobj = objectives::find($request->id);
         DB::table("objectives")->where("id", $request->id)->update(["trash" => 1]);
         DB::table("key_result")->where("obj_id", $request->id)->delete();
-        DB::table("initiative")->where("obj_id", $request->id)->delete();
+        $allInit = array();
+        $initdelete = DB::table("initiative")->where("obj_id", $request->id)->get();
+        if(count($initdelete) > 0)
+        {
+        foreach($initdelete as $initId)
+        {
+        DB::table("quarter")->where("initiative_id", $initId->id)->delete();
+        DB::table("quarter_month")->where("initiative_id", $initId->id)->delete();
+
+          $allInit[] = $initId->id;   
+        }
+
+        }
+
+        $initdelete = DB::table("initiative")->where("obj_id", $request->id)->delete();
         DB::table("epics")->where("obj_id",$request->id)->delete();
         if ($updateobj->type == "unit") {
             $organization = DB::table("business_units")->where("id", $updateobj->unit_id)->first();
