@@ -291,6 +291,8 @@ class OrganizationController extends Controller
           'value_unit_id'  => $request->unit_id,
           'IndexCount' => $counter,
           'type'  => $request->type,
+          'quarter_name'  => $request->q_name,
+          'quarter_year'  => $request->q_year,
 
         
         ]);
@@ -492,7 +494,86 @@ class OrganizationController extends Controller
           
         
         DB::table('sprint')->where('user_id',Auth::id())->where('value_unit_id',$request->unit_id)->where('status',NULL)->update(['status'=> 1]);
+      
+        if ($request->type == "stream") {
+          $organization = DB::table("value_stream")
+              ->where("slug", $request->slug)
+              ->first();
+          $objective = DB::table("objectives")
+              ->where("unit_id", $request->unit_id)
+              ->where("trash", null)
+              ->where("type", "stream")
+              ->orderby('IndexCount')
+              ->get();
+      }
 
+      if ($request->type == "unit") {
+        $organization = DB::table("business_units")
+            ->where("slug", $request->slug)
+            ->first();
+        $objective = DB::table("objectives")
+         
+            ->where("unit_id", $request->unit_id)
+            ->where("trash", null)
+            ->where("type", "unit")
+            ->orderby('IndexCount')
+            ->get();
+    }
+
+
+
+    if ($request->type == "BU") {
+        $organization = DB::table("unit_team")
+            ->where("slug", $request->slug)
+            ->first();
+        $objective = DB::table("objectives")
+            ->where("org_id", $request->org_id)
+            ->where("unit_id", $request->unit_id)
+            ->where("trash", null)
+            ->where("type", "BU")
+            ->orderby('IndexCount')
+            ->get();
+    }
+
+    if ($request->type == "VS") {
+        $organization = DB::table("value_team")
+            ->where("slug", $request->slug)
+            ->first();
+        $objective = DB::table("objectives")
+            ->where("org_id", $request->org_id)
+            ->where("unit_id", $request->unit_id)
+            ->where("trash", null)
+            ->where("type", "VS")
+            ->orderby('IndexCount')
+            ->get();
+    }
+
+    if ($request->type == "org") {
+        $organization = DB::table("organization")
+            ->where("slug", $request->slug)
+            ->first();
+        $objective = DB::table("objectives")
+            ->where("unit_id", $request->unit_id)
+            ->where("trash", null)
+            ->where("type", "org")
+            ->orderby('IndexCount')
+            ->get();
+    }
+
+    if ($request->type == "orgT") {
+        $organization = DB::table("org_team")
+            ->where("slug", $request->slug)
+            ->first();
+        $objective = DB::table("objectives")
+            ->where("unit_id", $request->unit_id)
+            ->where("trash", null)
+            ->where("type", "orgT")
+            ->orderby('IndexCount')
+            ->get();
+    }
+   
+    
+      return view("objective.objective-render",compact("organization", "objective"));
 
     }
     
@@ -1201,6 +1282,16 @@ function LoadNCEpic(Request $request)
 
 }
     
+public function RestartSprint(Request $request)
+{
+
+
+DB::table('sprint')->where('id',$request->id)->update(['status' => NULL]);
+DB::table('sprint_report')->where('q_id',$request->id)->delete();
+$data = DB::table('sprint')->where('id',$request->id)->first();
+return $data;
+ 
+}
 
 
 }
