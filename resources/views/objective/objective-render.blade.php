@@ -1,4 +1,64 @@
 <!-- Parent Collapsible -->
+
+@php
+$sprint = DB::table('sprint')->where('user_id',Auth::id())->where('value_unit_id',$organization->id)->where('status',NULL)->count();
+$sprintValue = DB::table('sprint')->where('user_id',Auth::id())->where('value_unit_id',$organization->id)->where('status',NULL)->first();
+
+$currentDate = \Carbon\Carbon::now();
+$currentYear = $currentDate->year;
+$currentMonth = $currentDate->month;
+$yearMonthString = $currentDate->format('Y');
+$yearMonth = $currentDate->format('F');
+$CurrentQuarter = '';
+
+$CurrentQuarter = DB::table('quarter_month')
+                  ->where('org_id',$organization->id)
+                  ->where('month',$yearMonth)
+                  ->where('year',$yearMonthString)->first();
+                  
+                  
+$Currentsprint = DB::table('sprint')->where('user_id',Auth::id())->where('value_unit_id',$organization->id)->where('status',1)->first();
+
+@endphp
+@if(count($objective) > 0)
+@if($sprint > 0)
+<div id="sprint-end">
+    {{$sprintValue->title}} {{$sprintValue->quarter_name}} {{$sprintValue->quarter_year}}
+    <button class="btn btn-warning mb-2 text-white" type="button" disabled  style="height: 35px">In progress</button>
+    <button class="btn btn-primary mr-1 mb-2" style="height: 35px" id="endquarterbutton" data-toggle="modal" data-target="#" onclick="Finishquarter('{{$sprintValue->quarter_name}}','{{$sprintValue->quarter_year}}')">Finish Quarter</button>
+</div>
+@else
+ <div id="sprint-end">
+  @if($Currentsprint) 
+  @if($currentDate < $Currentsprint->end_date)
+  @if($Currentsprint->quarter_name == 'Q1')
+  Q2 {{$CurrentQuarter->year}}
+  @endif
+  @if($Currentsprint->quarter_name == 'Q2')
+  Q3 {{$CurrentQuarter->year}}
+  @endif
+  @if($Currentsprint->quarter_name == 'Q3')
+  Q4 {{$CurrentQuarter->year}}
+  @endif
+  @if($Currentsprint->quarter_name == 'Q4')
+  Q1 {{$CurrentQuarter->year}}
+  @endif
+
+  <button class="btn btn-secondary mb-2" type="button" disabled  style="height: 35px">Not Started</button>
+  <button class="btn btn-primary mb-2"  style="height: 35px"  onclick="Restartquarter({{$Currentsprint->id}})">Reopen {{$Currentsprint->quarter_name}} {{$Currentsprint->quarter_year}} </button>
+  <button class="btn btn-primary mb-2" disabled style="height: 35px"  type="button">Start Quarter</button>
+  @endif
+  @else
+  @if($CurrentQuarter) {{$CurrentQuarter->quarter_name}} {{$CurrentQuarter->year}}  @endif 
+  <button class="btn btn-secondary mb-2" type="button" disabled  style="height: 35px">Not Started</button>
+    <button class="btn btn-primary mb-2"  style="height: 35px"  onclick="startquarter()">Start Quarter</button>
+  @endif
+
+
+</div>
+@endif
+@endif
+
 @if(count($objective) > 0)
 @foreach($objective as $obj)
 @php
@@ -78,12 +138,10 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
          @endphp
          <div class="action ml-0">
             <button class="btn btn-icon btn-circle btn-tolbar ml-auto " onclick="editobjective(event , {{$obj->id}} , '{{$organization->slug}}')">
-            <img src="{{ asset('public/assets/images/icons/edit.svg') }}" alt="Edit"
-               style="border-radius: 50%; width: 18px; height: 18px;">
+            <span class="material-symbols-outlined">edit</span>
             </button>
             <button class="btn btn-icon btn-circle btn-tolbar delete-obj mr-2" onclick="deleteobj(event ,{{$obj->id}})">
-            <img src="{{ asset('public/assets/images/icons/delete.svg') }}" alt="Delete"
-               style="border-radius: 50%; width: 18px; height: 18px;">
+            <span class="material-symbols-outlined">delete</span>
             </button>
          </div>
       </div>
@@ -173,14 +231,10 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
                            @endphp
                            <div class="action ml-0">
                               <button class="btn btn-icon btn-circle bg-white btn-tolbar ml-auto" onclick="editobjectivekey(event,{{$key->id}})">
-                              <img src="{{ asset('public/assets/images/icons/edit.svg') }}"
-                                 alt="Edit"
-                                 style="border-radius: 50%; width: 18px; height: 18px;">
+                              <span class="material-symbols-outlined">edit</span>
                               </button>
                               <button class="btn btn-icon btn-circle bg-white btn-tolbar"  onclick="deleteobjkey(event,{{$key->id}},'{{$obj->id}}')" data-toggle="modal" data-target="#delete-objective-key">
-                              <img src="{{ asset('public/assets/images/icons/delete.svg') }}"
-                                 alt="Delete"
-                                 style="border-radius: 50%; width: 18px; height: 18px;">
+                              <span class="material-symbols-outlined">delete</span>
                               </button>
                            </div>
                         </div>
@@ -275,15 +329,11 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
                                              <div class="action ml-0">
                                                 <button
                                                    class="btn btn-icon btn-circle bg-white btn-tolbar ml-auto" onclick="editinitiative({{$initiative->id}},'{{$initiative->initiative_name}}','{{$initiative->initiative_start_date}}','{{$initiative->initiative_end_date}}','{{$trimmedStringinit}}','{{$initiative->initiative_weight}}','{{$key->id}}','{{$obj->id}}','{{$key->key_end_date}}')" data-toggle="modal" data-target="#edit-initiative">
-                                                <img src="{{ asset('public/assets/images/icons/edit.svg') }}"
-                                                   alt="Edit"
-                                                   style="border-radius: 50%; width: 18px; height: 18px;">
+                                                <span class="material-symbols-outlined">edit</span>
                                                 </button>
                                                 <button
                                                    class="btn btn-icon btn-circle bg-white btn-tolbar" onclick="deletekeyinitiative({{$initiative->id}},'{{$key->id}}','{{$obj->id}}')" data-toggle="modal" data-target="#delete-initiative-key">
-                                                <img src="{{ asset('public/assets/images/icons/delete.svg') }}"
-                                                   alt="Delete"
-                                                   style="border-radius: 50%; width: 18px; height: 18px;">
+                                                <span class="material-symbols-outlined">delete</span>
                                                 </button>
                                              </div>
                                           </div>
@@ -488,7 +538,18 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
 </div>
 @endforeach
 @else
-No objective found.
+<div style="position:absolute;right:30%;top:100%;" class="text-center">
+   <img src="{{ asset('public/epic-backlog.svg') }}" width="120" height="120">
+   <div>
+      <h6 class="text-center">No Records Found</h6>
+   </div>
+   <div>
+      <p class="text-center">click on the button bellow and create your first objective. </p>
+   </div>
+   <button class="btn btn-primary btn-lg btn-theme btn-block ripple ml-25" onclick="addnewobjective({{$organization->id}} , '{{ $organization->type }}', '{{ $organization->slug }}')" style="width:50%">
+    New Objective
+   </button>
+</div>
 @endif
 
 @php
@@ -509,10 +570,18 @@ if($CurrentQuarter)
                   ->where('quarter_id',$CurrentQuarter->quarter_id)
                   ->orderby('id','DESC')
                    ->first();
+    $Quarters = DB::table('quarter_month')
+                  ->where('quarter_id',$CurrentQuarter->quarter_id)
+                   ->first();
+
 $monthNumber = \Carbon\Carbon::parse($Quarter->month)->month;
 $firstDayOfNextMonth = \Carbon\Carbon::create(null, $monthNumber + 1, 1, 0, 0, 0);
 $lastDayOfMonth = $firstDayOfNextMonth->subDay();
 $formattedDate = $lastDayOfMonth->toDateString();
+
+$monthNumbers = \Carbon\Carbon::parse($Quarters->month)->month;
+$firstDayOfMonths = \Carbon\Carbon::create(null, $monthNumbers, 1, 0, 0, 0);
+$formattedDates = $firstDayOfMonths->toDateString();
 }
 
 @endphp
@@ -522,10 +591,10 @@ $formattedDate = $lastDayOfMonth->toDateString();
             <div class="modal-header">
                 <div class="row">
                     <div class="col-md-12">
-                        <h5 class="modal-title" id="create-epic">Create Quarter/Sprint</h5>
+                        <h5 class="modal-title" id="create-epic">Start @if($CurrentQuarter) {{$CurrentQuarter->quarter_name}} {{$CurrentQuarter->year}}  @endif</h5>
                     </div>
                     <div class="col-md-12">
-                        <p>Fill out the form, submit and hit the save button.</p>
+                        <p>Provide title, description and confirm details.By startting, a baseline will be created in order to track progress.</p>
                     </div>
                       
                 </div>
@@ -547,32 +616,126 @@ $formattedDate = $lastDayOfMonth->toDateString();
                         <div class="col-md-12 col-lg-12 col-xl-12">
                             <div class="form-group mb-0">
                                 <input type="text" class="form-control" id="q_title" required>
-                                <label for="objective-name">Quarter Title</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-6 col-xl-6">
-                            <div class="form-group mb-0">
-                                <input type="date" class="form-control" min="{{ date('Y-m-d') }}" value="{{date('Y-m-d')}}" id="q_start_date"  required>
-                                <label for="start-date" style="bottom:72px;">Start Date</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-6 col-xl-6">
-                            <div class="form-group mb-0">
-                                <input type="date" min="{{ date('Y-m-d') }}" class="form-control" @if($CurrentQuarter) value="{{$formattedDate}}" @endif id="q_end_date" required>
-                                <label for="end-date">End Date</label>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-12 col-lg-12 col-xl-12">
-                            <div class="form-group mb-0">
-                                <input type="text" class="form-control"  id="q_description" >
-                                <label for="small-description">Description</label>
+                                <label for="objective-name">Title*</label>
                             </div>
                         </div>
 
-                        <div class="col-md-12">
-                            <button id="savequarterbutton" class="btn btn-primary btn-lg btn-theme btn-block ripple mt-3" onclick="saveQuarter();"  type="button">Start</button>
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                           <div class="form-group mb-0">
+                               <input type="text" class="form-control"  id="q_description" >
+                               <label for="small-description">Description</label>
+                           </div>
+                       </div>
+
+                       @if($organization->type == 'stream')
+                       <div class="col-md-12 col-lg-12 col-xl-12">
+                       <h6> Value Stream</h6>
+                       <div class="d-flex align-items-center">
+                        <div>
+                            <span style="font-size:17px" class="material-symbols-outlined">layers</span>
                         </div>
+                        <div>
+                            <p class="mt-2 ml-1">{{$organization->value_name}}</p>
+                        </div>
+                    </div>
+                       </div>
+                       @endif
+
+                       @if($organization->type == 'org')
+                       <div class="col-md-12 col-lg-12 col-xl-12">
+                       <h6> Organization</h6>
+                       <div class="d-flex align-items-center">
+                        <div>
+                            <span style="font-size:17px" class="material-symbols-outlined">home</span>
+                        </div>
+                        <div>
+                            <p class="mt-2 ml-1">{{$organization->organization_name}}</p>
+                        </div>
+                    </div>
+                       </div>
+                       @endif
+
+                       @if($organization->type == 'unit')
+                       <div class="col-md-12 col-lg-12 col-xl-12">
+                       <h6> Business Unit</h6>
+                       <div class="d-flex align-items-center">
+                        <div>
+                            <span style="font-size:17px" class="material-symbols-outlined">domain</span>
+                        </div>
+                        <div>
+                            <p class="mt-2 ml-1">{{$organization->business_name}}</p>
+                        </div>
+                    </div>
+                       </div>
+                       @endif
+
+                       @if($organization->type == 'BU')
+                       <div class="col-md-12 col-lg-12 col-xl-12">
+                       <h6> Business  Team</h6>
+                       <div class="d-flex align-items-center">
+                        <div>
+                            <span style="font-size:17px" class="material-symbols-outlined">groups</span>
+                        </div>
+                        <div>
+                            <p class="mt-2 ml-1">{{$organization->team_title}}</p>
+                        </div>
+                    </div>
+                       </div>
+                       @endif
+
+                       @if($organization->type == 'VS')
+                       <div class="col-md-12 col-lg-12 col-xl-12">
+                       <h6> Value Team</h6>
+                       <div class="d-flex align-items-center">
+                        <div>
+                            <span style="font-size:17px" class="material-symbols-outlined">groups</span>
+                        </div>
+                        <div>
+                            <p class="mt-2 ml-1">{{$organization->team_title}}</p>
+                        </div>
+                    </div>
+                       </div>
+                       @endif
+
+                       @if($organization->type == 'orgT')
+                       <div class="col-md-12 col-lg-12 col-xl-12">
+                       <h6> Organization Team</h6>
+                       <div class="d-flex align-items-center">
+                        <div>
+                            <span style="font-size:17px" class="material-symbols-outlined">groups</span>
+                        </div>
+                        <div>
+                            <p class="mt-2 ml-1">{{$organization->team_title}}</p>
+                        </div>
+                    </div>
+                       </div>
+                       @endif
+
+                       <div class="col-md-12 col-lg-12 col-xl-12">
+                        <h6> Quarter</h6>
+                       </div>
+
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                         @if($CurrentQuarter) {{$CurrentQuarter->quarter_name}} {{$CurrentQuarter->year}} {{\Carbon\Carbon::parse($formattedDates)->format('M d')}} - {{\Carbon\Carbon::parse($formattedDate)->format('M d')}} @endif
+                      
+                       <input type="hidden"  @if($CurrentQuarter) value="{{$formattedDates}}" @endif id="q_start_date"  required>
+                              
+                       
+                        </div>
+               
+                        <input type="hidden"  @if($CurrentQuarter) value="{{$formattedDate}}" @endif id="q_end_date" required>
+                        <input type="hidden"  @if($CurrentQuarter) value="{{$CurrentQuarter->quarter_name}}" @endif id="q_name" required>
+                        <input type="hidden"  @if($CurrentQuarter) value="{{$CurrentQuarter->year}}" @endif id="q_year" required>
+
+                        
+                        
+                        @if($CurrentQuarter)
+                        <div class="col-md-12">
+                            <button id="savequarterbutton" class="btn btn-primary btn-lg btn-theme btn-block ripple mt-3" onclick="saveQuarter();"  type="button">Start  @if($CurrentQuarter) {{$CurrentQuarter->quarter_name}} {{$CurrentQuarter->year}} @endif</button>
+                        </div>
+                        @else 
+                        <span class="ml-2 text-danger">Create Initiative to track progress </span>
+                        @endif
                     </div>
                 </form>
             </div>
