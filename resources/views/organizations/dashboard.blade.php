@@ -28,7 +28,7 @@
             ->where('type', 'org')
             ->count();
         $Impediments = DB::table('flags')
-            ->where('flag_type' , 'Impediment')
+            ->where('flag_status','!=','doneflag')
             ->where('business_units', $organization->id)
             ->where('board_type', 'org')
             ->where('flag_title','!=',NULL)
@@ -40,7 +40,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="row">
-                <div class="col-md-3 mb-4">
+                <div class="col-md-3 mb-4 col-6">
                     <div class="dashboard-card">
                         <div class="card-svg">
                             <a href="{{ url('dashboard/organization/' . $organization->slug . '/portfolio/' . $organization->type) }}">
@@ -55,7 +55,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3 mb-4">
+                <div class="col-md-3 mb-4 col-6">
                     <div class="dashboard-card">
                         <div class="card-svg">
                             <a href="{{ url('dashboard/epicbacklog/' . $organization->slug . '/org') }}"> 
@@ -70,7 +70,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3 mb-4">
+                <div class="col-md-3 mb-4 col-6">
                     <div class="dashboard-card">
                         <div class="card-svg">
                             <a href="{{ url('dashboard/organization/' . $organization->slug . '/performance-dashboard/' . $organization->type) }}">
@@ -85,7 +85,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3 mb-4">
+                <div class="col-md-3 mb-4 col-6">
                     <div class="dashboard-card">
                         <div class="card-svg">
                             <a href="{{ url('dashboard/organization/' . $organization->slug . '/Org-TEAMS') }}"> 
@@ -100,7 +100,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3 mb-4">
+                <div class="col-md-3 mb-4 col-6">
                     <div class="dashboard-card">
                         <div class="card-svg">
                             <a href="{{ url('dashboard/organization/' . $organization->slug . '/BU-Report/' . $organization->type) }}">
@@ -115,7 +115,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3 mb-4">
+                <div class="col-md-3 mb-4 col-6">
                     <div class="dashboard-card">
                         <div class="card-svg">
                             <a href="{{ url('dashboard/flags/' . $organization->slug . '/impediments/org') }}">
@@ -130,7 +130,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3 mb-4">
+                <div class="col-md-3 mb-4 col-6">
                     <div class="dashboard-card">
                         <div class="card-svg">
                             <a href="{{ url('dashboard/organization/Business-Units') }}">
