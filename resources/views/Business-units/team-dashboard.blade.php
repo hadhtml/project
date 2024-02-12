@@ -19,7 +19,7 @@ $Portfolio = DB::table('objectives')->where('type','BU')->where('unit_id',$organ
 $Performance = DB::table('kpi_setting')->where('stream_id',$organization->id)->where('type','BU')->count();
 $Reporting = DB::table('sprint')->where('value_unit_id',$organization->id)->where('type','BU')->count();
 $EpicsBacklog = DB::table('team_backlog')->where('epic_title','!=',NULL)->where('unit_id',$organization->id)->where('type','BU')->count();
-$Impediments = DB::table('flags')->where('flag_type' , 'Impediment')->where('business_units',$organization->id)->where('flag_title','!=',NULL)->where('board_type','BU')->count();
+$Impediments = DB::table('flags')->where('flag_status','!=','doneflag')->where('business_units',$organization->id)->where('flag_title','!=',NULL)->where('board_type','BU')->count();
 }
 
 if($type == 'VS')
@@ -28,7 +28,7 @@ $Portfolio = DB::table('objectives')->where('type','VS')->where('unit_id',$organ
 $Performance = DB::table('kpi_setting')->where('stream_id',$organization->id)->where('type','VS')->count();
 $Reporting = DB::table('sprint')->where('value_unit_id',$organization->id)->where('type','VS')->count();
 $EpicsBacklog = DB::table('team_backlog')->where('epic_title','!=',NULL)->where('unit_id',$organization->id)->where('type','VS')->count();
-$Impediments = DB::table('flags')->where('flag_type' , 'Impediment')->where('business_units',$organization->id)->where('flag_title','!=',NULL)->where('board_type','VS')->count();
+$Impediments = DB::table('flags')->where('flag_status','!=','doneflag')->where('business_units',$organization->id)->where('flag_title','!=',NULL)->where('board_type','VS')->count();
 }
 
 if($type == 'orgT')
@@ -37,7 +37,7 @@ $Portfolio = DB::table('objectives')->where('type','orgT')->where('unit_id',$org
 $Performance = DB::table('kpi_setting')->where('stream_id',$organization->id)->where('type','orgT')->count();
 $Reporting = DB::table('sprint')->where('value_unit_id',$organization->id)->where('type','orgT')->count();
 $EpicsBacklog = DB::table('team_backlog')->where('epic_title','!=',NULL)->where('unit_id',$organization->id)->where('type','orgT')->count();
-$Impediments = DB::table('flags')->where('flag_type' , 'Impediment')->where('business_units',$organization->id)->where('flag_title','!=',NULL)->where('board_type','orgT')->count();
+$Impediments = DB::table('flags')->where('flag_status','!=','doneflag')->where('business_units',$organization->id)->where('flag_title','!=',NULL)->where('board_type','orgT')->count();
 }
 
 @endphp
