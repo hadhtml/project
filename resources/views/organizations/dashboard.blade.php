@@ -31,6 +31,7 @@
             ->where('flag_status','!=','doneflag')
             ->where('business_units', $organization->id)
             ->where('board_type', 'org')
+            ->where('flag_type','Impediment')
             ->where('flag_title','!=',NULL)
             ->count();
         $businessunits = DB::table('business_units')->where('user_id' ,  Auth::id())->count();
