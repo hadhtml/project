@@ -783,6 +783,55 @@
 </div>
 
 
+<div class="modal fade" id="end-report" tabindex="-1" role="dialog" aria-labelledby="end-report" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="width: 526px !important;">
+            <div class="modal-header">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h5 class="modal-title" id="create-epic"></h5>
+                    </div>
+               
+                      
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <img src="{{asset('public/assets/images/icons/minus.svg')}}">
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="success-sprint"  role="alert"></div>
+                        <span id="sprint-error" class="text-danger"></span>
+                    </div>
+                </div>
+                <form class="needs-validation" action="#" method="POST" novalidate>
+                @csrf
+            
+                    <div class="row">
+                    
+ 
+ 
+                       <div class="col-md-12 col-lg-12 col-xl-12" id="end-quartr">
+                       
+                       </div>
+ 
+                    
+               
+ 
+                      
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button  class="btn btn-primary " onclick="endquarter();"  type="button">Finish Quarter </button>
+
+                          </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+ </div>
+
 
 
 

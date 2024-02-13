@@ -328,7 +328,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                 </div>
              
             </div>
-            @if($sprint > 0)
+            {{-- @if($sprint > 0)
             <div id="sprint-end">
                 <button class="button mr-1" id="endquarterbutton" data-toggle="modal" data-target="#" onclick="endquarter()">End Quarter</button>
             </div>
@@ -336,7 +336,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
              <div id="sprint-end">
                 <button class="button mr-1"  onclick="startquarter()">Start Quarter</button>
             </div>
-            @endif
+            @endif --}}
             <div>
                 <button class="button" onclick="addnewobjective({{$organization->id}} , '{{ $organization->type }}', '{{ $organization->slug }}')">Add New</button>
             </div>

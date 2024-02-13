@@ -28,7 +28,7 @@
             ->where('type', 'org')
             ->count();
         $Impediments = DB::table('flags')
-            ->where('flag_type' , 'Impediment')
+            ->where('flag_status','!=','doneflag')
             ->where('business_units', $organization->id)
             ->where('board_type', 'org')
             ->where('flag_title','!=',NULL)
