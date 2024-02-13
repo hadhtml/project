@@ -1246,6 +1246,7 @@ if($objcount > 0)
                                 "initiative_id" => $date->id,
                                 "quarter_name" => $quarterName,
                                 "year" => $year,
+                                "org_id" => $request->unit_id,
                             ]);
                         }
                     }
@@ -1296,7 +1297,7 @@ if($objcount > 0)
                     ->where("slug", $request->slug)
                     ->first();
                 $objective = DB::table("objectives")
-                    ->where("org_id", $request->org_id)
+             
                     ->where("unit_id", $request->unit_id)
                     ->where("trash", null)
                     ->where("type", "BU")
@@ -1309,7 +1310,7 @@ if($objcount > 0)
                     ->where("slug", $request->slug)
                     ->first();
                 $objective = DB::table("objectives")
-                    ->where("org_id", $request->org_id)
+                  
                     ->where("unit_id", $request->unit_id)
                     ->where("trash", null)
                     ->where("type", "VS")
