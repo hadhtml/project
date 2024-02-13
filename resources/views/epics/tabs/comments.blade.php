@@ -103,7 +103,7 @@
                                 <div class="d-flex flex-column">
                                     <div>
                                         <div class="form-group mb-0">
-                                            <textarea value="{{ $r->comment }}" rows="5" type="text" class="form-control" name="comment" id="objective-name" required>{{ $r->comment }}</textarea>
+                                            <textarea value="{{ $r->comment }}" rows="5" style="height:100% !important;" class="form-control" name="comment" id="objective-name" required>{{ $r->comment }}</textarea>
                                         </div>
                                     </div>
                                     <div>
@@ -115,14 +115,14 @@
                         </div>
                     </form>
                 </div>
-                <div class="card-body">
+                <div class="card-body" >
                     <div class="d-flex flex-column">
                         <div class="d-flex justify-content-between align-items-center mb-2">
-                            <div class="row">
+                            <div class="row" id="commenteditt{{ $r->id }}">
                                 <div class="col-md-3">
                                     <img width="36" height="36" src="{{ Avatar::create($user->name.' '.$user->last_name)->toBase64() }}">
                                 </div>
-                                <div class="col-md-9">
+                                <div class="col-md-9" >
                                     <div>
                                         <h5>{{ $user->name }} {{ $user->last_name }}</h5>
                                         <small>{{ Cmf::date_format($r->created_at) }}</small>
@@ -375,9 +375,11 @@ function replycomment(id) {
 }
 function editcommentshow(id) {
     $('#commentedit'+id).show();
+    $('#commenteditt'+id).hide();
 }
 function editcommenthide(id) {
     $('#commentedit'+id).hide();
+    $('#commenteditt'+id).show();
 }
 function deletecommentshow(id) {
     $('#commentdelete'+id).slideToggle();
