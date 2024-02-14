@@ -37,6 +37,8 @@ Route::middleware('auth')->group(function () {
         Route::get('financial-year', 'JiraController@financialsettings')->name('financial');
         Route::get('change-password', 'OrganizationController@change_password')->name('security');
         Route::get('users', 'MemberController@AllMembers')->name('users');
+        Route::get('asgin-names', 'HomeController@asignmodule')->name('asignmodule');
+        Route::POST('updatemodulenames', 'HomeController@updatemodulenames')->name('updatemodulenames');
     });
 
 });

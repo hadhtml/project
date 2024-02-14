@@ -10,18 +10,21 @@
                     @endif
                     @if(url()->current() == route('settings.financial')) 
                     <span style="font-size:22px" class="material-symbols-outlined">payments</span>
+                    @endif 
+                    @if(url()->current() == route('settings.asignmodule')) 
+                    <span style="font-size:22px" class="material-symbols-outlined">foundation</span>
                     @endif                    
                 </div>
                 <div>
                     <h5 class="text-dark font-weight-bold ml-2">
-                        @if(url()->current() == url('dashboard/organization/setting')) 
-                        Jira Settings
-                        @endif
                         @if(url()->current() == route('settings.financial')) 
                         Financial Year Settings
                         @endif
                         @if(url()->current() == route('settings.jirasettings')) 
                         Jira Settings
+                        @endif
+                        @if(url()->current() == route('settings.asignmodule')) 
+                        Asign Names
                         @endif
                     </h5>
                 </div>
@@ -38,6 +41,9 @@
                         @endif
                         @if(url()->current() == route('settings.financial')) 
                         Financial Year Settings
+                        @endif
+                        @if(url()->current() == route('settings.asignmodule')) 
+                        Asign Names
                         @endif
                     </p>
                 </div>

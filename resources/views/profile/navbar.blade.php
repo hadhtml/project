@@ -48,6 +48,16 @@ $organization = DB::table('organization')->where('user_id',Auth::id())->where('t
          </a>
       </li>
       <li class="mb-1">
+         <a href="{{route('settings.asignmodule')}}" @if (url()->current() == route('settings.asignmodule'))  class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center" @endif>
+         <div class="mr-2">
+            <span style="font-size:22px" class="material-symbols-outlined">foundation</span>
+         </div>
+         <div class="mr-2">
+            Asign Names
+         </div>
+         </a>
+      </li>
+      <li class="mb-1">
          <a href="{{route('settings.security')}}" @if (url()->current() == route('settings.security'))  class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center" @endif>
          <div class="mr-2">
             <span style="font-size:22px" class="material-symbols-outlined">key</span>

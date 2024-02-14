@@ -30,6 +30,10 @@ class HomeController extends Controller
         $organization  = Organization::where('user_id',Auth::id())->where('trash',NULL)->first();
         return view('organizations.dashboard',compact('organization'));
     }
+    public function asignmodule()
+    {
+        return view('settings.asignmodule');
+    }
     public function asignnames()
     {
         if(modulenames::where('user_id' , Auth::id())->count() == 1)
@@ -53,5 +57,20 @@ class HomeController extends Controller
         $cretemodulenames->level_three = $request->level_three;
         $cretemodulenames->slug_three = Cmf::shorten_url($request->level_three);
         $cretemodulenames->save();
+    }
+    public function updatemodulenames(Request $request)
+    {
+        $data = modulenames::where('user_id' , Auth::id())->first();
+
+        $updatemodulenames = modulenames::find($data->id);
+        $updatemodulenames->user_id = Auth::id();
+        $updatemodulenames->level_one = $request->level_one;
+        $updatemodulenames->slug_one = Cmf::shorten_url($request->level_one);
+        $updatemodulenames->level_two = $request->level_two;
+        $updatemodulenames->slug_two = Cmf::shorten_url($request->level_two);
+        $updatemodulenames->level_three = $request->level_three;
+        $updatemodulenames->slug_three = Cmf::shorten_url($request->level_three);
+        $updatemodulenames->save();
+        return redirect()->back()->with('message', 'Website Change Successfully');
     }
 }
