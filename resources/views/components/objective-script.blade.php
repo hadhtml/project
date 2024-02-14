@@ -1983,17 +1983,13 @@
                 slug:slug
             },
             success: function(res) {
+         
           
             $('#end-report').modal('show');
-            $('#end-quartr').html('<h5 class="modal-title">Finish ' +q_name+'  '+ q_year +'</h5>');   
-            if(res.id)
-            {
-            $('#month').val(res.month);
-            $('#quarter').val(res.quarter_id);
-            $('#init_id').val(res.initiative_id);
-            $('#month_id').val(res.id);
-            $('#move-epic').html('<label for="small-description">Move incomplete epic to next quarter?</label><div class="form-group mb-0"><select class="form-control" id="move_epic" ><option value="">Select</option><option value="yes">yes</option></select></div>');  
-            }
+            $('#end-quartr').html('<h5 class="modal-title">Finish ' +q_name+'  '+ q_year +'</h5>');
+             $('#move-epic').html(res);  
+
+        
             
             
             }
@@ -2008,13 +2004,28 @@
         var unit_id = "{{ $organization->id }}";
         var type = "{{ $organization->type }}";
         var slug = "{{ $organization->slug }}";
+        var move_epic = $('#move_epic').val();
 
-        var month   = $('#month').val();
-        var quarter   = $('#quarter').val();
-        var init_id   = $('#init_id').val();
-        var month_id   = $('#month_id').val();
-        var move_epic  = $('#move_epic').val();
+          var months = [];
+            var quarter = [];
+            var Ids = [];
+            var initiative = [];
 
+            $('.month').each(function() {
+                months.push($(this).val());
+            });
+
+            $('.quarter').each(function() {
+                quarter.push($(this).val());
+            });
+            $('.month_id').each(function() {
+                Ids.push($(this).val());
+            });
+            $('.init_id').each(function() {
+                initiative.push($(this).val());
+            });
+
+           
         $.ajax({
             type: "POST",
             url: "{{ url('end-sprint') }}",
@@ -2025,10 +2036,10 @@
                 unit_id: unit_id,
                 type: type,
                 slug:slug,
-                month:month,
+                months:months,
                 quarter:quarter,
-                init_id:init_id,
-                month_id:month_id,
+                initiative:initiative,
+                Ids:Ids,
                 move_epic:move_epic,
             },
             success: function(res) {
@@ -2448,7 +2459,7 @@ $.ajax({
                 if (res) {
 
                     $('#key-team').empty();
-                    $('#key-team').append('<option hidden value="">Select Value Stream</option>');
+                    $('#key-team').append('<option hidden value="">Select {{ Cmf::getmodulename("level_two") }}</option>');
                     $.each(res, function(key, course) {
                         $('select[name="key-team"]').append('<option value="' + course.id + '">' +
                             course.value_name + '</option>');
