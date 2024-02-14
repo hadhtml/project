@@ -46,7 +46,7 @@
                     </a>
                 </li> -->
                 <li>
-                    <a href="{{url('dashboard/organization/setting')}}" @if (url()->current() == url('dashboard/organization/setting')) class="active-link" @else class="nav-link"  @endif title="" data-toggle="tooltip" data-placement="right" data-original-title="Settings">
+                    <a href="{{ route('settings.jirasettings') }}" @if (url()->current() == route('settings.jirasettings')) class="active-link" @else class="nav-link"  @endif title="" data-toggle="tooltip" data-placement="right" data-original-title="Settings">
                         <span class="material-symbols-outlined">settings</span>
                     </a>
                 </li>
@@ -65,8 +65,8 @@
 
                 @endif
                 <div class="dropdown-menu mb-5">
-                    <a class="dropdown-item" href="{{url('profile-setting')}}">Profile</a>
-                    <a class="dropdown-item" href="{{url('change-password')}}">Security</a>
+                    <a class="dropdown-item" href="{{ route('settings.myprofile') }}">Profile</a>
+                    <a class="dropdown-item" href="{{route('settings.security')}}">Security</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item bg-primary text-white" href="{{ route('logout') }}"  onclick="event.preventDefault();
                 document.getElementById('logout-form').submit();" class="nav-link">Logout</a>

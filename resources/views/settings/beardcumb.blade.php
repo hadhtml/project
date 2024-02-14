@@ -3,26 +3,43 @@
         <!--begin::Info-->
         <div class="d-flex align-items-start flex-column flex-wrap mr-2">
             <!--begin::Page Title-->
-            <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
-                @if(url()->current() == url('dashboard/organization/setting')) 
-                Jira Settings
-                @endif
-                @if(url()->current() == url('dashboard/organization/financialsetting')) 
-                Financial Year Settings
-                @endif
-            </h5>
+            <div class="d-flex flex-row align-items-center">
+                <div>
+                    @if(url()->current() == route('settings.jirasettings')) 
+                    <span style="font-size:22px" class="material-symbols-outlined">manufacturing</span>
+                    @endif
+                    @if(url()->current() == route('settings.financial')) 
+                    <span style="font-size:22px" class="material-symbols-outlined">payments</span>
+                    @endif                    
+                </div>
+                <div>
+                    <h5 class="text-dark font-weight-bold ml-2">
+                        @if(url()->current() == url('dashboard/organization/setting')) 
+                        Jira Settings
+                        @endif
+                        @if(url()->current() == route('settings.financial')) 
+                        Financial Year Settings
+                        @endif
+                        @if(url()->current() == route('settings.jirasettings')) 
+                        Jira Settings
+                        @endif
+                    </h5>
+                </div>
+            </div>
             <!-- Breadcrum Items -->
            <div class="d-flex flex-row page-sub-titles align-items-center">
                 <div class="mr-2">
                     <a href="{{ route('organization.dashboard') }}">Dashboard</a>
                 </div>
                 <div class="mr-2">
-                    <p>@if(url()->current() == url('dashboard/organization/setting')) 
-                Jira Settings
-                @endif
-                @if(url()->current() == url('dashboard/organization/financialsetting')) 
-                Financial Year Settings
-                @endif</p>
+                    <p>
+                        @if(url()->current() == route('settings.jirasettings')) 
+                        Jira Settings
+                        @endif
+                        @if(url()->current() == route('settings.financial')) 
+                        Financial Year Settings
+                        @endif
+                    </p>
                 </div>
             </div>
             <!--End Breadcrum Items -->

@@ -471,7 +471,7 @@ $var_objective = "Backlog-Unit";
                </div>
                @else
                <div class="alert alert-danger mt-1 ml-3" role="alert">
-                  Connect your Jira account in the settings. <a href="{{url('dashboard/organization/setting')}}" class="alert-link">Click here</a>.
+                  Connect your Jira account in the settings. <a href="{{ route('settings.jirasettings') }}" class="alert-link">Click here</a>.
                </div>
                @endif
                <div class="col-md-12 col-lg-12 col-xl-12">

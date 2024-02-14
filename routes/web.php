@@ -21,9 +21,22 @@ Route::middleware('auth')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/asgin-names', [HomeController::class, 'asignnames'])->name('asignnames');
     Route::POST('createmodulenames', [HomeController::class, 'createmodulenames'])->name('createmodulenames');
+
+
     Route::name('organization.')->namespace('App\Http\Controllers')->middleware('dynamic-names')->prefix('organization')->group(function () {
         Route::get('dashboard', 'HomeController@dashboard')->name('dashboard');
     });
+
+
+
+    Route::name('settings.')->namespace('App\Http\Controllers')->middleware('dynamic-names')->prefix('settings')->group(function () {
+        Route::get('jira', 'JiraController@JiraSetting')->name('jirasettings');
+        Route::get('my-profile', 'OrganizationController@profile')->name('myprofile');
+        Route::get('financial-year', 'JiraController@financialsettings')->name('financial');
+        Route::get('change-password', 'OrganizationController@change_password')->name('security');
+
+    });
+
 });
 
 
@@ -202,8 +215,8 @@ Route::get('dashboard/organization/Bu/dashboard', [App\Http\Controllers\MemberCo
 
 Route::get('get-jira-epic', [App\Http\Controllers\JiraController::class,'jira']);
 Route::post('assign-jira-epic', [App\Http\Controllers\JiraController::class,'AssignJiraEpic']);
-Route::get('dashboard/organization/setting', [App\Http\Controllers\JiraController::class,'JiraSetting']);
-Route::get('dashboard/organization/financialsetting', [App\Http\Controllers\JiraController::class,'financialsettings']); 
+
+
 Route::post('add-jira-setting', [App\Http\Controllers\JiraController::class,'AddJiraSetting']);
 Route::post('add-financial-year', [App\Http\Controllers\JiraController::class,'AddFinancialYear']);
 Route::post('update-jira-setting', [App\Http\Controllers\JiraController::class,'UpdateJiraSetting']);
@@ -399,14 +412,9 @@ Route::post('update-team-org', [App\Http\Controllers\OrganizationController::cla
 Route::post('delete-org-team', [App\Http\Controllers\OrganizationController::class,'DeleteOrgTeam']);
 
 // PROFILE
-Route::get('change-password', [App\Http\Controllers\OrganizationController::class,'change_password']);
+
 Route::post('update-password', [App\Http\Controllers\OrganizationController::class,'update_password']);
-Route::get('profile-setting', [App\Http\Controllers\OrganizationController::class,'profile']);
+
 Route::post('update-profile', [App\Http\Controllers\OrganizationController::class,'UpdateProfile']);
 
 Route::post('change-init-pos', [App\Http\Controllers\ObjectiveController::class,'UpdatePosInit']);
-
-
-
-
-
