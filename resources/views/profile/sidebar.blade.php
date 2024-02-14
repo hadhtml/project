@@ -2,7 +2,7 @@
     <div class="d-flex flex-column flex-shrink-0" style="width: 100%; height: 89vh;">
         <ul class="mb-auto text-center sidebar align-items-center mx-auto text-center" id="navbarSupportedContent">
             <li>
-                <a href="{{url('/dashboard/organizations')}}" @if (url()->current() == url('dashboard/organizations')) class="active-link" @else class="nav-link"  @endif  aria-current="page" title="" data-toggle="tooltip" data-placement="right" data-original-title="Dashboard">
+                <a href="{{ route('organization.dashboard') }}" @if (url()->current() == route('organization.dashboard') class="active-link" @else class="nav-link"  @endif  aria-current="page" title="" data-toggle="tooltip" data-placement="right" data-original-title="Dashboard">
                     <span class="material-symbols-outlined">home</span>
                 </a>
             </li>

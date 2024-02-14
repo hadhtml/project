@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFlowChartScriptsTable extends Migration
+class CreateModulenamesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateFlowChartScriptsTable extends Migration
      */
     public function up()
     {
-        Schema::create('flow_chart_scripts', function (Blueprint $table) {
+        Schema::create('modulenames', function (Blueprint $table) {
             $table->id();
-            $table->string('unit_id')->nullable();
+            $table->string('user_id')->nullable();
+            $table->string('name')->nullable();
             $table->string('type')->nullable();
-            $table->longtext('script')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateFlowChartScriptsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('flow_chart_scripts');
+        Schema::dropIfExists('modulenames');
     }
 }

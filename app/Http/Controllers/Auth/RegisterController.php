@@ -72,16 +72,14 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'last_name' => $data['last_name'],
         ]);
-        
-            $organization  = new Organization();
-            $organization->organization_name = $data['org_name'];
-            $organization->email = $user->email;
-            $organization->slug = Str::slug($user->name.'-'.rand(10, 99));
-            $organization->user_id = $user->id;
-            $organization->code =  '#OR' . rand(1000, 9999);
-            $organization->type =  'org';
-            $organization->save();
-            
-            return $user;
+        $organization  = new Organization();
+        $organization->organization_name = $data['org_name'];
+        $organization->email = $user->email;
+        $organization->slug = Str::slug($user->name.'-'.rand(10, 99));
+        $organization->user_id = $user->id;
+        $organization->code =  '#OR' . rand(1000, 9999);
+        $organization->type =  'org';
+        $organization->save();
+        return $user;
     }
 }

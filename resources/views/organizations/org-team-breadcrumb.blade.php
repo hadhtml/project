@@ -23,7 +23,7 @@
                             <span style="font-size:17px" class="material-symbols-outlined">auto_stories</span>
                         </div>
                         <div>
-                            <a  href="{{url('dashboard/organizations')}}" style="text-decoration: none;" >Dashboard</a>
+                            <a  href="{{ route('organization.dashboard') }}" style="text-decoration: none;" >Dashboard</a>
                         </div>
                     </div>
 

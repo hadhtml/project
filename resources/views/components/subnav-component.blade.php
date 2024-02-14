@@ -16,7 +16,7 @@
                    
              
                     <li class="mb-1">
-                        <a href="{{url('dashboard/organizations')}}" @if (url()->current() == url('dashboard/organizations')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
+                        <a href="{{ route('organization.dashboard') }}" @if (url()->current() == url('organization/dashboard')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
                             <div class="mr-2">
                                 <span style="font-size:22px" class="material-symbols-outlined">auto_stories</span>
                             </div>

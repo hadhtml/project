@@ -37,7 +37,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                <a  href="{{url('dashboard/organization/'.$organization->slug.'/dashboard/'.$organization->type)}}" style="text-decoration: none;" >Dashboard</a>
                @endif
                @if($organization->type == 'org')
-               <a  href="{{url('dashboard/organizations')}}" style="text-decoration: none;" >Dashboard</a>
+               <a  href="{{ route('organization.dashboard') }}" style="text-decoration: none;" >Dashboard</a>
                @endif
             </div>
             @if($organization->type == 'BU')

@@ -38,7 +38,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                @if($organization->type == 'org')
                <div class="d-flex align-items-center mr-2">
                   <span style="font-size:19px" class="material-symbols-outlined">auto_stories</span>
-                  <a href="{{url('dashboard/organizations')}}" style="text-decoration: none;" >Dashboard</a>
+                  <a href="{{ route('organization.dashboard') }}" style="text-decoration: none;" >Dashboard</a>
                </div>
 
                <div class="d-flex align-items-center mr-2">
@@ -50,7 +50,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                @if($organization->type == 'unit')
                <div class="d-flex align-items-center mr-2">
                   <span style="font-size:19px" class="material-symbols-outlined">auto_stories</span>
-                  <a href="{{url('dashboard/organizations')}}" style="text-decoration: none;" >Dashboard</a>
+                  <a href="{{ route('organization.dashboard') }}" style="text-decoration: none;" >Dashboard</a>
                </div>
                
                <div class="d-flex align-items-center mr-2">
@@ -71,7 +71,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                
                <div class="d-flex align-items-center mr-2">
                   <span style="font-size:19px" class="material-symbols-outlined">auto_stories</span>
-                  <a href="{{url('dashboard/organizations')}}" style="text-decoration: none;" >Dashboard</a>
+                  <a href="{{ route('organization.dashboard') }}" style="text-decoration: none;" >Dashboard</a>
                </div>
 
                <div class="d-flex align-items-center mr-2">
@@ -93,7 +93,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                @if($organization->type == 'orgT')
                <div class="d-flex align-items-center mr-2">
                   <span style="font-size:19px" class="material-symbols-outlined">auto_stories</span>
-                  <a href="{{url('dashboard/organizations')}}" style="text-decoration: none;" >Dashboard</a>
+                  <a href="{{ route('organization.dashboard') }}" style="text-decoration: none;" >Dashboard</a>
                </div>
 
                <div class="d-flex align-items-center mr-2">
@@ -113,7 +113,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                @endphp
                  <div class="d-flex align-items-center mr-2">
                     <span style="font-size:19px" class="material-symbols-outlined">auto_stories</span>
-                     <a href="{{url('dashboard/organizations')}}" style="text-decoration: none;" >Dashboard</a>
+                     <a href="{{ route('organization.dashboard') }}" style="text-decoration: none;" >Dashboard</a>
                  </div>
                <div class="d-flex align-items-center mr-2">
                   <span style="font-size:19px" class="material-symbols-outlined">domain</span>
@@ -138,7 +138,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                @endphp
                 <div class="d-flex align-items-center mr-2">
                    <span style="font-size:19px" class="material-symbols-outlined">auto_stories</span>
-                  <a href="{{url('dashboard/organizations')}}" style="text-decoration: none;" >Dashboard</a>
+                  <a href="{{ route('organization.dashboard') }}" style="text-decoration: none;" >Dashboard</a>
                 </div>
 
                <div class="d-flex align-items-center mr-2">

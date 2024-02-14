@@ -62,7 +62,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                             <span style="font-size:17px" class="material-symbols-outlined">auto_stories</span>
                         </div>
                         <div>
-                            <a style="text-decoration: none;" href="{{ url('dashboard/organizations') }}">Dashboard</a>
+                            <a style="text-decoration: none;" href="{{ route('organization.dashboard') }}">Dashboard</a>
                         </div>
                     </div>
                 </div>

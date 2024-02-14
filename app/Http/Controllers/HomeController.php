@@ -9,34 +9,37 @@ use DB;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware(['auth','verified']);
-
     }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    // public function index()
-    // {
-    //     $data = DB::table('kpi_setting')->where('user_id',Auth::id())->get();
-    //     return view('Chart.chart',compact('data'));
-        
-        
-    // }
-    
     public function index()
+    {
+        if(Auth::id())
+        {
+          $organization  = Organization::where('user_id',Auth::id())->where('trash',NULL)->first();
+          return redirect(route('organization.dashboard'));
+        }
+        else
+        {
+          return view('welcome');
+        }
+    }
+    public function dashboard()
     {
         $organization  = Organization::where('user_id',Auth::id())->where('trash',NULL)->first();
         return view('organizations.dashboard',compact('organization'));
-
+    }
+    public function asignnames()
+    {
+        return view('organizations.asignnames');
+    }
+    public function createmodulenames(Request $request)
+    {
+        $request->validate([
+            'level_one' => 'required',
+            'level_two' => 'required',
+            'level_three' => 'required',
+        ]);
     }
 }
