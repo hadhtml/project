@@ -13,7 +13,7 @@
           
             
             @if($type == 'unit')
-            <td>Value Stream</td>
+            <td>{{ Cmf::getmodulename('level_two') }}</td>
             @endif
             @if($type == 'stream')
             <td>Team Title</td>

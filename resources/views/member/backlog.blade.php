@@ -85,7 +85,7 @@ $var_objective = 'Backlog';
                                           <div class="form-group mb-0">
                                              <select class="form-control category" id=""
                                                 name="stream_obj" required>
-                                                <option value="">Select Value Stream
+                                                <option value="">Select {{ Cmf::getmodulename("level_two") }}
                                                 </option>
                                                 <?php foreach(DB::table('value_stream')->where('user_id',Auth::id())->get() as $r){ ?>
                                                 <option value="{{ $r->id }}">
@@ -94,8 +94,7 @@ $var_objective = 'Backlog';
                                                 -->
                                                 <?php }  ?>
                                              </select>
-                                             <label for="small-description">Choose Value
-                                             Stream</label>
+                                             <label for="small-description">Choose {{ Cmf::getmodulename("level_two") }}</label>
                                           </div>
                                        </div>
                                        <div class="col-md-12 col-lg-12 col-xl-12">
@@ -421,12 +420,12 @@ $var_objective = 'Backlog';
                   <div class="col-md-12 col-lg-12 col-xl-12">
                      <div class="form-group mb-0">
                         <select class="form-control category" id="" name="stream_obj" required>
-                           <option value="">Select Value Stream</option>
+                           <option value="">Select {{ Cmf::getmodulename("level_two") }}</option>
                            <?php foreach(DB::table('value_stream')->where('user_id',Auth::id())->get() as $r){ ?>
                            <option value="{{ $r->id }}">{{ $r->value_name }}</option>
                            <?php }  ?>
                         </select>
-                        <label for="small-description">Choose Value Stream</label>
+                        <label for="small-description">Choose {{ Cmf::getmodulename("level_two") }}</label>
                      </div>
                   </div>
                   <div class="col-md-12 col-lg-12 col-xl-12">

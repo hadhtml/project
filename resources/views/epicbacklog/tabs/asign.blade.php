@@ -103,9 +103,9 @@
       @if ($data->type == 'stream')
       <div class="col-md-12 col-lg-12 col-xl-12">
          <div class="form-group mb-0">
-            <label for="small-description">Choose Value Stream</label>
+            <label for="small-description">Choose {{ Cmf::getmodulename("level_two") }}</label>
             <select class="form-control category" id="" name="stream_obj" required>
-               <option value="">Select Value Stream</option>
+               <option value="">Select {{ Cmf::getmodulename("level_two") }}</option>
                @foreach(DB::table('value_stream')->where('id',$data->unit_id)->get() as $r)
                <option value="{{ $r->id }}">{{ $r->value_name }}</option>
                @endforeach

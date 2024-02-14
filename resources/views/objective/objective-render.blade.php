@@ -629,7 +629,7 @@ $formattedDates = $firstDayOfMonths->toDateString();
 
                        @if($organization->type == 'stream')
                        <div class="col-md-12 col-lg-12 col-xl-12">
-                       <h6> Value Stream</h6>
+                       <h6> {{ Cmf::getmodulename('level_two') }}</h6>
                        <div class="d-flex align-items-center">
                         <div>
                             <span style="font-size:17px" class="material-symbols-outlined">layers</span>

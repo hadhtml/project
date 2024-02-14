@@ -16,7 +16,7 @@ $team  = DB::table('business_units')->where('id',$organization->unit_id)->first(
                 </div>
                 <div>
                     <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
-                        Value Stream
+                        {{ Cmf::getmodulename("level_two") }}
                     </h5>
                 </div>
             </div>

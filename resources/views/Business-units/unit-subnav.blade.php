@@ -39,7 +39,7 @@
                         <span style="font-size:22px" class="material-symbols-outlined">layers</span>
                     </div>
                     <div class="mr-2">
-                        Value Streams
+                        {{ Cmf::getmodulename("level_two") }}
                     </div>
                 </a>
             </li>

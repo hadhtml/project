@@ -2448,7 +2448,7 @@ $.ajax({
                 if (res) {
 
                     $('#key-team').empty();
-                    $('#key-team').append('<option hidden value="">Select Value Stream</option>');
+                    $('#key-team').append('<option hidden value="">Select {{ Cmf::getmodulename("level_two") }}</option>');
                     $.each(res, function(key, course) {
                         $('select[name="key-team"]').append('<option value="' + course.id + '">' +
                             course.value_name + '</option>');

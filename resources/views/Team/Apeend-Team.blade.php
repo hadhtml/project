@@ -16,12 +16,12 @@
     @if($type == 'unit')    
     <div class="form-group mb-0">
     <select name="key-team"  onchange="getteamobj(this.value,'{{$index}}')"  class="form-control key-team" value="" required>
-    <option value="">Select Value Stream</option>
+    <option value="">Select {{ Cmf::getmodulename('level_two') }}</option>
      @foreach($Team as $team)   
      <option value="{{$team->id}}">{{$team->value_name }}</option> 
      @endforeach 
     </select>
-    <label for="small-description" style="bottom:72px">Choose Value Stream</label>
+    <label for="small-description" style="bottom:72px">Choose {{ Cmf::getmodulename('level_two') }}</label>
     </div>
     @endif
     </div>

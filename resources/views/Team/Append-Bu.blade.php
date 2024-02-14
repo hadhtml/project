@@ -18,13 +18,13 @@
 <div class="col-md-6 col-lg-6 col-xl-6">
     <div class="form-group mb-0">
        <select class="form-control unitobj" onchange="getUnitObj(this.value,'{{$index}}')">
-        <option value="">Select Value Stream</option>
+        <option value="">Select {{ Cmf::getmodulename('level_two') }}</option>
         @foreach($Team as $r)
           <option value="{{ $r->id }}">{{ $r->value_name }}</option>
         @endforeach
 
        </select>
-        <label for="small-description">Choose Value Stream</label>
+        <label for="small-description">Choose {{ Cmf::getmodulename('level_two') }}</label>
     </div>
 </div>
 @endif

@@ -50,7 +50,7 @@ $var_objective = "Org-Unit";
                                         <ion-icon style="font-size: 18px;" name="layers-outline"></ion-icon>
                                     </div>
                                     <a href="{{ url('dashboard/organization') }}/{{ $unit->slug }}/Value-Streams">
-                                        <small>Value Streams ({{$ValueCount}})</small>
+                                        <small>{{ Cmf::getmodulename("level_two") }} ({{$ValueCount}})</small>
                                     </a>
                                 </div>
                             </div>

@@ -84,12 +84,12 @@
                                     <div class="col-md-6 col-lg-6 col-xl-6">
                                        <div class="form-group mb-0">
                                           <select class="form-control unitobj" onchange="getUnitObj(this.value,1)">
-                                             <option value="" >Select Value Stream</option>
+                                             <option value="" >Select {{ Cmf::getmodulename('level_two') }}</option>
                                              <?php foreach(DB::table('value_stream')->where('id',$organization->org_id)->get() as $r){ ?>
                                              <option value="{{ $r->id }}">{{ $r->value_name }}</option>
                                              <?php }  ?>
                                           </select>
-                                          <label for="small-description">Choose Value Stream</label>
+                                          <label for="small-description">Choose {{ Cmf::getmodulename('level_two') }}</label>
                                        </div>
                                     </div>
                                     <div class="col-md-6 col-lg-6 col-xl-6">

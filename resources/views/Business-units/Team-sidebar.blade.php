@@ -153,7 +153,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                             <span class="material-symbols-outlined"> arrow_back </span>
                         </div>
                         <div>
-                            Value Stream Team
+                            {{ Cmf::getmodulename("level_two") }} Team
                         </div>
                     </div>
                 </a>

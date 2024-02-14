@@ -2,7 +2,7 @@
 $var_objective = "V-Stream";
 @endphp
 @extends('components.main-layout')
-<title>Value Stream</title>
+<title>{{ Cmf::getmodulename('level_two') }}</title>
 @section('content')
 @if(count($Stream) > 0)
 <div class="row">
@@ -105,7 +105,7 @@ $var_objective = "V-Stream";
                       
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">Delete Value Stream</h5>
+                              <h5 class="modal-title" id="exampleModalLabel">Delete {{ Cmf::getmodulename('level_two') }}</h5>
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                               </button>
@@ -121,8 +121,8 @@ $var_objective = "V-Stream";
                                 <div class="modal-body-error">
                                 </div>
                               
-                            Are you sure you want to delete this Value Stream?
-                            <input type="text" name="value_name"  id="noPasteField" class="form-control noPasteField{{$stream->ID}}" placeholder="Type  Value Stream" required>
+                            Are you sure you want to delete this {{ Cmf::getmodulename('level_two') }}?
+                            <input type="text" name="value_name"  id="noPasteField" class="form-control noPasteField{{$stream->ID}}" placeholder="Type  {{ Cmf::getmodulename('level_two') }}" required>
                     
                             </div>
                         
@@ -141,7 +141,7 @@ $var_objective = "V-Stream";
                         <div class="modal-header">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h5 class="modal-title" id="create-epic">Update Value Stream</h5>
+                                    <h5 class="modal-title" id="create-epic">Update {{ Cmf::getmodulename('level_two') }}</h5>
                                 </div>
                                 <div class="col-md-12">
                                     <p>Lorem ipsum dummy text for printing</p>
@@ -159,7 +159,7 @@ $var_objective = "V-Stream";
                                     <div class="col-md-12 col-lg-12 col-xl-12">
                                         <div class="form-group mb-0">
                                             <input type="text" class="form-control" name="value_name" value="{{$stream->value_name}}" required>
-                                            <label for="{{ Cmf::getmodulename("level_one") }}">Value Stream</label>
+                                            <label for="{{ Cmf::getmodulename("level_one") }}">{{ Cmf::getmodulename('level_two') }}</label>
                                         </div>
                                     </div>
                                       <div class="col-md-12 col-lg-12 col-xl-12">
@@ -220,7 +220,7 @@ $var_objective = "V-Stream";
             <div class="modal-header">
                 <div class="row">
                     <div class="col-md-12">
-                        <h5 class="modal-title" id="create-epic">Create Value Stream</h5>
+                        <h5 class="modal-title" id="create-epic">Create {{ Cmf::getmodulename('level_two') }}</h5>
                     </div>
                     <div class="col-md-12">
                         <p>Lorem ipsum dummy text for printing</p>
@@ -238,7 +238,7 @@ $var_objective = "V-Stream";
                         <div class="col-md-12 col-lg-12 col-xl-12">
                             <div class="form-group mb-0">
                                 <input type="text" class="form-control" name="value_name" id="{{ Cmf::getmodulename('level_one') }}" required>
-                                <label for="{{ Cmf::getmodulename('level_one') }}">Value Stream</label>
+                                <label for="{{ Cmf::getmodulename('level_one') }}">{{ Cmf::getmodulename('level_two') }}</label>
                             </div>
                         </div>
                         @php
@@ -330,7 +330,7 @@ function DeleteValue(delete_id)
     
         if(value_name == '')
         {
-          $('#show-error').html('<div class="alert alert-danger" role="alert"> Please Enter Correct Value Stream Name</div>');    
+          $('#show-error').html('<div class="alert alert-danger" role="alert"> Please Enter Correct {{ Cmf::getmodulename("level_two") }} Name</div>');    
             return  false;
         }
        
@@ -348,11 +348,11 @@ function DeleteValue(delete_id)
       
          if(res == 1)
          {
-         $('.modal-body-error').html('<div class="alert alert-danger" role="alert"> Please Enter Correct Value Stream Name</div>');    
+         $('.modal-body-error').html('<div class="alert alert-danger" role="alert"> Please Enter Correct {{ Cmf::getmodulename("level_two") }} Name</div>');    
              
          }else
          {
-         $('.modal-body-error').html('<div class="alert alert-success" role="alert"> Value Stream Deleted Successfully</div>');
+         $('.modal-body-error').html('<div class="alert alert-success" role="alert"> {{ Cmf::getmodulename("level_two") }} Deleted Successfully</div>');
          location.reload();
          } 
 
