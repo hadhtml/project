@@ -38,7 +38,7 @@ $organization = DB::table('organization')->where('user_id',Auth::id())->where('t
          </a>
       </li>
       <li class="mb-1">
-         <a href="{{url('dashboard/organization/users')}}" @if (url()->current() == url('dashboard/organization/users'))  class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center" @endif>
+         <a href="{{route('settings.users')}}" @if (url()->current() == route('settings.users'))  class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center" @endif>
          <div class="mr-2">
             <span style="font-size:22px" class="material-symbols-outlined">group_add</span>
          </div>

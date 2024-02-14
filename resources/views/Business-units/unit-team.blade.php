@@ -336,7 +336,7 @@ $var_objective = "Org-Unit-team";
                         
                         @if($memberCount == 0)
                         <div class="alert alert-danger mt-1 ml-3" role="alert">
-                        Add users before assigning <a href="{{url('dashboard/organization/users')}}" class="alert-link">Click here</a>.
+                        Add users before assigning <a href="{{route('settings.users')}}" class="alert-link">Click here</a>.
                         </div>
                         @endif
                         

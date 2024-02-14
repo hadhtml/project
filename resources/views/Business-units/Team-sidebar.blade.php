@@ -50,7 +50,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
             </li>
 
             {{-- <li>
-                <a href="{{url('dashboard/organization/users')}}" @if (url()->current() == url('dashboard/organization/users')) class="active-link" @else class="nav-link"  @endif title="" data-toggle="tooltip" data-placement="right" data-original-title="Users">
+                <a href="{{route('settings.users')}}" @if (url()->current() == route('settings.users')) class="active-link" @else class="nav-link"  @endif title="" data-toggle="tooltip" data-placement="right" data-original-title="Users">
                     <span class="material-symbols-outlined">group</span>
                 </a>
             </li> --}}

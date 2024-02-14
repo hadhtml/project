@@ -34,7 +34,7 @@ Route::middleware('auth')->group(function () {
         Route::get('my-profile', 'OrganizationController@profile')->name('myprofile');
         Route::get('financial-year', 'JiraController@financialsettings')->name('financial');
         Route::get('change-password', 'OrganizationController@change_password')->name('security');
-
+        Route::get('users', 'MemberController@AllMembers')->name('users');
     });
 
 });
@@ -148,7 +148,7 @@ Route::get('chart-status', [App\Http\Controllers\ChartController::class, 'GetCha
 // Members
 
 
-Route::get('dashboard/organization/users', [App\Http\Controllers\MemberController::class,'AllMembers']);
+
 Route::post('save-member', [App\Http\Controllers\MemberController::class,'SaveMember']);
 Route::post('edit-member', [App\Http\Controllers\MemberController::class,'UpdateMember']);
 Route::get('check-email', [App\Http\Controllers\MemberController::class,'Checkemail']);

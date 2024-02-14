@@ -99,7 +99,7 @@ $var_objective = "Org-Unit";
                             @endif
                             @else
                               <div>
-                                <a class="nav-link" href="{{url('dashboard/organization/users')}}">
+                                <a class="nav-link" href="{{route('settings.users')}}">
                                     <button class="btn btn-primary">Assign</button>
                                 </a>
                             </div>
@@ -283,7 +283,7 @@ $var_objective = "Org-Unit";
                         </div>
                         @if($memberCount == 0)
                         <div class="alert alert-danger mt-1 ml-3" role="alert">
-                        Add users before assigning <a href="{{url('dashboard/organization/users')}}" class="alert-link">Click here</a>.
+                        Add users before assigning <a href="{{route('settings.users')}}" class="alert-link">Click here</a>.
                         </div>
                         @endif
                         <div class="col-md-12 col-lg-12 col-xl-12 mb-5">
