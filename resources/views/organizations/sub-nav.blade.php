@@ -40,7 +40,7 @@ $organization = DB::table('organization')->where('user_id',Auth::id())->where('t
                         <span style="font-size:22px" class="material-symbols-outlined">domain</span>
                     </div>
                     <div>
-                        Business Units
+                        {{ Cmf::getmodulename("level_one") }}
                     </div>
                 </div>
             </button>
@@ -83,7 +83,7 @@ $organization = DB::table('organization')->where('user_id',Auth::id())->where('t
                     <span style="font-size:22px" class="material-symbols-outlined">domain</span>
                 </div>
                 <div class="mr-2">
-                    Business Units
+                    {{ Cmf::getmodulename("level_one") }}
                 </div>
             </a>
         </li>

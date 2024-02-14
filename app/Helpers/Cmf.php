@@ -14,7 +14,7 @@ use Twilio\Rest\Client;
 use App\Models\orderstatus;
 use App\Models\activities;
 use App\Models\team_link_child;
-
+use App\Models\modulenames;
 
 use App\Models\Member_order;
 use Mail;
@@ -23,17 +23,29 @@ use Illuminate\Support\Facades\Http;
 use OneSignal;
 class Cmf
 { 
+    public static function getmodulename($level)
+    {
+        if($level == 'level_one')
+        {
+            return modulenames::where('user_id' , Auth::id())->first()->level_one;
+        }
+        if($level == 'level_two')
+        {
+            return modulenames::where('user_id' , Auth::id())->first()->level_two;
+        }
+        if($level == 'level_three')
+        {
+            return modulenames::where('user_id' , Auth::id())->first()->level_three;
+        }
+    }
 
     public static function outputscript($id , $type)
     {
         $data = team_link_child::where('bussiness_unit_id' , $id)->where('from' , $type)->get();
-
         foreach ($data as $r) {
             echo "string";
         }
         exit;
-
-
         return '"outputs": { "output_1": { "connections": [{ "node": "101", "output": "input_1" }] },"output_2": { "connections": [{ "node": "101", "output": "input_1" }] }, },';
     }
 

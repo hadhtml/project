@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{{asset('public/assets/css/style.css')}}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <title>Login</title>
+    <title>Asign Names To Modules</title>
     <style type="text/css">
     </style>
 </head>
@@ -30,13 +30,12 @@
             <div class="login-aside order-2 order-lg-1 d-flex flex-row-auto position-relative overflow-hidden">
                 <!--begin: Aside Container-->
                 <div class="d-flex flex-column-fluid flex-column justify-content-between py-9 px-7 py-lg-10 px-lg-30">
-                    <div class="d-flex flex-column-fluid flex-column flex-center">
+                    <div class="d-flex flex-column-fluid flex-column flex-center" id="asigloading">
                         <div class="row auth-form">
                             <div class="col-md-12">
                                 <h3>Asign Names To Modules</h3>
                             </div>
                         </div>
-                        
                         <div class="input-fields-area py-lg-0">
                             <form class="createmodulenames needs-validation pt-2" method="POST" action="{{ route('createmodulenames') }}">
                                 @csrf
@@ -94,6 +93,7 @@ function togglePasswordVisibility(fieldId) {
 }
 $('.createmodulenames').on('submit',(function(e) {
     $('#createmodulenamesbutton').html('<i class="fa fa-spin fa-spinner"></i>');
+    $("#createmodulenamesbutton" ).prop("disabled", true);
     e.preventDefault();
     var formData = new FormData(this);
     $.ajax({
@@ -104,7 +104,11 @@ $('.createmodulenames').on('submit',(function(e) {
         contentType: false,
         processData: false,
         success: function(res){
-            
+            $('#asigloading').html('<div class="row auth-form"> <div class="col-md-12"> <h3>Asign Names To Modules</h3> </div> </div> <div class="text-center mt-3 mb-3"> <img src="{{ url("public/images/Processing.gif") }}"> </div>');
+            setTimeout(function() { 
+                var url = '{{ route("organization.dashboard") }}';
+                window.location.replace(url);
+            }, 2000);
         }
     });
 }));

@@ -1,6 +1,6 @@
 <div class="flex-shrink-0 p-3 bg-white sub-nav open" id="panel">
    
-        <h6 class="title">Business Units</h6>
+        <h6 class="title">{{ Cmf::getmodulename("level_one") }}</h6>
         <ul class="list-unstyled ps-0 expanded-navbar mb-0">
             
             <li class="mb-1">
@@ -10,7 +10,7 @@
                             <span class="material-symbols-outlined"> arrow_back </span>
                         </div>
                         <div>
-                            Business Units
+                            {{ Cmf::getmodulename("level_one") }}
                         </div>
                     </div>
                 </a>

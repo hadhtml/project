@@ -159,7 +159,7 @@ $var_objective = "V-Stream";
                                     <div class="col-md-12 col-lg-12 col-xl-12">
                                         <div class="form-group mb-0">
                                             <input type="text" class="form-control" name="value_name" value="{{$stream->value_name}}" required>
-                                            <label for="Business Unit">Value Stream</label>
+                                            <label for="{{ Cmf::getmodulename("level_one") }}">Value Stream</label>
                                         </div>
                                     </div>
                                       <div class="col-md-12 col-lg-12 col-xl-12">
@@ -169,7 +169,7 @@ $var_objective = "V-Stream";
                                                   <option @if($r->id == $stream->unit_id) selected @endif value="{{ $r->id }}">{{ $r->business_name }}</option>
                                                 <?php }  ?>
                                             </select>
-                                            <label for="lead-manager">Business Unit</label>
+                                            <label for="lead-manager">{{ Cmf::getmodulename("level_one") }}</label>
                                         </div>
                                     </div>
                                     
@@ -208,9 +208,9 @@ $var_objective = "V-Stream";
 <div style="position:absolute;right:27%;top:40%;" class="text-center">
 <img src="{{asset('public/business-unit.svg')}}"  width="120" height="120">
 <div><h6 class="text-center">No Records Found</h6></div>
-<div><p class="text-center">You may create a business unit by clicking the button below.</p></div>
+<div><p class="text-center">You may create a {{ Cmf::getmodulename("level_one") }} by clicking the button below.</p></div>
 <button class="btn btn-primary btn-lg btn-theme btn-block ripple ml-32" style="width:40%" type="button" data-toggle="modal" data-target="#add-business-value">
-    Add Business Unit
+    Add {{ Cmf::getmodulename("level_one") }}
 </button>
 </div>
 @endif
@@ -237,8 +237,8 @@ $var_objective = "V-Stream";
                     <div class="row">
                         <div class="col-md-12 col-lg-12 col-xl-12">
                             <div class="form-group mb-0">
-                                <input type="text" class="form-control" name="value_name" id="Business Unit" required>
-                                <label for="Business Unit">Value Stream</label>
+                                <input type="text" class="form-control" name="value_name" id="{{ Cmf::getmodulename('level_one') }}" required>
+                                <label for="{{ Cmf::getmodulename('level_one') }}">Value Stream</label>
                             </div>
                         </div>
                         @php
@@ -247,17 +247,17 @@ $var_objective = "V-Stream";
                         <!--  <div class="col-md-12 col-lg-12 col-xl-12">-->
                         <!--    <div class="form-group mb-0">-->
                         <!--        <select class="form-control" name="unit_id" required>-->
-                        <!--               <option value="">Select Business Unit</option>-->
+                        <!--               <option value="">Select {{ Cmf::getmodulename("level_one") }}</option>-->
                         <!--            <?php foreach(DB::table('business_units')->where('user_id',Auth::id())->get() as $r){ ?>-->
                         <!--              <option value="{{ $r->id }}">{{ $r->business_name }}</option>-->
                         <!--            <?php }  ?>-->
                         <!--        </select>-->
-                        <!--        <label for="lead-manager">Business Unit</label>-->
+                        <!--        <label for="lead-manager">{{ Cmf::getmodulename("level_one") }}</label>-->
                         <!--    </div>-->
                         <!--</div>-->
                         <!-- @if($BCount == 0)-->
                         <!--<div class="alert alert-danger mt-1 ml-3" role="alert">-->
-                        <!--Add Business Unit before assigning <a href="{{url('dashboard/organization/Business-Units')}}" class="alert-link">Click here</a>.-->
+                        <!--Add {{ Cmf::getmodulename("level_one") }} before assigning <a href="{{url('dashboard/organization/Business-Units')}}" class="alert-link">Click here</a>.-->
                         <!--</div>-->
                         <!--@endif-->
                         

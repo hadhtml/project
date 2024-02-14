@@ -82,13 +82,13 @@ $var_objective = "Backlog-Unit";
                                        <div class="col-md-12 col-lg-12 col-xl-12">
                                           <div class="form-group mb-0">
                                              <select class="form-control category" id="" name="stream_obj" required>
-                                                <option value="" >Select Business Unit</option>
+                                                <option value="" >Select {{ Cmf::getmodulename('level_one') }}</option>
                                                 <?php foreach(DB::table('business_units')->where('user_id',Auth::id())->get() as $r){ ?>
                                                 <option value="{{ $r->id }}">{{ $r->business_name }}</option>
                                                 -->
                                                 <?php }  ?>
                                              </select>
-                                             <label for="small-description">Choose Business Unit</label>
+                                             <label for="small-description">Choose {{ Cmf::getmodulename('level_one') }}</label>
                                           </div>
                                        </div>
                                        <div class="col-md-12 col-lg-12 col-xl-12">
@@ -378,13 +378,13 @@ $var_objective = "Backlog-Unit";
                   <div class="col-md-12 col-lg-12 col-xl-12">
                      <div class="form-group mb-0">
                         <select class="form-control category" id="" name="stream_obj" required>
-                           <option value="" >Select Business Unit</option>
+                           <option value="" >Select {{ Cmf::getmodulename('level_one') }}</option>
                            <?php foreach(DB::table('business_units')->where('user_id',Auth::id())->get() as $r){ ?>
                            <option value="{{ $r->id }}">{{ $r->business_name }}</option>
                            -->
                            <?php }  ?>
                         </select>
-                        <label for="small-description">Choose Business Unit</label>
+                        <label for="small-description">Choose {{ Cmf::getmodulename('level_one') }}</label>
                      </div>
                   </div>
                   <div class="col-md-12 col-lg-12 col-xl-12">

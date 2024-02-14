@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Organization;
 use Auth;
 use DB;
-
+use App\Models\modulenames;
 class HomeController extends Controller
 {
     public function __construct()
@@ -32,14 +32,23 @@ class HomeController extends Controller
     }
     public function asignnames()
     {
-        return view('organizations.asignnames');
+        if(modulenames::where('user_id' , Auth::id())->count() == 1)
+        {
+          $organization  = Organization::where('user_id',Auth::id())->where('trash',NULL)->first();
+          return redirect(route('organization.dashboard'));
+        }
+        else
+        {
+          return view('organizations.asignnames');
+        }
     }
     public function createmodulenames(Request $request)
     {
-        $request->validate([
-            'level_one' => 'required',
-            'level_two' => 'required',
-            'level_three' => 'required',
-        ]);
+        $cretemodulenames = new modulenames;
+        $cretemodulenames->user_id = Auth::id();
+        $cretemodulenames->level_one = $request->level_one;
+        $cretemodulenames->level_two = $request->level_two;
+        $cretemodulenames->level_three = $request->level_three;
+        $cretemodulenames->save();
     }
 }

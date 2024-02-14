@@ -27,7 +27,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
             </li>
         
             <li>
-                <a href="{{url('dashboard/organization/Business-Units')}}"  @if (url()->current() == url('dashboard/organization/Business-Units')) class="active-link" @else class="nav-link"  @endif  data-toggle="tooltip" data-placement="right" data-original-title=" Business Units">
+                <a href="{{url('dashboard/organization/Business-Units')}}"  @if (url()->current() == url('dashboard/organization/Business-Units')) class="active-link" @else class="nav-link"  @endif  data-toggle="tooltip" data-placement="right" data-original-title="{{ Cmf::getmodulename("level_one") }}">
                     <span class="material-symbols-outlined">domain</span>
                 </a>
             </li>
@@ -112,7 +112,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                             <span class="material-symbols-outlined"> arrow_back </span>
                         </div>
                         <div>
-                            Business Unit Team
+                            {{ Cmf::getmodulename("level_one") }} Team
                         </div>
                     </div>
                 </a>

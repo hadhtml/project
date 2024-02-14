@@ -2,7 +2,7 @@
 $var_objective = "Org-Unit";
 @endphp
 @extends('components.main-layout')
-<title>Org-Business Units</title>
+<title>Org-{{ Cmf::getmodulename('level_one') }}</title>
 @section('content')
 
 @if (session('message'))
@@ -134,10 +134,10 @@ $var_objective = "Org-Unit";
                 <div class="modal-header">
                     <div class="d-flex flex-column">
                         <div>
-                            <h5 class="modal-title mb-0" id="exampleModalLabel">Delete Business Unit</h5>
+                            <h5 class="modal-title mb-0" id="exampleModalLabel">Delete {{ Cmf::getmodulename("level_one") }}</h5>
                         </div>
                         <div>
-                            <small>Are you sure you want to delete this Business Unit?</small>
+                            <small>Are you sure you want to delete this {{ Cmf::getmodulename("level_one") }}?</small>
                         </div>
                     </div>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -154,7 +154,7 @@ $var_objective = "Org-Unit";
                     <div class="modal-body-error">
                     </div>
                 
-                <input type="text" name="bu_name"  id="bu_name{{$unit->id}}" class="form-control" placeholder="Write business unit name and hit confirm" required>
+                <input type="text" name="bu_name"  id="bu_name{{$unit->id}}" class="form-control" placeholder="Write {{ Cmf::getmodulename('level_one') }} name and hit confirm" required>
 
                 </div>
                 <div class="modal-footer">
@@ -173,7 +173,7 @@ $var_objective = "Org-Unit";
                 <div class="modal-header">
                     <div class="row">
                         <div class="col-md-12">
-                            <h5 class="modal-title" id="create-epic">Update Business Unit</h5>
+                            <h5 class="modal-title" id="create-epic">Update {{ Cmf::getmodulename("level_one") }}</h5>
                         </div>
                         <div class="col-md-12">
                             <p>Lorem ipsum dummy text for printing</p>
@@ -191,7 +191,7 @@ $var_objective = "Org-Unit";
                             <div class="col-md-12 col-lg-12 col-xl-12">
                                 <div class="form-group mb-0">
                                     <input type="text" class="form-control" name="unit_name" value="{{$unit->business_name}}" required>
-                                    <label for="Business Unit">Business Unit</label>
+                                    <label for="{{ Cmf::getmodulename('level_one') }}">{{ Cmf::getmodulename("level_one") }}</label>
                                 </div>
                             </div>
                            
@@ -231,9 +231,9 @@ $var_objective = "Org-Unit";
 <div style="position:absolute;right:27%;top:40%;" class="text-center">
 <img src="{{asset('public/business-unit.svg')}}"  width="120" height="120">
 <div><h6 class="text-center">No Records Found</h6></div>
-<div><p class="text-center">You may create a business unit by clicking the button below.</p></div>
+<div><p class="text-center">You may create a {{ Cmf::getmodulename("level_one") }} by clicking the button below.</p></div>
 <button class="btn btn-primary btn-lg btn-theme btn-block ripple ml-32" style="width:40%" type="button" data-toggle="modal" data-target="#add-business-unit">
-    Add Business Unit
+    Add {{ Cmf::getmodulename("level_one") }}
 </button>
 </div>
 @endif
@@ -246,7 +246,7 @@ $var_objective = "Org-Unit";
             <div class="modal-header">
                 <div class="row">
                     <div class="col-md-12">
-                        <h5 class="modal-title" id="create-epic">Create Business Unit</h5>
+                        <h5 class="modal-title" id="create-epic">Create {{ Cmf::getmodulename("level_one") }}</h5>
                     </div>
                     <div class="col-md-12">
                         <p>Lorem ipsum dummy text for printing</p>
@@ -263,8 +263,8 @@ $var_objective = "Org-Unit";
                     <div class="row">
                         <div class="col-md-12 col-lg-12 col-xl-12">
                             <div class="form-group mb-0">
-                                <input type="text" class="form-control" name="unit_name" id="Business Unit" required>
-                                <label for="Business Unit">Business Unit</label>
+                                <input type="text" class="form-control" name="unit_name" id="{{ Cmf::getmodulename('level_one') }}" required>
+                                <label for="{{ Cmf::getmodulename('level_one') }}">{{ Cmf::getmodulename("level_one") }}</label>
                             </div>
                         </div>
                         @php
@@ -327,7 +327,7 @@ $var_objective = "Org-Unit";
       
         if(val == '')
         {
-          $('#show-error').html('<div class="alert alert-danger" role="alert"> Please Enter  Business Units Name</div>');    
+          $('#show-error').html('<div class="alert alert-danger" role="alert"> Please Enter  {{ Cmf::getmodulename("level_one") }} Name</div>');    
             return  false;
         }
        
@@ -344,11 +344,11 @@ $var_objective = "Org-Unit";
         success: function(res) {
          if(res == 1)
          {
-         $('.modal-body-error').html('<div class="alert alert-danger" role="alert"> Please Enter Correct Business Units Name</div>');    
+         $('.modal-body-error').html('<div class="alert alert-danger" role="alert"> Please Enter Correct {{ Cmf::getmodulename("level_one") }} Name</div>');    
              
          }else
          {
-         $('.modal-body-error').html('<div class="alert alert-success" role="alert"> Business Units Deleted Successfully</div>');
+         $('.modal-body-error').html('<div class="alert alert-success" role="alert"> {{ Cmf::getmodulename("level_one") }} Deleted Successfully</div>');
         
          setTimeout(function() {
         location.reload();

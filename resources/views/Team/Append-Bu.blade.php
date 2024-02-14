@@ -3,13 +3,13 @@
 <div class="col-md-6 col-lg-6 col-xl-6">
     <div class="form-group mb-0">
        <select class="form-control unitobj" onchange="getUnitObj(this.value,'{{$index}}')">
-        <option value="">Select Business Unit</option>
+        <option value="">Select {{ Cmf::getmodulename("level_one") }}</option>
         @foreach($Team as $r)
           <option value="{{ $r->id }}">{{ $r->business_name }}</option>
         @endforeach
 
        </select>
-        <label for="small-description">Choose Business Unit</label>
+        <label for="small-description">Choose {{ Cmf::getmodulename("level_one") }}</label>
     </div>
 </div>
 @endif

@@ -39,12 +39,12 @@
                                     <div class="col-md-6 col-lg-6 col-xl-6">
                                        <div class="form-group mb-0">
                                           <select required id="business_uni_id" name="bussiness_unit_id" class="form-control unitobj" onchange="getunitobjective(this.value)">
-                                             <option value="" >Select Business Unit</option>
+                                             <option value="" >Select {{ Cmf::getmodulename("level_one") }}</option>
                                              <?php foreach(DB::table('business_units')->where('id',$organization->org_id)->get() as $r){ ?>
                                              <option value="{{ $r->id }}">{{ $r->business_name }}</option>
                                              <?php }  ?>
                                           </select>
-                                          <label for="small-description">Choose Business Unit</label>
+                                          <label for="small-description">Choose {{ Cmf::getmodulename("level_one") }}</label>
                                        </div>
                                     </div>
                                     <div class="col-md-6 col-lg-6 col-xl-6">

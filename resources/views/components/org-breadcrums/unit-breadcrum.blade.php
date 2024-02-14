@@ -27,7 +27,7 @@
                 </div>
                 <div>
                     <h5 class="text-dark font-weight-bold ml-2">
-                        Business Units
+                        {{ Cmf::getmodulename("level_one") }}
                     </h5>
                 </div>
             </div>
@@ -84,7 +84,7 @@
                             <span style="font-size:17px" class="material-symbols-outlined">domain</span>
                         </div>
                         <div>
-                            <a href="{{url('dashboard/organization/Business-Units')}}">Business Units</a>
+                            <a href="{{url('dashboard/organization/Business-Units')}}">{{ Cmf::getmodulename("level_one") }}</a>
 
                         </div>
                     </div>
@@ -99,7 +99,7 @@
         <div class="d-flex align-items-center toolbar">
             <div>
                 <button class="button" type="button" data-toggle="modal" data-target="#add-business-unit">
-                    Add Business Unit
+                    Add {{ Cmf::getmodulename('level_one') }}
                 </button>
             </div>
         </div>

@@ -139,7 +139,7 @@
                             </a>
                         </div>
                         <div class="dashboard-card-tittle">
-                            <h4>Business Units</h4>
+                            <h4>{{ Cmf::getmodulename('level_one') }}</h4>
                         </div>
                         <div class="dashboard-card-number">
                             <h3>{{ $businessunits }}</h3>
