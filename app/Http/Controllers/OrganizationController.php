@@ -495,6 +495,30 @@ class OrganizationController extends Controller
         
         DB::table('sprint')->where('user_id',Auth::id())->where('value_unit_id',$request->unit_id)->where('status',NULL)->update(['status'=> 1]);
       
+        if($request->has('move_epic'))
+        {
+        if($request->move_epic == 'yes')
+        {
+          $monthNumber = \Carbon\Carbon::parse($request->month)->month;
+          $firstDayOfNextMonth = \Carbon\Carbon::create(null, $monthNumber + 1, 1, 0, 0, 0);
+          $lastDayOfMonth = $firstDayOfNextMonth->subDay();
+          $formattedDate = $lastDayOfMonth->toDateString();
+  
+          $moveepic = DB::table('epics')->whereBetween('epic_end_date', [$s->start_data, $s->end_date])
+          ->where('user_id',Auth::id())
+          ->where('buisness_unit_id',$s->value_unit_id)
+          ->where('epic_type',$request->type)
+          ->where('epic_status','!=','Done')
+          ->where('initiative_id',$request->init_id)
+          ->where('trash',NULL)
+          ->update(['quarter_id' => $request->quarter,'epic_end_date' => $formattedDate,'month_id' => $request->month_id ]);
+
+        }  
+
+        }
+      
+
+
         if ($request->type == "stream") {
           $organization = DB::table("value_stream")
               ->where("slug", $request->slug)
@@ -948,16 +972,19 @@ class OrganizationController extends Controller
           'key_id' => $request->id,
           'sprint_id' => $request->sprint_id,
           'value' => $request->value,
+          'status' => $request->status,
+          'summary' => $request->summary,
+          'participant' => $request->participant,
         
         ]);
 
-    $report = DB::table('sprint')->where('user_id',Auth::id())->where('status',NULL)->where('value_unit_id',$request->unit_id)->first();
-    $KEYChart =  DB::table('key_chart')->where('key_id',$request->id)->where('IndexCount',$report->IndexCount)->first();
-    $key = DB::table('key_result')->where('id',$request->id)->first();
-    $keyQAll = DB::table('key_chart')->where('key_id',$request->id)->get();
-    // $keyqvalue =  DB::table('key_quarter_value')->where('key_chart_id', $KEYChart->id)->get();
+    // $report = DB::table('sprint')->where('user_id',Auth::id())->where('status',NULL)->where('value_unit_id',$request->unit_id)->first();
+    // $KEYChart =  DB::table('key_chart')->where('key_id',$request->id)->where('IndexCount',$report->IndexCount)->first();
+    // $key = DB::table('key_result')->where('id',$request->id)->first();
+    // $keyQAll = DB::table('key_chart')->where('key_id',$request->id)->get();
+    // // $keyqvalue =  DB::table('key_quarter_value')->where('key_chart_id', $KEYChart->id)->get();
 
-    return view('objective.key-chart',compact('KEYChart','key','report','keyQAll'));
+    // return view('objective.key-chart',compact('KEYChart','key','report','keyQAll'));
 
     }
 
@@ -1293,5 +1320,47 @@ return $data;
  
 }
 
+public function MoveQuarter(Request $request)
+{
+  $currentDate = Carbon::now();
+  $currentYear = $currentDate->year;
+  $currentMonth = $currentDate->month;
+  $yearMonthString = $currentDate->format('Y');
+  $yearMonth = $currentDate->format('F');
+  $CurrentQuarter = '';
+  $Quarters = '';
+  $nextQuarter = '';
+  $CurrentQuarter = DB::table('quarter_month')
+                    ->where('org_id',$request->unit_id)
+                    ->where('month',$yearMonth)
+                    ->where('year',$yearMonthString)->first();
+  if($CurrentQuarter)
+  {
+      $Quarter = DB::table('quarter')
+                    ->where('id',$CurrentQuarter->quarter_id)
+                     ->first();
+      if($Quarter)
+      {
+       $index = $Quarter->loop_index + 1;
+       $Quarters = DB::table('quarter')
+       ->where('loop_index',$index)
+        ->first();
+       
+       if($Quarters)
+       {
+        $nextQuarter = DB::table('quarter_month')
+        ->where('quarter_id',$Quarters->id)
+        ->orderby('id','asc')
+        ->first();
+       } 
+   
+      }               
+     
+  
+  
+  } 
+
+  return $nextQuarter;
+}
 
 }

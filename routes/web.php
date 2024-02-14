@@ -41,6 +41,7 @@ Route::get('dashboard/organization/report-2/{id}/{sprint}/{type}', [App\Http\Con
 Route::post('save-sprint', [App\Http\Controllers\OrganizationController::class,'saveQuarter']);
 Route::post('end-sprint', [App\Http\Controllers\OrganizationController::class,'endQuarter']);
 Route::post('restart-sprint', [App\Http\Controllers\OrganizationController::class,'RestartSprint']);
+Route::get('quarter-epic-move', [App\Http\Controllers\OrganizationController::class,'MoveQuarter']);
 
 Route::get('dashboard/organization/{id}/BU-Report/{type}', [App\Http\Controllers\OrganizationController::class,'AllBUReport']);
 Route::get('Okr-report/{id}/{type}', [App\Http\Controllers\OrganizationController::class,'AllReport']);

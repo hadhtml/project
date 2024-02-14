@@ -1967,8 +1967,38 @@
 
     function Finishquarter(q_name,q_year) 
     {
-    $('#end-report').modal('show');
-    $('#end-quartr').html('<h5 class="modal-title">Finish ' +q_name+'  '+ q_year +'</h5>');
+
+        var unit_id = "{{ $organization->id }}";
+        var type = "{{ $organization->type }}";
+        var slug = "{{ $organization->slug }}";
+        $.ajax({
+            type: "GET",
+            url: "{{ url('quarter-epic-move') }}",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                unit_id: unit_id,
+                type: type,
+                slug:slug
+            },
+            success: function(res) {
+          
+            $('#end-report').modal('show');
+            $('#end-quartr').html('<h5 class="modal-title">Finish ' +q_name+'  '+ q_year +'</h5>');   
+            if(res.id)
+            {
+            $('#month').val(res.month);
+            $('#quarter').val(res.quarter_id);
+            $('#init_id').val(res.initiative_id);
+            $('#month_id').val(res.id);
+            $('#move-epic').html('<label for="small-description">Move incomplete epic to next quarter?</label><div class="form-group mb-0"><select class="form-control" id="move_epic" ><option value="">Select</option><option value="yes">yes</option></select></div>');  
+            }
+            
+            
+            }
+        });
+
     }
 
     function endquarter() {
@@ -1978,6 +2008,13 @@
         var unit_id = "{{ $organization->id }}";
         var type = "{{ $organization->type }}";
         var slug = "{{ $organization->slug }}";
+
+        var month   = $('#month').val();
+        var quarter   = $('#quarter').val();
+        var init_id   = $('#init_id').val();
+        var month_id   = $('#month_id').val();
+        var move_epic  = $('#move_epic').val();
+
         $.ajax({
             type: "POST",
             url: "{{ url('end-sprint') }}",
@@ -1987,7 +2024,12 @@
             data: {
                 unit_id: unit_id,
                 type: type,
-                slug:slug
+                slug:slug,
+                month:month,
+                quarter:quarter,
+                init_id:init_id,
+                month_id:month_id,
+                move_epic:move_epic,
             },
             success: function(res) {
                 $('#parentCollapsible').html(res);
