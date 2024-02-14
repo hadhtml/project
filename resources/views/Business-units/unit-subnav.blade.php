@@ -4,7 +4,7 @@
         <ul class="list-unstyled ps-0 expanded-navbar mb-0">
             
             <li class="mb-1">
-                <a href="{{url('dashboard/organization/Business-Units')}}" class="btn  align-items-center rounded"  aria-expanded="true">
+                <a href="{{route('organization.level-one', Cmf::getmoduleslug('level_one'))}}" class="btn  align-items-center rounded"  aria-expanded="true">
                     <div class="d-flex flex-row align-items-center">
                         <div class="mr-2">
                             <span class="material-symbols-outlined"> arrow_back </span>

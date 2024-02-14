@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Helpers\Cmf;
 use Illuminate\Http\Request;
 use App\Models\Organization;
 use Auth;
@@ -47,8 +47,11 @@ class HomeController extends Controller
         $cretemodulenames = new modulenames;
         $cretemodulenames->user_id = Auth::id();
         $cretemodulenames->level_one = $request->level_one;
+        $cretemodulenames->slug_one = Cmf::shorten_url($request->level_one);
         $cretemodulenames->level_two = $request->level_two;
+        $cretemodulenames->slug_two = Cmf::shorten_url($request->level_two);
         $cretemodulenames->level_three = $request->level_three;
+        $cretemodulenames->slug_three = Cmf::shorten_url($request->level_three);
         $cretemodulenames->save();
     }
 }

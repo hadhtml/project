@@ -257,7 +257,7 @@ $var_objective = "V-Stream";
                         <!--</div>-->
                         <!-- @if($BCount == 0)-->
                         <!--<div class="alert alert-danger mt-1 ml-3" role="alert">-->
-                        <!--Add {{ Cmf::getmodulename("level_one") }} before assigning <a href="{{url('dashboard/organization/Business-Units')}}" class="alert-link">Click here</a>.-->
+                        <!--Add {{ Cmf::getmodulename("level_one") }} before assigning <a href="{{route('organization.level-one', Cmf::getmoduleslug('level_one'))}}" class="alert-link">Click here</a>.-->
                         <!--</div>-->
                         <!--@endif-->
                         

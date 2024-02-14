@@ -8,7 +8,7 @@
             </li>
         
             <li>
-                <a href="{{url('dashboard/organization/Business-Units')}}"  @if (url()->current() == url('dashboard/organization/Business-Units')) class="active-link" @else class="nav-link"  @endif  data-toggle="tooltip" data-placement="right" data-original-title="{{ Cmf::getmodulename("level_one") }}">
+                <a href="{{route('organization.level-one', Cmf::getmoduleslug('level_one'))}}"  @if (url()->current() == route('organization.level-one', Cmf::getmoduleslug('level_one'))) class="active-link" @else class="nav-link"  @endif  data-toggle="tooltip" data-placement="right" data-original-title="{{ Cmf::getmodulename("level_one") }}">
                     <span class="material-symbols-outlined">domain</span>
                 </a>
             </li>

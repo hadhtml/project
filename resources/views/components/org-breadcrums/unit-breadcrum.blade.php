@@ -73,7 +73,7 @@
                                 <span style="font-size:17px" class="material-symbols-outlined">auto_stories</span>
                             </div>
                             <div>
-                                <a href="{{url('dashboard/organization/Business-Units')}}">BU-Dashboard</a>
+                                <a href="{{route('organization.level-one', Cmf::getmoduleslug('level_one'))}}">BU-Dashboard</a>
     
                             </div>
                         </div>
@@ -84,7 +84,7 @@
                             <span style="font-size:17px" class="material-symbols-outlined">domain</span>
                         </div>
                         <div>
-                            <a href="{{url('dashboard/organization/Business-Units')}}">{{ Cmf::getmodulename("level_one") }}</a>
+                            <a href="{{route('organization.level-one', Cmf::getmoduleslug('level_one'))}}">{{ Cmf::getmodulename("level_one") }}</a>
 
                         </div>
                     </div>

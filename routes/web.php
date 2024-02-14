@@ -25,6 +25,8 @@ Route::middleware('auth')->group(function () {
 
     Route::name('organization.')->namespace('App\Http\Controllers')->middleware('dynamic-names')->prefix('organization')->group(function () {
         Route::get('dashboard', 'HomeController@dashboard')->name('dashboard');
+        Route::get('/{id}', 'MemberController@ObjectivesUnit')->name('level-one');
+
     });
 
 
@@ -164,7 +166,6 @@ Route::post('delete-mutiple-organization-contact', [App\Http\Controllers\MemberC
 Route::get('dashboard/organization/{slug}/Value-Streams/dashboard', [App\Http\Controllers\MemberController::class,'VUDashboard']);
 
 //BusinessUnits
-Route::get('dashboard/organization/Business-Units', [App\Http\Controllers\MemberController::class,'ObjectivesUnit']);
 Route::get('dashboard/organization/{id}/dashboard/{type}', [App\Http\Controllers\MemberController::class,'BUDashboard']);
 
 Route::post('add-business-unit', [App\Http\Controllers\MemberController::class,'SaveBusinessUnits']);

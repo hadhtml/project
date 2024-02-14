@@ -29,7 +29,7 @@
 
 
                     <li class="mb-1">
-                        <a href="{{url('dashboard/organization/Business-Units')}}"  @if (url()->current() == url('dashboard/organization/Business-Units'))  class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center" @endif >
+                        <a href="{{route('organization.level-one', Cmf::getmoduleslug('level_one'))}}"  @if (url()->current() == route('organization.level-one', Cmf::getmoduleslug('level_one')))  class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center" @endif >
                             <div class="mr-2">
                                 <span style="font-size:22px" class="material-symbols-outlined">domain</span>
                             </div>

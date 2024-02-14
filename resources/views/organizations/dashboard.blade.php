@@ -134,7 +134,7 @@
                 <div class="col-md-3 mb-4 col-6">
                     <div class="dashboard-card">
                         <div class="card-svg">
-                            <a href="{{ url('dashboard/organization/Business-Units') }}">
+                            <a href="{{ route('organization.level-one', Cmf::getmoduleslug('level_one')) }}">
                                 <span class="material-symbols-outlined warning_off">domain</span>
                             </a>
                         </div>

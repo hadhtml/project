@@ -68,7 +68,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                 </div>
                 @if($type == 'unit')
                 {{-- <div class="mr-2">
-                    <a style="text-decoration: none;" href="{{ url('dashboard/organization/Business-Units') }}">
+                    <a style="text-decoration: none;" href="{{ route('organization.level-one', Cmf::getmoduleslug('level_one')) }}">
                         Buisness Units
                     </a>
                 </div> --}}

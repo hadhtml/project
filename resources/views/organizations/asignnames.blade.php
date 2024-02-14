@@ -61,6 +61,13 @@
                                     <div class="col-md-12 py-2">
                                         <button id="createmodulenamesbutton" class="btn btn-primary btn-lg btn-theme btn-block ripple">Asign</button>
                                     </div>
+                                    <div class="col-md-12 py-2">
+                                        <div class="row py-3">
+                                            <div class="col-md-12 text-center">
+                                                <p>Continue With Default Settings <a onclick="defaultsettings()" href="javascript:void(0)">Click Here</a> </p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </form>                        
                         </div>
@@ -90,6 +97,12 @@ function togglePasswordVisibility(fieldId) {
         icon.classList.remove('fa-eye-slash');
         icon.classList.add('fa-eye');
     }
+}
+function defaultsettings() {
+    $('#level_one').val('Business Units');
+    $('#level_two').val('Value Streams');
+    $('#level_three').val('Teams');
+    $('.createmodulenames').submit();
 }
 $('.createmodulenames').on('submit',(function(e) {
     $('#createmodulenamesbutton').html('<i class="fa fa-spin fa-spinner"></i>');
