@@ -230,7 +230,7 @@ $Currentsprint = DB::table('sprint')->where('user_id',Auth::id())->where('value_
                  @endif
    
                  <button class="btn btn-secondary mb-2" type="button" disabled  style="height: 35px">Not Started</button>
-                 <button class="btn btn-primary mb-2"  style="height: 35px"  onclick="Restartquarter({{$Currentsprint->id}})">Reopen {{$Currentsprint->quarter_name}} {{$Currentsprint->quarter_year}} </button>
+                 {{-- <button class="btn btn-primary mb-2"  style="height: 35px"  onclick="Restartquarter({{$Currentsprint->id}})">Reopen {{$Currentsprint->quarter_name}} {{$Currentsprint->quarter_year}} </button> --}}
                  <button class="btn btn-primary mb-2" disabled style="height: 35px"  type="button">Start Quarter</button>
                  @endif
                  @else
@@ -935,6 +935,9 @@ $formattedDates = $firstDayOfMonths->toDateString();
         </div>
     </div>
 </div>
+
+
+
 
 
 <!-- Change text on the story button when it's toggled and when not -->
