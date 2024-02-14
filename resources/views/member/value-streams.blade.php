@@ -45,7 +45,7 @@ $var_objective = "V-Stream";
                                         <ion-icon style="font-size: 18px;" name="people-outline"></ion-icon>
                                     </div>
                                     <a href="{{ url('dashboard/organization') }}/{{ $stream->slug }}/VS-TEAMS">
-                                        <small>Teams ({{DB::table('value_team')->where('org_id' , $stream->id)->count()}})</small>
+                                        <small>{{ Cmf::getmodulename('level_three') }} ({{DB::table('value_team')->where('org_id' , $stream->id)->count()}})</small>
                                     </a>
                                 </div>
                             </div>

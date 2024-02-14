@@ -11,7 +11,7 @@
                 </div>
                 <div>
                     <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
-                        Teams
+                        {{ Cmf::getmodulename('level_three') }}
                     </h5>
                 </div>
             </div>
@@ -41,7 +41,7 @@
                             <span style="font-size:17px" class="material-symbols-outlined">groups</span>
                         </div>
                         <div>
-                            <p>Teams</p>
+                            <p>{{ Cmf::getmodulename('level_three') }}</p>
                         </div>
                     </div>
 

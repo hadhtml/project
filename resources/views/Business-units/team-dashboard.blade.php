@@ -3,13 +3,13 @@ $var_objective = "Unit-team-dashboard";
 @endphp
 @extends('components.main-layout')
 @if($type == 'BU')
-<title>Team-{{$organization->team_title}}-Dashboard</title>
+<title>{{ Cmf::getmodulename('level_three') }}-{{$organization->team_title}}-Dashboard</title>
 @endif
 @if($type == 'VS')
-<title>Team-{{$organization->team_title}}-Dashboard</title>
+<title>{{ Cmf::getmodulename('level_three') }}-{{$organization->team_title}}-Dashboard</title>
 @endif
 @if($type == 'orgT')
-<title>Team-{{$organization->team_title}}-Dashboard</title>
+<title>{{ Cmf::getmodulename('level_three') }}-{{$organization->team_title}}-Dashboard</title>
 @endif
 @section('content')
 @php

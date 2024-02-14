@@ -159,7 +159,7 @@ $Unit = DB::table('business_units')->where('user_id',Auth::id())->where('id',$or
                      <span style="font-size:22px" class="material-symbols-outlined">groups</span>
                 </div>
                 <div class="mr-2">
-                    Teams
+                    {{ Cmf::getmodulename('level_three') }}
                 </div>
             </a>
         </li>

@@ -60,7 +60,7 @@ $var_objective = "Org-Unit";
                                         <ion-icon style="font-size: 18px;" name="people-outline"></ion-icon>
                                     </div>
                                     <a href="{{ url('dashboard/organization') }}/{{ $unit->slug }}/BU-TEAMS">
-                                        <small>Teams ({{$TeamCount}})</small>
+                                        <small>{{ Cmf::getmodulename('level_three') }} ({{$TeamCount}})</small>
                                     </a>
                                 </div>
                             </div>

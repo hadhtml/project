@@ -6,7 +6,7 @@
                     <span class="material-symbols-outlined">group</span>
                 </div>
                 <div>
-                    <h4>Teams</h4>
+                    <h4>{{ Cmf::getmodulename('level_three') }}</h4>
                 </div>
             </div>
         </div>

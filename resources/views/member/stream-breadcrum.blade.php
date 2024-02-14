@@ -63,7 +63,7 @@ $team  = DB::table('business_units')->where('id',$organization->unit_id)->first(
                             <span style="font-size:17px" class="material-symbols-outlined">groups</span>
                         </div>
                         <div>
-                           <p> Teams </p>                       
+                           <p> {{ Cmf::getmodulename('level_three') }} </p>                       
                         </div>
                     </div>
                 
@@ -91,7 +91,7 @@ $team  = DB::table('business_units')->where('id',$organization->unit_id)->first(
             <div>
                 @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/VS-TEAMS'))
                 <button class="button" type="button" data-toggle="modal" data-target="#add-team-stream">
-                    Add New
+                    Add {{ Cmf::getmodulename('level_three') }}
                 </button>
                 @endif
             </div>

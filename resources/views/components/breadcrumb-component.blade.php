@@ -245,7 +245,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                 @if($type == 'unit')  
                 <div class="d-flex flex-column">
                     <div>
-                    Team
+                    {{ Cmf::getmodulename('level_three') }}
                   
                     <select class="chkveg" multiple="multiple" >
                         @foreach(DB::table('unit_team')->where('org_id',$organization->id)->get() as $r)
@@ -266,7 +266,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                 @if($type == 'stream')  
                 <div class="d-flex flex-column">
                     <div >
-                    Team
+                    {{ Cmf::getmodulename('level_three') }}
                   
                     <select class="chkveg" multiple="multiple" >
                         
@@ -288,7 +288,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                 @if($type == 'org')  
                 <div class="d-flex flex-column">
                     <div >
-                    Team
+                    {{ Cmf::getmodulename('level_three') }}
                   
                     <select class="chkveg" multiple="multiple" >
       

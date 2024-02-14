@@ -101,7 +101,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
 
     <div class="flex-shrink-0 p-3 bg-white sub-nav open" id="panel">
 
-        <h6 class="title">Team</h6>
+        <h6 class="title">{{ Cmf::getmodulename('level_three') }}</h6>
         @if($organization->type == 'BU')
         <ul class="list-unstyled ps-0 expanded-navbar mb-0">
             
@@ -112,7 +112,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                             <span class="material-symbols-outlined"> arrow_back </span>
                         </div>
                         <div>
-                            {{ Cmf::getmodulename("level_one") }} Team
+                            {{ Cmf::getmodulename("level_one") }} {{ Cmf::getmodulename('level_three') }}
                         </div>
                     </div>
                 </a>
@@ -132,7 +132,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                             <span class="material-symbols-outlined"> arrow_back </span>
                         </div>
                         <div>
-                            Organization  Team
+                            Organization {{ Cmf::getmodulename('level_three') }}
                         </div>
                     </div>
                 </a>
@@ -153,7 +153,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                             <span class="material-symbols-outlined"> arrow_back </span>
                         </div>
                         <div>
-                            {{ Cmf::getmodulename("level_two") }} Team
+                            {{ Cmf::getmodulename("level_two") }} {{ Cmf::getmodulename('level_three') }}
                         </div>
                     </div>
                 </a>

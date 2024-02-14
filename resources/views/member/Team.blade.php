@@ -2,7 +2,7 @@
 $var_objective = "Team";
 @endphp
 @extends('components.main-layout')
-<title>Teams - {{$organization->organization_name}}</title>
+<title>{{ Cmf::getmodulename('level_three') }} - {{$organization->organization_name}}</title>
 @section('content')
 <style>
 

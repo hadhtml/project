@@ -94,7 +94,7 @@
                             </a>
                         </div>
                         <div class="dashboard-card-tittle">
-                            <h4>Teams</h4>
+                            <h4>{{ Cmf::getmodulename('level_three') }}</h4>
                         </div>
                         <div class="dashboard-card-number">
                             <h3>{{ $Teams }}</h3>

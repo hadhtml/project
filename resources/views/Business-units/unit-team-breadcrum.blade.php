@@ -39,7 +39,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                 <div>
                     @if($organization->type == 'unit' || $organization->type == 'stream')
                     <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
-                        Teams
+                        {{ Cmf::getmodulename('level_three') }}
                     </h5>
                     @endif
 
@@ -222,7 +222,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                         <span style="font-size:22px" class="material-symbols-outlined">groups</span>
                     </div>
                     <div>
-                        <p>Teams</p>                
+                        <p>{{ Cmf::getmodulename('level_three') }}</p>                
                     </div>
                 </div>
                 @else
@@ -248,7 +248,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
             <div>
                 @if($organization->type == 'unit')
                 <button class="button" type="button" data-toggle="modal" data-target="#add-team">
-                    Create Team
+                    Create {{ Cmf::getmodulename('level_three') }}
                 </button>
                 @endif
             </div>

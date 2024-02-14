@@ -49,7 +49,7 @@
         </div>
         @else
         <a href="javascript:void(0)" onclick="showmemberbox()" class="epic-header-buttons epicheaderteambutton" id="showboardbutton">
-            <img src="{{url('public/assets/svg/btnteamsvg.svg')}}" width="20"> Team
+            <img src="{{url('public/assets/svg/btnteamsvg.svg')}}" width="20"> {{ Cmf::getmodulename('level_three') }}
         </a>
         @endif
         @if($data->epic_type == 'unit' || $data->epic_type == 'stream' || $data->epic_type == 'org')
