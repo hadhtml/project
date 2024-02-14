@@ -1,10 +1,17 @@
 <div class="subheader subheader-solid breadcrums" id="kt_subheader">
     <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
         <div class="d-flex align-items-start flex-column flex-wrap mr-2">
-            <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
-                All Users
-            </h5>
-            <div class="d-flex flex-row page-sub-titles">
+            <div class="d-flex flex-row align-items-center">
+                <div>
+                    <span style="font-size:22px" class="material-symbols-outlined">group_add</span>                  
+                </div>
+                <div class="ml-3">
+                    <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
+                      All Users
+                    </h5>
+                </div>
+            </div>
+            <div class="d-flex flex-row page-sub-titles align-items-center">
                 <div class="mr-2">
                     <a href="{{route('home')}}">Dashboard</a>
                 </div>
