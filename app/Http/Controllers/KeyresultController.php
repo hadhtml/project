@@ -15,7 +15,7 @@ use App\Models\escalate_cards;
 use App\Models\key_result;
 use App\Models\key_chart;
 use App\Models\team_link_child;
-
+use App\Models\flow_chart_scripts;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use DB;
@@ -170,8 +170,9 @@ class KeyresultController extends Controller
             // $data = key_result::find($request->id);
             $InitData = DB::table('initiative')->where('key_id',$request->id)->get();
             $InitDataCount = DB::table('initiative')->where('key_id',$request->id)->count();
+            $Weight = DB::table('initiative')->where('key_id',$request->id)->sum('initiative_weight');
 
-            $html = view('keyresult.tabs.init-weight', compact('InitData','InitDataCount'))->render();
+            $html = view('keyresult.tabs.init-weight', compact('InitData','InitDataCount','Weight'))->render();
             return $html;
         }
         if($request->tab == 'charts')
@@ -188,7 +189,7 @@ class KeyresultController extends Controller
         }
         if($request->tab == 'okrmapper')
         {
-            $linking = team_link_child::where('bussiness_key_id' , $request->id)->get();
+            $linking = team_link_child::where('bussiness_key_id' , $request->id)->orderby('created_at' , 'desc')->get();
             $data = key_result::find($request->id);
             $html = view('keyresult.tabs.okrmapper', compact('data','linking'))->render();
             return $html;
@@ -211,7 +212,7 @@ class KeyresultController extends Controller
         return $html;
     }
     public function deletequartervalue(Request $request)
-    {
+    { 
         $key_quarter_value = DB::table('key_quarter_value')->where('id',$request->id)->first();
         $data = key_result::find($key_quarter_value->key_id);
         $report = DB::table('sprint')->where('user_id',Auth::id())->where('status',NULL)->where('value_unit_id',$data->unit_id)->first();
@@ -219,6 +220,7 @@ class KeyresultController extends Controller
         $key = key_result::find($key_quarter_value->key_id);
         $keyQAll = DB::table('key_chart')->where('key_id',$key_quarter_value->key_id)->get();
         DB::table('key_quarter_value')->where('id',$request->id)->delete(); 
+        DB::table('flag_comments')->where('flag_id',$request->id)->delete();
         $html = view('keyresult.tabs.values',compact('data','KEYChart','key','report','keyQAll'));
         return $html;
     }
@@ -333,15 +335,47 @@ class KeyresultController extends Controller
     public function okrmapperform(Request $request)
     {
         $add = new team_link_child();
-        $add->team_id = $request->team_id;
-        $add->team_obj_id = $request->team_obj_id;
+        $add->linked_objective_id = $request->objectiveid;
         $add->bussiness_unit_id = $request->bussiness_unit_id;
         $add->bussiness_obj_id = $request->bussiness_obj_id;
         $add->bussiness_key_id = $request->bussiness_key_id;
-        $add->type = $request->type;
+        $add->from = $request->type;
+        $add->to = $request->to;
         $add->save();
+        $linking = team_link_child::where('bussiness_key_id' , $request->bussiness_key_id)->orderby('created_at' , 'desc')->get();
+        $check = flow_chart_scripts::where('type' , $request->type)->where('unit_id' , $request->bussiness_unit_id);
+        if($check->count() == 0)
+        {
+            echo "string";exit;
+            $newchart = new flow_chart_scripts;
+            $newchart->unit_id = $request->bussiness_unit_id;
+            $newchart->type = $add->from;
+            $newchart->script = '"outputs": { "output_1": { "connections": [{ "node": "101", "output": "input_1" }] }, },';
+            $newchart->script_type = 'output';
+            $newchart->save();
+        }else{
+            $newchart = flow_chart_scripts::find($check->first()->id);
+            $newchart->script = Cmf::outputscript($request->bussiness_unit_id , $add->from);
+            $newchart->save();
+        }
 
-        $linking = team_link_child::where('bussiness_key_id' , $request->bussiness_key_id)->get();
+
+        // $checktwo = flow_chart_scripts::where('type' , $request->to)->where('unit_id' , $request->bussiness_unit_id);
+
+        // if($checktwo->count() == 0)
+        // {
+        //     $newchart = new flow_chart_scripts;
+        //     $newchart->unit_id = $request->bussiness_unit_id;
+        //     $newchart->type = $add->from;
+        //     $newchart->script = '"outputs": { "output_1": { "connections": [{ "node": "101", "output": "input_1" }] }, },';
+        //     $newchart->script_type = 'output';
+        //     $newchart->save();
+        // }else{
+        //     $newchart = flow_chart_scripts::find($check->first()->id);
+        //     $newchart->script = '"outputs": { "output_1": { "connections": [{ "node": "101", "output": "input_1" }] },"output_2": { "connections": [{ "node": "101", "output": "input_1" }] }, },';
+        //     $newchart->save();
+        // }
+
         $data = key_result::find($request->bussiness_key_id);
         $html = view('keyresult.tabs.okrmapper', compact('data','linking'))->render();
         return $html;
@@ -365,5 +399,120 @@ class KeyresultController extends Controller
         $data = key_result::find($data->bussiness_key_id);
         $html = view('keyresult.tabs.okrmapper', compact('data','linking'))->render();
         return $html;
+    }
+    public function searchobjectives(Request $request)
+    {
+        if($request->type == 'org')
+        {
+            $objectives = DB::table('objectives')->where('user_id' , Auth::id())->wherenull('trash')->where('type' , '!=' , 'org')->where('objective_name', 'LIKE', "%$request->id%")->get();
+        }
+        if($request->type == 'unit')
+        {
+            $objectives = DB::table('objectives')->where('user_id' , Auth::id())->wherenull('trash')->where('type' , '!=' , 'org')->where('type' , '!=' , 'unit')->where('objective_name', 'LIKE', "%$request->id%")->get();
+        }
+        if($request->type == 'stream')
+        {
+            $objectives = DB::table('objectives')->where('user_id' , Auth::id())->wherenull('trash')->where('type' , '!=' , 'stream')->where('type' , '!=' , 'org')->where('type' , '!=' , 'unit')->where('objective_name', 'LIKE', "%$request->id%")->get();
+        }
+        $html = view('keyresult.objectiveappend', compact('objectives'))->render();
+        return $html;
+    }
+
+    public function selectobjective(Request $request)
+    {
+        $data = DB::table('objectives')->where('id' , $request->id)->first();
+        if($data->type == 'unit')
+        {
+            echo '<div class="epic">
+                    <div class="d-flex">
+                        <div class="epic-tittle">'.$data->objective_name.'</div>
+                        <a onclick="removeobjective()" href="javascript:void(0)"><img class="closeimage" src="'.url('public/assets/svg/cross.svg').'"></a>
+                    </div>
+                    <input type="hidden" value="'.$data->type.'" name="to">
+                    <div class="epic-detail okrmappersearchdetail">
+                        <span style="font-size:22px" class="material-symbols-outlined mr-2">domain</span>
+                        <span>'.DB::table("business_units")->where("id" , $data->unit_id)->first()->business_name.'</span>
+
+                    </div>
+
+                </div>';
+        }
+        if($data->type == 'stream')
+        {
+            $valuestream = DB::table('value_stream')->where('id' , $data->unit_id)->first();
+            echo '<div class="epic">
+                    <div class="d-flex">
+                        <div class="epic-tittle">'.$data->objective_name.'</div>
+                        <a onclick="removeobjective()" href="javascript:void(0)"><img class="closeimage" src="'.url('public/assets/svg/cross.svg').'"></a>
+                    </div>
+                    <input type="hidden" value="'.$data->type.'" name="to">
+                    <div class="epic-detail okrmappersearchdetail">
+                        <span style="font-size:22px" class="material-symbols-outlined mr-2">layers</span>
+                        <span>'.$valuestream->value_name.'</span>
+
+                    </div>
+
+                </div>';
+        }
+
+        if($data->type == 'VS')
+        {
+            $valueteam = DB::table('value_team')->where('id' , $data->unit_id)->first();
+            $valuestream = DB::table('value_stream')->where('id' , $valueteam->org_id)->first();
+            echo '<div class="epic">
+                    <div class="d-flex">
+                        <div class="epic-tittle">'.$data->objective_name.'</div>
+                        <a onclick="removeobjective()" href="javascript:void(0)"><img class="closeimage" src="'.url('public/assets/svg/cross.svg').'"></a>
+                    </div>
+                    <input type="hidden" value="'.$data->type.'" name="to">
+                    <div class="epic-detail okrmappersearchdetail">
+                        <span style="font-size:22px" class="material-symbols-outlined mr-1">layers</span>
+                        <span>'.$valuestream->value_name.'</span>
+                        <span style="font-size:22px" class="material-symbols-outlined mr-1">groups</span>
+                        <span>'.$valueteam->team_title.'</span>
+                    </div>
+
+                </div>';
+        }
+
+        if($data->type == 'BU')
+        {
+            $businessteam = DB::table('unit_team')->where('id' , $data->unit_id)->first();
+            $business_units = DB::table('business_units')->where('id' , $businessteam->org_id)->first();
+            echo '<div class="epic">
+                    <div class="d-flex">
+                        <div class="epic-tittle">'.$data->objective_name.'</div>
+                        <a onclick="removeobjective()" href="javascript:void(0)"><img class="closeimage" src="'.url('public/assets/svg/cross.svg').'"></a>
+                    </div>
+                    <input type="hidden" value="'.$data->type.'" name="to">
+                    <div class="epic-detail okrmappersearchdetail">
+                        <span style="font-size:22px" class="material-symbols-outlined mr-2">domain</span>
+                        <span>'.$business_units->business_name.'</span>
+                        <span style="font-size:22px" class="material-symbols-outlined mr-2 ml-2">groups</span>
+                        <span>'.$businessteam->team_title.'</span>
+                    </div>
+
+                </div>';
+        }
+
+        if($data->type == 'orgT')
+        {
+            $org_team = DB::table('org_team')->where('id' , $data->unit_id)->first();
+            $organization = DB::table('organization')->where('id' , $org_team->org_id)->first();
+            echo '<div class="epic">
+                    <div class="d-flex">
+                        <div class="epic-tittle">'.$data->objective_name.'</div>
+                        <a onclick="removeobjective()" href="javascript:void(0)"><img class="closeimage" src="'.url('public/assets/svg/cross.svg').'"></a>
+                    </div>
+                    <input type="hidden" value="'.$data->type.'" name="to">
+                    <div class="epic-detail okrmappersearchdetail">
+                        <span style="font-size:22px" class="material-symbols-outlined mr-2">auto_stories</span>
+                        <span>'.$organization->organization_name.'</span>
+                        <span style="font-size:22px" class="material-symbols-outlined mr-2 ml-2">groups</span>
+                        <span>'.$org_team->team_title.'</span>
+                    </div>
+
+                </div>';
+        }
     }
 }
