@@ -1752,3 +1752,181 @@ button:focus {
 .objectiveheaderimage{
     width: 23px;
 }
+
+
+.leader-line {
+    z-index: -1;
+}
+.node {
+    height: auto;
+    position: absolute;
+    width: 280px;
+    background: white;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.05);
+}
+.slot-label {
+    flex: 100px;
+    min-width: 100px;
+    max-width: 250px;
+}
+.node-name .slot-label {
+    flex: 100px;
+    max-width: 360px;
+    padding: 0 5px;
+    background: white;
+    text-transform: capitalize;
+}
+
+.label-text {
+    padding: 0 5px;
+}
+.slot-button {
+    padding: 4px 4px 4px 6px;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    background: transparent;
+    border: 4px #8e8e8e solid;
+    color: #5b5b5b;
+}
+.slot-config {
+    padding: 4px 4px 4px 6px;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    background: transparent;
+    border: 1px #8e8e8e solid;
+    color: #5b5b5b;
+    border-radius: 30px;
+}
+.field-active,
+.field-inactive {
+    padding: 5px;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    background: #fff;
+    color: #5b5b5b;
+    text-transform: none;
+    font-style: italic;
+}
+.field-inactive {
+    background: #ccc;
+    color: #5b5b5b;
+    text-transform: none;
+    font-style: italic;
+}
+.slot-active,
+.slot-inactive {
+    padding: 4px 0px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    background: #fff;
+    color: #5b5b5b;
+}
+.slot-inactive {
+    background: #fff;
+    color: #000;
+}
+.slot:last-child {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.elevation-3 {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+.slot-anchor-small {
+    width: 8px;
+    height: 8px;
+    border-width: 4px;
+    border-color: #d8d8d8;
+    border-style: solid;
+}
+.slot-anchor-node-name {
+    width: 22px;
+    height: 22px;
+    border-width: 3px;
+    border-color: #d8d8d8;
+    border-style: solid;
+}
+.slot-anchor-active {
+    background: #fb8c00;
+    border-color: #fb8c00;
+    border-style: solid;
+    border-radius: 100px;
+    width: 5px;
+    height: 5px;
+}
+
+.slot-anchor-inactive {
+    background: #d8d8d8;
+    border-color: #d8d8d8;
+    border-radius: 100px;
+    width: 4px;
+    height: 4px;
+    border-style: solid;
+}
+.node-name {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: capitalize;
+    color: #black;
+    background: #fff;
+    margin: 0;
+    width: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.node-name.slot-active {
+    border-style: none;
+}
+.node-name .slot-anchor-inactive {
+    background: #fff;
+    border-color: #5b5b5b;
+    border-style: solid;
+}
+.node-name.slot-active .slot-anchor-node-name.slot-anchor-active {
+    background: #30c117;
+    border-color: #30c117;
+    border-style: solid;
+}
+.badge-inprogress {
+    padding: 2px 11px;
+    color: white;
+    background-color: #e1db3f;
+    border-radius: 100px;
+}
+.badge-todo {
+    padding: 2px 11px;
+    color: white;
+    background-color: gray;
+    border-radius: 100px;
+}
+.badge-done {
+    padding: 2px 11px;
+    color: white;
+    background-color: #3fe1a7;
+    border-radius: 100px;
+}
+.f-18 {
+    font-size: 18px;
+}
