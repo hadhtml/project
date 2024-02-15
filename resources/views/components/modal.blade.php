@@ -809,10 +809,7 @@
                 @csrf
             
                     <div class="row">
-                    <input type="hidden" id="month">
-                    <input type="hidden" id="quarter">
-                    <input type="hidden" id="init_id">
-                    <input type="hidden" id="month_id">
+                 
 
  
  

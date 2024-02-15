@@ -320,6 +320,9 @@ class OrganizationController extends Controller
     public function endQuarter(Request $request)
     {
 
+     
+     
+
      $s = DB::table('sprint')->where('user_id',Auth::id())->where('status',NULL)->where('value_unit_id',$request->unit_id)->where('type',$request->type)->first();
   
         
@@ -499,20 +502,27 @@ class OrganizationController extends Controller
         {
         if($request->move_epic == 'yes')
         {
-          $monthNumber = \Carbon\Carbon::parse($request->month)->month;
+
+  
+          
+          foreach($request->Ids  as $key => $value)
+          {
+            
+          $monthNumber = \Carbon\Carbon::parse($request->months[$key])->month;
           $firstDayOfNextMonth = \Carbon\Carbon::create(null, $monthNumber + 1, 1, 0, 0, 0);
           $lastDayOfMonth = $firstDayOfNextMonth->subDay();
           $formattedDate = $lastDayOfMonth->toDateString();
-  
-          $moveepic = DB::table('epics')->whereBetween('epic_end_date', [$s->start_data, $s->end_date])
-          ->where('user_id',Auth::id())
-          ->where('buisness_unit_id',$s->value_unit_id)
-          ->where('epic_type',$request->type)
-          ->where('epic_status','!=','Done')
-          ->where('initiative_id',$request->init_id)
-          ->where('trash',NULL)
-          ->update(['quarter_id' => $request->quarter,'epic_end_date' => $formattedDate,'month_id' => $request->month_id ]);
 
+         
+
+          
+          DB::table('epics')->whereBetween('epic_end_date', [$s->start_data, $s->end_date])
+          ->where('initiative_id',$request->initiative[$key])
+          ->where('epic_status','!=','Done')
+          ->where('trash',NULL)
+          ->update(['month_id' => $request->Ids[$key],'epic_end_date' => $formattedDate,'quarter_id' => $request->quarter[$key]]);
+         
+        }
         }  
 
         }
@@ -1333,34 +1343,65 @@ public function MoveQuarter(Request $request)
   $CurrentQuarter = DB::table('quarter_month')
                     ->where('org_id',$request->unit_id)
                     ->where('month',$yearMonth)
-                    ->where('year',$yearMonthString)->first();
-  if($CurrentQuarter)
+                    ->where('year',$yearMonthString)->get();
+    
+  $initid = array();
+  $quarter_id = array();
+  $index = array();
+  $init_qid = array();
+  $monthQ = array();
+
+  if(count($CurrentQuarter) > 0)
   {
-      $Quarter = DB::table('quarter')
-                    ->where('id',$CurrentQuarter->quarter_id)
-                     ->first();
-      if($Quarter)
+    foreach($CurrentQuarter as $Q)
+    {
+      $initid[] = $Q->initiative_id;
+      $quarter_id[] = $Q->quarter_id;
+    }
+
+    $Quarter = DB::table('quarter')
+      ->whereIn('id',$quarter_id)
+      ->whereIn('initiative_id',$initid)
+       ->get();
+      
+     
+      if(count($Quarter) > 0)
       {
-       $index = $Quarter->loop_index + 1;
+      foreach($Quarter as $q_id)
+      {
+        $init_qid[] = $q_id->initiative_id;
+        $index[] = $q_id->loop_index + 1; 
+      }  
+      
        $Quarters = DB::table('quarter')
-       ->where('loop_index',$index)
-        ->first();
-       
-       if($Quarters)
+       ->whereIn('loop_index',$index)
+       ->get();
+
+      
+       if(count($Quarters) > 0)
        {
+        foreach($Quarters as $month)
+        {
+        $monthQ[] = $month->id;
+        }
         $nextQuarter = DB::table('quarter_month')
-        ->where('quarter_id',$Quarters->id)
+        ->whereIn('quarter_id',$monthQ)
         ->orderby('id','asc')
-        ->first();
+        ->get();
+
+        return view("Report.move-epic",compact("nextQuarter"));
+
        } 
+
+   
    
       }               
      
-  
+      
   
   } 
 
-  return $nextQuarter;
+ 
 }
 
 }
