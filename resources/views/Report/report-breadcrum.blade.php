@@ -115,256 +115,241 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                         </div>
                         @endif
                        
-                                                                   
+                        <div class="d-flex flex-row page-sub-titles align-items-center">
 
-                        
-                                                                
-                    
-                            <div class="d-flex flex-row page-sub-titles">
-                                <div class="mr-2">
-                                   @if($organization->type == 'unit')
-                                   <div class="d-flex">
+                            @if($organization->type == 'unit')
+                               <div class="d-flex align-items-center">
                                     <div>
-                                        <span style="font-size:19px" class="material-symbols-outlined">auto_stories</span>
+                                        <span style="font-size:17px" class="material-symbols-outlined">auto_stories</span>
                                     </div>
                                     <div>
                                         <a  href="{{url('dashboard/organization/'.$organization->slug.'/dashboard/'.$organization->type)}}" style="text-decoration: none;" >Dashboard</a>
                                     </div>
                                 </div>
-                                   @endif
-               
-                                   @if($organization->type == 'stream')
-                                   <div class="d-flex">
+                               @endif
+           
+                               @if($organization->type == 'stream')
+                               <div class="d-flex align-items-center">
                                     <div>
-                                        <span style="font-size:19px" class="material-symbols-outlined">auto_stories</span>
+                                        <span style="font-size:17px" class="material-symbols-outlined">auto_stories</span>
                                     </div>
                                     <div>
                                         <a  href="{{url('dashboard/organization/'.$organization->slug.'/dashboard/'.$organization->type)}}" style="text-decoration: none;" >Dashboard</a>
                                     </div>
                                 </div>
-                                   @endif
-                                   @if($organization->type == 'BU')
-                                   <div class="d-flex">
+                               @endif
+                               @if($organization->type == 'BU')
+                               <div class="d-flex align-items-center">
                                     <div>
-                                        <span style="font-size:19px" class="material-symbols-outlined">auto_stories</span>
+                                        <span style="font-size:17px" class="material-symbols-outlined">auto_stories</span>
                                     </div>
                                     <div>
                                         <a  href="{{url('dashboard/organization/'.$organization->slug.'/dashboard/'.$organization->type)}}" style="text-decoration: none;" >Dashboard</a>
                                     </div>
                                 </div>
-                                   @endif
-                                   @if($organization->type == 'VS')
-                                   <div class="d-flex">
+                               @endif
+                               @if($organization->type == 'VS')
+                               <div class="d-flex align-items-center">
                                     <div>
-                                        <span style="font-size:19px" class="material-symbols-outlined">auto_stories</span>
+                                        <span style="font-size:17px" class="material-symbols-outlined">auto_stories</span>
                                     </div>
                                     <div>
                                         <a  href="{{url('dashboard/organization/'.$organization->slug.'/dashboard/'.$organization->type)}}" style="text-decoration: none;" >Dashboard</a>
                                     </div>
                                 </div>
-                                   @endif
-                                   @if($organization->type == 'org')
-                                   <div class="d-flex">
+                               @endif
+                               @if($organization->type == 'org')
+                               <div class="d-flex align-items-center">
                                     <div>
-                                        <span style="font-size:19px" class="material-symbols-outlined">auto_stories</span>
+                                        <span style="font-size:17px" class="material-symbols-outlined">auto_stories</span>
                                     </div>
                                     <div>
-                                        <a  href="{{url('dashboard/organizations')}}" style="text-decoration: none;" >Dashboard</a>
+                                        <a  href="{{ route('organization.dashboard') }}" style="text-decoration: none;" >Dashboard</a>
                                     </div>
                                 </div>
-                                   @endif
-                                   @if($organization->type == 'orgT')
-                                   <div class="d-flex">
+                               @endif
+                               @if($organization->type == 'orgT')
+                               <div class="d-flex align-items-center">
                                     <div>
-                                        <span style="font-size:19px" class="material-symbols-outlined">home</span>
+                                        <span style="font-size:17px" class="material-symbols-outlined">home</span>
                                     </div>
                                     <div>
                                         <a  href="{{url('dashboard/organization/'.$organization->slug.'/dashboard/'.$organization->type)}}" style="text-decoration: none;" >Dashboard</a>
                                     </div>
                                 </div>
-                                   @endif
-                                  
-                                   </div>
+                               @endif
 
-                                   @if($organization->type == 'VS')
-                                   <div class="mr-2">
-                                    <div class="d-flex">
-                                        <div>
-                                            <span style="font-size:19px" class="material-symbols-outlined">domain</span>
-                                        </div>
-                                        <div>
-                                            <a  href="{{url('dashboard/organization/'.$Unit->slug.'/portfolio/'.$Unit->type)}}" style="text-decoration: none;" >{{$Unit->business_name}}</a>
-                                        </div>
+                           @if($organization->type == 'VS')
+                           <div class="mr-2">
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <span style="font-size:17px" class="material-symbols-outlined">domain</span>
                                     </div>
-                                    
-                                 
-                                </div>
-                                @endif
-                
-                                @if($organization->type == 'VS')
-                                <div class="mr-2">
-                                    <div class="d-flex">
-                                        <div>
-                                            <span style="font-size:19px" class="material-symbols-outlined">layers</span>
-                                        </div>
-                                        <div>
-                                            <a  href="{{url('dashboard/organization/'.$team->slug.'/portfolio/'.$team->type)}}" style="text-decoration: none;" >{{$team->value_name}}</a>
-                                        </div>
+                                    <div>
+                                        <a  href="{{url('dashboard/organization/'.$Unit->slug.'/portfolio/'.$Unit->type)}}" style="text-decoration: none;" >{{$Unit->business_name}}</a>
                                     </div>
-                             
                                 </div>
-                                @endif
+                            </div>
+                            @endif
+            
+                            @if($organization->type == 'VS')
+                            <div class="mr-2">
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <span style="font-size:17px" class="material-symbols-outlined">layers</span>
+                                    </div>
+                                    <div>
+                                        <a  href="{{url('dashboard/organization/'.$team->slug.'/portfolio/'.$team->type)}}" style="text-decoration: none;" >{{$team->value_name}}</a>
+                                    </div>
+                                </div>
                          
-                    <div class="mr-2">
-                        @if($organization->type == 'stream')
-                        <div class="d-flex">
-                            <div>
-                                <span style="font-size:19px" class="material-symbols-outlined">domain</span>
                             </div>
-                            <div>
-                                <a  href="{{url('dashboard/organization/'.$team->slug.'/portfolio/'.$team->type)}}" style="text-decoration: none;" >{{$team->business_name}}</a>
+                            @endif
+                     
+                            <div class="mr-2">
+                                @if($organization->type == 'stream')
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <span style="font-size:17px" class="material-symbols-outlined">domain</span>
+                                    </div>
+                                    <div>
+                                        <a  href="{{url('dashboard/organization/'.$team->slug.'/portfolio/'.$team->type)}}" style="text-decoration: none;" >{{$team->business_name}}</a>
+                                    </div>
+                                </div>
+                                @endif
                             </div>
-                        </div>
-                        @endif
-                    </div>
 
-                    <div class="mr-2">
-                        @if($organization->type == 'BU')
-                        <div class="d-flex">
-                            <div>
-                                <span style="font-size:19px" class="material-symbols-outlined">domain</span>
+                            <div class="mr-2">
+                                @if($organization->type == 'BU')
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <span style="font-size:17px" class="material-symbols-outlined">domain</span>
+                                    </div>
+                                    <div>
+                                        <a  href="{{url('dashboard/organization/'.$team->slug.'/portfolio/'.$team->type)}}" style="text-decoration: none;" >{{$team->business_name}}</a>
+                                    </div>
+                                </div>
+                                @endif
                             </div>
-                            <div>
-                                <a  href="{{url('dashboard/organization/'.$team->slug.'/portfolio/'.$team->type)}}" style="text-decoration: none;" >{{$team->business_name}}</a>
-                            </div>
-                        </div>
-                        @endif
-                    </div>
-             
-                                              
-                                            
-                                               <div class="mr-2">
-                                                   @if($organization->type == 'stream')
-                                                   <div class="d-flex">
-                                                    <div>
-                                                        <span style="font-size:19px" class="material-symbols-outlined">layers</span>
-                                                    </div>
-                                                    <div>
-                                                        <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->value_name}}</a>
-                                                    </div>
-                                                </div>
-                                                   @endif
-                                                   
-                                                    @if($organization->type == 'unit')
-                                                    <div class="d-flex">
-                                                        <div>
-                                                            <span style="font-size:19px" class="material-symbols-outlined">domain</span>
-                                                        </div>
-                                                        <div>
-                                                            <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->business_name}}</a>
-                                                        </div>
-                                                    </div>
-                                                   @endif
-               
-                                                   @if($organization->type == 'BU')
-                                                   <div class="d-flex">
-                                                    <div>
-                                                        <span style="font-size:19px" class="material-symbols-outlined">groups</span>
-                                                    </div>
-                                                    <div>
-                                                        <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->team_title}}</a>
-                                                    </div>
-                                                </div>
-                                                   @endif
-                                                   @if($organization->type == 'VS')
-                                                   <div class="d-flex">
-                                                    <div>
-                                                        <span style="font-size:19px" class="material-symbols-outlined">groups</span>
-                                                    </div>
-                                                    <div>
-                                                        <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->team_title}}</a>
-                                                    </div>
-                                                </div>
-                                                   @endif
-                                                   @if($organization->type == 'orgT')
-                                                   <div class="d-flex">
-                                                    <div>
-                                                        <span style="font-size:19px" class="material-symbols-outlined">home</span>
-                                                    </div>
-                                                    <div>
-                                                        <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->team_title}}</a>
-                                                    </div>
-                                                </div>
-                                                   @endif
-                                                   {{-- @if($organization->type == 'org')
-                                                   <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->organization_name}}</a>
-                                                   @endif --}}
-                                               </div>
-                                               <div class="mr-2">
-                                                <div class="d-flex">
-                                                    <div>
-                                                        <span style="font-size:19px" class="material-symbols-outlined">Summarize</span>
-                                                    </div>
-                                                    <div>
-                                                        <p>Reports</p>
-                                                </div>
-                                                </div>
-                                              
-                                               </div>
-                                               
-                                               @if (url()->current() == url('Okr-report/'.$Sid.'/'.$organization->type))
-                                               <div class="mr-2">
-                                                <div class="d-flex flex-row">
-                                                    <div>
-                                                        <span style="font-size:22px" class="material-symbols-outlined">Summarize</span>
-                                                    </div>
-                                                    <div>
-                                                        <p>OKR Epics</p>
-                                                    </div>
-                                                </div>
-                                            
-                                            </div>                                         
-                                            @endif
-
-                                            @if (url()->current() == url('dashboard/organization/Okr-report-all/'.$Sid.'/'.$organization->type))
-                                            <div class="mr-2">
                                         
-                                             <div class="d-flex flex-row">
-                                                <div>
-                                                    <span style="font-size:22px" class="material-symbols-outlined">Summarize</span>
-                                                </div>
-                                                <div>
-                                                    <p>Epics Completed</p>
-                                                </div>
-                                            </div>
-                                         </div>                                         
-                                         @endif
+                            <div class="mr-2">
+                               @if($organization->type == 'stream')
+                               <div class="d-flex align-items-center">
+                                    <div>
+                                        <span style="font-size:17px" class="material-symbols-outlined">layers</span>
+                                    </div>
+                                    <div>
+                                        <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->value_name}}</a>
+                                    </div>
+                                </div>
+                               @endif
+                               
+                                @if($organization->type == 'unit')
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <span style="font-size:17px" class="material-symbols-outlined">domain</span>
+                                    </div>
+                                    <div>
+                                        <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->business_name}}</a>
+                                    </div>
+                                </div>
+                               @endif
 
-                                         @if (url()->current() == url('Okr-report-3/'.$Sid.'/'.$organization->type))
-                                         <div class="mr-2">
-                                     
-                                          <div class="d-flex flex-row">
-                                            <div>
-                                                <span style="font-size:22px" class="material-symbols-outlined">Summarize</span>
-                                            </div>
-                                            <div>
-                                                <p>OKR Figures</p>
-                                            </div>
-                                        </div>
-                                      </div>                                         
-                                      @endif
-
-                                        
-                                           
+                               @if($organization->type == 'BU')
+                               <div class="d-flex align-items-center">
+                                    <div>
+                                        <span style="font-size:17px" class="material-symbols-outlined">groups</span>
+                                    </div>
+                                    <div>
+                                        <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->team_title}}</a>
+                                    </div>
+                                </div>
+                               @endif
+                               @if($organization->type == 'VS')
+                               <div class="d-flex align-items-center">
+                                    <div>
+                                        <span style="font-size:17px" class="material-symbols-outlined">groups</span>
+                                    </div>
+                                    <div>
+                                        <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->team_title}}</a>
+                                    </div>
+                                </div>
+                               @endif
+                               @if($organization->type == 'orgT')
+                               <div class="d-flex align-items-center">
+                                    <div>
+                                        <span style="font-size:17px" class="material-symbols-outlined">home</span>
+                                    </div>
+                                    <div>
+                                        <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->team_title}}</a>
+                                    </div>
+                                </div>
+                               @endif
+                               {{-- @if($organization->type == 'org')
+                               <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->organization_name}}</a>
+                               @endif --}}
                            </div>
+                           <div class="mr-2">
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <span style="font-size:17px" class="material-symbols-outlined">Summarize</span>
+                                </div>
+                                <div>
+                                    <p>Reports</p>
+                                </div>
+                            </div>
+                          
+                           </div>
+                           
+                           @if (url()->current() == url('Okr-report/'.$Sid.'/'.$organization->type))
+                           <div class="mr-2">
+                            <div class="d-flex flex-row">
+                                <div>
+                                    <span style="font-size:22px" class="material-symbols-outlined">Summarize</span>
+                                </div>
+                                <div>
+                                    <p>OKR Epics</p>
+                                </div>
+                            </div>
+                        
+                        </div>                                         
+                        @endif
+
+                        @if (url()->current() == url('dashboard/organization/Okr-report-all/'.$Sid.'/'.$organization->type))
+                        <div class="mr-2">
+                         <div class="d-flex flex-row">
+                            <div>
+                                <span style="font-size:22px" class="material-symbols-outlined">Summarize</span>
+                            </div>
+                            <div>
+                                <p>Epics Completed</p>
+                            </div>
                         </div>
-                        <!--end::Info-->
-                        <!--begin::Toolbar-->
-                        <div class="d-flex align-items-center toolbar">
-                            {{-- <div>
-                                <button class="btn btn-primary" data-toggle="modal" data-target="#create-objective">Export Report</button>
-                            </div> --}}
+                     </div>                                         
+                     @endif
+
+                     @if (url()->current() == url('Okr-report-3/'.$Sid.'/'.$organization->type))
+                     <div class="mr-2">
+                      <div class="d-flex flex-row">
+                        <div>
+                            <span style="font-size:22px" class="material-symbols-outlined">Summarize</span>
                         </div>
-                        <!--end::Toolbar-->
+                        <div>
+                            <p>OKR Figures</p>
+                        </div>
                     </div>
-                </div>
+                  </div>                                         
+                  @endif
+
+               </div>
+            </div>
+            <!--end::Info-->
+            <!--begin::Toolbar-->
+            <div class="d-flex align-items-center toolbar">
+                {{-- <div>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#create-objective">Export Report</button>
+                </div> --}}
+            </div>
+            <!--end::Toolbar-->
+        </div>
+    </div>

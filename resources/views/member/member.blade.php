@@ -8,7 +8,8 @@ $var_objective = "Member";
    <div class="col-md-12">
       <div class="card">
          <div class="card-body p-10">
-            <table class="table data-table exmaple" id="">
+            <div class="table-responsive">
+               <table class="table data-table exmaple" id="">
                <thead>
                   <tr>
                      <td>
@@ -63,12 +64,14 @@ $var_objective = "Member";
                         @endif
                         <!--<span class="badge badge-pill badge-warning">Pending Invite</span>-->
                      </td>
-                     <td>
+                     <td style="width: 100px;">
                         <button class="btn-circle btn-tolbar" data-toggle="modal" data-target="#edit-member{{$member->ID}}">
-                        <img src="{{asset('public/assets/images/icons/edit.svg')}}" data-toggle="tooltip" data-placement="top" data-original-title="Edit">
+                        <span class="material-symbols-outlined" data-toggle="tooltip"
+                            data-placement="top" data-original-title="Edit">edit</span>
                         </button>
                         <button class="btn-circle btn-tolbar" data-toggle="modal" onclick="deletemember({{$member->ID}},'{{$member->u_id}}')" data-target="#delete-member">
-                        <img src="{{asset('public/assets/images/icons/delete.svg')}}" data-toggle="tooltip" data-placement="top" data-original-title="Delete">
+                        <span class="material-symbols-outlined" data-toggle="tooltip"
+                            data-placement="top" data-original-title="Delete">delete</span>
                         </button>
                      </td>
                   </tr>
@@ -157,6 +160,7 @@ $var_objective = "Member";
                   <!-- Add more rows as needed -->
                </tbody>
             </table>
+            </div>
          </div>
       </div>
    </div>

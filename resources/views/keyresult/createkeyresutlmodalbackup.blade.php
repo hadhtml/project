@@ -97,7 +97,7 @@
                                                         
                                 </select>
                                 @if($type == 'unit')
-                                    <label for="small-description" style="bottom:72px">Choose Value Stream</label>
+                                    <label for="small-description" style="bottom:72px">Choose {{ Cmf::getmodulename("level_two") }}</label>
                                 @endif
                                 @if($type == 'stream')
                                 <label for="small-description" style="bottom:72px">Choose Team</label>

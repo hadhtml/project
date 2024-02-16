@@ -8,7 +8,7 @@ $organization = DB::table('organization')->where('user_id',Auth::id())->where('t
    <h6 class="title">Settings</h6>
    <ul class="list-unstyled ps-0 expanded-navbar-options">
       <li class="mb-1">
-         <a href="{{url('profile-setting')}}" @if (url()->current() == url('profile-setting'))  class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center" @endif>
+         <a href="{{ route('settings.myprofile') }}" @if (url()->current() == route('settings.myprofile'))  class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center" @endif>
          <div class="mr-2">
             <span style="font-size:22px" class="material-symbols-outlined">person</span>
          </div>
@@ -18,7 +18,7 @@ $organization = DB::table('organization')->where('user_id',Auth::id())->where('t
          </a>
       </li>
       <li class="mb-1">
-         <a href="{{url('dashboard/organization/setting')}}" @if (url()->current() == url('dashboard/organization/setting')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
+         <a href="{{ route('settings.jirasettings') }}" @if (url()->current() == route('settings.jirasettings')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
          <div class="mr-2">
             <span style="font-size:22px" class="material-symbols-outlined">manufacturing</span>
          </div>
@@ -28,17 +28,17 @@ $organization = DB::table('organization')->where('user_id',Auth::id())->where('t
          </a>
       </li>
       <li class="mb-1">
-         <a href="{{url('dashboard/organization/financialsetting')}}" @if (url()->current() == url('dashboard/organization/setting/financial')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
+         <a href="{{ route('settings.financial') }}" @if (url()->current() == route('settings.financial')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
          <div class="mr-2">
             <span style="font-size:22px" class="material-symbols-outlined">payments</span>
          </div>
          <div class="mr-2">
-            Financial Year Setting 
+            Financial Year 
          </div>
          </a>
       </li>
       <li class="mb-1">
-         <a href="{{url('dashboard/organization/users')}}" @if (url()->current() == url('dashboard/organization/users'))  class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center" @endif>
+         <a href="{{route('settings.users')}}" @if (url()->current() == route('settings.users'))  class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center" @endif>
          <div class="mr-2">
             <span style="font-size:22px" class="material-symbols-outlined">group_add</span>
          </div>
@@ -48,7 +48,17 @@ $organization = DB::table('organization')->where('user_id',Auth::id())->where('t
          </a>
       </li>
       <li class="mb-1">
-         <a href="{{url('change-password')}}" @if (url()->current() == url('change-password'))  class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center" @endif>
+         <a href="{{route('settings.asignmodule')}}" @if (url()->current() == route('settings.asignmodule'))  class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center" @endif>
+         <div class="mr-2">
+            <span style="font-size:22px" class="material-symbols-outlined">foundation</span>
+         </div>
+         <div class="mr-2">
+            Asign Names
+         </div>
+         </a>
+      </li>
+      <li class="mb-1">
+         <a href="{{route('settings.security')}}" @if (url()->current() == route('settings.security'))  class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center" @endif>
          <div class="mr-2">
             <span style="font-size:22px" class="material-symbols-outlined">key</span>
          </div>

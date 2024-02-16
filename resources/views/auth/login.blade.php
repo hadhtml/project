@@ -35,16 +35,50 @@
                                 <div>
                                     <a href="{{url('/login')}}" class="active">Sign in</a>
                                 </div>
-                                
     
                                 <div>
                                     <a href="{{url('/register')}}">Create account</a>
                                 </div>
                             </div>
                         </div>
-                        <div class="input-fields-area py-lg-10">
-                            <h3>Sign in</h3>
-                            <form class="needs-validation pt-7" method="POST" action="{{ route('login') }}">
+                        <div class="row auth-form">
+                            <div class="col-md-12">
+                                <h3>Sign in</h3>
+                            </div>
+                        </div>
+                        
+                        <div class="row social-buttons">
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 p-2">
+                                <a class="auth-buttons" href="{{url('/auth/google')}}">
+                                    <button class="btn btn-white btn-block">
+                                        <img src="{{asset('public/assets/images/icons/google.svg')}}">
+                                         &nbsp;&nbsp;Google
+                                    </button>
+                                </a>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 p-2">
+                                <a class="auth-buttons" href="{{url('/auth/facebook')}}">
+                                    <button class="btn btn-white btn-block">
+                                        <img src="{{asset('public/assets/images/icons/facebook.svg')}}">
+                                        &nbsp;&nbsp;Facebook
+                                    </button>
+                                    </a>
+                            </div>
+                            {{-- <div class="col-xl-6 col-lg-6 col-md-6 p-2">
+                                <button class="btn btn-white btn-block">
+                                    <img src="{{asset('public/assets/images/icons/apple.svg')}}">
+                                    Apple
+                                </button>
+                            </div> --}}
+                        </div>
+                        <div class="row mt-1">
+                            <div class="col-md-12">
+                                <h2 class="separator-hr"><span>Or</span></h2>
+                            </div>
+                        </div>
+                        <div class="input-fields-area py-lg-0">
+                            
+                            <form class="needs-validation pt-2" method="POST" action="{{ route('login') }}">
                                 @csrf
                                 <div class="row">
                                     
@@ -98,33 +132,7 @@
                                     <p>Don't have an account? <a href="{{url('/register')}}">Sign Up</a> </p>
                                 </div>
                             </div>
-                            <div class="row mt-1">
-                                <div class="col-md-12">
-                                    <h2 class="separator-hr"><span>Or</span></h2>
-                                </div>
-                            </div>
-                            <div class="row social-buttons">
-                                <div class="col-xl-4 col-lg-4 col-md-4 p-2">
-                                    <button class="btn btn-white btn-block">
-                                        <img src="{{asset('public/assets/images/icons/google.svg')}}">
-                                        <a href="{{url('/auth/google')}}" class="btn"> Google</a>
-                                    </button>
-                                </div>
-                                <div class="col-xl-4 col-lg-4 col-md-4 p-2">
-                                    <a href="{{url('/auth/facebook')}}">
-                                        <button class="btn btn-white btn-block">
-                                            <img src="{{asset('public/assets/images/icons/facebook.svg')}}">
-                                            Facebook
-                                        </button>
-                                        </a>
-                                </div>
-                                {{-- <div class="col-xl-4 col-lg-4 col-md-4 p-2">
-                                    <button class="btn btn-white btn-block">
-                                        <img src="{{asset('public/assets/images/icons/apple.svg')}}">
-                                        Apple
-                                    </button>
-                                </div> --}}
-                            </div>
+                            
                         </div>
                     </div>
                 </div>

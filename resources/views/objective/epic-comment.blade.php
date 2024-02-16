@@ -25,12 +25,12 @@ $CommentReply = DB::table('epic_comment_reply')->where('comment_id',$comment->id
                     <div class="d-flex flex-row align-items-center">
                         <div class="pr-2">
                             <button class="btn-circle btn-tolbar" type="button" onclick="editcomment({{$comment->id}},'{{$comment->comment}}');">
-                                <img src="{{ url('public/assets/images/icons/edit.svg') }}">
+                                <span class="material-symbols-outlined">edit</span>
                             </button>
                         </div>
                         <div>
                             <button class="btn-circle btn-tolbar" type="button" onclick="deleteepiccomment({{$comment->id}});">
-                                <img src="{{ url('public/assets/images/icons/delete.svg') }}">
+                                <span class="material-symbols-outlined">delete</span>
                             </button>
                         </div>
                     </div>

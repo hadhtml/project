@@ -2,7 +2,7 @@
 $var_objective = "Stream-team";
 @endphp
 @extends('components.main-layout')
-<title>VS-Teams</title>
+<title>{{ Cmf::getmodulename('level_two') }}-{{ Cmf::getmodulename('level_three') }}</title>
 @section('content')
 
 

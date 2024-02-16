@@ -6,7 +6,6 @@
     </div>
     <div class="col-md-12 displayflex">
         <div class="epic_id mr-3 mt-1">
-            <img src="{{ url('public/assets/svg/arrow.svg') }}">
             OE-{{ $data->id }}
         </div>
         <div class="btn-group epicheaderborderleft">
@@ -43,14 +42,14 @@
         @if($data->team_id)
         <div class="members-list">
             <div id="members">
-                <a style="width: 90px;" onclick="showmemberbox()" href="javascript:void(0)" class="epic-header-buttons epicheaderteambutton" id="showboardbutton">
+                <a style="width: 58px;" onclick="showmemberbox()" href="javascript:void(0)" class="epic-header-buttons epicheaderteambutton" id="showboardbutton">
                     <img src="{{url('public/assets/svg/profile-2user.svg')}}" width="20"> 1
                 </a>
             </div>
         </div>
         @else
         <a href="javascript:void(0)" onclick="showmemberbox()" class="epic-header-buttons epicheaderteambutton" id="showboardbutton">
-            <img src="{{url('public/assets/svg/btnteamsvg.svg')}}" width="20"> Team
+            <img src="{{url('public/assets/svg/btnteamsvg.svg')}}" width="20"> {{ Cmf::getmodulename('level_three') }}
         </a>
         @endif
         @if($data->epic_type == 'unit' || $data->epic_type == 'stream' || $data->epic_type == 'org')
@@ -180,8 +179,9 @@
             </div>
         </div>
         @endif
-        <div class="epic-header-buttons raise-flag-button">
 
+        <div class="d-flex justify-content-between">
+            <div class="epic-header-buttons raise-flag-button">
             <a onclick="rasiseflag({{$data->id}})" href="javascript:void(0)"  id="showboardbutton">
                 <img src="{{url('public/assets/svg/btnflagsvg.svg')}}" width="20"> Flag @if(DB::table('flags')->where('epic_id'  ,$data->id)->count() > 0) ({{ DB::table('flags')->where('epic_id'  ,$data->id)->count() }}) @endif
             </a>
@@ -254,11 +254,12 @@
                 </div>
             </div>
         </div>
-       
 
         <div class="moverightside">
             <h1 class="epic-percentage">{{ $data->epic_progress }} % Completed</h1>
         </div>
+        </div>
+
     </div>
 </div>
 <div class="rightside" >

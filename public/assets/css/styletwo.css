@@ -24,6 +24,8 @@
 }
 .rightside{
     display: flex;
+    margin-top: -23px;
+    margin-right: -26px;
 }
 .rightside span{
     padding: 15px;
@@ -105,7 +107,7 @@
     height: 48px !important;
 }
 .newmodalcontent .form-group{
-    z-index: 1000;
+/*    z-index: 1000;*/
 }
 .newmodalcontent .form-group>label {
     bottom: 0;
@@ -186,7 +188,6 @@
 }
 .menuettitle ul{
     list-style-type: none;
-    padding-left: 10px;
 }
 .menuettitle ul li{
     color: #b2b2b2;
@@ -254,6 +255,11 @@
 .searchepic-box .epic .epic-detail{
     font-size: 14px;
     color: #b5b5b5;
+}
+
+
+.okrmappersearchdetail{
+    display: flex;
 }
 .searchepic-box .epic .epic-tittle{
     font-size: 16px;
@@ -655,15 +661,15 @@
 .deleteflag{
     cursor: auto;
     position: absolute;
-    border-radius: 5px;
+    border-radius: 10px;
     display: none; 
     width: 285px;
     z-index: 1111;
     top: 140;
     left: 80px;
-    padding: 10px;
+    padding: 15px;
     background-color: white;
-    box-shadow: 0px 2px 2px 4px rgb(87 106 134 / 20%);
+    box-shadow: 0px 2px 32px 4px rgb(87 106 134 / 20%);
 }
 .deleteflag img{
     cursor: pointer;
@@ -674,8 +680,8 @@
     color: #47495b;
 }
 .deleteflag button{
-    height: 41px;
-    border-radius: 5px !important;
+    height: 36px;
+    border-radius: 45px !important;
 }
 
 .deleteflag p{
@@ -694,7 +700,7 @@
     left: 80px;
     padding: 10px;
     background-color: white;
-    box-shadow: 0px 2px 2px 4px rgb(87 106 134 / 20%);
+    box-shadow: 0px 2px 32px 4px rgb(87 106 134 / 20%);
 }
 .moveflag img{
     cursor: pointer;
@@ -718,6 +724,7 @@
 }
 .modalheaderforapend{
     padding-top: 5px !important;
+    padding-bottom: 10px;
 }
 .modalfullscreen{
     max-width: 100%;
@@ -1110,7 +1117,7 @@ div[role="circleprogressbar"]::before {
     padding: 20px;
     border-radius: 12px;
     background: var(--white, #FFF);
-    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.05);
+/*    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.05);*/
     border: transparent !important;
 }
 .buisnessunit .mainheading h4{
@@ -1305,7 +1312,7 @@ button:focus {
     top: 125%;
     padding: 20px;
     background-color: white;
-    box-shadow: 0px 2px 2px 4px rgb(87 106 134 / 20%);
+    box-shadow: 0px 2px 32px 4px rgb(87 106 134 / 20%);
 }
 .deletechildstory img {
     cursor: pointer;
@@ -1350,6 +1357,10 @@ button:focus {
 }
 .business-card{
     margin-bottom: 30px;
+}
+.business-card a{
+    text-decoration: none;
+    color: black;
 }
 .col-action:hover{
     text-decoration: none;
@@ -1460,8 +1471,12 @@ button:focus {
 .organization-drop .multiselect{
     width: 110px;
     font-size: 12px !important;
-    padding-left: 0px !important;
-    padding-right: 0px !important;
+    padding: 10px 2px !important;
+    height: 35px;
+}
+.organization-drop .multiselect span
+{
+    font-size: 11px;
 }
 .organization-drop .multiselect-container{
     min-width: 200px;
@@ -1646,4 +1661,272 @@ button:focus {
     font-size: 21px;
     margin-left: 10px;
     margin-top: 5px;
+}
+.fieldouter {
+    width: 100%;
+    margin-top:2px !important;
+ }
+.selectbox { position: relative;}
+.selectarrow { content: ''; position: absolute; top: 20px;   right: 12px; border-width: 8px 5px 0 5px; border-style: solid; border-color: rgb(230, 230, 230) transparent transparent transparent; width: 0; height: 0;}
+
+.selectbox:hover .selectarrow,
+.selectbox:focus .selectarrow { border-width: 0 5px 8px 5px;
+  border-style: solid; border-color: transparent transparent rgb(230, 230, 230) transparent;}
+
+.selectbox .selected { 
+    display: block;
+    width: 100%;
+    height: 44px !important;
+    padding: 10px;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #efefef;
+    border-radius: 0.25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    cursor: pointer;
+}
+
+.selectbox .selected:hover,
+.selectbox .selected:focus {
+  border-color: #c6c6c6
+}
+
+.selectbox .selectOptionsbox {
+  background-color: #f9f9f9;
+  border: 1px solid #e6e6e6;
+  border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  padding: 0px !important;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  top: 45px !important;
+  width: 100%;
+  z-index: 4;
+  display: none;
+}
+
+.selectbox .selectOptionsbox.active {
+  display: block;
+}
+.customoption {
+    cursor: pointer;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+.customoption:hover {
+    background-color: #e9ecef;
+}
+.customoption .d-flex {
+    margin: 10px;
+}
+.memberprofilecontroleight{
+    height: 50px;
+    margin-bottom: 0;
+    padding-top: 3px;
+}
+.epic_id{
+    font-size: 12px;
+}
+.flagsdisplayonepic{
+    color: #ff54ff !important;
+    font-size:12px;
+    font-weight: 600;
+}
+.epic-tittle img{
+    width: 22px;
+    height: 22px;
+}
+.objectivepercentage{
+    position: absolute; 
+    right: 50px; 
+    top: 80px;
+}
+.objectiveheaderimage{
+    width: 23px;
+}
+
+
+.leader-line {
+    z-index: -1;
+}
+.node {
+    height: auto;
+    position: absolute;
+    width: 280px;
+    background: white;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.05);
+}
+.slot-label {
+    flex: 100px;
+    min-width: 100px;
+    max-width: 250px;
+}
+.node-name .slot-label {
+    flex: 100px;
+    max-width: 360px;
+    padding: 0 5px;
+    background: white;
+    text-transform: capitalize;
+}
+
+.label-text {
+    padding: 0 5px;
+}
+.slot-button {
+    padding: 4px 4px 4px 6px;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    background: transparent;
+    border: 4px #8e8e8e solid;
+    color: #5b5b5b;
+}
+.slot-config {
+    padding: 4px 4px 4px 6px;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    background: transparent;
+    border: 1px #8e8e8e solid;
+    color: #5b5b5b;
+    border-radius: 30px;
+}
+.field-active,
+.field-inactive {
+    padding: 5px;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    background: #fff;
+    color: #5b5b5b;
+    text-transform: none;
+    font-style: italic;
+}
+.field-inactive {
+    background: #ccc;
+    color: #5b5b5b;
+    text-transform: none;
+    font-style: italic;
+}
+.slot-active,
+.slot-inactive {
+    padding: 4px 0px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    background: #fff;
+    color: #5b5b5b;
+}
+.slot-inactive {
+    background: #fff;
+    color: #000;
+}
+.slot:last-child {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.elevation-3 {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+.slot-anchor-small {
+    width: 8px;
+    height: 8px;
+    border-width: 4px;
+    border-color: #d8d8d8;
+    border-style: solid;
+}
+.slot-anchor-node-name {
+    width: 22px;
+    height: 22px;
+    border-width: 3px;
+    border-color: #d8d8d8;
+    border-style: solid;
+}
+.slot-anchor-active {
+    background: #fb8c00;
+    border-color: #fb8c00;
+    border-style: solid;
+    border-radius: 100px;
+    width: 5px;
+    height: 5px;
+}
+
+.slot-anchor-inactive {
+    background: #d8d8d8;
+    border-color: #d8d8d8;
+    border-radius: 100px;
+    width: 4px;
+    height: 4px;
+    border-style: solid;
+}
+.node-name {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: capitalize;
+    color: #black;
+    background: #fff;
+    margin: 0;
+    width: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.node-name.slot-active {
+    border-style: none;
+}
+.node-name .slot-anchor-inactive {
+    background: #fff;
+    border-color: #5b5b5b;
+    border-style: solid;
+}
+.node-name.slot-active .slot-anchor-node-name.slot-anchor-active {
+    background: #30c117;
+    border-color: #30c117;
+    border-style: solid;
+}
+.badge-inprogress {
+    padding: 2px 11px;
+    color: white;
+    background-color: #e1db3f;
+    border-radius: 100px;
+}
+.badge-todo {
+    padding: 2px 11px;
+    color: white;
+    background-color: gray;
+    border-radius: 100px;
+}
+.badge-done {
+    padding: 2px 11px;
+    color: white;
+    background-color: #3fe1a7;
+    border-radius: 100px;
+}
+.f-18 {
+    font-size: 18px;
 }

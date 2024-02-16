@@ -34,7 +34,7 @@
 
 
                 <button class="btn-circle btn-tolbar" type="button" onclick="editkeyqvalue({{$Q->id}},'{{$Q->quarter_value}}')">
-                    <img src="{{ url('public/assets/images/icons/edit.svg') }}">
+                    <span class="material-symbols-outlined">edit</span>
                 </button>
                   
             </td>
@@ -118,7 +118,7 @@ $keyqvalue = $keyqfirst->value;
                 </button>
                   
                 <button class="btn-circle btn-tolbar" type="button" onclick="deletequartervalue({{$val->id}})">
-                    <img src="{{ url('public/assets/images/icons/delete.svg') }}">
+                    <span class="material-symbols-outlined">delete</span>
                 </button>
             </td>
 

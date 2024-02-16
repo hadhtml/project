@@ -6,21 +6,19 @@ $organization  = DB::table('organization')->where('user_id',Auth::id())->first()
                     <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
                         <!--begin::Info-->
                         <div class="d-flex align-items-start flex-column flex-wrap mr-2">
-                            <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
+                            <h5 class="text-dark font-weight-bold mt-2 mr-5">
                                @if($organization) 
                                {{$organization->organization_name.'-'.$organization->code}}
                                @else
                                organization
                                @endif
-
-                               
                             </h5>
                             <!-- Breadcrum Items -->
-                            <div class="d-flex flex-row page-sub-titles">
+                            <div class="d-flex align-items-center flex-row page-sub-titles">
                                 <div class="mr-2">
                                     <div class="d-flex">
                                         <div>
-                                            <span style="font-size:22px" class="material-symbols-outlined">auto_stories</span>
+                                            <span style="font-size:17px" class="material-symbols-outlined">auto_stories</span>
                                          
                                         </div>
                                         <div>

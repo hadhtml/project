@@ -11,19 +11,19 @@
                 </div>
                 <div>
                     <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
-                        Teams
+                        {{ Cmf::getmodulename('level_three') }}
                     </h5>
                 </div>
             </div>
             <!-- Breadcrum Items -->
-           <div class="d-flex flex-row page-sub-titles">
+           <div class="d-flex flex-row page-sub-titles align-items-center">
                 <div class="mr-2">
-                    <div class="d-flex">
+                    <div class="d-flex align-items-center">
                         <div>
-                            <span style="font-size:19px" class="material-symbols-outlined">auto_stories</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">auto_stories</span>
                         </div>
                         <div>
-                            <a  href="{{url('dashboard/organizations')}}" style="text-decoration: none;" >Dashboard</a>
+                            <a  href="{{ route('organization.dashboard') }}" style="text-decoration: none;" >Dashboard</a>
                         </div>
                     </div>
 
@@ -36,12 +36,12 @@
                 @endif --}}
              
                 <div class="mr-2">
-                    <div class="d-flex">
+                    <div class="d-flex align-items-center">
                         <div>
-                            <span style="font-size:19px" class="material-symbols-outlined">groups</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">groups</span>
                         </div>
                         <div>
-                            <p>Teams</p>
+                            <p>{{ Cmf::getmodulename('level_three') }}</p>
                         </div>
                     </div>
 

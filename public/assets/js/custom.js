@@ -24,7 +24,7 @@ function maximizemodal() {
     $("#open_in_full").toggleClass("d-none");
     $('#close_fullscreen').toggleClass('d-none');
 }
-function addnewobjective(event,id , type , slug) {
+function addnewobjective(id , type , slug) {
   $.ajax({
         type: "POST",
         url: main_url()+"/dashboard/objectives/addnewobjective",

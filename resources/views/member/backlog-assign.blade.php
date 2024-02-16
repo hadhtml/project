@@ -96,13 +96,13 @@
                                 <div class="col-md-12 col-lg-12 col-xl-12">
                                     <div class="form-group mb-0">
                                         <select class="form-control category" id="" name="stream_obj" required>
-                                            <option value="">Select Value Stream</option>
+                                            <option value="">Select {{ Cmf::getmodulename("level_two") }}</option>
                                             <?php foreach(DB::table('value_stream')->where('user_id',Auth::id())->get() as $r){ ?>
                                             <option value="{{ $r->id }}">{{ $r->value_name }}</option>
 
                                             <?php }  ?>
                                         </select>
-                                        <label for="small-description">Choose Value Stream</label>
+                                        <label for="small-description">Choose {{ Cmf::getmodulename("level_two") }}</label>
                                     </div>
                                 </div>
                                 <div class="col-md-12 col-lg-12 col-xl-12">
@@ -217,16 +217,16 @@
         </td>
         <td>
             <button class="btn-circle btn-tolbar" data-toggle="modal" data-target="#create{{ $backlog->id }}">
-                <img src="{{ asset('public/assets/images/icons/edit.svg') }}" data-toggle="tooltip"
-                    data-placement="top" data-original-title="Edit">
+                <span class="material-symbols-outlined" data-toggle="tooltip"
+                            data-placement="top" data-original-title="Edit">edit</span>
             </button>
             <button class="btn-circle btn-tolbar" data-toggle="modal" data-target="#delete{{ $backlog->id }}">
-                <img src="{{ asset('public/assets/images/icons/delete.svg') }}" data-toggle="tooltip"
-                    data-placement="top" data-original-title="Delete">
+                <span class="material-symbols-outlined" data-toggle="tooltip"
+                            data-placement="top" data-original-title="Delete">delete</span>
             </button>
             <a class="btn-circle btn-tolbar" href="{{ url('epic-clone/' . $backlog->id . '/' . $organization->type) }}">
-                <img src="{{ asset('public/assets/images/icons/info-circle.svg') }}" data-toggle="tooltip"
-                    data-placement="top" data-original-title="Clone">
+                <span class="material-symbols-outlined" data-toggle="tooltip"
+                            data-placement="top" data-original-title="Delete">copy_all</span>
             </a>
         </td>
         </tr>

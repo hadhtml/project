@@ -1,5 +1,5 @@
 <div class="row positionrelative">
-    <div class="col-md-12 mb-5">
+    <div class="col-md-12 mb-2">
         <h5 class="modal-title newmodaltittle epic-tittle-header" id="create-epic" style="display: flex;">
             <span style="font-size:22px;margin-top: 4px;" class="material-symbols-outlined">key_visualizer</span>
             <span class="ml-2">@if($data->epic_title) {{ $data->epic_title }} @else Enter Epic Backlog Tittle @endif</span>
@@ -7,7 +7,6 @@
     </div>
     <div class="col-md-12 displayflex">
         <div class="epic_id mr-3 mt-1" style="display: flex;">
-            <span style="font-size:18px" class="material-symbols-outlined mr-1">key_visualizer</span>
             OE-{{ $data->id }}
         </div>
         <div class="btn-group epicheaderborderleft">
@@ -44,14 +43,14 @@
         @if($data->team_id)
         <div class="members-list">
             <div id="members">
-                <a style="width: 90px;" onclick="showmemberbox()" href="javascript:void(0)" class="epic-header-buttons epicheaderteambutton" id="showboardbutton">
+                <a style="width: 58px;" onclick="showmemberbox()" href="javascript:void(0)" class="epic-header-buttons epicheaderteambutton" id="showboardbutton">
                     <img src="{{url('public/assets/svg/profile-2user.svg')}}" width="20"> 1
                 </a>
             </div>
         </div>
         @else
         <a href="javascript:void(0)" onclick="showmemberbox()" class="epic-header-buttons epicheaderteambutton" id="showboardbutton">
-            <img src="{{url('public/assets/svg/btnteamsvg.svg')}}" width="20">Team
+            <img src="{{url('public/assets/svg/btnteamsvg.svg')}}" width="20">{{ Cmf::getmodulename('level_three') }}
         </a>
         @endif
         <div class="memberlistposition">

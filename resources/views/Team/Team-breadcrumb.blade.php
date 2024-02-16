@@ -25,7 +25,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
          <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
             Epic Backlog
          </h5>
-         <div class="d-flex flex-row page-sub-titles">
+         <div class="d-flex flex-row page-sub-titles align-items-center">
             <div class="mr-2">
                @if($organization->type == 'BU')
                <a  href="{{url('dashboard/organization/'.$organization->slug.'/dashboard/'.$organization->type)}}" style="text-decoration: none;" >Dashboard</a>
@@ -37,7 +37,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                <a  href="{{url('dashboard/organization/'.$organization->slug.'/dashboard/'.$organization->type)}}" style="text-decoration: none;" >Dashboard</a>
                @endif
                @if($organization->type == 'org')
-               <a  href="{{url('dashboard/organizations')}}" style="text-decoration: none;" >Dashboard</a>
+               <a  href="{{ route('organization.dashboard') }}" style="text-decoration: none;" >Dashboard</a>
                @endif
             </div>
             @if($organization->type == 'BU')
@@ -86,7 +86,9 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
          <div>
             <button class="button" id="backlog-assign" data-toggle="modal" style="display:none" onclick="get_epic();" data-target="#">Assign</button>
             <button class="button" onclick="addnewbacklogepic()">Add New</button>
-            <button class="button" data-toggle="modal"  data-target="#create-jira-epic">Connect Jira</button>
+            <button class="button" data-toggle="modal"  data-target="#create-jira-epic">
+               <img src="https://cdn.iconscout.com/icon/free/png-256/free-jira-2296055-1912014.png?f=webp&w=128" width="20">&nbsp; Download
+            </button>
          </div>
       </div>
       <!--end::Toolbar-->

@@ -34,10 +34,10 @@ $var_objective = 'Report-'.$type;
                             <td>Organization</td>
                             @endif
                             @if($type ==  'unit')
-                            <td>Business Unit</td>
+                            <td>{{ Cmf::getmodulename("level_one") }}</td>
                             @endif
                             @if($type ==  'stream')
-                            <td>value Stream</td>
+                            <td>{{ Cmf::getmodulename('level_two') }}</td>
                             @endif
                             @if($type ==  'BU')
                             <td>BU-Team</td>

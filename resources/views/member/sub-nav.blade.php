@@ -9,7 +9,7 @@ $Unit = DB::table('business_units')->where('user_id',Auth::id())->where('id',$or
     {{-- <button id="closeBtn" class="close-button">
         <img src="https://dev.agileprolific.com/public/assets/images/icons/collaps.svg">
     </button> --}}
-    <h6 class="title">Value Streams</h6>
+    <h6 class="title">{{ Cmf::getmodulename("level_two") }}</h6>
     <ul class="list-unstyled ps-0 expanded-navbar mb-0">
 
         <li class="mb-1">
@@ -18,7 +18,7 @@ $Unit = DB::table('business_units')->where('user_id',Auth::id())->where('id',$or
                     <div class="mr-2">
                         <span class="material-symbols-outlined"> arrow_back </span>                                </div>
                     <div>
-                        Value Stream
+                        {{ Cmf::getmodulename("level_two") }}
                     </div>
                 </div>
             </a>
@@ -46,7 +46,7 @@ $Unit = DB::table('business_units')->where('user_id',Auth::id())->where('id',$or
                         <span style="font-size:22px" class="material-symbols-outlined">domain</span>
                     </div>
                     <div>
-                        Value Streams
+                        {{ Cmf::getmodulename("level_two") }}
                     </div>
                 </div>
             </button>
@@ -159,7 +159,7 @@ $Unit = DB::table('business_units')->where('user_id',Auth::id())->where('id',$or
                      <span style="font-size:22px" class="material-symbols-outlined">groups</span>
                 </div>
                 <div class="mr-2">
-                    Teams
+                    {{ Cmf::getmodulename('level_three') }}
                 </div>
             </a>
         </li>

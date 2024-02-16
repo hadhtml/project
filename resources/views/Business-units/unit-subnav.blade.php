@@ -1,16 +1,16 @@
 <div class="flex-shrink-0 p-3 bg-white sub-nav open" id="panel">
    
-        <h6 class="title">Business Units</h6>
+        <h6 class="title">{{ Cmf::getmodulename("level_one") }}</h6>
         <ul class="list-unstyled ps-0 expanded-navbar mb-0">
             
             <li class="mb-1">
-                <a href="{{url('dashboard/organization/Business-Units')}}" class="btn  align-items-center rounded"  aria-expanded="true">
+                <a href="{{route('organization.level-one', Cmf::getmoduleslug('level_one'))}}" class="btn  align-items-center rounded"  aria-expanded="true">
                     <div class="d-flex flex-row align-items-center">
                         <div class="mr-2">
                             <span class="material-symbols-outlined"> arrow_back </span>
                         </div>
                         <div>
-                            Business Units
+                            {{ Cmf::getmodulename("level_one") }}
                         </div>
                     </div>
                 </a>
@@ -39,7 +39,7 @@
                         <span style="font-size:22px" class="material-symbols-outlined">layers</span>
                     </div>
                     <div class="mr-2">
-                        Value Streams
+                        {{ Cmf::getmodulename("level_two") }}
                     </div>
                 </a>
             </li>
@@ -142,7 +142,7 @@
                          <span style="font-size:22px" class="material-symbols-outlined">groups</span>
                     </div>
                     <div class="mr-2">
-                        Teams
+                        {{ Cmf::getmodulename('level_three') }}
                     </div>
                 </a>
             </li>

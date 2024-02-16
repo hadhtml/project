@@ -119,7 +119,7 @@
                                        <div class="col-md-12">
                                      <div id="popover-password" style="display:none;">
 
-                                    <ul class="list-unstyled mt-2" style="font-size:14px">
+                                    <ul class="list-unstyled" style="font-size:12px">
                                         <li class="">
                                             <span class="low-upper-case">
                                                 <i class="fas fa-check" aria-hidden="true"></i>
@@ -171,13 +171,13 @@
                                 </div>
                             </div>
                             <div class="row social-buttons">
-                                <div class="col-xl-4 col-lg-4 col-md-4 p-2">
+                                <div class="col-xl-6 col-lg-6 col-md-6 p-2">
                                     <button class="btn btn-white btn-block">
                                         <img src="{{asset('public/assets/images/icons/google.svg')}}">
                                        <a href="{{url('/auth/google')}}" class="btn"> Google</a>
                                     </button>
                                 </div>
-                                <div class="col-xl-4 col-lg-4 col-md-4 p-2">
+                                <div class="col-xl-6 col-lg-6 col-md-6 p-2">
                                     <a href="{{url('/auth/facebook')}}">
                                     <button class="btn btn-white btn-block">
                                         <img src="{{asset('public/assets/images/icons/facebook.svg')}}">
@@ -185,7 +185,7 @@
                                     </button>
                                     </a>
                                 </div>
-                                {{-- <div class="col-xl-4 col-lg-4 col-md-4 p-2">
+                                {{-- <div class="col-xl-6 col-lg-6 col-md-6 p-2">
                                     <button class="btn btn-white btn-block">
                                         <img src="{{asset('public/assets/images/icons/apple.svg')}}">
                                         Apple

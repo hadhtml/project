@@ -69,7 +69,7 @@ $valuestream = DB::table('value_stream')->where('unit_id',$organization->id)->co
                         </a>
                     </div>
                     <div class="dashboard-card-tittle">
-                        <h4>Teams</h4>
+                        <h4>{{ Cmf::getmodulename('level_three') }}</h4>
                     </div>
                     <div class="dashboard-card-number">
                         <h3>{{$Teams}}</h3>
@@ -114,7 +114,7 @@ $valuestream = DB::table('value_stream')->where('unit_id',$organization->id)->co
                         </a>                     
                     </div>
                     <div class="dashboard-card-tittle">
-                        <h4>Value Streams</h4>
+                        <h4>{{ Cmf::getmodulename("level_two") }}</h4>
                     </div>
                     <div class="dashboard-card-number">
                         <h3>{{$valuestream}}</h3>

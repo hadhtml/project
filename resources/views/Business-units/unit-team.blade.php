@@ -2,7 +2,7 @@
 $var_objective = "Org-Unit-team";
 @endphp
 @extends('components.main-layout')
-<title>BU-Teams</title>
+<title>{{ Cmf::getmodulename('level_two') }}-{{ Cmf::getmodulename('level_three') }}</title>
 @section('content')
 
 
@@ -162,7 +162,7 @@ $var_objective = "Org-Unit-team";
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Delete Team</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Delete {{ Cmf::getmodulename('level_three') }}</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -176,7 +176,7 @@ $var_objective = "Org-Unit-team";
     
             <div class="modal-body">
               
-            Are you sure you want to delete this Team?
+            Are you sure you want to delete this {{ Cmf::getmodulename('level_three') }}?
     
             </div>
             <div class="modal-footer">
@@ -194,7 +194,7 @@ $var_objective = "Org-Unit-team";
                     <div class="modal-header">
                         <div class="row">
                             <div class="col-md-12">
-                                <h5 class="modal-title" id="create-epic">Update Team</h5>
+                                <h5 class="modal-title" id="create-epic">Update {{ Cmf::getmodulename('level_three') }}</h5>
                             </div>
                             <div class="col-md-12">
                                 <p>Lorem ipsum dummy text for printing</p>
@@ -279,9 +279,9 @@ $var_objective = "Org-Unit-team";
 <div style="position:absolute;right:27%;top:40%;" class="text-center">
 <img src="{{asset('public/team.svg')}}"  width="120" height="120">
 <div><h6 class="text-center">No Records Found</h6></div>
-<div><p class="text-center">You may create your first Team by clicking the bellow button.</p></div>
+<div><p class="text-center">You may create your first {{ Cmf::getmodulename('level_three') }} by clicking the bellow button.</p></div>
 <button class="btn btn-primary btn-lg btn-theme btn-block ripple ml-32" style="width:40%" type="button" data-toggle="modal" data-target="#add-team">
-    Add a Team
+    Add a {{ Cmf::getmodulename('level_three') }}
 </button>
 </div>
 @endif
@@ -297,7 +297,7 @@ $var_objective = "Org-Unit-team";
             <div class="modal-header">
                 <div class="row">
                     <div class="col-md-12">
-                        <h5 class="modal-title" id="create-epic">Create Team</h5>
+                        <h5 class="modal-title" id="create-epic">Create {{ Cmf::getmodulename('level_three') }}</h5>
                     </div>
                     <div class="col-md-12">
                         <p>Fill-in the details bellow</p>
@@ -336,7 +336,7 @@ $var_objective = "Org-Unit-team";
                         
                         @if($memberCount == 0)
                         <div class="alert alert-danger mt-1 ml-3" role="alert">
-                        Add users before assigning <a href="{{url('dashboard/organization/users')}}" class="alert-link">Click here</a>.
+                        Add users before assigning <a href="{{route('settings.users')}}" class="alert-link">Click here</a>.
                         </div>
                         @endif
                         
@@ -408,7 +408,7 @@ $var_objective = "Org-Unit-team";
                         {{-- <div class="col-md-12 col-lg-12 col-xl-12 member-area" style="display:none" id="member">
                         </div> --}}
                         <div class="col-md-12">
-                            <button class="btn btn-primary btn-lg btn-theme btn-block ripple" type="submit">Create Team</button>
+                            <button class="btn btn-primary btn-lg btn-theme btn-block ripple" type="submit">Create {{ Cmf::getmodulename('level_three') }}</button>
                         </div>
                     </div>
                 </form>

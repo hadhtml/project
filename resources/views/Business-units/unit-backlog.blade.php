@@ -52,7 +52,7 @@ $var_objective = "Backlog-Unit";
                      </td>
                      <div class="modal fade" id="assign-unitbacklog-epic{{$backlog->id}}" tabindex="-1" role="dialog" aria-labelledby="create-epic" aria-hidden="true">
                         <div class="modal-dialog" role="document">
-                           <div class="modal-content" style="width: 526px !important;">
+                           <div class="modal-content" style="width: 526px !important; padding: 12px !important;">
                               <div class="modal-header">
                                  <div class="row">
                                     <div class="col-md-12">
@@ -82,13 +82,13 @@ $var_objective = "Backlog-Unit";
                                        <div class="col-md-12 col-lg-12 col-xl-12">
                                           <div class="form-group mb-0">
                                              <select class="form-control category" id="" name="stream_obj" required>
-                                                <option value="" >Select Business Unit</option>
+                                                <option value="" >Select {{ Cmf::getmodulename('level_one') }}</option>
                                                 <?php foreach(DB::table('business_units')->where('user_id',Auth::id())->get() as $r){ ?>
                                                 <option value="{{ $r->id }}">{{ $r->business_name }}</option>
                                                 -->
                                                 <?php }  ?>
                                              </select>
-                                             <label for="small-description">Choose Business Unit</label>
+                                             <label for="small-description">Choose {{ Cmf::getmodulename('level_one') }}</label>
                                           </div>
                                        </div>
                                        <div class="col-md-12 col-lg-12 col-xl-12">
@@ -172,10 +172,12 @@ $var_objective = "Backlog-Unit";
                      </td>
                      <td>
                         <button class="btn-circle btn-tolbar" onclick="editbacklogepic({{ $backlog->id }} , 'backlog_unit')">
-                        <img src="{{asset('public/assets/images/icons/edit.svg')}}" data-toggle="tooltip" data-placement="top" data-original-title="Edit">
+                        <span class="material-symbols-outlined" data-toggle="tooltip"
+                            data-placement="top" data-original-title="Edit">edit</span>
                         </button>
                         <button class="btn-circle btn-tolbar" data-toggle="modal" data-target="#delete{{$backlog->id}}">
-                        <img src="{{asset('public/assets/images/icons/delete.svg')}}" data-toggle="tooltip" data-placement="top" data-original-title="Delete">
+                        <span class="material-symbols-outlined" data-toggle="tooltip"
+                            data-placement="top" data-original-title="Delete">delete</span>
                         </button>
                         @if ($backlog->backlog_id == NULL)
                         <a class="btn-circle btn-tolbar" href="{{url('epic-clone/'.$backlog->id.'/'.$organization->type)}}">
@@ -346,7 +348,7 @@ $var_objective = "Backlog-Unit";
 </div>
 <div class="modal fade" id="assign-unitbacklog-epic" tabindex="-1" role="dialog" aria-labelledby="create-epic" aria-hidden="true">
    <div class="modal-dialog" role="document">
-      <div class="modal-content" style="width: 526px !important;">
+      <div class="modal-content" style="width: 526px !important; padding: 12px !important;">
          <div class="modal-header">
             <div class="row">
                <div class="col-md-12">
@@ -362,7 +364,7 @@ $var_objective = "Backlog-Unit";
             <img src="{{asset('public/assets/images/icons/minus.svg')}}">
             </button>
          </div>
-         <div class="modal-body">
+         <div class="modal-body p-0">
             <form class="needs-validation" action="{{url('assign-unitbacklog-epic')}}" method="POST">
                @csrf   
                <input type="hidden" name="backlog_id" id="values">
@@ -376,13 +378,13 @@ $var_objective = "Backlog-Unit";
                   <div class="col-md-12 col-lg-12 col-xl-12">
                      <div class="form-group mb-0">
                         <select class="form-control category" id="" name="stream_obj" required>
-                           <option value="" >Select Business Unit</option>
+                           <option value="" >Select {{ Cmf::getmodulename('level_one') }}</option>
                            <?php foreach(DB::table('business_units')->where('user_id',Auth::id())->get() as $r){ ?>
                            <option value="{{ $r->id }}">{{ $r->business_name }}</option>
                            -->
                            <?php }  ?>
                         </select>
-                        <label for="small-description">Choose Business Unit</label>
+                        <label for="small-description">Choose {{ Cmf::getmodulename('level_one') }}</label>
                      </div>
                   </div>
                   <div class="col-md-12 col-lg-12 col-xl-12">
@@ -429,7 +431,7 @@ $var_objective = "Backlog-Unit";
 </div>
 <div class="modal fade" id="create-jira-epic" tabindex="-1" role="dialog" aria-labelledby="create-epic" aria-hidden="true">
    <div class="modal-dialog" role="document">
-      <div class="modal-content" style="width: 526px !important;">
+      <div class="modal-content" style="width: 526px !important;     padding: 12px !important;">
          <div class="modal-header">
             <div class="row">
                <div class="col-md-12">
@@ -469,7 +471,7 @@ $var_objective = "Backlog-Unit";
                </div>
                @else
                <div class="alert alert-danger mt-1 ml-3" role="alert">
-                  Connect your Jira account in the settings. <a href="{{url('dashboard/organization/setting')}}" class="alert-link">Click here</a>.
+                  Connect your Jira account in the settings. <a href="{{ route('settings.jirasettings') }}" class="alert-link">Click here</a>.
                </div>
                @endif
                <div class="col-md-12 col-lg-12 col-xl-12">

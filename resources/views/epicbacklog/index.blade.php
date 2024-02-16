@@ -57,20 +57,20 @@ $var_objective = 'TBaclog-' . $type;
                </thead>
                <tbody class="boards" id="backlog-board">
                   @foreach ($Backlog as $backlog)
-                  <tr id="backlog-{{ $backlog->id }}">
+                  <tr id="backlog-{{ $backlog->id }}" class="draggable">
                      <td>
                         <label class="form-checkbox">
                         <input type="checkbox" class="checkbox check" value="{{ $backlog->id }}">
                         <span class="checkbox-label"></span>
                         </label>
                      </td>
-                     <td class="draggable">
+                     <td class="">
                         <div class="epic_id mr-3 mt-1" style="display: flex;">
                            <span style="font-size:18px" class="material-symbols-outlined mr-1">key_visualizer</span>
                            OE-{{ $backlog->id }}
                         </div>
                      </td>
-                     <td class="draggable">
+                     <td>
                         {{ $backlog->epic_title }}
                      </td>
                      <!-- <td>
@@ -539,7 +539,7 @@ $var_objective = 'TBaclog-' . $type;
 <div class="modal fade" id="create-jira-epic" tabindex="-1" role="dialog" aria-labelledby="create-epic"
    aria-hidden="true">
    <div class="modal-dialog" role="document">
-      <div class="modal-content" style="width: 526px !important;">
+      <div class="modal-content" style="width: 526px !important; padding: 12px !important;">
          <div class="modal-header">
             <div class="row">
                <div class="col-md-12">
@@ -558,7 +558,7 @@ $var_objective = 'TBaclog-' . $type;
          @php
          $jira = DB::table('jira_setting')->where('user_id',Auth::id())->count();
          @endphp
-         <div class="modal-body">
+         <div class="modal-body p-0">
             <form class="needs-validation" action="{{ url('assign-jira-epic') }}" method="POST">
                @csrf
                <input type="hidden" name="backlog_id" value="{{ $organization->id }}">
@@ -579,7 +579,7 @@ $var_objective = 'TBaclog-' . $type;
                </div>
                @else
                <div class="alert alert-danger mt-1 ml-3" role="alert">
-                  Connect your Jira account in the settings. <a href="{{url('dashboard/organization/setting')}}" class="alert-link">Click here</a>.
+                  Connect your Jira account in the settings. <a href="{{ route('settings.jirasettings') }}" class="alert-link">Click here</a>.
                </div>
                @endif
                <div class="col-md-12 col-lg-12 col-xl-12">

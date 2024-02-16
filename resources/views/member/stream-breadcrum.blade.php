@@ -16,16 +16,16 @@ $team  = DB::table('business_units')->where('id',$organization->unit_id)->first(
                 </div>
                 <div>
                     <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
-                        Value Stream
+                        {{ Cmf::getmodulename("level_two") }}
                     </h5>
                 </div>
             </div>
-            <div class="d-flex flex-row page-sub-titles">
+            <div class="d-flex flex-row page-sub-titles align-items-center">
                 <div class="mr-2">
                     @if($organization->type == 'stream')
-                    <div class="d-flex">
+                    <div class="d-flex align-items-center">
                         <div>
-                            <span style="font-size:19px" class="material-symbols-outlined">auto_stories</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">auto_stories</span>
                         </div>
                         <div>
                             <a  href="{{url('dashboard/organization/'.$organization->slug.'/dashboard/'.$organization->type)}}" style="text-decoration: none;" >Dashboard</a>
@@ -36,9 +36,9 @@ $team  = DB::table('business_units')->where('id',$organization->unit_id)->first(
                 </div>
                 
                 <div class="mr-2">
-                    <div class="d-flex">
+                    <div class="d-flex align-items-center">
                         <div>
-                            <span style="font-size:19px" class="material-symbols-outlined">domain</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">domain</span>
                         </div>
                         <div>
                             <a  href="{{url('dashboard/organization/'.$team->slug.'/portfolio/'.$team->type)}}" style="text-decoration: none;" >{{$team->business_name}}</a>
@@ -47,9 +47,9 @@ $team  = DB::table('business_units')->where('id',$organization->unit_id)->first(
                 </div>
          
                 <div class="mr-2">
-                    <div class="d-flex">
+                    <div class="d-flex align-items-center">
                         <div>
-                            <span style="font-size:19px" class="material-symbols-outlined">layers</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">layers</span>
                         </div>
                         <div>
                             <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->value_name}}</a>
@@ -58,20 +58,20 @@ $team  = DB::table('business_units')->where('id',$organization->unit_id)->first(
                 </div>
                 <div class="mr-2">
                     @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/VS-TEAMS'))
-                    <div class="d-flex">
+                    <div class="d-flex align-items-center">
                         <div>
-                            <span style="font-size:19px" class="material-symbols-outlined">groups</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">groups</span>
                         </div>
                         <div>
-                           <p> Teams </p>                       
+                           <p> {{ Cmf::getmodulename('level_three') }} </p>                       
                         </div>
                     </div>
                 
                     @else
                  
-                    <div class="d-flex">
+                    <div class="d-flex align-items-center">
                         <div>
-                            <span style="font-size:19px" class="material-symbols-outlined">auto_stories</span>
+                            <span style="font-size:17px" class="material-symbols-outlined">auto_stories</span>
                         </div>
                         <div>
                            <p> Dashboard  </p>                      
@@ -91,7 +91,7 @@ $team  = DB::table('business_units')->where('id',$organization->unit_id)->first(
             <div>
                 @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/VS-TEAMS'))
                 <button class="button" type="button" data-toggle="modal" data-target="#add-team-stream">
-                    Add New
+                    Add {{ Cmf::getmodulename('level_three') }}
                 </button>
                 @endif
             </div>

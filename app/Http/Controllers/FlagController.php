@@ -128,28 +128,28 @@ class FlagController extends Controller
 
         if($previousstatus == 'inprogress')
         {
-            $from_status = '<b style="background-color: #E1DB3F; color: white; border-radius: 10px; padding-left: 5px; padding-right: 5px; ">In Progress</b>';
+            $from_status = '<b style="background-color: #E1DB3F; color: white; border-radius: 10px; padding:10px 7px; font-weight:400 ">In Progress</b>';
         }
         if($previousstatus == 'doneflag')
         {
-            $from_status = '<b style="background-color: #3fe1a7; color: white; border-radius: 10px; padding-left: 5px; padding-right: 5px; ">Done</b>';
+            $from_status = '<b style="background-color: #3fe1a7; color: white; border-radius: 10px; padding:10px 7px; font-weight:400 ">Done</b>';
         }
         if($previousstatus == 'todoflag')
         {
-            $from_status = '<b style="background-color: #6c757d; color: white; border-radius: 10px; padding-left: 5px; padding-right: 5px; ">To Do</b>';
+            $from_status = '<b style="background-color: #6c757d; color: white; border-radius: 10px; padding:10px 7px; font-weight:400 ">To Do</b>';
         }
 
         if($request->parentElId == 'todoflag')
         {
-            $tostatus = '<b style="background-color: #6c757d; color: white; border-radius: 10px; padding-left: 5px; padding-right: 5px; ">To Do</b>';
+            $tostatus = '<b style="background-color: #6c757d; color: white; border-radius: 10px; padding:10px 7px; font-weight:400 ">To Do</b>';
         }
         if($request->parentElId == 'doneflag')
         {
-            $tostatus = '<b style="background-color: #3fe1a7; color: white; border-radius: 10px; padding-left: 5px; padding-right: 5px; ">Done</b>';
+            $tostatus = '<b style="background-color: #3fe1a7; color: white; border-radius: 10px; padding:10px 7px; font-weight:400 ">Done</b>';
         }
         if($request->parentElId == 'inprogress')
         {
-            $tostatus = '<b style="background-color: #E1DB3F; color: white; border-radius: 10px; padding-left: 5px; padding-right: 5px; ">In Progress</b>';
+            $tostatus = '<b style="background-color: #E1DB3F; color: white; border-radius: 10px; padding:10px 7px; font-weight:400 ">In Progress</b>';
         }
         $notification = "Status Changed From ".$from_status .' To '.$tostatus;
         Cmf::save_activity(Auth::id() , $notification,'flags',$request->droppedElId , 'detector_status');
@@ -722,7 +722,7 @@ class FlagController extends Controller
         $update->epic_id = $request->id;
         $epic = Epic::find($request->id);
         $update->save();
-        $notification = 'Epic <b style="background-color: #6c757d; color: white; border-radius: 10px; padding-left: 5px; padding-right: 5px; "> '.$epic->epic_name. ' </b> Added in Flag';
+        $notification = 'Epic <b style="background-color: #6c757d; color: white; border-radius: 10px; padding:10px 7px; font-weight:400 "> '.$epic->epic_name. ' </b> Added in Flag';
         Cmf::save_activity(Auth::id() , $notification,'flags',$request->flagid, 'add');
         $data = flags::find($request->flagid);
         $html = view('flags.tabs.epicinputtoshow', compact('data'))->render();

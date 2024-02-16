@@ -108,6 +108,7 @@
             </div>
         </div>
     </div>
+
     @if ($report && $KEYChart)
         <div class="row">
             <div class="col-md-12 col-lg-12 col-xl-12">
@@ -391,6 +392,54 @@
                     <div>
                         <div class="dropdown d-flex">
                           
+
+</div>
+@if($report && $KEYChart)
+<div class="row">
+  <div class="col-md-12 col-lg-12 col-xl-12">
+     <div class="form-group mb-0">
+        <label for="small-description">New Value</label>
+        <input type="text" onkeypress="return onlyNumberKey(event)" class="form-control"  id="new-chart-value{{$key->id}}" required>
+     </div>
+  </div>
+</div>
+@else
+<div class="ml-2 text-danger mt-2" role="alert">
+    Define Quarterly Target for Current Quarter
+    </div>
+@endif
+<div class="row field_wrapper_key">
+  <div class="col-md-12">
+    @if($KEYChart)
+    @php
+     $keyqvalue =  DB::table('key_quarter_value')->where('key_chart_id', $KEYChart->id)->orderby('id','DESC')->get();
+    @endphp
+    <div @if($keyqvalue->count() > 4) class="activity-feed" @endif>
+        <table class="table value-table">
+          <thead>
+              <tr>
+                  <th>Updated On</th>
+                  <th class="text-center">Value</th>
+                  <th class="text-right">Action</th>
+              </tr>
+          </thead>
+          <tbody>
+            
+                @foreach($keyqvalue as $val)
+                <tr>
+                    <td>{{ \Carbon\Carbon::parse($val->created_at)->format('d M Y') }}</td>
+                    <td class="text-center" id="edit-val{{$val->id}}">{{$val->value}}</td>
+                    <td class="text-right" id="edit-button-val{{$val->id}}">
+                        <button class="btn-circle btn-tolbar" type="button" onclick="editquartervalue({{$val->id}},'{{$val->value}}')">
+                            <span class="material-symbols-outlined">edit</span>
+                        </button>
+                        <button class="btn-circle btn-tolbar" type="button" onclick="deletequartervalue({{$val->id}})">
+                            <span class="material-symbols-outlined">delete</span>
+                        </button>
+                    </td>
+                </tr>
+                @endforeach
+
             
                             <button class="btn btn-default btn-sm" onclick="writecomment({{ $val->id }})">
                               Add Comments

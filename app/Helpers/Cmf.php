@@ -8,9 +8,14 @@ use Auth;
 use Carbon\Carbon;
 use App\Models\orders;
 use App\Models\orderdetails;
+use App\Models\flags;
+use App\Models\escalate_cards;
 use Twilio\Rest\Client;
 use App\Models\orderstatus;
 use App\Models\activities;
+use App\Models\team_link_child;
+use App\Models\modulenames;
+
 use App\Models\Member_order;
 use Mail;
 use Illuminate\Support\Facades\Http;
@@ -18,6 +23,58 @@ use Illuminate\Support\Facades\Http;
 use OneSignal;
 class Cmf
 { 
+    public static function getmodulename($level)
+    {
+        if($level == 'level_one')
+        {
+            return modulenames::where('user_id' , Auth::id())->first()->level_one;
+        }
+        if($level == 'level_two')
+        {
+            return modulenames::where('user_id' , Auth::id())->first()->level_two;
+        }
+        if($level == 'level_three')
+        {
+            return modulenames::where('user_id' , Auth::id())->first()->level_three;
+        }
+    }
+    public static function getmoduleslug($level)
+    {
+        if($level == 'level_one')
+        {
+            return modulenames::where('user_id' , Auth::id())->first()->slug_one;
+        }
+        if($level == 'level_two')
+        {
+            return modulenames::where('user_id' , Auth::id())->first()->slug_two;
+        }
+        if($level == 'level_three')
+        {
+            return modulenames::where('user_id' , Auth::id())->first()->slug_three;
+        }
+    }
+    public static function outputscript($id , $type)
+    {
+        $data = team_link_child::where('bussiness_unit_id' , $id)->where('from' , $type)->get();
+        foreach ($data as $r) {
+            echo "string";
+        }
+        exit;
+        return '"outputs": { "output_1": { "connections": [{ "node": "101", "output": "input_1" }] },"output_2": { "connections": [{ "node": "101", "output": "input_1" }] }, },';
+    }
+
+    public static function gerescalatedmainid($id)
+    {
+        $data = flags::find($id);
+        if($data->escalate)
+        {
+            $escalated = escalate_cards::where('id' , $data->escalate)->first();
+            $data =  $escalated->orignal_flag_id;
+        }else{
+            $data =  $id;
+        }
+        return $data;
+    }
     public static function get_file_extension($file_name) {
         return substr(strrchr($file_name,'.'),1);
     }
@@ -43,6 +100,10 @@ class Cmf
     public static function date_format($data)
     {
         return date('d M Y, h:s a ', strtotime($data));
+    }
+    public static function date_format_time($data)
+    {
+        return date('h:s a ', strtotime($data));
     }
     public static function date_format_new($data)
     {

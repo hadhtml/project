@@ -2,7 +2,7 @@
     $var_objective = 'Org-team';
 @endphp
 @extends('components.main-layout')
-<title>Org-Teams</title>
+<title>{{ Cmf::getmodulename('level_one') }}-{{ Cmf::getmodulename('level_three') }}</title>
 @section('content')
     @if (session('message'))
         <div class="row">
@@ -367,7 +367,7 @@
 
                             @if ($memberCount == 0)
                                 <div class="alert alert-danger mt-1 ml-3" role="alert">
-                                    Add users before assigning <a href="{{ url('dashboard/organization/users') }}"
+                                    Add users before assigning <a href="{{ route('settings.users') }}"
                                         class="alert-link">Click here</a>.
                                 </div>
                             @endif

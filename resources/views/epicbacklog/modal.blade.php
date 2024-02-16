@@ -27,7 +27,7 @@
                         <span class="material-symbols-outlined">flag</span> Flags
                     </li>
                     <li id="teams" @if($data->epic_title)  onclick="showtab({{$data->id}} , 'teams')" @else data-toggle="tooltip" title="" data-original-title="Please Fill General Details" @endif class="tabsclass">
-                        <span class="material-symbols-outlined"> group </span> Teams
+                        <span class="material-symbols-outlined"> group </span> {{ Cmf::getmodulename('level_three') }}
                     </li>
                     <li id="asign" @if($data->epic_title)  onclick="showtab({{$data->id}} , 'asign')" @else data-toggle="tooltip" title="" data-original-title="Please Fill General Details" @endif class="tabsclass">
                         <span class="material-symbols-outlined">person_check</span> Asign

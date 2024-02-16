@@ -94,7 +94,7 @@
                             </a>
                         </div>
                         <div class="dashboard-card-tittle">
-                            <h4>Teams</h4>
+                            <h4>{{ Cmf::getmodulename('level_three') }}</h4>
                         </div>
                         <div class="dashboard-card-number">
                             <h3>{{ $Teams }}</h3>
@@ -134,12 +134,12 @@
                 <div class="col-md-3 mb-4 col-6">
                     <div class="dashboard-card">
                         <div class="card-svg">
-                            <a href="{{ url('dashboard/organization/Business-Units') }}">
+                            <a href="{{ route('organization.level-one', Cmf::getmoduleslug('level_one')) }}">
                                 <span class="material-symbols-outlined warning_off">domain</span>
                             </a>
                         </div>
                         <div class="dashboard-card-tittle">
-                            <h4>Business Units</h4>
+                            <h4>{{ Cmf::getmodulename('level_one') }}</h4>
                         </div>
                         <div class="dashboard-card-number">
                             <h3>{{ $businessunits }}</h3>

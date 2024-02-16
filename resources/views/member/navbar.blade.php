@@ -3,13 +3,13 @@
     <div class="d-flex flex-column flex-shrink-0" style="width: 100%; height: 89vh;">
         <ul class="mb-auto text-center sidebar align-items-center mx-auto text-center" id="navbarSupportedContent">
             <li>
-                <a href="{{url('/dashboard/organizations')}}" @if (url()->current() == url('dashboard/organizations')) class="active-link" @else class="nav-link"  @endif  aria-current="page" title="" data-toggle="tooltip" data-placement="right" data-original-title="Dashboard">
+                <a href="{{ route('organization.dashboard') }}" @if (url()->current() == url('organization/dashboard')) class="active-link" @else class="nav-link"  @endif  aria-current="page" title="" data-toggle="tooltip" data-placement="right" data-original-title="Dashboard">
                     <span class="material-symbols-outlined">home</span>
                 </a>
             </li>
         
             <li>
-                <a href="{{url('dashboard/organization/Business-Units')}}"  @if (url()->current() == url('dashboard/organization/Business-Units')) class="active-link" @else class="nav-link"  @endif  data-toggle="tooltip" data-placement="right" data-original-title=" Business Units">
+                <a href="{{route('organization.level-one', Cmf::getmoduleslug('level_one'))}}"  @if (url()->current() == route('organization.level-one', Cmf::getmoduleslug('level_one'))) class="active-link" @else class="nav-link"  @endif  data-toggle="tooltip" data-placement="right" data-original-title="{{ Cmf::getmodulename("level_one") }}">
                     <span class="material-symbols-outlined">domain</span>
                 </a>
             </li>
@@ -32,7 +32,7 @@
             </li> -->
 
             {{-- <li>
-                <a href="{{url('dashboard/organization/users')}}" @if (url()->current() == url('dashboard/organization/users')) class="active-link" @else class="nav-link"  @endif title="" data-toggle="tooltip" data-placement="right" data-original-title="Users">
+                <a href="{{route('settings.users')}}" @if (url()->current() == route('settings.users')) class="active-link" @else class="nav-link"  @endif title="" data-toggle="tooltip" data-placement="right" data-original-title="Users">
                     <span class="material-symbols-outlined">group</span>
                 </a>
             </li> --}}
@@ -46,7 +46,7 @@
                     </a>
                 </li> -->
                 <li>
-                    <a href="{{url('dashboard/organization/setting')}}" @if (url()->current() == url('dashboard/organization/setting')) class="active-link" @else class="nav-link"  @endif title="" data-toggle="tooltip" data-placement="right" data-original-title="Settings">
+                    <a href="{{ route('settings.jirasettings') }}" @if (url()->current() == route('settings.jirasettings')) class="active-link" @else class="nav-link"  @endif title="" data-toggle="tooltip" data-placement="right" data-original-title="Settings">
                         <span class="material-symbols-outlined">settings</span>
                     </a>
                 </li>
@@ -65,8 +65,8 @@
 
                 @endif
                 <div class="dropdown-menu mb-5">
-                    <a class="dropdown-item" href="{{url('profile-setting')}}">Profile</a>
-                    <a class="dropdown-item" href="{{url('change-password')}}">Security</a>
+                    <a class="dropdown-item" href="{{ route('settings.myprofile') }}">Profile</a>
+                    <a class="dropdown-item" href="{{route('settings.security')}}">Security</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item bg-primary text-white" href="{{ route('logout') }}"  onclick="event.preventDefault();
                 document.getElementById('logout-form').submit();" class="nav-link">Logout</a>

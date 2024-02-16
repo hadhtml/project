@@ -74,12 +74,10 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
          @endphp
          <div class="action ml-0">
             <button class="btn btn-icon btn-circle btn-tolbar ml-auto " onclick="editobjective({{$obj->id}},'{{$obj->objective_name}}','{{$obj->start_date}}','{{$obj->end_date}}','{{$trimmedStringobj}}','{{$obj->status}}')" data-toggle="modal" data-target="#edit-objective">
-            <img src="{{ asset('public/assets/images/icons/edit.svg') }}" alt="Edit"
-               style="border-radius: 50%; width: 18px; height: 18px;">
+            <span class="material-symbols-outlined">edit</span>
             </button>
             <button class="btn btn-icon btn-circle btn-tolbar delete-obj mr-2" onclick="deleteobj({{$obj->id}})" data-toggle="modal" data-target="#delete-objective">
-            <img src="{{ asset('public/assets/images/icons/delete.svg') }}" alt="Delete"
-               style="border-radius: 50%; width: 18px; height: 18px;">
+            <span class="material-symbols-outlined">delete</span>
             </button>
          </div>
       </div>
@@ -169,14 +167,10 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
                            <div class="action ml-0">
                               <button
                                  class="btn btn-icon btn-circle bg-white btn-tolbar ml-auto" onclick="editobjectivekey({{$key->id}})">
-                              <img src="{{ asset('public/assets/images/icons/edit.svg') }}"
-                                 alt="Edit"
-                                 style="border-radius: 50%; width: 18px; height: 18px;">
+                              <span class="material-symbols-outlined">edit</span>
                               </button>
                               <button class="btn btn-icon btn-circle bg-white btn-tolbar" onclick="deleteobjkey({{$key->id}},'{{$obj->id}}')" data-toggle="modal" data-target="#delete-objective-key">
-                              <img src="{{ asset('public/assets/images/icons/delete.svg') }}"
-                                 alt="Delete"
-                                 style="border-radius: 50%; width: 18px; height: 18px;">
+                              <span class="material-symbols-outlined">delete</span>
                               </button>
                            </div>
                         </div>
@@ -270,15 +264,11 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
                                              <div class="action ml-0">
                                                 <button
                                                    class="btn btn-icon btn-circle bg-white btn-tolbar ml-auto" onclick="editinitiative({{$initiative->id}},'{{$initiative->initiative_name}}','{{$initiative->initiative_start_date}}','{{$initiative->initiative_end_date}}','{{$trimmedStringinit}}','{{$initiative->initiative_weight}}','{{$key->id}}','{{$obj->id}}')" data-toggle="modal" data-target="#edit-initiative">
-                                                <img src="{{ asset('public/assets/images/icons/edit.svg') }}"
-                                                   alt="Edit"
-                                                   style="border-radius: 50%; width: 18px; height: 18px;">
+                                                <span class="material-symbols-outlined">edit</span>
                                                 </button>
                                                 <button
                                                    class="btn btn-icon btn-circle bg-white btn-tolbar" onclick="deletekeyinitiative({{$initiative->id}},'{{$key->id}}','{{$obj->id}}')" data-toggle="modal" data-target="#delete-initiative-key">
-                                                <img src="{{ asset('public/assets/images/icons/delete.svg') }}"
-                                                   alt="Delete"
-                                                   style="border-radius: 50%; width: 18px; height: 18px;">
+                                                <span class="material-symbols-outlined">delete</span>
                                                 </button>
                                              </div>
                                           </div>
