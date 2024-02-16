@@ -17,11 +17,6 @@ use Carbon\Carbon;
 
 class MapperController extends Controller
 {
-    public function index()
-    {
-        $organization  = DB::table('organization')->where('user_id' , Auth::id())->first();
-	    return view('mapper.index',compact('organization')); 
-    }
     public function saveteamlevellinking(Request $request)
     {
         $add = new team_link_child();
@@ -83,5 +78,15 @@ class MapperController extends Controller
             $buteam = DB::table('unit_team')->where('org_id'  , $data->id)->get();
             return view('mapper.unit.index',compact('data','valuestream','buteam','organization')); 
         }
+
+        if($type == 'stream')
+        {
+            $organization = DB::table('value_stream')->where('slug'  , $url)->first();
+            $data = DB::table('value_stream')->where('slug'  , $url)->first();
+            $valueteam = DB::table('value_team')->where('org_id'  , $data->id)->get();
+            return view('mapper.stream.index',compact('data','valueteam','organization')); 
+        }
+
+
     }
 }

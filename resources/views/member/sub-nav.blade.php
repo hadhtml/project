@@ -76,7 +76,16 @@ $Unit = DB::table('business_units')->where('user_id',Auth::id())->where('id',$or
                 </div>
             </a>
         </li>
-
+        <li class="mb-1">
+            <a href="{{url('dashboard/mapper/'.$organization->slug.'/stream')}}" @if (url()->current() == url('dashboard/mapper/'.$organization->slug.'/stream')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
+                <div class="mr-2">
+                     <span style="font-size:22px" class="material-symbols-outlined">link</span>
+                </div>
+                <div class="mr-2">
+                    OKR Mapper
+                </div>
+            </a>
+        </li> 
         <li class="mb-1">
             <a href="{{url('dashboard/epicbacklog/'.$organization->slug.'/stream')}}" @if (url()->current() == url('dashboard/epicbacklog/'.$organization->slug.'/VS')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
                 <div class="mr-2">
