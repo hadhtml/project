@@ -22658,3 +22658,7 @@ line-height: normal;
   padding: 10px;
   text-align: center;
 }
+.drag-impo-grab
+{
+    will-change: transform; -webkit-tap-highlight-color: transparent; cursor: grab; user-select: none;
+}
