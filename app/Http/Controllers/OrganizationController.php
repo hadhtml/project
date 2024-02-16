@@ -10,6 +10,9 @@ use Illuminate\Support\Str;
 use DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
+use App\Models\flag_members;
+use App\Models\flag_comments;
+use App\Models\key_result;
 
 class OrganizationController extends Controller
 {
@@ -976,7 +979,7 @@ class OrganizationController extends Controller
 
     public function AddnewQvalue(Request $request)
     {
-      
+    
         DB::table('key_quarter_value')->insert([
           'key_chart_id' => $request->key_chart_id,
           'key_id' => $request->id,
@@ -984,9 +987,18 @@ class OrganizationController extends Controller
           'value' => $request->value,
           'status' => $request->status,
           'summary' => $request->summary,
-          'participant' => $request->participant,
+          'participant' => implode(',',$request->participant),
         
         ]);
+
+
+        $data = key_result::find($request->id);
+        $report = DB::table('sprint')->where('user_id',Auth::id())->where('status',NULL)->where('value_unit_id',$data->unit_id)->where('type',$data->type)->first();
+        $KEYChart =  DB::table('key_chart')->where('key_id',$request->id)->where('IndexCount',$report->IndexCount)->first();
+        $key = key_result::find($request->id);
+        $keyQAll = DB::table('key_chart')->where('key_id',$request->id)->get();    
+        $html = view('keyresult.tabs.values',compact('data','KEYChart','key','report','keyQAll'));
+        return $html;
 
     // $report = DB::table('sprint')->where('user_id',Auth::id())->where('status',NULL)->where('value_unit_id',$request->unit_id)->first();
     // $KEYChart =  DB::table('key_chart')->where('key_id',$request->id)->where('IndexCount',$report->IndexCount)->first();
@@ -1000,21 +1012,34 @@ class OrganizationController extends Controller
 
     public function UpdateQvalue(Request $request)
     {
-        DB::table('key_quarter_value')->where('id',$request->id)->update([
-          'value' => $request->title,
+        DB::table('key_quarter_value')->where('id',$request->flag_id)->update([
+          'value' => $request->value,
+          'status' => $request->status,
+          'summary' => $request->summary,
+          'participant' => implode(',',$request->participant),
         
         ]);
 
-        $key = DB::table('key_quarter_value')->where('id',$request->id)->first();
-        $keychart = DB::table('key_quarter_value')->where('key_chart_id',$key->key_chart_id)->orderby('id','DESC')->first();
 
-        return $keychart;
+        $data = key_result::find($request->id);
+        $report = DB::table('sprint')->where('user_id',Auth::id())->where('status',NULL)->where('value_unit_id',$data->unit_id)->where('type',$data->type)->first();
+        $KEYChart =  DB::table('key_chart')->where('key_id',$request->id)->where('IndexCount',$report->IndexCount)->first();
+        $key = key_result::find($request->id);
+        $keyQAll = DB::table('key_chart')->where('key_id',$request->id)->get();    
+        $html = view('keyresult.tabs.values',compact('data','KEYChart','key','report','keyQAll'));
+        return $html;
+
+        // $key = DB::table('key_quarter_value')->where('id',$request->id)->first();
+        // $keychart = DB::table('key_quarter_value')->where('key_chart_id',$key->key_chart_id)->orderby('id','DESC')->first();
+
+        // return $keychart;
 
     }
 
     public function DeleteQvalue(Request $request)
     {
         DB::table('key_quarter_value')->where('id',$request->id)->delete();
+     
       
     }
 
@@ -1403,5 +1428,81 @@ public function MoveQuarter(Request $request)
 
  
 }
+
+public function savecommentkey(Request $request)
+{
+    $addcomment = new flag_comments();
+    $addcomment->flag_id = $request->flag_id;
+    $addcomment->user_id = $request->user_id;
+    $addcomment->comment = $request->comment;
+    $addcomment->type = 'comment';
+    $addcomment->comment_type = 'key';
+    $addcomment->save();
+
+    $data = key_result::find($request->id);
+        $report = DB::table('sprint')->where('user_id',Auth::id())->where('status',NULL)->where('value_unit_id',$data->unit_id)->where('type',$data->type)->first();
+        $KEYChart =  DB::table('key_chart')->where('key_id',$request->id)->where('IndexCount',$report->IndexCount)->first();
+        $key = key_result::find($request->id);
+        $keyQAll = DB::table('key_chart')->where('key_id',$request->id)->get();    
+        $html = view('keyresult.tabs.values',compact('data','KEYChart','key','report','keyQAll'));
+        return $html;
+  
+}
+
+public function Deletecommentkey(Request $request)
+{
+  
+  flag_comments::where('id',$request->id)->delete();
+  $data = key_result::find($request->key);
+  $report = DB::table('sprint')->where('user_id',Auth::id())->where('status',NULL)->where('value_unit_id',$data->unit_id)->where('type',$data->type)->first();
+  $KEYChart =  DB::table('key_chart')->where('key_id',$request->key)->where('IndexCount',$report->IndexCount)->first();
+  $key = key_result::find($request->key);
+  $keyQAll = DB::table('key_chart')->where('key_id',$request->key)->get();    
+  $html = view('keyresult.tabs.values',compact('data','KEYChart','key','report','keyQAll'));
+  return $html;
+
+  
+  
+}
+
+
+public function updatecommentkey(Request $request)
+    {
+        $addcomment = flag_comments::find($request->comment_id);
+        $addcomment->comment = $request->comment;
+        $addcomment->save();
+
+        $data = key_result::find($request->id);
+        $report = DB::table('sprint')->where('user_id',Auth::id())->where('status',NULL)->where('value_unit_id',$data->unit_id)->where('type',$data->type)->first();
+        $KEYChart =  DB::table('key_chart')->where('key_id',$request->id)->where('IndexCount',$report->IndexCount)->first();
+        $key = key_result::find($request->id);
+        $keyQAll = DB::table('key_chart')->where('key_id',$request->id)->get();    
+        $html = view('keyresult.tabs.values',compact('data','KEYChart','key','report','keyQAll'));
+        return $html;
+    }
+
+
+    public function savereplykey(Request $request)
+    {
+        $addcomment = new flag_comments();
+        $addcomment->flag_id = $request->flag_id;
+        $addcomment->user_id = $request->user_id;
+        $addcomment->comment = $request->comment;
+        $addcomment->type = 'reply';
+        $addcomment->comment_type = 'key';
+        $addcomment->comment_id = $request->comment_id;
+        $addcomment->save();
+
+        $data = key_result::find($request->id);
+        $report = DB::table('sprint')->where('user_id',Auth::id())->where('status',NULL)->where('value_unit_id',$data->unit_id)->where('type',$data->type)->first();
+        $KEYChart =  DB::table('key_chart')->where('key_id',$request->id)->where('IndexCount',$report->IndexCount)->first();
+        $key = key_result::find($request->id);
+        $keyQAll = DB::table('key_chart')->where('key_id',$request->id)->get();    
+        $html = view('keyresult.tabs.values',compact('data','KEYChart','key','report','keyQAll'));
+        return $html;
+       
+    }
+
+    
 
 }

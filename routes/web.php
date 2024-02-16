@@ -22,6 +22,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/asgin-names', [HomeController::class, 'asignnames'])->name('asignnames');
     Route::POST('createmodulenames', [HomeController::class, 'createmodulenames'])->name('createmodulenames');
 
+    Route::name('organization.')->namespace('App\Http\Controllers')->middleware('dynamic-names')->prefix('organization')->group(function () {
+        Route::get('dashboard', 'HomeController@dashboard')->name('dashboard');
+    });
+
+
 
     Route::name('organization.')->namespace('App\Http\Controllers')->middleware('dynamic-names')->prefix('organization')->group(function () {
         Route::get('dashboard', 'HomeController@dashboard')->name('dashboard');
@@ -40,6 +45,7 @@ Route::middleware('auth')->group(function () {
         Route::get('asgin-names', 'HomeController@asignmodule')->name('asignmodule');
         Route::POST('updatemodulenames', 'HomeController@updatemodulenames')->name('updatemodulenames');
     });
+
 
 });
 
@@ -74,6 +80,10 @@ Route::get('dashboard/organization/report-init-all/{sprint}/{type}', [App\Http\C
 
 Route::post('update-sprint', [App\Http\Controllers\OrganizationController::class,'UpdateSprintQuarter']);
 Route::post('delete-report', [App\Http\Controllers\OrganizationController::class,'DeleteSprintQuarter']);
+Route::post('keyresult-savecomment', [App\Http\Controllers\OrganizationController::class,'savecommentkey']);
+Route::post('deletecomment-key', [App\Http\Controllers\OrganizationController::class,'Deletecommentkey']);
+Route::post('updatecomment-key', [App\Http\Controllers\OrganizationController::class,'updatecommentkey']);
+Route::post('savereply-key', [App\Http\Controllers\OrganizationController::class,'savereplykey']);
 
 
 

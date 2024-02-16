@@ -170,8 +170,9 @@ class KeyresultController extends Controller
             // $data = key_result::find($request->id);
             $InitData = DB::table('initiative')->where('key_id',$request->id)->get();
             $InitDataCount = DB::table('initiative')->where('key_id',$request->id)->count();
+            $Weight = DB::table('initiative')->where('key_id',$request->id)->sum('initiative_weight');
 
-            $html = view('keyresult.tabs.init-weight', compact('InitData','InitDataCount'))->render();
+            $html = view('keyresult.tabs.init-weight', compact('InitData','InitDataCount','Weight'))->render();
             return $html;
         }
         if($request->tab == 'charts')
@@ -211,7 +212,7 @@ class KeyresultController extends Controller
         return $html;
     }
     public function deletequartervalue(Request $request)
-    {
+    { 
         $key_quarter_value = DB::table('key_quarter_value')->where('id',$request->id)->first();
         $data = key_result::find($key_quarter_value->key_id);
         $report = DB::table('sprint')->where('user_id',Auth::id())->where('status',NULL)->where('value_unit_id',$data->unit_id)->first();
@@ -219,6 +220,7 @@ class KeyresultController extends Controller
         $key = key_result::find($key_quarter_value->key_id);
         $keyQAll = DB::table('key_chart')->where('key_id',$key_quarter_value->key_id)->get();
         DB::table('key_quarter_value')->where('id',$request->id)->delete(); 
+        DB::table('flag_comments')->where('flag_id',$request->id)->delete();
         $html = view('keyresult.tabs.values',compact('data','KEYChart','key','report','keyQAll'));
         return $html;
     }

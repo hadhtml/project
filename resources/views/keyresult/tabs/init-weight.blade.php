@@ -46,6 +46,9 @@
 </div>
 
 
+
+@endforeach
+
 <div class="row ml-3 mb-2" style="display:none;" id="key_count">
     <div class="col-md-6">
         <span>Total Initiative ({{$InitDataCount}})</span>  
@@ -54,7 +57,6 @@
         <span></span>
     </div>
 </div>
-@endforeach
 @else
 <span class="ml-5">No Initiative found</span>
 @endif
