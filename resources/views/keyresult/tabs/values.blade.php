@@ -60,10 +60,10 @@
 }
 /* select with icons badges single*/
 .select-icon .select2-selection__placeholder .badge {
-  display: block;
+  display: none;
 }
 .select-icon .placeholder {
-display: none; 
+/*  display: none; */
 }
 .select-icon .select2-results__option:before,
 .select-icon .select2-results__option[aria-selected=true]:before {
@@ -73,23 +73,6 @@ display: none;
 .select-icon  .select2-search--dropdown {
   display: none;
 }
-
-.day-circle {
-        display: inline-block;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background-color: #eee;
-        text-align: center;
-        line-height: 40px;
-        cursor: pointer;
-        font-size: 13px;
-        margin: 2px;
-    }
-
-    .day-circle.checked {
-        background-color: #3498db;/ Blue color when checked / color: #fff;/ White text when checked /
-    }
 </style>
 @if (!isset($noreport))
     @if ($KEYChart)
@@ -125,11 +108,8 @@ display: none;
             </div>
         </div>
     </div>
-    @if ($report && $KEYChart)
 
-    @php
-    $days = json_decode($KEYChart->daysInput);
-     @endphp
+    @if ($report && $KEYChart)
         <div class="row">
             <div class="col-md-12 col-lg-12 col-xl-12">
                 <div class="d-flex flex-row align-items-center justify-content-between block-header">
@@ -140,85 +120,17 @@ display: none;
                                 </span>
                         </div>
                         <div>
-                            <h4 style="font-size: 12px">Check-in</h4>
+                            <h4>Check-in</h4>
                         </div>
                     </div>
                     <div class="displayflex">
-                    <span class="mt-2" style="font-size: 13px">Frequency: {{$KEYChart->repeatdays}} On @foreach($days as $day) {{$day}} @endforeach </span><a href="#" onclick="uploadfrequency()" class="nav-link">(Change)</a>
-
-                    </div>
-                    <div class="displayflex">
-              
 
                         <span onclick="uploadattachment()" class="btn btn-default btn-sm">New Check-In</span>
                     </div>
                 </div>
             </div>
         </div>
-       
-        <div class="row uploadfrequency displaynone mb-1">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex flex-column">
-                            <div class="mb-4">
-                                <h4>Custom Reference</h4>
-                            </div>
-                            <form class="needs-validation savefrequencyform"
-                            action="{{ url('frequency-update') }}" method="POST"> 
-                        
-                            @csrf
-                            <input type="hidden" value="{{ $key->id }}" name="id">
-                            <input type="hidden" value="{{ $KEYChart->id }}" name="key_chart_id">
-
-                            <div class="d-flex flex-row align-items-center mb-4">
-                                <div class="mr-2">
-                                    Repeat every 
-                                </div>
-                                <div class="mr-2">
-                                    <input class="form-control input-sm" value="{{$KEYChart->days}}" type="number" min="1" required name="days">
-                                </div>
-                                <div class="mr-2">
-                                    <select class="form-control input-sm" value="{{$KEYChart->repeatdays}}" name="repeat" required>
-                                        <option value="Week">Week</option>
-                                        <option value="Month">Month</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="d-flex flex-row align-items-center mb-4">
-                                <div class="mr-2">
-                                    Repeat on
-                                </div>
-                                <div class="mr-2">
-                                    <label class="day-circle {{ in_array('Sunday', $days) ? 'checked' : '' }}" data-day="Sunday" onclick="toggleDay(this)">S</label>
-                                    <label class="day-circle {{ in_array('Monday', $days) ? 'checked' : '' }}" data-day="Monday" onclick="toggleDay(this)">M</label>
-                                    <label class="day-circle {{ in_array('Tuesday', $days) ? 'checked' : '' }}" data-day="Tuesday" onclick="toggleDay(this)">T</label>
-                                    <label class="day-circle {{ in_array('Wednesday', $days) ? 'checked' : '' }}" data-day="Wednesday" onclick="toggleDay(this)">W</label>
-                                    <label class="day-circle {{ in_array('Thursday', $days) ? 'checked' : '' }}" data-day="Thursday" onclick="toggleDay(this)">T</label>
-                                    <label class="day-circle {{ in_array('Friday', $days) ? 'checked' : '' }}" data-day="Friday" onclick="toggleDay(this)">F</label>
-                                    <label class="day-circle {{ in_array('Saturday', $days) ? 'checked' : '' }}" data-day="Saturday" onclick="toggleDay(this)">S</label>
-                                    
-                                </div>
-                          
-                            </div>
-                            <input type="hidden" id="checkedDays" name="daysInput[]" value="">
-
-                            <button type="submit"
-                            class="saveepicflagbuttonasdsadsad btn btn-primary btn-sm">Save</button>
-                        </form>
-                        </div>
-                       
-                 
-                    </div>
-               
-                </div>
-            </div>
-        </div>
-
-                            
-
-  
-
+     
         <div class="row uploadattachment">
             <div class="col-md-12">
                 <div class="card comment-card storyaddcard">
@@ -300,26 +212,15 @@ display: none;
             Define Quarterly Target for Current Quarter
         </div>
     @endif
-
-  
     <div class="row field_wrapper_key">
-        <div>
-            <p class="mt-5 ml-3">Current Quarter</p>
-        </div>
         <div class="col-md-12">
             @if ($KEYChart)
-
-            <div class="card-body" style="height: 300px;">
-                <canvas id="lineChart"></canvas>
-            </div>
-            
                 @php
                     $keyqvalue = DB::table('key_quarter_value')
                         ->where('key_chart_id', $KEYChart->id)
-                        // ->orderby('id', 'DESC')
+                        ->orderby('id', 'DESC')
                         ->get();
                 @endphp
-
                    @foreach($keyqvalue as $val)
 
                    @php
@@ -329,99 +230,10 @@ display: none;
                     $remainingIds = array_slice($dataArray, 2);
                     $remainingCount = count($remainingIds);
                               
-                    
-                    $value = [];
-                    foreach ($keyqvalue as $chart) {
-                    $value[] = $chart->value;
-                    }
-                   
-                  
-                  
-                                    
-                   $commentscount = DB::table('flag_comments')->where('flag_id',$val->id)->where('type','comment')->where('comment_type','key')->count();
+             
+        $commentscount = DB::table('flag_comments')->where('flag_id',$val->id)->where('type','comment')->where('comment_type','key')->count();
     
                    @endphp
-
-
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<script>
-
-
-    var ctxLine = document.getElementById('lineChart').getContext(
-        '2d');
-        if (window.lineChart !== undefined) 
-        {
-    window.lineChart.destroy(); 
-        }
-     
-     var extraLineData = "{{$KEYChart->quarter_value}}";
-     var extraLineDataS = [0,extraLineData];
-
-  
- 
-   
-       
-      
-
-       var lineChart = new Chart(ctxLine, {
-        type: 'line', 
-        data: {
-            labels:@json($value),
-            datasets: [{
-                    label: 'Actual Line',
-                    data:@json($value),
-                    borderColor: 'gray',
-                    fill: false,
-                    backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(255, 159, 64, 0.2)',
-                    'rgba(255, 205, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(201, 203, 207, 0.2)'
-                    ],
-                 
-                    borderWidth: 2,
-                },
-                {
-                label: 'Quarter (Target) Line',
-                data:extraLineDataS,
-                borderColor: 'gray', 
-                borderWidth: 1.5,
-                fill: false,
-                borderDash: [5, 5],
-                                                          
-                },
-
-      
-             
-              
-            ]
-        },
-        options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    x: {
-                        beginAtZero: true,
-                        display: false,
-                        
-                    },
-                    y: {
-                        beginAtZero: true,
-                        stepSize: 150,
-                        
-                    },
-                },
-          
-            }
-    });
-    
-  
-</script>
                    <div class="card check-in-card">
                        <div class="card-body">
                            <div class="d-flex flex-row align-items-center justify-content-between check-in-header">
@@ -500,8 +312,6 @@ display: none;
                         <div class="card-body">
                             <form class="needs-validation updatekeychart{{ $val->id }}" action="{{ url('update-new-quarter-value') }}" method="POST" novalidate>
                                 @csrf
-                                
-                               
                                 <input type="hidden" value="{{ $val->id }}" name="flag_id">
                                 <input type="hidden" value="{{ $key->id }}" name="id">
                                 <div class="row">        
@@ -582,6 +392,54 @@ display: none;
                     <div>
                         <div class="dropdown d-flex">
                           
+
+</div>
+@if($report && $KEYChart)
+<div class="row">
+  <div class="col-md-12 col-lg-12 col-xl-12">
+     <div class="form-group mb-0">
+        <label for="small-description">New Value</label>
+        <input type="text" onkeypress="return onlyNumberKey(event)" class="form-control"  id="new-chart-value{{$key->id}}" required>
+     </div>
+  </div>
+</div>
+@else
+<div class="ml-2 text-danger mt-2" role="alert">
+    Define Quarterly Target for Current Quarter
+    </div>
+@endif
+<div class="row field_wrapper_key">
+  <div class="col-md-12">
+    @if($KEYChart)
+    @php
+     $keyqvalue =  DB::table('key_quarter_value')->where('key_chart_id', $KEYChart->id)->orderby('id','DESC')->get();
+    @endphp
+    <div @if($keyqvalue->count() > 4) class="activity-feed" @endif>
+        <table class="table value-table">
+          <thead>
+              <tr>
+                  <th>Updated On</th>
+                  <th class="text-center">Value</th>
+                  <th class="text-right">Action</th>
+              </tr>
+          </thead>
+          <tbody>
+            
+                @foreach($keyqvalue as $val)
+                <tr>
+                    <td>{{ \Carbon\Carbon::parse($val->created_at)->format('d M Y') }}</td>
+                    <td class="text-center" id="edit-val{{$val->id}}">{{$val->value}}</td>
+                    <td class="text-right" id="edit-button-val{{$val->id}}">
+                        <button class="btn-circle btn-tolbar" type="button" onclick="editquartervalue({{$val->id}},'{{$val->value}}')">
+                            <span class="material-symbols-outlined">edit</span>
+                        </button>
+                        <button class="btn-circle btn-tolbar" type="button" onclick="deletequartervalue({{$val->id}})">
+                            <span class="material-symbols-outlined">delete</span>
+                        </button>
+                    </td>
+                </tr>
+                @endforeach
+
             
                             <button class="btn btn-default btn-sm" onclick="writecomment({{ $val->id }})">
                               Add Comments
@@ -981,6 +839,7 @@ display: none;
 
 
 
+
   {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -1005,9 +864,7 @@ function writecomment(id) {
     $('.writecomment' + id).slideToggle();   
 }
 
-function uploadfrequency() {
-$('.uploadfrequency').slideToggle();
-}
+
 
 function showupdatecard(id) {
   $('.uploadattachment'+id).slideToggle();
@@ -1095,37 +952,6 @@ $("#js-select1").select2({
       tags: true // создает новые опции на лету
     });
 
-    function toggleDay(element) {
-    element.classList.toggle("checked");
-    updateCheckedDays();
-}
-
-function updateCheckedDays() {
-    let checkedDays = [];
-    document.querySelectorAll('.day-circle.checked').forEach(function(day) {
-        checkedDays.push(day.getAttribute('data-day'));
-    });
-    document.getElementById('checkedDays').value = JSON.stringify(checkedDays);
-}
-
-
-$('.savefrequencyform').on('submit',(function(e) {
-    e.preventDefault();
-    var formData = new FormData(this);
-    console.log(formData);
-    $.ajax({
-        type:'POST',
-        url: $(this).attr('action'),
-        data:formData,
-        cache:false,
-        contentType: false,
-        processData: false,
-        success: function(data){
-            $('.secondportion').html(data);
-   
-        }
-    });
-}));
 
 </script>
 
