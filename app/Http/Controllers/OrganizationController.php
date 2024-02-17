@@ -1503,6 +1503,28 @@ public function updatecommentkey(Request $request)
        
     }
 
+    public function frequencyupdate(Request $request)
+    {
+        DB::table('key_chart')->where('id',$request->key_chart_id)->update([
+          'days' => $request->days,
+          'repeatdays' => $request->repeat,
+          'daysInput' =>  implode(',', $request->daysInput),
+     
+        
+        ]);
+
+
+        $data = key_result::find($request->id);
+        $report = DB::table('sprint')->where('user_id',Auth::id())->where('status',NULL)->where('value_unit_id',$data->unit_id)->where('type',$data->type)->first();
+        $KEYChart =  DB::table('key_chart')->where('key_id',$request->id)->where('IndexCount',$report->IndexCount)->first();
+        $key = key_result::find($request->id);
+        $keyQAll = DB::table('key_chart')->where('key_id',$request->id)->get();    
+        $html = view('keyresult.tabs.values',compact('data','KEYChart','key','report','keyQAll'));
+        return $html;
+
     
+
+    }
+
 
 }
