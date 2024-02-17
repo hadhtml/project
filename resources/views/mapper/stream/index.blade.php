@@ -33,12 +33,12 @@ $var_objective = "mapper-stream";
           </div>
           <!-- Node 1 End -->
           <!-- Node 2 -->
-          @foreach(DB::table('value_stream')->where('unit_id'  , $data->id)->get() as $key_calue_stream => $v)
-          <div id="valuestream{{ $v->id }}" class="node">
+          @foreach(DB::table('value_team')->where('org_id'  , $data->id)->get() as $key_calue_stream => $v)
+          <div id="valuestreamteam{{ $v->id }}" class="node">
             <div class="node-name slot-active drag-impo-grab">
-              <div class="slot-label drag-impo-grab"><span style="font-size:22px" class="material-symbols-outlined">layers</span> {{ $v->value_name }}</div>
+              <div class="slot-label drag-impo-grab"><span style="font-size:22px" class="material-symbols-outlined">groups</span> {{ $v->team_title }}</div>
             </div>
-            @foreach(DB::table('objectives')->where('unit_id' , $v->id)->where('type' , 'stream')->get() as $o)
+            @foreach(DB::table('objectives')->where('unit_id' , $v->id)->where('type' , 'VS')->get() as $o)
             <div class="@if(DB::table('team_link_child')->where('linked_objective_id' , $o->id)->count() > 0) slot-active @else slot-inactive @endif drag-impo-grab">
               <div id="connectedobjective{{ $o->id }}" class="slot-anchor-small slot-anchor-active drag-impo-grab"></div>
               <span class="material-symbols-outlined f-18">location_searching</span>
@@ -55,24 +55,11 @@ $var_objective = "mapper-stream";
 
 
 <style type="text/css">
-  @foreach(DB::table('value_stream')->where('unit_id'  , $data->id)->get() as $key_calue_stream => $v)
-
-      @foreach(DB::table('value_team')->where('org_id'  , $v->id)->get() as $key_value_stream_team => $v_t)
-
-        #valuestreamteam{{ $v_t->id }}{
-          transform: translate(700px, 0px);
-        }
-
-      @endforeach
-
-
-
-
-
+@foreach(DB::table('value_team')->where('org_id'  , $data->id)->get() as $key_calue_stream => $v)
   @php 
-      $v_objective_count = DB::table('objectives')->where('type' , 'stream')->where('unit_id'  ,$v->id)->count();
+      $v_objective_count = DB::table('objectives')->where('unit_id' , $v->id)->where('type' , 'VS')->count();
       $v_i = 0;
-      foreach(DB::table('objectives')->where('type' , 'stream')->where('unit_id'  ,$v->id)->get() as $v_key => $v_value)
+      foreach(DB::table('objectives')->where('unit_id' , $v->id)->where('type' , 'VS')->get() as $v_key => $v_value)
       {
           foreach(DB::table('key_result')->where('obj_id' , $v_value->id)->get() as $v_key_result_index=>$v_key_result_value)
           {
@@ -96,44 +83,44 @@ $var_objective = "mapper-stream";
           $v_key_resultheight = 50;
       }
   @endphp
-  @if($loop->first)
-  @php
-      $v_firstloop = $v_objectiveheight+$v_key_resultheight+50;
-  @endphp
-  #valuestream{{ $v->id }}{
-    transform: translate(350px, 0px);
-  }
-  @endif
-  @if($loop->iteration == 2)
-  @php
-      $v_secondloop = $v_objectiveheight+$v_key_resultheight+20;
-  @endphp
-  #valuestream{{ $v->id }}{
-    transform: translate(350px, {{$v_firstloop}}px);
-  }
-  @endif
-  @if($loop->iteration == 3)
-  @php
-      $v_thirdloop = $v_objectiveheight+$v_key_resultheight+60;
-  @endphp
-  #valuestream{{ $v->id }}{
-    transform: translate(350px, {{$v_firstloop+$v_secondloop}}px);
-  }
-  @endif
-  @if($loop->iteration == 4)
-  @php
-      $v_fourthloop = $v_objectiveheight+$v_key_resultheight+20;
-  @endphp
-  #valuestream{{ $v->id }}{
-    transform: translate(350px, {{$v_thirdloop+$v_firstloop+$v_secondloop}}px);
-  }
-  @endif
-  @if($loop->iteration == 5)
-  #valuestream{{ $v->id }}{
-    transform: translate(350px, {{$v_fourthloop+$v_thirdloop+$v_firstloop+$v_secondloop}}px);
-  }
-  @endif
-  @endforeach
+@if($loop->first)
+@php
+    $v_firstloop = $v_objectiveheight+$v_key_resultheight+50;
+@endphp
+#valuestreamteam{{ $v->id }}{
+  transform: translate(650px, 0px);
+}
+@endif
+@if($loop->iteration == 2)
+@php
+    $v_secondloop = $v_objectiveheight+$v_key_resultheight+20;
+@endphp
+#valuestreamteam{{ $v->id }}{
+  transform: translate(650px, {{$v_firstloop}}px);
+}
+@endif
+@if($loop->iteration == 3)
+@php
+    $v_thirdloop = $v_objectiveheight+$v_key_resultheight+60;
+@endphp
+#valuestreamteam{{ $v->id }}{
+  transform: translate(650px, {{$v_firstloop+$v_secondloop}}px);
+}
+@endif
+@if($loop->iteration == 4)
+@php
+    $v_fourthloop = $v_objectiveheight+$v_key_resultheight+20;
+@endphp
+#valuestreamteam{{ $v->id }}{
+  transform: translate(650px, {{$v_thirdloop+$v_firstloop+$v_secondloop}}px);
+}
+@endif
+@if($loop->iteration == 5)
+#valuestreamteam{{ $v->id }}{
+  transform: translate(650px, {{$v_fourthloop+$v_thirdloop+$v_firstloop+$v_secondloop}}px);
+}
+@endif
+@endforeach
 </style>
 
 
@@ -142,25 +129,28 @@ $var_objective = "mapper-stream";
 @section('scripts')
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/leader-line@1.0.5/leader-line.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/plain-draggable@2.5.12/plain-draggable.min.js"></script>
-    <script type="text/javascript">
-        window.addEventListener("load", function() {
+<script type="text/javascript">
+  window.addEventListener("load", function() {
   "use strict";
 
 
-  @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->get() as $t_l_c)
+
+
+
+  @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->where('from' , 'stream')->get() as $t_l_c)
    var slout_out_buisness_unit_key_result_{{ $t_l_c->bussiness_key_id }} = document.getElementById("buisness_unit_key_result_{{ $t_l_c->bussiness_key_id }}");
   @endforeach
 
-  @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->get() as $in_t_l_c)
+  @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->where('from' , 'stream')->get() as $in_t_l_c)
    var connectedobjective{{ $in_t_l_c->linked_objective_id }} = document.getElementById("connectedobjective{{ $in_t_l_c->linked_objective_id }}");
   @endforeach
 
-  @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->get() as $linedeclarekeyforslot =>  $line_t_l_c)
+  @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->where('from' , 'stream')->get() as $linedeclarekeyforslot =>  $line_t_l_c)
    var line{{ $linedeclarekeyforslot+1 }};
   @endforeach
 
 
-  @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->get() as $linekeyforslot =>  $line_t_l_c)
+  @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->where('from' , 'stream')->get() as $linekeyforslot =>  $line_t_l_c)
    line{{$linekeyforslot+1}} = new LeaderLine(connectedobjective{{ $line_t_l_c->linked_objective_id }}, buisness_unit_key_result_{{ $line_t_l_c->bussiness_key_id }}, {
     startPlug: "behind",
     endPlug: "behind",
@@ -176,9 +166,10 @@ $var_objective = "mapper-stream";
   @endforeach
 
 
+
   new PlainDraggable(node_1, {
     onMove: function() {
-      @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->get() as $draglinekey =>  $drag)
+      @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->where('from' , 'stream')->get() as $draglinekey =>  $drag)
       line{{ $draglinekey+1 }}.position();
       @endforeach
     },
@@ -187,11 +178,10 @@ $var_objective = "mapper-stream";
       line.dash = false;
     }
   });
-
-  @foreach(DB::table('value_stream')->where('unit_id'  , $data->id)->get() as $v)
-  new PlainDraggable(valuestream{{ $v->id }}, {
+  @foreach(DB::table('value_team')->where('org_id'  , $data->id)->get() as $key_calue_stream => $v)
+  new PlainDraggable(valuestreamteam{{ $v->id }}, {
     onMove: function() {
-      @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->get() as $draglinekey =>  $drag)
+      @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->where('from' , 'stream')->get() as $draglinekey =>  $drag)
       line{{ $draglinekey+1 }}.position();
       @endforeach
     },
@@ -200,22 +190,6 @@ $var_objective = "mapper-stream";
       line.dash = false;
     }
   });
-
-    @foreach(DB::table('value_team')->where('org_id'  , $v->id)->get() as $key_value_stream_team => $v_t)
-
-       new PlainDraggable(valuestreamteam{{ $v_t->id }}, {
-          onMove: function() {
-            @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->get() as $draglinekey =>  $drag)
-            line{{ $draglinekey+1 }}.position();
-            @endforeach
-          },
-          // onMoveStart: function() { line.dash = {animation: true}; },
-          onDragEnd: function() {
-            line.dash = false;
-          }
-        });
-
-    @endforeach
   @endforeach
 });
 
