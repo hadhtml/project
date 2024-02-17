@@ -166,20 +166,20 @@ $var_objective = "mapper-unit";
   "use strict";
 
 
-  @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->get() as $t_l_c)
+  @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->where('from' , 'unit')->get() as $t_l_c)
    var slout_out_buisness_unit_key_result_{{ $t_l_c->bussiness_key_id }} = document.getElementById("buisness_unit_key_result_{{ $t_l_c->bussiness_key_id }}");
   @endforeach
 
-  @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->get() as $in_t_l_c)
+  @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->where('from' , 'unit')->get() as $in_t_l_c)
    var connectedobjective{{ $in_t_l_c->linked_objective_id }} = document.getElementById("connectedobjective{{ $in_t_l_c->linked_objective_id }}");
   @endforeach
 
-  @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->get() as $linedeclarekeyforslot =>  $line_t_l_c)
+  @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->where('from' , 'unit')->get() as $linedeclarekeyforslot =>  $line_t_l_c)
    var line{{ $linedeclarekeyforslot+1 }};
   @endforeach
 
 
-  @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->get() as $linekeyforslot =>  $line_t_l_c)
+  @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->where('from' , 'unit')->get() as $linekeyforslot =>  $line_t_l_c)
    line{{$linekeyforslot+1}} = new LeaderLine(connectedobjective{{ $line_t_l_c->linked_objective_id }}, buisness_unit_key_result_{{ $line_t_l_c->bussiness_key_id }}, {
     startPlug: "behind",
     endPlug: "behind",
@@ -197,7 +197,7 @@ $var_objective = "mapper-unit";
 
   new PlainDraggable(node_1, {
     onMove: function() {
-      @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->get() as $draglinekey =>  $drag)
+      @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->where('from' , 'unit')->get() as $draglinekey =>  $drag)
       line{{ $draglinekey+1 }}.position();
       @endforeach
     },
@@ -210,7 +210,7 @@ $var_objective = "mapper-unit";
   @foreach(DB::table('value_stream')->where('unit_id'  , $data->id)->get() as $v)
   new PlainDraggable(valuestream{{ $v->id }}, {
     onMove: function() {
-      @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->get() as $draglinekey =>  $drag)
+      @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->where('from' , 'unit')->get() as $draglinekey =>  $drag)
       line{{ $draglinekey+1 }}.position();
       @endforeach
     },
