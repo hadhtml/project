@@ -18376,12 +18376,7 @@ hr {
     flex-shrink: 0;
 }
 
-.auth-form
-{
-    padding: 20px 0px;
-}
-
-.auth-form h3 {
+.input-fields-area h3 {
     color: #000;
     font-size: 35px;
     font-style: normal;
@@ -18576,7 +18571,7 @@ option {
     position: fixed;
     width: 4%;
     height: 100vh;
-    margin-top: 4%;
+    margin-top: 5%;
     background-color: #547AFF;
     z-index: 1;
     /* Sidebar shadow */
@@ -18766,9 +18761,9 @@ option {
 }
 
 .btn-circle.btn-tolbar {
-    width: 32px;
-    height: 32px;
-    padding: 0px 0px !important;
+    width: 38px;
+    height: 38px;
+    padding: 4px 9px !important;
     border-radius: 35px;
     font-size: 15px;
     line-height: 1.33;
@@ -18779,8 +18774,8 @@ option {
 }
 
 .btn-circle .btn-tolbar img {
-    width: 14px !important;
-    height: 14px !important;
+    width: 18px !important;
+    height: 18px !important;
 }
 
 .btn-circle {
@@ -18809,7 +18804,7 @@ option {
 
 
 .main-topbar {
-    padding: 9px 10px;
+    padding: 15px 10px;
     border-bottom: 1px solid #E8E8E8;
     z-index: 999;
     width: 100%;
@@ -19028,7 +19023,7 @@ option {
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    margin-top: 5%;
+    margin-top: 6%;
     padding: 12px 25px;
 
 }
@@ -19059,21 +19054,20 @@ option {
     font-style: normal;
     font-weight: 500 !important;
     line-height: normal;
-    margin-bottom: 2px !important;
+    margin-bottom: 0px !important;
     margin-top: 0px !important;
 }
 
 .toolbar .button {
     border-radius: 54px;
-    padding: 6px 14px;
-    height: 36px;
+    padding: 9px 16px;
+    height: 43px;
     flex-shrink: 0;
     border: 1px solid #3661EC;
     background: var(--primary-color, #3661EC);
-    font-size: 12px;
+    font-size: 13px;
     font-style: normal;
     font-weight: 500;
-    min-width: 81px !important;
     min-width: 100px;
     line-height: normal;
     color: white;
@@ -19249,7 +19243,7 @@ option {
     font-weight: 400;
     line-height: 10px;
     color: #717171;
-    margin-top: 0px;
+    margin-top: 3px;
     margin-right: 3px;
 }
 
@@ -19269,7 +19263,7 @@ option {
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
-    line-height: 6px !important;
+    line-height: normal;
     color: #717171;
 }
 
@@ -19319,7 +19313,6 @@ option {
 
 .header-objective .content {
     width: 55%;
-
 }
 
 .header-objective .content p {
@@ -19469,7 +19462,7 @@ option {
 }
 
 .modal-title {
-    font-size: 22px;
+    font-size: 26px;
     font-style: normal;
     font-weight: 600;
     line-height: normal;
@@ -19481,7 +19474,7 @@ option {
     font-size: 13px;
     font-style: normal;
     font-weight: 400;
-    margin-top: 3px;
+    margin-top: 5px;
     line-height: normal;
 }
 
@@ -21012,7 +21005,7 @@ input[type="radio"]:checked {
     height: 264px;
     width: 94%;
     padding: 0px;
-    box-shadow: 0px 2px 20px 4px rgb(87 106 134 / 20%);
+    box-shadow: 0px 2px 2px 4px rgb(87 106 134 / 20%);
     border-radius: 10px;
 }
 
@@ -21345,7 +21338,7 @@ input[type="radio"]:checked {
 
 .menuettitle ul {
     list-style-type: none;
-    padding-left: 0px;
+    padding-left: 10px;
 }
 
 .menuettitle ul li {
@@ -21355,12 +21348,6 @@ input[type="radio"]:checked {
     font-size: 14px;
     margin-bottom: 15px;
     cursor: pointer;
-}
-
-.menuettitle ul li:hover
-{
-    color: #000;
-    border-right: 2px solid #547aff;
 }
 
 .menuettitle ul li span
@@ -22450,211 +22437,63 @@ line-height: normal;
     border-top: 1px dashed var(--Border, #d3d3d38a);
 }
 
-@media only screen and (max-width: 1200px)
+
+.check-in-card
 {
-    .expanded-navbar-options li a
-    {
-        font-size:11px !important
-    }
-    .subheader
-    {
-        margin-top: 8%;
-    }
+    margin-bottom: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.05);
+    padding: 9px 17px;
 }
 
-
-@media only screen and (max-width: 1440px)
+.check-in-card .check-in-header
 {
-    .header-objective .action
-    {
-        width: 12%;
-    }
-    .content
-    {
-        margin-left: 56px;
-    }
-
-
-    .expanded-navbar-options li a
-    {
-        font-size: 12px;
-        padding: 4px 17px !important;
-    }
-    .aside
-    {
-        margin-top: 6%;
-    }
-    .toolbar .button
-    {
-        padding: 9px 14px;
-        font-size: 12px;
-        height: 37px;
-    }
-
-    .header-objective .content {
-        width: 70%;
-        margin-left: 0px;
-    }
-    .header-objective .title
-    {
-        width: 30%;
-    }
-    .header-objective .title h5
-    {
-        font-size: 12.5px;
-    }
-    .header-objective .content p
-    {
-        font-size: 12.5px;
-    }
-    .objective-header img
-    {
-        width: 26px;
-        height: 26px;
-        object-fit: contain;
-    }
-    .subheader
-    {
-        margin-top: 7%;
-    }
-    .breadcrums h5
-    {
-        font-size: 15px;
-    }
-    .page-sub-titles p
-    {
-        font-size: 12px;
-    }
-    .badge-cs
-    {
-        height: 25px;
-        padding: 2px 8px;
-        font-size: 11px;
-    }
+    margin-bottom: 10px;
 }
 
-
-@media only screen and (max-width: 600px) {
-  .main-topbar{
-    padding: 6px 15px;
-  }
-  .subheader
-  {
-    margin-top: 14%;
-    width: 100%;
-    padding: 8px 15px;
-  }
-  .breadcrums h5
-  {
-    font-size: 14px;
-  }
-
-  .body-inner-content
-  {
-    padding: 15px  !important;
-  }
-
-  .aside
-  {
-    display: none !important;
-  }
-  .sub-nav{
-    display: none !important;
-  }
-  .content{
-    margin-left: 0px;
-  }
-  .body-content
-  {
-    margin-left: 0%;
-    width: 100%;
-  }
-
-  .login-right-cont
-  {
-    display: none !important;
-  }
-
-  .login-nav-links
-  {
-    padding: 0px !important;
-    margin-bottom: 35px;
-  }
-
-  .input-fields-area h3
-  {
-    margin-bottom: 0px;
-  }
-
-  .needs-validation
-  {
-    padding-top: 13px !important;
-  }
-
-  .auth-form h3
-  {
-    font-size: 27px;
-  }
-  .py-3
-  {
-    padding-top: 0.2rem !important;
-    padding-bottom: 0.2rem !important;
-  }
-
-  .auth-form
-  {
-    padding: 0px;
-  }
-
-  .toolbar .button
-  {
-    font-size: 11px;
-    padding: 1px 14px;
-    height: 37px;
-  }
-    .modal-content
-    {
-        width: 100% !important;
-    }
-
-    .beautiful-row {
-    display: block;
-    margin-bottom: 10px; /* Ensure margin is applied in responsive mode */
-  }
-
-  .beautiful-row td {
-    display: block;
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-
+.check-in-card .check-in-header .lable{
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-transform: capitalize;
 }
 
-.modal-header
+.check-in-card .check-in-header .value small
 {
-    padding: 0.5rem 1rem !important;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-transform: capitalize;
 }
 
-.auth-buttons
+.check-in-card .check-in-header .value h4
 {
-    text-decoration: none;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
 }
 
-.auth-buttons:hover
+.check-in-card .check-in-header .lable span
 {
-    text-decoration: none;
+    fill: var(--White, #FFF);
+    stroke-width: 3px;
+    stroke: #13A085;
+    width: 14px;
+    height:14px;
+    margin-right: 5px;
+    border-radius: 100px;
 }
 
-.beautiful-row {
-  background-color: #fff; /* Set background color */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
-  border-bottom: 0px !important;
-  margin-bottom: 10px;
-}
 
-.beautiful-row td
-{
-  padding: 10px;
-  text-align: center;
+.check-in-card .check-in-content{
+    padding:10px 0px;
+    border-bottom: 1px solid #EAEAEA;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-transform: capitalize;
 }
