@@ -1505,10 +1505,25 @@ public function updatecommentkey(Request $request)
 
     public function frequencyupdate(Request $request)
     {
+
+      if($request->custrepeat == 'Custom')
+      {
+     
+      $daysInput = implode(',', $request->daysInput);
+      $days = $request->days;
+      $repeatdays = $request->repeat;  
+
+      }else
+      {
+        $daysInput = $request->cust_day;
+        $days = $request->cust_date;
+        $repeatdays = $request->custrepeat;  
+      }
         DB::table('key_chart')->where('id',$request->key_chart_id)->update([
-          'days' => $request->days,
-          'repeatdays' => $request->repeat,
-          'daysInput' =>  implode(',', $request->daysInput),
+          'days' => $days,
+          'repeatdays' => $repeatdays,
+          'daysInput' =>  $daysInput,
+          'cust_type' => $request->custrepeat,
      
         
         ]);
