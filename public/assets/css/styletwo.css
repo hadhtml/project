@@ -1916,6 +1916,12 @@ button:focus {
     background-color: #e1db3f;
     border-radius: 100px;
 }
+.badge-team-valuestream{
+    padding: 2px 11px;
+    color: white;
+    background-color: #547aff;
+    border-radius: 100px;
+}
 .badge-todo {
     padding: 2px 11px;
     color: white;

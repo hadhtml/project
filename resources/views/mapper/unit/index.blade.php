@@ -10,7 +10,7 @@ $var_objective = "mapper-unit";
         <div style="width: 100%; height: 5000px; padding: 50px;">
             
         <!-- Node 1 -->
-          <div id="node_1" class="node">
+          <div id="node_1" class="node" style="transform: translate(-60px, -60px);;">
             <div class="node-name slot-active drag-impo-grab">
               <div class="slot-label drag-impo-grab"><span style="font-size:22px" class="material-symbols-outlined">domain</span> {{ $data->business_name }}</div>
             </div>
@@ -22,7 +22,6 @@ $var_objective = "mapper-unit";
             </div>
             @foreach(DB::table('key_result')->where('obj_id' , $o->id)->get() as $k)
             <div class="slot-active">
-                <div class="slot-anchor-small @if(DB::table('team_link_child')->where('bussiness_key_id' , $k->id)->count() > 0) slot-anchor-active @else slot-anchor-inactive @endif"></div>
                 <span class="material-symbols-outlined f-18 ml-2">key</span>
                 <div class="slot-label"><span class="label-text">{{ $k->key_name }}</span></div>
                 <div class="badge-todo mr-2">{{ $k->key_prog }}%</div>
@@ -44,19 +43,21 @@ $var_objective = "mapper-unit";
               <span class="material-symbols-outlined f-18">location_searching</span>
               <div class="slot-label drag-impo-grab"><span class="label-text">{{ $o->objective_name }}</span></div>
               <div class="badge-inprogress">{{round($o->obj_prog,0)}}%</div>
-              <div class="slot-anchor-small slot-anchor-inactive drag-impo-grab"></div>
             </div>
+            @foreach(DB::table('key_result')->where('obj_id' , $o->id)->get() as $k)
+            <div class="slot-active">
+                <span class="material-symbols-outlined f-18 ml-2">key</span>
+                <div class="slot-label"><span class="label-text">{{ $k->key_name }}</span></div>
+                <div class="badge-todo mr-2">{{ $k->key_prog }}%</div>
+                <div id="buisness_unit_key_result_{{ $k->id }}" class="slot-anchor-small @if(DB::table('team_link_child')->where('bussiness_key_id' , $k->id)->count() > 0) slot-anchor-active @else slot-anchor-inactive @endif"></div>
+            </div>
+            @endforeach
             @endforeach
           </div>
                 @foreach(DB::table('value_team')->where('org_id'  , $v->id)->get() as $key_value_stream_team => $v_t)
                 <div id="valuestreamteam{{ $v_t->id }}" class="node">
                   <div class="node-name slot-active drag-impo-grab">
-                    <div class="slot-label drag-impo-grab"><span style="font-size:22px" class="material-symbols-outlined">groups</span> {{ $v_t->team_title }}</div>
-                  </div>
-                  <div class="slot-active drag-impo-grab">
-                    <div id="slot-anchor-2" class="slot-anchor-small slot-anchor-active drag-impo-grab"></div>
-                    <div class="slot-label drag-impo-grab"><span class="label-text">Stuff</span></div>
-                    <div class="slot-anchor-small slot-anchor-inactive drag-impo-grab"></div>
+                    <div class="slot-label drag-impo-grab"><span class="mr-2 d-flex badge-team-valuestream">VS <span style="font-size:22px" class="material-symbols-outlined ml-2">groups</span></span>  {{ $v_t->team_title }}</div>
                   </div>
                   @foreach(DB::table('objectives')->where('unit_id' , $v_t->id)->where('type' , 'VS')->get() as $o)
                   <div class="slot slot-inactive">
@@ -75,83 +76,21 @@ $var_objective = "mapper-unit";
 
 <style type="text/css">
   @foreach(DB::table('value_stream')->where('unit_id'  , $data->id)->get() as $key_calue_stream => $v)
-
       @foreach(DB::table('value_team')->where('org_id'  , $v->id)->get() as $key_value_stream_team => $v_t)
-
         #valuestreamteam{{ $v_t->id }}{
-          transform: translate(700px, 0px);
+          transform: translate(900px, 0px);
         }
-
       @endforeach
-
-
-
-
-
-  @php 
-      $v_objective_count = DB::table('objectives')->where('type' , 'stream')->where('unit_id'  ,$v->id)->count();
-      $v_i = 0;
-      foreach(DB::table('objectives')->where('type' , 'stream')->where('unit_id'  ,$v->id)->get() as $v_key => $v_value)
-      {
-          foreach(DB::table('key_result')->where('obj_id' , $v_value->id)->get() as $v_key_result_index=>$v_key_result_value)
-          {
-              if($v_key_result_value)
-              {
-                  $v_i++;
-              }
-              
-          }
-      }
-  @endphp
-  @php
-      $v_objectiveheight = $v_objective_count*80;
-      if($v_objectiveheight == 0)
-      {
-          $v_objectiveheight = 35;
-      }
-      $v_key_resultheight = $v_i;
-      if($v_key_resultheight == 0)
-      {
-          $v_key_resultheight = 50;
-      }
-  @endphp
   @if($loop->first)
-  @php
-      $v_firstloop = $v_objectiveheight+$v_key_resultheight+50;
-  @endphp
-  #valuestream{{ $v->id }}{
-    transform: translate(350px, 0px);
-  }
+   #valuestream{{ $v->id }}{
+      transform: translate(350px, -60px);
+   }
+  @else
+    #valuestream{{ $v->id }}{
+        transform: translate(350px, {{ ($v->total_obj_key+1)*50  }}px);
+      }
   @endif
-  @if($loop->iteration == 2)
-  @php
-      $v_secondloop = $v_objectiveheight+$v_key_resultheight+20;
-  @endphp
-  #valuestream{{ $v->id }}{
-    transform: translate(350px, {{$v_firstloop}}px);
-  }
-  @endif
-  @if($loop->iteration == 3)
-  @php
-      $v_thirdloop = $v_objectiveheight+$v_key_resultheight+60;
-  @endphp
-  #valuestream{{ $v->id }}{
-    transform: translate(350px, {{$v_firstloop+$v_secondloop}}px);
-  }
-  @endif
-  @if($loop->iteration == 4)
-  @php
-      $v_fourthloop = $v_objectiveheight+$v_key_resultheight+20;
-  @endphp
-  #valuestream{{ $v->id }}{
-    transform: translate(350px, {{$v_thirdloop+$v_firstloop+$v_secondloop}}px);
-  }
-  @endif
-  @if($loop->iteration == 5)
-  #valuestream{{ $v->id }}{
-    transform: translate(350px, {{$v_fourthloop+$v_thirdloop+$v_firstloop+$v_secondloop}}px);
-  }
-  @endif
+
   @endforeach
 </style>
 

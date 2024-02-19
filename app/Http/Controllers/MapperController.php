@@ -74,7 +74,16 @@ class MapperController extends Controller
         {
             $organization = DB::table('business_units')->where('slug'  , $url)->first();
             $data = DB::table('business_units')->where('slug'  , $url)->first();
-            $valuestream = DB::table('value_stream')->where('unit_id'  , $data->id)->get();
+            $valuestream = DB::table('value_stream')->where('unit_id'  , $data->id)->orderby('id' , 'asc')->get();
+            foreach ($valuestream as $key => $v) {
+                $objective = DB::table('objectives')->where('unit_id' , $v->id)->where('type' , 'stream')->count();
+                $key_result = DB::table('key_result')->where('unit_id' , $v->id)->where('type' , 'stream')->count();
+                if($key+1 == 1){
+                   DB::table('value_stream')->where('id' , $v->id)->update(array('mapper_height' => -60)); 
+                }else{
+
+                }
+            }
             $buteam = DB::table('unit_team')->where('org_id'  , $data->id)->get();
             return view('mapper.unit.index',compact('data','valuestream','buteam','organization')); 
         }
