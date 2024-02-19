@@ -97,7 +97,7 @@
                 $keyqvalue = '';
                 $keyqfirst = DB::table('key_quarter_value')
                     ->where('key_chart_id', $KEYChart->id)
-                    ->orderby('id', 'DESC')
+                    // ->orderby('id', 'DESC')
                     ->first();
                 if ($keyqfirst) {
                     $keyqvalue = $keyqfirst->value;
@@ -144,8 +144,15 @@
                             </div>
                         </div>
                         <div class="displayflex">
-                        <span class="mt-2" style="font-size: 13px">Frequency: {{$KEYChart->repeatdays}} On @foreach($days as $day) {{$day}} @endforeach </span><a href="#" onclick="uploadfrequency()" class="nav-link">(Change)</a>
-    
+                        @if($KEYChart->cust_type == 'Custom')    
+                        <span class="mt-2" style="font-size: 13px">Frequency: {{$KEYChart->repeatdays}} On @if($KEYChart->daysInput) @foreach($days as $day) {{$day}} @endforeach @endif </span><a href="javascript:void(0)" onclick="uploadfrequency()" class="nav-link">(Change)</a>
+                        @elseif($KEYChart->cust_type == 'Does not repeat')
+                        <span class="mt-2" style="font-size: 13px">Frequency: {{$KEYChart->repeatdays}}  </span><a href="javascript:void(0)" onclick="uploadfrequency()" class="nav-link">(Change)</a>
+                        @elseif($KEYChart->cust_type == 'Daily')
+                        <span class="mt-2" style="font-size: 13px">Frequency: {{$KEYChart->repeatdays}}  </span><a href="javascript:void(0)" onclick="uploadfrequency()" class="nav-link">(Change)</a>
+                        @else()
+                        <span class="mt-2" style="font-size: 13px">Frequency: {{$KEYChart->repeatdays}} On @if($KEYChart->daysInput)  {{$KEYChart->daysInput}}  @endif </span><a href="javascript:void(0)" onclick="uploadfrequency()" class="nav-link">(Change)</a>
+                        @endif
                         </div>
                         <div class="displayflex">
                   
@@ -160,49 +167,77 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            <div class="d-flex flex-column">
-                                <div class="mb-4">
+                            <form class="needs-validation savefrequencyform"
+                            action="{{ url('frequency-update') }}" method="POST"> 
+                        
+                            @csrf
+                            <div class="row">
+                                <div class="col-md-6">
+                                    
+                                <input type="text"  value="{{ (new DateTime())->format('l, M d') }}"  class="form-control datepickername" id="datepicker" name="custrepeatdatepicker">
+                                 </div>
+                              
+                                <div class="col-md-6">
+                                <select class="form-control" onchange="getcust(this.value)"  name="custrepeat" id="datepickerselect" required>
+                                    <option value="Does not repeat">Does not repeat</option>
+                                    <option value="Daily">Daily</option>
+                                    <option value="Weekly">Weekly on {{ (new DateTime())->format('l') }}</option>
+                                    <option value="Custom">Custom...</option>
+                                </select>
+                                </div>
+                                 </div>
+                            <input type="hidden" id="cust-day" name="cust_day">
+                            <input type="hidden" id="cust-date" name="cust_date">
+
+                            <div class="d-flex flex-column mt-2">
+                                <div class="mb-4 Custom" @if($KEYChart->cust_type == 'Custom') @else style="display:none" @endif>
                                     <h4>Custom Reference</h4>
                                 </div>
-                                <form class="needs-validation savefrequencyform"
-                                action="{{ url('frequency-update') }}" method="POST"> 
-                            
-                                @csrf
+                             
                                 <input type="hidden" value="{{ $key->id }}" name="id">
                                 <input type="hidden" value="{{ $KEYChart->id }}" name="key_chart_id">
     
                                 <div class="d-flex flex-row align-items-center mb-4">
-                                    <div class="mr-2">
+                                    <div class="mr-2 Custom"  @if($KEYChart->cust_type == 'Custom') @else style="display:none" @endif>
                                         Repeat every 
                                     </div>
-                                    <div class="mr-2">
-                                        <input class="form-control input-sm" value="{{$KEYChart->days}}" type="number" min="1" required name="days">
+                                    <div class="mr-2 Custom"  @if($KEYChart->cust_type == 'Custom') @else style="display:none" @endif>
+                                        <input class="form-control input-sm" value="{{$KEYChart->days}}" type="number" min="1"  name="days">
                                     </div>
-                                    <div class="mr-2">
-                                        <select class="form-control input-sm" value="{{$KEYChart->repeatdays}}" name="repeat" required>
+                                    <div class="mr-2 Custom"  @if($KEYChart->cust_type == 'Custom') @else style="display:none" @endif>
+                                        <select class="form-control input-sm" value="{{$KEYChart->repeatdays}}" name="repeat" >
                                             <option value="Week">Week</option>
                                             <option value="Month">Month</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="d-flex flex-row align-items-center mb-4">
-                                    <div class="mr-2">
+                                <div class="d-flex flex-row align-items-center mb-4" >
+                                    <div class="mr-2 Custom"  @if($KEYChart->cust_type == 'Custom') @else style="display:none" @endif>
                                         Repeat on
                                     </div>
-                                    <div class="mr-2">
-                                        <label class="day-circle {{ in_array('Sunday', $days) ? 'checked' : '' }}" data-day="Sunday" onclick="toggleDay(this)">S</label>
-                                        <label class="day-circle {{ in_array('Monday', $days) ? 'checked' : '' }}" data-day="Monday" onclick="toggleDay(this)">M</label>
-                                        <label class="day-circle {{ in_array('Tuesday', $days) ? 'checked' : '' }}" data-day="Tuesday" onclick="toggleDay(this)">T</label>
-                                        <label class="day-circle {{ in_array('Wednesday', $days) ? 'checked' : '' }}" data-day="Wednesday" onclick="toggleDay(this)">W</label>
-                                        <label class="day-circle {{ in_array('Thursday', $days) ? 'checked' : '' }}" data-day="Thursday" onclick="toggleDay(this)">T</label>
-                                        <label class="day-circle {{ in_array('Friday', $days) ? 'checked' : '' }}" data-day="Friday" onclick="toggleDay(this)">F</label>
-                                        <label class="day-circle {{ in_array('Saturday', $days) ? 'checked' : '' }}" data-day="Saturday" onclick="toggleDay(this)">S</label>
-                                        
+                                    <div class="mr-2 Custom" @if($KEYChart->cust_type == 'Custom') @else style="display:none" @endif>
+                                        @if($KEYChart->cust_type == 'Custom')  
+                                        <label class="day-circle @if($KEYChart->daysInput) {{ in_array('Sunday', $days) ? 'checked' : '' }}" @endif data-day="Sunday" onclick="toggleDay(this)">S</label>
+                                        <label class="day-circle @if($KEYChart->daysInput) {{ in_array('Monday', $days) ? 'checked' : '' }}" @endif data-day="Monday" onclick="toggleDay(this)">M</label>
+                                        <label class="day-circle @if($KEYChart->daysInput) {{ in_array('Tuesday', $days) ? 'checked' : '' }}" @endif data-day="Tuesday" onclick="toggleDay(this)">T</label>
+                                        <label class="day-circle @if($KEYChart->daysInput) {{ in_array('Wednesday', $days) ? 'checked' : '' }}" @endif data-day="Wednesday" onclick="toggleDay(this)">W</label>
+                                        <label class="day-circle @if($KEYChart->daysInput) {{ in_array('Thursday', $days) ? 'checked' : '' }}" @endif data-day="Thursday" onclick="toggleDay(this)">T</label>
+                                        <label class="day-circle @if($KEYChart->daysInput) {{ in_array('Friday', $days) ? 'checked' : '' }}" @endif data-day="Friday" onclick="toggleDay(this)">F</label>
+                                        <label class="day-circle @if($KEYChart->daysInput) {{ in_array('Saturday', $days) ? 'checked' : '' }}" @endif data-day="Saturday" onclick="toggleDay(this)">S</label>
+                                        @else
+                                        <label class="day-circle"  data-day="Sunday" onclick="toggleDay(this)">S</label>
+                                        <label class="day-circle"  data-day="Monday" onclick="toggleDay(this)">M</label>
+                                        <label class="day-circle"  data-day="Tuesday" onclick="toggleDay(this)">T</label>
+                                        <label class="day-circle"  data-day="Wednesday" onclick="toggleDay(this)">W</label>
+                                        <label class="day-circle"  data-day="Thursday" onclick="toggleDay(this)">T</label>
+                                        <label class="day-circle"  data-day="Friday" onclick="toggleDay(this)">F</label>
+                                        <label class="day-circle"   data-day="Saturday" onclick="toggleDay(this)">S</label>
+                                        @endif
                                     </div>
                               
                                 </div>
-                                <input type="hidden" id="checkedDays" name="daysInput[]" value="">
-    
+                                <input type="hidden" id="checkedDays" @if($KEYChart->daysInput) value="{{$KEYChart->daysInput}}" @endif name="daysInput[]" value="">
+                         
                                 <button type="submit"
                                 class="saveepicflagbuttonasdsadsad btn btn-primary btn-sm">Save</button>
                             </form>
@@ -331,8 +366,15 @@
                                   
                         
                         $value = [];
+                        if(count($keyqvalue) <= 1 )
+                        {
+                            $value[] = ['Label1','Label2'];
+                      
+                        }else
+                        {
                         foreach ($keyqvalue as $chart) {
                         $value[] = $chart->value;
+                        }
                         }
                        
                       
@@ -978,7 +1020,7 @@
     
     
     
-    
+
     
     
       {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
@@ -987,7 +1029,8 @@
      
       <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script> --}}
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    
+     
+      <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <script>
     
        
@@ -1112,7 +1155,8 @@
     $('.savefrequencyform').on('submit',(function(e) {
         e.preventDefault();
         var formData = new FormData(this);
-        console.log(formData);
+        console.log($('#datepicker').val());
+      
         $.ajax({
             type:'POST',
             url: $(this).attr('action'),
@@ -1126,6 +1170,33 @@
             }
         });
     }));
+
+    $( function() {
+    $( "#datepicker" ).datepicker({
+        onSelect: function(dateText, inst) {
+            var selectedDate = $(this).datepicker('getDate');
+            var dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            var fullDayName = dayNames[selectedDate.getDay()];
+            console.log("Full day name of selected date: " + fullDayName);
+            var formattedDate = $.datepicker.formatDate("M dd yy", selectedDate);
+            $('.datepickername').val(fullDayName+','+formattedDate);
+            $('#datepickerselect').html('<option value="Does not repeat">Does not repeat</option><option value="Daily">Daily</option><option value="Weekly">Weekly on '+ fullDayName +'</option><option value="Custom">Custom...</option>');
+            $('#cust-day').val(fullDayName);
+            $('#cust-date').val(formattedDate);
+        }
+    });
+});
+function getcust(val)
+{
+if(val == 'Custom')
+{
+ $('.Custom').show();   
+}else
+{
+$('.Custom').hide();
+
+}
+}
     
     </script>
     
