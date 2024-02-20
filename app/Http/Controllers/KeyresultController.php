@@ -178,7 +178,24 @@ class KeyresultController extends Controller
         if($request->tab == 'charts')
         {
             $data = key_result::find($request->id);
-            $html = view('keyresult.tabs.charts', compact('data'))->render();
+            // $html = view('keyresult.tabs.charts', compact('data'))->render();
+            // return $html;
+
+            $report = DB::table('sprint')->where('user_id',Auth::id())->where('status',NULL)->where('value_unit_id',$data->unit_id)->first();
+            if($report)
+            {
+                $KEYChart =  DB::table('key_chart')->where('key_id',$request->id)->where('IndexCount',$report->IndexCount)->first();
+                if(!$KEYChart)
+                {
+
+                }
+                $key = key_result::find($request->id);
+                $keyQAll = DB::table('key_chart')->where('key_id',$request->id)->get();    
+                $html = view('keyresult.tabs.charts',compact('data','KEYChart','key','report','keyQAll'));
+            }else{
+                $noreport = 'no';
+                $html = view('keyresult.tabs.charts',compact('data','noreport'));
+            }  
             return $html;
         }
         if($request->tab == 'teams')
