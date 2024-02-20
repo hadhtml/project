@@ -23,6 +23,7 @@
 <script src="{{ asset('public/assets/js/custom.js') }}"></script>
 <link rel="stylesheet" href="{{ url('public/assets/flowchart/jquery.flowchart.css') }}">
 <script src="{{ url('public/assets/flowchart/jquery.flowchart.js') }}"></script>
+
 <!-- Zoom -->
 @yield('linking')
 <script>
