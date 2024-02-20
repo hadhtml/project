@@ -178,7 +178,24 @@ class KeyresultController extends Controller
         if($request->tab == 'charts')
         {
             $data = key_result::find($request->id);
-            $html = view('keyresult.tabs.charts', compact('data'))->render();
+            // $html = view('keyresult.tabs.charts', compact('data'))->render();
+            // return $html;
+
+            $report = DB::table('sprint')->where('user_id',Auth::id())->where('status',NULL)->where('value_unit_id',$data->unit_id)->first();
+            if($report)
+            {
+                $KEYChart =  DB::table('key_chart')->where('key_id',$request->id)->where('IndexCount',$report->IndexCount)->first();
+                if(!$KEYChart)
+                {
+
+                }
+                $key = key_result::find($request->id);
+                $keyQAll = DB::table('key_chart')->where('key_id',$request->id)->get();    
+                $html = view('keyresult.tabs.charts',compact('data','KEYChart','key','report','keyQAll'));
+            }else{
+                $noreport = 'no';
+                $html = view('keyresult.tabs.charts',compact('data','noreport'));
+            }  
             return $html;
         }
         if($request->tab == 'teams')
@@ -343,39 +360,6 @@ class KeyresultController extends Controller
         $add->to = $request->to;
         $add->save();
         $linking = team_link_child::where('bussiness_key_id' , $request->bussiness_key_id)->orderby('created_at' , 'desc')->get();
-        $check = flow_chart_scripts::where('type' , $request->type)->where('unit_id' , $request->bussiness_unit_id);
-        if($check->count() == 0)
-        {
-            echo "string";exit;
-            $newchart = new flow_chart_scripts;
-            $newchart->unit_id = $request->bussiness_unit_id;
-            $newchart->type = $add->from;
-            $newchart->script = '"outputs": { "output_1": { "connections": [{ "node": "101", "output": "input_1" }] }, },';
-            $newchart->script_type = 'output';
-            $newchart->save();
-        }else{
-            $newchart = flow_chart_scripts::find($check->first()->id);
-            $newchart->script = Cmf::outputscript($request->bussiness_unit_id , $add->from);
-            $newchart->save();
-        }
-
-
-        // $checktwo = flow_chart_scripts::where('type' , $request->to)->where('unit_id' , $request->bussiness_unit_id);
-
-        // if($checktwo->count() == 0)
-        // {
-        //     $newchart = new flow_chart_scripts;
-        //     $newchart->unit_id = $request->bussiness_unit_id;
-        //     $newchart->type = $add->from;
-        //     $newchart->script = '"outputs": { "output_1": { "connections": [{ "node": "101", "output": "input_1" }] }, },';
-        //     $newchart->script_type = 'output';
-        //     $newchart->save();
-        // }else{
-        //     $newchart = flow_chart_scripts::find($check->first()->id);
-        //     $newchart->script = '"outputs": { "output_1": { "connections": [{ "node": "101", "output": "input_1" }] },"output_2": { "connections": [{ "node": "101", "output": "input_1" }] }, },';
-        //     $newchart->save();
-        // }
-
         $data = key_result::find($request->bussiness_key_id);
         $html = view('keyresult.tabs.okrmapper', compact('data','linking'))->render();
         return $html;
