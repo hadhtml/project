@@ -21,9 +21,9 @@
                     <li id="weighttab" onclick="showtab({{$data->id}} , 'weighttab')" class="tabsclass">
                         <span class="material-symbols-outlined"> weight </span> Weight
                     </li>
-                    <!-- <li id="charts" onclick="showtab({{$data->id}} , 'charts')" class="tabsclass">
+                    <li id="charts" onclick="showtab({{$data->id}} , 'charts')" class="tabsclass">
                         <span class="material-symbols-outlined">monitoring</span> Charts
-                    </li> -->
+                    </li>
                     
                     <!-- <li id="teams" onclick="showtab({{$data->id}} , 'teams')" class="tabsclass">
                         <span class="material-symbols-outlined"> group </span> Teams
