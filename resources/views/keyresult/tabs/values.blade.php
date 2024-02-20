@@ -443,6 +443,7 @@
                   
                 ]
             },
+            
             options: {
                     responsive: true,
                     maintainAspectRatio: false,
@@ -997,10 +998,10 @@
                 <div class="d-flex flex-row align-items-center justify-content-between block-header">
                     <div class="d-flex flex-row align-items-center">
                         <div class="mr-2">
-                            <span class="material-symbols-outlined">database</span>
+                            <span class="material-symbols-outlined">checklist</span>
                         </div>
                         <div>
-                            <h4>Values</h4>
+                            <h4>Check-in</h4>
                         </div>
                     </div>
                 </div>
