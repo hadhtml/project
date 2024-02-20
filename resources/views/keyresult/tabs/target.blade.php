@@ -61,6 +61,9 @@
             <h6 class="define-quarterly-targets">Define Quarterly Targets </h6>
          </div>
       </div>
+      @php
+      $ChartCount = DB::table('key_chart')->where('key_id' , $data->id)->count();
+      @endphp
       <div class="row field_wrapper_key">
          @foreach(DB::table('key_chart')->where('key_id' , $data->id)->get() as $key=>$r)
          <div class="col-md-12 col-lg-12 col-xl-6">
@@ -81,7 +84,7 @@
    </div>
    <div class="row margintopfourtypixel">
       <div class="col-md-12 text-right">
-         <button type="submit" class="btn btn-primary btn-theme ripple savechangebutton" id="updatebutton">Save Changes</button>
+         <button type="submit" class="btn btn-primary btn-theme ripple savechangebutton"  id="updatebutton">Save Changes</button>
       </div>
    </div>
 </form>
@@ -93,7 +96,7 @@
       checktarget();
    }
     $(document).ready(function() {
-        var maxField = 10;
+        var maxField = 4;
         var addButton = $('.add_value');
         var wrapper = $('.field_wrapper_key');
 
@@ -105,18 +108,25 @@
             if (x < maxField) {
                 x++; //Increment field counter
                 var fieldHTML =
-                    '<div class="col-md-12 col-lg-12 col-xl-6 removediv'+x+'"> <div class="form-group mb-0"> <label for="small-description">Quarter '+x+' Target</label> <input type="text" onkeypress="return onlyNumberKey(event)" value="" class="form-control target_value" placeholder="" name="newtarget[]"  onkeypress="return onlyNumberKey(event)"> <span onclick="removediv('+x+')" class="material-symbols-outlined deletequarter">close</span> </div> </div>';
+                    '<div class="col-md-12 col-lg-12 col-xl-6 removediv'+x+'"> <div class="form-group mb-0"> <label for="small-description">Quarter '+x+' Target</label> <input type="text" onkeypress="return onlyNumberKey(event)" value="" class="form-control target_value" placeholder="" name="newtarget[]"  onkeypress="return onlyNumberKey(event)"> <span  class="material-symbols-outlined remove_button deletequarter">close</span> </div> </div>';
 
                 $(wrapper).append(fieldHTML); //Add field html
             }else{
-                $('.target-error').html('Limit of Quarter Target is 10');
+                $('.target-error').html('Limit of Quarter Target is 4');
             }
         });
-    });
-    function removediv(id) {
-        $('.removediv'+id).remove();
+
+        $(wrapper).on('click', '.remove_button', function(e) {
+        e.preventDefault();
+        $(this).closest('.col-md-12').remove(); //Remove the closest parent div with class 'col-md-12'
+        x--;
         $('.target-error').html('');
-    }
+    });
+    });
+   //  function removediv(id) {
+   //      $('.removediv'+id).remove();
+   //      $('.target-error').html('');
+   //  }
     function checktarget()
     {
         var key_result_type = $('#key_result_type').val();
