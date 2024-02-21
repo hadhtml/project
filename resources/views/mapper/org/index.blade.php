@@ -126,17 +126,17 @@ $var_objective = "mapper-org";
       @foreach(DB::table('value_team')->where('org_id'  , $v->id)->get() as $key_value_stream_team => $v_t)
         @if($loop->first)
           #valuestreamteam{{ $v_t->id }}{
-            transform: translate(900px, -60px);
+            transform: translate(1200px, -60px);
           }
         @else
         #valuestreamteam{{ $v_t->id }}{
-          transform: translate(900px, {{ $key_value_stream_team*200 }}px);
+          transform: translate(1200px, {{ $key_value_stream_team*200 }}px);
         }
         @endif
         @endforeach
 
       #valuestream{{ $v->id }}{
-          transform: translate(550px, {{ $v->mapper_height  }}px);
+          transform: translate(900px, {{ $v->mapper_height  }}px);
         }
 
     @endforeach
@@ -146,11 +146,11 @@ $var_objective = "mapper-org";
 
     @if($loop->first)
       #buisnessunitteam{{ $b_t->id }}{
-        transform: translate(900px, 400px);
+        transform: translate(1200px, 400px);
       }
     @else
     #buisnessunitteam{{ $b_t->id }}{
-      transform: translate(900px, {{ $key_value_stream_team*200 }}px);
+      transform: translate(1200px, {{ $key_value_stream_team*200 }}px);
     }
     @endif
 
