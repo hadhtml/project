@@ -136,6 +136,13 @@ class MapperController extends Controller
             return view('mapper.stream.index',compact('data','valueteam','organization')); 
         }
 
-
+        if($type == 'org')
+        {
+            $organization = DB::table('organization')->where('slug'  , $url)->first();
+            $data = DB::table('organization')->where('slug'  , $url)->first();
+            $business_units = DB::table('business_units')->where('org_id'  , $data->id)->get();
+            Cmf::savemapperheight($organization->id , 'unit');
+            return view('mapper.org.index',compact('data','business_units','organization')); 
+        }
     }
 }

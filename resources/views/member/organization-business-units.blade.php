@@ -187,6 +187,7 @@ $var_objective = "Org-Unit";
                     <form class="needs-validation" action="{{url('update-business-unit')}}" method="POST">
                         @csrf
                         <input type="hidden" name="unit_id" value="{{$unit->id}}">
+                        <input type="hidden" name="org_id" value="{{ DB::table('organization')->where('user_id' ,Auth::id())->first()->id }}">
                         <div class="row">
                             <div class="col-md-12 col-lg-12 col-xl-12">
                                 <div class="form-group mb-0">
@@ -259,7 +260,7 @@ $var_objective = "Org-Unit";
             <div class="modal-body">
                 <form class="needs-validation" action="{{url('add-business-unit')}}"  method="POST">
                     @csrf
-                    <input type="hidden" name="org_unit_id" value="">
+                    <input type="hidden" name="org_unit_id" value="{{ DB::table('organization')->where('user_id' ,Auth::id())->first()->id }}">
                     <div class="row">
                         <div class="col-md-12 col-lg-12 col-xl-12">
                             <div class="form-group mb-0">
