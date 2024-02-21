@@ -86,7 +86,6 @@ Route::post('updatecomment-key', [App\Http\Controllers\OrganizationController::c
 Route::post('savereply-key', [App\Http\Controllers\OrganizationController::class,'savereplykey']);
 Route::post('frequency-update', [App\Http\Controllers\OrganizationController::class,'frequencyupdate']);
 
-
 Route::get('auth/google', [App\Http\Controllers\GoogleController::class, 'redirectToGoogle']);
 Route::get('auth/google/callback', [App\Http\Controllers\GoogleController::class, 'handleGoogleCallback']);
 
