@@ -21,7 +21,7 @@
         @php
         $keyqvalue = DB::table('key_quarter_value')
             ->where('key_chart_id', $KEYChart->id)
-            // ->orderby('id', 'DESC')
+            ->orderby('id', 'DESC')
             ->get();
          @endphp
 
