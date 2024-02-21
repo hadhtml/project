@@ -8,56 +8,115 @@ $var_objective = "mapper-org";
 <div class="row">
     <div class="col-md-12">
         <div style="width: 100%; height: 5000px; padding: 50px;">
+            
+        <!-- Node 1 -->
           <div id="node_1" class="node" style="transform: translate(-60px, -60px);;">
             <div class="node-name slot-active drag-impo-grab">
               <div class="slot-label drag-impo-grab"><span style="font-size:22px" class="material-symbols-outlined mr-2">auto_stories</span> {{ $data->organization_name }}</div>
             </div>
             @foreach(DB::table('objectives')->wherenull('trash')->where('unit_id' , $data->id)->where('type' , 'org')->get() as $o)
-                @include('mapper.org.objectives')
+            <div class="slot slot-inactive">
+                <span class="material-symbols-outlined f-18">location_searching</span>
+                <div class="slot-label" ><span class="label-text">{{ $o->objective_name }}</span></div>
+                <div class="badge-inprogress">{{round($o->obj_prog,0)}}%</div>
+            </div>
+            @foreach(DB::table('key_result')->wherenull('trash')->where('obj_id' , $o->id)->get() as $k)
+            <div class="slot-active">
+                <span class="material-symbols-outlined f-18 ml-2">key</span>
+                <div class="slot-label"><span class="label-text">{{ $k->key_name }}</span></div>
+                <div class="badge-todo mr-2">{{ $k->key_prog }}%</div>
+                <div id="buisness_unit_key_result_{{ $k->id }}" class="slot-anchor-small @if(DB::table('team_link_child')->where('bussiness_key_id' , $k->id)->count() > 0) slot-anchor-active @else slot-anchor-inactive @endif"></div>
+            </div>
+            @endforeach
             @endforeach
           </div>
-          @foreach($business_units as $b)
-              <div id="buisnessunit{{ $b->id }}" class="node">
-                <div class="node-name slot-active drag-impo-grab">
-                  <div class="slot-label drag-impo-grab"><span style="font-size:22px" class="material-symbols-outlined">domain</span> {{ $b->business_name }}</div>
-                </div>
-                @foreach(DB::table('objectives')->wherenull('trash')->where('unit_id' , $b->id)->where('type' , 'unit')->get() as $o)
-                  @include('mapper.org.objectives')
-                @endforeach
-              </div>
-              @foreach(DB::table('value_stream')->where('unit_id'  , $b->id)->orderby('id' , 'asc')->limit(4)->get() as $key_calue_stream => $v)
-              <div id="valuestream{{ $v->id }}" class="node">
-                <div class="node-name slot-active drag-impo-grab">
-                  <div class="slot-label drag-impo-grab"><span style="font-size:22px" class="material-symbols-outlined">layers</span> {{ $v->value_name }}</div>
-                </div>
-                @foreach(DB::table('objectives')->wherenull('trash')->where('unit_id' , $v->id)->where('type' , 'stream')->get() as $o)
-                  @include('mapper.org.objectives')
-                @endforeach
-              </div>
-                    @foreach(DB::table('value_team')->where('org_id'  , $v->id)->get() as $key_value_stream_team => $v_t)
-                    <div id="valuestreamteam{{ $v_t->id }}" class="node">
-                      <div class="node-name slot-active drag-impo-grab">
-                        <div class="slot-label drag-impo-grab"><span class="mr-2 d-flex badge-team-valuestream">VS <span style="font-size:22px" class="material-symbols-outlined ml-2">groups</span></span>  {{ $v_t->team_title }}</div>
-                      </div>
-                      @foreach(DB::table('objectives')->wherenull('trash')->where('unit_id' , $v_t->id)->where('type' , 'VS')->get() as $o)
-                      <div class="slot slot-inactive">
-                          <div id="connectedobjective{{ $o->id }}" class="slot-anchor-small slot-anchor-active drag-impo-grab"></div>
-                          <span class="material-symbols-outlined f-18">location_searching</span>
-                          <div class="slot-label" ><span class="label-text">{{ $o->objective_name }}</span></div>
-                          <div class="badge-inprogress">{{round($o->obj_prog,0)}}%</div>
-                      </div>
-                      @endforeach
-                    </div>
-                    @endforeach
-              @endforeach
+          <!-- Node 1 End -->
+          <!-- Node 2 -->
+          @foreach(DB::table('business_units')->where('mapper_height' , '!=' , 0)->where('org_id'  , $data->id)->orderby('id' , 'asc')->get() as $b)
+          <div id="buisnessunit{{ $b->id }}" class="node">
+            <div class="node-name slot-active drag-impo-grab">
+              <div class="slot-label drag-impo-grab"><span style="font-size:22px" class="material-symbols-outlined">domain</span> {{ $b->business_name }}</div>
+            </div>
+            @foreach(DB::table('objectives')->wherenull('trash')->where('unit_id' , $b->id)->where('type' , 'unit')->get() as $bo)
+            <div class="@if(DB::table('team_link_child')->where('linked_objective_id' , $bo->id)->count() > 0) slot-active @else slot-inactive @endif drag-impo-grab">
+              <div id="connectedobjective{{ $bo->id }}" class="slot-anchor-small slot-anchor-active drag-impo-grab"></div>
+              <span class="material-symbols-outlined f-18">location_searching</span>
+              <div class="slot-label drag-impo-grab"><span class="label-text">{{ $bo->objective_name }}</span></div>
+              <div class="badge-inprogress">{{round($bo->obj_prog,0)}}%</div>
+            </div>
+            @foreach(DB::table('key_result')->wherenull('trash')->where('obj_id' , $bo->id)->get() as $bok)
+            <div class="slot-active">
+                <span class="material-symbols-outlined f-18 ml-2">key</span>
+                <div class="slot-label"><span class="label-text">{{ $bok->key_name }}</span></div>
+                <div class="badge-todo mr-2">{{ $bok->key_prog }}%</div>
+                <div id="buisness_unit_key_result_{{ $bok->id }}" class="slot-anchor-small @if(DB::table('team_link_child')->where('bussiness_key_id' , $bok->id)->count() > 0) slot-anchor-active @else slot-anchor-inactive @endif"></div>
+            </div>
+            @endforeach
+            @endforeach
+          </div>
+
+          @foreach(DB::table('unit_team')->where('org_id'  , $b->id)->get() as $b_t)
+          <div id="buisnessunitteam{{ $b_t->id }}" class="node">
+            <div class="node-name slot-active drag-impo-grab">
+              <div class="slot-label drag-impo-grab"><span class="mr-2 d-flex badge-team-valuestream">BU <span style="font-size:22px" class="material-symbols-outlined ml-2">groups</span></span>  {{ $b_t->team_title }}</div>
+            </div>
+            @foreach(DB::table('objectives')->wherenull('trash')->where('unit_id' , $b_t->id)->where('type' , 'BU')->get() as $o)
+            <div class="slot slot-inactive">
+                <div id="connectedobjective{{ $o->id }}" class="slot-anchor-small slot-anchor-active drag-impo-grab"></div>
+                <span class="material-symbols-outlined f-18">location_searching</span>
+                <div class="slot-label" ><span class="label-text">{{ $o->objective_name }}</span></div>
+                <div class="badge-inprogress">{{round($o->obj_prog,0)}}%</div>
+            </div>
+            @endforeach
+          </div>
           @endforeach
+
+          @foreach(DB::table('value_stream')->where('unit_id'  , $b->id)->orderby('id' , 'asc')->limit(4)->get() as $key_calue_stream => $v)
+          <div id="valuestream{{ $v->id }}" class="node">
+            <div class="node-name slot-active drag-impo-grab">
+              <div class="slot-label drag-impo-grab"><span style="font-size:22px" class="material-symbols-outlined">layers</span> {{ $v->value_name }}</div>
+            </div>
+            @foreach(DB::table('objectives')->wherenull('trash')->where('unit_id' , $v->id)->where('type' , 'stream')->get() as $o)
+            <div class="@if(DB::table('team_link_child')->where('linked_objective_id' , $o->id)->count() > 0) slot-active @else slot-inactive @endif drag-impo-grab">
+              <div id="connectedobjective{{ $o->id }}" class="slot-anchor-small slot-anchor-active drag-impo-grab"></div>
+              <span class="material-symbols-outlined f-18">location_searching</span>
+              <div class="slot-label drag-impo-grab"><span class="label-text">{{ $o->objective_name }}</span></div>
+              <div class="badge-inprogress">{{round($o->obj_prog,0)}}%</div>
+            </div>
+            @foreach(DB::table('key_result')->wherenull('trash')->where('obj_id' , $o->id)->get() as $k)
+            <div class="slot-active">
+                <span class="material-symbols-outlined f-18 ml-2">key</span>
+                <div class="slot-label"><span class="label-text">{{ $k->key_name }}</span></div>
+                <div class="badge-todo mr-2">{{ $k->key_prog }}%</div>
+                <div id="buisness_unit_key_result_{{ $k->id }}" class="slot-anchor-small @if(DB::table('team_link_child')->where('bussiness_key_id' , $k->id)->count() > 0) slot-anchor-active @else slot-anchor-inactive @endif"></div>
+            </div>
+            @endforeach
+            @endforeach
+          </div>
+            @foreach(DB::table('value_team')->where('org_id'  , $v->id)->get() as $key_value_stream_team => $v_t)
+            <div id="valuestreamteam{{ $v_t->id }}" class="node">
+              <div class="node-name slot-active drag-impo-grab">
+                <div class="slot-label drag-impo-grab"><span class="mr-2 d-flex badge-team-valuestream">VS <span style="font-size:22px" class="material-symbols-outlined ml-2">groups</span></span>  {{ $v_t->team_title }}</div>
+              </div>
+              @foreach(DB::table('objectives')->wherenull('trash')->where('unit_id' , $v_t->id)->where('type' , 'VS')->get() as $o)
+              <div class="slot slot-inactive">
+                  <div id="connectedobjective{{ $o->id }}" class="slot-anchor-small slot-anchor-active drag-impo-grab"></div>
+                  <span class="material-symbols-outlined f-18">location_searching</span>
+                  <div class="slot-label" ><span class="label-text">{{ $o->objective_name }}</span></div>
+                  <div class="badge-inprogress">{{round($o->obj_prog,0)}}%</div>
+              </div>
+              @endforeach
+            </div>
+            @endforeach
+          @endforeach
+            @endforeach
         </div>
     </div>
 </div>
 
 
 <style type="text/css">
-  @foreach($business_units as $key_calue_stream => $b)
+  @foreach(DB::table('business_units')->where('mapper_height' , '!=' , 0)->where('org_id'  , $data->id)->orderby('id' , 'asc')->get() as $key_calue_stream => $b)
     #buisnessunit{{ $b->id }}{
       transform: translate(300px, {{ $b->mapper_height }}px);
     }
@@ -83,7 +142,7 @@ $var_objective = "mapper-org";
     @endforeach
 
 
-    @foreach(DB::table('unit_team')->where('org_id'  , $data->id)->get() as $b_t)
+    @foreach(DB::table('unit_team')->where('org_id'  , $b->id)->get() as $b_t)
 
     @if($loop->first)
       #buisnessunitteam{{ $b_t->id }}{
@@ -110,25 +169,18 @@ $var_objective = "mapper-org";
         window.addEventListener("load", function() {
   "use strict";
 
-  @php
-    $team_link_child_org =   DB::table('team_link_child')->where('user_id' , Auth::id())->where('bussiness_unit_id' , $data->id)->orwhere('from' , 'org')->where('from' , 'stream')->get();
-    $team_link_child_unit =   DB::table('team_link_child')->where('user_id' , Auth::id())->where('bussiness_unit_id' , $data->id)->orwhere('from' , 'org')->where('from' , 'unit')->get();
-    $onevar = DB::table('team_link_child')->where('user_id' , Auth::id())->where('bussiness_unit_id' , $data->id)->orwhere('from' , 'org')->orwhere('from' ,'stream')->where('from' , 'unit')->get();
-  @endphp
-
-
-  @foreach($team_link_child_org as $t_l_c)
+  @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->orwhere('from' , 'org')->where('from' , 'stream')->get() as $t_l_c)
    var slout_out_buisness_unit_key_result_{{ $t_l_c->bussiness_key_id }} = document.getElementById("buisness_unit_key_result_{{ $t_l_c->bussiness_key_id }}");
   @endforeach
 
-  @foreach($team_link_child_unit as $t_l_c)
+  @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->orwhere('from' , 'org')->where('from' , 'unit')->get() as $t_l_c)
    var slout_out_buisness_unit_key_result_{{ $t_l_c->bussiness_key_id }} = document.getElementById("buisness_unit_key_result_{{ $t_l_c->bussiness_key_id }}");
   @endforeach
 
-  @foreach($team_link_child_unit as $in_t_l_c)
+  @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->orwhere('from' , 'org')->where('from' , 'unit')->get() as $in_t_l_c)
    var connectedobjective{{ $in_t_l_c->linked_objective_id }} = document.getElementById("connectedobjective{{ $in_t_l_c->linked_objective_id }}");
   @endforeach
-  @foreach($team_link_child_org as $in_t_l_c)
+  @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->orwhere('from' , 'org')->where('from' , 'stream')->get() as $in_t_l_c)
    var connectedobjective{{ $in_t_l_c->linked_objective_id }} = document.getElementById("connectedobjective{{ $in_t_l_c->linked_objective_id }}");
   @endforeach
 
@@ -136,8 +188,8 @@ $var_objective = "mapper-org";
    var line{{ $linedeclarekeyforslot+1 }};
   @endforeach
 
-  @foreach($onevar as $linekeyforslot =>  $line_t_l_c)
-   line{{$linekeyforslot+1}} = new LeaderLine(connectedobjective{{ $line_t_l_c->linked_objective_id }}, buisness_unit_key_result_{{ $line_t_l_c->bussiness_key_id }}, {
+  @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->orwhere('from' , 'org')->orwhere('from' ,'stream')->where('from' , 'unit')->get() as $linekeyforslot =>  $line_t_l_c)
+   line{{$linekeyforslot+1}} = new LeaderLine(connectedobjective{{ $line_t_l_c->linked_objective_id }}, slout_out_buisness_unit_key_result_{{ $line_t_l_c->bussiness_key_id }}, {
     startPlug: "behind",
     endPlug: "behind",
     size: 4,
@@ -154,7 +206,7 @@ $var_objective = "mapper-org";
 
   new PlainDraggable(node_1, {
     onMove: function() {
-      @foreach($onevar as $draglinekey =>  $drag)
+      @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->orwhere('from' , 'org')->orwhere('from' ,'stream')->where('from' , 'unit')->get() as $draglinekey =>  $drag)
       line{{ $draglinekey+1 }}.position();
       @endforeach
     },
@@ -165,10 +217,24 @@ $var_objective = "mapper-org";
   });
 
 
-  @foreach($business_units as $key_calue_stream => $b)
+  @foreach(DB::table('business_units')->where('mapper_height' , '!=' , 0)->where('org_id'  , $data->id)->orderby('id' , 'asc')->get() as $key_calue_stream => $b)
+
+  @foreach(DB::table('unit_team')->where('org_id'  , $b->id)->get() as $b_t)
+    new PlainDraggable(buisnessunitteam{{ $b_t->id }}, {
+      onMove: function() {
+        @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->orwhere('from' ,'stream')->where('from' , 'unit')->get() as $draglinekey =>  $drag)
+        line{{ $draglinekey+1 }}.position();
+        @endforeach
+      },
+      // onMoveStart: function() { line.dash = {animation: true}; },
+      onDragEnd: function() {
+        line.dash = false;
+      }
+    });
+  @endforeach
     new PlainDraggable(buisnessunit{{ $b->id }}, {
       onMove: function() {
-        @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->where('bussiness_unit_id' , $data->id)->orwhere('from' ,'stream')->where('from' , 'unit')->get() as $draglinekey =>  $drag)
+        @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->orwhere('from' ,'stream')->where('from' , 'unit')->get() as $draglinekey =>  $drag)
         line{{ $draglinekey+1 }}.position();
         @endforeach
       },
@@ -180,7 +246,7 @@ $var_objective = "mapper-org";
     @foreach(DB::table('value_stream')->where('unit_id'  , $b->id)->get() as $v)
     new PlainDraggable(valuestream{{ $v->id }}, {
       onMove: function() {
-        @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->where('bussiness_unit_id' , $data->id)->orwhere('from' ,'stream')->where('from' , 'unit')->get() as $draglinekey =>  $drag)
+        @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->orwhere('from' ,'stream')->where('from' , 'unit')->get() as $draglinekey =>  $drag)
         line{{ $draglinekey+1 }}.position();
         @endforeach
       },
@@ -194,7 +260,7 @@ $var_objective = "mapper-org";
 
          new PlainDraggable(valuestreamteam{{ $v_t->id }}, {
             onMove: function() {
-              @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->where('bussiness_unit_id' , $data->id)->orwhere('from' ,'stream')->get() as $draglinekey =>  $drag)
+              @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->orwhere('from' ,'stream')->get() as $draglinekey =>  $drag)
               line{{ $draglinekey+1 }}.position();
               @endforeach
             },
