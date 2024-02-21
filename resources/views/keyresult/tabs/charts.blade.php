@@ -77,10 +77,7 @@
 
     var ctxLine_1 = document.getElementById('lineChart2').getContext(
         '2d');
-    if (window.lineChart !== undefined) 
-    {
-    window.lineChart.destroy(); 
-    }
+ 
      
      var extraLineData = "{{$KEYChart->quarter_value}}";
      var extraLineDataS = [0,extraLineData];
