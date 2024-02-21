@@ -22477,13 +22477,13 @@ line-height: normal;
 }
 
 
-.circle-container {
+.circle-container-inp {
       position: relative;
       width: 10px; /* Adjust the size as needed */
       height: 10px; /* Adjust the size as needed */
     }
 
-    .circle-container::before {
+    .circle-container-inp::before {
       content: '';
       position: absolute;
       top: 0;
@@ -22494,6 +22494,8 @@ line-height: normal;
       border-radius: 50%;
       box-sizing: border-box;
     }
+
+    
 .check-in-card .check-in-content{
     padding:10px 0px;
     border-bottom: 1px solid #EAEAEA;
