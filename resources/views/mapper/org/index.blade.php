@@ -25,7 +25,7 @@ $var_objective = "mapper-org";
                 <span class="material-symbols-outlined f-18 ml-2">key</span>
                 <div class="slot-label"><span class="label-text">{{ $k->key_name }}</span></div>
                 <div class="badge-todo mr-2">{{ $k->key_prog }}%</div>
-                <div id="buisness_unit_key_result_{{ $k->id }}" class="slot-anchor-small @if(DB::table('team_link_child')->where('bussiness_key_id' , $k->id)->count() > 0) slot-anchor-active @else slot-anchor-inactive @endif"></div>
+                <div id="buisness_unit_key_result_{{ $k->id }}" class="slot-anchor-small @if(DB::table('team_link_child')->where('bussiness_key_id' , $k->id)->where('from' , 'org')->count() > 0) slot-anchor-active @else slot-anchor-inactive @endif"></div>
             </div>
             @endforeach
             @endforeach
@@ -38,7 +38,7 @@ $var_objective = "mapper-org";
               <div class="slot-label drag-impo-grab"><span style="font-size:22px" class="material-symbols-outlined">domain</span> {{ $b->business_name }}</div>
             </div>
             @foreach(DB::table('objectives')->wherenull('trash')->where('unit_id' , $b->id)->where('type' , 'unit')->get() as $bo)
-            <div class="@if(DB::table('team_link_child')->where('linked_objective_id' , $bo->id)->count() > 0) slot-active @else slot-inactive @endif drag-impo-grab">
+            <div class="@if(DB::table('team_link_child')->where('to' , 'unit')->where('linked_objective_id' , $bo->id)->count() > 0) slot-active @else slot-inactive @endif drag-impo-grab">
               <div id="connectedobjective{{ $bo->id }}" class="slot-anchor-small slot-anchor-active drag-impo-grab"></div>
               <span class="material-symbols-outlined f-18">location_searching</span>
               <div class="slot-label drag-impo-grab"><span class="label-text">{{ $bo->objective_name }}</span></div>
@@ -49,7 +49,7 @@ $var_objective = "mapper-org";
                 <span class="material-symbols-outlined f-18 ml-2">key</span>
                 <div class="slot-label"><span class="label-text">{{ $bok->key_name }}</span></div>
                 <div class="badge-todo mr-2">{{ $bok->key_prog }}%</div>
-                <div id="buisness_unit_key_result_{{ $bok->id }}" class="slot-anchor-small @if(DB::table('team_link_child')->where('bussiness_key_id' , $bok->id)->count() > 0) slot-anchor-active @else slot-anchor-inactive @endif"></div>
+                <div id="buisness_unit_key_result_{{ $bok->id }}" class="slot-anchor-small @if(DB::table('team_link_child')->where('from' , 'unit')->where('bussiness_key_id' , $bok->id)->count() > 0) slot-anchor-active @else slot-anchor-inactive @endif"></div>
             </div>
             @endforeach
             @endforeach
