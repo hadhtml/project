@@ -15,14 +15,102 @@ use App\Models\orderstatus;
 use App\Models\activities;
 use App\Models\team_link_child;
 use App\Models\modulenames;
-
 use App\Models\Member_order;
+use App\Models\business_units;
 use Mail;
 use Illuminate\Support\Facades\Http;
-
 use OneSignal;
 class Cmf
 { 
+
+    public static function savemapperheight($id , $type)
+    {
+        
+        if($type == 'unit')
+        {
+            $sum = 0;
+            $business_units = business_units::where('org_id' , $id)->orderby('id' , 'asc')->get();
+            foreach ($business_units as $key => $value) {
+                $objectives = DB::table('objectives')->wherenull('trash')->where('unit_id' , $value->id)->where('type' , 'unit')->count();
+                $keyresults = DB::table('key_result')->wherenull('trash')->where('unit_id' , $value->id)->where('type' , 'unit')->count();
+                if($objectives+$keyresults == 0)
+                {
+                    $updatebuisnessunit = business_units::find($value->id);
+                    $updatebuisnessunit->mapper_height = 0;
+                    $updatebuisnessunit->save();
+                }else{
+                    $total  = ($objectives+$keyresults+1)*50;
+                    if ($key === 0) {
+                        $sum = $total;
+                    } else {
+                        $sum += $total;
+                    }
+                    if($key+1 === 1)
+                    {
+                        $updatebuisnessunit = business_units::find($value->id);
+                        $updatebuisnessunit->mapper_height = -60;
+                        $updatebuisnessunit->save(); 
+                    }elseif($key+1 === 2){
+                        $updatebuisnessunit = business_units::find($value->id);
+                        $updatebuisnessunit->mapper_height = $sum-100;
+                        $updatebuisnessunit->save();
+                    }else{
+                        $updatebuisnessunit = business_units::find($value->id);
+                        if($total == 50)
+                        {
+                            $updatebuisnessunit->mapper_height = 0;
+                        }else{
+                            $updatebuisnessunit->mapper_height = $sum;
+                        }
+                        $updatebuisnessunit->save();
+                    }
+                }
+                
+            }
+        }
+        if($type == 'stream')
+        {
+            $sum = 0;
+            $business_units = business_units::where('org_id' , $id)->orderby('id' , 'asc')->get();
+            foreach ($business_units as $key => $value) {
+                $objectives = DB::table('objectives')->wherenull('trash')->where('unit_id' , $value->id)->where('type' , 'unit')->count();
+                $keyresults = DB::table('key_result')->wherenull('trash')->where('unit_id' , $value->id)->where('type' , 'unit')->count();
+                if($objectives+$keyresults == 0)
+                {
+                    $updatebuisnessunit = business_units::find($value->id);
+                    $updatebuisnessunit->mapper_height = 0;
+                    $updatebuisnessunit->save();
+                }else{
+                    $total  = ($objectives+$keyresults+1)*50;
+                    if ($key === 0) {
+                        $sum = $total;
+                    } else {
+                        $sum += $total;
+                    }
+                    if($key+1 === 1)
+                    {
+                        $updatebuisnessunit = business_units::find($value->id);
+                        $updatebuisnessunit->mapper_height = -60;
+                        $updatebuisnessunit->save(); 
+                    }elseif($key+1 === 2){
+                        $updatebuisnessunit = business_units::find($value->id);
+                        $updatebuisnessunit->mapper_height = $sum-100;
+                        $updatebuisnessunit->save();
+                    }else{
+                        $updatebuisnessunit = business_units::find($value->id);
+                        if($total == 50)
+                        {
+                            $updatebuisnessunit->mapper_height = 0;
+                        }else{
+                            $updatebuisnessunit->mapper_height = $sum;
+                        }
+                        $updatebuisnessunit->save();
+                    }
+                }
+                
+            }
+        }
+    }
     public static function getmodulename($level)
     {
         if($level == 'level_one')

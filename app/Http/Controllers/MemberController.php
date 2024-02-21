@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Helpers\Cmf;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Organization;
@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Member;
+use App\Models\business_units;
 use DB;
 use Carbon\Carbon;
 use Mail;
@@ -277,54 +278,34 @@ class MemberController extends Controller
     
     }
     
-       public function MultipleDeleteOrganizationMember(Request $request)
+    public function MultipleDeleteOrganizationMember(Request $request)
     {
-
-     $Member  = OrganizationContacts::whereIn('id',$request->selectedOptions)->delete();
-        
-    
+        $Member  = OrganizationContacts::whereIn('id',$request->selectedOptions)->delete();
     }
     
-     public function SaveBusinessUnits(Request $request)
+    public function SaveBusinessUnits(Request $request)
     {
-
-     
-        DB::table('business_units')
-        ->insert([
-            'business_name' => $request->unit_name,
-            'lead_id' => $request->lead_manager,
-            'detail' => $request->unit_detail,
-            'slug' => Str::slug($request->unit_name.'-'.rand(10, 99)),
-            'user_id' => Auth::id(),
-            
-            ]);
-      
-       
+        $addbuisnessunit = new business_units();
+        $addbuisnessunit->business_name = $request->unit_name;
+        $addbuisnessunit->lead_id = $request->lead_manager;
+        $addbuisnessunit->org_id = $request->org_unit_id;
+        $addbuisnessunit->detail = $request->detail;
+        $addbuisnessunit->user_id = Auth::id();
+        $addbuisnessunit->slug = Str::slug($request->unit_name.'-'.rand(10, 99));
+        $addbuisnessunit->save();    
         return redirect()->back()->with('message', 'Business Units Added Successfully');
-
     }
-    
-       public function UpdateBusinessUnits(Request $request)
-    {
-
-     
-        DB::table('business_units')
-        ->where('id',$request->unit_id)
-        ->update([
-            'business_name' => $request->unit_name,
-            'lead_id' => $request->lead_manager,
-            'detail' => $request->detail,
-            'slug' => Str::slug($request->unit_name.'-'.rand(10, 99)),
-            
-            ]);
-      
-       
+    public function UpdateBusinessUnits(Request $request)
+    { 
+        $updatebuisnessunit = business_units::find($request->unit_id);
+        $updatebuisnessunit->business_name = $request->unit_name;
+        $updatebuisnessunit->lead_id = $request->lead_manager;
+        $updatebuisnessunit->org_id = $request->org_id;
+        $updatebuisnessunit->detail = $request->detail;
+        $updatebuisnessunit->slug = Str::slug($request->unit_name.'-'.rand(10, 99));
+        $updatebuisnessunit->save(); 
         return redirect()->back()->with('message', 'Business Units Updated Successfully');
-
-    }
-    
-    
-    
+    }    
     public function SaveBusinessTeam(Request $request)
     {
 

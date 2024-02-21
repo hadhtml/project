@@ -47,7 +47,7 @@ $organization = DB::table('organization')->where('user_id',Auth::id())->where('t
             </a>
         </li> --}}
         <li class="mb-1">
-            <a href="javascript::void(0)" class="d-flex flex-row align-items-center">
+            <a href="{{ url('dashboard/mapper') }}/{{ $organization->slug }}/org" class="d-flex flex-row align-items-center">
                 <div class="mr-2">
                      <span style="font-size:22px" class="material-symbols-outlined">link</span>
                 </div>
