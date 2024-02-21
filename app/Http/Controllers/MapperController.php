@@ -140,7 +140,7 @@ class MapperController extends Controller
         {
             $organization = DB::table('organization')->where('slug'  , $url)->first();
             $data = DB::table('organization')->where('slug'  , $url)->first();
-            $business_units = DB::table('business_units')->where('org_id'  , $data->id)->get();
+            $business_units = DB::table('business_units')->where('mapper_height' , '!=' , 0)->where('org_id'  , $data->id)->orderby('id' , 'asc')->get();
             Cmf::savemapperheight($organization->id , 'unit');
             return view('mapper.org.index',compact('data','business_units','organization')); 
         }
