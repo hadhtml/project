@@ -3,7 +3,6 @@
         min-width: 480px;
     }
 
-
     .select2-results__option {
         padding-right: 20px;
         vertical-align: middle;
@@ -111,14 +110,13 @@
             $keyqvalue = '';
             $keyqfirst = DB::table('key_quarter_value')
                 ->where('key_chart_id', $KEYChart->id)
-                // ->orderby('id', 'DESC')
+                ->orderby('id', 'DESC')
                 ->first();
             if ($keyqfirst) {
                 $keyqvalue = $keyqfirst->value;
             }
         @endphp
     @endif
-
 
     <div class="row">
         <div class="col-md-12 col-lg-12 col-xl-12">
@@ -183,7 +181,6 @@
                         @endif
                     </div>
                     <div class="displayflex">
-
 
                         <span onclick="uploadattachment()" class="btn btn-default btn-sm">New Check-In</span>
                     </div>
@@ -304,7 +301,6 @@
                         </form>
                     </div>
 
-
                 </div>
 
             </div>
@@ -312,20 +308,21 @@
         </div>
 
 
-
-        <div id="success-check-in"></div>
+        
 
         <div class="row uploadattachment">
+
             <div class="col-md-12">
+
                 <div class="card comment-card storyaddcard">
                     <div class="card-body">
+                        <div id="success-check-in"></div>
                         <form class="needs-validation savekeychartnewform"
                             action="{{ url('add-new-quarter-value') }}" method="POST">
                             @csrf
                             <input type="hidden" value="{{ $key->id }}" name="id">
                             <input type="hidden" value="{{ $KEYChart->id }}" name="key_chart_id">
                             <input type="hidden" value="{{ $report->id }}" name="sprint_id">
-
 
 
                             <div class="row">
@@ -354,13 +351,12 @@
                                                 class="text-danger">*</small></label>
                                     </div>
                                     <select required id="js-select1" multiple="multiple" name="participant[]">
-                                        <option value="">Select Assignee</option>
+                                    
                                         @foreach (DB::table('members')->where('org_user', Auth::id())->get() as $r)
                                             <option value="{{ $r->id }}">{{ $r->name }}
                                                 {{ $r->last_name }}</option>
                                         @endforeach
                                     </select>
-
 
                                 </div>
 
@@ -398,12 +394,10 @@
         </div>
     @endif
 
-
     <div class="row">
         
         <div class="col-md-12">
             @if ($KEYChart)
-
 
                 @php
                     $keyqvalue = DB::table('key_quarter_value')
@@ -420,14 +414,7 @@
                         $remainingIds = array_slice($dataArray, 2);
                         $remainingCount = count($remainingIds);
 
-                        $value = [];
-                        if (count($keyqvalue) <= 1) {
-                            $value[] = ['Label1', 'Label2'];
-                        } else {
-                            foreach ($keyqvalue as $chart) {
-                                $value[] = $chart->value;
-                            }
-                        }
+                   
 
                         $commentscount = DB::table('flag_comments')
                             ->where('flag_id', $val->id)
@@ -439,10 +426,8 @@
 
 
 
-
         </div>
     </div>
-
 
     <div class="card check-in-card">
         <div class="card-body">
@@ -501,7 +486,7 @@
                 <div>
                     <div class="dropdown d-flex">
 
-                        <span class="mt-1"> {{ \Carbon\Carbon::parse($val->created_at)->diffForHumans() }}</span>
+                        <span class="mt-1"> {{ $val->created_at}}</span>
                         <button class="btn btn-circle dropdown-toggle btn-tolbar bg-transparent"
                             id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">
@@ -524,14 +509,12 @@
 
 
 
-
     <div class="uploadattachment{{ $val->id }} displaynone">
         <div class="card comment-card storyaddcard">
             <div class="card-body">
                 <form class="needs-validation updatekeychart{{ $val->id }}"
                     action="{{ url('update-new-quarter-value') }}" method="POST" novalidate>
                     @csrf
-
 
                     <input type="hidden" value="{{ $val->id }}" name="flag_id">
                     <input type="hidden" value="{{ $key->id }}" name="id">
@@ -573,7 +556,6 @@
                                         {{ $r->last_name }}</option>
                                 @endforeach
                             </select>
-
 
                         </div>
 
@@ -617,13 +599,11 @@
 
 
 
-
-    <div class="mr-auto p-2">comments
+    <div class="mr-auto p-2 displaynone show-comment{{ $val->id }}">comments
 
         <div class="p-2 btn btn-default btn-sm ml-40" onclick="writecomment({{ $val->id }})">Add Comments</div>
 
     </div>
-
 
 
 
@@ -945,7 +925,6 @@
         </script>
     @endforeach
 
-
     <script type="text/javascript">
         $("#textarea").keypress(function(e) {
             if (e.which === 13 && !e.shiftKey) {
@@ -1008,7 +987,6 @@
                     </div> --}}
 @endif
 
-
 <div class="row margintopfourtypixel">
     <div class="col-md-12 text-right">
         {{-- <button class="btn btn-primary"
@@ -1041,7 +1019,6 @@
     </div>
 </div>
 @endif
-
 
 
 
@@ -1100,7 +1077,6 @@
             processData: false,
             success: function(data) {
 
-
                 $('#success-check-in').html(
                     '<div class="alert alert-success" role="alert"> Check-in Value Added Successfully</div>'
                 );
@@ -1151,12 +1127,10 @@
     }
     // $(function() {
 
-
     //  $('.key-chart').multiselect({
     //    includeSelectAllOption:true,
     //    numberDisplayed: 0
     //  });
-
 
     // });
 
@@ -1165,7 +1139,8 @@
         placeholder: "Select Assignee",
         // allowHtml: true,
         allowClear: true,
-        tags: true // создает новые опции на лету
+        tags: false // создает новые опции на лету
+        
     });
 
     function toggleDay(element) {
@@ -1180,7 +1155,6 @@
         });
         document.getElementById('checkedDays').value = JSON.stringify(checkedDays);
     }
-
 
     $('.savefrequencyform').on('submit', (function(e) {
         e.preventDefault();
@@ -1234,3 +1208,5 @@
         $('.show-comment' + id).slideToggle();
     }
 </script>
+
+
