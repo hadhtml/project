@@ -1783,6 +1783,12 @@ button:focus {
 
 .label-text {
     padding: 0 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 .slot-button {
     padding: 4px 4px 4px 6px;
