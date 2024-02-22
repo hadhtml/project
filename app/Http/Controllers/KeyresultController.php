@@ -358,6 +358,7 @@ class KeyresultController extends Controller
         $add->bussiness_key_id = $request->bussiness_key_id;
         $add->from = $request->type;
         $add->to = $request->to;
+        $add->user_id = Auth::id();
         $add->save();
         $linking = team_link_child::where('bussiness_key_id' , $request->bussiness_key_id)->orderby('created_at' , 'desc')->get();
         $data = key_result::find($request->bussiness_key_id);

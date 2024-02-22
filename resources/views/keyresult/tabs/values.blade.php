@@ -147,16 +147,6 @@
         <div class="row">
             <div class="col-md-12 col-lg-12 col-xl-12">
                 <div class="d-flex flex-row align-items-center justify-content-between block-header">
-                    <div class="d-flex flex-row align-items-center">
-                        <div class="mr-2">
-                            <span class="material-symbols-outlined">
-                                checklist
-                            </span>
-                        </div>
-                        <div>
-                            <h4 style="font-size: 12px">Check-in</h4>
-                        </div>
-                    </div>
                     <div class="displayflex">
                         @if ($KEYChart->cust_type == 'Custom')
                             <span class="mt-2" style="font-size: 13px">Frequency: {{ $KEYChart->repeatdays }} On
@@ -403,43 +393,36 @@
         
         <div class="col-md-12">
             @if ($KEYChart)
-
-
+            @php
+                $keyqvalue = DB::table('key_quarter_value')
+                    ->where('key_chart_id', $KEYChart->id)
+                    // ->orderby('id', 'DESC')
+                    ->get();
+            @endphp
+            @foreach ($keyqvalue as $val)
                 @php
-                    $keyqvalue = DB::table('key_quarter_value')
-                        ->where('key_chart_id', $KEYChart->id)
-                        // ->orderby('id', 'DESC')
-                        ->get();
-                @endphp
+                    $dataArray = explode(',', $val->participant);
+                    $dataCount = count($dataArray);
+                    $firstTwoIds = array_slice($dataArray, 0, 2);
+                    $remainingIds = array_slice($dataArray, 2);
+                    $remainingCount = count($remainingIds);
 
-                @foreach ($keyqvalue as $val)
-                    @php
-                        $dataArray = explode(',', $val->participant);
-                        $dataCount = count($dataArray);
-                        $firstTwoIds = array_slice($dataArray, 0, 2);
-                        $remainingIds = array_slice($dataArray, 2);
-                        $remainingCount = count($remainingIds);
-
-                        $value = [];
-                        if (count($keyqvalue) <= 1) {
-                            $value[] = ['Label1', 'Label2'];
-                        } else {
-                            foreach ($keyqvalue as $chart) {
-                                $value[] = $chart->value;
-                            }
+                    $value = [];
+                    if (count($keyqvalue) <= 1) {
+                        $value[] = ['Label1', 'Label2'];
+                    } else {
+                        foreach ($keyqvalue as $chart) {
+                            $value[] = $chart->value;
                         }
+                    }
 
-                        $commentscount = DB::table('flag_comments')
-                            ->where('flag_id', $val->id)
-                            ->where('type', 'comment')
-                            ->where('comment_type', 'key')
-                            ->count();
+                    $commentscount = DB::table('flag_comments')
+                        ->where('flag_id', $val->id)
+                        ->where('type', 'comment')
+                        ->where('comment_type', 'key')
+                        ->count();
 
-                    @endphp
-
-
-
-
+                @endphp
         </div>
     </div>
 
@@ -447,11 +430,11 @@
     <div class="card check-in-card">
         <div class="card-body">
             <div class="d-flex flex-row align-items-center justify-content-between check-in-header">
-                <div class="d-flex flex-row align-items-center">
-                    <div class="lable">
-                        <small> <span></span>{{ $val->status }}</small>
+                <div class="d-flex flex-row align-items-center value">
+                    <div class="lable ">
+                        <small class="staus d-flex align-items-center"><div class="circle-container-inp mr-1"></div> {{ $val->status }}</small>
                     </div>
-                    <div class="d-flex flex-row align-items-center value ml-3">
+                    <div class="d-flex flex-row align-items-center  ml-3">
                         <div><small>Value: </small></div>
                         <h4 class="mt-2 ml-1">{{ $val->value }}</h4>
                     </div>
@@ -493,15 +476,15 @@
             <div class="check-in-content">
                 <p>{{ $val->summary }}</p>
             </div>
-            <div class="d-flex flex-row justify-content-between mt-1">
+            <div class="d-flex flex-row justify-content-between mt-2">
                 <div class="d-flex flex-row">
                     <button class="btn btn-default btn-sm" onclick="showcomment({{ $val->id }})">Comments
                         ({{ $commentscount }})</button>
                 </div>
                 <div>
-                    <div class="dropdown d-flex">
+                    <div class="dropdown d-flex align-items-center">
 
-                        <span class="mt-1"> {{ \Carbon\Carbon::parse($val->created_at)->diffForHumans() }}</span>
+                        <small class="mt-1"> {{ \Carbon\Carbon::parse($val->created_at)->diffForHumans() }}</small>
                         <button class="btn btn-circle dropdown-toggle btn-tolbar bg-transparent"
                             id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">
@@ -614,19 +597,14 @@
         }));
     </script>
 
-
-
-
-
-    <div class="mr-auto p-2">comments
-
-        <div class="p-2 btn btn-default btn-sm ml-40" onclick="writecomment({{ $val->id }})">Add Comments</div>
-
+    <div class="mr-auto d-flex justify-content-between align-items-center">
+        <div>
+            Comments
+        </div>
+        <div>
+            <div class="btn btn-default btn-sm" onclick="writecomment({{ $val->id }})">Add Comments</div>
+        </div>
     </div>
-
-
-
-
 
     <div class="col-md-12 col-lg-12 col-xl-12 displaynone writecomment{{ $val->id }}">
         <div class="d-flex flex-column">
