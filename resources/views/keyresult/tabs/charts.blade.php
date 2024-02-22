@@ -39,9 +39,10 @@
             $Qvalue[] = $allQ->quarter_value;
             $Qname[] = 'Q'.$allQ->IndexCount;
             }
+             array_unshift($Qvalue, 0);
             }else
             {
-                $Qvalue = [];
+            $Qvalue = [];
             $Qname = [];
             }
 
