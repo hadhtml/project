@@ -19,17 +19,39 @@
         </div>
         @if ($KEYChart)
         @php
+             
+        $value = [];
         $keyqvalue = DB::table('key_quarter_value')
             ->where('key_chart_id', $KEYChart->id)
-            ->orderby('id', 'DESC')
+            // ->orderby('id', 'DESC')
             ->get();
-         @endphp
 
-       @foreach($keyqvalue as $val)
+            $Qvalue = [];
+            $Qname = [];
+            $KEYChartQ1 = DB::table('key_chart')
+            ->where('key_id', $key->id)
+            ->whereIn('IndexCount', [1, 2, 3, 4])
+            ->get();
+            if(count($KEYChartQ1) > 0)
+            {
+            foreach ($KEYChartQ1 as $allQ) 
+            {
+            $Qvalue[] = $allQ->quarter_value;
+            $Qname[] = 'Q'.$allQ->IndexCount;
+            }
+            }else
+            {
+                $Qvalue = [];
+            $Qname = [];
+            }
+
+         @endphp
+         
+       
+       @if(count($keyqvalue) > 0)
 
        @php
         
-        $value = [];
         if(count($keyqvalue) <= 1 )
         {
         $value[] = ['Label1','Label2'];
@@ -46,8 +68,10 @@
                         
 
        @endphp
-       @endforeach
        @endif
+    
+
+
        
         
      
@@ -77,77 +101,56 @@
 <script>
 
 
-    var ctxLine_1 = document.getElementById('lineChart2').getContext(
-        '2d');
- 
+var dataset1 = @json($Qvalue);
+var dataset2 = @json($value);
+
+var labels = @json($Qname);
+
+for (var i = labels.length; i < dataset2.length; i++) {
+    // labels.push("Data Point " + (i + 1));
+}
+
+var data = {
+    labels: labels.concat(new Array(dataset2.length - labels.length).fill("")),
+    datasets: [{
+        label: 'Quarter Target',
+        data: dataset1,
+        borderColor: 'rgb(255, 99, 132)',
+        fill: false,
+        borderColor: 'gray', 
+        borderWidth: 1.5,
+        borderDash: [5, 5],
+        pointStyle: 'circle',
+        pointRadius: 5,
+        pointHoverRadius: 5,
+        backgroundColor:'blue',
      
-     var extraLineData = "{{$KEYChart->quarter_value}}";
-     var extraLineDataS = [0,extraLineData];
-
-  
- 
-   
+    }, {
+        label: 'Check-in Value',
+        data: dataset2,
+        borderColor: 'gray',
+        fill: false,
        
-      
+    }]
+};
 
-       var lineChart_1 = new Chart(ctxLine_1, {
-        type: 'line', 
-        data: {
-            labels:@json($value),
-            datasets: [{
-                    label: 'Actual Line',
-                    data:@json($value),
-                    borderColor: 'gray',
-                    fill: false,
-                    backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(255, 159, 64, 0.2)',
-                    'rgba(255, 205, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(201, 203, 207, 0.2)'
-                    ],
-                 
-                    borderWidth: 2,
-                },
-                {
-                label: 'Quarter (Target) Line',
-                data:extraLineDataS,
-                borderColor: 'gray', 
-                borderWidth: 1.5,
-                fill: false,
-                borderDash: [5, 5],
-                                                          
-                },
 
-      
-             
-              
-            ]
-        },
-        
-        options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    x: {
-                        beginAtZero: true,
-                        display: false,
-                        
-                    },
-                    y: {
-                        beginAtZero: true,
-                        stepSize: 150,
-                        
-                    },
-                },
-          
+var ctx = document.getElementById('lineChart2').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: data,
+    options: {
+        scales: {
+            x: {
+            beginAtZero: true,
+                      
+            },
+            y: {
+                beginAtZero: true
             }
-    });
-    
-
-    
+        }
+    }
+});
   
 </script>
             </div>
@@ -241,3 +244,4 @@
     
   
 </script>
+@endif

@@ -110,7 +110,7 @@
             $keyqvalue = '';
             $keyqfirst = DB::table('key_quarter_value')
                 ->where('key_chart_id', $KEYChart->id)
-                ->orderby('id', 'DESC')
+                ->orderby('id','DESC')
                 ->first();
             if ($keyqfirst) {
                 $keyqvalue = $keyqfirst->value;
@@ -199,22 +199,22 @@
                             <div class="row">
                                 <div class="col-md-6">
 
-                                    <input type="text" value="{{ (new DateTime())->format('l, M d') }}"
+                                    <input type="text"  value="{{ (new DateTime())->format('l, M d') }}"
                                         class="form-control datepickername" id="datepicker" name="custrepeatdatepicker">
                                 </div>
 
                                 <div class="col-md-6">
                                     <select class="form-control" onchange="getcust(this.value)" name="custrepeat"
                                         id="datepickerselect" required>
-                                        <option value="Does not repeat">Does not repeat</option>
-                                        <option value="Daily">Daily</option>
-                                        <option value="Weekly">Weekly on {{ (new DateTime())->format('l') }}</option>
-                                        <option value="Custom">Custom...</option>
+                                        <option @if ($KEYChart->cust_type == 'Does not repeat') selected @endif value="Does not repeat">Does not repeat</option>
+                                        <option @if ($KEYChart->cust_type == 'Daily') selected @endif  value="Daily">Daily</option>
+                                        <option @if ($KEYChart->cust_type == 'Weekly') selected @endif value="Weekly">Weekly on {{ (new DateTime())->format('l') }}</option>
+                                        <option @if ($KEYChart->cust_type == 'Custom') selected @endif value="Custom" >Custom...</option>
                                     </select>
                                 </div>
                             </div>
-                            <input type="hidden" id="cust-day" name="cust_day">
-                            <input type="hidden" id="cust-date" name="cust_date">
+                            <input type="hidden" id="cust-day" @if($KEYChart->cust_type != 'Custom') value="{{$KEYChart->daysInput}}" @endif name="cust_day">
+                            <input type="hidden" id="cust-date" @if($KEYChart->cust_type != 'Custom') value="{{$KEYChart->days}}" @endif name="cust_date">
 
                             <div class="d-flex flex-column mt-2">
                                 <div class="mb-4 Custom"
@@ -402,7 +402,7 @@
                 @php
                     $keyqvalue = DB::table('key_quarter_value')
                         ->where('key_chart_id', $KEYChart->id)
-                        // ->orderby('id', 'DESC')
+                        ->orderby('id', 'DESC')
                         ->get();
                 @endphp
 
