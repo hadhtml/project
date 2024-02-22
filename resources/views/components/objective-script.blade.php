@@ -1288,7 +1288,7 @@
         // var key = $('#edit_id_initiative_key').val();
         // var init = $('#edit_id_initiative').val();
         // $('#init_weight' + init).val(sliderValue);
-
+        
         $.ajax({
             type: "GET",
             url: "{{ url('check-init-weight-edit-first') }}",
@@ -1302,14 +1302,18 @@
 
             },
             success: function(res) {
-
-
+             
                 if (res.key > 100) {
                         var setvalue  = parseInt(res.key)-100;
                         $('#wieght-error').html('<div class="row"> <div class="col-md-12"><small class="text-danger ml-2">Combined weight Percentage not be greater than 100%. You Can Set Weight Value of This Key Result is <b>'+setvalue+'</b></small></div></div>');
+                    
                     } else {
+                        
+                        $('#weight' + key).html('Adjust Key Weight to 100 (' + res.key + ')');
                         $('#wieght-error').html('');
                     }
+
+                   
 
 
 

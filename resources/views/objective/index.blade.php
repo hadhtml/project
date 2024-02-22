@@ -407,7 +407,7 @@ $Currentsprint = DB::table('sprint')->where('user_id',Auth::id())->where('value_
                                           @endif
                                           @if($initiativeweightcount < 100)
                                           <div class=" text-danger" role="">
-                                             <small>Adjust Key Weight to 100  ({{$initiativeweightcount}})</small>
+                                             <small id="weight{{$key->id}}">Adjust Key Weight to 100  ({{$initiativeweightcount}})</small>
                                           </div>
                                           @endif
                                           @endif

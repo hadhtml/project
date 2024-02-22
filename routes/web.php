@@ -85,7 +85,6 @@ Route::post('deletecomment-key', [App\Http\Controllers\OrganizationController::c
 Route::post('updatecomment-key', [App\Http\Controllers\OrganizationController::class,'updatecommentkey']);
 Route::post('savereply-key', [App\Http\Controllers\OrganizationController::class,'savereplykey']);
 
-
 Route::get('auth/google', [App\Http\Controllers\GoogleController::class, 'redirectToGoogle']);
 Route::get('auth/google/callback', [App\Http\Controllers\GoogleController::class, 'handleGoogleCallback']);
 

@@ -503,7 +503,7 @@ class MemberController extends Controller
     
     public function GetBacklogKey(Request $request)
     {
-    $objective = DB::table('key_result')->where('obj_id',$request->id)->get();
+    $objective = DB::table('key_result')->where('key_name','!=',NULL)->where('obj_id',$request->id)->get();
     return $objective;
     }
     
