@@ -15,6 +15,9 @@
                     <li id="activites"@if($data->objective_name)  onclick="showtabobjective({{$data->id}} , 'activites')" @else data-toggle="tooltip" title="" data-original-title="Please Fill General Details" @endif class="tabsclass">
                        <span class="material-symbols-outlined">browse_activity</span> Activities
                     </li>
+                    <li id="okrmapper"@if($data->objective_name)  onclick="showtabobjective({{$data->id}} , 'okrmapper')" @else data-toggle="tooltip" title="" data-original-title="Please Fill General Details" @endif class="tabsclass">
+                       <span class="material-symbols-outlined">link</span> OKR Mapper
+                    </li>
                 </ul>
                 <h4>Action</h4>
                 <ul class="positionrelative">

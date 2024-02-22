@@ -683,10 +683,26 @@ $var_objective = 'TBaclog-' . $type;
             editbacklogepic("{{ $_GET['epicbacklog'] }}");
         @endif
         $("#edit-backlog-epic-modal-new").on('hidden.bs.modal', function(){
+            deletenullobject('team_backlog');
            var new_url="{{ url()->current() }}";
            window.history.pushState("data","Title",new_url);
         });
     });
+    function deletenullobject(type) {
+    $.ajax({
+        type: "POST",
+        url: "{{ url('deletenullobject') }}",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+            type: type,
+        },
+        success: function(res) {
+            
+        }
+    });
+}
    $(document).ready(function() {
       $('#editorbacklog').summernote({
         height: 180,

@@ -104,6 +104,11 @@ Route::get('get-obj-key-weight', [App\Http\Controllers\ObjectiveController::clas
 Route::post('save-objective-key', [App\Http\Controllers\ObjectiveController::class, 'SaveKeyObjective']);
 Route::post('update-objective-key', [App\Http\Controllers\ObjectiveController::class, 'UpdateKeyObjective']);
 Route::post('Delete-objective-key', [App\Http\Controllers\ObjectiveController::class, 'DeleteKeyObjective']);
+Route::post('deletenullobject', [App\Http\Controllers\ObjectiveController::class, 'deletenullobject']);
+
+
+
+
 
 Route::post('save-key-initiative', [App\Http\Controllers\ObjectiveController::class, 'SaveKeyinitiative']);
 Route::post('Delete-key-initiative', [App\Http\Controllers\ObjectiveController::class, 'DeleteKeyInitiative']);

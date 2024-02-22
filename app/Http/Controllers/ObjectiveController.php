@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Organization;
 use App\Models\epics_stroy;
+use App\Models\team_link_child;
 use App\Models\Epic;
 use App\Models\flags;
 use App\Models\activities;
@@ -24,6 +25,31 @@ class ObjectiveController extends Controller
     public function __construct()
     {
         $this->middleware("auth");
+    }
+    public function deletenullobject(Request $request)
+    {
+        if($request->type == 'objectives')
+        {
+            DB::table('objectives')->wherenull('objective_name')->delete();
+        }
+        if($request->type == 'key_result')
+        {
+            DB::table('key_result')->wherenull('key_name')->delete();
+        }
+        if($request->type == 'flags')
+        {
+            DB::table('flags')->wherenull('flag_title')->delete();
+        }
+        if($request->type == 'epics')
+        {
+            DB::table('epics')->wherenull('epic_name')->delete();
+        }
+        if($request->type == 'team_backlog')
+        {
+            DB::table('team_backlog')->wherenull('epic_title')->delete();
+        }
+        
+        
     }
     public function getobjective(Request $request)
     {
@@ -125,6 +151,13 @@ class ObjectiveController extends Controller
             $activity = activities::where('value_id' , $request->id)->where('type' , 'objective')->orderby('id' , 'desc')->get();
             $data = objectives::find($request->id);
             $html = view('objective.modal.tabs.activities', compact('activity','data'))->render();
+            return $html;
+        }
+        if($request->tab == 'okrmapper')
+        {
+            $linking = team_link_child::where('linked_objective_id' , $request->id)->orderby('created_at' , 'desc')->get();
+            $data = objectives::find($request->id);
+            $html = view('objective.modal.tabs.okrmapper', compact('data','linking'))->render();
             return $html;
         }
     }
