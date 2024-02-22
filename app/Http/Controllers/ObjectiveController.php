@@ -618,7 +618,7 @@ DB::table("objectives")
                 ->where("slug", $request->slug)
                 ->first();
             $objective = DB::table("objectives")
-                ->where("org_id", $request->org_id)
+           
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "unit")
@@ -631,7 +631,7 @@ DB::table("objectives")
                 ->where("slug", $request->slug)
                 ->first();
             $objective = DB::table("objectives")
-                ->where("org_id", $request->org_id)
+               
                 ->where("unit_id", $request->unit_id)
                 ->where("trash", null)
                 ->where("type", "stream")
