@@ -24,7 +24,6 @@
                         <form id="okrmapperform" action="{{ url('dashboard/keyresult/okrmapperform') }}" method="POST">
                             @csrf
                             <input type="hidden" value="{{ $data->type }}" name="to">
-                            <input type="hidden" value="{{ $data->type }}" name="type">
                             <input type="hidden" required  value="{{ $data->id }}" name="objectiveid">
                             <div class="row mb-5">
                                 <div class="col-md-12 col-lg-12 col-xl-12" id="epicinputtoshow">
@@ -74,80 +73,37 @@
                     <div class="col-md-10">
                         <div class="row">
                             <div class="col-md-12">
-                                @if($r->to == 'BU')
+                                @if($r->from == 'org')
                                     @php
+                                        $keyresult = DB::table('key_result')->where('id' , $r->bussiness_key_id)->first();
                                         $objective = DB::table('objectives')->where('id' , $r->linked_objective_id)->first();
-                                        $businessteam = DB::table('unit_team')->where('id' , $objective->unit_id)->first();
-                                        $business_units = DB::table('business_units')->where('id' , $businessteam->org_id)->first();
+                                        $organization = DB::table('organization')->where('id' , $objective->unit_id)->first();
                                     @endphp
                                     <div class="epic">
                                         <div class="epic-tittle">
-                                            <img class="mr-1" src="{{ url('public/assets/svg/objectives/two.svg') }}"> {{ $objective->objective_name }}
+                                            <img class="mr-1" src="{{ url('public/assets/svg/objectives/two.svg') }}"> {{ $keyresult->key_name }}
+                                        </div>
+                                        <div class="epic-detail okrmappersearchdetail mt-2">
+                                            <span style="font-size:22px" class="material-symbols-outlined mr-2">auto_stories</span>
+                                            <span>{{ $organization->organization_name }}</span>
+                                        </div>
+                                    </div>
+                                @endif
+                                @if($r->from == 'unit')
+                                    @php
+                                        $keyresult = DB::table('key_result')->where('id' , $r->bussiness_key_id)->first();
+                                        $objective = DB::table('objectives')->where('id' , $r->linked_objective_id)->first();
+                                        $organization = DB::table('business_units')->where('id' , $objective->unit_id)->first();
+                                    @endphp
+                                    <div class="epic">
+                                        <div class="epic-tittle">
+                                            <img class="mr-1" src="{{ url('public/assets/svg/objectives/two.svg') }}"> {{ $keyresult->key_name }}
                                         </div>
                                         <div class="epic-detail okrmappersearchdetail mt-2">
                                             <span style="font-size:22px" class="material-symbols-outlined mr-2">domain</span>
-                                            <span>{{ $business_units->business_name }}</span>
-                                            <span style="font-size:22px" class="material-symbols-outlined mr-2 ml-2">groups</span>
-                                            <span>{{ $businessteam->team_title }}</span>
+                                            <span>{{ $organization->business_name }}</span>
                                         </div>
                                     </div>
-                                @endif
-                                @if($r->to == 'orgT')
-                                @php
-                                    $objective = DB::table('objectives')->where('id' , $r->linked_objective_id)->first();
-                                    $org_team = DB::table('org_team')->where('id' , $objective->unit_id)->first();
-                                    $organization = DB::table('organization')->where('id' , $org_team->org_id)->first();
-                                @endphp
-                                <div class="epic">
-                                    <div class="epic-tittle"><img class="mr-1" src="{{ url('public/assets/svg/objectives/two.svg') }}"> {{ $objective->objective_name }}</div>
-                                    <div class="epic-detail okrmappersearchdetail mt-2">
-                                        <span style="font-size:22px" class="material-symbols-outlined mr-2">auto_stories</span>
-                                        <span>{{ $organization->organization_name }}</span>
-                                        <span style="font-size:22px" class="material-symbols-outlined mr-2 ml-2">groups</span>
-                                        <span>{{ $org_team->team_title }}</span>
-                                    </div>
-                                </div>
-                                @endif
-                                @if($r->to == 'unit')
-                                @php
-                                    $data = DB::table('key_result')->where('id' , $r->bussiness_key_id)->first();
-                                @endphp
-                                <div class="epic">
-                                    <div class="epic-tittle"><img class="mr-1" src="{{ url('public/assets/svg/objectives/two.svg') }}"> {{ $data->key_name }}</div>
-                                    <div class="epic-detail okrmappersearchdetail mt-2">
-                                        <span style="font-size:22px" class="material-symbols-outlined mr-2">domain</span>
-                                        <span></span>
-                                    </div>
-                                </div>
-                                @endif
-                                @if($r->to == 'stream')
-                                @php
-                                    $objective = DB::table('objectives')->where('id' , $r->linked_objective_id)->first();
-                                    $valuestream = DB::table('value_stream')->where('id' , $objective->unit_id)->first();
-                                @endphp
-                                <div class="epic">
-                                    <div class="epic-tittle"><img class="mr-1" src="{{ url('public/assets/svg/objectives/two.svg') }}"> {{ $objective->objective_name }}</div>
-                                    <div class="epic-detail okrmappersearchdetail mt-2">
-                                        <span style="font-size:22px" class="material-symbols-outlined mr-2">layers</span>
-                                        <span>{{ $valuestream->value_name }}</span>
-                                    </div>
-                                </div>
-                                @endif
-                                @if($r->to == 'VS')
-                                @php
-                                    $objective = DB::table('objectives')->where('id' , $r->linked_objective_id)->first();
-                                    $valueteam = DB::table('value_team')->where('id' , $objective->unit_id)->first();
-                                    $valuestream = DB::table('value_stream')->where('id' , $valueteam->org_id)->first();
-                                @endphp
-                                <div class="epic">
-                                    <div class="epic-tittle"><img class="mr-1" src="{{ url('public/assets/svg/objectives/two.svg') }}"> {{ $objective->objective_name }}</div>
-                                    <div class="epic-detail okrmappersearchdetail mt-2">
-                                        <span style="font-size:22px" class="material-symbols-outlined mr-2">layers</span>
-                                        <span>{{ $valuestream->value_name }}</span>
-                                        <span style="font-size:22px" class="material-symbols-outlined mr-2 ml-2">groups</span>
-                                        <span>{{ $valueteam->team_title }}</span>
-                                    </div>
-                                </div>
                                 @endif
                             </div>
                         </div>

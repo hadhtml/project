@@ -420,15 +420,6 @@ class KeyresultController extends Controller
 
     public function selectkeyreslt(Request $request)
     {
-
-        // $add->linked_objective_id = $request->objectiveid;
-        // $add->bussiness_unit_id = $request->bussiness_unit_id;
-        // $add->bussiness_obj_id = $request->bussiness_obj_id;
-        // $add->bussiness_key_id = $request->bussiness_key_id;
-        // $add->from = $request->type;
-        // $add->to = $request->to;
-
-
         $data = DB::table('key_result')->where('id' , $request->id)->first();
         if($data->type == 'org')
         {
@@ -438,9 +429,9 @@ class KeyresultController extends Controller
                     <a onclick="removeobjective()" href="javascript:void(0)"><img class="closeimage" src="'.url('public/assets/svg/cross.svg').'"></a>
                 </div>
                 <input type="hidden" value="'.$data->id.'" name="bussiness_key_id">
+                <input type="hidden" value="'.$data->type.'" name="type">
                 <input type="hidden" value="'.$data->unit_id.'" name="bussiness_unit_id">
                 <input type="hidden" value="'.$data->obj_id.'" name="bussiness_obj_id">
-                
                 <div class="epic-detail okrmappersearchdetail">
                     <span style="font-size:22px" class="material-symbols-outlined mr-2">auto_stories</span>
                     <span>'.DB::table('organization')->where('id' , $data->unit_id)->first()->organization_name.'</span>
