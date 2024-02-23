@@ -403,6 +403,53 @@ class KeyresultController extends Controller
         return $html;
     }
 
+
+    public function searchkeyresult(Request $request)
+    {
+        if($request->type == 'unit')
+        {
+            $keyresult = DB::table('key_result')->where('user_id' , Auth::id())->wherenull('trash')->where('type' , 'org')->where('key_name', 'LIKE', "%$request->id%")->get();
+        }
+        if($request->type == 'stream')
+        {
+            $objectives = DB::table('objectives')->where('user_id' , Auth::id())->wherenull('trash')->where('type' , '!=' , 'stream')->where('type' , '!=' , 'org')->where('type' , '!=' , 'unit')->where('objective_name', 'LIKE', "%$request->id%")->get();
+        }
+        $html = view('keyresult.keresultappend', compact('keyresult'))->render();
+        return $html;
+    }
+
+    public function selectkeyreslt(Request $request)
+    {
+
+        // $add->linked_objective_id = $request->objectiveid;
+        // $add->bussiness_unit_id = $request->bussiness_unit_id;
+        // $add->bussiness_obj_id = $request->bussiness_obj_id;
+        // $add->bussiness_key_id = $request->bussiness_key_id;
+        // $add->from = $request->type;
+        // $add->to = $request->to;
+
+
+        $data = DB::table('key_result')->where('id' , $request->id)->first();
+        if($data->type == 'org')
+        {
+            echo '<div class="epic">
+                <div class="d-flex">
+                    <div class="epic-tittle">'.$data->key_name.'</div>
+                    <a onclick="removeobjective()" href="javascript:void(0)"><img class="closeimage" src="'.url('public/assets/svg/cross.svg').'"></a>
+                </div>
+                <input type="hidden" value="'.$data->id.'" name="bussiness_key_id">
+                <input type="hidden" value="'.$data->unit_id.'" name="bussiness_unit_id">
+                <input type="hidden" value="'.$data->obj_id.'" name="bussiness_obj_id">
+                
+                <div class="epic-detail okrmappersearchdetail">
+                    <span style="font-size:22px" class="material-symbols-outlined mr-2">auto_stories</span>
+                    <span>'.DB::table('organization')->where('id' , $data->unit_id)->first()->organization_name.'</span>
+                </div>
+            </div>';
+        }
+
+    }
+
     public function selectobjective(Request $request)
     {
         $data = DB::table('objectives')->where('id' , $request->id)->first();

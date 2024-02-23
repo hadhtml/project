@@ -387,7 +387,8 @@ Route::name('keyresult.')->namespace('App\Http\Controllers')->prefix('dashboard/
     Route::POST('searchobjectives', 'KeyresultController@searchobjectives');
     Route::POST('selectobjective', 'KeyresultController@selectobjective');
 
-
+    Route::POST('selectkeyreslt', 'KeyresultController@selectkeyreslt');
+    Route::POST('searchkeyresult', 'KeyresultController@searchkeyresult');
 });
 
 
