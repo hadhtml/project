@@ -434,3 +434,5 @@ Route::post('update-password', [App\Http\Controllers\OrganizationController::cla
 Route::post('update-profile', [App\Http\Controllers\OrganizationController::class,'UpdateProfile']);
 
 Route::post('change-init-pos', [App\Http\Controllers\ObjectiveController::class,'UpdatePosInit']);
+
+Route::post('frequency-update', [App\Http\Controllers\OrganizationController::class,'frequencyupdate']);
