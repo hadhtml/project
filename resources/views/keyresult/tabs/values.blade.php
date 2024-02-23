@@ -486,7 +486,7 @@
                 <div>
                     <div class="dropdown d-flex">
 
-                        <span class="mt-1"> {{ $val->created_at}}</span>
+                        <span class="mt-1">{{ \Carbon\Carbon::parse($val->created_at)->format('d M Y, h:i A')}}</span>
                         <button class="btn btn-circle dropdown-toggle btn-tolbar bg-transparent"
                             id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">
@@ -782,6 +782,7 @@
                                 success: function(data) {
                                     $('#savereplybutton{{ $r->id }}').html('Save');
                                     $('.secondportion').html(data);
+                                    $('.show-comment{{ $val->id }}').slideToggle();
                                 }
                             });
                         }));
@@ -896,6 +897,7 @@
                         success: function(data) {
                             $('#updatecommentbutton{{ $p->id }}').html('Save');
                             $('.secondportion').html(data);
+                            $('.show-comment{{ $val->id }}').slideToggle();
 
                         }
                     });
@@ -918,6 +920,7 @@
                     success: function(data) {
                         $('#updatecommentbutton{{ $r->id }}').html('Save');
                         $('.secondportion').html(data);
+                        $('.show-comment{{ $val->id }}').slideToggle();
 
                     }
                 });
@@ -948,6 +951,7 @@
                 success: function(data) {
                     $('#savecommentbutton{{ $val->id }}').html('Save');
                     $('.secondportion').html(data);
+                    $('.show-comment{{ $val->id }}').slideToggle();
 
                 }
             });
@@ -1106,7 +1110,8 @@
             },
             success: function(data) {
                 $('#commentdeletekey' + id).remove();
-                $('.secondportion').html(data);
+                // $('.secondportion').html(data);
+           
             },
             error: function(error) {
                 console.log('Error updating card position:', error);
