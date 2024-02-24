@@ -13,6 +13,7 @@ use App\Models\flags;
 use App\Models\flag_comments;
 use App\Models\escalate_cards;
 use App\Models\key_result;
+use App\Models\objectives;
 use App\Models\key_chart;
 use App\Models\team_link_child;
 use App\Models\flow_chart_scripts;
@@ -365,6 +366,23 @@ class KeyresultController extends Controller
         $html = view('keyresult.tabs.okrmapper', compact('data','linking'))->render();
         return $html;
     }
+    public function okrmapperlowerform(Request $request)
+    {
+        $add = new team_link_child();
+        $add->linked_objective_id = $request->objectiveid;
+        $add->bussiness_unit_id = $request->bussiness_unit_id;
+        $add->bussiness_obj_id = $request->bussiness_obj_id;
+        $add->bussiness_key_id = $request->bussiness_key_id;
+        $add->from = $request->type;
+        $add->to = $request->to;
+        $add->user_id = Auth::id();
+        $add->save();
+
+        $linking = team_link_child::where('linked_objective_id' , $request->objectiveid)->orderby('created_at' , 'desc')->get();
+        $data = objectives::find($request->objectiveid);
+        $html = view('objective.modal.tabs.okrmapper', compact('data','linking'))->render();
+        return $html;
+    }
     public function checkkeyresultlink(Request $request)
     {
         $check = team_link_child::where('team_id' , $request->team_id)->where('team_obj_id' , $request->team_obj_id)->where('bussiness_unit_id' , $request->bussiness_unit_id)->where('bussiness_obj_id' , $request->bussiness_obj_id)->where('bussiness_key_id' , $request->bussiness_key_id)->count();
@@ -406,15 +424,28 @@ class KeyresultController extends Controller
 
     public function searchkeyresult(Request $request)
     {
+        $data = objectives::find($request->obj_id);
         if($request->type == 'unit')
         {
             $keyresult = DB::table('key_result')->where('user_id' , Auth::id())->wherenull('trash')->where('type' , 'org')->where('key_name', 'LIKE', "%$request->id%")->get();
         }
+        if($request->type == 'orgT')
+        {
+            $keyresult = DB::table('key_result')->where('user_id' , Auth::id())->wherenull('trash')->where('type' , 'org')->where('key_name', 'LIKE', "%$request->id%")->get();
+        }
+        if($request->type == 'BU')
+        {
+            $keyresult = DB::table('key_result')->where('user_id' , Auth::id())->wherenull('trash')->where('type' , 'org')->orwhere('type' , 'unit')->where('key_name', 'LIKE', "%$request->id%")->get();
+        }
+        if($request->type == 'VS')
+        {
+            $keyresult = DB::table('key_result')->where('user_id' , Auth::id())->wherenull('trash')->where('type' , 'org')->orwhere('type' , 'unit')->orwhere('type' , 'stream')->where('key_name', 'LIKE', "%$request->id%")->get();
+        }
         if($request->type == 'stream')
         {
-            $objectives = DB::table('objectives')->where('user_id' , Auth::id())->wherenull('trash')->where('type' , '!=' , 'stream')->where('type' , '!=' , 'org')->where('type' , '!=' , 'unit')->where('objective_name', 'LIKE', "%$request->id%")->get();
+            $keyresult = DB::table('key_result')->where('user_id' , Auth::id())->wherenull('trash')->where('type' , 'org')->orwhere('type' , 'unit')->where('key_name', 'LIKE', "%$request->id%")->get();
         }
-        $html = view('keyresult.keresultappend', compact('keyresult'))->render();
+        $html = view('keyresult.keresultappend', compact('keyresult','data'))->render();
         return $html;
     }
 
@@ -425,8 +456,8 @@ class KeyresultController extends Controller
         {
             echo '<div class="epic">
                 <div class="d-flex">
-                    <div class="epic-tittle">'.$data->key_name.'</div>
-                    <a onclick="removeobjective()" href="javascript:void(0)"><img class="closeimage" src="'.url('public/assets/svg/cross.svg').'"></a>
+                    <div class="epic-tittle d-flex"><span style="font-size:22px" class="material-symbols-outlined mr-2">key</span> <span>'.$data->key_name.'</span></div>
+                    <a onclick="removekeyresult()" href="javascript:void(0)"><img class="closeimage" src="'.url('public/assets/svg/cross.svg').'"></a>
                 </div>
                 <input type="hidden" value="'.$data->id.'" name="bussiness_key_id">
                 <input type="hidden" value="'.$data->type.'" name="type">
@@ -435,6 +466,41 @@ class KeyresultController extends Controller
                 <div class="epic-detail okrmappersearchdetail">
                     <span style="font-size:22px" class="material-symbols-outlined mr-2">auto_stories</span>
                     <span>'.DB::table('organization')->where('id' , $data->unit_id)->first()->organization_name.'</span>
+                </div>
+            </div>';
+        }
+        if($data->type == 'unit')
+        {
+            echo '<div class="epic">
+                <div class="d-flex">
+                    <div class="epic-tittle d-flex"><span style="font-size:22px" class="material-symbols-outlined mr-2">key</span> <span>'.$data->key_name.'</span></div>
+                    <a onclick="removekeyresult()" href="javascript:void(0)"><img class="closeimage" src="'.url('public/assets/svg/cross.svg').'"></a>
+                </div>
+                <input type="hidden" value="'.$data->id.'" name="bussiness_key_id">
+                <input type="hidden" value="'.$data->type.'" name="type">
+                <input type="hidden" value="'.$data->unit_id.'" name="bussiness_unit_id">
+                <input type="hidden" value="'.$data->obj_id.'" name="bussiness_obj_id">
+                <div class="epic-detail okrmappersearchdetail">
+                    <span style="font-size:22px" class="material-symbols-outlined mr-2">auto_stories</span>
+                    <span>'.DB::table('business_units')->where('id' , $data->unit_id)->first()->business_name.'</span>
+                </div>
+            </div>';
+        }
+        if($data->type == 'stream')
+        {
+            $valuestream = DB::table('value_stream')->where('id' , $data->unit_id)->first();
+            echo '<div class="epic">
+                <div class="d-flex">
+                    <div class="epic-tittle d-flex"><span style="font-size:22px" class="material-symbols-outlined mr-2">key</span> <span>'.$data->key_name.'</span></div>
+                    <a onclick="removekeyresult()" href="javascript:void(0)"><img class="closeimage" src="'.url('public/assets/svg/cross.svg').'"></a>
+                </div>
+                <input type="hidden" value="'.$data->id.'" name="bussiness_key_id">
+                <input type="hidden" value="'.$data->type.'" name="type">
+                <input type="hidden" value="'.$data->unit_id.'" name="bussiness_unit_id">
+                <input type="hidden" value="'.$data->obj_id.'" name="bussiness_obj_id">
+                <div class="epic-detail okrmappersearchdetail">
+                    <span style="font-size:22px" class="material-symbols-outlined mr-2">auto_stories</span>
+                    <span>'.$valuestream->value_name.'</span>
                 </div>
             </div>';
         }

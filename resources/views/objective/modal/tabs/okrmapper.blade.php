@@ -21,7 +21,7 @@
             <div class="d-flex flex-column">
                 <div class="card comment-card storyaddcard">
                     <div class="card-body">
-                        <form id="okrmapperform" action="{{ url('dashboard/keyresult/okrmapperform') }}" method="POST">
+                        <form id="okrmapperform" action="{{ url('dashboard/keyresult/okrmapperlowerform') }}" method="POST">
                             @csrf
                             <input type="hidden" value="{{ $data->type }}" name="to">
                             <input type="hidden" required  value="{{ $data->id }}" name="objectiveid">
@@ -80,9 +80,7 @@
                                         $organization = DB::table('organization')->where('id' , $objective->unit_id)->first();
                                     @endphp
                                     <div class="epic">
-                                        <div class="epic-tittle">
-                                            <img class="mr-1" src="{{ url('public/assets/svg/objectives/two.svg') }}"> {{ $keyresult->key_name }}
-                                        </div>
+                                        <div class="epic-tittle d-flex"><span style="font-size:22px" class="material-symbols-outlined mr-2">key</span> <span>{{ $keyresult->key_name }}</span></div>
                                         <div class="epic-detail okrmappersearchdetail mt-2">
                                             <span style="font-size:22px" class="material-symbols-outlined mr-2">auto_stories</span>
                                             <span>{{ $organization->organization_name }}</span>
@@ -93,15 +91,30 @@
                                     @php
                                         $keyresult = DB::table('key_result')->where('id' , $r->bussiness_key_id)->first();
                                         $objective = DB::table('objectives')->where('id' , $r->linked_objective_id)->first();
-                                        $organization = DB::table('business_units')->where('id' , $objective->unit_id)->first();
+                                        $business_unit = DB::table('business_units')->where('id' , $objective->unit_id)->first();
                                     @endphp
                                     <div class="epic">
-                                        <div class="epic-tittle">
-                                            <img class="mr-1" src="{{ url('public/assets/svg/objectives/two.svg') }}"> {{ $keyresult->key_name }}
-                                        </div>
+                                        <div class="epic-tittle d-flex"><span style="font-size:22px" class="material-symbols-outlined mr-2">key</span> <span>{{ $keyresult->key_name }}</span></div>
                                         <div class="epic-detail okrmappersearchdetail mt-2">
                                             <span style="font-size:22px" class="material-symbols-outlined mr-2">domain</span>
-                                            <span>{{ $organization->business_name }}</span>
+                                            <span>{{ $business_unit->business_name }}</span>
+                                        </div>
+                                    </div>
+                                @endif
+                                @if($r->from == 'stream')
+                                    @php
+                                        $keyresult = DB::table('key_result')->where('id' , $r->bussiness_key_id)->first();
+                                        $objective = DB::table('objectives')->where('id' , $r->linked_objective_id)->first();
+                                        $value_stream = DB::table('value_stream')->where('id' , $objective->unit_id)->first();
+                                        $business_unit = DB::table('business_units')->where('id' , $value_stream->unit_id)->first();
+                                    @endphp
+                                    <div class="epic">
+                                        <div class="epic-tittle d-flex"><span style="font-size:22px" class="material-symbols-outlined mr-2">key</span> <span>{{ $keyresult->key_name }}</span></div>
+                                        <div class="epic-detail okrmappersearchdetail mt-2">
+                                            <span style="font-size:22px" class="material-symbols-outlined mr-2">domain</span>
+                                            <span>{{ $business_unit->business_name }}</span>
+                                            <span style="font-size:22px" class="material-symbols-outlined mr-2">layers</span>
+                                            <span>{{ $value_stream->value_name }}</span>
                                         </div>
                                     </div>
                                 @endif
@@ -130,8 +143,8 @@
     </div>
 </div>
 <script type="text/javascript">
-    function removeobjective(id) {
-         $('#objectiveid').val('');
+    function removekeyresult() {
+        $('#objectiveid').val('');
         $('.selectepic').hide();
         $('.selectepic').html('');
         $('#searchobjective').val('');
@@ -139,6 +152,7 @@
     }
     function searchkeyresult(id) {
         var type = '{{ $data->type }}';
+        var obj_id = '{{ $data->id }}';
         $.ajax({
             type: "POST",
             url: "{{ url('dashboard/keyresult/searchkeyresult') }}",
@@ -147,7 +161,8 @@
             },
             data: {
                 id:id,
-                type:type
+                type:type,
+                obj_id:obj_id
             },
             success: function(res) {
                 if(id == '')
