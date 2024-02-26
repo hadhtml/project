@@ -405,12 +405,17 @@ $Currentsprint = DB::table('sprint')->where('user_id',Auth::id())->where('value_
                                              <small>Adjust Key Weight to 100 ({{$initiativeweightcount}})</small>
                                           </div>
                                           @endif
-                                          @if($initiativeweightcount < 100)
-                                          <div class=" text-danger" role="">
-                                             <small id="weight{{$key->id}}">Adjust Key Weight to 100  ({{$initiativeweightcount}})</small>
+                                          @endif
+                                         
+                                          <div class=" text-danger" id="weight{{$key->id}}" role="">
+                                             @if($initiativeweightcount > 0)
+                                             @if($initiativeweightcount < 100)
+                                             <small>Adjust Key Weight to 100  ({{$initiativeweightcount}})</small>
+                                             @endif
+                                             @endif
                                           </div>
-                                          @endif
-                                          @endif
+                                          
+                                         
                                           @php
                                           $keyedit = preg_replace('/[^\p{L}\p{N}\s]/u', '',$key->key_detail);
                                           $trimmedStringkey = trim($keyedit);
