@@ -7,6 +7,7 @@ $var_objective = "mapper-org";
 <style type="text/css">
    .body-inner-content{
       overflow: auto;
+      width: 5000px;
       transform: rotateX(180deg);
    }
    .rotatex{
@@ -63,7 +64,7 @@ $var_objective = "mapper-org";
             </div>
             @foreach(DB::table('objectives')->wherenull('trash')->where('unit_id' , $b->id)->where('type' , 'unit')->get() as $o)
             <div class="@if(DB::table('team_link_child')->where('linked_objective_id' , $o->id)->count() > 0) slot-active @else slot-inactive @endif drag-impo-grab">
-               <div id="connectedobjective{{ $o->id }}" class="slot-anchor-small slot-anchor-active drag-impo-grab"></div>
+               <div id="connectedobjective{{ $o->id }}" class="slot-anchor-small @if(DB::table('team_link_child')->where('linked_objective_id' , $o->id)->count() > 0) slot-anchor-active @else slot-anchor-inactive @endif drag-impo-grab"></div>
                <span class="material-symbols-outlined f-18">location_searching</span>
                <div class="slot-label drag-impo-grab"><span class="label-text">{{ $o->objective_name }}</span></div>
                <div class="badge-inprogress">{{round($o->obj_prog,0)}}%</div>
@@ -184,23 +185,24 @@ $var_objective = "mapper-org";
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/leader-line@1.0.5/leader-line.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/plain-draggable@2.5.12/plain-draggable.min.js"></script>
 <script type="text/javascript">
+
    window.addEventListener("load", function() {
    "use strict";
    
-   @foreach(DB::table('team_link_child')->groupby('bussiness_key_id')->where('bussiness_unit_id' , $data->id)->orwhere('from' , 'org')->orwhere('from' , 'unit')->orwhere('from' , 'stream')->get() as $t_l_c)
+   @foreach(DB::table('team_link_child')->groupby('bussiness_key_id')->where('bussiness_unit_id' , $data->id)->where('user_id' , Auth::id())->get() as $t_l_c)
    var slout_out_buisness_unit_key_result_{{ $t_l_c->bussiness_key_id }} = document.getElementById("buisness_unit_key_result_{{ $t_l_c->bussiness_key_id }}");
    @endforeach
    
    
-   @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->orwhere('from' , 'org')->orwhere('from' , 'unit')->orwhere('from' , 'stream')->get() as $in_t_l_c)
+   @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->where('user_id' , Auth::id())->get() as $in_t_l_c)
    var connectedobjective{{ $in_t_l_c->linked_objective_id }} = document.getElementById("connectedobjective{{ $in_t_l_c->linked_objective_id }}");
    @endforeach
    
-   @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->orwhere('from' , 'org')->orwhere('from' , 'unit')->orwhere('from' , 'stream')->get() as $linedeclarekeyforslot =>  $line_t_l_c)
+   @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->where('user_id' , Auth::id())->get() as $linedeclarekeyforslot =>  $line_t_l_c)
    var line{{ $linedeclarekeyforslot+1 }};
    @endforeach
    
-   @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->orwhere('from' , 'org')->orwhere('from' , 'unit')->orwhere('from' , 'stream')->get() as $linekeyforslot =>  $line_t_l_c)
+   @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->where('user_id' , Auth::id())->get() as $linekeyforslot =>  $line_t_l_c)
    line{{$linekeyforslot+1}} = new LeaderLine(connectedobjective{{ $line_t_l_c->linked_objective_id }}, slout_out_buisness_unit_key_result_{{ $line_t_l_c->bussiness_key_id }}, {
    startPlug: "behind",
    endPlug: "behind",
