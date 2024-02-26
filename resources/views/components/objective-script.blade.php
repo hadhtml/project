@@ -842,7 +842,15 @@
     }
     function editobjective(event , id , slug) {
         event.stopPropagation();
+        @if($organization->type == 'org')
         var new_url=""+main_url()+"/dashboard/organization/"+slug+"/portfolio/org?objective="+id;
+        @endif
+        @if($organization->type == 'unit')
+        var new_url=""+main_url()+"/dashboard/organization/"+slug+"/portfolio/unit?objective="+id;
+        @endif
+        @if($organization->type == 'stream')
+        var new_url=""+main_url()+"/dashboard/organization/"+slug+"/portfolio/stream?objective="+id;
+        @endif
         window.history.pushState("data","Title",new_url);
         $.ajax({
             type: "POST",

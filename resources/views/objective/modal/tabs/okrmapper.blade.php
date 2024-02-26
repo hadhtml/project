@@ -76,46 +76,25 @@
                                 @if($r->from == 'org')
                                     @php
                                         $keyresult = DB::table('key_result')->where('id' , $r->bussiness_key_id)->first();
-                                        $objective = DB::table('objectives')->where('id' , $r->linked_objective_id)->first();
-                                        $organization = DB::table('organization')->where('id' , $objective->unit_id)->first();
                                     @endphp
                                     <div class="epic">
                                         <div class="epic-tittle d-flex"><span style="font-size:22px" class="material-symbols-outlined mr-2">key</span> <span>{{ $keyresult->key_name }}</span></div>
-                                        <div class="epic-detail okrmappersearchdetail mt-2">
-                                            <span style="font-size:22px" class="material-symbols-outlined mr-2">auto_stories</span>
-                                            <span>{{ $organization->organization_name }}</span>
-                                        </div>
                                     </div>
                                 @endif
                                 @if($r->from == 'unit')
                                     @php
                                         $keyresult = DB::table('key_result')->where('id' , $r->bussiness_key_id)->first();
-                                        $objective = DB::table('objectives')->where('id' , $r->linked_objective_id)->first();
-                                        $business_unit = DB::table('business_units')->where('id' , $objective->unit_id)->first();
                                     @endphp
                                     <div class="epic">
                                         <div class="epic-tittle d-flex"><span style="font-size:22px" class="material-symbols-outlined mr-2">key</span> <span>{{ $keyresult->key_name }}</span></div>
-                                        <div class="epic-detail okrmappersearchdetail mt-2">
-                                            <span style="font-size:22px" class="material-symbols-outlined mr-2">domain</span>
-                                            <span>{{ $business_unit->business_name }}</span>
-                                        </div>
                                     </div>
                                 @endif
                                 @if($r->from == 'stream')
                                     @php
                                         $keyresult = DB::table('key_result')->where('id' , $r->bussiness_key_id)->first();
-                                        $objective = DB::table('objectives')->where('id' , $r->linked_objective_id)->first();
-                                        $value_stream = DB::table('value_stream')->where('id' , $objective->unit_id)->first();
-                                        $business_unit = DB::table('business_units')->where('id' , $value_stream->unit_id)->first();
                                     @endphp
                                     <div class="epic">
                                         <div class="epic-tittle d-flex"><span style="font-size:22px" class="material-symbols-outlined mr-2">key</span> <span>{{ $keyresult->key_name }}</span></div>
-                                        <div class="epic-detail okrmappersearchdetail mt-2">
-                                            <span style="font-size:22px" class="material-symbols-outlined mr-2">domain</span>
-                                            <span>{{ $business_unit->business_name }}</span>
-                                            <span style="font-size:22px" class="material-symbols-outlined mr-2">layers</span>
-                                            <span>{{ $value_stream->value_name }}</span>
-                                        </div>
                                     </div>
                                 @endif
                             </div>

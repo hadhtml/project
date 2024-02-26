@@ -1,6 +1,15 @@
 @if($objectives->count() > 0)
 @foreach($objectives as $r)
 @if(DB::table('team_link_child')->where('linked_objective_id'  ,$r->id)->count() == 0)
+@if($r->type == 'org')
+<div onclick="selectobjective({{$r->id}})" class="epic">
+    <div class="epic-tittle">{{ $r->objective_name }}</div>
+    <div class="epic-detail okrmappersearchdetail">
+        <span style="font-size:22px" class="material-symbols-outlined mr-2">auto_stories</span>
+        <span>{{ DB::table('organization')->where('id' , $r->unit_id)->first()->organization_name }}</span>
+    </div>
+</div>
+@endif
 @if($r->type == 'unit')
 <div onclick="selectobjective({{$r->id}})" class="epic">
     <div class="epic-tittle">{{ $r->objective_name }}</div>
@@ -104,5 +113,7 @@
 </script>
 @else
 
-    No Objective Found
+    <div class="text-center">
+        <p>No Objective Found</p>
+    </div>
 @endif

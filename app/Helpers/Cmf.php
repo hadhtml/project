@@ -17,6 +17,8 @@ use App\Models\team_link_child;
 use App\Models\modulenames;
 use App\Models\Member_order;
 use App\Models\business_units;
+use App\Models\value_stream;
+
 use Mail;
 use Illuminate\Support\Facades\Http;
 use OneSignal;
@@ -28,86 +30,140 @@ class Cmf
         
         if($type == 'unit')
         {
-            $sum = 0;
             $business_units = business_units::where('org_id' , $id)->orderby('id' , 'asc')->get();
             foreach ($business_units as $key => $value) {
                 $objectives = DB::table('objectives')->wherenull('trash')->where('unit_id' , $value->id)->where('type' , 'unit')->count();
                 $keyresults = DB::table('key_result')->wherenull('trash')->where('unit_id' , $value->id)->where('type' , 'unit')->count();
-                if($objectives+$keyresults == 0)
-                {
-                    $updatebuisnessunit = business_units::find($value->id);
-                    $updatebuisnessunit->mapper_height = 0;
-                    $updatebuisnessunit->save();
-                }else{
-                    $total  = ($objectives+$keyresults+1)*50;
-                    if ($key === 0) {
-                        $sum = $total;
-                    } else {
-                        $sum += $total;
-                    }
-                    if($key+1 === 1)
-                    {
-                        $updatebuisnessunit = business_units::find($value->id);
-                        $updatebuisnessunit->mapper_height = -60;
-                        $updatebuisnessunit->save(); 
-                    }elseif($key+1 === 2){
-                        $updatebuisnessunit = business_units::find($value->id);
-                        $updatebuisnessunit->mapper_height = $sum-100;
-                        $updatebuisnessunit->save();
-                    }else{
-                        $updatebuisnessunit = business_units::find($value->id);
-                        if($total == 50)
-                        {
-                            $updatebuisnessunit->mapper_height = 0;
-                        }else{
-                            $updatebuisnessunit->mapper_height = $sum;
-                        }
-                        $updatebuisnessunit->save();
-                    }
-                }
-                
+                $total =  ($objectives+$keyresults+1)*50;
+                $updatebuisnessunit = business_units::find($value->id);
+                $updatebuisnessunit->mapper_height = $total;
+                $updatebuisnessunit->mapper_height_test = $total;
+                $updatebuisnessunit->save();
             }
+            $keyvalue = 1;
+            foreach ($business_units as $key => $value) {
+                if($keyvalue == 2)
+                {
+                    $mapperheight = business_units::where('org_id' , $id)->orderBy('id', 'ASC')->limit(1)->first();
+                    $updatebuisnessunit = business_units::find($value->id);
+                    $updatebuisnessunit->mapper_height = $mapperheight->mapper_height;
+                    $updatebuisnessunit->save();
+                }
+
+                if($keyvalue == 3)
+                {
+                    $mapperheight = business_units::selectRaw('SUM(mapper_height_test) as height')
+                    ->fromSub(function ($query) {
+                        $query->select('mapper_height_test')
+                              ->from('business_units')
+                              ->limit(2);
+                    }, 'subquery')
+                    ->first();
+                    $updatebuisnessunit = business_units::find($value->id);
+                    $updatebuisnessunit->mapper_height = $mapperheight->height+30;
+                    $updatebuisnessunit->save();
+                }
+
+                if($keyvalue == 4)
+                {
+                    $mapperheight = business_units::selectRaw('SUM(mapper_height_test) as height')
+                    ->fromSub(function ($query) {
+                        $query->select('mapper_height_test')
+                              ->from('business_units')
+                              ->limit(3);
+                    }, 'subquery')
+                    ->first();
+                    $updatebuisnessunit = business_units::find($value->id);
+                    $updatebuisnessunit->mapper_height = $mapperheight->height+20+$updatebuisnessunit->mapper_height;
+                    $updatebuisnessunit->save();
+                }
+
+                if($keyvalue == 5)
+                {
+                    $mapperheight = business_units::selectRaw('SUM(mapper_height_test) as height')
+                    ->fromSub(function ($query) {
+                        $query->select('mapper_height_test')
+                              ->from('business_units')
+                              ->limit(4);
+                    }, 'subquery')
+                    ->first();
+                    $updatebuisnessunit = business_units::find($value->id);
+                    $updatebuisnessunit->mapper_height = $mapperheight->height+50+$updatebuisnessunit->mapper_height;
+                    $updatebuisnessunit->save();
+                }
+
+                $keyvalue++;
+            }
+
         }
         if($type == 'stream')
         {
-            $sum = 0;
-            $business_units = business_units::where('org_id' , $id)->orderby('id' , 'asc')->get();
-            foreach ($business_units as $key => $value) {
-                $objectives = DB::table('objectives')->wherenull('trash')->where('unit_id' , $value->id)->where('type' , 'unit')->count();
-                $keyresults = DB::table('key_result')->wherenull('trash')->where('unit_id' , $value->id)->where('type' , 'unit')->count();
-                if($objectives+$keyresults == 0)
+            $value_stream = value_stream::where('org_id' , $id)->orderby('id' , 'asc')->get();
+            foreach ($value_stream as $key => $value) {
+                $objectives = DB::table('objectives')->wherenull('trash')->where('unit_id' , $value->id)->where('type' , 'stream')->count();
+                $keyresults = DB::table('key_result')->wherenull('trash')->where('unit_id' , $value->id)->where('type' , 'stream')->count();
+                $total =  ($objectives+$keyresults+1)*50;
+                $updatevalue_stream = value_stream::find($value->id);
+                $updatevalue_stream->mapper_height = $total;
+                $updatevalue_stream->mapper_height_test = $total;
+                $updatevalue_stream->save();
+            }
+
+
+
+            $keyvalue = 1;
+            foreach ($value_stream as $key => $value) {
+                if($keyvalue == 2)
                 {
-                    $updatebuisnessunit = business_units::find($value->id);
-                    $updatebuisnessunit->mapper_height = 0;
-                    $updatebuisnessunit->save();
-                }else{
-                    $total  = ($objectives+$keyresults+1)*50;
-                    if ($key === 0) {
-                        $sum = $total;
-                    } else {
-                        $sum += $total;
-                    }
-                    if($key+1 === 1)
-                    {
-                        $updatebuisnessunit = business_units::find($value->id);
-                        $updatebuisnessunit->mapper_height = -60;
-                        $updatebuisnessunit->save(); 
-                    }elseif($key+1 === 2){
-                        $updatebuisnessunit = business_units::find($value->id);
-                        $updatebuisnessunit->mapper_height = $sum-100;
-                        $updatebuisnessunit->save();
-                    }else{
-                        $updatebuisnessunit = business_units::find($value->id);
-                        if($total == 50)
-                        {
-                            $updatebuisnessunit->mapper_height = 0;
-                        }else{
-                            $updatebuisnessunit->mapper_height = $sum;
-                        }
-                        $updatebuisnessunit->save();
-                    }
+                    $mapperheight = value_stream::where('org_id' , $id)->orderBy('id', 'ASC')->limit(1)->first();
+                    $updatevalue_stream = value_stream::find($value->id);
+                    $updatevalue_stream->mapper_height = $mapperheight->mapper_height;
+                    $updatevalue_stream->save();
                 }
-                
+
+                if($keyvalue == 3)
+                {
+                    $mapperheight = value_stream::selectRaw('SUM(mapper_height_test) as height')
+                    ->fromSub(function ($query) {
+                        $query->select('mapper_height_test')
+                              ->from('value_stream')
+                              ->limit(2);
+                    }, 'subquery')
+                    ->first();
+                    $updatevalue_stream = value_stream::find($value->id);
+                    $updatevalue_stream->mapper_height = $mapperheight->height+30;
+                    $updatevalue_stream->save();
+                }
+
+                if($keyvalue == 4)
+                {
+                    $mapperheight = value_stream::selectRaw('SUM(mapper_height_test) as height')
+                    ->fromSub(function ($query) {
+                        $query->select('mapper_height_test')
+                              ->from('value_stream')
+                              ->limit(3);
+                    }, 'subquery')
+                    ->first();
+                    $updatevalue_stream = value_stream::find($value->id);
+                    $updatevalue_stream->mapper_height = $mapperheight->height+50+$updatevalue_stream->mapper_height;
+                    $updatevalue_stream->save();
+                }
+
+                if($keyvalue == 5)
+                {
+                    $mapperheight = value_stream::selectRaw('SUM(mapper_height_test) as height')
+                    ->fromSub(function ($query) {
+                        $query->select('mapper_height_test')
+                              ->from('value_stream')
+                              ->limit(4);
+                    }, 'subquery')
+                    ->first();
+                    $updatevalue_stream = value_stream::find($value->id);
+                    $updatevalue_stream->mapper_height = $mapperheight->height+50+$updatevalue_stream->mapper_height;
+                    $updatevalue_stream->save();
+                }
+
+                $keyvalue++;
             }
         }
     }
