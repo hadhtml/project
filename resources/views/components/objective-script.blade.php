@@ -851,6 +851,12 @@
         @if($organization->type == 'stream')
         var new_url=""+main_url()+"/dashboard/organization/"+slug+"/portfolio/stream?objective="+id;
         @endif
+        @if($organization->type == 'BU')
+        var new_url=""+main_url()+"/dashboard/organization/"+slug+"/portfolio/BU?objective="+id;
+        @endif
+        @if($organization->type == 'VS')
+        var new_url=""+main_url()+"/dashboard/organization/"+slug+"/portfolio/VS?objective="+id;
+        @endif
         window.history.pushState("data","Title",new_url);
         $.ajax({
             type: "POST",
