@@ -8,7 +8,15 @@
       <div id="connectedobjective{{ $o->id }}" class="slot-anchor-small slot-anchor-active drag-impo-grab"></div>
       <span class="material-symbols-outlined f-18">location_searching</span>
       <div class="slot-label" ><span class="label-text">{{ $o->objective_name }}</span></div>
+      @if($o->status == 'Done')
+      <div class="badge-done">{{round($o->obj_prog,0)}}%</div>
+      @endif
+      @if($o->status == 'To Do')
+      <div class="badge-todo">{{round($o->obj_prog,0)}}%</div>
+      @endif
+      @if($o->status == 'In progress')
       <div class="badge-inprogress">{{round($o->obj_prog,0)}}%</div>
+      @endif
    </div>
    @endforeach
 </div>
