@@ -66,7 +66,32 @@
        
       
       
-                        
+    $currentDate = \Carbon\Carbon::now();
+    $currentYear = $currentDate->year;
+    $currentMonth = $currentDate->month;
+    $yearMonthString = $currentDate->format('Y');
+    $yearMonth = $currentDate->format('F');
+    $CurrentQuarter = '';
+
+    $CurrentQuarter = DB::table('quarter_month')
+                    ->where('org_id',$key->unit_id)
+                    ->where('month',$yearMonth)
+                    ->where('year',$yearMonthString)->first();
+    if($CurrentQuarter)
+    {
+        $Quarter = DB::table('quarter_month')
+                    ->where('quarter_id',$CurrentQuarter->quarter_id)
+                    ->orderby('id','DESC')
+                    ->first();
+
+    $monthNumber = \Carbon\Carbon::parse($Quarter->month)->month;
+    $firstDayOfNextMonth = \Carbon\Carbon::create(null, $monthNumber + 1, 1, 0, 0, 0);
+    $lastDayOfMonth = $firstDayOfNextMonth->subDay();
+    $formattedDate = $lastDayOfMonth->toDateString();
+
+    
+
+    }                 
 
        @endphp
        @endif
@@ -176,70 +201,64 @@ var myChart = new Chart(ctx, {
     window.lineChart.destroy(); 
     }
      
-     var extraLineData = "{{$KEYChart->quarter_value}}";
-     var extraLineDataS = [0,extraLineData];
+var extraLineData = {{$KEYChart->quarter_value}}; // Assuming $KEYChart->quarter_value is a numeric value
+var actualData = @json($value);
 
-  
- 
-   
-       
-      
+var formattedDate = "{{$formattedDate}}";
 
-       var lineChart = new Chart(ctxLine, {
-        type: 'line', 
-        data: {
-            labels:@json($value),
-            datasets: [{
-                    label: 'Actual Line',
-                    data:@json($value),
-                    borderColor: 'gray',
-                    fill: false,
-                    backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(255, 159, 64, 0.2)',
-                    'rgba(255, 205, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(201, 203, 207, 0.2)'
-                    ],
-                 
-                    borderWidth: 2,
-                },
-                {
-                label: 'Quarter (Target) Line',
-                data:extraLineDataS,
-                borderColor: 'gray', 
-                borderWidth: 1.5,
-                fill: false,
-                borderDash: [5, 5],
-                                                          
-                },
+// var extraLineDataS = Array.from({length: actualData.length}, (_, i) => i === 0 ? 0 : extraLineData);
+var extraLineDataS = Array(actualData.length).fill(extraLineData);
+var maxLinebar = {{$KEYChart->quarter_value}};
+                                        
+var calculatedMaxbar = Math.ceil(maxLinebar / 25) * 25;
+var calculatedMaxbarNew = (calculatedMaxbar + 50);
 
-      
-             
-              
-            ]
+var lineChart = new Chart(ctxLine, {
+    type: 'line', 
+    data: {
+        labels:actualData,
+        datasets: [{
+            label: 'Actual Line',
+            data: actualData,
+            borderColor: 'gray',
+            fill: false,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 205, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(201, 203, 207, 0.2)'
+            ],
+            borderWidth: 1,
         },
-        
-        options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    x: {
-                        beginAtZero: true,
-                        display: false,
-                        
-                    },
-                    y: {
-                        beginAtZero: true,
-                        stepSize: 150,
-                        
-                    },
-                },
-          
-            }
-    });
+        {
+            label: 'Quarter (Target) Line (' + formattedDate + ')',
+            data: extraLineDataS,
+            borderColor: 'gray', 
+            borderWidth: 1.5,
+            fill: false,
+            borderDash: [5, 5],
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            x: {
+                beginAtZero: true,
+                display: false,
+                stepSize:20,
+            },
+            y: {
+                beginAtZero: true,
+                stepSize:20,
+                max: calculatedMaxbarNew,
+            },
+        },
+    }
+});
     
 
     

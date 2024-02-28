@@ -114,6 +114,9 @@
                 ->first();
             if ($keyqfirst) {
                 $keyqvalue = $keyqfirst->value;
+            }else
+            {
+            $keyqvalue = $key->init_value;  
             }
         @endphp
     @endif
