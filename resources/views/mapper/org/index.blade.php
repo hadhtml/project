@@ -5,18 +5,20 @@ $var_objective = "mapper-org";
 <title>ORG-OKR Mapper</title>
 @section('content')
 <style type="text/css">
+   .body-content {
+       overflow: auto;
+/*       transform: rotateX(180deg);*/
+   }
    .body-inner-content{
-      overflow: auto;
       width: 5000px;
-      transform: rotateX(180deg);
    }
    .rotatex{
-      transform: rotateX(180deg);
+
    }
 </style>
 <div class="row rotatex">
    <div class="col-md-12">
-      <div style="width: 100%; height: 2000px; padding: 50px;">
+      <div style="width: 100%; height: 1000px; padding: 50px;">
          <!-- Node 1 -->
          <div id="node_1" class="node" style="transform: translate(-60px, -60px);;">
             <div class="node-name slot-active drag-impo-grab">
@@ -84,19 +86,21 @@ $var_objective = "mapper-org";
    });
    @endforeach
    
+
    
    new PlainDraggable(node_1, {
    onMove: function() {
-   @foreach(DB::table('team_link_child')->groupby('bussiness_key_id')->where('bussiness_unit_id' , $data->id)->where('user_id' , Auth::id())->get() as $draglinekey =>  $drag)
+   @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->where('user_id' , Auth::id())->get() as $draglinekey =>  $drag)
    line{{ $draglinekey+1 }}.position();
    @endforeach
    },
    // onMoveStart: function() { line.dash = {animation: true}; },
    onDragEnd: function() {
-      @foreach(DB::table('team_link_child')->groupby('bussiness_key_id')->where('bussiness_unit_id' , $data->id)->where('user_id' , Auth::id())->get() as $draglinekey =>  $drag)
+      @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->where('user_id' , Auth::id())->get() as $draglinekey =>  $drag)
          line{{ $draglinekey+1 }}.dash = false;
          @endforeach
-   }
+   },
+   autoScroll:true,
    });
    
 
@@ -104,7 +108,7 @@ $var_objective = "mapper-org";
 
    new PlainDraggable(orgteam{{ $o_t->id }}, {
    onMove: function() {
-   @foreach(DB::table('team_link_child')->groupby('bussiness_key_id')->where('bussiness_unit_id' , $data->id)->where('user_id' , Auth::id())->get() as $draglinekey =>  $drag)
+   @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->where('user_id' , Auth::id())->get() as $draglinekey =>  $drag)
    line{{ $draglinekey+1 }}.position();
    @endforeach
    },
@@ -113,7 +117,8 @@ $var_objective = "mapper-org";
    @foreach(DB::table('team_link_child')->groupby('bussiness_key_id')->where('bussiness_unit_id' , $data->id)->where('user_id' , Auth::id())->get() as $draglinekey =>  $drag)
          line{{ $draglinekey+1 }}.dash = false;
          @endforeach
-   }
+   },
+   autoScroll:true,
    });
 
    @endforeach
@@ -124,60 +129,64 @@ $var_objective = "mapper-org";
    @foreach(DB::table('unit_team')->where('org_id'  , $b->id)->get() as $b_t)
    new PlainDraggable(buisnessunitteam{{ $b_t->id }}, {
    onMove: function() {
-   @foreach(DB::table('team_link_child')->groupby('bussiness_key_id')->where('bussiness_unit_id' , $data->id)->where('user_id' , Auth::id())->get() as $draglinekey =>  $drag)
+   @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->where('user_id' , Auth::id())->get() as $draglinekey =>  $drag)
    line{{ $draglinekey+1 }}.position();
    @endforeach
    },
    // onMoveStart: function() { line.dash = {animation: true}; },
    onDragEnd: function() {
-   @foreach(DB::table('team_link_child')->groupby('bussiness_key_id')->where('bussiness_unit_id' , $data->id)->where('user_id' , Auth::id())->get() as $draglinekey =>  $drag)
+   @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->where('user_id' , Auth::id())->get() as $draglinekey =>  $drag)
          line{{ $draglinekey+1 }}.dash = false;
          @endforeach
-   }
+   },
+   autoScroll:true,
    });
    @endforeach
    new PlainDraggable(buisnessunit{{ $b->id }}, {
    onMove: function() {
-   @foreach(DB::table('team_link_child')->groupby('bussiness_key_id')->where('bussiness_unit_id' , $data->id)->where('user_id' , Auth::id())->get() as $draglinekey =>  $drag)
+   @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->where('user_id' , Auth::id())->get() as $draglinekey =>  $drag)
    line{{ $draglinekey+1 }}.position();
    @endforeach
    },
    // onMoveStart: function() { line.dash = {animation: true}; },
    onDragEnd: function() {
-   @foreach(DB::table('team_link_child')->groupby('bussiness_key_id')->where('bussiness_unit_id' , $data->id)->where('user_id' , Auth::id())->get() as $draglinekey =>  $drag)
+   @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->where('user_id' , Auth::id())->get() as $draglinekey =>  $drag)
          line{{ $draglinekey+1 }}.dash = false;
          @endforeach
-   }
+   },
+   autoScroll:true,
    });
    @foreach($valuestream as $v)
    new PlainDraggable(valuestream{{ $v->id }}, {
    onMove: function() {
-   @foreach(DB::table('team_link_child')->groupby('bussiness_key_id')->where('bussiness_unit_id' , $data->id)->where('user_id' , Auth::id())->get() as $draglinekey =>  $drag)
+   @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->where('user_id' , Auth::id())->get() as $draglinekey =>  $drag)
    line{{ $draglinekey+1 }}.position();
    @endforeach
    },
    // onMoveStart: function() { line.dash = {animation: true}; },
    onDragEnd: function() {
-   @foreach(DB::table('team_link_child')->groupby('bussiness_key_id')->where('bussiness_unit_id' , $data->id)->where('user_id' , Auth::id())->get() as $draglinekey =>  $drag)
+   @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->where('user_id' , Auth::id())->get() as $draglinekey =>  $drag)
          line{{ $draglinekey+1 }}.dash = false;
          @endforeach
-   }
+   },
+   autoScroll:true,
    });
    
    @foreach(DB::table('value_team')->where('org_id'  , $v->id)->get() as $key_value_stream_team => $v_t)
    
     new PlainDraggable(valuestreamteam{{ $v_t->id }}, {
        onMove: function() {
-         @foreach(DB::table('team_link_child')->groupby('bussiness_key_id')->where('bussiness_unit_id' , $data->id)->where('user_id' , Auth::id())->get() as $draglinekey =>  $drag)
+         @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->where('user_id' , Auth::id())->get() as $draglinekey =>  $drag)
          line{{ $draglinekey+1 }}.position();
          @endforeach
        },
        // onMoveStart: function() { line.dash = {animation: true}; },
        onDragEnd: function() {
-         @foreach(DB::table('team_link_child')->groupby('bussiness_key_id')->where('bussiness_unit_id' , $data->id)->where('user_id' , Auth::id())->get() as $draglinekey =>  $drag)
+         @foreach(DB::table('team_link_child')->where('bussiness_unit_id' , $data->id)->where('user_id' , Auth::id())->get() as $draglinekey =>  $drag)
          line{{ $draglinekey+1 }}.dash = false;
          @endforeach
-       }
+       },
+       autoScroll:true,
      });
    
    @endforeach
