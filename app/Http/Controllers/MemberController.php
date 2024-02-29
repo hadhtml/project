@@ -366,6 +366,7 @@ class MemberController extends Controller
      
         DB::table('value_stream')
         ->insert([
+            'org_id' => DB::table('organization')->where('user_id' , Auth::id())->first()->id,
             'unit_id' => $request->org_value_id,
             'lead_id' => $request->lead_manager,
             'detail' => $request->detail,
@@ -387,6 +388,7 @@ class MemberController extends Controller
         DB::table('value_stream')
         ->where('id',$request->value_id)
         ->update([
+            'org_id' => DB::table('organization')->where('user_id' , Auth::id())->first()->id,
             'unit_id' => $request->unit_id,
             'lead_id' => $request->lead_manager,
             'detail' => $request->detail,
@@ -503,7 +505,7 @@ class MemberController extends Controller
     
     public function GetBacklogKey(Request $request)
     {
-    $objective = DB::table('key_result')->where('obj_id',$request->id)->get();
+    $objective = DB::table('key_result')->where('key_name','!=',NULL)->where('obj_id',$request->id)->get();
     return $objective;
     }
     

@@ -78,7 +78,11 @@
       </div>
       <div class="row">
           <div class="col-md-12 col-lg-12 col-xl-6 mt-2">
+               @if($ChartCount == 4)
+              
+               @else
                <div class="btn btn-primary add_value">Add</div>
+               @endif
            </div>
       </div>
    </div>
@@ -175,3 +179,5 @@
         });
     }));
 </script>
+
+

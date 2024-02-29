@@ -3,7 +3,6 @@
         min-width: 480px;
     }
 
-
     .select2-results__option {
         padding-right: 20px;
         vertical-align: middle;
@@ -111,14 +110,13 @@
             $keyqvalue = '';
             $keyqfirst = DB::table('key_quarter_value')
                 ->where('key_chart_id', $KEYChart->id)
-                // ->orderby('id', 'DESC')
+                ->orderby('id','DESC')
                 ->first();
             if ($keyqfirst) {
                 $keyqvalue = $keyqfirst->value;
             }
         @endphp
     @endif
-
 
     <div class="row">
         <div class="col-md-12 col-lg-12 col-xl-12">
@@ -147,6 +145,16 @@
         <div class="row">
             <div class="col-md-12 col-lg-12 col-xl-12">
                 <div class="d-flex flex-row align-items-center justify-content-between block-header">
+                    <div class="d-flex flex-row align-items-center">
+                        <div class="mr-2">
+                            <span class="material-symbols-outlined">
+                                checklist
+                            </span>
+                        </div>
+                        <div>
+                            <h4 style="font-size: 12px">Check-in</h4>
+                        </div>
+                    </div>
                     <div class="displayflex">
                         @if ($KEYChart->cust_type == 'Custom')
                             <span class="mt-2" style="font-size: 13px">Frequency: {{ $KEYChart->repeatdays }} On
@@ -174,7 +182,6 @@
                     </div>
                     <div class="displayflex">
 
-
                         <span onclick="uploadattachment()" class="btn btn-default btn-sm">New Check-In</span>
                     </div>
                 </div>
@@ -192,22 +199,22 @@
                             <div class="row">
                                 <div class="col-md-6">
 
-                                    <input type="text" value="{{ (new DateTime())->format('l, M d') }}"
+                                    <input type="text"  value="{{ (new DateTime())->format('l, M d') }}"
                                         class="form-control datepickername" id="datepicker" name="custrepeatdatepicker">
                                 </div>
 
                                 <div class="col-md-6">
                                     <select class="form-control" onchange="getcust(this.value)" name="custrepeat"
                                         id="datepickerselect" required>
-                                        <option value="Does not repeat">Does not repeat</option>
-                                        <option value="Daily">Daily</option>
-                                        <option value="Weekly">Weekly on {{ (new DateTime())->format('l') }}</option>
-                                        <option value="Custom">Custom...</option>
+                                        <option @if ($KEYChart->cust_type == 'Does not repeat') selected @endif value="Does not repeat">Does not repeat</option>
+                                        <option @if ($KEYChart->cust_type == 'Daily') selected @endif  value="Daily">Daily</option>
+                                        <option @if ($KEYChart->cust_type == 'Weekly') selected @endif value="Weekly">Weekly on {{ (new DateTime())->format('l') }}</option>
+                                        <option @if ($KEYChart->cust_type == 'Custom') selected @endif value="Custom" >Custom...</option>
                                     </select>
                                 </div>
                             </div>
-                            <input type="hidden" id="cust-day" name="cust_day">
-                            <input type="hidden" id="cust-date" name="cust_date">
+                            <input type="hidden" id="cust-day" @if($KEYChart->cust_type != 'Custom') value="{{$KEYChart->daysInput}}" @endif name="cust_day">
+                            <input type="hidden" id="cust-date" @if($KEYChart->cust_type != 'Custom') value="{{$KEYChart->days}}" @endif name="cust_date">
 
                             <div class="d-flex flex-column mt-2">
                                 <div class="mb-4 Custom"
@@ -294,7 +301,6 @@
                         </form>
                     </div>
 
-
                 </div>
 
             </div>
@@ -302,20 +308,21 @@
         </div>
 
 
-
-        <div id="success-check-in"></div>
+        
 
         <div class="row uploadattachment">
+
             <div class="col-md-12">
+
                 <div class="card comment-card storyaddcard">
                     <div class="card-body">
+                        <div id="success-check-in"></div>
                         <form class="needs-validation savekeychartnewform"
                             action="{{ url('add-new-quarter-value') }}" method="POST">
                             @csrf
                             <input type="hidden" value="{{ $key->id }}" name="id">
                             <input type="hidden" value="{{ $KEYChart->id }}" name="key_chart_id">
                             <input type="hidden" value="{{ $report->id }}" name="sprint_id">
-
 
 
                             <div class="row">
@@ -344,13 +351,12 @@
                                                 class="text-danger">*</small></label>
                                     </div>
                                     <select required id="js-select1" multiple="multiple" name="participant[]">
-                                        <option value="">Select Assignee</option>
+                                    
                                         @foreach (DB::table('members')->where('org_user', Auth::id())->get() as $r)
                                             <option value="{{ $r->id }}">{{ $r->name }}
                                                 {{ $r->last_name }}</option>
                                         @endforeach
                                     </select>
-
 
                                 </div>
 
@@ -388,53 +394,49 @@
         </div>
     @endif
 
-
     <div class="row">
         
         <div class="col-md-12">
             @if ($KEYChart)
-            @php
-                $keyqvalue = DB::table('key_quarter_value')
-                    ->where('key_chart_id', $KEYChart->id)
-                    // ->orderby('id', 'DESC')
-                    ->get();
-            @endphp
-            @foreach ($keyqvalue as $val)
+
                 @php
-                    $dataArray = explode(',', $val->participant);
-                    $dataCount = count($dataArray);
-                    $firstTwoIds = array_slice($dataArray, 0, 2);
-                    $remainingIds = array_slice($dataArray, 2);
-                    $remainingCount = count($remainingIds);
-
-                    $value = [];
-                    if (count($keyqvalue) <= 1) {
-                        $value[] = ['Label1', 'Label2'];
-                    } else {
-                        foreach ($keyqvalue as $chart) {
-                            $value[] = $chart->value;
-                        }
-                    }
-
-                    $commentscount = DB::table('flag_comments')
-                        ->where('flag_id', $val->id)
-                        ->where('type', 'comment')
-                        ->where('comment_type', 'key')
-                        ->count();
-
+                    $keyqvalue = DB::table('key_quarter_value')
+                        ->where('key_chart_id', $KEYChart->id)
+                        ->orderby('id', 'DESC')
+                        ->get();
                 @endphp
+
+                @foreach ($keyqvalue as $val)
+                    @php
+                        $dataArray = explode(',', $val->participant);
+                        $dataCount = count($dataArray);
+                        $firstTwoIds = array_slice($dataArray, 0, 2);
+                        $remainingIds = array_slice($dataArray, 2);
+                        $remainingCount = count($remainingIds);
+
+                   
+
+                        $commentscount = DB::table('flag_comments')
+                            ->where('flag_id', $val->id)
+                            ->where('type', 'comment')
+                            ->where('comment_type', 'key')
+                            ->count();
+
+                    @endphp
+
+
+
         </div>
     </div>
-
 
     <div class="card check-in-card">
         <div class="card-body">
             <div class="d-flex flex-row align-items-center justify-content-between check-in-header">
-                <div class="d-flex flex-row align-items-center value">
-                    <div class="lable ">
-                        <small class="staus d-flex align-items-center"><div class="circle-container-inp mr-1"></div> {{ $val->status }}</small>
+                <div class="d-flex flex-row align-items-center">
+                    <div class="lable">
+                        <small> <span></span>{{ $val->status }}</small>
                     </div>
-                    <div class="d-flex flex-row align-items-center  ml-3">
+                    <div class="d-flex flex-row align-items-center value ml-3">
                         <div><small>Value: </small></div>
                         <h4 class="mt-2 ml-1">{{ $val->value }}</h4>
                     </div>
@@ -476,15 +478,15 @@
             <div class="check-in-content">
                 <p>{{ $val->summary }}</p>
             </div>
-            <div class="d-flex flex-row justify-content-between mt-2">
+            <div class="d-flex flex-row justify-content-between mt-1">
                 <div class="d-flex flex-row">
                     <button class="btn btn-default btn-sm" onclick="showcomment({{ $val->id }})">Comments
                         ({{ $commentscount }})</button>
                 </div>
                 <div>
-                    <div class="dropdown d-flex align-items-center">
+                    <div class="dropdown d-flex">
 
-                        <small class="mt-1"> {{ \Carbon\Carbon::parse($val->created_at)->diffForHumans() }}</small>
+                        <span class="mt-1">{{ \Carbon\Carbon::parse($val->created_at)->format('d M Y, h:i A')}}</span>
                         <button class="btn btn-circle dropdown-toggle btn-tolbar bg-transparent"
                             id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">
@@ -507,14 +509,12 @@
 
 
 
-
     <div class="uploadattachment{{ $val->id }} displaynone">
         <div class="card comment-card storyaddcard">
             <div class="card-body">
                 <form class="needs-validation updatekeychart{{ $val->id }}"
                     action="{{ url('update-new-quarter-value') }}" method="POST" novalidate>
                     @csrf
-
 
                     <input type="hidden" value="{{ $val->id }}" name="flag_id">
                     <input type="hidden" value="{{ $key->id }}" name="id">
@@ -557,7 +557,6 @@
                                 @endforeach
                             </select>
 
-
                         </div>
 
                         <div class="col-md-12 col-lg-12 col-xl-12">
@@ -597,14 +596,17 @@
         }));
     </script>
 
-    <div class="mr-auto d-flex justify-content-between align-items-center">
-        <div>
-            Comments
-        </div>
-        <div>
-            <div class="btn btn-default btn-sm" onclick="writecomment({{ $val->id }})">Add Comments</div>
-        </div>
+
+
+
+    <div class="mr-auto p-2 displaynone show-comment{{ $val->id }}">comments
+
+        <div class="p-2 btn btn-default btn-sm ml-40" onclick="writecomment({{ $val->id }})">Add Comments</div>
+
     </div>
+
+
+
 
     <div class="col-md-12 col-lg-12 col-xl-12 displaynone writecomment{{ $val->id }}">
         <div class="d-flex flex-column">
@@ -780,6 +782,7 @@
                                 success: function(data) {
                                     $('#savereplybutton{{ $r->id }}').html('Save');
                                     $('.secondportion').html(data);
+                                    $('.show-comment{{ $val->id }}').slideToggle();
                                 }
                             });
                         }));
@@ -894,6 +897,7 @@
                         success: function(data) {
                             $('#updatecommentbutton{{ $p->id }}').html('Save');
                             $('.secondportion').html(data);
+                            $('.show-comment{{ $val->id }}').slideToggle();
 
                         }
                     });
@@ -916,13 +920,13 @@
                     success: function(data) {
                         $('#updatecommentbutton{{ $r->id }}').html('Save');
                         $('.secondportion').html(data);
+                        $('.show-comment{{ $val->id }}').slideToggle();
 
                     }
                 });
             }));
         </script>
     @endforeach
-
 
     <script type="text/javascript">
         $("#textarea").keypress(function(e) {
@@ -947,6 +951,7 @@
                 success: function(data) {
                     $('#savecommentbutton{{ $val->id }}').html('Save');
                     $('.secondportion').html(data);
+                    $('.show-comment{{ $val->id }}').slideToggle();
 
                 }
             });
@@ -986,7 +991,6 @@
                     </div> --}}
 @endif
 
-
 <div class="row margintopfourtypixel">
     <div class="col-md-12 text-right">
         {{-- <button class="btn btn-primary"
@@ -1019,7 +1023,6 @@
     </div>
 </div>
 @endif
-
 
 
 
@@ -1078,7 +1081,6 @@
             processData: false,
             success: function(data) {
 
-
                 $('#success-check-in').html(
                     '<div class="alert alert-success" role="alert"> Check-in Value Added Successfully</div>'
                 );
@@ -1108,7 +1110,8 @@
             },
             success: function(data) {
                 $('#commentdeletekey' + id).remove();
-                $('.secondportion').html(data);
+                // $('.secondportion').html(data);
+           
             },
             error: function(error) {
                 console.log('Error updating card position:', error);
@@ -1129,12 +1132,10 @@
     }
     // $(function() {
 
-
     //  $('.key-chart').multiselect({
     //    includeSelectAllOption:true,
     //    numberDisplayed: 0
     //  });
-
 
     // });
 
@@ -1143,7 +1144,8 @@
         placeholder: "Select Assignee",
         // allowHtml: true,
         allowClear: true,
-        tags: true // создает новые опции на лету
+        tags: false // создает новые опции на лету
+        
     });
 
     function toggleDay(element) {
@@ -1158,7 +1160,6 @@
         });
         document.getElementById('checkedDays').value = JSON.stringify(checkedDays);
     }
-
 
     $('.savefrequencyform').on('submit', (function(e) {
         e.preventDefault();
@@ -1212,3 +1213,5 @@
         $('.show-comment' + id).slideToggle();
     }
 </script>
+
+
