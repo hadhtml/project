@@ -34,14 +34,14 @@ return [
     'google' => [
         'client_id' => '514459465592-gaqjohvhef6r5di8icom0ah0be0hb25l.apps.googleusercontent.com',
         'client_secret' => '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',
-        'redirect' => 'https://dev.agileprolific.com/auth/google/callback',
+        'redirect' => 'https://dev.outcomemet.com/auth/google/callback',
     ],
 
     'facebook' => [
 
         'client_id' => '231040379846233',
         'client_secret' => 'ccdce0739c45ae1cf0324e43c481725b',
-        'redirect' => 'https://dev.agileprolific.com/auth/facebook/callback',
+        'redirect' => 'https://dev.outcomemet.com/auth/facebook/callback',
 
     ],
 
