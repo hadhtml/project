@@ -212,7 +212,7 @@ class MemberController extends Controller
     }else
     {
     
-    echo "You're not authorized to access this Link <a href= ".url('dashboard/organizations').">Back</a>";   
+    echo "You're not authorized to access this Link <a href= ".url('organization/dashboard').">Back</a>";   
     }     
   
         
@@ -784,7 +784,7 @@ class MemberController extends Controller
     }else
     {
        
-    echo "You're not authorized to access this Link <a href= ".url('dashboard/organizations').">Back</a>";   
+    echo "You're not authorized to access this Link <a href= ".url('organization/dashboard').">Back</a>";   
     } 
    
         
@@ -845,7 +845,7 @@ class MemberController extends Controller
     }else
     {
        
-    echo "You're not authorized to access this Link <a href= ".url('dashboard/organizations').">Back</a>";   
+    echo "You're not authorized to access this Link <a href= ".url('organization/dashboard').">Back</a>";   
     } 
         
     }
@@ -1460,7 +1460,7 @@ $updateData = [
     }else
     {
        
-        echo "You're not authorized to access this Link <a href= ".url('dashboard/organizations').">Back</a>";   
+        echo "You're not authorized to access this Link <a href= ".url('organization/dashboard').">Back</a>";   
     }
     
         
@@ -1476,7 +1476,7 @@ $updateData = [
     }else
     {
        
-    echo "You're not authorized to access this Link <a href= ".url('dashboard/organizations').">Back</a>";   
+    echo "You're not authorized to access this Link <a href= ".url('organization/dashboard').">Back</a>";   
     }  
       
     }
@@ -1492,7 +1492,7 @@ $updateData = [
         }else
         {
            
-        echo "You're not authorized to access this Link <a href= ".url('dashboard/organizations').">Back</a>";   
+        echo "You're not authorized to access this Link <a href= ".url('organization/dashboard').">Back</a>";   
         }    
       
     }
@@ -1510,7 +1510,7 @@ $updateData = [
     }else
     {
        
-    echo "You're not authorized to access this Link <a href= ".url('dashboard/organizations').">Back</a>";   
+    echo "You're not authorized to access this Link <a href= ".url('organization/dashboard').">Back</a>";   
     }    
       
     }
@@ -1528,7 +1528,7 @@ $updateData = [
     }else
     {
        
-    echo "You're not authorized to access this Link <a href= ".url('dashboard/organizations').">Back</a>";   
+    echo "You're not authorized to access this Link <a href= ".url('organization/dashboard').">Back</a>";   
     }     
       
     }

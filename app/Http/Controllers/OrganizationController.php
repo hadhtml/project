@@ -26,7 +26,7 @@ class OrganizationController extends Controller
     if(Auth::id())
     {
       $organization  = Organization::where('user_id',Auth::id())->where('trash',NULL)->first();
-      return redirect('dashboard/organizations');
+      return redirect('organization/dashboard');
     }else
     {
       return view('welcome');
@@ -55,7 +55,7 @@ class OrganizationController extends Controller
     }else
     {
     
-    echo "You're not authorized to access this Link <a href= ".url('dashboard/organizations').">Back</a>";   
+    echo "You're not authorized to access this Link <a href= ".url('organization/dashboard').">Back</a>";   
     }   
         
     }
