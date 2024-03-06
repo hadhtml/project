@@ -845,6 +845,9 @@
         @if($organization->type == 'org')
         var new_url=""+main_url()+"/dashboard/organization/"+slug+"/portfolio/org?objective="+id;
         @endif
+        @if($organization->type == 'orgT')
+        var new_url=""+main_url()+"/dashboard/organization/"+slug+"/portfolio/orgT?objective="+id;
+        @endif
         @if($organization->type == 'unit')
         var new_url=""+main_url()+"/dashboard/organization/"+slug+"/portfolio/unit?objective="+id;
         @endif
