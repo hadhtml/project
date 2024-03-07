@@ -340,6 +340,8 @@ class FlagController extends Controller
         $activity = 'Created the '.$request->flag_type.' Flag on '.Cmf::date_format_new($flag->created_at).' at '.Cmf::date_format_time($flag->created_at);
         Cmf::save_activity(Auth::id() , $activity,'flags',$flag->id , 'image');
         DB::table('epics')->where('id',$request->flag_epic_id)->update(['flag_assign' => $request->flag_type]);
+        DB::table('flags')->where('epic_id',$request->flag_epic_id)->where('flag_title',NULL)->delete();
+
         if($request->type == 'unit')
         {
             $organization  = DB::table('business_units')->where('slug',$request->slug)->first();
