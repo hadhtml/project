@@ -54,7 +54,7 @@
         <!--begin::Toolbar-->
         <div class="d-flex align-items-center toolbar">
             <div>
-                @if(url()->current() == url('dashboard/organization/setting')) 
+                 @if(url()->current() == url('settings/jira'))  
                 <button class="button" type="button" data-toggle="modal" data-target="#create-jira">
                     Connect Jira
                 </button>
