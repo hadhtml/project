@@ -4,7 +4,7 @@
 <head>
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
     <meta content="width=device-width, initial-scale=1" name="viewport">
-    <title>Agileprolific Welcome Email</title>
+    <title>OutcomeMet Welcome Email</title>
     <style type="text/css">
   @import url(https://fonts.googleapis.com/css?family=Nunito);
 
@@ -102,7 +102,7 @@
   <tr class="">
 <td class="">
 @php
-$img = 'https://agileprolific.com/dev/public/assets/images/icons/logo.svg';
+$img = 'https://dev.outcomemet.com/public/assets/images/icons/logo.svg';
 @endphp 
 <img alt="robot picture" class="" height="155" src="{{ url('public/assets/images/icons/logo.svg') }}" width="155">
 </td>
@@ -144,7 +144,7 @@ $img = 'https://agileprolific.com/dev/public/assets/images/icons/logo.svg';
                     ">
 <p>The password was auto-generated, however feel free to change it 
   
-    <a href="https://agileprolific.com/dev/password/reset" style="text-decoration: underline;">
+    <a href="https://dev.outcomemet.com/password/reset" style="text-decoration: underline;">
       here</a>
   
   </p>

@@ -112,6 +112,21 @@ class EpicController extends Controller
         ->update(['old_date' => $Olddata->epic_end_date]);
         }
 
+        $flagCount = DB::table('flags')->where('epic_id',$request->epic_id)->count();
+        if($flagCount == 0)
+        {
+            $flag = new flags();
+            $flag->business_units = NULL;
+            $flag->epic_id = $request->epic_id;
+            $flag->flag_type = 0;
+            $flag->flag_title = NULL;
+            $flag->flag_description = NULL;
+            $flag->archived = NULL;
+            $flag->flag_status = NULL;
+            $flag->board_type = NULL;
+            $flag->save();
+        }
+
         $currentDate = Carbon::now();
         $currentYear = $currentDate->year;
         $currentMonth = $currentDate->month;
@@ -280,7 +295,7 @@ class EpicController extends Controller
         if($request->tab == 'flags')
         {
             $data = Epic::find($request->id);
-            $flags = flags::where('epic_id' , $data->id)->orderby('flags.flag_order' , 'asc')->get();
+            $flags = flags::where('epic_id' , $data->id)->where('flag_title','!=',NULL)->orderby('flags.flag_order' , 'asc')->get();
             $html = view('epics.tabs.flags', compact('flags','data'))->render();
             return $html;
         }
@@ -1211,6 +1226,8 @@ class EpicController extends Controller
         $member->member_id = $request->flag_assign;
         $member->flag_id = $flag->id;
         $member->save();
+        DB::table('flags')->where('epic_id',$request->flag_epic_id)->where('flag_title',NULL)->delete();
+
     }
     public function showorderby(Request $request)
     {

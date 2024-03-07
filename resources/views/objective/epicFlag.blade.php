@@ -355,19 +355,25 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
                                                                                  @foreach($quarterMonth as $month)
                                                                                  @php
                                                                                  $epicId = array();
-                                                                                 // if($FladId[0] == 'null')
+                                                                                
+                                                                                
+                                                                                 // if($FladId[0] == 0)
                                                                                  // {
-                                                                                 //    $epic  = DB::table('epics')->where('month_id',$month->id)->where('flag_assign',NULL)->where('trash',NULL)->get();
+                                                                                 
+                                                                                 // $epic  = DB::table('epics')->where('month_id',$month->id)->where('flag_assign',0)->where('trash',NULL)->get();
    
-                                                                                 // }else
-                                                                                 // {
-                                                                                 // $flag = DB::table('flags')->whereIn('flag_type',$FladId)->get();
-                                                                                 // foreach($flag as $flags)
-                                                                                 // {
-                                                                                 // $epicId[] = $flags->epic_id;
                                                                                  // }
-                                                                                 $epic  = DB::table('epics')->where('month_id',$month->id)->whereIn('flag_assign',$FladId)->where('trash',NULL)->get();
-                                                                                 // }
+                                                                               
+                                                                                  $flag = DB::table('flags')->whereIn('flag_type',$FladId)->get();
+                                                                              
+                                                                                 foreach($flag as $flags)
+                                                                                 {
+                                                                                 $epicId[] = $flags->epic_id;
+                                                                                 }
+                                                                                 $epic  = DB::table('epics')->where('month_id',$month->id)->whereIn('id',$epicId)->where('trash',NULL)->get();
+                                                                             
+
+                                                                                
                                                                                  
                                                                                  @endphp
                                                                                  <div  @if($CurrentQuarter) @if($q->id < $CurrentQuarter->quarter_id) class="board-flex" @endif @endif class="board boardI"  style="width:236px"
