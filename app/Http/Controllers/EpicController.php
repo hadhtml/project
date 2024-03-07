@@ -295,7 +295,7 @@ class EpicController extends Controller
         if($request->tab == 'flags')
         {
             $data = Epic::find($request->id);
-            $flags = flags::where('epic_id' , $data->id)->orderby('flags.flag_order' , 'asc')->get();
+            $flags = flags::where('epic_id' , $data->id)->where('flag_title','!=',NULL)->orderby('flags.flag_order' , 'asc')->get();
             $html = view('epics.tabs.flags', compact('flags','data'))->render();
             return $html;
         }
