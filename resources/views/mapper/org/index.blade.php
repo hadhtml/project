@@ -5,12 +5,11 @@ $var_objective = "mapper-org";
 <title>ORG-OKR Mapper</title>
 @section('content')
 <style type="text/css">
-   .body-content {
-       overflow: auto;
-/*       transform: rotateX(180deg);*/
-   }
    .body-inner-content{
-      width: 5000px;
+      overflow: auto;
+      min-height: 1600px;
+      min-width: 2100px;
+      padding-left: 25px !important;
    }
    .rotatex{
 
