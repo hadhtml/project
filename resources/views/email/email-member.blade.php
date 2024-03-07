@@ -104,10 +104,10 @@
 @php
 $img = 'https://agileprolific.com/dev/public/assets/images/icons/logo.svg';
 @endphp 
-<img alt="robot picture" class="" height="155" src="{{$img}}" width="155">
+<img alt="robot picture" class="" height="155" src="{{ url('public/assets/images/icons/logo.svg') }}" width="155">
 </td>
 </tr>
-<tr class=""><td class="headline">Welcome to Agileprolific!</td></tr>
+<tr class=""><td class="headline">Welcome to OutcomeMet!</td></tr>
 <tr>
 <td>
 <center class=""><table cellpadding="0" cellspacing="0" class="" style="margin: 0 auto;" width="75%"><tbody class=""><tr class="">

@@ -136,7 +136,7 @@
          <tbody>
          <tr>
          <td style="width:200px;background-color: white;border-radius: 15px;">
-         <img height="auto" src="https://agileprolific.com/dev/public/assets/images/icons/logo.svg" style="border:0;display:block;outline:none;text-decoration:none;width:100%;" width="64" />
+         <img height="auto" src="https://dev.outcomemet.com/public/assets/images/icons/logo.svg" style="border:0;display:block;outline:none;text-decoration:none;width:100%;" width="64" />
          </td>
          </tr>
          </tbody>
