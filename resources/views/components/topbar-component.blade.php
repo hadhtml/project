@@ -2,9 +2,9 @@
     <a class="navbar-brand" href="#">
         <img src="{{asset('public/assets/images/icons/icon with text PNG color.png')}}" style=" width: 100px;
         height: 40px;
-        object-fit: cover;" class="d-inline-block align-top" alt="">
+        object-fit: contain;" class="d-inline-block align-top" alt="">
         <img src="{{asset('public/assets/images/icons/logo-2.png')}}"style="width:120px;
-        height: 40px;" class="d-inline-block align-top" alt="">
+        height: 40px; object-fit:contain" class="d-inline-block align-top" alt="">
 
     </a>
 
