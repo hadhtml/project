@@ -13,6 +13,7 @@ $var_objective = "mapper-unit";
       position: fixed;
       top: -3%;
       left: 300px;
+      z-index: 999999;
    }
    .body-inner-content{
       overflow: auto;
