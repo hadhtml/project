@@ -4,10 +4,23 @@ $var_objective = "mapper-unit";
 @extends('components.main-layout')
 <title>BU-OKR Mapper</title>
 @section('content')
+<style type="text/css">
+  body{
+    overflow: auto !important;
+  }
+   .body-inner-content{
+      overflow: auto;
+      min-height: 1600px;
+      min-width: 2100px;
+      padding-left: 25px !important;
+   }
+   .rotatex{
 
+   }
+</style>
 <div class="row">
     <div class="col-md-12">
-        <div style="width: 100%; height: 5000px; padding: 50px;">
+        <div style="width: 100%; height: 1000px; padding: 50px;">
             
         <!-- Node 1 -->
           <div id="node_1" class="node" style="transform: translate(-60px, -60px);;">
