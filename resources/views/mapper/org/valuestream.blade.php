@@ -1,5 +1,5 @@
 @foreach($valuestream as $key_calue_stream => $v)
-   <div id="valuestream{{ $v->id }}" class="node">
+   <div id="valuestream{{ $v->id }}" class="node valuestreambox">
       <div class="node-name slot-active drag-impo-grab">
          <div class="slot-label drag-impo-grab"><span style="font-size:22px" class="material-symbols-outlined">layers</span> {{ $v->value_name }}</div>
       </div>
@@ -37,7 +37,7 @@
       @endforeach
    </div>
    @foreach(DB::table('value_team')->where('org_id'  , $v->id)->get() as $key_value_stream_team => $v_t)
-   <div id="valuestreamteam{{ $v_t->id }}" class="node">
+   <div id="valuestreamteam{{ $v_t->id }}" class="node valuestreamteambox">
       <div class="node-name slot-active drag-impo-grab">
          <div class="slot-label drag-impo-grab"><span class="mr-2 d-flex badge-team-valuestream">VS <span style="font-size:22px" class="material-symbols-outlined ml-2">groups</span></span>  {{ $v_t->team_title }}</div>
       </div>
@@ -60,28 +60,3 @@
    </div>
    @endforeach
 @endforeach
-
-<style type="text/css">
-@foreach($valuestream as $v)
-   @if($loop->first)
-   #valuestream{{ $v->id }}{
-      transform: translate(650px, -60px);
-   }
-   @else
-   #valuestream{{ $v->id }}{
-      transform: translate(650px, {{ $v->mapper_height }}px);
-   }
-   @endif
-   @foreach(DB::table('value_team')->where('org_id'  , $v->id)->get() as $key_value_stream_team => $v_t)
-      @if($loop->first)
-      #valuestreamteam{{ $v_t->id }}{
-      transform: translate(1000px, -60px);
-      }
-      @else
-      #valuestreamteam{{ $v_t->id }}{
-      transform: translate(1000px, {{ $key_value_stream_team*200 }}px);
-      }
-      @endif
-   @endforeach
-@endforeach
-</style>

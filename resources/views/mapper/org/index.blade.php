@@ -17,7 +17,7 @@ $var_objective = "mapper-org";
    .body-inner-content{
       overflow: auto;
       min-height: 1600px;
-      min-width: 2100px;
+      min-width: 2500px;
       padding-left: 25px !important;
    }
    .rotatex{
@@ -26,7 +26,7 @@ $var_objective = "mapper-org";
 </style>
 <div class="row rotatex">
    <div class="col-md-12">
-      <div style="width: 100%; height: 1000px; padding: 50px;margin-top: 150px;">
+      <div style="width: 100%; height: 5000px; padding: 50px;margin-top: 150px;">
          <!-- Node 1 -->
          <div id="node_1" class="node" style="transform: translate(-60px, -60px);;">
             <div class="node-name slot-active drag-impo-grab">
@@ -217,6 +217,52 @@ $var_objective = "mapper-org";
    @endforeach
    @endforeach
    });
+</script>
+<script>
+ document.addEventListener('DOMContentLoaded', function() {
+   let cumulativeHeight = -60;
+   const boxes = document.querySelectorAll('.buisnessunits');
+   boxes.forEach(function(box) {
+     box.style.transform = `translate(300px , ${cumulativeHeight}px)`;
+     cumulativeHeight += box.offsetHeight + 10;
+   });
+
+
+   let valuestreamcumulativeHeight = -60;
+   const valuestreamboxes = document.querySelectorAll('.valuestreambox');
+   valuestreamboxes.forEach(function(boxvaluestream) {
+     boxvaluestream.style.transform = `translate(700px , ${valuestreamcumulativeHeight}px)`;
+     valuestreamcumulativeHeight += boxvaluestream.offsetHeight + 10;
+   });
+
+
+   let valuestreamteamcumulativeHeight = -60;
+   const valuestreamteamboxes = document.querySelectorAll('.valuestreamteambox');
+   valuestreamteamboxes.forEach(function(boxvaluestreamteam) {
+     boxvaluestreamteam.style.transform = `translate(1100px , ${valuestreamteamcumulativeHeight}px)`;
+     valuestreamteamcumulativeHeight += boxvaluestreamteam.offsetHeight + 10;
+   });
+
+
+   let buisnessunitsteamcumulativeHeight = -60;
+   const buisnessunitsteamboxes = document.querySelectorAll('.buisnessunitsteam');
+   buisnessunitsteamboxes.forEach(function(boxbuisnessunitsteam) {
+     boxbuisnessunitsteam.style.transform = `translate(1450px , ${buisnessunitsteamcumulativeHeight}px)`;
+     buisnessunitsteamcumulativeHeight += boxbuisnessunitsteam.offsetHeight + 10;
+   });
+
+   let orgteamboxcumulativeHeight = -60;
+   const orgteamboxboxes = document.querySelectorAll('.orgteambox');
+   orgteamboxboxes.forEach(function(boxorgteambox) {
+     boxorgteambox.style.transform = `translate(1850px , ${orgteamboxcumulativeHeight}px)`;
+     orgteamboxcumulativeHeight += boxorgteambox.offsetHeight + 10;
+   });
+
+
+
    
+
+   
+ });
 </script>
 @endsection
