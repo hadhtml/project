@@ -8,6 +8,12 @@ $var_objective = "mapper-org";
    body{
       overflow: auto !important;
    }
+   .subheader-solid{
+      width: 100%;
+      position: fixed;
+      top: -3%;
+      left: 300px;
+   }
    .body-inner-content{
       overflow: auto;
       min-height: 1600px;
@@ -20,7 +26,7 @@ $var_objective = "mapper-org";
 </style>
 <div class="row rotatex">
    <div class="col-md-12">
-      <div style="width: 100%; height: 1000px; padding: 50px;">
+      <div style="width: 100%; height: 1000px; padding: 50px;margin-top: 150px;">
          <!-- Node 1 -->
          <div id="node_1" class="node" style="transform: translate(-60px, -60px);;">
             <div class="node-name slot-active drag-impo-grab">
