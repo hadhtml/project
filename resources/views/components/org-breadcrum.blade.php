@@ -1,6 +1,6 @@
 <!-- begin breadcrums -->
 @php
-$organization  = DB::table('organization')->where('user_id',Auth::id())->first();
+$organization  = DB::table('organization')->where('user_id',Auth::id())->orWhere('user_id',Auth::user()->invitation_id)->first();
 @endphp
                 <div class="subheader subheader-solid breadcrums" id="kt_subheader">
                     <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">

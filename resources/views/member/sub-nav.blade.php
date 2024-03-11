@@ -1,6 +1,14 @@
 @php
-$Stream = DB::table('value_stream')->where('user_id',Auth::id())->get();
-$Unit = DB::table('business_units')->where('user_id',Auth::id())->where('id',$organization->unit_id)->first();
+$Stream = DB::table('value_stream')->where('user_id',Auth::id())->orWhere('user_id', Auth::user()->invitation_id)
+->get();
+
+$Unit = DB::table('business_units')
+->where('id',$organization->unit_id)
+    ->where(function($query) {
+        $query->where('user_id', Auth::id())
+              ->orWhere('user_id', Auth::user()->invitation_id);
+    })
+    ->first();
 
 @endphp  
 

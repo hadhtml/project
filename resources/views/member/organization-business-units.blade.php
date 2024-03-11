@@ -22,7 +22,7 @@ $var_objective = "Org-Unit";
        @php
        $ValueCount = DB::table('value_stream')->where('unit_id',$unit->id)->count();
        $TeamCount = DB::table('unit_team')->where('org_id',$unit->id)->count();
-       $member = DB::table('members')->where('org_user',Auth::id())->count();
+       $member = DB::table('members')->where('org_user',Auth::id())->orWhere('org_user',Auth::user()->invitation_id)->count();
        @endphp
 
         <div class="col-md-3">
@@ -187,7 +187,7 @@ $var_objective = "Org-Unit";
                     <form class="needs-validation" action="{{url('update-business-unit')}}" method="POST">
                         @csrf
                         <input type="hidden" name="unit_id" value="{{$unit->id}}">
-                        <input type="hidden" name="org_id" value="{{ DB::table('organization')->where('user_id' ,Auth::id())->first()->id }}">
+                        <input type="hidden" name="org_id" value="{{ DB::table('organization')->where('user_id' ,Auth::id())->orWhere('user_id',Auth::user()->invitation_id)->first()->id }}">
                         <div class="row">
                             <div class="col-md-12 col-lg-12 col-xl-12">
                                 <div class="form-group mb-0">
@@ -260,7 +260,7 @@ $var_objective = "Org-Unit";
             <div class="modal-body">
                 <form class="needs-validation" action="{{url('add-business-unit')}}"  method="POST">
                     @csrf
-                    <input type="hidden" name="org_unit_id" value="{{ DB::table('organization')->where('user_id' ,Auth::id())->first()->id }}">
+                    <input type="hidden" name="org_unit_id" value="{{ DB::table('organization')->where('user_id' ,Auth::id())->orWhere('user_id',Auth::user()->invitation_id)->first()->id }}">
                     <div class="row">
                         <div class="col-md-12 col-lg-12 col-xl-12">
                             <div class="form-group mb-0">

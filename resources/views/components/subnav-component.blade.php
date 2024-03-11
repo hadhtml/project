@@ -1,5 +1,5 @@
 @php
-$organization = DB::table('organization')->where('user_id',Auth::id())->where('trash',NULL)->first();    
+$organization = DB::table('organization')->where('user_id',Auth::id())->orWhere('user_id',Auth::user()->invitation_id)->where('trash',NULL)->first();    
 @endphp
 <div class="flex-shrink-0 p-3 bg-white sub-nav open" id="panel">
     {{-- <button id="closeBtn" class="close-button">

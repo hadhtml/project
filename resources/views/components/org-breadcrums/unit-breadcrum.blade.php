@@ -14,7 +14,7 @@
                     </div>
                     <div>
                         <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
-                            {{ DB::table('business_units')->where('id' , $organization->id)->first()->business_name }}
+                            {{ DB::table('business_units')->where('id',$organization->id)->first()->business_name }}
 
                         </h5>
                     </div>

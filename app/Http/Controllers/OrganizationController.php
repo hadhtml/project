@@ -46,7 +46,13 @@ class OrganizationController extends Controller
 
     public function OrgTeam($id)
     {
-    $organization = DB::table('organization')->where('slug',$id)->where('user_id',Auth::id())->first();
+    $organization = DB::table('organization')
+    ->where('slug',$id)
+        ->where(function($query) {
+            $query->where('user_id', Auth::id())
+                  ->orWhere('user_id', Auth::user()->invitation_id);
+        })
+        ->first();
 
     if($organization)
     {
