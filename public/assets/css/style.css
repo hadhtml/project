@@ -18339,10 +18339,10 @@ hr {
     -webkit-text-fill-color: transparent;
     /* Make text transparent */
 
-    font-size: 54px;
+    font-size: 46px;
     font-style: normal;
     font-weight: 600;
-    line-height: 70px;
+    line-height: 63px;
     text-transform: capitalize;
 
 
@@ -22525,4 +22525,5 @@ line-height: normal;
 .list-unstyled li
 {
     float: left;
+    width: 100% !important;
 }
