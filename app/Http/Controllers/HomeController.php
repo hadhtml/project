@@ -15,6 +15,7 @@ class HomeController extends Controller
     }
     public function index()
     {
+     
         if(Auth::id())
         {
           $organization  = Organization::where('user_id',Auth::id())->where('trash',NULL)->first();
@@ -27,7 +28,8 @@ class HomeController extends Controller
     }
     public function dashboard()
     {
-        $organization  = Organization::where('user_id',Auth::id())->where('trash',NULL)->first();
+      
+        $organization  = Organization::where('user_id',Auth::id())->orWhere('user_id',Auth::user()->invitation_id)->where('trash',NULL)->first();
         return view('organizations.dashboard',compact('organization'));
     }
     public function asignmodule()

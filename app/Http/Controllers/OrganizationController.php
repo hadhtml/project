@@ -26,7 +26,7 @@ class OrganizationController extends Controller
     if(Auth::id())
     {
       $organization  = Organization::where('user_id',Auth::id())->where('trash',NULL)->first();
-      return redirect('dashboard/organizations');
+      return redirect('organization/dashboard');
     }else
     {
       return view('welcome');
@@ -46,7 +46,13 @@ class OrganizationController extends Controller
 
     public function OrgTeam($id)
     {
-    $organization = DB::table('organization')->where('slug',$id)->where('user_id',Auth::id())->first();
+    $organization = DB::table('organization')
+    ->where('slug',$id)
+        ->where(function($query) {
+            $query->where('user_id', Auth::id())
+                  ->orWhere('user_id', Auth::user()->invitation_id);
+        })
+        ->first();
 
     if($organization)
     {
@@ -55,7 +61,7 @@ class OrganizationController extends Controller
     }else
     {
     
-    echo "You're not authorized to access this Link <a href= ".url('dashboard/organizations').">Back</a>";   
+    echo "You're not authorized to access this Link <a href= ".url('organization/dashboard').">Back</a>";   
     }   
         
     }
