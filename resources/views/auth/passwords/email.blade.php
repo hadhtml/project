@@ -13,6 +13,7 @@
     <!-- MDB -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{{asset('public/assets/css/style.css')}}">
+    <link rel="icon" type="image/x-icon" href="{{asset('public/assets/images/icons/icon.ico')}}">
     <title>{{ __('Reset Password') }}</title>
     <style type="text/css">
     </style>

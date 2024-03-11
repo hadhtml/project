@@ -18203,7 +18203,10 @@ hr {
 
 /*Login*/
 
-
+.radius-10
+{
+    border-radius: 10 !important;
+}
 
 .bg-white {
     background-color: #ffffff !important;
@@ -22510,4 +22513,16 @@ line-height: normal;
 .check-in-card .check-in-content p
 {
     margin-bottom: 0px !important;
+}
+
+.auth-form h3
+{
+    font-size: 33px;
+    font-weight: 600;
+    margin-bottom: 3px;
+}
+
+.list-unstyled li
+{
+    float: left;
 }

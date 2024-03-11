@@ -13,6 +13,7 @@
     <!-- MDB -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{{asset('public/assets/css/style.css')}}">
+    <link rel="icon" type="image/x-icon" href="{{asset('public/assets/images/icons/icon.ico')}}">
     <title>{{ __('verification') }}</title>
     <style type="text/css">
     </style>
@@ -20,53 +21,46 @@
 
 <body>
     <div class="d-flex flex-column flex-root">
-        <!--begin::Login-->
-        <div class="login login-2 login-signin-on d-flex flex-column flex-lg-row flex-column-fluid bg-white">
-            <!--begin::Aside-->
-            <div class="login-aside order-2 order-lg-1 d-flex flex-row-auto position-relative overflow-hidden">
-                <!--begin: Aside Container-->
-                <div class="d-flex flex-column-fluid flex-column justify-content-between py-9 px-7 py-lg-10 px-lg-30">
-                    <div class="d-flex flex-column-fluid flex-column flex-center">
-                        <div class="login-nav-links pt-md-1 pb-md-3 pt-sm-5 px-lg-0 pt-5 px-7">
-                       
-                        </div>
-                        <div class="input-fields-area py-lg-10">
-                           <h3>{{ __('Verify Your Email Address') }}</h3>
-                     
-   
-       
-          
-                
+        <div class="container p-5" >
+            <div class="card" style="height: 50vh !important;">
+                <div class="card-body p-0">
+                    <!--begin::Login-->
+                    <div class="login login-2 login-signin-on d-flex flex-column flex-lg-row flex-column-fluid bg-white">
+                        <!--begin::Aside-->
+                        <div class="login-aside order-2 order-lg-1 d-flex flex-row-auto position-relative overflow-hidden">
+                            <!--begin: Aside Container-->
+                            <div class="d-flex flex-column-fluid flex-column justify-content-between py-9 px-7 py-lg-10 px-lg-30">
+                                <div class="d-flex flex-column-fluid flex-column flex-center">
+                                    <div class="login-nav-links pt-md-1 pb-md-3 pt-sm-5 px-lg-0 pt-5 px-7">
+                                   
+                                    </div>
+                                    <div class="input-fields-area py-lg-10">
+                                       <h3>{{ __('Verify Your Email Address') }}</h3>
+                                        @if (session('resent'))
+                                            <div class="alert alert-success" role="alert">
+                                                {{ __('A fresh verification link has been sent to your email address.') }}
+                                            </div>
+                                        @endif
 
-                
-                    @if (session('resent'))
-                        <div class="alert alert-success" role="alert">
-                            {{ __('A fresh verification link has been sent to your email address.') }}
+                                        {{ __('Before proceeding, please check your email for a verification link.') }}
+                                        {{ __('If you did not receive the email') }},
+                                        <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
+                                            @csrf
+                                            <button type="submit" class="btn btn-primary btn-lg btn-theme btn-block ripple mt-3">{{ __('click here to request another') }}</button>.
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    @endif
-
-                    {{ __('Before proceeding, please check your email for a verification link.') }}
-                    {{ __('If you did not receive the email') }},
-                    <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
-                        @csrf
-                        <button type="submit" class="btn btn-primary btn-lg btn-theme btn-block ripple mt-3">{{ __('click here to request another') }}</button>.
-                    </form>
-              
-      
-  
-
-                            
-                         
-                          
-                        </div>
+                        <!--begin::Aside-->
+                        @include('components.authsidebar')
+                        <!--begin::Content-->
+                    
                     </div>
                 </div>
             </div>
-            <!--begin::Aside-->
-            @include('components.authsidebar')
-            <!--begin::Content-->
-        
         </div>
+
     </div>
 </body>
 <!-- MDB -->
