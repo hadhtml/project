@@ -11,7 +11,8 @@ $var_objective = "mapper-org";
    .subheader-solid{
       width: 100%;
       position: fixed;
-      top: -3%;
+      top: -2%;
+      z-index: 1000000000;
       left: 300px;
    }
    .body-inner-content{
