@@ -262,6 +262,17 @@
                 @include('Business-units.unit-sidebar')
             @endif
 
+            @if ($var_objective == 'mapper-stream')
+                @include('member.navbar')
+            @endif
+
+            @if ($var_objective == 'mapper-org')
+                @include('components.sidebar-component')
+            @endif
+
+            
+
+
             @if ($var_objective == 'V-Stream-dashboard')
             @include('member.navbar')
             @endif
@@ -360,6 +371,15 @@
                  @if ($var_objective == 'mapper-unit')
                     @include('components.org-breadcrums.unit-breadcrum')
                  @endif
+
+                 @if ($var_objective == 'mapper-stream')
+                    @include('mapper.stream.beardcumb')
+                 @endif
+
+                 @if ($var_objective == 'mapper-org')
+                    @include('mapper.org.beardcumb')
+                 @endif
+
                  
                  @if ($var_objective == 'V-Stream')
                  

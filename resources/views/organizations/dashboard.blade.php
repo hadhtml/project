@@ -34,7 +34,7 @@
             ->where('flag_type','Impediment')
             ->where('flag_title','!=',NULL)
             ->count();
-        $businessunits = DB::table('business_units')->where('user_id' ,  Auth::id())->count();
+        $businessunits = DB::table('business_units')->where('user_id' ,  Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->count();
     @endphp
     
     

@@ -5,7 +5,7 @@ $var_objective = "security";
 <title>My Profile</title>
 @section('content')
 @php
-$organization  = DB::table('organization')->where('user_id',Auth::id())->first();
+$organization  = DB::table('organization')->where('user_id',Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->first();
 @endphp
 <div class="row">
    <div class="col-md-12">

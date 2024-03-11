@@ -7,7 +7,7 @@
     <h6 class="title">Menu</h6>
     <ul class="list-unstyled ps-0">
         <li class="mb-1">
-            <a href="{{url('/dashboard/organizations')}}" style="text-decoration: none;" class="" >
+            <a href="{{url('/organization/dashboard')}}" style="text-decoration: none;" class="" >
             <button class="btn btn-toggle align-items-center rounded" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
              All Organizations   
             </button>

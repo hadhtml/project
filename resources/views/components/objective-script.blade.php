@@ -129,21 +129,43 @@
             handleDivClick('{{ $epicforcollapse->initiative_id }}');
         @endif
         $("#edit-epic-modal-new").on('hidden.bs.modal', function(){
+           deletenullobject('epics');
            var new_url="{{ url()->current() }}";
            window.history.pushState("data","Title",new_url);
         });
-
-
+        $("#edit-key-result-new").on('hidden.bs.modal', function(){
+           deletenullobject('key_result');
+           var new_url="{{ url()->current() }}";
+           window.history.pushState("data","Title",new_url);
+        });
         @if(isset($_GET['objective']))
             editobjective(event , "{{ $_GET['objective'] }}" , '{{ $organization->slug }}');
         @endif
 
         $("#objectivemodalnew").on('hidden.bs.modal', function(){
+            deletenullobject('objectives');
            var new_url="{{ url()->current() }}";
            window.history.pushState("data","Title",new_url);
         });
 
     });
+
+    function deletenullobject(type) {
+        $.ajax({
+            type: "POST",
+            url: "{{ url('deletenullobject') }}",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                type: type,
+            },
+            success: function(res) {
+                
+            }
+        });
+    }
+
 
     function addnewquartervalue(id, key_chart_id, sprint_id) {
         var value = $('#new-chart-value' + id).val();
@@ -198,17 +220,7 @@
             @endphp
             $("#nestedCollapsible{{ $objective_id }}").collapse('toggle');
         @endif
-        $("#edit-key-result-new").on('hidden.bs.modal', function(){
-           if($('#key_title').val() == '')
-           {
-                // $('#key_delete_id').val("$_GET['keyresult']");
-                // $('#key_delete_obj_id').val(obj);
-                // DeleteObjectivekey()
-                // deletekeyresult($('#cardid').val())
-           }
-           var new_url="{{ url()->current() }}";
-           window.history.pushState("data","Title",new_url);
-        });
+
     });
      function editobjectivekey(event,id) {
         event.stopPropagation();
@@ -830,7 +842,24 @@
     }
     function editobjective(event , id , slug) {
         event.stopPropagation();
+        @if($organization->type == 'org')
         var new_url=""+main_url()+"/dashboard/organization/"+slug+"/portfolio/org?objective="+id;
+        @endif
+        @if($organization->type == 'orgT')
+        var new_url=""+main_url()+"/dashboard/organization/"+slug+"/portfolio/orgT?objective="+id;
+        @endif
+        @if($organization->type == 'unit')
+        var new_url=""+main_url()+"/dashboard/organization/"+slug+"/portfolio/unit?objective="+id;
+        @endif
+        @if($organization->type == 'stream')
+        var new_url=""+main_url()+"/dashboard/organization/"+slug+"/portfolio/stream?objective="+id;
+        @endif
+        @if($organization->type == 'BU')
+        var new_url=""+main_url()+"/dashboard/organization/"+slug+"/portfolio/BU?objective="+id;
+        @endif
+        @if($organization->type == 'VS')
+        var new_url=""+main_url()+"/dashboard/organization/"+slug+"/portfolio/VS?objective="+id;
+        @endif
         window.history.pushState("data","Title",new_url);
         $.ajax({
             type: "POST",
