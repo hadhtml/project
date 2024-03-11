@@ -5,13 +5,19 @@ $var_objective = "mapper-unit";
 <title>BU-OKR Mapper</title>
 @section('content')
 <style type="text/css">
-  body{
-    overflow: auto !important;
-  }
+   body{
+      overflow: auto !important;
+   }
+   .subheader-solid{
+      width: 100%;
+      position: fixed;
+      top: -3%;
+      left: 300px;
+   }
    .body-inner-content{
       overflow: auto;
       min-height: 1600px;
-      min-width: 2100px;
+      min-width: 2500px;
       padding-left: 25px !important;
    }
    .rotatex{
@@ -20,7 +26,7 @@ $var_objective = "mapper-unit";
 </style>
 <div class="row">
     <div class="col-md-12">
-        <div style="width: 100%; height: 1000px; padding: 50px;">
+        <div style="width: 100%; height: 5000px; padding: 50px;margin-top: 150px;">
             
         <!-- Node 1 -->
           <div id="node_1" class="node" style="transform: translate(-60px, -60px);;">
@@ -60,7 +66,7 @@ $var_objective = "mapper-unit";
             @endforeach
           </div>
           @foreach(DB::table('unit_team')->where('org_id'  , $data->id)->get() as $b_t)
-          <div id="buisnessunitteam{{ $b_t->id }}" class="node">
+          <div id="buisnessunitteam{{ $b_t->id }}" class="node buisnessunitsteam">
             <div class="node-name slot-active drag-impo-grab">
               <div class="slot-label drag-impo-grab"><span class="mr-2 d-flex badge-team-valuestream">BU <span style="font-size:22px" class="material-symbols-outlined ml-2">groups</span></span>  {{ $b_t->team_title }}</div>
             </div>
@@ -85,7 +91,7 @@ $var_objective = "mapper-unit";
           <!-- Node 1 End -->
           <!-- Node 2 -->
           @foreach(DB::table('value_stream')->where('unit_id'  , $data->id)->orderby('id' , 'asc')->limit(4)->get() as $key_calue_stream => $v)
-          <div id="valuestream{{ $v->id }}" class="node">
+          <div id="valuestream{{ $v->id }}" class="node valuestreambox">
             <div class="node-name slot-active drag-impo-grab">
               <div class="slot-label drag-impo-grab"><span style="font-size:22px" class="material-symbols-outlined">layers</span> {{ $v->value_name }}</div>
             </div>
@@ -123,7 +129,7 @@ $var_objective = "mapper-unit";
             @endforeach
           </div>
             @foreach(DB::table('value_team')->where('org_id'  , $v->id)->get() as $key_value_stream_team => $v_t)
-            <div id="valuestreamteam{{ $v_t->id }}" class="node">
+            <div id="valuestreamteam{{ $v_t->id }}" class="node valuestreamteambox">
               <div class="node-name slot-active drag-impo-grab">
                 <div class="slot-label drag-impo-grab"><span class="mr-2 d-flex badge-team-valuestream">VS <span style="font-size:22px" class="material-symbols-outlined ml-2">groups</span></span>  {{ $v_t->team_title }}</div>
               </div>
@@ -149,46 +155,6 @@ $var_objective = "mapper-unit";
         </div>
     </div>
 </div>
-
-
-<style type="text/css">
-  @foreach(DB::table('value_stream')->where('unit_id'  , $data->id)->get() as $key_calue_stream => $v)
-      @foreach(DB::table('value_team')->where('org_id'  , $v->id)->get() as $key_value_stream_team => $v_t)
-      @if($loop->first)
-        #valuestreamteam{{ $v_t->id }}{
-          transform: translate(900px, -60px);
-        }
-      @else
-      #valuestreamteam{{ $v_t->id }}{
-        transform: translate(900px, {{ $key_value_stream_team*200 }}px);
-      }
-      @endif
-      @endforeach
-
-    #valuestream{{ $v->id }}{
-        transform: translate(350px, {{ $v->mapper_height  }}px);
-      }
-
-  @endforeach
-
-
-  @foreach(DB::table('unit_team')->where('org_id'  , $data->id)->get() as $b_t)
-
-  @if($loop->first)
-    #buisnessunitteam{{ $b_t->id }}{
-      transform: translate(900px, 400px);
-    }
-  @else
-  #buisnessunitteam{{ $b_t->id }}{
-    transform: translate(900px, {{ $key_value_stream_team*200 }}px);
-  }
-  @endif
-
-  @endforeach
-</style>
-
-
-
 @endsection
 @section('scripts')
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/leader-line@1.0.5/leader-line.min.js"></script>
@@ -298,6 +264,33 @@ $var_objective = "mapper-unit";
     @endforeach
   @endforeach
 });
+</script>
 
-    </script>
+<script>
+ document.addEventListener('DOMContentLoaded', function() {
+
+   let valuestreamcumulativeHeight = -60;
+   const valuestreamboxes = document.querySelectorAll('.valuestreambox');
+   valuestreamboxes.forEach(function(boxvaluestream) {
+     boxvaluestream.style.transform = `translate(350px , ${valuestreamcumulativeHeight}px)`;
+     valuestreamcumulativeHeight += boxvaluestream.offsetHeight + 10;
+   });
+
+
+   let valuestreamteamcumulativeHeight = -60;
+   const valuestreamteamboxes = document.querySelectorAll('.valuestreamteambox');
+   valuestreamteamboxes.forEach(function(boxvaluestreamteam) {
+     boxvaluestreamteam.style.transform = `translate(800px , ${valuestreamteamcumulativeHeight}px)`;
+     valuestreamteamcumulativeHeight += boxvaluestreamteam.offsetHeight + 10;
+   });
+
+
+   let buisnessunitsteamcumulativeHeight = -60;
+   const buisnessunitsteamboxes = document.querySelectorAll('.buisnessunitsteam');
+   buisnessunitsteamboxes.forEach(function(boxbuisnessunitsteam) {
+     boxbuisnessunitsteam.style.transform = `translate(1200px , ${buisnessunitsteamcumulativeHeight}px)`;
+     buisnessunitsteamcumulativeHeight += boxbuisnessunitsteam.offsetHeight + 10;
+   });  
+ });
+</script>
 @endsection
