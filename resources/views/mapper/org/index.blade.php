@@ -28,7 +28,7 @@ $var_objective = "mapper-org";
    <div class="col-md-12">
       <div style="width: 100%; height: 5000px; padding: 50px;margin-top: 150px;">
          <!-- Node 1 -->
-         <div id="node_1" class="node" style="transform: translate(-60px, -60px);;">
+         <div id="node_1" class="node" style="transform: translate(-60px, -60px);">
             <div class="node-name slot-active drag-impo-grab">
                <div class="slot-label drag-impo-grab"><span style="font-size:22px" class="material-symbols-outlined mr-2">auto_stories</span> {{ $data->organization_name }}</div>
             </div>

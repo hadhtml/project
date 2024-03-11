@@ -75,55 +75,7 @@ class MapperController extends Controller
         {
             $organization = DB::table('business_units')->where('slug'  , $url)->first();
             $data = DB::table('business_units')->where('slug'  , $url)->first();
-            $valuestream = DB::table('value_stream')->where('unit_id'  , $data->id)->orderby('id' , 'asc')->limit(4)->get();
-            $count = 1;
-            foreach ($valuestream as $key => $v) {
-                $objective = DB::table('objectives')->where('unit_id' , $v->id)->where('type' , 'stream')->count();
-                $key_result = DB::table('key_result')->where('unit_id' , $v->id)->where('type' , 'stream')->count();
-                $totalrows  = ($objective+$key_result+1)*50;
-                $temp = new temp_data_counts();
-                $temp->value_id = $v->id;
-                $temp->indexcount = $key+1;
-                $temp->type = 'stream';
-                $temp->user_id = Auth::id();
-                $temp->height = $totalrows;
-                $temp->save();
-            }
-            foreach (temp_data_counts::where('user_id' , Auth::id())->orderby('indexcount' , 'asc')->where('type', 'stream')->get() as $key=> $r) {
-                if($r->indexcount == 1)
-                {
-                    $update = temp_data_counts::find($r->id);
-                    $update->exactheight = -60;
-                    $update->save();
-                }
-                if($r->indexcount == 2)
-                {
-                    $exactheightv = temp_data_counts::where('user_id' , Auth::id())->where('indexcount' , 1)->where('type', 'stream')->sum('height');
-                    $update = temp_data_counts::find($r->id);
-                    $update->exactheight = $exactheightv;
-                    $update->save();
-                }
-                if($r->indexcount == 3)
-                {
-                    $exactheightv = temp_data_counts::where('user_id' , Auth::id())->where('indexcount' , 2)->where('type', 'stream')->value(DB::raw("SUM(exactheight + height)"));
-                    $update = temp_data_counts::find($r->id);
-                    $update->exactheight = $exactheightv;
-                    $update->save();
-                }
-                if($r->indexcount == 4)
-                {
-                    $exactheightv = temp_data_counts::where('user_id' , Auth::id())->where('indexcount' , 3)->where('type', 'stream')->value(DB::raw("SUM(exactheight + height)"));
-                    $update = temp_data_counts::find($r->id);
-                    $update->exactheight = $exactheightv;
-                    $update->save();
-                }
-            }
-            foreach (temp_data_counts::where('user_id' , Auth::id())->orderby('indexcount' , 'asc')->where('type', 'stream')->get() as $r) {
-                $updatevaluestream = value_stream::find($r->value_id);
-                $updatevaluestream->mapper_height = $r->exactheight;
-                $updatevaluestream->save();
-            }
-            temp_data_counts::where('user_id' , Auth::id())->orderby('indexcount' , 'asc')->where('type', 'stream')->delete();
+            $valuestream = DB::table('value_stream')->where('unit_id'  , $data->id)->orderby('id' , 'asc')->get();
             $buteam = DB::table('unit_team')->where('org_id'  , $data->id)->get();
             return view('mapper.unit.index',compact('data','valuestream','buteam','organization')); 
         }
@@ -142,8 +94,6 @@ class MapperController extends Controller
             $data = DB::table('organization')->where('slug'  , $url)->first();
             $business_units = DB::table('business_units')->where('org_id'  , $data->id)->orderby('id' , 'asc')->get();
             $valuestream = DB::table('value_stream')->where('org_id'  , $data->id)->orderby('id' , 'asc')->get();
-            Cmf::savemapperheight($organization->id , 'unit');
-            Cmf::savemapperheight($organization->id , 'stream');
             return view('mapper.org.index',compact('data','business_units','organization','valuestream')); 
         }
     }
