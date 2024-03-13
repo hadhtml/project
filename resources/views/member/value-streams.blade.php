@@ -242,7 +242,7 @@ $var_objective = "V-Stream";
                             </div>
                         </div>
                         @php
-                        $BCount = DB::table('business_units')->where('user_id',Auth::id())->count();
+                        $BCount = DB::table('business_units')->where('user_id',Auth::id())->orWhere('user_id',Auth::user()->invitation_id)->count();
                         @endphp
                         <!--  <div class="col-md-12 col-lg-12 col-xl-12">-->
                         <!--    <div class="form-group mb-0">-->
@@ -262,13 +262,13 @@ $var_objective = "V-Stream";
                         <!--@endif-->
                         
                         @php
-                        $memberCount = DB::table('members')->where('org_user',Auth::id())->count();
+                        $memberCount = DB::table('members')->where('org_user',Auth::id())->orWhere('org_user',Auth::user()->invitation_id)->count();
                         @endphp
                         <div class="col-md-12 col-lg-12 col-xl-12">
                             <div class="form-group mb-0">
                                 <select class="form-control" name="lead_manager" required>
                                     <option value="NULL" selected>Select Lead</option>
-                                    <?php foreach(DB::table('members')->where('org_user',Auth::id())->get() as $r){ ?>
+                                    <?php foreach(DB::table('members')->where('org_user',Auth::id())->orWhere('org_user',Auth::user()->invitation_id)->get() as $r){ ?>
                                       <option value="{{ $r->id }}">{{ $r->name }} {{$r->last_name}}</option>
                                     <?php }  ?>
                                 </select>
