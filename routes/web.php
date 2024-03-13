@@ -439,3 +439,10 @@ Route::post('update-profile', [App\Http\Controllers\OrganizationController::clas
 Route::post('change-init-pos', [App\Http\Controllers\ObjectiveController::class,'UpdatePosInit']);
 
 Route::post('frequency-update', [App\Http\Controllers\OrganizationController::class,'frequencyupdate']);
+
+Route::post('searchissues', [App\Http\Controllers\EpicController::class,'Searchissues']);
+Route::post('selectissue', [App\Http\Controllers\EpicController::class,'selectIssue']);
+Route::post('savemapissue', [App\Http\Controllers\EpicController::class,'saveIssue']);
+Route::post('deletelinkingmap', [App\Http\Controllers\EpicController::class,'deletelinkingmap']);
+
+Route::get('dashboard/organization/{slug}/leaderline/{id}', [App\Http\Controllers\EpicController::class,'LeaderLinemap']);
