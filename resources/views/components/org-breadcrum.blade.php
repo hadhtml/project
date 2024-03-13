@@ -8,7 +8,7 @@ $organization  = DB::table('organization')->where('user_id',Auth::id())->orWhere
                         <div class="d-flex align-items-start flex-column flex-wrap mr-2">
                             <h5 class="text-dark font-weight-bold mt-2 mr-5">
                                @if($organization) 
-                               {{$organization->organization_name.'-'.$organization->code}}
+                               {{$organization->organization_name}}
                                @else
                                organization
                                @endif
