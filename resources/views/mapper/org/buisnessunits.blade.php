@@ -1,5 +1,9 @@
 @foreach($business_units as $b)
+
+<div id="buisnessunit{{ $b->id }}" class="node">
+=======
 <div id="buisnessunit{{ $b->id }}" class="node buisnessunits">
+
    <div class="node-name slot-active drag-impo-grab">
       <div class="slot-label drag-impo-grab"><span style="font-size:22px" class="material-symbols-outlined">domain</span> {{ $b->business_name }}</div>
    </div>
@@ -37,7 +41,11 @@
    @endforeach
 </div>
 @foreach(DB::table('unit_team')->where('org_id'  , $b->id)->get() as $b_t)
+
+<div id="buisnessunitteam{{ $b_t->id }}" class="node">
+=======
 <div id="buisnessunitteam{{ $b_t->id }}" class="node buisnessunitsteam">
+
    <div class="node-name slot-active drag-impo-grab">
       <div class="slot-label drag-impo-grab"><span class="mr-2 d-flex badge-team-valuestream">BU <span style="font-size:22px" class="material-symbols-outlined ml-2">groups</span></span>  {{ $b_t->team_title }}</div>
    </div>
@@ -59,4 +67,33 @@
    @endforeach
 </div>
 @endforeach
+
 @endforeach
+
+<style type="text/css">
+@foreach($business_units as $key_calue_stream => $b)
+@if($loop->first)
+#buisnessunit{{ $b->id }}{
+    transform: translate(300px, -60px);
+}
+@else
+#buisnessunit{{ $b->id }}{
+    transform: translate(300px, {{ $b->mapper_height }}px);
+}
+@endif
+   @foreach(DB::table('unit_team')->where('org_id'  , $b->id)->get() as $b_t)
+      @if($loop->first)
+      #buisnessunitteam{{ $b_t->id }}{
+      transform: translate(1350px, 400px);
+      }
+      @else
+      #buisnessunitteam{{ $b_t->id }}{
+      transform: translate(1350px, -60px);
+      }
+      @endif
+   @endforeach
+@endforeach
+</style>
+=======
+@endforeach
+

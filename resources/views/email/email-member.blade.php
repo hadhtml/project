@@ -102,9 +102,13 @@
   <tr class="">
 <td class="">
 @php
-$img = 'https://dev.outcomemet.com/public/assets/images/icons/logo.svg';
+$img = 'https://dev.outcomemet.com/public/assets/images/icons/icon-color.png';
 @endphp 
+
+<img alt="robot picture" class="" height="155" src="{{ url('public/assets/images/icons/icon-color.png') }}" width="155">
+=======
 <img alt="robot picture" class="" height="155" src="{{ url('public/assets/images/icons/logo.svg') }}" width="155">
+
 </td>
 </tr>
 <tr class=""><td class="headline">Welcome to OutcomeMet!</td></tr>
@@ -128,7 +132,7 @@ $img = 'https://dev.outcomemet.com/public/assets/images/icons/logo.svg';
 <tr>
 <td class="">
 <div class="">
-<a style="background-color:#674299;border-radius:4px;color:#fff;display:inline-block;font-family:Helvetica, Arial, sans-serif;font-size:18px;font-weight:normal;line-height:50px;text-align:center;text-decoration:none;width:350px;-webkit-text-size-adjust:none;" href="https://agileprolific.com/dev/">Visit Account and Start Managing</a>
+<a style="background-color:#ffffff;border-radius:4px;color:#2F67F6;display:inline-block;font-family:Helvetica, Arial, sans-serif;font-size:18px;font-weight:normal;line-height:50px;text-align:center;text-decoration:none;width:350px;-webkit-text-size-adjust:none;" href="https://agileprolific.com/dev/">Visit Account and Start Managing</a>
 </div>
  <br>
 </td>
@@ -141,7 +145,7 @@ $img = 'https://dev.outcomemet.com/public/assets/images/icons/logo.svg';
 <tbody>
 <tr>
 <td class="" style="color:#444;
-                    ">
+                   ">
 <p>The password was auto-generated, however feel free to change it 
   
     <a href="https://dev.outcomemet.com/password/reset" style="text-decoration: underline;">

@@ -273,7 +273,7 @@ class JiraController extends Controller
     public function JiraSetting()
      {
          
-      $Jiradata = DB::table('jira_setting')->where('user_id',Auth::id())->get();
+      $Jiradata = DB::table('jira_setting')->where('user_id',Auth::id())->orWhere('user_id',Auth::user()->invitation_id)->get();
        return view('settings.jira-setting',compact('Jiradata'));  
      }
      

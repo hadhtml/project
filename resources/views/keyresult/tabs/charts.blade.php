@@ -21,10 +21,7 @@
         @php
              
         $value = [];
-        $keyqvalue = DB::table('key_quarter_value')
-            ->where('key_chart_id', $KEYChart->id)
-            // ->orderby('id', 'DESC')
-            ->get();
+        $QId = [];
 
             $Qvalue = [];
             $Qname = [];
@@ -38,6 +35,7 @@
             {
             $Qvalue[] = $allQ->quarter_value;
             $Qname[] = 'Q'.$allQ->IndexCount;
+            $QId[] =   $allQ->id;
             }
              array_unshift($Qvalue, 0);
             }else
@@ -46,7 +44,12 @@
             $Qname = [];
             }
 
+            $keyqvalue = DB::table('key_quarter_value')
+            ->whereIn('key_chart_id',$QId)
+            ->get();
+
          @endphp
+         
          
        
        @if(count($keyqvalue) > 0)

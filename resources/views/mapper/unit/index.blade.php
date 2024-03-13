@@ -165,6 +165,43 @@ $var_objective = "mapper-unit";
   "use strict";
 
   @php
+
+    // $team_link_child_stream =   DB::table('team_link_child')->where('user_id' , Auth::id())->where('bussiness_unit_id' , $data->id)->where('from' , 'stream')->get();
+    $team_link_child_stream = DB::table('team_link_child')
+    ->where('bussiness_unit_id' , $data->id)
+    ->where('from' , 'stream')
+    ->where(function($query) {
+        $query->where('user_id', Auth::id())
+              ->orWhere('user_id', Auth::user()->invitation_id);
+    })
+    ->get();
+    // $team_link_child_unit =   DB::table('team_link_child')->where('user_id' , Auth::id())->where('bussiness_unit_id' , $data->id)->where('from' , 'unit')->get();
+    $team_link_child_unit = DB::table('team_link_child')
+    ->where('bussiness_unit_id' , $data->id)
+    ->where('from' , 'unit')
+    ->where(function($query) {
+        $query->where('user_id', Auth::id())
+              ->orWhere('user_id', Auth::user()->invitation_id);
+    })
+    ->get();
+
+    // $team_link_child_unit_or_stream = DB::table('team_link_child')->where('user_id' , Auth::id())->where('bussiness_unit_id' , $data->id)->orwhere('from' ,'stream')->where('from' , 'unit')->get();
+    $team_link_child_unit_or_stream = DB::table('team_link_child')
+    ->where('bussiness_unit_id' , $data->id)
+    ->orwhere('from' ,'stream')
+    ->where('from' , 'unit')
+    ->where(function($query) {
+        $query->where('user_id', Auth::id())
+              ->orWhere('user_id', Auth::user()->invitation_id);
+    })
+    ->get();
+    @endphp
+
+  @foreach($team_link_child_stream as $t_l_c)
+   var slout_out_buisness_unit_key_result_{{ $t_l_c->bussiness_key_id }} = document.getElementById("buisness_unit_key_result_{{ $t_l_c->bussiness_key_id }}");
+  @endforeach
+
+
     $team_link_child_stream =   DB::table('team_link_child')->where('user_id' , Auth::id())->where('bussiness_unit_id' , $data->id)->where('from' , 'stream')->get();
     $team_link_child_unit =   DB::table('team_link_child')->where('user_id' , Auth::id())->where('bussiness_unit_id' , $data->id)->where('from' , 'unit')->get();
     $team_link_child_unit_or_stream = DB::table('team_link_child')->where('user_id' , Auth::id())->where('bussiness_unit_id' , $data->id)->orwhere('from' ,'stream')->where('from' , 'unit')->get();
@@ -173,6 +210,7 @@ $var_objective = "mapper-unit";
   @foreach($team_link_child_stream as $t_l_c)
    var slout_out_buisness_unit_key_result_{{ $t_l_c->bussiness_key_id }} = document.getElementById("buisness_unit_key_result_{{ $t_l_c->bussiness_key_id }}");
   @endforeach
+
 
   @foreach($team_link_child_unit as $t_l_c)
    var slout_out_buisness_unit_key_result_{{ $t_l_c->bussiness_key_id }} = document.getElementById("buisness_unit_key_result_{{ $t_l_c->bussiness_key_id }}");
