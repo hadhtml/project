@@ -40,7 +40,7 @@
             <div class="form-group mb-0">
                 <label for="editor{{ $data->id }}">Description</label>
                 <div class="textareaformcontrol">
-                    <textarea name="detail" id="editor{{ $data->id }}">{{ $data->detail }}</textarea> 
+                    <textarea name="detail" class="editor{{ $data->id }}">{{ $data->detail }}</textarea> 
                 </div>
             </div>
         </div>
@@ -52,7 +52,7 @@
     </div>
 </form>
 <script type="text/javascript">
-    $('#editor{{ $data->id }}').summernote({
+    $('.editor{{ $data->id }}').summernote({
         height: 180,
         toolbar: [
             ['style', ['bold', 'italic', 'underline', 'clear']],

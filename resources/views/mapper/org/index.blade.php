@@ -13,6 +13,7 @@ $var_objective = "mapper-org";
       position: fixed;
       top: -3%;
       left: 300px;
+      z-index: 999999;
    }
    .body-inner-content{
       overflow: auto;
@@ -30,10 +31,10 @@ $var_objective = "mapper-org";
          <!-- Node 1 -->
          <div id="node_1" class="node" style="transform: translate(-60px, -60px);">
             <div class="node-name slot-active drag-impo-grab">
-               <div class="slot-label drag-impo-grab"><span style="font-size:22px" class="material-symbols-outlined mr-2">auto_stories</span> {{ $data->organization_name }}</div>
+               <a target="_blank" href="{{ url('organization/dashboard') }}" class="slot-label drag-impo-grab"><span style="font-size:22px" class="material-symbols-outlined mr-2">auto_stories</span> {{ $data->organization_name }}</a>
             </div>
             @foreach(DB::table('objectives')->wherenull('trash')->where('unit_id' , $data->id)->where('type' , 'org')->get() as $o)
-               <div class="slot-inactive drag-impo-grab">
+               <a target="_blank" href="{{ url('dashboard/organization') }}/{{ $data->slug }}/portfolio/org?objective={{ $o->id }}" class="slot-inactive drag-impo-grab blanklink">
                   <span class="material-symbols-outlined f-18">location_searching</span>
                   <div class="slot-label drag-impo-grab"><span class="label-text">{{ $o->objective_name }}</span></div>
                   @if($o->status == 'Done')
@@ -45,9 +46,9 @@ $var_objective = "mapper-org";
                   @if($o->status == 'In progress')
                   <div class="badge-inprogress">{{round($o->obj_prog,0)}}%</div>
                   @endif
-               </div>
+               </a>
             @foreach(DB::table('key_result')->wherenull('trash')->where('obj_id' , $o->id)->get() as $k)
-               <div class="slot-active">
+               <a href="{{ url('dashboard/organization') }}/{{ $data->slug }}/portfolio/org?keyresult={{ $k->id }}" target="_blank" class="slot-active blanklink">
                   <span class="material-symbols-outlined f-18 ml-2">key</span>
                   <div class="slot-label"><span class="label-text">{{ $k->key_name }}</span></div>
                   @if($k->key_status == 'Done')
@@ -60,7 +61,7 @@ $var_objective = "mapper-org";
                   <div class="badge-inprogress mr-2"">{{round($k->key_prog,0)}}%</div>
                   @endif
                   <div id="buisness_unit_key_result_{{ $k->id }}" class="slot-anchor-small @if(DB::table('team_link_child')->where('bussiness_key_id' , $k->id)->count() > 0) slot-anchor-active @else slot-anchor-inactive @endif"></div>
-               </div>
+               </a>
             @endforeach
             @endforeach
          </div>

@@ -1943,3 +1943,17 @@ button:focus {
 .f-18 {
     font-size: 18px;
 }
+.slot-label{
+    color: #6a6a6a;
+}
+.slot-label:hover{
+    color: #0073e9;
+    text-decoration: none;
+}
+.blanklink{
+    color: #6a6a6a;
+}
+.blanklink:hover{
+    color: #0073e9;
+    text-decoration: none;
+}
