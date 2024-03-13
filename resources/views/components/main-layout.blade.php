@@ -20,7 +20,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/kanban.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dragula@3.7.3/dist/dragula.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="{{asset('public/assets/images/icons/icon.ico')}}">
+    
     <!-- Summernote -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-bs4.min.css" rel="stylesheet">
 
@@ -294,6 +294,38 @@
             @if ($var_objective == 'linking')     
             @include('member.navbar')
             @endif
+
+            
+
+            @if ($var_objective == 'leaderline-unit')
+                 
+            @include('Business-units.unit-sidebar')
+
+            @endif
+            
+            @if ($var_objective == 'leaderline-stream')
+                 
+            @include('member.navbar')
+
+            @endif
+
+            @if ($var_objective == 'leaderline-BU')
+            @include('Business-units.Team-sidebar')
+            @endif
+
+            @if ($var_objective == 'leaderline-orgT')
+            @include('Business-units.Team-sidebar')
+            @endif
+
+            @if ($var_objective == 'leaderline-VS')
+            @include('Business-units.Team-sidebar')
+            @endif
+
+
+            @if ($var_objective == 'leaderline-org')
+            @include('components.sidebar-component')
+            @endif
+            
             
             
             
@@ -552,6 +584,36 @@
                 @if ($var_objective == 'security')
                 @include('profile.breadcrum')
               
+                @endif
+
+                
+                @if ($var_objective == 'leaderline-unit')
+                 
+                @include('epics.leadeline-breadcrumb')
+    
+                @endif
+                
+                @if ($var_objective == 'leaderline-stream')
+                     
+                @include('epics.leadeline-breadcrumb')
+    
+                @endif
+    
+                @if ($var_objective == 'leaderline-BU')
+                @include('epics.leadeline-breadcrumb')
+                @endif
+    
+                @if ($var_objective == 'leaderline-orgT')
+                @include('epics.leadeline-breadcrumb')
+                @endif
+    
+                @if ($var_objective == 'leaderline-VS')
+                @include('epics.leadeline-breadcrumb')
+                @endif
+    
+    
+                @if ($var_objective == 'leaderline-org')
+                @include('epics.leadeline-breadcrumb')
                 @endif
                 
 
