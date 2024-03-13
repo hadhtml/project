@@ -30,6 +30,7 @@ class MemberController extends Controller
     public function AllMembers()
     {
         $Member  = Member::where('org_user',Auth::id())
+        ->orWhere('org_user',Auth::user()->invitation_id)
         ->join('users','members.user_id','=','users.id')->select('members.*','users.*','users.role AS u_role','users.status AS u_status','members.id AS ID','users.id AS u_id','members.name AS Name','members.last_name AS LastName','members.image AS image')
         ->get();
         return view('member.member',compact('Member'));
@@ -295,12 +296,19 @@ class MemberController extends Controller
     
     public function SaveBusinessUnits(Request $request)
     {
+        if(Auth::user()->invitation_id)
+        {
+        $id = Auth::user()->invitation_id;
+        }else
+        {
+        $id = Auth::id();
+        }
         $addbuisnessunit = new business_units();
         $addbuisnessunit->business_name = $request->unit_name;
         $addbuisnessunit->lead_id = $request->lead_manager;
         $addbuisnessunit->org_id = $request->org_unit_id;
         $addbuisnessunit->detail = $request->detail;
-        $addbuisnessunit->user_id = Auth::id();
+        $addbuisnessunit->user_id = $id;
         $addbuisnessunit->slug = Str::slug($request->unit_name.'-'.rand(10, 99));
         $addbuisnessunit->save();    
         return redirect()->back()->with('message', 'Business Units Added Successfully');
@@ -373,16 +381,22 @@ class MemberController extends Controller
       public function SaveBusinessStream(Request $request)
     {
 
-     
+        if(Auth::user()->invitation_id)
+        {
+        $id = Auth::user()->invitation_id;
+        }else
+        {
+        $id = Auth::id();
+        }
         DB::table('value_stream')
         ->insert([
-            'org_id' => DB::table('organization')->where('user_id' , Auth::id())->first()->id,
+            'org_id' => DB::table('organization')->where('user_id' , Auth::id())->orWhere('user_id',Auth::user()->invitation_id)->first()->id,
             'unit_id' => $request->org_value_id,
             'lead_id' => $request->lead_manager,
             'detail' => $request->detail,
             'value_name' => $request->value_name,
             'slug' => Str::slug($request->value_name.'-'.rand(10, 99)),
-            'user_id' => Auth::id(),
+            'user_id' => $id,
             
             ]);
       
