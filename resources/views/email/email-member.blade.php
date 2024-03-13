@@ -102,9 +102,9 @@
   <tr class="">
 <td class="">
 @php
-$img = 'https://dev.outcomemet.com/public/assets/images/icons/icon with text PNG color.png';
+$img = 'https://dev.outcomemet.com/public/assets/images/icons/icon-color.png';
 @endphp 
-<img alt="robot picture" class="" height="155" src="{{ url('public/assets/images/icons/icon with text PNG color.png') }}" width="155">
+<img alt="robot picture" class="" height="155" src="{{ url('public/assets/images/icons/icon-color.png') }}" width="155">
 </td>
 </tr>
 <tr class=""><td class="headline">Welcome to OutcomeMet!</td></tr>
