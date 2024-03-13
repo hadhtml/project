@@ -32,9 +32,28 @@ class JiraController extends Controller
     {
 
      
-        $jiraBaclog = DB::table('backlog_unit')->where('jira_project',$request->id)->where('user_id',Auth::id())->where('unit_id','!=',$request->unit_id)->count();
-        $jiraBaclogValue = DB::table('backlog')->where('jira_project',$request->id)->where('user_id',Auth::id())->where('stream_id','!=',$request->unit_id)->count();
+        // $jiraBaclog = DB::table('backlog_unit')->where('jira_project',$request->id)->where('user_id',Auth::id())->where('unit_id','!=',$request->unit_id)->count();
+        // $jiraBaclogValue = DB::table('backlog')->where('jira_project',$request->id)->where('user_id',Auth::id())->where('stream_id','!=',$request->unit_id)->count();
   
+        $jiraBaclog = DB::table('backlog_unit')
+        ->where('jira_project',$request->id)
+        ->where('unit_id','!=',$request->unit_id)
+        ->where(function($query) {
+            $query->where('user_id', Auth::id())
+                  ->orWhere('user_id', Auth::user()->invitation_id);
+        })
+        ->count();
+
+        $jiraBaclogValue = DB::table('backlog')
+        ->where('jira_project',$request->id)
+        ->where('stream_id','!=',$request->unit_id)
+        ->where(function($query) {
+            $query->where('user_id', Auth::id())
+                  ->orWhere('user_id', Auth::user()->invitation_id);
+        })
+        ->count();
+
+
         if($jiraBaclog > 0 || $jiraBaclogValue > 0)
         {
          echo 1;
