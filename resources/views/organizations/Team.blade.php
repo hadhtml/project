@@ -235,7 +235,7 @@
                                         <div class="col-md-12 col-lg-12 col-xl-12">
                                             <div class="form-group mb-0">
                                                 <select class="form-control" name="lead_manager_team">
-                                                    <?php foreach(DB::table('members')->where('org_user',Auth::id())->get() as $r){ ?>
+                                                    <?php foreach(DB::table('members')->where('org_user',Auth::id())->orWhere('org_user',Auth::user()->invitation_id)->get() as $r){ ?>
                                                     <option @if ($r->id == $team->lead_id) selected @endif
                                                         value="{{ $r->id }}">{{ $r->name }}
                                                         {{ $r->last_name }}</option>
@@ -258,7 +258,7 @@
                                             <hr>
                                         </div>
                                         <div class="col-md-12 col-lg-12 col-xl-12 member-area">
-                                            @foreach (DB::table('members')->where('org_user', Auth::id())->get() as $r)
+                                            @foreach (DB::table('members')->where('org_user', Auth::id())->orWhere('org_user',Auth::user()->invitation_id)->get() as $r)
                                                 <div
                                                     class="d-flex flex-row align-items-center justify-content-between single-member">
                                                     <div class="d-flex flex-row align-items-center ">
@@ -349,6 +349,7 @@
                             @php
                                 $memberCount = DB::table('members')
                                     ->where('org_user', Auth::id())
+                                    ->orWhere('org_user',Auth::user()->invitation_id)
                                     ->count();
                             @endphp
 
@@ -356,7 +357,7 @@
                                 <div class="form-group mb-0">
                                     <select class="form-control" name="lead_manager_team" required>
                                         <option value="NULL">Select Lead</option>
-                                        <?php foreach(DB::table('members')->where('org_user',Auth::id())->get() as $r){ ?>
+                                        <?php foreach(DB::table('members')->where('org_user',Auth::id())->orWhere('org_user',Auth::user()->invitation_id)->get() as $r){ ?>
                                         <option value="{{ $r->id }}">{{ $r->name }} {{ $r->last_name }}
                                         </option>
                                         <?php }  ?>
@@ -398,7 +399,7 @@
                                                   </tr>
                                                 </thead> --}}
                                                 <tbody id="myTable">
-                                                    @foreach (DB::table('members')->where('org_user', Auth::id())->get() as $r)
+                                                    @foreach (DB::table('members')->where('org_user', Auth::id())->orWhere('org_user',Auth::user()->invitation_id)->get() as $r)
                                                   <tr>
                                                     <div>
                                                     <th scope="row"> 

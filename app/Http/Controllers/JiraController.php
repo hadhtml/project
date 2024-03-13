@@ -32,9 +32,28 @@ class JiraController extends Controller
     {
 
      
-        $jiraBaclog = DB::table('backlog_unit')->where('jira_project',$request->id)->where('user_id',Auth::id())->where('unit_id','!=',$request->unit_id)->count();
-        $jiraBaclogValue = DB::table('backlog')->where('jira_project',$request->id)->where('user_id',Auth::id())->where('stream_id','!=',$request->unit_id)->count();
+        // $jiraBaclog = DB::table('backlog_unit')->where('jira_project',$request->id)->where('user_id',Auth::id())->where('unit_id','!=',$request->unit_id)->count();
+        // $jiraBaclogValue = DB::table('backlog')->where('jira_project',$request->id)->where('user_id',Auth::id())->where('stream_id','!=',$request->unit_id)->count();
   
+        $jiraBaclog = DB::table('backlog_unit')
+        ->where('jira_project',$request->id)
+        ->where('unit_id','!=',$request->unit_id)
+        ->where(function($query) {
+            $query->where('user_id', Auth::id())
+                  ->orWhere('user_id', Auth::user()->invitation_id);
+        })
+        ->count();
+
+        $jiraBaclogValue = DB::table('backlog')
+        ->where('jira_project',$request->id)
+        ->where('stream_id','!=',$request->unit_id)
+        ->where(function($query) {
+            $query->where('user_id', Auth::id())
+                  ->orWhere('user_id', Auth::user()->invitation_id);
+        })
+        ->count();
+
+
         if($jiraBaclog > 0 || $jiraBaclogValue > 0)
         {
          echo 1;
@@ -42,7 +61,15 @@ class JiraController extends Controller
         }else
         {
           
-        $data = DB::table('jira_setting')->where('user_id',Auth::id())->where('id',$request->y)->first();
+        // $data = DB::table('jira_setting')->where('user_id',Auth::id())->where('id',$request->y)->first();
+        $data = DB::table('jira_setting')
+        ->where('id',$request->y)
+        ->where(function($query) {
+            $query->where('user_id', Auth::id())
+                  ->orWhere('user_id', Auth::user()->invitation_id);
+        })
+        ->first();
+
         $jira_url = $data->jira_url ; 
         $jira_user_name = $data->user_name; 
         $jira_token = $data->token;
@@ -98,19 +125,35 @@ class JiraController extends Controller
             // }
 
                
-            $jiraa = DB::table('jira_data')->where('jira_id',$item['key'])->where('user_id',Auth::id())->first();
-       
+            // $jiraa = DB::table('jira_data')->where('jira_id',$item['key'])->where('user_id',Auth::id())->first();
+
+            $jiraa = DB::table('jira_data')
+            ->where('jira_id',$item['key'])
+            ->where(function($query) {
+                $query->where('user_id', Auth::id())
+                      ->orWhere('user_id', Auth::user()->invitation_id);
+            })
+            ->first();
+
+            $member = DB::table('users')->where('id',Auth::id())->first();
+            if($member->invitation_id)
+            {
+            $id = $member->invitation_id;
+            }else
+            {
+              $id = Auth::id();  
+            }
             
             if($jiraa)
             {
                 DB::table('jira_data')
                 ->where('jira_id',$item['key'])
-                ->where('user_id',Auth::id())
+                ->where('user_id',$id)
                 ->update([
                     'Summary' =>  $item['fields']['summary'],
                     'jira_id' => $item['key'],
                     'detail' => $item['fields']['description'],
-                    'user_id' => Auth::id(),
+                    'user_id' => $id,
     
             
                     ]);
@@ -127,7 +170,7 @@ class JiraController extends Controller
                     'jira_id' => $item['key'],
                     'detail' => $item['fields']['description'],
                     // 'progress' => $item['progress'],
-                     'user_id' => Auth::id(),
+                     'user_id' => $id,
                      'jira_project' => $request->id,
                      'account_id' => $request->y
 
@@ -144,7 +187,15 @@ class JiraController extends Controller
         
 
         
-        $jiradata = DB::table('jira_data')->where('user_id',Auth::id())->where('jira_project',$request->id)->get();
+        // $jiradata = DB::table('jira_data')->where('user_id',Auth::id())->where('jira_project',$request->id)->get();
+
+        $jiradata = DB::table('jira_data')
+        ->where('jira_project',$request->id)
+        ->where(function($query) {
+            $query->where('user_id', Auth::id())
+                  ->orWhere('user_id', Auth::user()->invitation_id);
+        })
+        ->get();
         return view('Business-units.jira', compact('jiradata')); 
         
         }
@@ -358,7 +409,15 @@ class JiraController extends Controller
     {
 
       
-        $data = DB::table('jira_setting')->where('user_id',Auth::id())->where('id',$request->id)->first();
+        // $data = DB::table('jira_setting')->where('user_id',Auth::id())->where('id',$request->id)->first();
+
+        $data = DB::table('jira_setting')
+        ->where('id',$request->id)
+        ->where(function($query) {
+            $query->where('user_id', Auth::id())
+                  ->orWhere('user_id', Auth::user()->invitation_id);
+        })
+        ->first();
         $jira_url = $data->jira_url; 
         $jira_user_name = $data->user_name; 
         $jira_token = $data->token;
@@ -378,8 +437,24 @@ class JiraController extends Controller
         {
        
          
-         $jiraProject = DB::table('jira_project')->where('user_id',Auth::id())->where('project_name',$project['name'])->first();
-            
+        //  $jiraProject = DB::table('jira_project')->where('user_id',Auth::id())->where('project_name',$project['name'])->first();
+        
+         $jiraProject = DB::table('jira_project')
+         ->where('project_name',$project['name'])
+         ->where(function($query) {
+             $query->where('user_id', Auth::id())
+                   ->orWhere('user_id', Auth::user()->invitation_id);
+         })
+         ->first();
+     
+            $member = DB::table('users')->where('id',Auth::id())->first();
+            if($member->invitation_id)
+            {
+            $id = $member->invitation_id;
+            }else
+            {
+              $id = Auth::id();  
+            }
             if($jiraProject)
             {
                 DB::table('jira_project')
@@ -387,7 +462,7 @@ class JiraController extends Controller
                 ->where('project_name',$project['name'])
                 ->update([
                     'project_name' => $project['name'],
-                    'user_id' => Auth::id(),
+                    'user_id' => $id,
     
             
                     ]);
@@ -396,7 +471,7 @@ class JiraController extends Controller
             {
                 DB::table('jira_project')->insert([
                     'project_name' => $project['name'],
-                     'user_id' => Auth::id(),
+                     'user_id' => $id,
             
                     ]);
                
@@ -406,7 +481,7 @@ class JiraController extends Controller
          
          }
          
-         $jiraProjectdata = DB::table('jira_project')->where('user_id',Auth::id())->get();
+         $jiraProjectdata = DB::table('jira_project')->where('user_id',Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get();
          return $jiraProjectdata;
         
          

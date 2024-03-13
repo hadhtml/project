@@ -210,7 +210,7 @@ $var_objective = "Stream-team";
                      <div class="col-md-12 col-lg-12 col-xl-12">
                         <div class="form-group mb-0">
                             <select class="form-control" name="edit_lead_manager_team">
-                                @foreach(DB::table('members')->where('org_user',Auth::id())->get() as $r)
+                                @foreach(DB::table('members')->where('org_user',Auth::id())->orWhere('org_user',Auth::user()->invitation_id)->get() as $r)
                                   <option  @if($r->id == $team->lead_id) selected @endif value="{{ $r->id }}">{{ $r->name }} {{ $r->last_name }}</option>
                                  @endforeach
                             </select>
@@ -230,7 +230,7 @@ $var_objective = "Stream-team";
                     </div>
                     <div class="col-md-12 col-lg-12 col-xl-12 member-area">
                       
-                        @foreach(DB::table('members')->where('org_user',Auth::id())->get() as $r)
+                        @foreach(DB::table('members')->where('org_user',Auth::id())->orWhere('org_user',Auth::user()->invitation_id)->get() as $r)
                         <div class="d-flex flex-row align-items-center justify-content-between single-member">
                             <div class="d-flex flex-row align-items-center ">
                                 <div>
@@ -308,7 +308,7 @@ $var_objective = "Stream-team";
                          <div class="col-md-12 col-lg-12 col-xl-12">
                             <div class="form-group mb-0">
                                 <select class="form-control" name="lead_manager_team">
-                                    <?php foreach(DB::table('members')->where('org_user',Auth::id())->get() as $r){ ?>
+                                    <?php foreach(DB::table('members')->where('org_user',Auth::id())->orWhere('org_user',Auth::user()->invitation_id)->get() as $r){ ?>
                                       <option value="{{ $r->id }}">{{ $r->name }} {{ $r->last_name }}</option>
                                     <?php }  ?>
                                 </select>
@@ -340,7 +340,7 @@ $var_objective = "Stream-team";
                                           </tr>
                                         </thead> --}}
                                         <tbody id="myTable">
-                                            @foreach(DB::table('members')->where('org_user',Auth::id())->get() as $r)
+                                            @foreach(DB::table('members')->where('org_user',Auth::id())->orWhere('org_user',Auth::user()->invitation_id)->get() as $r)
                                             <tr>
                                             <div>
                                             <th scope="row"> 
