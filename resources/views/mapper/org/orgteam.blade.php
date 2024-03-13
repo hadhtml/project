@@ -1,5 +1,8 @@
 @foreach(DB::table('org_team')->where('org_id'  , $data->id)->get() as $o_t)
+
 <div id="orgteam{{ $o_t->id }}" class="node">
+
+<div id="orgteam{{ $o_t->id }}" class="node orgteambox">
    <div class="node-name slot-active drag-impo-grab">
       <div class="slot-label drag-impo-grab"><span class="mr-2 d-flex badge-team-valuestream">ORG <span style="font-size:22px" class="material-symbols-outlined ml-2">groups</span></span>  {{ $o_t->team_title }}</div>
    </div>
@@ -20,6 +23,7 @@
    </div>
    @endforeach
 </div>
+
 @endforeach
 
 <style type="text/css">
@@ -29,3 +33,6 @@
 }
 @endforeach
 </style>
+
+@endforeach
+

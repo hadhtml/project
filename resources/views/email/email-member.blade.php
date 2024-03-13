@@ -104,7 +104,11 @@
 @php
 $img = 'https://dev.outcomemet.com/public/assets/images/icons/icon-color.png';
 @endphp 
+
 <img alt="robot picture" class="" height="155" src="{{ url('public/assets/images/icons/icon-color.png') }}" width="155">
+=======
+<img alt="robot picture" class="" height="155" src="{{ url('public/assets/images/icons/logo.svg') }}" width="155">
+
 </td>
 </tr>
 <tr class=""><td class="headline">Welcome to OutcomeMet!</td></tr>
@@ -141,7 +145,7 @@ $img = 'https://dev.outcomemet.com/public/assets/images/icons/icon-color.png';
 <tbody>
 <tr>
 <td class="" style="color:#444;
-                    ">
+                   ">
 <p>The password was auto-generated, however feel free to change it 
   
     <a href="https://dev.outcomemet.com/password/reset" style="text-decoration: underline;">

@@ -45,7 +45,7 @@ class GoogleController extends Controller
 
     
 
-                return redirect('dashboard/organizations');
+                return redirect('organization/dashboard');
 
      
 
@@ -77,7 +77,7 @@ class GoogleController extends Controller
 
      
 
-                return redirect('dashboard/organizations');
+                return redirect('organization/dashboard');
 
             }
 
@@ -137,7 +137,7 @@ class GoogleController extends Controller
 
        
 
-                return redirect()->intended('dashboard/organizations');
+                return redirect()->intended('organization/dashboard');
 
          
 
@@ -167,7 +167,7 @@ class GoogleController extends Controller
 
         
 
-                return redirect()->intended('dashboard/organizations');
+                return redirect()->intended('organization/dashboard');
 
             }
 

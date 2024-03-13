@@ -13,135 +13,143 @@
     <!-- MDB -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{{asset('public/assets/css/style.css')}}">
+    <link rel="icon" type="image/x-icon" href="{{asset('public/assets/images/icons/icon.ico')}}">
     <title>Login</title>
     <style type="text/css">
     </style>
 </head>
 
-<body>
+<body style="background: #f3f3f3;">
 
    
     <div class="d-flex flex-column flex-root">
-
-        <!--begin::Login-->
-        <div class="login login-2 login-signin-on d-flex flex-column flex-lg-row flex-column-fluid bg-white">
-            <!--begin::Aside-->
-            <div class="login-aside order-2 order-lg-1 d-flex flex-row-auto position-relative overflow-hidden">
-                <!--begin: Aside Container-->
-                <div class="d-flex flex-column-fluid flex-column justify-content-between py-9 px-7 py-lg-10 px-lg-30">
-                    <div class="d-flex flex-column-fluid flex-column flex-center">
-                        <div class="login-nav-links pt-md-1 pb-md-3 pt-sm-5 px-lg-0 pt-5 px-7">
-                            <div class="d-flex flex-row">
-                                <div>
-                                    <a href="{{url('/login')}}" class="active">Sign in</a>
-                                </div>
-    
-                                <div>
-                                    <a href="{{url('/register')}}">Create account</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row auth-form">
-                            <div class="col-md-12">
-                                <h3>Sign in</h3>
-                            </div>
-                        </div>
-                        
-                        <div class="row social-buttons">
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 p-2">
-                                <a class="auth-buttons" href="{{url('/auth/google')}}">
-                                    <button class="btn btn-white btn-block">
-                                        <img src="{{asset('public/assets/images/icons/google.svg')}}">
-                                         &nbsp;&nbsp;Google
-                                    </button>
-                                </a>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 p-2">
-                                <a class="auth-buttons" href="{{url('/auth/facebook')}}">
-                                    <button class="btn btn-white btn-block">
-                                        <img src="{{asset('public/assets/images/icons/facebook.svg')}}">
-                                        &nbsp;&nbsp;Facebook
-                                    </button>
-                                    </a>
-                            </div>
-                            {{-- <div class="col-xl-6 col-lg-6 col-md-6 p-2">
-                                <button class="btn btn-white btn-block">
-                                    <img src="{{asset('public/assets/images/icons/apple.svg')}}">
-                                    Apple
-                                </button>
-                            </div> --}}
-                        </div>
-                        <div class="row mt-1">
-                            <div class="col-md-12">
-                                <h2 class="separator-hr"><span>Or</span></h2>
-                            </div>
-                        </div>
-                        <div class="input-fields-area py-lg-0">
-                            
-                            <form class="needs-validation pt-2" method="POST" action="{{ route('login') }}">
-                                @csrf
-                                <div class="row">
-                                    
-                                    <div class="col-md-12 col-lg-12 col-xl-12">
-                                        <div class="form-group mb-0">
-                                            
-                                            <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}"  id="email" required>
-                                            <label for="email">Email</label>
-                                           
+        <div class="container p-5" >
+            <div class="card">
+                <div class="card-body p-0">
+                    <!--begin::Login-->
+                <div class="login login-2 login-signin-on d-flex flex-column flex-lg-row flex-column-fluid bg-white">
+                    <!--begin::Aside-->
+                    <div class="login-aside order-2 order-lg-1 d-flex flex-row-auto position-relative overflow-hidden">
+                        <!--begin: Aside Container-->
+                        <div class="d-flex flex-column-fluid flex-column justify-content-between py-9 px-7 py-lg-10 px-lg-10">
+                            <div class="d-flex flex-column-fluid flex-column flex-center">
+                                <!-- <div class="login-nav-links pt-md-1 pb-md-3 pt-sm-5 px-lg-0 pt-5 px-7">
+                                    <div class="d-flex flex-row">
+                                        <div>
+                                            <a href="{{url('/login')}}" class="active">Sign in</a>
                                         </div>
-                                       
+            
+                                        <div>
+                                            <a href="{{url('/register')}}">Create account</a>
+                                        </div>
                                     </div>
+                                </div> -->
+                                <div class="row auth-form">
+                                    <div class="col-md-12">
+                                        <h3>Sign in</h3>
+                                        <p>Enter your email and password to login.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="row social-buttons mb-2">
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 p-2">
+                                        <a class="auth-buttons" href="{{url('/auth/google')}}">
+                                            <button class="btn btn-white btn-block">
+                                                <img src="{{asset('public/assets/images/icons/google.svg')}}">
+                                                 &nbsp;&nbsp;Google
+                                            </button>
+                                        </a>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 p-2">
+                                        <a class="auth-buttons" href="{{url('/auth/facebook')}}">
+                                            <button class="btn btn-white btn-block">
+                                                <img src="{{asset('public/assets/images/icons/facebook.svg')}}">
+                                                &nbsp;&nbsp;Facebook
+                                            </button>
+                                            </a>
+                                    </div>
+                                    {{-- <div class="col-xl-6 col-lg-6 col-md-6 p-2">
+                                        <button class="btn btn-white btn-block">
+                                            <img src="{{asset('public/assets/images/icons/apple.svg')}}">
+                                            Apple
+                                        </button>
+                                    </div> --}}
+                                </div>
+                                <!-- <div class="row mt-1">
+                                    <div class="col-md-12">
+                                        <h2 class="separator-hr"><span>Or</span></h2>
+                                    </div>
+                                </div> -->
+                                <div class="input-fields-area py-lg-0">
+                                    
+                                    <form class="needs-validation pt-2" method="POST" action="{{ route('login') }}">
+                                        @csrf
+                                        <div class="row">
+                                            
+                                            <div class="col-md-12 col-lg-12 col-xl-12">
+                                                <div class="form-group mb-0">
+                                                    
+                                                    <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}"  id="email" required>
+                                                    <label for="email">Email</label>
+                                                   
+                                                </div>
+                                               
+                                            </div>
 
-                                    @error('email')
-                                    <span class="invalid-feedback mb-3 ml-5 mt-0" style="display:block !important" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                     @enderror
-                                   
-                                    <div class="col-md-12 col-lg-12 col-xl-12">
-                                        <div class="form-group mb-0 position-relative">
-                                            <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" id="Password" required>
-                                            <label for="Password">Password</label>
-                                            <span class="toggle-password" onclick="togglePasswordVisibility('Password')"><i class="fas fa-eye"></i></span>
-                                            @error('password')
-                                            <span class="invalid-feedback" style="display:block !important" role="alert">
+                                            @error('email')
+                                            <span class="invalid-feedback mb-3 ml-5 mt-0" style="display:block !important" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
-                                        @enderror
+                                             @enderror
+                                           
+                                            <div class="col-md-12 col-lg-12 col-xl-12">
+                                                <div class="form-group mb-0 position-relative">
+                                                    <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" id="Password" required>
+                                                    <label for="Password">Password</label>
+                                                    <span class="toggle-password" onclick="togglePasswordVisibility('Password')"><i class="fas fa-eye"></i></span>
+                                                    @error('password')
+                                                    <span class="invalid-feedback" style="display:block !important" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-md-12 py-2">
+                                                <button class="btn btn-primary btn-lg btn-theme btn-block ripple">Sign In</button>
+                                            </div>
+                                        </div>
+
+                                        @if (Route::has('password.request'))
+                                        <div class="row py-3">
+                                        <div class="col-md-12 text-center">
+                                        <a class="btn btn-link" href="{{ route('password.request') }}">
+                                            {{ __('Forgot Your Password?') }}
+                                        </a>
+                                    </div>
+                                </div>
+                                    @endif
+                                    </form>
+                                    
+                                    <div class="row py-3">
+                                        <div class="col-md-12 text-center">
+                                            <p>Don't have an account? <a href="{{url('/register')}}">Sign Up</a> </p>
                                         </div>
                                     </div>
                                     
-                                    <div class="col-md-12 py-2">
-                                        <button class="btn btn-primary btn-lg btn-theme btn-block ripple">Sign In</button>
-                                    </div>
-                                </div>
-
-                                @if (Route::has('password.request'))
-                                <div class="row py-3">
-                                <div class="col-md-12 text-center">
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
-                                    {{ __('Forgot Your Password?') }}
-                                </a>
-                            </div>
-                        </div>
-                            @endif
-                            </form>
-                            
-                            <div class="row py-3">
-                                <div class="col-md-12 text-center">
-                                    <p>Don't have an account? <a href="{{url('/register')}}">Sign Up</a> </p>
                                 </div>
                             </div>
-                            
                         </div>
                     </div>
+                    <!--begin::Aside-->
+                    @include('components.authsidebar')
+                    <!--begin::Content-->
+                
+                </div>
                 </div>
             </div>
-            <!--begin::Aside-->
-            @include('components.authsidebar')
-            <!--begin::Content-->
-        
         </div>
+        
     </div>
 </body>
 <!-- MDB -->

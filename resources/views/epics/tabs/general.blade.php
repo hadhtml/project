@@ -12,7 +12,7 @@
         </div>
     </div>
 </div>
-<form id="updategeneralepic" class="needs-validation" action="{{ url('dashboard/epics/updategeneral') }}" method="POST" novalidate>
+<form class="needs-validation updategeneralepic" action="{{ url('dashboard/epics/updategeneral') }}" method="POST" novalidate>
     @csrf
     <input type="hidden" value="{{ $data->id }}" name="epic_id">
     <div class="row">
@@ -40,14 +40,14 @@
             <div class="form-group mb-0">
                 <label for="editor{{ $data->id }}">Description</label>
                 <div class="textareaformcontrol">
-                    <textarea name="epic_detail" id="editor{{ $data->id }}">{{ $data->epic_detail }}</textarea> 
+                    <textarea name="epic_detail" class="summernoteforupdatedeneral">{{ $data->epic_detail }}</textarea> 
                 </div>
             </div>
         </div>
     </div>
     <div class="row margintopfourtypixel">
         <div class="col-md-12 text-right">
-            <button type="submit" class="btn btn-primary btn-theme ripple savechangebutton" id="updatebuttonepic">Save Changes</button>
+            <button type="submit" class="btn btn-primary btn-theme ripple savechangebutton">Save Changes</button>
         </div>
     </div>
 </form>
@@ -78,7 +78,7 @@
             }
         });
     }
-    $('#editor{{ $data->id }}').summernote({
+    $('.summernoteforupdatedeneral').summernote({
         height: 180,
         toolbar: [
             ['style', ['bold', 'italic', 'underline', 'clear']],
@@ -90,8 +90,8 @@
             ['view', ['fullscreen', 'codeview']],
         ],
     });
-    $('#updategeneralepic').on('submit',(function(e) {
-        $('#updatebuttonepic').html('<i class="fa fa-spin fa-spinner"></i>');
+    $('.updategeneralepic').on('submit',(function(e) {
+        $('.savechangebutton').html('<i class="fa fa-spin fa-spinner"></i>');
         e.preventDefault();
         var formData = new FormData(this);
         $.ajax({
@@ -105,7 +105,7 @@
                 showepicinboard('{{ $data->id }}');
                 editepic('{{ $data->id }}');
                 showheader('{{ $data->id }}')
-                $('#updatebuttonepic').html('Save Changes');
+                $('.savechangebutton').html('Save Changes');
             }
         });
     }));

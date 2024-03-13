@@ -8,8 +8,9 @@ use App\Models\Organization;
 use App\Models\Epic;
 use App\Models\flags;
 use App\Models\flag_comments;
-use App\Models\escalate_cards;
+use App\Models\temp_data_counts;
 use App\Models\team_link_child;
+use App\Models\value_stream;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use DB;
@@ -17,11 +18,6 @@ use Carbon\Carbon;
 
 class MapperController extends Controller
 {
-    public function index()
-    {
-        $organization  = DB::table('organization')->where('user_id' , Auth::id())->first();
-	    return view('mapper.index',compact('organization')); 
-    }
     public function saveteamlevellinking(Request $request)
     {
         $add = new team_link_child();
@@ -79,9 +75,26 @@ class MapperController extends Controller
         {
             $organization = DB::table('business_units')->where('slug'  , $url)->first();
             $data = DB::table('business_units')->where('slug'  , $url)->first();
-            $valuestream = DB::table('value_stream')->where('unit_id'  , $data->id)->get();
+            $valuestream = DB::table('value_stream')->where('unit_id'  , $data->id)->orderby('id' , 'asc')->get();
             $buteam = DB::table('unit_team')->where('org_id'  , $data->id)->get();
             return view('mapper.unit.index',compact('data','valuestream','buteam','organization')); 
+        }
+
+        if($type == 'stream')
+        {
+            $organization = DB::table('value_stream')->where('slug'  , $url)->first();
+            $data = DB::table('value_stream')->where('slug'  , $url)->first();
+            $valueteam = DB::table('value_team')->where('org_id'  , $data->id)->get();
+            return view('mapper.stream.index',compact('data','valueteam','organization')); 
+        }
+
+        if($type == 'org')
+        {
+            $organization = DB::table('organization')->where('slug'  , $url)->first();
+            $data = DB::table('organization')->where('slug'  , $url)->first();
+            $business_units = DB::table('business_units')->where('org_id'  , $data->id)->orderby('id' , 'asc')->get();
+            $valuestream = DB::table('value_stream')->where('org_id'  , $data->id)->orderby('id' , 'asc')->get();
+            return view('mapper.org.index',compact('data','business_units','organization','valuestream')); 
         }
     }
 }

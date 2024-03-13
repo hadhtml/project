@@ -84,7 +84,6 @@ Route::post('keyresult-savecomment', [App\Http\Controllers\OrganizationControlle
 Route::post('deletecomment-key', [App\Http\Controllers\OrganizationController::class,'Deletecommentkey']);
 Route::post('updatecomment-key', [App\Http\Controllers\OrganizationController::class,'updatecommentkey']);
 Route::post('savereply-key', [App\Http\Controllers\OrganizationController::class,'savereplykey']);
-Route::post('frequency-update', [App\Http\Controllers\OrganizationController::class,'frequencyupdate']);
 
 Route::get('auth/google', [App\Http\Controllers\GoogleController::class, 'redirectToGoogle']);
 Route::get('auth/google/callback', [App\Http\Controllers\GoogleController::class, 'handleGoogleCallback']);
@@ -105,6 +104,11 @@ Route::get('get-obj-key-weight', [App\Http\Controllers\ObjectiveController::clas
 Route::post('save-objective-key', [App\Http\Controllers\ObjectiveController::class, 'SaveKeyObjective']);
 Route::post('update-objective-key', [App\Http\Controllers\ObjectiveController::class, 'UpdateKeyObjective']);
 Route::post('Delete-objective-key', [App\Http\Controllers\ObjectiveController::class, 'DeleteKeyObjective']);
+Route::post('deletenullobject', [App\Http\Controllers\ObjectiveController::class, 'deletenullobject']);
+
+
+
+
 
 Route::post('save-key-initiative', [App\Http\Controllers\ObjectiveController::class, 'SaveKeyinitiative']);
 Route::post('Delete-key-initiative', [App\Http\Controllers\ObjectiveController::class, 'DeleteKeyInitiative']);
@@ -378,12 +382,15 @@ Route::name('keyresult.')->namespace('App\Http\Controllers')->prefix('dashboard/
     Route::POST('addweight', 'KeyresultController@addweight');
     Route::POST('selectteamokrmapper', 'KeyresultController@selectteamokrmapper');
     Route::POST('okrmapperform', 'KeyresultController@okrmapperform');
+    Route::POST('okrmapperlowerform', 'KeyresultController@okrmapperlowerform');
+    
     Route::POST('checkkeyresultlink', 'KeyresultController@checkkeyresultlink');
     Route::POST('deletelinking', 'KeyresultController@deletelinking');
     Route::POST('searchobjectives', 'KeyresultController@searchobjectives');
     Route::POST('selectobjective', 'KeyresultController@selectobjective');
 
-
+    Route::POST('selectkeyreslt', 'KeyresultController@selectkeyreslt');
+    Route::POST('searchkeyresult', 'KeyresultController@searchkeyresult');
 });
 
 
@@ -430,3 +437,5 @@ Route::post('update-password', [App\Http\Controllers\OrganizationController::cla
 Route::post('update-profile', [App\Http\Controllers\OrganizationController::class,'UpdateProfile']);
 
 Route::post('change-init-pos', [App\Http\Controllers\ObjectiveController::class,'UpdatePosInit']);
+
+Route::post('frequency-update', [App\Http\Controllers\OrganizationController::class,'frequencyupdate']);

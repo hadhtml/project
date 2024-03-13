@@ -8,6 +8,7 @@
       <!--<![endif]-->
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="icon" type="image/x-icon" href="{{asset('public/assets/images/icons/icon.ico')}}">
       <style type="text/css">
          #outlook a {
          padding: 0;

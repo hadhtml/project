@@ -13,194 +13,203 @@
     <!-- MDB -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{{asset('public/assets/css/style.css')}}">
+     <link rel="icon" type="image/x-icon" href="{{asset('public/assets/images/icons/icon.ico')}}">
     <title>Signup</title>
     <style type="text/css">
     </style>
 </head>
 
-<body>
+<body style="background: #f3f3f3;">
     <div class="d-flex flex-column flex-root">
-        <!--begin::Login-->
-        <div class="login login-2 login-signin-on d-flex flex-column flex-lg-row flex-column-fluid bg-white">
-            <!--begin::Aside-->
-            <div class="login-aside order-2 order-lg-1 d-flex flex-row-auto position-relative overflow-hidden">
-                <!--begin: Aside Container-->
-                <div class="d-flex flex-column-fluid flex-column justify-content-between py-9 px-7 py-lg-10 px-lg-30">
-                    <div class="d-flex flex-column-fluid flex-column flex-center">
-                        <div class="login-nav-links pt-md-1 pb-md-3 pt-sm-5 px-lg-0 pt-5 px-7">
-                            <div class="d-flex flex-row">
-                                <div>
-                                    <a href="{{url('/login')}}" >Sign in</a>
-                                </div>
-                                <div>
-                                    <a href="{{url('/register')}}" class="active">Create account</a>
+        <div class="container p-5" >
+            <div class="card" style="height: 60vh !important;">
+                <div class="card-body p-0">
+                    <div class="login login-2 login-signin-on d-flex flex-column flex-lg-row flex-column-fluid bg-white">
+                        <!--begin::Aside-->
+                        <div class="login-aside order-2 order-lg-1 d-flex flex-row-auto position-relative overflow-hidden">
+                            <!--begin: Aside Container-->
+                            <div class="d-flex flex-column-fluid flex-column justify-content-between py-9 px-7 py-lg-10 px-lg-10">
+                                <div class="d-flex flex-column-fluid flex-column flex-center">
+                                    <!-- <div class="login-nav-links pt-md-1 pb-md-3 pt-sm-5 px-lg-0 pt-5 px-7">
+                                        <div class="d-flex flex-row">
+                                            <div>
+                                                <a href="{{url('/login')}}" >Sign in</a>
+                                            </div>
+                                            <div>
+                                                <a href="{{url('/register')}}" class="active">Create account</a>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <div class="row auth-form">
+                                        <div class="col-md-12">
+                                            <h3>Create new account</h3>
+                                            <p>Fil-in the form and register to an awesome journey</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="row social-buttons mb-2">
+                                        <div class="col-xl-6 col-lg-6 col-md-6 p-2">
+                                            <button class="btn btn-white btn-block">
+                                                <img src="{{asset('public/assets/images/icons/google.svg')}}">
+                                               <a href="{{url('/auth/google')}}" class="btn">Google</a>
+                                            </button>
+                                        </div>
+                                        <div class="col-xl-6 col-lg-6 col-md-6 p-2">
+                                            <a href="{{url('/auth/facebook')}}">
+                                            <button class="btn btn-white btn-block">
+                                                <img src="{{asset('public/assets/images/icons/facebook.svg')}}">
+                                                Facebook
+                                            </button>
+                                            </a>
+                                        </div>
+                                        {{-- <div class="col-xl-6 col-lg-6 col-md-6 p-2">
+                                            <button class="btn btn-white btn-block">
+                                                <img src="{{asset('public/assets/images/icons/apple.svg')}}">
+                                                Apple
+                                            </button>
+                                        </div> --}}
+                                    </div>
+
+                                    <div class="input-fields-area py-lg-0">
+                                        <form class="needs-validation pt-2" method="POST" action="{{ route('register') }}">
+                                           @csrf 
+                                            <div class="row">
+                                                <div class="col-md-6 col-lg-6 col-xl-6">
+                                                    <div class="form-group mb-0">
+                                                        <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" id="FirstName" required>
+                                                        <label for="FirstName">First Name</label>
+                                                   
+                                                    </div>
+                                                </div>
+                                                @error('name')
+                                                <span class="invalid-feedback " style="display:block !important" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                 @enderror
+                                                <div class="col-md-6 col-lg-6 col-xl-6">
+                                                    <div class="form-group mb-0">
+                                                        <input type="text" class="form-control" name="last_name" id="LastName" required>
+                                                        <label for="LastName">Last Name</label>
+                                                    </div>
+                                                </div>
+                                                {{-- <div class="col-md-12 col-lg-12 col-xl-12">
+                                                    <div class="form-group mb-0">
+                                                        <select class="form-select form-control shadow-effect" aria-label="Default select example">
+                                                            <option value="1">Sales </option>
+                                                            <option value="2">Human Resource</option>
+                                                            <option value="3">Finance</option>
+                                                        </select>
+                                                        <label for="LastName">Work industry</label>
+                                                    </div>
+                                                </div> --}}
+
+                                                <div class="col-md-12 col-lg-12 col-xl-12">
+                                                    <div class="form-group mb-0">
+                                                        <input type="text" class="form-control" name="org_name" id="LastName" required>
+                                                        <label for="LastName">Organization Name</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 col-lg-12 col-xl-12">
+                                                    <div class="form-group mb-0">
+                                                        <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" id="email" required>
+                                                        <label for="email">Email</label>
+                                                      
+                                                    </div>
+                                                </div>
+                                                @error('email')
+                                                <span class="invalid-feedback" style="display:block !important" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                 @enderror
+                                              
+                                                <div class="col-md-6 col-lg-6 col-xl-6">
+                                                    <div class="form-group mb-0 position-relative">
+                                                        <input type="password" class="form-control @error('password') is-invalid @enderror" onkeyup="passwordValidation();" name="password" id="Password" required>
+                                                        <label for="Password">Password</label>
+                                                    
+                                                        <span class="toggle-password" onclick="togglePasswordVisibility('Password')"><i class="fas fa-eye"></i></span>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="col-md-6 col-lg-6 col-xl-6">
+                                                    <div class="form-group mb-0 position-relative">
+                                                        <input type="password" class="form-control" id="ConfirmPassword"  name="password_confirmation" required>
+                                                        <label for="ConfirmPassword">Confirm Password</label>
+                                                        <span class="toggle-password" onclick="togglePasswordVisibility('ConfirmPassword')"><i class="fas fa-eye"></i></span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12" >
+                                                    @error('password')
+                                                        <span class="invalid-feedback" style="display:block !important" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                       </span>
+                                                         @enderror
+                                                    <span class="" id="pswmessage" role="alert"></span>
+                                                </div>
+                                                
+                                                <div class="col-md-12">
+                                                    <div id="popover-password" style="display:none;">
+                                                        <ul class="list-unstyled" style="font-size:12px; margin-bottom: 0px;">
+                                                            <li class="">
+                                                                <span class="low-upper-case">
+                                                                    <i class="fas fa-check" aria-hidden="true"></i>
+                                                                    &nbsp;Lowercase &amp; Uppercase
+                                                                </span>
+                                                            </li>
+                                                            <li class="">
+                                                                <span class="one-number">
+                                                                    <i class="fas fa-check" aria-hidden="true"></i>
+                                                                    &nbsp;Number (0-9)
+                                                                </span>
+                                                            </li>
+                                                            <li class="">
+                                                                <span class="one-special-char">
+                                                                   <i class="fas fa-check" aria-hidden="true"></i>
+                                                                    &nbsp;Special Character (!@#$%^&*)
+                                                                </span>
+                                                            </li>
+                                                            <li class="">
+                                                                <span class="eight-character">
+                                                                    <i class="fas fa-check" aria-hidden="true"></i>
+                                                                    &nbsp;Atleast 8 Character
+                                                                </span>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="col-md-12 col-lg-12 col-xl-12 py-2">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" required value="" id="flexCheckDefault">
+                                                        <label class="form-check-label ml-3 mt-1" for="flexCheckDefault">
+                                                            I agree to the terms & Conditions
+                                                        </label>
+                                                    </div>
+                                                </div> -->
+                                                <div class="col-md-12 py-2">
+                                                    <button class="btn btn-primary btn-lg btn-theme btn-block" id="password-button">Signup</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        
+                                        <div class="row py-3">
+                                            <div class="col-md-12 text-center">
+                                                <p>already have an account? <a href="{{url('/login')}}">Sign in</a> </p>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="input-fields-area py-lg-10">
-                            <h3>Create new account</h3>
-                            <form class="needs-validation pt-7" method="POST" action="{{ route('register') }}">
-                               @csrf 
-                                <div class="row">
-                                    <div class="col-md-6 col-lg-6 col-xl-6">
-                                        <div class="form-group mb-0">
-                                            <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" id="FirstName" required>
-                                            <label for="FirstName">First Name</label>
-                                       
-                                        </div>
-                                    </div>
-                                    @error('name')
-                                    <span class="invalid-feedback mb-3 ml-5 mt-0" style="display:block !important" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                     @enderror
-                                    <div class="col-md-6 col-lg-6 col-xl-6">
-                                        <div class="form-group mb-0">
-                                            <input type="text" class="form-control" name="last_name" id="LastName" required>
-                                            <label for="LastName">Last Name</label>
-                                        </div>
-                                    </div>
-                                    {{-- <div class="col-md-12 col-lg-12 col-xl-12">
-                                        <div class="form-group mb-0">
-                                            <select class="form-select form-control shadow-effect" aria-label="Default select example">
-                                                <option value="1">Sales </option>
-                                                <option value="2">Human Resource</option>
-                                                <option value="3">Finance</option>
-                                            </select>
-                                            <label for="LastName">Work industry</label>
-                                        </div>
-                                    </div> --}}
-
-                                    <div class="col-md-12 col-lg-12 col-xl-12">
-                                        <div class="form-group mb-0">
-                                            <input type="text" class="form-control" name="org_name" id="LastName" required>
-                                            <label for="LastName">Organization Name</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 col-lg-12 col-xl-12">
-                                        <div class="form-group mb-0">
-                                            <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" id="email" required>
-                                            <label for="email">Email</label>
-                                          
-                                        </div>
-                                    </div>
-                                    @error('email')
-                                    <span class="invalid-feedback mb-3 ml-5 mt-0" style="display:block !important" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                     @enderror
-                                  
-                                    <div class="col-md-12 col-lg-12 col-xl-12">
-                                        <div class="form-group mb-0 position-relative">
-                                            <input type="password" class="form-control @error('password') is-invalid @enderror" onkeyup="passwordValidation();" name="password" id="Password" required>
-                                            <label for="Password">Password</label>
-                                        
-                                            <span class="toggle-password" onclick="togglePasswordVisibility('Password')"><i class="fas fa-eye"></i></span>
-                                        </div>
-                                      
-                                    </div>
-                                    @error('password')
-                                    <span class="invalid-feedback mb-3 ml-5 mt-0" style="display:block !important" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                   </span>
-                                     @enderror
-                                     <span class="mb-3 ml-5 mt-0" id="pswmessage" role="alert">
-                                        
-                                     </span>
-                                   
-                                    <div class="col-md-12 col-lg-12 col-xl-12">
-                                        <div class="form-group mb-0 position-relative">
-                                            <input type="password" class="form-control" id="ConfirmPassword"  name="password_confirmation" required>
-                                            <label for="ConfirmPassword">Confirm Password</label>
-                                            <span class="toggle-password" onclick="togglePasswordVisibility('ConfirmPassword')"><i class="fas fa-eye"></i></span>
-                                        </div>
-                                    </div>
-                                    
-                                       <div class="col-md-12">
-                                     <div id="popover-password" style="display:none;">
-
-                                    <ul class="list-unstyled" style="font-size:12px">
-                                        <li class="">
-                                            <span class="low-upper-case">
-                                                <i class="fas fa-check" aria-hidden="true"></i>
-                                                &nbsp;Lowercase &amp; Uppercase
-                                            </span>
-                                        </li>
-                                        <li class="">
-                                            <span class="one-number">
-                                                <i class="fas fa-check" aria-hidden="true"></i>
-                                                &nbsp;Number (0-9)
-                                            </span>
-                                        </li>
-                                        <li class="">
-                                            <span class="one-special-char">
-                                               <i class="fas fa-check" aria-hidden="true"></i>
-                                                &nbsp;Special Character (!@#$%^&*)
-                                            </span>
-                                        </li>
-                                        <li class="">
-                                            <span class="eight-character">
-                                                <i class="fas fa-check" aria-hidden="true"></i>
-                                                &nbsp;Atleast 8 Character
-                                            </span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                                    <div class="col-md-12 col-lg-12 col-xl-12 py-2">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" required value="" id="flexCheckDefault">
-                                            <label class="form-check-label ml-3 mt-1" for="flexCheckDefault">
-                                                I agree to the terms & Conditions
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 py-2">
-                                        <button class="btn btn-primary btn-lg btn-theme btn-block" id="password-button">Signup</button>
-                                    </div>
-                                </div>
-                            </form>
-                            <div class="row pt-5">
-                                <div class="col-md-12">
-                                    <h2 class="separator-hr"><span>Or</span></h2>
-                                </div>
-                            </div>
-                            <div class="row py-3">
-                                <div class="col-md-12 text-center">
-                                    <p>already have an account? <a href="{{url('/login')}}">Sign in</a> </p>
-                                </div>
-                            </div>
-                            <div class="row social-buttons">
-                                <div class="col-xl-6 col-lg-6 col-md-6 p-2">
-                                    <button class="btn btn-white btn-block">
-                                        <img src="{{asset('public/assets/images/icons/google.svg')}}">
-                                       <a href="{{url('/auth/google')}}" class="btn"> Google</a>
-                                    </button>
-                                </div>
-                                <div class="col-xl-6 col-lg-6 col-md-6 p-2">
-                                    <a href="{{url('/auth/facebook')}}">
-                                    <button class="btn btn-white btn-block">
-                                        <img src="{{asset('public/assets/images/icons/facebook.svg')}}">
-                                        Facebook
-                                    </button>
-                                    </a>
-                                </div>
-                                {{-- <div class="col-xl-6 col-lg-6 col-md-6 p-2">
-                                    <button class="btn btn-white btn-block">
-                                        <img src="{{asset('public/assets/images/icons/apple.svg')}}">
-                                        Apple
-                                    </button>
-                                </div> --}}
-                            </div>
-                        </div>
+                        <!--begin::Aside-->
+                        <!--begin::Content-->
+                        @include('components.authsidebar')
                     </div>
                 </div>
+                
             </div>
-            <!--begin::Aside-->
-            <!--begin::Content-->
-            @include('components.authsidebar')
-
-        
+            
         </div>
     </div>
 </body>

@@ -682,16 +682,26 @@ $(document).ready(function() {
         editflag("{{ $_GET['flag'] }}")
     @endif
     $("#edit-epic").on('hidden.bs.modal', function(){
-       if($('#flag_tittle').val() == '')
-       {
-            var cardid = $('#cardid').val();
-            $('#'+cardid).remove();
-            deleteflag($('#cardid').val())
-       }
+       deletenullobject('flags');
        var new_url="{{ url()->current() }}";
        window.history.pushState("data","Title",new_url);
     });
 });
+function deletenullobject(type) {
+    $.ajax({
+        type: "POST",
+        url: "{{ url('deletenullobject') }}",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+            type: type,
+        },
+        success: function(res) {
+            
+        }
+    });
+}
 function searchepic(id) {
     var type = '{{ $type }}';
     var organizationid = '{{ $organization->slug }}';
