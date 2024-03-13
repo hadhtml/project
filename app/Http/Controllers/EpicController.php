@@ -301,7 +301,12 @@ class EpicController extends Controller
         }
         if($request->tab == 'checkins')
         {
-            $html = view('epics.tabs.checkins')->render();
+            $data = Epic::find($request->id);
+            $linking = DB::table('dependency_map')->select('dependency_map.*','dependency_map_link.*','dependency_map_link.id AS ID','dependency_map.id AS map_id')
+                      ->leftJoin('dependency_map_link','dependency_map_link.dependency_map_id','=','dependency_map.id')
+                      ->where('dependency_map.epic_id' , $request->id)->get();
+
+            $html = view('epics.tabs.checkins',compact('data','linking'))->render();
             return $html;
         }
     }
@@ -1264,5 +1269,216 @@ class EpicController extends Controller
         }
         $html = view('epics.showepicinboard', compact('e','organization'))->render();
         return $html;
+    }
+
+    public function Searchissues(Request $request)
+    {
+      
+        // $objectives = DB::table('epics')->where('user_id' , Auth::id())->wherenull('trash')->where('epic_name', 'LIKE', "%$request->id%")->get();
+        
+        // $objectives = DB::table('epics')
+        // ->select('epic_name as name','id as ID','epic_type as type')
+        //     ->where('epic_name', 'like', "%$request->id%")
+        //     ->where('id','!=',$request->epic )
+        //     ->union(
+        //         DB::table('epics_stroy')
+        //         ->select('epic_story_name as name','id as ID','story_type as type')
+        //         ->where('epic_story_name', 'like', "%$request->id%")
+        //         ->where('epic_id','!=',$request->epic )
+        //         ->where('epic_type', 'orignal')
+        
+        //     )
+        //     ->get();
+
+            $objectives = DB::table('epics')
+                ->where('epic_name', 'like', "%$request->id%")
+                ->where('id','!=',$request->epic)
+                ->get();
+
+           $epic = $request->epic;
+           $unit = $request->unit_id;      
+    
+
+
+        $html = view('epics.searchissue', compact('objectives','epic','unit'))->render();
+        return $html;
+    }
+
+    public function selectIssue(Request $request)
+    { 
+        if($request->type == 'Story')
+        {
+        $data = DB::table('epics_stroy')->where('id' , $request->id)->first();
+        echo '<div class="epic">
+        <div class="d-flex">
+            <div class="epic-tittle"><span style="font-size:20px" class="material-symbols-outlined mr-2">auto_stories</span> '.$data->epic_story_name.'</div>
+            <a onclick="removeobjective()" href="javascript:void(0)"><img class="closeimage" src="'.url('public/assets/svg/cross.svg').'"></a>
+        </div>
+        <input type="hidden" value="'.$data->story_type.'" name="block_type">
+        <div class="epic-detail okrmappersearchdetail">
+        
+    
+
+        </div>
+
+    </div>';
+        }else
+        {
+            $data = DB::table('epics')->where('id' , $request->id)->first();
+            echo '<div class="epic">
+            <div class="d-flex">
+           
+                <div class="epic-tittle"> <img src="http://localhost/agileprolific/public/assets/svg/arrow.svg"> '.$data->epic_name.'</div>
+                <a onclick="removeobjective()" href="javascript:void(0)"><img class="closeimage" src="'.url('public/assets/svg/cross.svg').'"></a>
+            </div>
+            <input type="hidden" value="epic" name="block_type" id="block_type">
+            <input type="hidden" value="'.$data->buisness_unit_id.'" name="block_level_id" id="block_level_id">
+            <input type="hidden" value="'.$data->epic_type.'" name="block_level_type" id="block_level_type">
+            <div class="epic-detail okrmappersearchdetail">
+            <input type="hidden"  value="'.$request->id.'"  id="objectiveid" name="objectiveid">
+
+           
+        
+    
+            </div>
+    
+        </div>';
+        }
+        
+
+   
+    }
+
+    public function saveIssue(Request $request)
+    {
+    
+    $link = DB::table("dependency_map")->where('epic_id' , $request->epic_id)->orderby('created_at' , 'desc')->first();    
+    if($link)
+    {
+     DB::table("dependency_map")
+        ->where('blocked_by',$request->epic_id)->update([
+        "blocked_by" => $request->epic_id,
+        "bussiness_unit_id" => $request->bussiness_unit_id,
+        "type" => $request->type,
+        "epic_id" => $request->epic_id,
+        "block_level_id" => $request->unit_id,
+        "month_id" => $request->month_id,
+    
+       ]);
+       
+       
+       DB::table("dependency_map_link")
+       ->insert([
+       "dependency_map_id" => $link->id,
+       "block" => $request->objectiveid,
+       "block_type" => $request->block_type,
+       "block_level_id" => $request->block_level_id,
+       "block_level_type" => $request->block_level_type,
+       "epic_id" => $request->epic_id,
+       "unit_id" => $request->bussiness_unit_id,
+   
+      ]);       
+    }else
+    {
+        $link_id = DB::table("dependency_map")
+        ->insertGetId([
+        "blocked_by" => $request->epic_id,
+        "bussiness_unit_id" => $request->bussiness_unit_id,
+        "type" => $request->type,
+        "epic_id" => $request->epic_id,
+        "block_level_id" => $request->unit_id,
+        "month_id" => $request->month_id,
+    
+       ]);
+
+       DB::table("dependency_map_link")
+       ->insert([
+       "dependency_map_id" => $link_id,
+       "block" => $request->objectiveid,
+       "block_type" => $request->block_type,
+       "block_level_id" => $request->block_level_id,
+       "block_level_type" => $request->block_level_type,
+       "epic_id" => $request->epic_id,
+       "unit_id" => $request->bussiness_unit_id,
+   
+      ]);  
+    }
+  
+
+  
+
+   $data = Epic::find($request->epic_id);
+   $linking = DB::table('dependency_map')->select('dependency_map.*','dependency_map_link.*','dependency_map_link.id AS ID','dependency_map.id AS map_id')
+   ->leftJoin('dependency_map_link','dependency_map_link.dependency_map_id','=','dependency_map.id')
+                      ->where('dependency_map.epic_id' , $request->epic_id)->get();
+   $html = view('epics.tabs.checkins',compact('data','linking'))->render();
+   return $html;
+
+    }
+
+    public function deletelinkingmap(Request $request)
+    {
+    
+    //  DB::table("dependency_map")->where('id',$request->id)->delete();
+     DB::table("dependency_map_link")->where('id',$request->id)->delete();
+     $count = DB::table("dependency_map_link")->where('dependency_map_id',$request->map_id)->count();
+     if($count == 0)
+     {
+     DB::table("dependency_map")->where('id',$request->map_id)->delete();
+     }
+
+   $data = Epic::find($request->epic_id);
+   $linking = DB::table('dependency_map')->select('dependency_map.*','dependency_map_link.*','dependency_map_link.id AS ID','dependency_map.id AS map_id')
+   ->leftJoin('dependency_map_link','dependency_map_link.dependency_map_id','=','dependency_map.id')
+   ->where('dependency_map.epic_id' , $request->epic_id)->get();
+
+   $html = view('epics.tabs.checkins',compact('data','linking'))->render();
+   return $html;
+
+    }
+
+    public function LeaderLinemap($slug,$type)
+    {
+    if($type == 'unit')
+    {
+    $organization = DB::table('business_units')->where('slug',$slug)->where('user_id',Auth::id())->first();
+    }
+
+    if($type == 'stream')
+    {
+    $organization = DB::table('value_stream')->where('slug',$slug)->where('user_id',Auth::id())->first();
+    }
+
+    if($type == 'org')
+    {
+    $organization = DB::table('organization')->where('slug',$slug)->where('user_id',Auth::id())->first();
+    }
+
+    if($type == 'orgT')
+    {
+    $organization = DB::table('org_team')->where('slug',$slug)->first();
+    }
+
+    if($type == 'BU')
+    {
+    $organization = DB::table('unit_team')->where('slug',$slug)->first();
+    }
+
+    if($type == 'VS')
+    {
+    $organization = DB::table('value_team')->where('slug',$slug)->first();
+    }
+
+    
+    if($organization)
+    {
+    return view('epics.index-leaderline',compact('organization','type'));  
+    }else
+    {
+       
+    echo "You're not authorized to access this Link <a href= ".url('dashboard/organizations').">Back</a>";   
+    } 
+   
+        
     }
 }
