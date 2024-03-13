@@ -556,7 +556,7 @@ $var_objective = 'TBaclog-' . $type;
             </button>
          </div>
          @php
-         $jira = DB::table('jira_setting')->where('user_id',Auth::id())->count();
+         $jira = DB::table('jira_setting')->where('user_id',Auth::id())->orWhere('user_id',Auth::user()->invitation_id)->count();
          @endphp
          <div class="modal-body p-0">
             <form class="needs-validation" action="{{ url('assign-jira-epic') }}" method="POST">
@@ -569,9 +569,9 @@ $var_objective = 'TBaclog-' . $type;
                      <select class="form-control" onchange="get_jira_project(this.value)" id="JIRA"
                         name="jira_name" required>
                         <option value="">Select Jira Connect</option>
-                        <?php foreach(DB::table('jira_setting')->where('user_id',Auth::id())->get() as $r){ ?>
+                        <?php foreach(DB::table('jira_setting')->where('user_id',Auth::id())->orWhere('user_id',Auth::user()->invitation_id)->get() as $r){ ?>
                         <option value="{{ $r->id }}">{{ $r->jira_name }}</option>
-                        -->
+                   
                         <?php }  ?>
                      </select>
                      <label for="small-description">Choose Jira Connect</label>
