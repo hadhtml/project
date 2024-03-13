@@ -146,6 +146,17 @@
                     </div>
                 </a>
             </li>
+
+            <li class="mb-1">
+                <a href="{{url('dashboard/organization/'.$organization->slug.'/leaderline/unit')}}" class="d-flex flex-row align-items-center">
+                    <div class="mr-2">
+                         <span style="font-size:22px" class="material-symbols-outlined">sprint</span>
+                    </div>
+                    <div class="mr-2">
+                        Dependency Map
+                    </div>
+                </a>
+            </li>
             <!-- <li class="mb-1">
                 <a href="#" class="d-flex flex-row align-items-center">
                     <div class="mr-2">

@@ -391,6 +391,17 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                     </div>
                 </a>
             </li>
+
+            <li class="mb-1">
+                <a href="{{url('dashboard/organization/'.$organization->slug.'/leaderline/VS')}}" class="d-flex flex-row align-items-center">
+                    <div class="mr-2">
+                         <span style="font-size:22px" class="material-symbols-outlined">sprint</span>
+                    </div>
+                    <div class="mr-2">
+                        Dependency Map
+                    </div>
+                </a>
+            </li>
             @endif
             @if($organization->type == 'BU')
             <li class="mb-1">
@@ -430,6 +441,17 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                     </div>
                     <div class="mr-2">
                         Action
+                    </div>
+                </a>
+            </li>
+
+            <li class="mb-1">
+                <a href="{{url('dashboard/organization/'.$organization->slug.'/leaderline/BU')}}" class="d-flex flex-row align-items-center">
+                    <div class="mr-2">
+                         <span style="font-size:22px" class="material-symbols-outlined">sprint</span>
+                    </div>
+                    <div class="mr-2">
+                        Dependency Map
                     </div>
                 </a>
             </li>
@@ -473,6 +495,17 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                     </div>
                     <div class="mr-2">
                         Action
+                    </div>
+                </a>
+            </li>
+
+            <li class="mb-1">
+                <a href="{{url('dashboard/organization/'.$organization->slug.'/leaderline/orgT')}}" class="d-flex flex-row align-items-center">
+                    <div class="mr-2">
+                         <span style="font-size:22px" class="material-symbols-outlined">sprint</span>
+                    </div>
+                    <div class="mr-2">
+                        Dependency Map
                     </div>
                 </a>
             </li>
