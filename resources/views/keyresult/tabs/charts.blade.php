@@ -22,9 +22,13 @@
              
         $value = [];
         $QId = [];
+        $color = [];
+        $allvalue = [];
+        $allcolor = [];
 
             $Qvalue = [];
             $Qname = [];
+            
             $KEYChartQ1 = DB::table('key_chart')
             ->where('key_id', $key->id)
             ->whereIn('IndexCount', [1, 2, 3, 4])
@@ -37,7 +41,7 @@
             $Qname[] = 'Q'.$allQ->IndexCount;
             $QId[] =   $allQ->id;
             }
-             array_unshift($Qvalue, 0);
+            //  array_unshift($Qvalue, 0);
             }else
             {
             $Qvalue = [];
@@ -45,12 +49,43 @@
             }
 
             $keyqvalue = DB::table('key_quarter_value')
+            ->where('key_chart_id',$KEYChart->id)
+            ->orderby('created_at', 'ASC')
+            ->get();
+
+            // $keyqvaluemax = DB::table('key_quarter_value')
+            //             ->where('key_chart_id', $KEYChart->id)
+            //             ->orderby('id', 'DESC')
+            //             ->first();
+
+            $keyqvalueAll = DB::table('key_quarter_value')
             ->whereIn('key_chart_id',$QId)
             ->get();
 
          @endphp
          
-         
+         @if(count($keyqvalueAll) > 0)
+
+         @php
+        
+        foreach ($keyqvalueAll as $allchart) {
+        $allvalue[] = $allchart->value;
+        if($allchart->status == 'On Track')
+        {
+        $allcolor[] = '#539884';
+        }elseif($allchart->status == 'At Risk')
+        {
+        $allcolor[] = '#f7cd55';
+        }else
+        {
+        $allcolor[] = '#f35a47';
+        }
+        }
+      
+                    
+
+       @endphp
+         @endif  
        
        @if(count($keyqvalue) > 0)
 
@@ -64,6 +99,18 @@
         {
         foreach ($keyqvalue as $chart) {
         $value[] = $chart->value;
+        if($chart->status == 'On Track')
+        {
+        $color[] = '#539884';
+        }elseif($chart->status == 'At Risk')
+        {
+        $color[] = '#f7cd55';
+        }else
+        {
+        $color[] = '#f35a47';
+        }
+        $maxlinebar = 0;
+        $maxlinebar = max($value);
         }
         }
        
@@ -75,6 +122,7 @@
     $yearMonthString = $currentDate->format('Y');
     $yearMonth = $currentDate->format('F');
     $CurrentQuarter = '';
+    $formattedDate = '';
 
     $CurrentQuarter = DB::table('quarter_month')
                     ->where('org_id',$key->unit_id)
@@ -131,7 +179,8 @@
 
 
 var dataset1 = @json($Qvalue);
-var dataset2 = @json($value);
+var dataset2 = @json($allvalue);
+var alldatasetcolor = @json($allcolor);
 
 var labels = @json($Qname);
 
@@ -159,6 +208,9 @@ var data = {
         data: dataset2,
         borderColor: 'gray',
         fill: false,
+        pointRadius: 5,
+        borderWidth: 1.5,
+        backgroundColor:alldatasetcolor,
        
     }]
 };
@@ -205,13 +257,15 @@ var myChart = new Chart(ctx, {
     }
      
 var extraLineData = {{$KEYChart->quarter_value}}; // Assuming $KEYChart->quarter_value is a numeric value
+
 var actualData = @json($value);
+var color = @json($color);
 
 var formattedDate = "{{$formattedDate}}";
 
 // var extraLineDataS = Array.from({length: actualData.length}, (_, i) => i === 0 ? 0 : extraLineData);
 var extraLineDataS = Array(actualData.length).fill(extraLineData);
-var maxLinebar = {{$KEYChart->quarter_value}};
+var maxLinebar = {{$maxlinebar}};
                                         
 var calculatedMaxbar = Math.ceil(maxLinebar / 25) * 25;
 var calculatedMaxbarNew = (calculatedMaxbar + 50);
@@ -225,24 +279,19 @@ var lineChart = new Chart(ctxLine, {
             data: actualData,
             borderColor: 'gray',
             fill: false,
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 159, 64, 0.2)',
-                'rgba(255, 205, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(201, 203, 207, 0.2)'
-            ],
-            borderWidth: 1,
+            backgroundColor:color,
+            borderWidth: 2,
+            pointRadius: 5,
         },
         {
             label: 'Quarter (Target) Line (' + formattedDate + ')',
             data: extraLineDataS,
             borderColor: 'gray', 
-            borderWidth: 1.5,
             fill: false,
             borderDash: [5, 5],
+            borderWidth: 2,
+            pointRadius: 0,
+            
         }]
     },
     options: {

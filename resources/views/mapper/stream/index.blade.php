@@ -214,6 +214,10 @@ $var_objective = "mapper-stream";
         </div>
     </div>
 </div>
+@endforeach
+
+@endforeach
+
 
 @endsection
 @section('scripts')
