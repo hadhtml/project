@@ -139,7 +139,7 @@
            window.history.pushState("data","Title",new_url);
         });
         @if(isset($_GET['objective']))
-            editobjective(event , "{{ $_GET['objective'] }}" , '{{ $organization->slug }}');
+            editobjectivewithoutevent("{{ $_GET['objective'] }}" , '{{ $organization->slug }}');
         @endif
 
         $("#objectivemodalnew").on('hidden.bs.modal', function(){
@@ -214,7 +214,7 @@
     }
     $(document).ready(function() {
         @if(isset($_GET['keyresult']))
-            editobjectivekey(event , "{{ $_GET['keyresult'] }}");
+            editobjectivekeywithoutevent("{{ $_GET['keyresult'] }}");
             @php
                 $objective_id = DB::table('key_result')->where('id' , $_GET['keyresult'])->first()->obj_id;
             @endphp
@@ -222,6 +222,25 @@
         @endif
 
     });
+    function editobjectivekeywithoutevent(id) {
+        $.ajax({
+            type: "POST",
+            url: "{{ url('dashboard/keyresult/getkeyresult') }}",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                id: id,
+            },
+            success: function(res) {
+                var new_url="{{ url()->current() }}?keyresult="+id;
+                window.history.pushState("data","Title",new_url);
+               
+                $('#newmodalcontent').html(res);
+                $('#edit-key-result-new').modal('show');
+            }
+        });
+    }
      function editobjectivekey(event,id) {
         event.stopPropagation();
         $.ajax({
@@ -839,6 +858,22 @@
             $('#key-feild-error-edit').html('Please fill out all required fields.');
 
         }
+    }
+    function editobjectivewithoutevent(id , slug) {
+        $.ajax({
+            type: "POST",
+            url: main_url()+"/dashboard/objectives/getobjective",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                id: id,
+            },
+            success: function(res) {
+                $('#objective-modal-content').html(res);
+                $('#objectivemodalnew').modal('show');
+            }
+        });
     }
     function editobjective(event , id , slug) {
         event.stopPropagation();
