@@ -214,9 +214,7 @@ $var_objective = "mapper-stream";
         </div>
     </div>
 </div>
-@endforeach
 
-@endforeach
 
 
 @endsection
@@ -287,6 +285,8 @@ $var_objective = "mapper-stream";
   @endforeach
 });
 
+@endforeach
+@endforeach
     </script>
 
 <script>
