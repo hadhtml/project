@@ -215,6 +215,8 @@ $var_objective = "mapper-stream";
     </div>
 </div>
 
+
+
 @endsection
 @section('scripts')
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/leader-line@1.0.5/leader-line.min.js"></script>
@@ -282,7 +284,9 @@ $var_objective = "mapper-stream";
   });
   @endforeach
 });
+@endforeach
 
+@endforeach
     </script>
 
 <script>
