@@ -25,6 +25,11 @@ use OneSignal;
 class Cmf
 { 
 
+    public static function getuserdatabytable($table , $user_id)
+    {
+        return DB::table($table)->where('user_id' , $user_id)->count();
+    }
+
     public static function savemapperheight($id , $type)
     {
         

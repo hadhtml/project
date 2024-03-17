@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController; 
+use App\Http\Controllers\Admin\Auth\LoginController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -446,3 +447,27 @@ Route::post('savemapissue', [App\Http\Controllers\EpicController::class,'saveIss
 Route::post('deletelinkingmap', [App\Http\Controllers\EpicController::class,'deletelinkingmap']);
 
 Route::get('dashboard/organization/{slug}/leaderline/{id}', [App\Http\Controllers\EpicController::class,'LeaderLinemap']);
+
+
+Route::name('admin.')->prefix('admin')->group(function(){
+    Route::get('/login',[LoginController::class, 'login'])->name('login');
+    Route::post('/login-process',[LoginController::class, 'login_process'])->name('login_process');
+    Route::post('/logout',[LoginController::class, 'logout'])->name('logout');
+});
+
+Route::name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')->middleware('admin')->group(function(){
+    Route::get('/dashboard','AdminController@dashboard')->name('dashboard');
+    Route::get('/profile','AdminController@profile')->name('profile');
+    Route::post('/updateuserprofile','AdminController@updateuserprofile');
+    Route::post('/updateusersecurity','AdminController@updateusersecurity');
+
+
+    Route::name('users.')->prefix('users')->group(function(){
+        Route::get('/allusers','AdminController@allusers');
+        Route::get('/cloneuser','AdminController@cloneuser');
+        Route::post('importuserdata','AdminController@importuserdata');
+        Route::post('getuserdata','AdminController@getuserdata');
+        
+    });    
+
+});
