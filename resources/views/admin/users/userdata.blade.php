@@ -33,33 +33,33 @@
           </tr>
           <tr>
             <td><input type="checkbox"></td>
-            <td>{{ Cmf::getuserdatabytable('backlog' , $from) }}</td>
-            <td>attachments</td>
+            <td>{{ Cmf::getuserdatabytable('chart_data' , $from) }}</td>
+            <td>chart_data</td>
           </tr>
           <tr>
             <td><input type="checkbox"></td>
-            <td>{{ Cmf::getuserdatabytable('backlog' , $from) }}</td>
-            <td>attachments</td>
+            <td></td>
+            <td>dependency_map</td>
           </tr>
           <tr>
             <td><input type="checkbox"></td>
-            <td>{{ Cmf::getuserdatabytable('backlog' , $from) }}</td>
-            <td>attachments</td>
+            <td></td>
+            <td>dependency_map_link</td>
           </tr>
           <tr>
             <td><input type="checkbox"></td>
-            <td>{{ Cmf::getuserdatabytable('backlog' , $from) }}</td>
-            <td>attachments</td>
+            <td>{{ Cmf::getuserdatabytable('epics' , $from) }}</td>
+            <td>epics</td>
           </tr>
           <tr>
             <td><input type="checkbox"></td>
-            <td>{{ Cmf::getuserdatabytable('backlog' , $from) }}</td>
-            <td>attachments</td>
+            <td>{{ Cmf::getuserdatabytable('epics_stroy' , $from) }}</td>
+            <td>epics_stroy</td>
           </tr>
           <tr>
             <td><input type="checkbox"></td>
-            <td>{{ Cmf::getuserdatabytable('backlog' , $from) }}</td>
-            <td>attachments</td>
+            <td></td>
+            <td>epic_clone</td>
           </tr>
           <tr>
             <td><input type="checkbox"></td>
