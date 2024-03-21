@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Organization;
 use App\Models\business_units;
 use App\Models\value_stream;
+use App\Models\initiative;
+
 use Illuminate\Support\Str;
 use DB;
 class AdminController extends Controller
@@ -65,6 +67,7 @@ class AdminController extends Controller
         $createobjective->type = $o->type;
         $createobjective->IndexCount = $o->IndexCount;
         $createobjective->save();
+        return $createobjective->id;
     }
     public function importuserdata(Request $request)
     {
@@ -72,44 +75,61 @@ class AdminController extends Controller
         $to = $request->to;
         $org_id = DB::table('organization')->where('user_id' , $to)->first()->id;
         $from_org_id = DB::table('organization')->where('user_id' , $from)->first()->id;
-        $org_objectives = DB::table('objectives')->where('type' , 'org')->where('unit_id' , $from_org_id)->get();
-        foreach ($org_objectives as $o) {
+        $objectives = DB::table('objectives')->where('user_id' , $from)->where('type' , 'org')->get();
+        foreach ($objectives as $o) {
             $createobjective = new objectives();
-            $createobjective->status = $o->status;
             $createobjective->user_id = $to;
-            $createobjective->obj_prog = $o->obj_prog;
-            $createobjective->q_obj_prog = $o->q_obj_prog;
-            $createobjective->unit_id = $org_id;
+            $createobjective->org_id = $org_id;
+            $createobjective->objective_name = $o->objective_name;
             $createobjective->start_date = $o->start_date;
             $createobjective->end_date = $o->end_date;
-            $createobjective->type = $o->type;
+            $createobjective->detail = $o->detail;
+            $createobjective->status = $o->status;
+            $createobjective->obj_prog = $o->obj_prog;       
+            $createobjective->q_obj_prog = $o->q_obj_prog;     
+            $createobjective->unit_id = $org_id;    
+            $createobjective->type = $o->type;       
             $createobjective->IndexCount = $o->IndexCount;
             $createobjective->save();
-
-
-            foreach ($variable as $key => $value) {
-                $org_add_key_result->user_id        
-                $org_add_key_result->obj_id     
-                $org_add_key_result->key_name       
-                $org_add_key_result->key_start_date     
-                $org_add_key_result->key_end_date       
-                $org_add_key_result->key_detail 
-                $org_add_key_result->key_status     
-                $org_add_key_result->created_at     
-                $org_add_key_result->updated_at     
-                $org_add_key_result->trash      
-                $org_add_key_result->key_prog   
-                $org_add_key_result->weight 
-                $org_add_key_result->q_key_prog     
-                $org_add_key_result->unit_id        
-                $org_add_key_result->target_value       
-                $org_add_key_result->key_result_type        
-                $org_add_key_result->key_unit       
-                $org_add_key_result->init_value     
-                $org_add_key_result->target_number      
-                $org_add_key_result->type       
-                $org_add_key_result->IndexCount
+            $org_keyresult = DB::table('key_result')->where('obj_id' , $o->id)->get();
+            foreach ($org_keyresult as $k) {
+                $org_add_key_result->user_id = $to;     
+                $org_add_key_result->obj_id = $createobjective->id; 
+                $org_add_key_result->key_name  =     $k->key_name;
+                $org_add_key_result->key_start_date =     $k->key_start_date;
+                $org_add_key_result->key_end_date =      $k->key_end_date;
+                $org_add_key_result->key_detail =$k->key_detail;
+                $org_add_key_result->key_status  =   $k->key_status;
+                $org_add_key_result->key_prog   =$k->key_prog;
+                $org_add_key_result->weight =$k->weight;
+                $org_add_key_result->q_key_prog =    $k->q_key_prog;
+                $org_add_key_result->unit_id     =   $org_id;
+                $org_add_key_result->target_value =      $k->target_value;
+                $org_add_key_result->key_result_type =       $k->key_result_type;
+                $org_add_key_result->key_unit       =$k->key_unit;
+                $org_add_key_result->init_value     =$k->init_value;
+                $org_add_key_result->target_number   =   $k->target_number;
+                $org_add_key_result->type       = $k->type;
+                $org_add_key_result->IndexCount = $k->IndexCount;
+                $org_add_key_result->save();
+                $initiative = DB::table('key_result')->where('key_id' , $k->id)->get();
+                foreach ($initiative as $i) {
+                    $org_initiative = new initiative;
+                    $org_initiative->initiative_name = $i->initiative_name;
+                    $org_initiative->obj_id = $createobjective->id;
+                    $org_initiative->key_id = $org_add_key_result->id;
+                    $org_initiative->initiative_start_date = $i->initiative_start_date;
+                    $org_initiative->initiative_end_date = $i->initiative_end_date;
+                    $org_initiative->initiative_detail = $i->initiative_detail;
+                    $org_initiative->user_id = $to;
+                    $org_initiative->initiative_weight = $i->initiative_weight;
+                    $org_initiative->initiative_status = $i->initiative_status;
+                    $org_initiative->IndexCount = $i->IndexCount;
+                    $org_initiative->save();
+                }
             }
+
+
         }
 
 
