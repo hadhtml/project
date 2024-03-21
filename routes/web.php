@@ -466,7 +466,7 @@ Route::name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')-
         Route::get('/allusers','AdminController@allusers');
         Route::get('/cloneuser','AdminController@cloneuser');
         Route::post('importuserdata','AdminController@importuserdata');
-        Route::post('getuserdata','AdminController@getuserdata');
+        Route::post('getuserdata','AdminController@importuserdata');
         
     });    
 

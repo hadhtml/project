@@ -49,13 +49,13 @@
         contentType: false,
         processData: false,
         success: function(data){
-          if(data == 0)
-          {
-            alert('Please Select Atleast One Module');
+          // if(data == 0)
+          // {
+          //   alert('Please Select Atleast One Module');
             $('.clonebutton').html('Start Clonning');
-          }else{
+          // }else{
 
-          }
+          // }
         }
     });
 }));

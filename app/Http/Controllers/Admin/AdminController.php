@@ -8,7 +8,11 @@ use App\Models\Organization;
 use App\Models\business_units;
 use App\Models\value_stream;
 use App\Models\initiative;
-
+use App\Models\objectives;
+use App\Models\key_result;
+use App\Models\Quarter;
+use App\Models\quarter_month;
+use App\Models\Epic;
 use Illuminate\Support\Str;
 use DB;
 class AdminController extends Controller
@@ -54,28 +58,13 @@ class AdminController extends Controller
     {
         return DB::table($tablename)->where('user_id' , $user_id)->get();
     }
-    public function addobjective()
-    {
-        $createobjective = new objectives();
-        $createobjective->status = $o->status;
-        $createobjective->user_id = $to;
-        $createobjective->obj_prog = $o->obj_prog;
-        $createobjective->q_obj_prog = $o->q_obj_prog;
-        $createobjective->unit_id = $org_id;
-        $createobjective->start_date = $o->start_date;
-        $createobjective->end_date = $o->end_date;
-        $createobjective->type = $o->type;
-        $createobjective->IndexCount = $o->IndexCount;
-        $createobjective->save();
-        return $createobjective->id;
-    }
     public function importuserdata(Request $request)
     {
         $from = $request->from;
         $to = $request->to;
         $org_id = DB::table('organization')->where('user_id' , $to)->first()->id;
         $from_org_id = DB::table('organization')->where('user_id' , $from)->first()->id;
-        $objectives = DB::table('objectives')->where('user_id' , $from)->where('type' , 'org')->get();
+        $objectives = DB::table('objectives')->where('unit_id' , $from_org_id)->where('type' , 'org')->get();
         foreach ($objectives as $o) {
             $createobjective = new objectives();
             $createobjective->user_id = $to;
@@ -93,6 +82,7 @@ class AdminController extends Controller
             $createobjective->save();
             $org_keyresult = DB::table('key_result')->where('obj_id' , $o->id)->get();
             foreach ($org_keyresult as $k) {
+                $org_add_key_result = new key_result();
                 $org_add_key_result->user_id = $to;     
                 $org_add_key_result->obj_id = $createobjective->id; 
                 $org_add_key_result->key_name  =     $k->key_name;
@@ -112,7 +102,7 @@ class AdminController extends Controller
                 $org_add_key_result->type       = $k->type;
                 $org_add_key_result->IndexCount = $k->IndexCount;
                 $org_add_key_result->save();
-                $initiative = DB::table('key_result')->where('key_id' , $k->id)->get();
+                $initiative = DB::table('initiative')->where('key_id' , $k->id)->get();
                 foreach ($initiative as $i) {
                     $org_initiative = new initiative;
                     $org_initiative->initiative_name = $i->initiative_name;
@@ -126,10 +116,66 @@ class AdminController extends Controller
                     $org_initiative->initiative_status = $i->initiative_status;
                     $org_initiative->IndexCount = $i->IndexCount;
                     $org_initiative->save();
+                    $quarter = DB::table('quarter')->where('initiative_id' , $i->id)->get();
+                    foreach ($quarter as $q) {
+                        $addquarter = new Quarter();
+                        $addquarter->quarter_name = $q->quarter_name;
+                        $addquarter->initiative_id = $org_initiative->id;
+                        $addquarter->user_id = $to;
+                        $addquarter->quarter_progress = $q->quarter_progress;
+                        $addquarter->year = $q->year;
+                        $addquarter->loop_index = $q->loop_index;
+                        $addquarter->save();
+                        $quarter_month = quarter_month::where('quarter_id' , $q->id)->get();
+                        foreach ($quarter_month as $q_m) {
+                            $addquartermonth = new quarter_month();
+                            $addquartermonth->quarter_id = $addquarter->id;
+                            $addquartermonth->month = $q_m->month;
+                            $addquartermonth->user_id = $to;
+                            $addquartermonth->initiative_id = $org_initiative->id;
+                            $addquartermonth->quarter_name = $q_m->quarter_name;
+                            $addquartermonth->year = $q_m->year;
+                            $addquartermonth->org_id = $org_id;
+                            $addquartermonth->save();
+                        }
+                    }
+                    $epics = DB::table('epics')->where('initiative_id' , $i->id)->get();
+                    foreach ($epics as $e) {
+                        $createepic = new Epic();
+                        $monthid = $e->month_id;
+                        $quarter_month = DB::table('quarter_month')->where('id' , $monthid)->first();
+                        $newquartermonth  = DB::table('quarter_month')->where('month' , $quarter_month->month)->where('quarter_name' , $quarter_month->quarter_name)->where('year' , $quarter_month->year)->where('initiative_id' , $org_initiative->id)->first();
+                        $createepic->month_id = $newquartermonth->id;
+                        $createepic->epic_status = $e->epic_status;    
+                        $createepic->epic_name  = $e->epic_name;
+                        $createepic->epic_detail  = $e->epic_detail;  
+                        $createepic->epic_start_date = $e->epic_start_date;
+                        $createepic->epic_end_date  = $e->epic_end_date;
+                        $createepic->epic_progress  = $e->epic_progress;
+                        $createepic->user_id = $to;
+                        $createepic->initiative_id = $org_initiative->id;  
+                        $createepic->quarter_id = $newquartermonth->quarter_id;
+                        $createepic->backlog_id = $e->backlog_id;
+                        $createepic->type   = $e->type;
+                        $createepic->flag_type = $e->flag_type;
+                        $createepic->flag_assign = $e->flag_assign;
+                        $createepic->flag_title = $e->flag_title;
+                        $createepic->flag_description = $e->flag_description;
+                        $createepic->flag_status =    $e->flag_status;
+                        $createepic->flag_order = $e->flag_order;
+                        $createepic->obj_id = $createobjective->id;
+                        $createepic->buisness_unit_id = $org_id;
+                        $createepic->team_id =    $e->team_id;
+                        $createepic->key_id = $org_add_key_result->id;
+                        $createepic->jira_id  =   $e->jira_id;
+                        $createepic->jira_project =   $e->jira_project;
+                        $createepic->account_id = $e->account_id;
+                        $createepic->epic_type  = $e->epic_type;
+                        $createepic->old_date = $e->old_date;
+                        $createepic->save();   
+                    }
                 }
             }
-
-
         }
 
 
