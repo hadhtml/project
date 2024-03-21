@@ -5,109 +5,58 @@
 </div>
 
 <!-- Modal body -->
+<form class="importuserdata" method="POST" action="{{ url('admin/users/importuserdata') }}">
+  @csrf
+  <input type="hidden" value="{{ $from }}" name="from">
+  <input type="hidden" value="{{ $to }}" name="to">
 <div class="modal-body">
   <table class="table table-bordered">
       <thead>
         <tr>
-          <th><input type="checkbox"></th>
-          
-          <th>No of Rows</th>
+          <th><input type="checkbox"></th>          
           <th>Name</th>
+          <th>Status</th>
         </tr>
       </thead>
       <tbody>
           <tr>
-            <td><input type="checkbox"></td>
-            <td>{{ Cmf::getuserdatabytable('activities' , $from) }}</td>
-            <td>Activities</td>
+            <td><input name="module[]" value="buisness_unit" type="checkbox"></td>
+            <td>Buisness Units</td>
+            <td id="buisness_unit">Not Cloned</td>
           </tr>
           <tr>
-            <td><input type="checkbox"></td>
-            <td>{{ Cmf::getuserdatabytable('attachments' , $from) }}</td>
-            <td>attachments</td>
+            <td><input name="module[]" value="okr_mapper" type="checkbox"></td>
+            <td>OKR Mapper</td>
+            <td>Not Cloned</td>
           </tr>
-          <tr>
-            <td><input type="checkbox"></td>
-            <td>{{ Cmf::getuserdatabytable('business_units' , $from) }}</td>
-            <td>business_units</td>
-          </tr>
-          <tr>
-            <td><input type="checkbox"></td>
-            <td>{{ Cmf::getuserdatabytable('chart_data' , $from) }}</td>
-            <td>chart_data</td>
-          </tr>
-          <tr>
-            <td><input type="checkbox"></td>
-            <td></td>
-            <td>dependency_map</td>
-          </tr>
-          <tr>
-            <td><input type="checkbox"></td>
-            <td></td>
-            <td>dependency_map_link</td>
-          </tr>
-          <tr>
-            <td><input type="checkbox"></td>
-            <td>{{ Cmf::getuserdatabytable('epics' , $from) }}</td>
-            <td>epics</td>
-          </tr>
-          <tr>
-            <td><input type="checkbox"></td>
-            <td>{{ Cmf::getuserdatabytable('epics_stroy' , $from) }}</td>
-            <td>epics_stroy</td>
-          </tr>
-          <tr>
-            <td><input type="checkbox"></td>
-            <td></td>
-            <td>epic_clone</td>
-          </tr>
-          <tr>
-            <td><input type="checkbox"></td>
-            <td>{{ Cmf::getuserdatabytable('backlog' , $from) }}</td>
-            <td>attachments</td>
-          </tr>
-          <tr>
-            <td><input type="checkbox"></td>
-            <td>{{ Cmf::getuserdatabytable('backlog' , $from) }}</td>
-            <td>attachments</td>
-          </tr>
-          <tr>
-            <td><input type="checkbox"></td>
-            <td>{{ Cmf::getuserdatabytable('backlog' , $from) }}</td>
-            <td>attachments</td>
-          </tr>
-          <tr>
-            <td><input type="checkbox"></td>
-            <td>{{ Cmf::getuserdatabytable('backlog' , $from) }}</td>
-            <td>attachments</td>
-          </tr>
-          <tr>
-            <td><input type="checkbox"></td>
-            <td>{{ Cmf::getuserdatabytable('backlog' , $from) }}</td>
-            <td>attachments</td>
-          </tr>
-          <tr>
-            <td><input type="checkbox"></td>
-            <td>{{ Cmf::getuserdatabytable('backlog' , $from) }}</td>
-            <td>attachments</td>
-          </tr>
-          <tr>
-            <td><input type="checkbox"></td>
-            <td>{{ Cmf::getuserdatabytable('backlog' , $from) }}</td>
-            <td>attachments</td>
-          </tr>
-          <tr>
-            <td><input type="checkbox"></td>
-            <td>{{ Cmf::getuserdatabytable('backlog' , $from) }}</td>
-            <td>attachments</td>
-          </tr>
-          <tr>
-            <td><input type="checkbox"></td>
-            <td>{{ Cmf::getuserdatabytable('backlog' , $from) }}</td>
-            <td>attachments</td>
-          </tr>
-
-          
       </tbody>
   </table>
 </div>
+<div class="modal-footer">
+    <button class="btn btn-primary clonebutton">Start Clonning</button>
+</div>
+</form>
+<script type="text/javascript">
+  $('.importuserdata').on('submit',(function(e) {
+    $('.clonebutton').html('<i class="fa fa-spin fa-spinner"></i>');
+    e.preventDefault();
+    var formData = new FormData(this);
+    $.ajax({
+        type:'POST',
+        url: $(this).attr('action'),
+        data:formData,
+        cache:false,
+        contentType: false,
+        processData: false,
+        success: function(data){
+          if(data == 0)
+          {
+            alert('Please Select Atleast One Module');
+            $('.clonebutton').html('Start Clonning');
+          }else{
+
+          }
+        }
+    });
+}));
+</script>

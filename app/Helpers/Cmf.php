@@ -27,7 +27,7 @@ class Cmf
 
     public static function getuserdatabytable($table , $user_id)
     {
-        return DB::table($table)->where('user_id' , $user_id)->count();
+        return DB::table($table)->where('user_id' , $user_id)->get();
     }
 
     public static function savemapperheight($id , $type)
