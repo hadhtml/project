@@ -325,6 +325,35 @@
             @if ($var_objective == 'leaderline-org')
             @include('components.sidebar-component')
             @endif
+
+            @if ($var_objective == 'Pagekpi-unit')
+                 
+            @include('Business-units.unit-sidebar')
+
+            @endif
+            
+            @if ($var_objective == 'Pagekpi-stream')
+                 
+            @include('member.navbar')
+
+            @endif
+
+            @if ($var_objective == 'Pagekpi-BU')
+            @include('Business-units.Team-sidebar')
+            @endif
+
+            @if ($var_objective == 'Pagekpi-orgT')
+            @include('Business-units.Team-sidebar')
+            @endif
+
+            @if ($var_objective == 'Pagekpi-VS')
+            @include('Business-units.Team-sidebar')
+            @endif
+
+
+            @if ($var_objective == 'Pagekpi-org')
+            @include('components.sidebar-component')
+            @endif
             
             
             
@@ -614,6 +643,36 @@
     
                 @if ($var_objective == 'leaderline-org')
                 @include('epics.leadeline-breadcrumb')
+                @endif
+
+                @if ($var_objective == 'Pagekpi-BU')
+                @include('KPI.kpi-breadcrumb')
+                @include('KPI.modal')    
+                @endif
+
+                @if ($var_objective == 'Pagekpi-VS')
+                @include('KPI.kpi-breadcrumb')
+                @include('KPI.modal')  
+                @endif
+
+                @if ($var_objective == 'Pagekpi-orgT')
+                @include('KPI.kpi-breadcrumb')
+                @include('KPI.modal')    
+                @endif
+
+                @if ($var_objective == 'Pagekpi-unit')
+                @include('KPI.kpi-breadcrumb')
+                @include('KPI.modal')  
+                @endif
+                
+                @if ($var_objective == 'Pagekpi-stream')
+                @include('KPI.kpi-breadcrumb')
+                @include('KPI.modal')    
+                @endif
+
+                @if ($var_objective == 'Pagekpi-org')
+                @include('KPI.kpi-breadcrumb')
+                @include('KPI.modal')  
                 @endif
                 
 
