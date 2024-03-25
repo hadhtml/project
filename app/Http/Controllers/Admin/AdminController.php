@@ -365,16 +365,4 @@ class AdminController extends Controller
 
     }
 
-    public function AllUserPlan()
-    {
-        $data = DB::table('user_plan')->select(
-            "user_plan.*",
-            "users.*",
-            "plan.*",
-            "user_plan.created_at as created")
-            ->leftJoin('users', 'user_plan.user_id', '=', 'users.id')
-            ->leftJoin('plan', 'user_plan.plan_id', '=', 'plan.id')
-            ->get();
-        return view('admin.subscriptions.user-plan',compact('data'));
-    }
 }
