@@ -136,5 +136,29 @@ foreach ($quarters as $year => $yearQuarters) {
         
         curl_close($ch);
    }
+
+   public function abbreviate($number)
+   {
+       // Check if the number is greater than or equal to 1000
+       if ($number >= 1000) {
+           // Abbreviate the number
+           $abbreviations = ['K', 'M', 'B', 'T'];
+           $abbrevIndex = 0;
+   
+           while ($number >= 1000) {
+               $number = $number / 1000;
+               $abbrevIndex++;
+           }
+   
+           // Format the number with one decimal place
+           $formattedNumber = number_format($number, 1);
+   
+           // Add the abbreviation
+           return $formattedNumber . $abbreviations[$abbrevIndex - 1];
+       }
+   
+       // If the number is less than 1000, no abbreviation needed
+       return $number;
+   }
 	
 }

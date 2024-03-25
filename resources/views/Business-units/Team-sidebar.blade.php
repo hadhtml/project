@@ -402,6 +402,17 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                     </div>
                 </a>
             </li>
+
+            <li class="mb-1">
+                <a href="{{url('dashboard/organization/'.$organization->slug.'/kpi/VS')}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/performance-dashboard/'.$organization->type)) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
+                    <div class="mr-2">
+                        <span style="font-size:22px" class="material-symbols-outlined">team_dashboard</span>
+                    </div>
+                    <div class="mr-2">
+                        KPI
+                    </div>
+                </a>
+            </li>
             @endif
             @if($organization->type == 'BU')
             <li class="mb-1">
@@ -452,6 +463,17 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                     </div>
                     <div class="mr-2">
                         Dependency Map
+                    </div>
+                </a>
+            </li>
+
+            <li class="mb-1">
+                <a href="{{url('dashboard/organization/'.$organization->slug.'/kpi/BU')}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/performance-dashboard/'.$organization->type)) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
+                    <div class="mr-2">
+                        <span style="font-size:22px" class="material-symbols-outlined">team_dashboard</span>
+                    </div>
+                    <div class="mr-2">
+                        KPI
                     </div>
                 </a>
             </li>
@@ -506,6 +528,17 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
                     </div>
                     <div class="mr-2">
                         Dependency Map
+                    </div>
+                </a>
+            </li>
+
+            <li class="mb-1">
+                <a href="{{url('dashboard/organization/'.$organization->slug.'/kpi/orgT')}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/performance-dashboard/'.$organization->type)) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
+                    <div class="mr-2">
+                        <span style="font-size:22px" class="material-symbols-outlined">team_dashboard</span>
+                    </div>
+                    <div class="mr-2">
+                        KPI
                     </div>
                 </a>
             </li>
