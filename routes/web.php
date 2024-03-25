@@ -460,7 +460,9 @@ Route::name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')-
     Route::get('/profile','AdminController@profile')->name('profile');
     Route::post('/updateuserprofile','AdminController@updateuserprofile');
     Route::post('/updateusersecurity','AdminController@updateusersecurity');
-
+    Route::get('/addplanmodule','AdminController@addPlanModule');
+    Route::post('/save-plan','AdminController@SavePlan');
+    Route::get('/user-plan','AdminController@AllUserPlan');
 
     Route::name('users.')->prefix('users')->group(function(){
         Route::get('/allusers','AdminController@allusers');
