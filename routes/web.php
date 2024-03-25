@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController; 
+use App\Http\Controllers\Admin\Auth\LoginController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -446,3 +447,52 @@ Route::post('savemapissue', [App\Http\Controllers\EpicController::class,'saveIss
 Route::post('deletelinkingmap', [App\Http\Controllers\EpicController::class,'deletelinkingmap']);
 
 Route::get('dashboard/organization/{slug}/leaderline/{id}', [App\Http\Controllers\EpicController::class,'LeaderLinemap']);
+
+
+Route::name('admin.')->prefix('admin')->group(function(){
+    Route::get('/login',[LoginController::class, 'login'])->name('login');
+    Route::post('/login-process',[LoginController::class, 'login_process'])->name('login_process');
+    Route::post('/logout',[LoginController::class, 'logout'])->name('logout');
+});
+
+Route::name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')->middleware('admin')->group(function(){
+    Route::get('/dashboard','AdminController@dashboard')->name('dashboard');
+    Route::get('/profile','AdminController@profile')->name('profile');
+    Route::post('/updateuserprofile','AdminController@updateuserprofile');
+    Route::post('/updateusersecurity','AdminController@updateusersecurity');
+    Route::get('/addplanmodule','AdminController@addPlanModule');
+    Route::post('/save-plan','AdminController@SavePlan');
+    Route::get('/user-plan','AdminController@AllUserPlan');
+
+
+    Route::name('users.')->prefix('users')->group(function(){
+        Route::get('/allusers','AdminController@allusers');
+        Route::get('/cloneuser','AdminController@cloneuser');
+        Route::post('importuserdata','AdminController@importuserdata');
+        Route::post('getuserdata','AdminController@importuserdata');
+        
+    });    
+
+});
+
+
+// KPI CHART
+Route::get('dashboard/organization/{id}/kpi/{type}', [App\Http\Controllers\KpiController::class,'ValueChartKpi']);
+Route::post('add-chart-kpi', [App\Http\Controllers\KpiController::class,'SaveKpiData']);
+Route::get('dashboard/getkpicheckin', [App\Http\Controllers\KpiController::class,'getkpimodal']);
+Route::post('add-kpi-check', [App\Http\Controllers\KpiController::class,'AddnewcheckIn']);
+Route::post('kpi-deletevalue', [App\Http\Controllers\KpiController::class,'DeleteheckInValue']);
+Route::post('update-new-kpi-value', [App\Http\Controllers\KpiController::class,'UpdateheckInValue']);
+Route::post('update-kpi-basic', [App\Http\Controllers\KpiController::class,'UpdateKpiData']);
+Route::post('add-kpi-flag', [App\Http\Controllers\KpiController::class,'AddnewKpiflag']);
+Route::post('dashboard/kpiflagupdate', [App\Http\Controllers\KpiController::class,'UpdateKpiflag']);
+Route::post('kpi-deleteflag', [App\Http\Controllers\KpiController::class,'DeleteKpiflag']);
+Route::post('kpi-savecomment', [App\Http\Controllers\KpiController::class,'savecommentkpi']);
+Route::post('updatecomment-kpi', [App\Http\Controllers\KpiController::class,'updatecommentkpi']);
+Route::post('deletecomment-kpi', [App\Http\Controllers\KpiController::class,'Deletecommentkpi']);
+Route::post('savereply-kpi', [App\Http\Controllers\KpiController::class,'savereplykpi']);
+Route::get('kpi-render', [App\Http\Controllers\KpiController::class,'ValueChartKpiRender']);
+Route::post('delete-kpi-chart', [App\Http\Controllers\KpiController::class,'DeleteKpiData']);
+Route::get('kpi-flag-search', [App\Http\Controllers\KpiController::class,'Searchkpiflag']);
+Route::post('dashboard/orderbykpistatus', [App\Http\Controllers\KpiController::class,'orderbykpistatus']);
+Route::get('kpi-checkin-search', [App\Http\Controllers\KpiController::class,'kpicheckinsearch']);
