@@ -19,6 +19,8 @@ use App\Models\epics_stroy;
 use App\Models\flag_comments;
 use App\Models\flag_members;
 use App\Models\attachments;
+use App\Models\modulenames;
+use App\Models\jira_setting;
 use App\Models\quarter_month;
 use App\Models\Epic;
 use Illuminate\Support\Str;
@@ -349,6 +351,34 @@ class AdminController extends Controller
     {
         $from = $request->from;
         $to = $request->to;
+
+        $frommodulenames = DB::table('modulenames')->where('user_id' , $from)->first();
+        $tomodulenames = DB::table('modulenames')->where('user_id' , $to)->first();
+
+        $updatemodulename  = modulenames::find($tomodulenames->id);
+        $updatemodulename->level_one = $frommodulenames->level_one;
+        $updatemodulename->slug_one = $frommodulenames->slug_one;
+        $updatemodulename->level_two = $frommodulenames->level_two;
+        $updatemodulename->slug_two = $frommodulenames->slug_two;
+        $updatemodulename->level_three = $frommodulenames->level_three;
+        $updatemodulename->slug_three = $frommodulenames->slug_three;
+        $updatemodulename->save();
+
+        $fromjira_setting = jira_setting::where('user_id' , $from)->first();
+        if($fromjira_setting)
+        {
+            $addtojira_setting = new jira_setting();
+            $addtojira_setting->user_name = $fromjira_setting->user_name;
+            $addtojira_setting->token = $fromjira_setting->token;
+            $addtojira_setting->user_id = $to;
+            $addtojira_setting->sync = $fromjira_setting->sync;
+            $addtojira_setting->jira_url = $fromjira_setting->jira_url;
+            $addtojira_setting->jira_name = $fromjira_setting->jira_name;
+            $addtojira_setting->save();
+        }
+        
+
+
         $org_id = DB::table('organization')->where('user_id' , $to)->first()->id;
         $from_org_id = DB::table('organization')->where('user_id' , $from)->first()->id;
         $flags = flags::where('board_type' , 'org')->wherenull('epic_id')->where('business_units' , $from_org_id)->get();
@@ -438,7 +468,7 @@ class AdminController extends Controller
                     $this->cloneflags($flags ,$addvaluestream->id , $to , $epic_id);
                     $this->cloneepic($backlogs , $addvaluestream->id , $to);
                     $this->cloneokrmapper($objectives , $addvaluestream->id , $to);
-                    
+
                     $valueteams  = DB::Table('value_team')->where('org_id' , $v->id)->get();
                     foreach ($valueteams as $valueteam) {
                         $addvalueteam = new org_team();
