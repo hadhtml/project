@@ -52,6 +52,31 @@
                         </ul>
                     </div>
                 </li>
+                <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                    <a href="javascript:;" class="menu-link menu-toggle">
+                        <span class="material-symbols-outlined">subscriptions</span>
+                        <span class="menu-text">Subscriptions Plan</span><i class="menu-arrow"></i>
+                    </a>
+                    <div class="menu-submenu">
+                        <i class="menu-arrow"></i>
+                        <ul class="menu-subnav">
+                            <li class="menu-item" aria-haspopup="true">
+                                <a href="{{ url('admin/addplanmodule') }}" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot"><span></span></i><span
+                                        class="menu-text">Add Plan</span>
+                                </a>
+                            </li>
+
+                            <li class="menu-item" aria-haspopup="true">
+                                <a href="{{ url('admin/user-plan') }}" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot"><span></span></i><span
+                                        class="menu-text">All User Plan</span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </li>
                 <!-- <li class="menu-section">
                     <h4 class="menu-text">COMPANY</h4>
                     <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
