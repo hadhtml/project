@@ -341,7 +341,67 @@ class AdminController extends Controller
                         $createepic->account_id = $e->account_id;
                         $createepic->epic_type  = $e->epic_type;
                         $createepic->old_date = $e->old_date;
-                        $createepic->save();   
+                        $createepic->save();
+                        $flags = flags::where('epic_id' , $e->id)->get();
+                        $this->cloneflags($flags ,$org_id , $to , $createepic->id);
+
+                        foreach (epics_stroy::where('epic_id' , $e->id)->where('epic_type' , 'orignal')->get() as $r) {
+                            $item = new epics_stroy();
+                            $item->epic_id = $createepic->id;
+                            $item->epic_story_name = $r->epic_story_name;
+                            $item->story_assign = $r->story_assign;
+                            $item->story_type = $r->story_type;
+                            $item->description = $r->description;
+                            $item->story_status = $r->story_status;
+                            $item->StoryID = $r->StoryID;
+                            $item->epic_type = $r->epic_type;
+                            $item->R_id = $r->R_id;
+                            $item->user_id =  $to;
+                            $item->save();
+                            if($r->story_status == 'Done')
+                            {
+                                $item = epics_stroy::find($item->id);
+                                $item->progress =  100;
+                                $item->save();
+                            }
+                        }
+                        foreach(activities::where('value_id' , $e->id)->where('type' , 'epics')->get() as $r) {
+                            $activity = new activities();
+                            $activity->user_id = $to;
+                            $activity->activity = $r->activity;
+                            $activity->is_read = $r->is_read;
+                            $activity->value_id = $createepic->id;
+                            $activity->type = $r->type;
+                            $activity->icon = $r->icon;
+                            $activity->save();
+                        }
+                        foreach(flag_comments::where('flag_id' , $e->id)->get() as $r) {
+                            $comment = new flag_comments();
+                            $comment->flag_id = $createepic->id;
+                            $comment->user_id = $to;
+                            $comment->comment = $r->comment;
+                            $comment->type = $r->type;
+                            $comment->comment_id = $r->comment_id;
+                            $comment->comment_type = $r->comment_type;
+                            $comment->save();
+                            $commentReply = flag_comments::where('flag_id',$comment->flag_id)->where('type','comment')->first();
+                            flag_comments::where('flag_id',$comment->flag_id)->where('type','reply')->update(['comment_id' => $commentReply->id ]);
+
+                        }
+                        foreach(attachments::where('value_id' , $e->id)->get() as $r) {
+                            $attachment = new attachments();
+                            $attachment->user_id = $to;
+                            $attachment->attachment = $r->attachment;
+                            $attachment->file_name = $r->file_name;
+                            $attachment->extension = $r->extension;
+                            $attachment->type = $r->type;
+                            $attachment->value_id = $createepic->id;
+                            $attachment->save();
+                        }
+
+
+
+
                     }
                 }
             }
@@ -377,6 +437,19 @@ class AdminController extends Controller
             $addtojira_setting->save();
         }
         
+
+        $setting = DB::table('settings')->where('user_id',$from)->first();
+        if($setting)
+        {
+            $selectmonth = DB::table('settings')->where('user_id',$to)->first();
+            if($selectmonth)
+            {
+                DB::table('settings')->where('user_id',$to)->update(['month' => $setting->month,]); 
+            }else
+            {
+                DB::table('settings')->insert(['month' => $setting->month,'user_id' => $to,]);
+            }
+        }
 
 
         $org_id = DB::table('organization')->where('user_id' , $to)->first()->id;
