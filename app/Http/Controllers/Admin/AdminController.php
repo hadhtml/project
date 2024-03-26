@@ -12,15 +12,19 @@ use App\Models\objectives;
 use App\Models\key_result;
 use App\Models\Quarter;
 use App\Models\flags;
+use App\Models\team_link_child;
 use App\Models\activities;
 use App\Models\team_backlog;
 use App\Models\org_team;
+use App\Models\unit_team;
+use App\Models\value_team;
 use App\Models\epics_stroy;
 use App\Models\flag_comments;
 use App\Models\flag_members;
 use App\Models\attachments;
 use App\Models\modulenames;
 use App\Models\jira_setting;
+use App\Models\clonefromandtos;
 use App\Models\quarter_month;
 use App\Models\Epic;
 use Illuminate\Support\Str;
@@ -43,6 +47,16 @@ class AdminController extends Controller
                 ->leftJoin('users', 'organization.user_id', '=', 'users.id')
                 ->paginate(10);
         return view('admin.users.all')->with(array('data' => $data));
+    }
+    public function clonefromandtos($from , $to , $clone_from , $clone_to , $type)
+    {
+        $add = new clonefromandtos();
+        $add->from = $from;
+        $add->to = $to;
+        $add->clone_from = $clone_from;
+        $add->clone_to = $clone_to;
+        $add->type = $type;
+        $add->save();
     }
     public function cloneuser()
     {
@@ -160,6 +174,9 @@ class AdminController extends Controller
             $add->backlog_id = $b->backlog_id;
             $add->progress = $b->progress;;
             $add->save();
+
+            $this->clonefromandtos($from = Null, $to , $b->id , $add->id , 'epic_backlog');
+
             foreach (epics_stroy::where('epic_id' , $b->id)->where('epic_type' , 'epicbacklog')->get() as $r) {
                 $item = new epics_stroy();
                 $item->epic_id = $add->id;
@@ -249,6 +266,7 @@ class AdminController extends Controller
             $createobjective->type = $o->type;       
             $createobjective->IndexCount = $o->IndexCount;
             $createobjective->save();
+            $this->clonefromandtos($from = Null , $to , $o->id , $createobjective->id , 'objectives');
             $org_keyresult = DB::table('key_result')->where('obj_id' , $o->id)->get();
             foreach ($org_keyresult as $k) {
                 $org_add_key_result = new key_result();
@@ -271,6 +289,7 @@ class AdminController extends Controller
                 $org_add_key_result->type       = $k->type;
                 $org_add_key_result->IndexCount = $k->IndexCount;
                 $org_add_key_result->save();
+                $this->clonefromandtos($from = Null , $to , $k->id , $org_add_key_result->id , 'keyresult');
                 $initiative = DB::table('initiative')->where('key_id' , $k->id)->get();
                 foreach ($initiative as $i) {
                     $org_initiative = new initiative;
@@ -333,8 +352,7 @@ class AdminController extends Controller
                         $createepic->flag_status =    $e->flag_status;
                         $createepic->flag_order = $e->flag_order;
                         $createepic->obj_id = $createobjective->id;
-                        $createepic->buisness_unit_id = $org_id;
-                        $createepic->team_id =    $e->team_id;
+                        $createepic->buisness_unit_id = $org_id;                
                         $createepic->key_id = $org_add_key_result->id;
                         $createepic->jira_id  =   $e->jira_id;
                         $createepic->jira_project =   $e->jira_project;
@@ -342,6 +360,10 @@ class AdminController extends Controller
                         $createepic->epic_type  = $e->epic_type;
                         $createepic->old_date = $e->old_date;
                         $createepic->save();
+        
+                        $this->clonefromandtos($from = Null, $to , $e->id , $createepic->id , 'epics');
+
+
                         $flags = flags::where('epic_id' , $e->id)->get();
                         $this->cloneflags($flags ,$org_id , $to , $createepic->id);
 
@@ -451,9 +473,13 @@ class AdminController extends Controller
             }
         }
 
+        clonefromandtos::where('to' , $to)->delete();
 
         $org_id = DB::table('organization')->where('user_id' , $to)->first()->id;
         $from_org_id = DB::table('organization')->where('user_id' , $from)->first()->id;
+
+        $this->clonefromandtos($from, $to , $from_org_id , $org_id , 'organization');
+
         $flags = flags::where('board_type' , 'org')->wherenull('epic_id')->where('business_units' , $from_org_id)->get();
         $epic_id = NULL;
 
@@ -472,6 +498,9 @@ class AdminController extends Controller
             $addorgteam->slug = Str::slug($orgteam->team_title.'-'.rand(10, 99));
             $addorgteam->type = $orgteam->type;
             $addorgteam->save();
+
+            $this->clonefromandtos($from, $to , $orgteam->id , $addorgteam->id , 'orgteam');
+
             $flags = flags::where('board_type' , 'orgT')->wherenull('epic_id')->where('business_units' , $orgteam->id)->get();
             $epic_id = NULL;
             $backlogs = team_backlog::where('type' , 'orgT')->where('unit_id' , $orgteam->id)->get();
@@ -493,6 +522,9 @@ class AdminController extends Controller
                 $addbuisnessunit->user_id = $to;
                 $addbuisnessunit->slug = Str::slug($b->business_name.'-'.rand(10, 99));
                 $addbuisnessunit->save();
+
+                $this->clonefromandtos($from, $to , $b->id , $addbuisnessunit->id , 'business_units');
+
                 $flags = flags::where('board_type' , 'unit')->wherenull('epic_id')->where('business_units' , $b->id)->get();
                 $epic_id = NULL;
                 $backlogs = team_backlog::where('type' , 'unit')->where('unit_id' , $b->id)->get();
@@ -503,8 +535,8 @@ class AdminController extends Controller
                 
                 
                 $unitteams  = DB::Table('unit_team')->where('org_id' , $b->id)->get();
-                foreach ($orgteams as $unitteam) {
-                    $addunitteam = new org_team();
+                foreach ($unitteams as $unitteam) {
+                    $addunitteam = new unit_team();
                     $addunitteam->org_id = $addbuisnessunit->id;
                     $addunitteam->member = $unitteam->member;
                     $addunitteam->team_title = $unitteam->team_title;
@@ -512,6 +544,9 @@ class AdminController extends Controller
                     $addunitteam->slug = Str::slug($unitteam->team_title.'-'.rand(10, 99));
                     $addunitteam->type = $unitteam->type;
                     $addunitteam->save();
+
+                    $this->clonefromandtos($from, $to , $unitteam->id , $addunitteam->id , 'business_unit_team');
+
                     $flags = flags::where('board_type' , 'BU')->wherenull('epic_id')->where('business_units' , $unitteam->id)->get();
                     $epic_id = NULL;
                     $backlogs = team_backlog::where('type' , 'BU')->where('unit_id' , $unitteam->id)->get();
@@ -534,6 +569,9 @@ class AdminController extends Controller
                     $addvaluestream->slug = Str::slug($v->value_name.'-'.rand(10, 99));
                     $addvaluestream->user_id = $to;
                     $addvaluestream->save();
+
+                    $this->clonefromandtos($from, $to , $v->id , $addvaluestream->id , 'value_stream');
+
                     $flags = flags::where('board_type' , 'stream')->wherenull('epic_id')->where('business_units' , $v->id)->get();
                     $epic_id = NULL;
                     $backlogs = team_backlog::where('type' , 'stream')->where('unit_id' , $v->id)->get();
@@ -544,14 +582,17 @@ class AdminController extends Controller
 
                     $valueteams  = DB::Table('value_team')->where('org_id' , $v->id)->get();
                     foreach ($valueteams as $valueteam) {
-                        $addvalueteam = new org_team();
-                        $addvalueteam->org_id = $addbuisnessunit->id;
+                        $addvalueteam = new value_team();
+                        $addvalueteam->org_id = $addvaluestream->id;
                         $addvalueteam->member = $valueteam->member;
                         $addvalueteam->team_title = $valueteam->team_title;
                         $addvalueteam->lead_id = $valueteam->lead_id;
                         $addvalueteam->slug = Str::slug($valueteam->team_title.'-'.rand(10, 99));
                         $addvalueteam->type = $valueteam->type;
                         $addvalueteam->save();
+
+                        $this->clonefromandtos($from, $to , $valueteam->id , $addvalueteam->id , 'value_team');
+
                         $flags = flags::where('board_type' , 'VS')->wherenull('epic_id')->where('business_units' , $valueteam->id)->get();
                         $epic_id = NULL;
                         $backlogs = team_backlog::where('type' , 'VS')->where('unit_id' , $valueteam->id)->get();
@@ -563,6 +604,74 @@ class AdminController extends Controller
                 }
             }
         }
+
+        $team_link_child = team_link_child::where('user_id' , $from)->get();
+
+
+        foreach ($team_link_child as $link) {
+
+            $clonefromandtos_objectives = clonefromandtos::where('to' , $to)->where('type' , 'objectives')->where('clone_from' , $link->linked_objective_id)->first();
+            $clonefromandtos_keyresult = clonefromandtos::where('to' ,  $to)->where('type' , 'keyresult')->where('clone_from' , $link->bussiness_key_id)->first();
+
+            if($link->from == 'org')
+            {
+              $bussiness_unit_id = $org_id; 
+            }
+
+            if($link->from == 'unit')
+            {
+              $clonefromandtos_unit = clonefromandtos::where('to' ,  $to)->where('type' , 'business_units')->where('clone_from' , $link->bussiness_unit_id)->first();
+              $bussiness_unit_id = $clonefromandtos_unit->clone_to; 
+            }
+
+            if($link->from == 'stream')
+            {
+              $clonefromandtos_stream = clonefromandtos::where('to' ,  $to)->where('type' , 'value_stream')->where('clone_from' , $link->bussiness_unit_id)->first();
+              $bussiness_unit_id = $clonefromandtos_stream->clone_to; 
+            }
+            $clonefromandtos_bussiness_obj_id = clonefromandtos::where('to' ,  $to)->where('type' , 'objectives')->where('clone_from' , $link->bussiness_obj_id)->first();
+            $addlink = new team_link_child();
+            $addlink->linked_objective_id = $clonefromandtos_objectives->clone_to;
+            $addlink->bussiness_unit_id = $bussiness_unit_id;
+            $addlink->bussiness_obj_id = $clonefromandtos_bussiness_obj_id->clone_to;
+            $addlink->bussiness_key_id = $clonefromandtos_keyresult->clone_to;
+            $addlink->from = $link->from;
+            $addlink->to = $link->to;
+            $addlink->user_id = $to;
+            $addlink->save();
+        }
+
+        $clonnedepics = clonefromandtos::where('to' ,  $to)->where('type' , 'epics')->get();
+        foreach ($clonnedepics as $c_d_e) {
+            $epic = Epic::find($c_d_e->clone_from);
+            if($epic->team_id)
+            {
+                if($epic->type == 'org')
+                {
+                    $clonefromandtos_team_id = clonefromandtos::where('to' , $to)->where('type' , 'orgteam')->where('clone_from' , $e->team_id)->first();
+                    $createepic = Epic::find($c_d_e->clone_to);
+                    $createepic->team_id =    $clonefromandtos_team_id->clone_to;
+                    $createepic->save();
+                }
+                if($epic->type == 'unit')
+                {
+                    $clonefromandtos_team_id = clonefromandtos::where('to' , $to)->where('type' , 'business_unit_team')->where('clone_from' , $e->team_id)->first();
+                    $createepic = Epic::find($c_d_e->clone_to);
+                    $createepic->team_id =    $clonefromandtos_team_id->clone_to;
+                    $createepic->save();
+                }
+                if($epic->type == 'stream')
+                {
+                    $clonefromandtos_team_id = clonefromandtos::where('to' , $to)->where('type' , 'value_team')->where('clone_from' , $e->team_id)->first();
+                    $createepic = Epic::find($c_d_e->clone_to);
+                    $createepic->team_id =    $clonefromandtos_team_id->clone_to;
+                    $createepic->save();
+                }
+            }
+        }
+
+        
+
     }
     public function addPlanModule()
     {

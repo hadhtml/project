@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateModulenamesTable extends Migration
+class CreateClonefromandtosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateModulenamesTable extends Migration
      */
     public function up()
     {
-        Schema::create('modulenames', function (Blueprint $table) {
+        Schema::create('clonefromandtos', function (Blueprint $table) {
             $table->id();
-            $table->string('user_id')->nullable();
-            $table->string('name')->nullable();
+            $table->string('from')->nullable();
+            $table->string('to')->nullable();
+            $table->string('clone_from')->nullable();
+            $table->string('clone_to')->nullable();
             $table->string('type')->nullable();
             $table->timestamps();
         });
@@ -29,6 +31,6 @@ class CreateModulenamesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('modulenames');
+        Schema::dropIfExists('clonefromandtos');
     }
 }

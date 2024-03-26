@@ -335,7 +335,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form class="needs-validation" action="{{ url('add-team-org') }}" method="POST">
+                    <form  action="{{ url('add-team-org') }}" method="POST">
                         @csrf
                         <input type="hidden" name="team_unit_id" value="{{ $organization->id }}">
                         <div class="row">
@@ -356,7 +356,7 @@
                             <div class="col-md-12 col-lg-12 col-xl-12">
                                 <div class="form-group mb-0">
                                     <select class="form-control" name="lead_manager_team" required>
-                                        <option value="NULL">Select Lead</option>
+                                        <option value="">Select Lead</option>
                                         <?php foreach(DB::table('members')->where('org_user',Auth::id())->orWhere('org_user',Auth::user()->invitation_id)->get() as $r){ ?>
                                         <option value="{{ $r->id }}">{{ $r->name }} {{ $r->last_name }}
                                         </option>
