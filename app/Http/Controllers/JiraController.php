@@ -218,7 +218,7 @@ class JiraController extends Controller
           $backlog = DB::table('jira_data')->whereIn('id', $request->input('jira_epic'))->get();
           if($request->type == 'unit')
           {
-           $data = DB::table('backlog_unit')->orderby('id','DESC')->where('user_id',Auth::id())->first();
+           $data = DB::table('team_backlog')->orderby('id','DESC')->where('user_id',Auth::id())->first();
            if($data)
            {
            $counter = $data->position; 
@@ -227,7 +227,7 @@ class JiraController extends Controller
            
           if($request->type == 'stream')
           {
-           $data = DB::table('backlog')->orderby('id','DESC')->where('user_id',Auth::id())->first();
+           $data = DB::table('team_backlog')->orderby('id','DESC')->where('user_id',Auth::id())->first();
            if($data)
            {
            $counter = $data->position; 
@@ -248,7 +248,7 @@ class JiraController extends Controller
                 $counter++;
                 if($request->type == 'unit')
                 {
-                 DB::table('backlog_unit')->insert([
+                 DB::table('team_backlog')->insert([
                 'epic_status' => $log->E_Status,
                 'epic_title' => $log->Summary,
                 'epic_detail' => $log->detail,
@@ -261,6 +261,7 @@ class JiraController extends Controller
                  'user_id' => Auth::id(),
                  'position' => $counter,
                  'account_id' => $log->account_id, 
+                 'type' => $request->type, 
 
 
                 ]);
@@ -268,7 +269,7 @@ class JiraController extends Controller
                 
                  if($request->type == 'stream')
                 {
-                 DB::table('backlog')->insert([
+                 DB::table('team_backlog')->insert([
                 'epic_status' => $log->E_Status,
                 'epic_title' => $log->Summary,
                 'epic_detail' => $log->detail,
@@ -281,6 +282,7 @@ class JiraController extends Controller
                 'user_id' => Auth::id(),
                  'position' => $counter,
                  'account_id' => $log->account_id, 
+                 'type' => $request->type, 
 
 
 
