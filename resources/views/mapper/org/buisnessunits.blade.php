@@ -23,13 +23,13 @@
       <span class="material-symbols-outlined f-18 ml-2">key</span>
       <div class="slot-label"><span class="label-text">{{ $k->key_name }}</span></div>
       @if($k->key_status == 'Done')
-      <div class="badge-done mr-2">{{round($k->key_prog,0)}}%</div>
+      <div class="badge-done mr-2">{{ Cmf::keyresultprogress($k->id) }}%</div>
       @endif
       @if($k->key_status == 'To Do')
-      <div class="badge-todo mr-2">{{round($k->key_prog,0)}}%</div>
+      <div class="badge-todo mr-2">{{ Cmf::keyresultprogress($k->id) }}%</div>
       @endif
       @if($k->key_status == 'In progress')
-      <div class="badge-inprogress mr-2">{{round($k->key_prog,0)}}%</div>
+      <div class="badge-inprogress mr-2">{{ Cmf::keyresultprogress($k->id) }}%</div>
       @endif
       <div id="buisness_unit_key_result_{{ $k->id }}" class="slot-anchor-small @if(DB::table('team_link_child')->where('bussiness_key_id' , $k->id)->count() > 0) slot-anchor-active @else slot-anchor-inactive @endif"></div>
    </a>

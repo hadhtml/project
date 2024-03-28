@@ -18,7 +18,7 @@ use App\Models\modulenames;
 use App\Models\Member_order;
 use App\Models\business_units;
 use App\Models\value_stream;
-
+use App\Models\objectives;
 use Mail;
 use Illuminate\Support\Facades\Http;
 use OneSignal;
@@ -29,7 +29,27 @@ class Cmf
     {
         return DB::table($table)->where('user_id' , $user_id)->get();
     }
+    public static function keyresultprogress($id)
+    {
+        $keyresult  = team_link_child::where('bussiness_key_id', $id)->pluck('linked_objective_id');
+        $objectiveIds = $keyresult->toArray();
+        $objProgSum = objectives::whereIn('id', $objectiveIds)->sum('obj_prog');
+        $count = count($objectiveIds);
 
+        if($count > 0)
+        {
+            if($objProgSum > 0)
+            {
+                $progress = $objProgSum/$count;
+            }else{
+                $progress = 0;    
+            }
+        }else{
+            $progress = 0;
+        }
+
+        return round($progress,0);
+    }
     public static function savemapperheight($id , $type)
     {
         
