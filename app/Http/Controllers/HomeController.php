@@ -28,9 +28,15 @@ class HomeController extends Controller
     }
     public function dashboard()
     {
+        if(DB::table('user_plan')->where('user_id',Auth::id())->where('status',1)->count() == 1)
+        {
+          $organization  = Organization::where('user_id',Auth::id())->orWhere('user_id',Auth::user()->invitation_id)->where('trash',NULL)->first();
+          return view('organizations.dashboard',compact('organization'));
+        }else
+        {
+          return view('profile.user-plan-page');
+        }
       
-        $organization  = Organization::where('user_id',Auth::id())->orWhere('user_id',Auth::user()->invitation_id)->where('trash',NULL)->first();
-        return view('organizations.dashboard',compact('organization'));
     }
     public function asignmodule()
     {
