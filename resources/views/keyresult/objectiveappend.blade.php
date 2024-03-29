@@ -36,12 +36,37 @@
         </div>
         @endif
         @if($r->type == 'BU')
-        <span style="font-size:22px" class="material-symbols-outlined mr-2">groups</span>
-        <span>{{ DB::table('unit_team')->where('id' , $r->unit_id)->first()->team_title }}</span>
+        @php
+            $bu_team = DB::table('unit_team')->where('id' , $r->unit_id)->first();
+        @endphp
+        <div class="d-flex mt-2">
+            <span style="font-size:22px" class="material-symbols-outlined mr-2">domain</span>
+            <span>{{ DB::table('business_units')->where('id' , $bu_team->org_id)->first()->business_name }}</span>
+        </div>
+        <div class="d-flex mt-2">
+            <span style="font-size:22px" class="material-symbols-outlined mr-2">groups</span>
+            <span>{{ $bu_team->team_title }}</span>
+        </div>
         @endif
         @if($r->type == 'VS')
-        <span style="font-size:22px" class="material-symbols-outlined mr-2">groups</span>
-        <span>{{ DB::table('value_team')->where('id' , $r->unit_id)->first()->team_title }}</span>
+        @php
+            $vs_team = DB::table('value_team')->where('id' , $r->unit_id)->first();
+            $value_stream = DB::table('value_stream')->where('id' , $vs_team)->first();
+        @endphp
+        <div class="d-flex mt-2">
+            <span style="font-size:22px" class="material-symbols-outlined mr-2">domain</span>
+            <span>{{ DB::table('business_units')->where('id' , $value_stream->unit_id)->first()->business_name }}</span>
+        </div>
+
+        <div class="d-flex mt-2">
+            <span style="font-size:22px" class="material-symbols-outlined mr-2">layers</span>
+            <span>{{ $value_stream->value_name }}</span>
+        </div>
+
+        <div class="d-flex mt-2">
+            <span style="font-size:22px" class="material-symbols-outlined mr-2">groups</span>
+            <span>{{ $vs_team->team_title }}</span>
+        </div>
         @endif
     </div>
 </div>
