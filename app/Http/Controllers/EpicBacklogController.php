@@ -34,35 +34,89 @@ class EpicBacklogController extends Controller
         {
             $organization = DB::table('unit_team')->where('slug',$id)->first();        
             $Backlog  =  DB::table('team_backlog')->where('trash' , Null)->where('type' , 'BU')->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
+            return view('epicbacklog.index',compact('Backlog','organization','type'));  
+
         }
         if($type == 'stream')
         {
-            $organization = DB::table('value_stream')->where('slug',$id)->first();        
+            // $organization = DB::table('value_stream')->where('slug',$id)->first();
+            $organization = DB::table('value_stream')
+            ->where('slug', $id)
+            ->where(function($query) {
+                $query->where('user_id', Auth::id())
+                      ->orWhere('user_id', Auth::user()->invitation_id);
+            })
+            ->first();
+            if($organization)
+            {
             $Backlog  =  DB::table('team_backlog')->where('trash' , Null)->where('type' , 'stream')->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
+            return view('epicbacklog.index',compact('Backlog','organization','type'));  
+
+            }else
+            {
+               
+                echo "You're not authorized to access this Link <a href= ".url('organization/dashboard').">Back</a>";   
+            }          
         }
         if($type == 'VS')
         {
             $organization = DB::table('value_team')->where('slug',$id)->first();        
             $Backlog  =  DB::table('team_backlog')->where('trash' , Null)->where('type' , 'VS')->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
+            return view('epicbacklog.index',compact('Backlog','organization','type'));  
+
         }
         if($type == 'org')
         {
-            $organization = DB::table('organization')->where('slug',$id)->first();     
+            // $organization = DB::table('organization')->where('slug',$id)->first();
+            $organization = DB::table('organization')
+            ->where('slug', $id)
+            ->where(function($query) {
+                $query->where('user_id', Auth::id())
+                      ->orWhere('user_id', Auth::user()->invitation_id);
+            })
+            ->first();
+
+            if($organization)
+            {
             $Backlog  =  DB::table('team_backlog')->where('trash' , Null)->where('type' , 'org')->where('unit_id',$organization->id)->orderby('position')->where('assign_status',NULL)->get();
+            return view('epicbacklog.index',compact('Backlog','organization','type'));  
+
+            }else
+            {
+               
+            echo "You're not authorized to access this Link <a href= ".url('organization/dashboard').">Back</a>";   
+            }      
         }
         if($type == 'orgT')
         {
             $organization = DB::table('org_team')->where('slug',$id)->first();        
             $Backlog  =  DB::table('team_backlog')->where('trash' , Null)->where('unit_id',$organization->id)->where('type' , 'orgT')->orderby('position')->where('assign_status',NULL)->get();
+            return view('epicbacklog.index',compact('Backlog','organization','type'));  
+
         }
 
         if($type == 'unit')
         {
-            $organization = DB::table('business_units')->where('slug',$id)->first();        
+            // $organization = DB::table('business_units')->where('slug',$id)->first();
+            $organization = DB::table('business_units')
+            ->where('slug', $id)
+            ->where(function($query) {
+                $query->where('user_id', Auth::id())
+                      ->orWhere('user_id', Auth::user()->invitation_id);
+            })
+            ->first();
+            if($organization)
+            {
             $Backlog  =  DB::table('team_backlog')->where('trash' , Null)->where('unit_id',$organization->id)->where('type' , 'unit')->orderby('position')->where('assign_status',NULL)->get();
+            return view('epicbacklog.index',compact('Backlog','organization','type'));  
+
+            }else
+            {
+               
+                echo "You're not authorized to access this Link <a href= ".url('organization/dashboard').">Back</a>";   
+            }        
         }
 
-        return view('epicbacklog.index',compact('Backlog','organization','type'));  
     }
     public function getepicmodal(Request $request)
     {

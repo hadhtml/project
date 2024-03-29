@@ -194,63 +194,184 @@ class ObjectiveController extends Controller
     public function Objectives($id, $type)
     {
         if ($type == "unit") {
-            $organization = DB::table("business_units")
-                ->where("slug", $id)
-                ->first();
-            $objective = DB::table("objectives")
-                ->where("unit_id", $organization->id)
-                ->where("trash", null)
-                ->where("type", "unit")
-                ->orderby('IndexCount')
-                ->get();
+            $organization = DB::table('business_units')
+            ->where('slug', $id)
+            ->where(function($query) {
+                $query->where('user_id', Auth::id())
+                      ->orWhere('user_id', Auth::user()->invitation_id);
+            })
+            ->first();
+      
+
+                if($organization)
+                {
+                    $objective = DB::table("objectives")
+                    ->where("unit_id", $organization->id)
+                    ->where("trash", null)
+                    ->where("type", "unit")
+                    ->orderby('IndexCount')
+                    ->get();
+                    return view(
+                        "objective.index",
+                        compact("organization", "objective", "type")
+                    );                
+                }else
+                {
+                   
+                    echo "You're not authorized to access this Link <a href= ".url('organization/dashboard').">Back</a>";   
+                }
+
+               
         }
 
         if ($type == "stream") {
-            $organization = DB::table("value_stream")
-                ->where("slug", $id)
-                ->first();
-            $objective = DB::table("objectives")
-                ->where("unit_id", $organization->id)
-                ->where("trash", null)
-                ->where("type", "stream")
-                ->orderby('IndexCount')
-                ->get();
+            $organization = DB::table('value_stream')
+            ->where('slug', $id)
+            ->where(function($query) {
+                $query->where('user_id', Auth::id())
+                      ->orWhere('user_id', Auth::user()->invitation_id);
+            })
+            ->first();
+       
+
+                if($organization)
+                {
+                    $objective = DB::table("objectives")
+                    ->where("unit_id", $organization->id)
+                    ->where("trash", null)
+                    ->where("type", "stream")
+                    ->orderby('IndexCount')
+                    ->get();
+                    return view(
+                        "objective.index",
+                        compact("organization", "objective", "type")
+                    );                
+                }else
+                {
+                   
+                    echo "You're not authorized to access this Link <a href= ".url('organization/dashboard').">Back</a>";   
+                }
+
+
+             
+
+                
         }
 
         if ($type == "BU") {
-            $organization = DB::table("unit_team")
-                ->where("slug", $id)
-                ->first();
-            $objective = DB::table("objectives")
-                ->where("unit_id", $organization->id)
+            $org = DB::table('unit_team')->where('slug',$id)->first();
+
+            $organizationData = DB::table('business_units')
+            ->where('id',$org->org_id)
+            ->where(function($query) {
+                $query->where('user_id', Auth::id())
+                      ->orWhere('user_id', Auth::user()->invitation_id);
+            })
+            ->first();
+            
+            if($organizationData)
+            {
+                $organization = DB::table('unit_team')->where('slug',$id)->first();
+
+                $objective = DB::table("objectives")
+                ->where("unit_id", $organizationData->id)
                 ->where("trash", null)
                 ->where("type", "BU")
                 ->orderby('IndexCount')
                 ->get();
+
+                return view(
+                    "objective.index",
+                    compact("organization", "objective", "type")
+                );
+            }else
+            {
+               
+            echo "You're not authorized to access this Link <a href= ".url('organization/dashboard').">Back</a>";   
+            } 
+            
+            // $organization = DB::table("unit_team")
+            //     ->where("slug", $id)
+            //     ->first();
+            // $objective = DB::table("objectives")
+            //     ->where("unit_id", $organization->id)
+            //     ->where("trash", null)
+            //     ->where("type", "BU")
+            //     ->orderby('IndexCount')
+            //     ->get();
         }
 
         if ($type == "VS") {
-            $organization = DB::table("value_team")
-                ->where("slug", $id)
-                ->first();
-            $objective = DB::table("objectives")
-                ->where("unit_id", $organization->id)
+
+            $org = DB::table('value_team')->where('slug',$id)->first();
+   
+            $organizationData = DB::table('value_stream')
+            ->where('id',$org->org_id)
+            ->where(function($query) {
+                $query->where('user_id', Auth::id())
+                      ->orWhere('user_id', Auth::user()->invitation_id);
+            })
+            ->first();
+            if($organizationData)
+            {
+                $organization = DB::table('value_team')->where('slug',$id)->first();    
+                $objective = DB::table("objectives")
+                ->where("unit_id", $organizationData->id)
                 ->where("trash", null)
                 ->where("type", "VS")
                 ->orderby('IndexCount')
                 ->get();
+                return view(
+                    "objective.index",
+                    compact("organization", "objective", "type")
+                );
+            }else
+            {
+               
+            echo "You're not authorized to access this Link <a href= ".url('organization/dashboard').">Back</a>";   
+            }    
+
+            // $organization = DB::table("value_team")
+            //     ->where("slug", $id)
+            //     ->first();
+            // $objective = DB::table("objectives")
+            //     ->where("unit_id", $organization->id)
+            //     ->where("trash", null)
+            //     ->where("type", "VS")
+            //     ->orderby('IndexCount')
+            //     ->get();
         }
 
         if ($type == "org") {
-            $organization = DB::table("organization")
-                ->where("slug", $id)
+
+
+
+                $organization = DB::table('organization')
+                ->where('slug', $id)
+                ->where(function($query) {
+                    $query->where('user_id', Auth::id())
+                          ->orWhere('user_id', Auth::user()->invitation_id);
+                })
                 ->first();
-            $objective = DB::table("objectives")
-                ->where("unit_id", $organization->id)
-                ->where("trash", null)
-                ->where("type", "org")
-                ->orderby('IndexCount')
-                ->get();
+        
+                if($organization)
+                {
+                    $objective = DB::table("objectives")
+                    ->where("unit_id", $organization->id)
+                    ->where("trash", null)
+                    ->where("type", "org")
+                    ->orderby('IndexCount')
+                    ->get();
+                    return view(
+                        "objective.index",
+                        compact("organization", "objective", "type")
+                    );
+                }else
+                {
+                   
+                    echo "You're not authorized to access this Link <a href= ".url('organization/dashboard').">Back</a>";   
+                }
+          
         }
 
         if ($type == "orgT") {
@@ -263,15 +384,17 @@ class ObjectiveController extends Controller
                 ->where("type", "orgT")
                 ->orderby('IndexCount')
                 ->get();
+
+                return view(
+                    "objective.index",
+                    compact("organization", "objective", "type")
+                );
         }
 
 
-        Jira::UpdateEpicjira();
+        // Jira::UpdateEpicjira();
 
-        return view(
-            "objective.index",
-            compact("organization", "objective", "type")
-        );
+     
     }
     public function deleteobjective(Request $request)
     {

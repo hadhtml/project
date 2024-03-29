@@ -12,10 +12,16 @@ $Reporting = DB::table('sprint')->where('value_unit_id',$organization->id)->wher
 $EpicsBacklog = DB::table('team_backlog')->where('epic_title','!=',NULL)->where('unit_id',$organization->id)->where('type','stream')->count();
 $Impediments = DB::table('flags')->where('business_units',$organization->id)->where('flag_type','Impediment')->where('flag_status','!=','doneflag')->where('flag_title','!=',NULL)->where('archived',2)->where('board_type','stream')->count();
 
+$per = DB::table('user_plan')->where('user_id',Auth::id())
+       ->leftJoin('plan', 'user_plan.plan_id', '=', 'plan.id')->where('user_plan.package_status',1)->select('plan.*')->first();
 @endphp
 <div class="row">
     <div class="col-md-12">
         <div class="row">
+            @if($per)
+            @foreach(explode(',',$per->module) as $info) 
+            @if($info == 'OKR Planner')
+
             <div class="col-md-3 mb-4">
                 <div class="dashboard-card">
                     <div class="card-svg">
@@ -31,6 +37,14 @@ $Impediments = DB::table('flags')->where('business_units',$organization->id)->wh
                     </div>
                 </div>
             </div>
+            @endif
+            @endforeach
+            @endif
+
+            @if($per)
+            @foreach(explode(',',$per->module) as $info) 
+            @if($info == 'Epic Backlog')
+
             <div class="col-md-3 mb-4">
                 <div class="dashboard-card">
                     <div class="card-svg">
@@ -46,10 +60,18 @@ $Impediments = DB::table('flags')->where('business_units',$organization->id)->wh
                     </div>
                 </div>
             </div>
+            @endif
+            @endforeach
+            @endif
+
+            @if($per)
+            @foreach(explode(',',$per->module) as $info) 
+            @if($info == 'kpi')
+
             <div class="col-md-3 mb-4">
                 <div class="dashboard-card">
                     <div class="card-svg">
-                        <a href="{{url('dashboard/organization/'.$organization->slug.'/performance-dashboard/'.$organization->type)}}"> 
+                        <a href="{{url('dashboard/organization/'.$organization->slug.'/kpi/'.$organization->type)}}"> 
                             <span class="material-symbols-outlined team_dashboard">team_dashboard</span>
                         </a> 
                     </div>
@@ -61,6 +83,10 @@ $Impediments = DB::table('flags')->where('business_units',$organization->id)->wh
                     </div>
                 </div>
             </div>
+            @endif
+            @endforeach
+            @endif
+
             <div class="col-md-3 mb-4">
                 <div class="dashboard-card">
                     <div class="card-svg">
@@ -76,6 +102,10 @@ $Impediments = DB::table('flags')->where('business_units',$organization->id)->wh
                     </div>
                 </div>
             </div>
+
+            @if($per)
+            @foreach(explode(',',$per->module) as $info) 
+            @if($info == 'Reports')
             <div class="col-md-3 mb-4">
                 <div class="dashboard-card">
                     <div class="card-svg">
@@ -91,6 +121,14 @@ $Impediments = DB::table('flags')->where('business_units',$organization->id)->wh
                     </div>
                 </div>
             </div>
+            @endif
+            @endforeach
+            @endif
+
+            @if($per)
+            @foreach(explode(',',$per->module) as $info) 
+            @if($info == 'Flag')
+
             <div class="col-md-3 mb-4">
                 <div class="dashboard-card">
                     <div class="card-svg">
@@ -106,6 +144,10 @@ $Impediments = DB::table('flags')->where('business_units',$organization->id)->wh
                     </div>
                 </div>
             </div>
+            @endif
+            @endforeach
+            @endif
+
         </div>
         <!-- <div class="row mt-7">
             <div class="col-md-4">

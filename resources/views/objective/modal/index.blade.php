@@ -1,3 +1,8 @@
+@php
+$per = DB::table('user_plan')->where('user_id',Auth::id())
+       ->leftJoin('plan', 'user_plan.plan_id', '=', 'plan.id')->where('user_plan.package_status',1)->select('plan.*')->first();
+@endphp
+
 <div class="modal-header modalheaderforapend">
     @include('objective.modal.modalheader')
 </div>
@@ -15,10 +20,16 @@
                     <li id="activites"@if($data->objective_name)  onclick="showtabobjective({{$data->id}} , 'activites')" @else data-toggle="tooltip" title="" data-original-title="Please Fill General Details" @endif class="tabsclass">
                        <span class="material-symbols-outlined">browse_activity</span> Activities
                     </li>
+                      @if($per)
+                      @foreach(explode(',',$per->module) as $info) 
+                      @if($info == 'OKR Mapper')
                     @if($data->type != 'org')
                     <li id="okrmapper"@if($data->objective_name)  onclick="showtabobjective({{$data->id}} , 'okrmapper')" @else data-toggle="tooltip" title="" data-original-title="Please Fill General Details" @endif class="tabsclass">
                        <span class="material-symbols-outlined">link</span> OKR Mapper
                     </li>
+                    @endif
+                    @endif
+                    @endforeach
                     @endif
                 </ul>
                 <h4>Action</h4>
