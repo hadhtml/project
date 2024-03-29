@@ -11,8 +11,8 @@ $var_objective = "mapper-unit";
    .subheader-solid{
       width: 100%;
       position: fixed;
-      top: -3%;
-      left: 300px;
+      top: 1%;
+      left: 240px;
       z-index: 999999;
    }
    .body-inner-content{
@@ -195,11 +195,16 @@ $var_objective = "mapper-unit";
   @endforeach
 
   @foreach($team_link_child_unit_or_stream as $linedeclarekeyforslot =>  $line_t_l_c)
+   if ($('#connectedobjective{{ $line_t_l_c->linked_objective_id }}').length) { 
    var line{{ $linedeclarekeyforslot+1 }};
+ }
   @endforeach
 
 
   @foreach($team_link_child_unit_or_stream as $linekeyforslot =>  $line_t_l_c)
+
+  if ($('#connectedobjective{{ $line_t_l_c->linked_objective_id }}').length) {
+
    line{{$linekeyforslot+1}} = new LeaderLine(connectedobjective{{ $line_t_l_c->linked_objective_id }}, buisness_unit_key_result_{{ $line_t_l_c->bussiness_key_id }}, {
     startPlug: "behind",
     endPlug: "behind",
@@ -212,6 +217,8 @@ $var_objective = "mapper-unit";
     // path: 'grid',
     // dropShadow: {color: '#111', dx: 0, dy: 2, blur: 0.2}
   });
+
+ }
   @endforeach
 
 
