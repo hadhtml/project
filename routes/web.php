@@ -46,6 +46,7 @@ Route::middleware('auth')->group(function () {
         Route::get('asgin-names', 'HomeController@asignmodule')->name('asignmodule');
         Route::POST('updatemodulenames', 'HomeController@updatemodulenames')->name('updatemodulenames');
         Route::get('subscription', 'OrganizationController@subscription')->name('subscription');
+
     });
 
 
@@ -468,7 +469,6 @@ Route::name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')-
     Route::get('edit-plan/{id}','AdminController@EditPlan');
     Route::post('update-plan','AdminController@UpdatePlan');
 
-
     Route::name('users.')->prefix('users')->group(function(){
         Route::get('/allusers','AdminController@allusers');
         Route::get('/cloneuser','AdminController@cloneuser');
@@ -479,8 +479,6 @@ Route::name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')-
 
 });
 
-
-// KPI CHART
 Route::get('dashboard/organization/{id}/kpi/{type}', [App\Http\Controllers\KpiController::class,'ValueChartKpi']);
 Route::post('add-chart-kpi', [App\Http\Controllers\KpiController::class,'SaveKpiData']);
 Route::get('dashboard/getkpicheckin', [App\Http\Controllers\KpiController::class,'getkpimodal']);
@@ -511,5 +509,3 @@ Route::post('stripe-post', [App\Http\Controllers\BraintreeController::class,'str
 Route::get('/get-paypal-client-id', [App\Http\Controllers\BraintreeController::class,'getPaypalClientId']);
 Route::get('/cancel', [App\Http\Controllers\BraintreeController::class,'cancel'])->name('checkout.cancel');
 Route::get('stripe/checkout/success', [App\Http\Controllers\BraintreeController::class,'stripeCheckoutSuccess'])->name('stripe.checkout.success');
-
-
