@@ -45,8 +45,6 @@ Route::middleware('auth')->group(function () {
         Route::get('users', 'MemberController@AllMembers')->name('users');
         Route::get('asgin-names', 'HomeController@asignmodule')->name('asignmodule');
         Route::POST('updatemodulenames', 'HomeController@updatemodulenames')->name('updatemodulenames');
-        Route::get('subscription', 'OrganizationController@subscription')->name('subscription');
-
     });
 
 
@@ -465,9 +463,6 @@ Route::name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')-
     Route::get('/addplanmodule','AdminController@addPlanModule');
     Route::post('/save-plan','AdminController@SavePlan');
     Route::get('/user-plan','AdminController@AllUserPlan');
-    Route::get('/all-plan','AdminController@AllPlan');
-    Route::get('edit-plan/{id}','AdminController@EditPlan');
-    Route::post('update-plan','AdminController@UpdatePlan');
 
     Route::name('users.')->prefix('users')->group(function(){
         Route::get('/allusers','AdminController@allusers');
@@ -478,34 +473,3 @@ Route::name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')-
     });    
 
 });
-
-Route::get('dashboard/organization/{id}/kpi/{type}', [App\Http\Controllers\KpiController::class,'ValueChartKpi']);
-Route::post('add-chart-kpi', [App\Http\Controllers\KpiController::class,'SaveKpiData']);
-Route::get('dashboard/getkpicheckin', [App\Http\Controllers\KpiController::class,'getkpimodal']);
-Route::post('add-kpi-check', [App\Http\Controllers\KpiController::class,'AddnewcheckIn']);
-Route::post('kpi-deletevalue', [App\Http\Controllers\KpiController::class,'DeleteheckInValue']);
-Route::post('update-new-kpi-value', [App\Http\Controllers\KpiController::class,'UpdateheckInValue']);
-Route::post('update-kpi-basic', [App\Http\Controllers\KpiController::class,'UpdateKpiData']);
-Route::post('add-kpi-flag', [App\Http\Controllers\KpiController::class,'AddnewKpiflag']);
-Route::post('dashboard/kpiflagupdate', [App\Http\Controllers\KpiController::class,'UpdateKpiflag']);
-Route::post('kpi-deleteflag', [App\Http\Controllers\KpiController::class,'DeleteKpiflag']);
-Route::post('kpi-savecomment', [App\Http\Controllers\KpiController::class,'savecommentkpi']);
-Route::post('updatecomment-kpi', [App\Http\Controllers\KpiController::class,'updatecommentkpi']);
-Route::post('deletecomment-kpi', [App\Http\Controllers\KpiController::class,'Deletecommentkpi']);
-Route::post('savereply-kpi', [App\Http\Controllers\KpiController::class,'savereplykpi']);
-Route::get('kpi-render', [App\Http\Controllers\KpiController::class,'ValueChartKpiRender']);
-Route::post('delete-kpi-chart', [App\Http\Controllers\KpiController::class,'DeleteKpiData']);
-Route::get('kpi-flag-search', [App\Http\Controllers\KpiController::class,'Searchkpiflag']);
-Route::post('dashboard/orderbykpistatus', [App\Http\Controllers\KpiController::class,'orderbykpistatus']);
-Route::get('kpi-checkin-search', [App\Http\Controllers\KpiController::class,'kpicheckinsearch']);
-
-
-// PYMENT
-Route::get('profile/client_token', [App\Http\Controllers\BraintreeController::class,'generateClientToken']);
-Route::get('boost/private-process-payment', [App\Http\Controllers\BraintreeController::class,'processPayment']);
-Route::post('paypal-pay', [App\Http\Controllers\BraintreeController::class,'paypalpay']);
-Route::get('boost-payment/{slug}', [App\Http\Controllers\BraintreeController::class,'paymentPage']);
-Route::post('stripe-post', [App\Http\Controllers\BraintreeController::class,'stripePost']);
-Route::get('/get-paypal-client-id', [App\Http\Controllers\BraintreeController::class,'getPaypalClientId']);
-Route::get('/cancel', [App\Http\Controllers\BraintreeController::class,'cancel'])->name('checkout.cancel');
-Route::get('stripe/checkout/success', [App\Http\Controllers\BraintreeController::class,'stripeCheckoutSuccess'])->name('stripe.checkout.success');
