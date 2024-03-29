@@ -20,6 +20,11 @@
 </head>
 
 <body style="background: #f3f3f3;">
+<style type="text/css">
+    .form-group>label {
+        bottom: 72px !important;
+    }
+</style>
     <div class="d-flex flex-column flex-root">
         <div class="container p-5" >
             <div class="card" style="height: 60vh !important;">

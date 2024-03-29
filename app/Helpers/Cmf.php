@@ -29,6 +29,10 @@ class Cmf
     {
         return DB::table($table)->where('user_id' , $user_id)->get();
     }
+    public static function getmainorganizationslug()
+    {
+        return DB::table('organization')->where('user_id' , Auth::id())->first();
+    }
     public static function keyresultprogress($id)
     {
         $keyresult  = team_link_child::where('bussiness_key_id', $id)->pluck('linked_objective_id');
