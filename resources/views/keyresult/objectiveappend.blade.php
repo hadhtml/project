@@ -51,7 +51,7 @@
         @if($r->type == 'VS')
         @php
             $vs_team = DB::table('value_team')->where('id' , $r->unit_id)->first();
-            $value_stream = DB::table('value_stream')->where('id' , $vs_team)->first();
+            $value_stream = DB::table('value_stream')->where('id' , $vs_team->org_id)->first();
         @endphp
         <div class="d-flex mt-2">
             <span style="font-size:22px" class="material-symbols-outlined mr-2">domain</span>
