@@ -692,7 +692,7 @@ class AdminController extends Controller
         $sale_price = NULL;
       }
     
-       $id =  DB::table('plan')->insertGetId([
+        DB::table('plan')->insert([
           'plan_title' => $request->plan_title,
           'duration' => $request->duration,
           'base_price_status' => $request->base_price_status,
@@ -702,19 +702,10 @@ class AdminController extends Controller
           'per_user_price' => $request->per_user_price,
           'status' => $request->status,
           'description' => $request->description,
-          'module' =>  implode(',', $request->module),
+          'module' => $request->module,
            'slug' =>  Str::slug($request->plan_title),
         
         ]);
-
-        foreach($request->features  as $k => $value)
-        {
-             DB::table('features')
-             ->insert([
-                'feature' => $request->features[$k],
-                'plan_id' => $id
-            ]);
-        }
 
 
         
@@ -724,13 +715,6 @@ class AdminController extends Controller
 
     }
 
-    public function AllPlan()
-    {
-        $data = DB::table('plan')->get();
-        return view('admin.subscriptions.all-plan',compact('data'));
-    }
-
-    
     public function AllUserPlan()
     {
         $data = DB::table('user_plan')->select(
@@ -742,58 +726,5 @@ class AdminController extends Controller
             ->leftJoin('plan', 'user_plan.plan_id', '=', 'plan.id')
             ->get();
         return view('admin.subscriptions.user-plan',compact('data'));
-    }
-
-    public function EditPlan($id)
-    {
-        $data = DB::table('plan')->where('id',$id)->first();
-        return view('admin.subscriptions.edit-plan',compact('data'));
-    }
-
-    public function UpdatePlan(Request $request)
-    {
-
-      if($request->base_price_status == 'price')
-      {
-        $base_price = $request->base_price;
-        $sale_price = $request->sale_price;
-      }else
-      {
-        $base_price = NULL;
-        $sale_price = NULL;
-      }
-    
-        DB::table('plan')->where('id',$request->id)->update([
-          'plan_title' => $request->plan_title,
-          'duration' => $request->duration,
-          'base_price_status' => $request->base_price_status,
-          'base_price' => $base_price,
-          'sale_price' => $sale_price,
-          'max_user' => $request->max_user,
-          'per_user_price' => $request->per_user_price,
-          'status' => $request->status,
-          'description' => $request->description,
-          'module' =>  implode(',', $request->module),
-           'slug' =>  Str::slug($request->plan_title),
-        
-        ]);
-
-        if($request->has('f_id'))
-        {
-        foreach($request->f_id  as $k => $value)
-        {
-             DB::table('features')
-             ->where('id',$request->f_id[$k])
-             ->update([
-              'feature' => $request->features[$k],
-            ]);
-        }
-        }
-
-        
-        return redirect('admin/all-plan');
-
-  
-
     }
 }
