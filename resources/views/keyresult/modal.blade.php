@@ -1,8 +1,3 @@
-@php
-$per = DB::table('user_plan')->where('user_id',Auth::id())
-       ->leftJoin('plan', 'user_plan.plan_id', '=', 'plan.id')->where('user_plan.package_status',1)->select('plan.*')->first();
-@endphp
-
 <div class="modal-header modalheaderforapend">
     @include('keyresult.modalheader')
 </div>
@@ -33,10 +28,6 @@ $per = DB::table('user_plan')->where('user_id',Auth::id())
                     <!-- <li id="teams" onclick="showtab({{$data->id}} , 'teams')" class="tabsclass">
                         <span class="material-symbols-outlined"> group </span> Teams
                     </li> -->
-                    @if($per)
-                    @foreach(explode(',',$per->module) as $info) 
-                    @if($info == 'OKR Mapper')
-
                     @if($data->type == 'org')
                     <li id="okrmapper" onclick="showtab({{$data->id}} , 'okrmapper')" class="tabsclass">
                         <span class="material-symbols-outlined"> link </span> OKR Mapper</li>
@@ -49,11 +40,6 @@ $per = DB::table('user_plan')->where('user_id',Auth::id())
                     <li id="okrmapper" onclick="showtab({{$data->id}} , 'okrmapper')" class="tabsclass">
                         <span class="material-symbols-outlined"> link </span> OKR Mapper</li>
                     @endif
-
-                    @endif
-                    @endforeach
-                    @endif
-                    
                 </ul>
                 <h4>Action</h4>
                 <ul class="positionrelative">

@@ -67,17 +67,6 @@ $organization = DB::table('organization')->where('user_id',Auth::id())->where('t
          </div>
          </a>
       </li>
-
-      <li class="mb-1">
-         <a href="{{route('settings.subscription')}}" @if (url()->current() == route('settings.subscription'))  class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center" @endif>
-         <div class="mr-2">
-            <span style="font-size:22px" class="material-symbols-outlined">key</span>
-         </div>
-         <div class="mr-2">
-            Subscription
-         </div>
-         </a>
-      </li>
       <!-- <li class="mb-1">
          <a href="#" class="d-flex flex-row align-items-center">
              <div class="mr-2">

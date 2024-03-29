@@ -14,9 +14,6 @@ if($organization->type == 'orgT')
 $team  = DB::table('organization')->where('id',$organization->org_id)->first();  
 }
 
-$per = DB::table('user_plan')->where('user_id',Auth::id())
-       ->leftJoin('plan', 'user_plan.plan_id', '=', 'plan.id')->where('user_plan.package_status',1)->select('plan.*')->first();
-
 @endphp
 
 
@@ -182,10 +179,6 @@ $per = DB::table('user_plan')->where('user_id',Auth::id())
                 </a>
             </li>
 
-            @if($per)
-            @foreach(explode(',',$per->module) as $info) 
-            @if($info == 'OKR Planner')
-
             <li class="mb-1">
                 <a href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/BU')}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/portfolio/BU')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
                     <div class="mr-2">
@@ -196,16 +189,9 @@ $per = DB::table('user_plan')->where('user_id',Auth::id())
                     </div>
                 </a>
             </li>
-            @endif
-            @endforeach
-            @endif
 
             @endif
             @if($organization->type == 'org')
-
-            @if($per)
-            @foreach(explode(',',$per->module) as $info) 
-            @if($info == 'OKR Planner')
             <li class="mb-1">
                 <a href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/org')}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/portfolio/org')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
                     <div class="mr-2">
@@ -216,9 +202,6 @@ $per = DB::table('user_plan')->where('user_id',Auth::id())
                     </div>
                 </a>
             </li>
-            @endif
-            @endforeach
-            @endif
 
             @endif
             @if($organization->type == 'VS')
@@ -234,9 +217,6 @@ $per = DB::table('user_plan')->where('user_id',Auth::id())
                 </a>
             </li>
 
-            @if($per)
-            @foreach(explode(',',$per->module) as $info) 
-            @if($info == 'OKR Planner')
             <li class="mb-1">
                 <a href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/VS')}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/portfolio/VS')) class="d-flex flex-row align-items-center nav-link" @else class="d-flex flex-row align-items-center"  @endif>
                     <div class="mr-2">
@@ -247,10 +227,6 @@ $per = DB::table('user_plan')->where('user_id',Auth::id())
                     </div>
                 </a>
             </li>
-            @endif
-            @endforeach
-            @endif
-
             @endif
 
             @if($organization->type == 'orgT')
@@ -264,10 +240,6 @@ $per = DB::table('user_plan')->where('user_id',Auth::id())
                     </div>
                 </a>
             </li>
-
-            @if($per)
-            @foreach(explode(',',$per->module) as $info) 
-            @if($info == 'OKR Planner')
             
             <li class="mb-1">
                 <a href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/orgT')}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/portfolio/orgT')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
@@ -279,20 +251,11 @@ $per = DB::table('user_plan')->where('user_id',Auth::id())
                     </div>
                 </a>
             </li>
-            @endif
-            @endforeach
-            @endif
-
 
             @endif
 
 
             @if($organization->type == 'BU')
-
-            @if($per)
-            @foreach(explode(',',$per->module) as $info) 
-            @if($info == 'Epic Backlog')
-
             <li class="mb-1">
                 <a href="{{ url('dashboard/epicbacklog/' . $organization->slug . '/BU') }}" @if (url()->current() == url('dashboard/epicbacklog/' . $organization->slug . '/BU')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
                     <div class="mr-2">
@@ -303,17 +266,9 @@ $per = DB::table('user_plan')->where('user_id',Auth::id())
                     </div>
                 </a>
             </li>
-            @endif
-            @endforeach
-            @endif
 
             @endif
             @if($organization->type == 'VS')
-
-            @if($per)
-            @foreach(explode(',',$per->module) as $info) 
-            @if($info == 'Epic Backlog')
-
             <li class="mb-1">
                 <a href="{{ url('dashboard/epicbacklog/' . $organization->slug . '/VS') }}" @if (url()->current() == url('dashboard/epicbacklog/' . $organization->slug . '/VS')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
                     <div class="mr-2">
@@ -325,16 +280,9 @@ $per = DB::table('user_plan')->where('user_id',Auth::id())
                 </a>
             </li>
             @endif
-            @endforeach
-            @endif
-
-            @endif
 
             @if($organization->type == 'orgT')
-
-            @if($per)
-            @foreach(explode(',',$per->module) as $info) 
-            @if($info == 'Epic Backlog')
+       
 
             <li class="mb-1">
                 <a href="{{url('dashboard/epicbacklog/' . $organization->slug . '/orgT')}}" @if (url()->current() == url('dashboard/epicbacklog/' . $organization->slug . '/orgT')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
@@ -346,10 +294,6 @@ $per = DB::table('user_plan')->where('user_id',Auth::id())
                     </div>
                 </a>
             </li>
-            @endif
-            @endforeach
-            @endif
-
             @endif
 
 
@@ -395,9 +339,6 @@ $per = DB::table('user_plan')->where('user_id',Auth::id())
 
             @endif
             
-            @if($per)
-            @foreach(explode(',',$per->module) as $info) 
-            @if($info == 'Reports')
             <li class="mb-1">
                 <a href="{{url('dashboard/organization/'.$organization->slug.'/BU-Report/'.$organization->type)}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/BU-Report/'.$organization->type)) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"   @endif   >
                     <div class="mr-2">
@@ -408,16 +349,8 @@ $per = DB::table('user_plan')->where('user_id',Auth::id())
                     </div>
                 </a>
             </li>
-            @endif
-            @endforeach
-            @endif
 
             @if($organization->type == 'VS')
-
-            @if($per)
-            @foreach(explode(',',$per->module) as $info) 
-            @if($info == 'Flag')
-
             <li class="mb-1">
                 <a href="{{url('dashboard/flags/'.$organization->slug.'/impediments/VS')}}" @if (url()->current() == url('dashboard/flags/'.$organization->slug.'/impediments/VS')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
                     <div class="mr-2">
@@ -458,14 +391,7 @@ $per = DB::table('user_plan')->where('user_id',Auth::id())
                     </div>
                 </a>
             </li>
-            @endif
-            @endforeach
-            @endif
 
-            @if($per)
-            @foreach(explode(',',$per->module) as $info) 
-            @if($info == 'Map')
-          
             <li class="mb-1">
                 <a href="{{url('dashboard/organization/'.$organization->slug.'/leaderline/VS')}}" class="d-flex flex-row align-items-center">
                     <div class="mr-2">
@@ -476,14 +402,6 @@ $per = DB::table('user_plan')->where('user_id',Auth::id())
                     </div>
                 </a>
             </li>
-            @endif
-            @endforeach
-            @endif
-
-            @if($per)
-            @foreach(explode(',',$per->module) as $info) 
-            @if($info == 'kpi')
-          
 
             <li class="mb-1">
                 <a href="{{url('dashboard/organization/'.$organization->slug.'/kpi/VS')}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/performance-dashboard/'.$organization->type)) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
@@ -496,16 +414,7 @@ $per = DB::table('user_plan')->where('user_id',Auth::id())
                 </a>
             </li>
             @endif
-            @endforeach
-            @endif
-
-            @endif
             @if($organization->type == 'BU')
-
-            @if($per)
-            @foreach(explode(',',$per->module) as $info) 
-            @if($info == 'Flag')
-
             <li class="mb-1">
                 <a href="{{url('dashboard/flags/'.$organization->slug.'/impediments/BU')}}" @if (url()->current() == url('dashboard/flags/'.$organization->slug.'/impediments/BU')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
                     <div class="mr-2">
@@ -546,14 +455,6 @@ $per = DB::table('user_plan')->where('user_id',Auth::id())
                     </div>
                 </a>
             </li>
-            @endif
-            @endforeach
-            @endif
-
-            @if($per)
-            @foreach(explode(',',$per->module) as $info) 
-            @if($info == 'Map')
-          
 
             <li class="mb-1">
                 <a href="{{url('dashboard/organization/'.$organization->slug.'/leaderline/BU')}}" class="d-flex flex-row align-items-center">
@@ -565,14 +466,7 @@ $per = DB::table('user_plan')->where('user_id',Auth::id())
                     </div>
                 </a>
             </li>
-            @endif
-            @endforeach
-            @endif
 
-            @if($per)
-            @foreach(explode(',',$per->module) as $info) 
-            @if($info == 'kpi')
-          
             <li class="mb-1">
                 <a href="{{url('dashboard/organization/'.$organization->slug.'/kpi/BU')}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/performance-dashboard/'.$organization->type)) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
                     <div class="mr-2">
@@ -584,17 +478,8 @@ $per = DB::table('user_plan')->where('user_id',Auth::id())
                 </a>
             </li>
             @endif
-            @endforeach
-            @endif
-
-            @endif
 
             @if($organization->type == 'orgT')
-
-            @if($per)
-            @foreach(explode(',',$per->module) as $info) 
-            @if($info == 'Flag')
-
             <li class="mb-1">
                 <a href="{{url('dashboard/flags/'.$organization->slug.'/impediments/orgT')}}" @if (url()->current() == url('dashboard/flags/'.$organization->slug.'/impediments/orgT')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
                     <div class="mr-2">
@@ -636,14 +521,6 @@ $per = DB::table('user_plan')->where('user_id',Auth::id())
                 </a>
             </li>
 
-            @endif
-            @endforeach
-            @endif
-
-            @if($per)
-            @foreach(explode(',',$per->module) as $info) 
-            @if($info == 'Map')
-          
             <li class="mb-1">
                 <a href="{{url('dashboard/organization/'.$organization->slug.'/leaderline/orgT')}}" class="d-flex flex-row align-items-center">
                     <div class="mr-2">
@@ -654,14 +531,7 @@ $per = DB::table('user_plan')->where('user_id',Auth::id())
                     </div>
                 </a>
             </li>
-            @endif
-            @endforeach
-            @endif
 
-            @if($per)
-            @foreach(explode(',',$per->module) as $info) 
-            @if($info == 'kpi')
-          
             <li class="mb-1">
                 <a href="{{url('dashboard/organization/'.$organization->slug.'/kpi/orgT')}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/performance-dashboard/'.$organization->type)) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
                     <div class="mr-2">
@@ -672,9 +542,6 @@ $per = DB::table('user_plan')->where('user_id',Auth::id())
                     </div>
                 </a>
             </li>
-            @endif
-            @endforeach
-            @endif
 
             @endif
             
