@@ -52,8 +52,6 @@
                         </ul>
                     </div>
                 </li>
-
-
                 <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                     <a href="javascript:;" class="menu-link menu-toggle">
                         <span class="material-symbols-outlined">subscriptions</span>
@@ -66,13 +64,6 @@
                                 <a href="{{ url('admin/addplanmodule') }}" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot"><span></span></i><span
                                         class="menu-text">Add Plan</span>
-                                </a>
-                            </li>
-
-                            <li class="menu-item" aria-haspopup="true">
-                                <a href="{{ url('admin/all-plan') }}" class="menu-link">
-                                    <i class="menu-bullet menu-bullet-dot"><span></span></i><span
-                                        class="menu-text">All  Plan</span>
                                 </a>
                             </li>
 

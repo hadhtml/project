@@ -42,7 +42,7 @@
     <div class="activity-feed @if($comments->count() == 0) col-md-12 @endif">
         <div class="col-md-12 col-lg-12 col-xl-12 writecomment">
             <div class="d-flex flex-column">
-                <form method="POST" id="savecomment{{ $data->id }}" action="{{ url('dashboard/epics/savecomment') }}">
+                <form method="POST" class="savecomment{{ $data->id }}" action="{{ url('dashboard/epics/savecomment') }}">
                 @csrf
                 <input type="hidden" value="{{ $data->id }}" name="flag_id">
                 <input type="hidden" value="{{ Auth::user()->id }}" name="user_id">
@@ -347,7 +347,7 @@ function showorderby(id,flag_id,table) {
         }
     });
 }
-$('#savecomment{{ $data->id }}').on('submit',(function(e) {
+$('.savecomment{{ $data->id }}').on('submit',(function(e) {
     $('#savecommentbutton{{ $data->id }}').html('<i class="fa fa-spin fa-spinner"></i>');
     e.preventDefault();
     var formData = new FormData(this);
@@ -361,7 +361,7 @@ $('#savecomment{{ $data->id }}').on('submit',(function(e) {
         processData: false,
         success: function(data){
             $('#savecommentbutton{{ $data->id }}').html('Save');
-            $("#savecomment{{ $data->id }}")[0].reset();
+            $(".savecomment{{ $data->id }}")[0].reset();
             $('#updateflag{{ $data->id }}').submit();
             $('.secondportion').html(data);
         }

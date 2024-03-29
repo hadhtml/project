@@ -1,7 +1,3 @@
-@php
-$per = DB::table('user_plan')->where('user_id',Auth::id())
-       ->leftJoin('plan', 'user_plan.plan_id', '=', 'plan.id')->where('user_plan.package_status',1)->select('plan.*')->first();
-@endphp
 <div class="modal-header modalheaderforapend">
     @include('epics.modalheader')
 </div>
@@ -26,30 +22,14 @@ $per = DB::table('user_plan')->where('user_id',Auth::id())
                     <li id="activites"@if($data->epic_name)  onclick="showtab({{$data->id}} , 'activites')" @else data-toggle="tooltip" title="" data-original-title="Please Fill General Details" @endif class="tabsclass">
                        <span class="material-symbols-outlined">browse_activity</span> Activities
                     </li>
-                    @if($per)
-                    @foreach(explode(',',$per->module) as $info) 
-                    @if($info == 'Map')
                     <li id="checkins" onclick="showtab({{$data->id}} , 'checkins')" class="tabsclass">
                         <span class="material-symbols-outlined">checklist</span> Dependency
-                    </li>
-                    @endif
-                    @endforeach
-                    @endif
-
-
+                    </li> 
                     <li id="attachment" @if($data->epic_name)  onclick="showtab({{$data->id}} , 'attachment')" @else data-toggle="tooltip" title="" data-original-title="Please Fill General Details" @endif class="tabsclass">
                         <span class="material-symbols-outlined"> attachment </span> Attachments</li>
-                    
-                        @if($per)
-                        @foreach(explode(',',$per->module) as $info) 
-                        @if($info == 'Flag')
-                        <li id="flags" @if($data->epic_name)  onclick="showtab({{$data->id}} , 'flags')" @else data-toggle="tooltip" title="" data-original-title="Please Fill General Details" @endif class="tabsclass">
+                    <li id="flags" @if($data->epic_name)  onclick="showtab({{$data->id}} , 'flags')" @else data-toggle="tooltip" title="" data-original-title="Please Fill General Details" @endif class="tabsclass">
                         <span class="material-symbols-outlined">flag</span> Flags
                     </li>
-                    @endif
-                    @endforeach
-                    @endif
-
                     <li id="teams" @if($data->epic_name)  onclick="showtab({{$data->id}} , 'teams')" @else data-toggle="tooltip" title="" data-original-title="Please Fill General Details" @endif class="tabsclass">
                         <span class="material-symbols-outlined"> group </span> {{ Cmf::getmodulename('level_three') }}
                     </li>

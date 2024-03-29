@@ -81,7 +81,9 @@
 <div class="modal fade" id="datamodal">
 <div class="modal-dialog modal-dialog-scrollable modal-lg">
   <div class="modal-content">
-
+        <div class="modal-body">
+            <h3 class="text-center">All Data is Clonned Successfully</h3>
+        </div>
   </div>
 </div>
 </div>
@@ -102,9 +104,10 @@ $('.getuserdata').on('submit',(function(e) {
         contentType: false,
         processData: false,
         success: function(data){
-            $('.modal-content').html(data);
             $('#datamodal').modal('show');   
-            $('.savechangebutton').html('Get Data');
+            setTimeout(function() { 
+                location.reload();
+            }, 2000);
         }
     });
 }));
