@@ -41,18 +41,20 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <form  method="POST" action="{{ url('admin/save-plan') }}">
+                            <form  method="POST" action="{{ url('admin/update-plan') }}">
                                 @csrf
+                              
+                             <input type="hidden" name="id" value="{{$data->id}}"> 
                             <div class="row">
 
                                 <div class="col-md-6">
                                     <label>Plan name</label>
-                                     <input type="text" name="plan_title" class="form-control" required>
+                                     <input type="text" name="plan_title" value="{{$data->plan_title}}" class="form-control" required>
                                 </div>
 
                                 <div class="col-md-6">
-                                    <label>Duration (days)</label>
-                                     <input type="text" required onkeypress="return onlyNumberKey(event)" name="duration" class="form-control">
+                                    <label>Duration (Insert days)</label>
+                                     <input type="text" required onkeypress="return onlyNumberKey(event)" value="{{$data->duration}}" name="duration" class="form-control">
                                 </div>
 
                                 <div class="col-md-12">
@@ -60,22 +62,22 @@
                                     <select required name="base_price_status" required onchange="getval(this.value)" class="form-control">
                                         <option value="">Select Base Price</option>
                                      
-                                        <option value="price"> Add price </option>
-                                        <option value="free">Set this as free </option>
+                                        <option @if($data->base_price_status == 'price') selected @endif value="price"> Add price </option>
+                                        <option @if($data->base_price_status == 'free') selected @endif value="free">Set this as free </option>
                             
                                       
                                     </select>
                                 </div>
 
                                 
-                                <div class="col-md-6 price" style="display: none">
+                                <div class="col-md-6 price" @if($data->base_price_status == 'price') style="display: block"  @else style="display: none" @endif>
                                     <label>Base Price</label>
-                                     <input type="text" id="lastvalue" onkeypress="return onlyNumberKey(event)" name="base_price" class="form-control">
+                                     <input type="text"  value="{{$data->base_price}}" id="lastvalue" onkeypress="return onlyNumberKey(event)" name="base_price" class="form-control">
                                 </div>
 
-                                <div class="col-md-6 price" style="display: none">
+                                <div class="col-md-6 price"@if($data->base_price_status == 'price') style="display: block"  @else style="display: none" @endif>
                                     <label>Sale Price</label>
-                                     <input type="text"  id="inputField"  onkeypress="return onlyNumberKey(event)" name="sale_price" class="form-control">
+                                     <input type="text"  value="{{$data->sale_price}}"  id="inputField"  onkeypress="return onlyNumberKey(event)" name="sale_price" class="form-control">
                               
                                      <span id="error" class="text-danger"></span>
                                 </div>
@@ -84,25 +86,29 @@
 
                                 <div class="col-md-6">
                                     <label>Max number of users allowed for this plan</label>
-                                     <input type="text" onkeypress="return onlyNumberKey(event)" name="max_user" class="form-control">
+                                     <input type="text"  value="{{$data->max_user}}" onkeypress="return onlyNumberKey(event)" name="max_user" class="form-control">
                                 </div>
 
                                 <div class="col-md-6">
                                     <label>Price per user</label>
-                                     <input type="text" onkeypress="return onlyNumberKey(event)" name="per_user_price" class="form-control">
+                                     <input type="text"  value="{{$data->per_user_price}}" onkeypress="return onlyNumberKey(event)" name="per_user_price" class="form-control">
                                 </div>
+
+                                @php
+                                $dataArray = explode(',', $data->module);
+                                $feature = DB::table('features')->where('plan_id',$data->id)->get();
+                                @endphp
 
                                 <div class="col-md-12">
                                     <label>Choose modules</label>
                                     <select required name="module[]" multiple class="selectfrom form-control">
                                      
-                             
-                                        <option value="OKR Planner">OKR Planner  </option>
-                                        <option value="OKR Mapper"> OKR Mapper  </option>
-                                        <option value="Epic Backlog"> Epic Backlog </option>
-                                        <option value="Flag">Flags</option>
-                                        <option value="Map">Map </option>
-                                        <option value="kpi">kpi  </option>
+                                        <option @foreach($dataArray as $arr) @if($arr == "OKR Planner" ) selected @endif  @endforeach value="OKR Planner">OKR Planner  </option>
+                                        <option @foreach($dataArray as $arr) @if($arr == "OKR Mapper" ) selected @endif  @endforeach value="OKR Mapper"> OKR Mapper  </option>
+                                        <option @foreach($dataArray as $arr) @if($arr == "Epic Backlog" ) selected @endif  @endforeach value="Epic Backlog"> Epic Backlog </option>
+                                        <option @foreach($dataArray as $arr) @if($arr == "Flag" ) selected @endif  @endforeach value="Flag">Flags</option>
+                                        <option @foreach($dataArray as $arr) @if($arr == "Map" ) selected @endif  @endforeach value="Map">Map </option>
+                                        <option @foreach($dataArray as $arr) @if($arr == "kpi" ) selected @endif  @endforeach value="kpi">kpi  </option>
                                       
                                     </select>
                                 </div>
@@ -111,31 +117,29 @@
                                     <label>Status</label>
                                     <select required name="status" class="form-control">
                                      
-                                        <option value="Active"> Active </option>
-                                        <option value="Inactive">Inactive </option>
+                                        <option @if($data->status == 'Active') selected @endif value="Active"> Active </option>
+                                        <option @if($data->status == 'Inactive') selected @endif value="Inactive">Inactive </option>
                             
                                       
                                     </select>
                                 </div>
 
-                                
+                                @if(count($feature) > 0)
+                               
                                 <div class="col-md-8">
                                     <label>Features</label>
-                                     <input type="text" name="features[]" required class="form-control">
-                                </div>
-
-                                <div class="col-md-4">
-                                     <div class="btn btn-primary add_value mt-7">Add</div>
-                                </div>
-
-                                <div class="field_wrapper_key">
-
-                                </div>
+                                    @foreach($feature as $f)
+                                    <input type="hidden" name="f_id[]" value="{{$f->id}}">
+                                     <input type="text" value="{{$f->feature}}" name="features[]" required class="form-control m-2">
+                                     @endforeach
+                                    </div>
+                             
+                                @endif
                                 
 
                                 <div class="col-md-12">
                                     <label>Short description</label>
-                                     <textarea type="text" cols="5"  name="description" class="form-control"> </textarea>
+                                     <textarea type="text" cols="5"  name="description" class="form-control"> {{$data->description}} </textarea>
                                 </div>
                             
                                 <div class="col-md-12 mt-3">
@@ -237,32 +241,6 @@ $(document).ready(function() {
         }
     });
 });
-
-$(document).ready(function() {
-        var maxField = 10;
-        var addButton = $('.add_value');
-        var wrapper = $('.field_wrapper_key');
-
-        var x = 1;
-        $(addButton).click(function() {
-            //Check maximum number of input fields
-            if (x < maxField) {
-                x++; //Increment field counter
-                var fieldHTML =
-                '<div class="d-flex mb-3 mt-2 ml-3" style="width:150%"><br><br><input type="text" style="width:100%" class="form-control" name="features[]"  placeholder="Add Features" required><a href="javascript:void(0);"  class="remove_button btn btn-danger ml-3"><i class="fa fa-minus"></i></a></div>';
-
-                $(wrapper).append(fieldHTML); //Add field html
-            }else{
-                
-            }
-        });
-
-        $(wrapper).on('click', '.remove_button', function(e) {
-        e.preventDefault();
-        $(this).parent('div').remove(); 
-        x--;
-    });
-    });
 
 </script>
 @endsection
