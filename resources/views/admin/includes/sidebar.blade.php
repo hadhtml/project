@@ -70,6 +70,13 @@
                             </li>
 
                             <li class="menu-item" aria-haspopup="true">
+                                <a href="{{ url('admin/all-plan') }}" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot"><span></span></i><span
+                                        class="menu-text">All  Plan</span>
+                                </a>
+                            </li>
+
+                            <li class="menu-item" aria-haspopup="true">
                                 <a href="{{ url('admin/user-plan') }}" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot"><span></span></i><span
                                         class="menu-text">All User Plan</span>
