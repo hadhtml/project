@@ -4,6 +4,11 @@ $var_objective = "mapper-org";
 @extends('components.main-layout')
 <title>ORG-OKR Mapper</title>
 @section('content')
+<style type="text/css">
+   .node{
+      padding-right: 0px !important;
+   }
+</style>
 <div class="row rotatex">
    <div class="col-md-12">
       <div style="width: 100%; height: 5000px; padding: 50px;margin-top: 150px;">
@@ -47,9 +52,9 @@ $var_objective = "mapper-org";
 
          @include('mapper.org.orgteam')
 
-         @include('mapper.org.buisnessunits')
+         @include('mapper.org.horizontal.buisnessunits')
          
-         @include('mapper.org.valuestream')
+         @include('mapper.org.horizontal.valuestream')
       </div>
    </div>
 </div>
@@ -77,16 +82,17 @@ $var_objective = "mapper-org";
    
    @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $linekeyforslot =>  $line_t_l_c)
    line{{$linekeyforslot+1}} = new LeaderLine(connectedobjective{{ $line_t_l_c->linked_objective_id }}, slout_out_buisness_unit_key_result_{{ $line_t_l_c->bussiness_key_id }}, {
-   startPlug: "behind",
-   endPlug: "behind",
+   startPlug: "disc",
+   endPlug: "disc",
    startPlugColor: '#1a6be0',
      endPlugColor: '#1efdaa',
      gradient: true,
      startPlug: 'arrow1',
+     endPlug: 'arrow1',
    size: 4,
    startPlugSize: 1,
    endPlugSize: 1,
-   startSocket: "left",
+   startSocket: "right",
    endSocket: "right",
    color: "#fb8c00",
    path: 'grid'
