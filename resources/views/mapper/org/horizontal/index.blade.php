@@ -79,13 +79,17 @@ $var_objective = "mapper-org";
    line{{$linekeyforslot+1}} = new LeaderLine(connectedobjective{{ $line_t_l_c->linked_objective_id }}, slout_out_buisness_unit_key_result_{{ $line_t_l_c->bussiness_key_id }}, {
    startPlug: "behind",
    endPlug: "behind",
+   startPlugColor: '#1a6be0',
+     endPlugColor: '#1efdaa',
+     gradient: true,
+     startPlug: 'arrow1',
    size: 4,
    startPlugSize: 1,
    endPlugSize: 1,
    startSocket: "left",
    endSocket: "right",
-   color: "#fb8c00"
-   // path: 'grid',
+   color: "#fb8c00",
+   path: 'grid'
    // dropShadow: {color: '#111', dx: 0, dy: 2, blur: 0.2}
    });
    @endforeach
@@ -222,7 +226,7 @@ $var_objective = "mapper-org";
         }
     });
     // Add 20px and nodeHeight to the maxHeight
-    maxHeight += 50 + nodeHeight;
+    maxHeight += 100 + nodeHeight;
     console.log("Height of the tallest box with 20px and nodeHeight added: " + maxHeight + "px");
 
 

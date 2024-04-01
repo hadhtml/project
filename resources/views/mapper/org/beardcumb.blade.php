@@ -57,7 +57,7 @@
    .body-inner-content{
       overflow: auto;
       min-height: 1600px;
-      min-width: 2500px;
+      min-width: 4500px;
       padding-left: 25px !important;
    }
 </style>
