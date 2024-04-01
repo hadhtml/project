@@ -8,7 +8,7 @@ $var_objective = "mapper-org";
    <div class="col-md-12">
       <div style="width: 100%; height: 5000px; padding: 50px;margin-top: 150px;">
          <!-- Node 1 -->
-         <div id="node_1" class="node" style="transform: translate(-60px, -60px);">
+         <div id="node_1" class="node" style="transform: translate(600px, -60px);">
             <div class="node-name slot-active drag-impo-grab">
                <a target="_blank" href="{{ url('organization/dashboard') }}" class="slot-label drag-impo-grab"><span style="font-size:22px" class="material-symbols-outlined mr-2">auto_stories</span> {{ $data->organization_name }}</a>
             </div>
@@ -200,20 +200,42 @@ $var_objective = "mapper-org";
 </script>
 <script>
  document.addEventListener('DOMContentLoaded', function() {
+   
+   const nodeBox = document.querySelector('.node');
+   const nodeHeight = nodeBox.offsetHeight + 20;
+
    let cumulativeHeight = -60;
    const boxes = document.querySelectorAll('.buisnessunits');
    boxes.forEach(function(box) {
-     box.style.transform = `translate(300px , ${cumulativeHeight}px)`;
-     cumulativeHeight += box.offsetHeight + 10;
+     if (box !== 0) {
+         cumulativeHeight += 300;
+     }
+     box.style.transform = `translate(${cumulativeHeight}px , ${nodeHeight}px)`;
    });
 
 
-   let valuestreamcumulativeHeight = -60;
+   var maxHeight = 0;
+    $('.buisnessunits').each(function() {
+        var currentHeight = $(this).height();
+        if (currentHeight > maxHeight) {
+            maxHeight = currentHeight;
+        }
+    });
+    // Add 20px and nodeHeight to the maxHeight
+    maxHeight += 50 + nodeHeight;
+    console.log("Height of the tallest box with 20px and nodeHeight added: " + maxHeight + "px");
+
+
+
+    let cumulativeHeightvaluestream = -60;
    const valuestreamboxes = document.querySelectorAll('.valuestreambox');
-   valuestreamboxes.forEach(function(boxvaluestream) {
-     boxvaluestream.style.transform = `translate(700px , ${valuestreamcumulativeHeight}px)`;
-     valuestreamcumulativeHeight += boxvaluestream.offsetHeight + 10;
+   valuestreamboxes.forEach(function(valustreambox) {
+     if (valustreambox !== 0) {
+         cumulativeHeightvaluestream += 300;
+     }
+     valustreambox.style.transform = `translate(${cumulativeHeightvaluestream}px , ${maxHeight}px)`;
    });
+
 
 
    let valuestreamteamcumulativeHeight = -60;

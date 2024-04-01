@@ -36,5 +36,28 @@
                 </div>
             </div>
         </div>
+        <div class="d-flex align-items-center toolbar">
+         <div class="d-flex align-items-center">
+            <a class="button" href="{{ url('dashboard/mapper') }}/{{ $data->slug }}/org?view=horizontal">Horizontal View</a>
+         </div>
+      </div>
     </div>
 </div>
+<style type="text/css">
+   body{
+      overflow: auto !important;
+   }
+   .subheader-solid{
+      width: 81%;
+      position: fixed;
+      top: -3%;
+      left: 300px;
+      z-index: 999999;
+   }
+   .body-inner-content{
+      overflow: auto;
+      min-height: 1600px;
+      min-width: 2500px;
+      padding-left: 25px !important;
+   }
+</style>
