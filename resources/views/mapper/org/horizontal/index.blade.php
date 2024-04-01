@@ -204,11 +204,11 @@ $var_objective = "mapper-org";
    const nodeBox = document.querySelector('.node');
    const nodeHeight = nodeBox.offsetHeight + 20;
 
-   let cumulativeHeight = -60;
+   let cumulativeHeight = 100;
    const boxes = document.querySelectorAll('.buisnessunits');
-   boxes.forEach(function(box) {
-     if (box !== 0) {
-         cumulativeHeight += 300;
+   boxes.forEach(function(box, index) {
+     if (index !== 0) {
+         cumulativeHeight += 500;
      }
      box.style.transform = `translate(${cumulativeHeight}px , ${nodeHeight}px)`;
    });
@@ -227,11 +227,11 @@ $var_objective = "mapper-org";
 
 
 
-    let cumulativeHeightvaluestream = -60;
+    let cumulativeHeightvaluestream = 0;
    const valuestreamboxes = document.querySelectorAll('.valuestreambox');
-   valuestreamboxes.forEach(function(valustreambox) {
-     if (valustreambox !== 0) {
-         cumulativeHeightvaluestream += 300;
+   valuestreamboxes.forEach(function(valustreambox, indexvalustream) {
+     if (indexvalustream !== 0) {
+         cumulativeHeightvaluestream += 500;
      }
      valustreambox.style.transform = `translate(${cumulativeHeightvaluestream}px , ${maxHeight}px)`;
    });
