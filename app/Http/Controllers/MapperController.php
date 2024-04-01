@@ -95,7 +95,7 @@ class MapperController extends Controller
             $business_units = DB::table('business_units')->where('org_id'  , $data->id)->orderby('id' , 'asc')->get();
             $valuestream = DB::table('value_stream')->where('org_id'  , $data->id)->orderby('id' , 'asc')->get();
 
-            if($_GET['view'] == 'horizontal')
+            if(isset($_GET['view']))
             {
                 return view('mapper.org.horizontal.index',compact('data','business_units','organization','valuestream'));
             }else{
