@@ -261,7 +261,8 @@ class JiraController extends Controller
                  'user_id' => Auth::id(),
                  'position' => $counter,
                  'account_id' => $log->account_id, 
-                 'type' => $request->type, 
+                 'type' => $request->type,
+                 'epic_status' => 'To Do', 
 
 
                 ]);
@@ -277,12 +278,13 @@ class JiraController extends Controller
                 'epic_end_date' => $log->Duedate,
                 'jira_id' => $log->jira_id,
                 'progress' => $log->progress,
-                'stream_id' => $request->backlog_id,
+                'unit_id' => $request->backlog_id,
                 'jira_project' => $request->jira_project,
                 'user_id' => Auth::id(),
                  'position' => $counter,
                  'account_id' => $log->account_id, 
-                 'type' => $request->type, 
+                 'type' => $request->type,
+                 'epic_status' => 'To Do',  
 
 
 
@@ -304,7 +306,8 @@ class JiraController extends Controller
                 'user_id' => Auth::id(),
                  'position' => $counter,
                  'account_id' => $log->account_id,
-                 'type' => $request->type,  
+                 'type' => $request->type, 
+                 'epic_status' => 'To Do',  
 
 
 
