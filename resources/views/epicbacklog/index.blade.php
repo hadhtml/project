@@ -890,5 +890,128 @@ $var_objective = 'TBaclog-' . $type;
            $('.alert-success').slideUp();
        }, 3000);
    });
+
+   $('.category').on('change', function() {
+       var id = $(this).val();
+       var type = "{{ $organization->type }}";
+       if (id) {
+           $.ajax({
+               type: "GET",
+               url: "{{ url('get-value-obj') }}",
+               headers: {
+                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+               },
+               data: {
+                   id: id,
+                   type: type,
+               },
+               success: function(res) {
+   
+                   if (res) {
+                       $('.obj').empty();
+                       $('.obj').append('<option hidden>Choose Objective</option>');
+                       $.each(res, function(key, course) {
+                           $('select[name="locstate"]').append('<option value="' + course
+                               .id + '">' + course.objective_name + '</option>');
+                       });
+                   } else {
+                       $('.obj').empty();
+   
+                   }
+   
+               }
+           });
+       } else {
+           $('.init').empty();
+           $('.key').empty();
+           $('.obj').empty();
+       }
+   
+   });
+   
+   
+   
+   function getvaluekey(id) {
+   
+       $.ajax({
+           type: "GET",
+           url: "{{ url('get-value-key') }}",
+           headers: {
+               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+           },
+           data: {
+               id: id,
+           },
+           success: function(res) {
+   
+               if (res) {
+                   $('.key').empty();
+                   $('.key').append('<option hidden>Choose Key Result</option>');
+                   $.each(res, function(key, course) {
+                       $('select[name="lockey"]').append('<option value="' + course.id + '">' +
+                           course.key_name + '</option>');
+                   });
+               } else {
+                   $('.key').empty();
+               }
+   
+           }
+       });
+   
+   }
+   
+   function getvalueintit(id) {
+   
+       $.ajax({
+           type: "GET",
+           url: "{{ url('get-value-init') }}",
+           headers: {
+               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+           },
+           data: {
+               id: id,
+           },
+           success: function(res) {
+   
+               if (res) {
+                   $('.init').empty();
+                   $('.init').append('<option hidden value="">Choose initiative</option>');
+                   $.each(res, function(key, course) {
+                       $('select[name="locinit"]').append('<option value="' + course.id + '">' +
+                           course.initiative_name + '</option>');
+                   });
+               } else {
+                   $('.init').empty();
+               }
+   
+           }
+       });
+   
+   }
+   
+   function assign_epic_unit(val) {
+   
+       var id = "{{ $organization->id }}";
+   
+       $.ajax({
+           type: "GET",
+           url: "{{ url('get-assign-epic-unit') }}",
+           headers: {
+               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+           },
+           data: {
+               id: id,
+               slug: slug,
+               val: val
+           },
+           success: function(res) {
+   
+               $('#olddata').html(res);
+   
+   
+           }
+       });
+   
+   }
 </script>
 @endsection
