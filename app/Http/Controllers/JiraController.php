@@ -46,7 +46,7 @@ class JiraController extends Controller
 
         $jiraBaclogValue = DB::table('backlog')
         ->where('jira_project',$request->id)
-        ->where('stream_id','!=',$request->unit_id)
+        ->where('unit_id','!=',$request->unit_id)
         ->where(function($query) {
             $query->where('user_id', Auth::id())
                   ->orWhere('user_id', Auth::user()->invitation_id);
