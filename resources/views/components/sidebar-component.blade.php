@@ -25,7 +25,7 @@
             </li> -->
 
             <li>
-                <a href="{{ url('dashboard/okr-mapper') }}"  class="nav-link"  title="" data-toggle="tooltip" data-placement="right" data-original-title="OKR Mapper">
+                <a href="{{ url('dashboard/mapper') }}/{{ Cmf::getmainorganizationslug()->slug }}/org"  class="nav-link"  title="" data-toggle="tooltip" data-placement="right" data-original-title="OKR Mapper">
                     <span class="material-symbols-outlined">link</span>
                 </a>
             </li>

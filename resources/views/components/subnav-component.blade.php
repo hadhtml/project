@@ -154,7 +154,7 @@ $organization = DB::table('organization')->where('user_id',Auth::id())->orWhere(
 
         
         <li class="mb-1">
-            <a href="{{url('dashboard/organization/'.$organization->slug.'/kpi/'.$organization->type)}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/performance-dashboard/'.$organization->type)) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
+            <a href="{{url('dashboard/organization/'.$organization->slug.'/kpi/'.$organization->type)}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/kpi/'.$organization->type)) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
                 <div class="mr-2">
                     <span style="font-size:22px" class="material-symbols-outlined">team_dashboard</span>
                 </div>
