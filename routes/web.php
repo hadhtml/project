@@ -473,3 +473,23 @@ Route::name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')-
     });    
 
 });
+
+Route::get('dashboard/organization/{id}/kpi/{type}', [App\Http\Controllers\KpiController::class,'ValueChartKpi']);
+Route::post('add-chart-kpi', [App\Http\Controllers\KpiController::class,'SaveKpiData']);
+Route::get('dashboard/getkpicheckin', [App\Http\Controllers\KpiController::class,'getkpimodal']);
+Route::post('add-kpi-check', [App\Http\Controllers\KpiController::class,'AddnewcheckIn']);
+Route::post('kpi-deletevalue', [App\Http\Controllers\KpiController::class,'DeleteheckInValue']);
+Route::post('update-new-kpi-value', [App\Http\Controllers\KpiController::class,'UpdateheckInValue']);
+Route::post('update-kpi-basic', [App\Http\Controllers\KpiController::class,'UpdateKpiData']);
+Route::post('add-kpi-flag', [App\Http\Controllers\KpiController::class,'AddnewKpiflag']);
+Route::post('dashboard/kpiflagupdate', [App\Http\Controllers\KpiController::class,'UpdateKpiflag']);
+Route::post('kpi-deleteflag', [App\Http\Controllers\KpiController::class,'DeleteKpiflag']);
+Route::post('kpi-savecomment', [App\Http\Controllers\KpiController::class,'savecommentkpi']);
+Route::post('updatecomment-kpi', [App\Http\Controllers\KpiController::class,'updatecommentkpi']);
+Route::post('deletecomment-kpi', [App\Http\Controllers\KpiController::class,'Deletecommentkpi']);
+Route::post('savereply-kpi', [App\Http\Controllers\KpiController::class,'savereplykpi']);
+Route::get('kpi-render', [App\Http\Controllers\KpiController::class,'ValueChartKpiRender']);
+Route::post('delete-kpi-chart', [App\Http\Controllers\KpiController::class,'DeleteKpiData']);
+Route::get('kpi-flag-search', [App\Http\Controllers\KpiController::class,'Searchkpiflag']);
+Route::post('dashboard/orderbykpistatus', [App\Http\Controllers\KpiController::class,'orderbykpistatus']);
+Route::get('kpi-checkin-search', [App\Http\Controllers\KpiController::class,'kpicheckinsearch']);
