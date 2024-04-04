@@ -4,6 +4,7 @@ $var_objective = "mapper-org";
 @extends('components.main-layout')
 <title>ORG-OKR Mapper</title>
 @section('content')
+
 <div class="row rotatex">
    <div class="col-md-12">
       <div style="width: 100%; height: 5000px; padding: 50px;margin-top: 150px;">
