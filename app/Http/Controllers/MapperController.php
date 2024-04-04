@@ -94,7 +94,14 @@ class MapperController extends Controller
             $data = DB::table('organization')->where('slug'  , $url)->first();
             $business_units = DB::table('business_units')->where('org_id'  , $data->id)->orderby('id' , 'asc')->get();
             $valuestream = DB::table('value_stream')->where('org_id'  , $data->id)->orderby('id' , 'asc')->get();
-            return view('mapper.org.index',compact('data','business_units','organization','valuestream')); 
+
+            if(isset($_GET['view']))
+            {
+                return view('mapper.org.horizontal.index',compact('data','business_units','organization','valuestream'));
+            }else{
+                return view('mapper.org.index',compact('data','business_units','organization','valuestream'));   
+            }
+             
         }
     }
 }

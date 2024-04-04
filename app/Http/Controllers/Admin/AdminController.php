@@ -290,6 +290,14 @@ class AdminController extends Controller
                 $org_add_key_result->IndexCount = $k->IndexCount;
                 $org_add_key_result->save();
                 $this->clonefromandtos($from = Null , $to , $k->id , $org_add_key_result->id , 'keyresult');
+
+
+                
+
+
+                
+
+                
                 $initiative = DB::table('initiative')->where('key_id' , $k->id)->get();
                 foreach ($initiative as $i) {
                     $org_initiative = new initiative;
