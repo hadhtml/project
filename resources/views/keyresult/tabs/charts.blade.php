@@ -26,6 +26,9 @@
         $allvalue = [];
         $allcolor = [];
 
+        $formattedDate = '';
+        $maxlinebar = 0;
+
             $Qvalue = [];
             $Qname = [];
             
@@ -35,13 +38,22 @@
             ->get();
             if(count($KEYChartQ1) > 0)
             {
+            if(count($KEYChartQ1) <= 1 )
+            {
+             $Qvalue[] = [0,$allQ->quarter_value];
+      
+             }else
+             {
+
             foreach ($KEYChartQ1 as $allQ) 
             {
             $Qvalue[] = $allQ->quarter_value;
             $Qname[] = 'Q'.$allQ->IndexCount;
             $QId[] =   $allQ->id;
             }
-            //  array_unshift($Qvalue, 0);
+             }
+          
+            // array_unshift($Qvalue, 0);
             }else
             {
             $Qvalue = [];
@@ -60,6 +72,7 @@
 
             $keyqvalueAll = DB::table('key_quarter_value')
             ->whereIn('key_chart_id',$QId)
+            ->orderby('created_at', 'ASC')
             ->get();
 
          @endphp
@@ -109,7 +122,7 @@
         {
         $color[] = '#f35a47';
         }
-        $maxlinebar = 0;
+       
         $maxlinebar = max($value);
         }
         }
@@ -189,7 +202,7 @@ for (var i = labels.length; i < dataset2.length; i++) {
 }
 
 var data = {
-    labels: labels.concat(new Array(dataset2.length - labels.length).fill("")),
+    labels: labels,
     datasets: [{
         label: 'Quarter Target',
         data: dataset1,
@@ -264,8 +277,13 @@ var color = @json($color);
 var formattedDate = "{{$formattedDate}}";
 
 // var extraLineDataS = Array.from({length: actualData.length}, (_, i) => i === 0 ? 0 : extraLineData);
-var extraLineDataS = Array(actualData.length).fill(extraLineData);
-var maxLinebar = {{$maxlinebar}};
+// var extraLineDataS = Array(actualData.length).fill(extraLineData);
+var maxLinebar = "{{$maxlinebar}}";
+
+var extraLineDataS = Array.from({
+        length: @json($value).length
+    }, (_, i) => i === 0 ? 0 : extraLineData);
+
                                         
 var calculatedMaxbar = Math.ceil(maxLinebar / 25) * 25;
 var calculatedMaxbarNew = (calculatedMaxbar + 50);
