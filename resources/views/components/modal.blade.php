@@ -210,7 +210,7 @@
   </div>
 <!-- Create Epic -->
 <div class="modal" id="objectivemodalnew" tabindex="-1" role="dialog" aria-labelledby="edit-epic" aria-hidden="true">
-    <div class="modal-dialog modal-lg" id="modaldialogepic" role="document">
+    <div class="modal-dialog modal-lg modaldialogepic" role="document">
         <div class="modal-content newmodalcontent" id="objective-modal-content">
             
         </div>

@@ -17,6 +17,7 @@ function showdetailsofactivity(id){
     $('#activitydetalbox'+id).slideToggle();
 }
 function maximizemodal() {
+    $('.modaldialogepic').toggleClass('modalfullscreen');
     $('#modaldialogepic').toggleClass('modalfullscreen');
     $('#edit-epic-modal-new').css('padding-right' , '0px')
     $('#modaldialog').toggleClass('modalfullscreen')
