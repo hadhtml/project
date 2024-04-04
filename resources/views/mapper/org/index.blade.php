@@ -35,7 +35,8 @@ $var_objective = "mapper-org";
       </button>
    </div>
 </div>
-<div class="row rotatex">
+<div class="rotatex">
+   <div class="row">
    <div class="col-md-12">
       <div style="width: 100%; height: 5000px; padding: 50px;margin-top: 150px;">
          <!-- Node 1 -->
@@ -84,28 +85,14 @@ $var_objective = "mapper-org";
       </div>
    </div>
 </div>
+</div>
+
 @endsection
 @section('scripts')
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/leader-line@1.0.5/leader-line.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/plain-draggable@2.5.12/plain-draggable.min.js"></script>
 <script type="text/javascript">
-   var zoom = 1;
-    function zoom_in(id) {
-        zoom += 0.1;
-        console.log(zoom);
-        $('.body-inner-content').css('transform', 'scale(' + zoom + ')');
-    }
-    function zoom_init(id) {
-        zoom = 1;
-        console.log(zoom);
-        $('.body-inner-content').css('transform', 'scale(' + zoom + ')');
-    }
-    function zoom_out(id) {
-        zoom -= 0.1;
-        $('.body-inner-content').css('transform', 'scale(' + zoom + ')');
-    }
-
-
+   
    window.addEventListener("load", function() {
    "use strict";
    
@@ -244,6 +231,23 @@ $var_objective = "mapper-org";
    @endforeach
    @endforeach
    });
+
+   var zoom = 1;
+    function zoom_in(id) {
+        zoom += 0.1;
+        console.log(zoom);
+        $('.rotatex').css('zoom', '' + zoom + '');
+    }
+    function zoom_init(id) {
+        zoom = 1;
+        console.log(zoom);
+        $('.rotatex').css('zoom', '' + zoom + '');
+    }
+    function zoom_out(id) {
+        zoom -= 0.1;
+        $('.rotatex').css('zoom', '' + zoom + '');
+    }
+
 </script>
 <script>
  document.addEventListener('DOMContentLoaded', function() {
