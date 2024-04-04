@@ -1,92 +1,76 @@
+<style type="text/css">
+    .okrmappersearchdetail {
+        display: unset;
+    }
+</style>
 @if($objectives->count() > 0)
 @foreach($objectives as $r)
-@if(DB::table('team_link_child')->where('linked_objective_id'  ,$r->id)->count() == 0)
-@if($r->type == 'org')
 <div onclick="selectobjective({{$r->id}})" class="epic">
-    <div class="epic-tittle">{{ $r->objective_name }}</div>
+    <div class="epic-tittle"><img src="{{ url('public/assets/svg/objectives/one.svg') }}"> {{ $r->objective_name }}</div>
     <div class="epic-detail okrmappersearchdetail">
-        <span style="font-size:22px" class="material-symbols-outlined mr-2">auto_stories</span>
-        <span>{{ DB::table('organization')->where('id' , $r->unit_id)->first()->organization_name }}</span>
-    </div>
-</div>
-@endif
-@if($r->type == 'unit')
-<div onclick="selectobjective({{$r->id}})" class="epic">
-    <div class="epic-tittle">{{ $r->objective_name }}</div>
-    <div class="epic-detail okrmappersearchdetail">
+        @if($r->type == 'unit')
         <span style="font-size:22px" class="material-symbols-outlined mr-2">domain</span>
         <span>{{ DB::table('business_units')->where('id' , $r->unit_id)->first()->business_name }}</span>
-    </div>
-</div>
-@endif
-@if($r->type == 'stream')
-@php
-    $valuestream = DB::table('value_stream')->where('id' , $r->unit_id)->first();
-@endphp
-@if($valuestream)
-<div onclick="selectobjective({{$r->id}})" class="epic">
-    <div class="epic-tittle">{{ $r->objective_name }}</div>
-    <div class="epic-detail okrmappersearchdetail">
-        <span style="font-size:22px" class="material-symbols-outlined mr-2">layers</span>
-        <span>{{ $valuestream->value_name }}</span>
-    </div>
-</div>
-@endif
-@endif
-@if($r->type == 'VS')
-@php
-    $valueteam = DB::table('value_team')->where('id' , $r->unit_id)->first();
-    $valuestream = DB::table('value_stream')->where('id' , $valueteam->org_id)->first();
-@endphp
-@if($valueteam && $valuestream)
-<div onclick="selectobjective({{$r->id}})" class="epic">
-    <div class="epic-tittle">{{ $r->objective_name }}</div>
-    <div class="epic-detail okrmappersearchdetail">
-        <span style="font-size:22px" class="material-symbols-outlined mr-2">layers</span>
-        <span>{{ $valuestream->value_name }}</span>
-        <span style="font-size:22px" class="material-symbols-outlined mr-2 ml-2">groups</span>
-        <span>{{ $valueteam->team_title }}</span>
-    </div>
-</div>
-@endif
-@endif
-@if($r->type == 'BU')
-@php
-    $businessteam = DB::table('unit_team')->where('id' , $r->unit_id)->first();
-    $business_units = DB::table('business_units')->where('id' , $businessteam->org_id)->first();
-@endphp
-@if($businessteam && $business_units)
-<div onclick="selectobjective({{$r->id}})" class="epic">
-    <div class="epic-tittle">{{ $r->objective_name }}</div>
-    <div class="epic-detail okrmappersearchdetail">
-        <span style="font-size:22px" class="material-symbols-outlined mr-2">domain</span>
-        <span>{{ $business_units->business_name }}</span>
-        <span style="font-size:22px" class="material-symbols-outlined mr-2 ml-2">groups</span>
-        <span>{{ $businessteam->team_title }}</span>
-    </div>
-</div>
-@endif
-@endif
-@if($r->type == 'orgT')
-@php
-    $org_team = DB::table('org_team')->where('id' , $r->unit_id)->first();
-    $organization = DB::table('organization')->where('id' , $org_team->org_id)->first();
-@endphp
-@if($org_team && $organization)
-<div onclick="selectobjective({{$r->id}})" id="cloneid{{ $r->id }}" class="epic">
-    <div class="epic-tittle">{{ $r->objective_name }}</div>
-    <div class="epic-detail okrmappersearchdetail">
-        <span style="font-size:22px" class="material-symbols-outlined mr-2">auto_stories</span>
-        <span>{{ $organization->organization_name }}</span>
-        <span style="font-size:22px" class="material-symbols-outlined mr-2 ml-2">groups</span>
-        <span>{{ $org_team->team_title }}</span>
-    </div>
-</div>
-@endif
-@endif
-@endif
-@endforeach
+        @endif
+        @if($r->type == 'stream')
+        @php
+            $value_Stream = DB::table('value_stream')->where('id' , $r->unit_id)->first();
+        @endphp
+        <div class="d-flex mt-2">
+            <span style="font-size:22px" class="material-symbols-outlined mr-2">domain</span>
+            <span>{{ DB::table('business_units')->where('id' , $value_Stream->unit_id)->first()->business_name }}</span>
+        </div>
+        <div class="d-flex mt-2">
+            <span style="font-size:22px" class="material-symbols-outlined mr-2">layers</span>
+            <span>{{ $value_Stream->value_name }}</span>
+        </div>
+        @endif
+        @if($r->type == 'orgT')
+        <div class="d-flex mt-2">
+            <span style="font-size:22px" class="material-symbols-outlined mr-2">domain</span>
+            <span>{{ Cmf::getmainorganizationslug()->organization_name }}</span>
+        </div>
+        <div class="d-flex mt-2">
+            <span style="font-size:22px" class="material-symbols-outlined mr-2">groups</span>
+            <span>{{ DB::table('org_team')->where('id' , $r->unit_id)->first()->team_title }}</span>
+        </div>
+        @endif
+        @if($r->type == 'BU')
+        @php
+            $bu_team = DB::table('unit_team')->where('id' , $r->unit_id)->first();
+        @endphp
+        <div class="d-flex mt-2">
+            <span style="font-size:22px" class="material-symbols-outlined mr-2">domain</span>
+            <span>{{ DB::table('business_units')->where('id' , $bu_team->org_id)->first()->business_name }}</span>
+        </div>
+        <div class="d-flex mt-2">
+            <span style="font-size:22px" class="material-symbols-outlined mr-2">groups</span>
+            <span>{{ $bu_team->team_title }}</span>
+        </div>
+        @endif
+        @if($r->type == 'VS')
+        @php
+            $vs_team = DB::table('value_team')->where('id' , $r->unit_id)->first();
+            $value_stream = DB::table('value_stream')->where('id' , $vs_team->org_id)->first();
+        @endphp
+        <div class="d-flex mt-2">
+            <span style="font-size:22px" class="material-symbols-outlined mr-2">domain</span>
+            <span>{{ DB::table('business_units')->where('id' , $value_stream->unit_id)->first()->business_name }}</span>
+        </div>
 
+        <div class="d-flex mt-2">
+            <span style="font-size:22px" class="material-symbols-outlined mr-2">layers</span>
+            <span>{{ $value_stream->value_name }}</span>
+        </div>
+
+        <div class="d-flex mt-2">
+            <span style="font-size:22px" class="material-symbols-outlined mr-2">groups</span>
+            <span>{{ $vs_team->team_title }}</span>
+        </div>
+        @endif
+    </div>
+</div>
+@endforeach
 <script type="text/javascript">
     function selectobjective(id) {
         $('#objectiveid').val(id);

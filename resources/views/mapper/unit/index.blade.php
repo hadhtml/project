@@ -11,8 +11,8 @@ $var_objective = "mapper-unit";
    .subheader-solid{
       width: 100%;
       position: fixed;
-      top: -3%;
-      left: 300px;
+      top: 1%;
+      left: 240px;
       z-index: 999999;
    }
    .body-inner-content{
@@ -36,7 +36,7 @@ $var_objective = "mapper-unit";
            </a>
             @foreach(DB::table('objectives')->wherenull('trash')->where('unit_id' , $data->id)->where('type' , 'unit')->get() as $o)
             <a href="{{ url('dashboard/organization') }}/{{ $data->slug }}/portfolio/unit?objective={{ $o->id }}" target="_blank" class="blanklink @if(DB::table('team_link_child')->where('linked_objective_id' , $o->id)->count() > 0) slot-active @else slot-inactive @endif drag-impo-grab">
-              <div id="connectedobjective{{ $o->id }}" class="slot-anchor-small @if(DB::table('team_link_child')->where('linked_objective_id' , $o->id)->count() > 0) slot-anchor-active @else slot-anchor-inactive @endif drag-impo-grab"></div>
+              <div id="connectedobjective{{ $o->id }}" class="drag-impo-grab"></div>
               <span class="material-symbols-outlined f-18">location_searching</span>
               <div class="slot-label drag-impo-grab"><span class="label-text">{{ $o->objective_name }}</span></div>
               @if($o->status == 'Done')
@@ -54,13 +54,13 @@ $var_objective = "mapper-unit";
                 <span class="material-symbols-outlined f-18 ml-2">key</span>
                 <div class="slot-label"><span class="label-text">{{ $k->key_name }}</span></div>
                 @if($k->key_status == 'Done')
-                <div class="badge-done mr-2">{{round($k->key_prog,0)}}%</div>
+                <div class="badge-done mr-2">{{ Cmf::keyresultprogress($k->id) }}%</div>
                 @endif
                 @if($k->key_status == 'To Do')
-                <div class="badge-todo mr-2">{{round($k->key_prog,0)}}%</div>
+                <div class="badge-todo mr-2">{{ Cmf::keyresultprogress($k->id) }}%</div>
                 @endif
                 @if($k->key_status == 'In progress')
-                <div class="badge-inprogress mr-2">{{round($k->key_prog,0)}}%</div>
+                <div class="badge-inprogress mr-2">{{ Cmf::keyresultprogress($k->id) }}%</div>
                 @endif
                 <div id="buisness_unit_key_result_{{ $k->id }}" class="slot-anchor-small @if(DB::table('team_link_child')->where('bussiness_key_id' , $k->id)->count() > 0) slot-anchor-active @else slot-anchor-inactive @endif"></div>
              </a>
@@ -99,7 +99,7 @@ $var_objective = "mapper-unit";
             </a>
             @foreach(DB::table('objectives')->wherenull('trash')->where('unit_id' , $v->id)->where('type' , 'stream')->get() as $o)
             <a href="{{ url('dashboard/organization') }}/{{ $v->slug }}/portfolio/stream?objective={{ $o->id }}" target="_blank" class="blanklink @if(DB::table('team_link_child')->where('linked_objective_id' , $o->id)->count() > 0) slot-active @else slot-inactive @endif drag-impo-grab">
-               <div id="connectedobjective{{ $o->id }}" class="slot-anchor-small @if(DB::table('team_link_child')->where('linked_objective_id' , $o->id)->count() > 0) slot-anchor-active @else slot-anchor-inactive @endif drag-impo-grab"></div>
+               <div id="connectedobjective{{ $o->id }}" class="slot-anchor-small slot-anchor-inactive drag-impo-grab"></div>
                <span class="material-symbols-outlined f-18">location_searching</span>
                <div class="slot-label drag-impo-grab"><span class="label-text">{{ $o->objective_name }}</span></div>
                @if($o->status == 'Done')
@@ -117,14 +117,14 @@ $var_objective = "mapper-unit";
                <span class="material-symbols-outlined f-18 ml-2">key</span>
                <div class="slot-label"><span class="label-text">{{ $k->key_name }}</span></div>
                @if($k->key_status == 'Done')
-               <div class="badge-done mr-2">{{round($k->key_prog,0)}}%</div>
-               @endif
-               @if($k->key_status == 'To Do')
-               <div class="badge-todo mr-2">{{round($k->key_prog,0)}}%</div>
-               @endif
-               @if($k->key_status == 'In progress')
-               <div class="badge-inprogress mr-2">{{round($k->key_prog,0)}}%</div>
-               @endif
+                <div class="badge-done mr-2">{{ Cmf::keyresultprogress($k->id) }}%</div>
+                @endif
+                @if($k->key_status == 'To Do')
+                <div class="badge-todo mr-2">{{ Cmf::keyresultprogress($k->id) }}%</div>
+                @endif
+                @if($k->key_status == 'In progress')
+                <div class="badge-inprogress mr-2">{{ Cmf::keyresultprogress($k->id) }}%</div>
+                @endif
                <div id="buisness_unit_key_result_{{ $k->id }}" class="slot-anchor-small @if(DB::table('team_link_child')->where('bussiness_key_id' , $k->id)->count() > 0) slot-anchor-active @else slot-anchor-inactive @endif"></div>
             </a>
             @endforeach
@@ -195,11 +195,19 @@ $var_objective = "mapper-unit";
   @endforeach
 
   @foreach($team_link_child_unit_or_stream as $linedeclarekeyforslot =>  $line_t_l_c)
+   if ($('#connectedobjective{{ $line_t_l_c->linked_objective_id }}').length) { 
    var line{{ $linedeclarekeyforslot+1 }};
+ }
   @endforeach
 
 
   @foreach($team_link_child_unit_or_stream as $linekeyforslot =>  $line_t_l_c)
+
+  if ($('#connectedobjective{{ $line_t_l_c->linked_objective_id }}').length) {
+
+    $('#connectedobjective{{ $line_t_l_c->linked_objective_id }}').removeClass('slot-anchor-inactive');
+    $('#connectedobjective{{ $line_t_l_c->linked_objective_id }}').addClass('slot-anchor-active');
+
    line{{$linekeyforslot+1}} = new LeaderLine(connectedobjective{{ $line_t_l_c->linked_objective_id }}, buisness_unit_key_result_{{ $line_t_l_c->bussiness_key_id }}, {
     startPlug: "behind",
     endPlug: "behind",
@@ -212,6 +220,8 @@ $var_objective = "mapper-unit";
     // path: 'grid',
     // dropShadow: {color: '#111', dx: 0, dy: 2, blur: 0.2}
   });
+
+ }
   @endforeach
 
 

@@ -4,11 +4,16 @@ $var_objective = "mapper-org";
 @extends('components.main-layout')
 <title>ORG-OKR Mapper</title>
 @section('content')
+<style type="text/css">
+   .node{
+      padding-right: 0px !important;
+   }
+</style>
 <div class="row rotatex">
    <div class="col-md-12">
       <div style="width: 100%; height: 5000px; padding: 50px;margin-top: 150px;">
          <!-- Node 1 -->
-         <div id="node_1" class="node" style="transform: translate(-60px, -60px);">
+         <div id="node_1" class="node" style="transform: translate(600px, -60px);">
             <div class="node-name slot-active drag-impo-grab">
                <a target="_blank" href="{{ url('organization/dashboard') }}" class="slot-label drag-impo-grab"><span style="font-size:22px" class="material-symbols-outlined mr-2">auto_stories</span> {{ $data->organization_name }}</a>
             </div>
@@ -47,9 +52,9 @@ $var_objective = "mapper-org";
 
          @include('mapper.org.orgteam')
 
-         @include('mapper.org.buisnessunits')
+         @include('mapper.org.horizontal.buisnessunits')
          
-         @include('mapper.org.valuestream')
+         @include('mapper.org.horizontal.valuestream')
       </div>
    </div>
 </div>
@@ -77,15 +82,20 @@ $var_objective = "mapper-org";
    
    @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $linekeyforslot =>  $line_t_l_c)
    line{{$linekeyforslot+1}} = new LeaderLine(connectedobjective{{ $line_t_l_c->linked_objective_id }}, slout_out_buisness_unit_key_result_{{ $line_t_l_c->bussiness_key_id }}, {
-   startPlug: "behind",
-   endPlug: "behind",
+   startPlug: "disc",
+   endPlug: "disc",
+   startPlugColor: '#1a6be0',
+     endPlugColor: '#1efdaa',
+     gradient: true,
+     startPlug: 'arrow1',
+     // endPlug: 'arrow1',
    size: 4,
    startPlugSize: 1,
    endPlugSize: 1,
-   startSocket: "left",
+   startSocket: "right",
    endSocket: "right",
-   color: "#fb8c00"
-   // path: 'grid',
+   color: "#fb8c00",
+   path: 'grid'
    // dropShadow: {color: '#111', dx: 0, dy: 2, blur: 0.2}
    });
    @endforeach
@@ -200,20 +210,42 @@ $var_objective = "mapper-org";
 </script>
 <script>
  document.addEventListener('DOMContentLoaded', function() {
-   let cumulativeHeight = -60;
+   
+   const nodeBox = document.querySelector('.node');
+   const nodeHeight = nodeBox.offsetHeight + 20;
+
+   let cumulativeHeight = 100;
    const boxes = document.querySelectorAll('.buisnessunits');
-   boxes.forEach(function(box) {
-     box.style.transform = `translate(300px , ${cumulativeHeight}px)`;
-     cumulativeHeight += box.offsetHeight + 10;
+   boxes.forEach(function(box, index) {
+     if (index !== 0) {
+         cumulativeHeight += 500;
+     }
+     box.style.transform = `translate(${cumulativeHeight}px , ${nodeHeight}px)`;
    });
 
 
-   let valuestreamcumulativeHeight = -60;
+   var maxHeight = 0;
+    $('.buisnessunits').each(function() {
+        var currentHeight = $(this).height();
+        if (currentHeight > maxHeight) {
+            maxHeight = currentHeight;
+        }
+    });
+    // Add 20px and nodeHeight to the maxHeight
+    maxHeight += 100 + nodeHeight;
+    console.log("Height of the tallest box with 20px and nodeHeight added: " + maxHeight + "px");
+
+
+
+    let cumulativeHeightvaluestream = 0;
    const valuestreamboxes = document.querySelectorAll('.valuestreambox');
-   valuestreamboxes.forEach(function(boxvaluestream) {
-     boxvaluestream.style.transform = `translate(700px , ${valuestreamcumulativeHeight}px)`;
-     valuestreamcumulativeHeight += boxvaluestream.offsetHeight + 10;
+   valuestreamboxes.forEach(function(valustreambox, indexvalustream) {
+     if (indexvalustream !== 0) {
+         cumulativeHeightvaluestream += 500;
+     }
+     valustreambox.style.transform = `translate(${cumulativeHeightvaluestream}px , ${maxHeight}px)`;
    });
+
 
 
    let valuestreamteamcumulativeHeight = -60;

@@ -4,37 +4,12 @@ $var_objective = "mapper-stream";
 @extends('components.main-layout')
 <title>{{ $data->value_name }} OKR Mapper</title>
 @section('content')
-
-
-<div class="row">
-    <div class="col-md-12">
-        <div style="width: 100%; height: 5000px; padding: 50px;">
-            
-        <!-- Node 1 -->
-          <div id="node_1" class="node">
-            <div class="node-name slot-active drag-impo-grab">
-              <div class="slot-label drag-impo-grab"><span style="font-size:22px" class="material-symbols-outlined">domain</span> {{ $data->value_name }}</div>
-            </div>
-            @foreach(DB::table('objectives')->where('unit_id' , $data->id)->where('type' , 'stream')->get() as $o)
-            <div class="slot slot-inactive">
-                <span class="material-symbols-outlined f-18">location_searching</span>
-                <div class="slot-label" ><span class="label-text">{{ $o->objective_name }}</span></div>
-                <div class="badge-inprogress">{{round($o->obj_prog,0)}}%</div>
-            </div>
-            @foreach(DB::table('key_result')->where('obj_id' , $o->id)->get() as $k)
-            <div class="slot-active">
-                <div class="slot-anchor-small @if(DB::table('team_link_child')->where('bussiness_key_id' , $k->id)->count() > 0) slot-anchor-active @else slot-anchor-inactive @endif"></div>
-                <span class="material-symbols-outlined f-18 ml-2">key</span>
-                <div class="slot-label"><span class="label-text">{{ $k->key_name }}</span></div>
-                <div class="badge-todo mr-2">{{ $k->key_prog }}%</div>
-                <div id="buisness_unit_key_result_{{ $k->id }}" class="slot-anchor-small @if(DB::table('team_link_child')->where('bussiness_key_id' , $k->id)->count() > 0) slot-anchor-active @else slot-anchor-inactive @endif"></div>
-
 <style type="text/css">
    body{
       overflow: auto !important;
    }
    .subheader-solid{
-      width: 100%;
+      width: 81%;
       position: fixed;
       top: -3%;
       left: 300px;
@@ -43,11 +18,8 @@ $var_objective = "mapper-stream";
    .body-inner-content{
       overflow: auto;
       min-height: 1600px;
-      min-width: 2500px;
+      min-width: 4500px;
       padding-left: 25px !important;
-   }
-   .rotatex{
-
    }
 </style>
 <div class="row">
@@ -78,14 +50,14 @@ $var_objective = "mapper-stream";
                <span class="material-symbols-outlined f-18 ml-2">key</span>
                <div class="slot-label"><span class="label-text">{{ $k->key_name }}</span></div>
                @if($k->key_status == 'Done')
-               <div class="badge-done mr-2"">{{round($k->key_prog,0)}}%</div>
-               @endif
-               @if($k->key_status == 'To Do')
-               <div class="badge-todo mr-2"">{{round($k->key_prog,0)}}%</div>
-               @endif
-               @if($k->key_status == 'In progress')
-               <div class="badge-inprogress mr-2"">{{round($k->key_prog,0)}}%</div>
-               @endif
+              <div class="badge-done mr-2">{{ Cmf::keyresultprogress($k->id) }}%</div>
+              @endif
+              @if($k->key_status == 'To Do')
+              <div class="badge-todo mr-2">{{ Cmf::keyresultprogress($k->id) }}%</div>
+              @endif
+              @if($k->key_status == 'In progress')
+              <div class="badge-inprogress mr-2">{{ Cmf::keyresultprogress($k->id) }}%</div>
+              @endif
                <div id="buisness_unit_key_result_{{ $k->id }}" class="slot-anchor-small @if(DB::table('team_link_child')->where('bussiness_key_id' , $k->id)->count() > 0) slot-anchor-active @else slot-anchor-inactive @endif"></div>
 
             </div>
@@ -114,109 +86,6 @@ $var_objective = "mapper-stream";
         </div>
     </div>
 </div>
-
-
-<style type="text/css">
-@foreach(DB::table('value_team')->where('org_id'  , $data->id)->get() as $key_calue_stream => $v)
-  @php 
-      $v_objective_count = DB::table('objectives')->where('unit_id' , $v->id)->where('type' , 'VS')->count();
-      $v_i = 0;
-      foreach(DB::table('objectives')->where('unit_id' , $v->id)->where('type' , 'VS')->get() as $v_key => $v_value)
-      {
-          foreach(DB::table('key_result')->where('obj_id' , $v_value->id)->get() as $v_key_result_index=>$v_key_result_value)
-          {
-              if($v_key_result_value)
-              {
-                  $v_i++;
-              }
-              
-          }
-      }
-  @endphp
-  @php
-      $v_objectiveheight = $v_objective_count*80;
-      if($v_objectiveheight == 0)
-      {
-          $v_objectiveheight = 35;
-      }
-      $v_key_resultheight = $v_i;
-      if($v_key_resultheight == 0)
-      {
-          $v_key_resultheight = 50;
-      }
-  @endphp
-@if($loop->first)
-@php
-    $v_firstloop = $v_objectiveheight+$v_key_resultheight+50;
-@endphp
-#valuestreamteam{{ $v->id }}{
-  transform: translate(650px, 0px);
-}
-@endif
-@if($loop->iteration == 2)
-@php
-    $v_secondloop = $v_objectiveheight+$v_key_resultheight+20;
-@endphp
-#valuestreamteam{{ $v->id }}{
-  transform: translate(650px, {{$v_firstloop}}px);
-}
-@endif
-@if($loop->iteration == 3)
-@php
-    $v_thirdloop = $v_objectiveheight+$v_key_resultheight+60;
-@endphp
-#valuestreamteam{{ $v->id }}{
-  transform: translate(650px, {{$v_firstloop+$v_secondloop}}px);
-}
-@endif
-@if($loop->iteration == 4)
-@php
-    $v_fourthloop = $v_objectiveheight+$v_key_resultheight+20;
-@endphp
-#valuestreamteam{{ $v->id }}{
-  transform: translate(650px, {{$v_thirdloop+$v_firstloop+$v_secondloop}}px);
-}
-@endif
-@if($loop->iteration == 5)
-#valuestreamteam{{ $v->id }}{
-  transform: translate(650px, {{$v_fourthloop+$v_thirdloop+$v_firstloop+$v_secondloop}}px);
-}
-@endif
-@endforeach
-</style>
-
-
-
-
-          @foreach(DB::table('value_team')->where('org_id'  , $data->id)->get() as $key_value_stream_team => $v_t)
-           <div id="valuestreamteam{{ $v_t->id }}" class="node valuestreamteambox">
-              <div class="node-name slot-active drag-impo-grab">
-                 <div class="slot-label drag-impo-grab"><span class="mr-2 d-flex badge-team-valuestream">VS <span style="font-size:22px" class="material-symbols-outlined ml-2">groups</span></span>  {{ $v_t->team_title }}</div>
-              </div>
-              @foreach(DB::table('objectives')->wherenull('trash')->where('unit_id' , $v_t->id)->where('type' , 'VS')->get() as $o)
-              <div class="slot slot-inactive">
-                 <div id="connectedobjective{{ $o->id }}" class="slot-anchor-small slot-anchor-active drag-impo-grab"></div>
-                 <span class="material-symbols-outlined f-18">location_searching</span>
-                 <div class="slot-label" ><span class="label-text">{{ $o->objective_name }}</span></div>
-                 @if($o->status == 'Done')
-                 <div class="badge-done">{{round($o->obj_prog,0)}}%</div>
-                 @endif
-                 @if($o->status == 'To Do')
-                 <div class="badge-todo">{{round($o->obj_prog,0)}}%</div>
-                 @endif
-                 @if($o->status == 'In progress')
-                 <div class="badge-inprogress">{{round($o->obj_prog,0)}}%</div>
-                 @endif
-              </div>
-              @endforeach
-           </div>
-           @endforeach
-        </div>
-    </div>
-</div>
-
-
-
 @endsection
 @section('scripts')
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/leader-line@1.0.5/leader-line.min.js"></script>
@@ -284,9 +153,6 @@ $var_objective = "mapper-stream";
   });
   @endforeach
 });
-
-@endforeach
-@endforeach
     </script>
 
 <script>

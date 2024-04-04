@@ -5,9 +5,6 @@
    </a>
    @foreach(DB::table('objectives')->wherenull('trash')->where('unit_id' , $b->id)->where('type' , 'unit')->get() as $o)
    <a href="{{ url('dashboard/organization') }}/{{ $b->slug }}/portfolio/unit?objective={{ $o->id }}" target="_blank" class="blanklink @if(DB::table('team_link_child')->where('linked_objective_id' , $o->id)->count() > 0) slot-active @else slot-inactive @endif drag-impo-grab">
-      <div id="connectedobjective{{ $o->id }}" class="slot-anchor-small @if(DB::table('team_link_child')->where('linked_objective_id' , $o->id)->count() > 0) slot-anchor-active @else slot-anchor-inactive @endif drag-impo-grab"></div>
-      <span class="material-symbols-outlined f-18">location_searching</span>
-      <div class="slot-label drag-impo-grab"><span class="label-text">{{ $o->objective_name }}</span></div>
       @if($o->status == 'Done')
       <div class="badge-done">{{round($o->obj_prog,0)}}%</div>
       @endif
@@ -17,6 +14,9 @@
       @if($o->status == 'In progress')
       <div class="badge-inprogress">{{round($o->obj_prog,0)}}%</div>
       @endif
+      <span class="material-symbols-outlined f-18">location_searching</span>
+      <div class="slot-label drag-impo-grab"><span class="label-text">{{ $o->objective_name }}</span></div>
+      <div id="connectedobjective{{ $o->id }}" class="slot-anchor-small @if(DB::table('team_link_child')->where('linked_objective_id' , $o->id)->count() > 0) slot-anchor-active @else slot-anchor-inactive @endif drag-impo-grab"></div>
    </a>
    @foreach(DB::table('key_result')->wherenull('trash')->where('obj_id' , $o->id)->get() as $k)
    <a href="{{ url('dashboard/organization') }}/{{ $b->slug }}/portfolio/unit?keyresult={{ $k->id }}" target="_blank" class="blanklink slot-active">
