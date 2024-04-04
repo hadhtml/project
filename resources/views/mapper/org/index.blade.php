@@ -4,7 +4,37 @@ $var_objective = "mapper-org";
 @extends('components.main-layout')
 <title>ORG-OKR Mapper</title>
 @section('content')
-
+<div class="d-flex flex-row-reverse zoom-btn-section">
+   <div>
+      <button
+         class="btn-circle btn-zoom-buttons zoom" onclick="zoom_in(280)" >
+      <img width="20px"
+         height="20px"
+         src="{{asset('public/assets/images/icons/search-zoom-in.svg')}}"
+         alt="zoom-In">
+      </button>
+   </div>
+   <div
+      class="mr-2">
+      <button
+         class="btn-circle btn-zoom-buttons zoom-out" onclick="zoom_out(280)">
+      <img width="20px"
+         height="20px"
+         src="{{asset('public/assets/images/icons/search-zoom-out.svg')}}"
+         alt="zoom-Out">
+      </button>
+   </div>
+   <div
+      class="mr-2">
+      <button
+         class="btn-circle btn-zoom-buttons zoom-init" onclick="zoom_init(280)">
+      <img width="20px"
+         height="20px"
+         src="{{asset('public/assets/images/icons/maximize.svg')}}"
+         alt="zoom-Out">
+      </button>
+   </div>
+</div>
 <div class="row rotatex">
    <div class="col-md-12">
       <div style="width: 100%; height: 5000px; padding: 50px;margin-top: 150px;">
@@ -59,6 +89,22 @@ $var_objective = "mapper-org";
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/leader-line@1.0.5/leader-line.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/plain-draggable@2.5.12/plain-draggable.min.js"></script>
 <script type="text/javascript">
+   var zoom = 1;
+    function zoom_in(id) {
+        zoom += 0.1;
+        console.log(zoom);
+        $('.body-inner-content').css('transform', 'scale(' + zoom + ')');
+    }
+    function zoom_init(id) {
+        zoom = 1;
+        console.log(zoom);
+        $('.body-inner-content').css('transform', 'scale(' + zoom + ')');
+    }
+    function zoom_out(id) {
+        zoom -= 0.1;
+        $('.body-inner-content').css('transform', 'scale(' + zoom + ')');
+    }
+
 
    window.addEventListener("load", function() {
    "use strict";
