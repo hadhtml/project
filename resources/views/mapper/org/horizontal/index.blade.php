@@ -88,7 +88,7 @@ $var_objective = "mapper-org";
      endPlugColor: '#1efdaa',
      gradient: true,
      startPlug: 'arrow1',
-     endPlug: 'arrow1',
+     // endPlug: 'arrow1',
    size: 4,
    startPlugSize: 1,
    endPlugSize: 1,
