@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Organization;
 use Illuminate\Support\Str;
+use App\Helpers\Cmf;
+use App\Models\modulenames;
+use DB;
+
 
 class RegisterController extends Controller
 {
@@ -54,7 +58,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:8'],
         ]);
     }
 
@@ -80,6 +84,42 @@ class RegisterController extends Controller
         $organization->code =  '#OR' . rand(1000, 9999);
         $organization->type =  'org';
         $organization->save();
+
+        $cretemodulenames = new modulenames;
+        $cretemodulenames->user_id = $user->id;
+        $cretemodulenames->level_one = $data['level_one'];
+        $cretemodulenames->slug_one = Cmf::shorten_url($data['level_one']);
+        $cretemodulenames->level_two = $data['level_two'];
+        $cretemodulenames->slug_two = Cmf::shorten_url($data['level_two']);
+        $cretemodulenames->level_three = $data['level_three'];
+        $cretemodulenames->slug_three = Cmf::shorten_url($data['level_three']);
+        $cretemodulenames->save();
+
+        if($data['month'])
+        {
+        DB::table('settings')
+        ->insert([
+        'month' => $data['month'],
+        'user_id' => $user->id,  
+        ]);
+        }
+
+    
+
+            DB::table('jira_setting')
+            ->insert([
+              'user_name' => $data['user_name'], 
+              'token' => $data['token'],
+              'jira_url' => $data['jira_url'], 
+              'jira_name' => $data['jira_name'],
+              'user_id' => $user->id,  
+      
+      
+              ]);
+        
+     
+       
+
         return $user;
     }
 }
