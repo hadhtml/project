@@ -1,3 +1,11 @@
+@php
+$sub = DB::table('subscriptions')->where('user_id',Auth::id())->first();
+if($sub)
+{
+$per = DB::table('plan')->where('plan_id',$sub->stripe_price)->first();
+}
+
+@endphp
 <div class="flex-shrink-0 p-3 bg-white sub-nav open" id="panel">
    
         <h6 class="title">{{ Cmf::getmodulename("level_one") }}</h6>
@@ -30,6 +38,8 @@
                     </div>
                 </a>
             </li>
+
+            
        
 
           
@@ -43,6 +53,10 @@
                     </div>
                 </a>
             </li>
+
+            @if($per)
+            @foreach(explode(',',$per->module) as $info) 
+            @if($info == 'OKR Mapper')
             <li class="mb-1">
                 <a href="{{url('dashboard/mapper/'.$organization->slug.'/unit')}}" @if (url()->current() == url('dashboard/mapper/'.$organization->slug.'/unit')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
                     <div class="mr-2">
@@ -53,8 +67,17 @@
                     </div>
                 </a>
             </li>
+            @endif
+            @endforeach
+            @endif
+
+        
             <!-- Portfolio -->
 
+
+            @if($per)
+            @foreach(explode(',',$per->module) as $info) 
+            @if($info == 'OKR Planner')
             <li class="mb-1">
                 <a href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
                     <div class="mr-2">
@@ -65,7 +88,14 @@
                     </div>
                 </a>
             </li>
+            @endif
+            @endforeach
+            @endif
 
+            @if($per)
+            @foreach(explode(',',$per->module) as $info) 
+            @if($info == 'Epic Backlog')
+          
             <li class="mb-1">
                 <a href="{{ url('dashboard/epicbacklog/' . $organization->slug . '/unit') }}" @if (url()->current() == url('dashboard/epicbacklog/' . $organization->slug . '/unit')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
                     <div class="mr-2">
@@ -76,6 +106,11 @@
                     </div>
                 </a>
             </li>
+            @endif
+            @endforeach
+            @endif
+    
+
             {{-- <li class="mb-1">
                 <a href="{{url('dashboard/organization/'.$organization->slug.'/performance-dashboard/'.$organization->type)}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/performance-dashboard/'.$organization->type)) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
                     <div class="mr-2">
@@ -86,6 +121,11 @@
                     </div>
                 </a>
             </li> --}}
+
+            @if($per)
+            @foreach(explode(',',$per->module) as $info) 
+            @if($info == 'Reports')
+          
             <li class="mb-1">
                 <a href="{{url('dashboard/organization/'.$organization->slug.'/BU-Report/'.$organization->type)}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/BU-Report/'.$organization->type)) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif   >
                     <div class="mr-2">
@@ -96,6 +136,15 @@
                     </div>
                 </a>
             </li>
+            @endif
+            @endforeach
+            @endif
+
+            @if($per)
+            @foreach(explode(',',$per->module) as $info) 
+            @if($info == 'Flag')
+          
+         
             <li class="mb-1">
                 <a href="{{url('dashboard/flags/'.$organization->slug.'/impediments/unit')}}" @if (url()->current() == url('dashboard/flags/'.$organization->slug.'/impediments/unit')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
                     <div class="mr-2">
@@ -136,6 +185,13 @@
                     </div>
                 </a>
             </li>
+            @endif
+            @endforeach
+            @endif
+      
+        
+
+          
             <li class="mb-1">
                 <a href="{{url('dashboard/organization/'.$organization->slug.'/BU-TEAMS')}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/BU-TEAMS')) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif>
                     <div class="mr-2">
@@ -146,7 +202,12 @@
                     </div>
                 </a>
             </li>
-
+       
+            
+            @if($per)
+            @foreach(explode(',',$per->module) as $info) 
+            @if($info == 'Map')
+          
             <li class="mb-1">
                 <a href="{{url('dashboard/organization/'.$organization->slug.'/leaderline/unit')}}" class="d-flex flex-row align-items-center">
                     <div class="mr-2">
@@ -157,7 +218,15 @@
                     </div>
                 </a>
             </li>
+            @endif
+            @endforeach
+            @endif
 
+            @if($per)
+            @foreach(explode(',',$per->module) as $info) 
+            @if($info == 'kpi')
+          
+        
             <li class="mb-1">
                 <a href="{{url('dashboard/organization/'.$organization->slug.'/kpi/'.$organization->type)}}" @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/performance-dashboard/'.$organization->type)) class="d-flex flex-row align-items-center nav-active" @else class="d-flex flex-row align-items-center"  @endif >
                     <div class="mr-2">
@@ -168,6 +237,13 @@
                     </div>
                 </a>
             </li>
+            @endif
+            @endforeach
+            @endif
+
+
+        
+
             <!-- <li class="mb-1">
                 <a href="#" class="d-flex flex-row align-items-center">
                     <div class="mr-2">

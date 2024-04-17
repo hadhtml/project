@@ -81,16 +81,16 @@ $dataArray = explode(',', $p->module);
   <ul class="price">
     <li class="header">{{$p->plan_title}}</li>
     @if($p->base_price_status ==  'price')
-    <li class="grey">${{$p->base_price}} / mo</li>
+    <li class="grey">${{$p->base_price}} / {{$p->billing_method}}</li>
     @else
     <li class="grey">Free</li>
     @endif
-    <li class="">{{$p->duration}} days</li>
+    <li class="">{{$p->billing_method}}</li>
     @foreach($dataArray as $arr)
     <li>{{$arr}}</li>
     @endforeach
     <li class="grey">
-        <a href="{{url('boost-payment/'.$p->slug)}}"  class="btn btn-primary" >Checkout</a>    </li>
+        <a href="{{url('boost-payment/'.$p->plan_id)}}"  class="btn btn-primary" >Checkout</a>    </li>
   </ul>
 </div>
 @endforeach

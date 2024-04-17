@@ -1371,12 +1371,9 @@
                         var setvalue  = parseInt(res.key)-100;
                         $('#wieght-error').html('<div class="row"> <div class="col-md-12"><small class="text-danger ml-2">Combined weight Percentage not be greater than 100%. You Can Set Weight Value of This Key Result is <b>'+setvalue+'</b></small></div></div>');
                     
-                    } else if(res.key == 100) {
+                    } else {
                         
-                        $('#weight' + key).html('Key Weight (' + res.key + ')');
-                        $('#wieght-error').html('');
-                    }else{
-                        $('#weight' + key).html('Adjust Key Weight to  (' + res.key + ')');
+                        $('#weight' + key).html('Adjust Key Weight to 100 (' + res.key + ')');
                         $('#wieght-error').html('');
                     }
 
