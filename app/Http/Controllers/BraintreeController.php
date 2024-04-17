@@ -8,8 +8,13 @@ use Carbon\Carbon;
 use DB;
 use Auth;
 use Stripe;
+// use Stripe\Subscription;
 use Session;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Laravel\Cashier\Cashier;
+use Stripe\Plan;
+use Laravel\Cashier\Billable;
+use Laravel\Cashier\Subscription;
 
 class BraintreeController extends Controller
 {
@@ -77,7 +82,8 @@ class BraintreeController extends Controller
     public function paymentPage($slug)
     {
    
-    $plan = DB::table('plan')->where('slug',$slug)->first();
+     
+    $plan = DB::table('plan')->where('plan_id',$slug)->first();
 
     if($plan->base_price_status == 'free')
     {
@@ -98,7 +104,8 @@ class BraintreeController extends Controller
 
     }else
     {
-    return view('settings.payment',compact('plan'));
+     $intent = auth()->user()->createSetupIntent();
+    return view('settings.payment',compact('plan','intent'));
     }
 
     
@@ -109,18 +116,13 @@ class BraintreeController extends Controller
     {
 
 
-        $value = $request['value'];
-        
-        $newDateTime = Carbon::now()->addDays(30);
-
        
            DB::table('user_plan')->insert([
                'plan_id' => $request->plan_id,
-               'amount' => $value,
                'status' => 1,
                'transaction_id' => $request->transaction,
-               'plan_expire' => $newDateTime,
                'user_id' => auth::id(),
+               'payment_type' => 'paypal',
            ]);
 
         $url = url('organization/dashboard');
@@ -132,33 +134,71 @@ class BraintreeController extends Controller
 
     {
 
-        $plan =  DB::table('plan')->where('id',$request->id)->first();
-        $value = $plan->base_price;
+
+           $plan =  DB::table('plan')->where('plan_id',$request->plan)->first();
+        // $value = $plan->base_price;
 
 
-        \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
-        $redirectUrl = route('stripe.checkout.success').'?session_id={CHECKOUT_SESSION_ID}';
-        $session = \Stripe\Checkout\Session::create([
-      'success_url' => $redirectUrl,
-      'cancel_url' => route('checkout.cancel', [], true),
-      "payment_method_types" => ['card'],
-       "mode" => 'payment',
-       "line_items" => [
-        [
-           "price_data" =>[
-               "currency" =>"usd",
-               "product_data" =>[
-                   "name"=> "Training Session",
-                   "description" => "Training Session"
-               ],
-               "unit_amount" => $value * 100,
-           ],
-           "quantity" => 1 
-        ],
+        //  \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+
+        
+            $user = Auth::user();
+
+
+        //     if($user->subscribedToPlan($request->plan,'default')) {
+                
+            
+        //     echo 1;
+            
+        //     }else
+        //     {
+
+
+        // }
+
+        
+        $user->createOrGetStripeCustomer();
+        $paymentMethod = $request->payment_method;
+        
+        if($paymentMethod != null)
+        {
+        $paymentMethod =  $user->addPaymentMethod($paymentMethod);
+        }
+
+        
+        try {
+        $subscription = $user->newSubscription($plan->plan_title, $request->plan)->create($request->payment_method);
+
+        $url = url('organization/dashboard');
+         return $url;
+        } catch (\Exception $e) {
+            $e->getMessage();
+        }
+    
+       
+       
+    //     $redirectUrl = route('stripe.checkout.success').'?session_id={CHECKOUT_SESSION_ID}';
+    //     $session = \Stripe\Checkout\Session::create([
+    //   'success_url' => $redirectUrl,
+    //   'cancel_url' => route('checkout.cancel', [], true),
+    //   "payment_method_types" => ['card'],
+    //    "mode" => 'payment',
+    //    "line_items" => [
+    //     [
+    //        "price_data" =>[
+    //            "currency" =>"usd",
+    //            "product_data" =>[
+    //                "name"=> "Training Session",
+    //                "description" => "Training Session"
+    //            ],
+    //            "unit_amount" => $value * 100,
+    //        ],
+    //        "quantity" => 1 
+    //     ],
 
      
-    ]
-        ]);
+    // ]
+    //     ]);
 
         // Stripe\Charge::create ([
 
@@ -170,28 +210,28 @@ class BraintreeController extends Controller
 
         // ]);
 
-        $newDateTime = Carbon::now()->addDays(30);
+        // $newDateTime = Carbon::now()->addDays(30);
 
-        $planId =  DB::table('user_plan')->where('plan_id',$request->id)->where('user_id',auth::id())->first();
-        if($planId)
-        {
-        DB::table('user_plan')->where('plan_id',$request->id)->where('user_id',auth::id())->update([ 'transaction_id' => $session->id,]);
-        }else
-        {
-        DB::table('user_plan')->insert([
-        'plan_id' => $plan->id,
-        'amount' => $value,
-        'status' => 0,
-        'transaction_id' => $session->id,
-        'plan_expire' => $newDateTime,
-        'user_id' => auth::id(),
-        ]);
-        }
+        // $planId =  DB::table('user_plan')->where('plan_id',$request->id)->where('user_id',auth::id())->first();
+        // if($planId)
+        // {
+        // DB::table('user_plan')->where('plan_id',$request->id)->where('user_id',auth::id())->update([ 'transaction_id' => $session->id,]);
+        // }else
+        // {
+        // DB::table('user_plan')->insert([
+        // 'plan_id' => $plan->id,
+        // 'amount' => $value,
+        // 'status' => 0,
+        // 'transaction_id' => $session->id,
+        // 'plan_expire' => $newDateTime,
+        // 'user_id' => auth::id(),
+        // ]);
+        // }
        
 
       
        
-        return redirect($session->url);
+        // return redirect($session->url);
 
 
 
@@ -240,6 +280,35 @@ return redirect('organization/dashboard');
 public function cancel()
 {
 return redirect()->back()->with('error-message', 'Error');
+
+}
+
+public function CancalPlan(Request $request)
+{
+    $user = Auth::user();
+    $data = DB::table('subscriptions')->where('user_id',Auth::id())->where('name',$request->name)->first();
+    if($data->ends_at == NULL)
+    {
+    $user->subscription($request->name)->cancel();
+    }else
+    {
+    $user->subscription($request->name)->resume();
+    }
+    
+
+}
+
+
+public function UpgradePlan(Request $request)
+{
+    $stripe = \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+
+
+    $user = Auth::user();
+
+    $plan = DB::table('plan')->where('id',$request->plan_id)->first();
+    $user->subscription('Pro')->noProrate()->swap($plan->plan_id);
+    
 
 }
 
