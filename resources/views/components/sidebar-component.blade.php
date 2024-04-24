@@ -24,11 +24,15 @@
                 </a>
             </li> -->
 
-            {{-- <li>
+
+             <li>
+
+            <li>
+
                 <a href="{{ url('dashboard/mapper') }}/{{ Cmf::getmainorganizationslug()->slug }}/org"  class="nav-link"  title="" data-toggle="tooltip" data-placement="right" data-original-title="OKR Mapper">
                     <span class="material-symbols-outlined">link</span>
                 </a>
-            </li> --}}
+            </li>
 
             {{-- <li>
                 <a href="{{route('settings.users')}}" @if (url()->current() == route('settings.users')) class="active-link" @else class="nav-link"  @endif title="" data-toggle="tooltip" data-placement="right" data-original-title="Users">

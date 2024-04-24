@@ -78,9 +78,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <script type="text/javascript">
     var zoom = 1;
-
     function zoom_in(id) {
-        
         zoom += 0.1;
         $('.board-cards' +id).css('transform', 'scale(' + zoom + ')');
     }

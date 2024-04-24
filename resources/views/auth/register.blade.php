@@ -27,6 +27,7 @@
 
 <body style="background: #f3f3f3;">
 <style type="text/css">
+
 .stepwizard-step p {
     margin-top: 0px;
     color:#666;
@@ -71,6 +72,10 @@
     line-height: 1.428571429;
     border-radius: 15px;
 }
+
+    .form-group>label {
+        bottom: 72px !important;
+    }
 </style>
     <div class="d-flex flex-column flex-root">
         <div class="container p-5" >
