@@ -1,3 +1,5 @@
+
+
 <?php
 
 use Illuminate\Support\Facades\Route;
@@ -18,8 +20,14 @@ use App\Http\Controllers\Admin\Auth\LoginController;
 
 Auth::routes(['verify' => true]);
 
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('organization/dashboard', [HomeController::class, 'index'])->name('home');
+
 Route::middleware('auth')->group(function () {
-    Route::get('/', [HomeController::class, 'index'])->name('home');
+    
     Route::get('/asgin-names', [HomeController::class, 'asignnames'])->name('asignnames');
     Route::POST('createmodulenames', [HomeController::class, 'createmodulenames'])->name('createmodulenames');
 
@@ -534,6 +542,20 @@ Route::get('admin/all-contact', [App\Http\Controllers\SiteController::class,'All
 Route::get('admin/key-feature', [App\Http\Controllers\SiteController::class,'FeatureSection']);
 Route::post('admin/save-feature-section', [App\Http\Controllers\SiteController::class,'SaveFeatureSection']);
 Route::post('admin/update-feature-section', [App\Http\Controllers\SiteController::class,'UpdateFeatureSection']);
+Route::get('admin/delete-faq/{id}', [App\Http\Controllers\SiteController::class,'DeleteFaq']);
+Route::post('admin/save-business-section-header', [App\Http\Controllers\SiteController::class,'SaveBusinessSectionHeader']);
+Route::get('admin/contact-section', [App\Http\Controllers\SiteController::class,'ContactSection']);
+Route::post('admin/save-content-section', [App\Http\Controllers\SiteController::class,'SaveContactSection']);
+Route::get('admin/ceo-message', [App\Http\Controllers\SiteController::class,'CeoMessage']);
+Route::post('admin/save-message', [App\Http\Controllers\SiteController::class,'SaveCeoMessage']);
+Route::post('admin/save-highlights-section-header', [App\Http\Controllers\SiteController::class,'SaveHighlightSectionHeader']);
+Route::get('admin/delete-business-section/{id}', [App\Http\Controllers\SiteController::class,'DeleteBusinessSection']);
+
+
+
+
+
+
 
 
 
