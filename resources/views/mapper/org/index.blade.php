@@ -62,7 +62,7 @@ $var_objective = "mapper-org";
    window.addEventListener("load", function() {
    "use strict";
    
-   @foreach(DB::table('team_link_child')->groupby('bussiness_key_id')->where('user_id' , Auth::id())->get() as $t_l_c)
+   @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->get() as $t_l_c)
    var slout_out_buisness_unit_key_result_{{ $t_l_c->bussiness_key_id }} = document.getElementById("buisness_unit_key_result_{{ $t_l_c->bussiness_key_id }}");
    @endforeach
    
