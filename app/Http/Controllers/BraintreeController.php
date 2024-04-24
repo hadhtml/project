@@ -1,3 +1,4 @@
+
 <?php
 
 namespace App\Http\Controllers;
@@ -115,11 +116,9 @@ class BraintreeController extends Controller
     public function paypalpay(Request $request)
     {
 
-
-       
            DB::table('user_plan')->insert([
                'plan_id' => $request->plan_id,
-               'status' => 1,
+               'status' => 'active',
                'transaction_id' => $request->transaction,
                'user_id' => auth::id(),
                'payment_type' => 'paypal',
@@ -168,11 +167,19 @@ class BraintreeController extends Controller
         
         try {
         $subscription = $user->newSubscription($plan->plan_title, $request->plan)->create($request->payment_method);
+        DB::table('user_plan')->insert([
+            'plan_id' => $request->plan,
+            'status' => $subscription->stripe_status,
+            'transaction_id' => $subscription->stripe_id,
+            'user_id' => auth::id(),
+            'payment_type' => 'stripe',
+        ]);
+        
 
         $url = url('organization/dashboard');
          return $url;
         } catch (\Exception $e) {
-            $e->getMessage();
+         return $e->getMessage();
         }
     
        
@@ -289,10 +296,16 @@ public function CancalPlan(Request $request)
     $data = DB::table('subscriptions')->where('user_id',Auth::id())->where('name',$request->name)->first();
     if($data->ends_at == NULL)
     {
-    $user->subscription($request->name)->cancel();
+    $plan = $user->subscription($request->name)->cancel();
+    DB::table('user_plan')->where('transaction_id',$plan->stripe_id)->update([
+        'subscription_ends_at' => $plan->ends_at,
+    ]);
     }else
     {
-    $user->subscription($request->name)->resume();
+    $plan = $user->subscription($request->name)->resume();
+    DB::table('user_plan')->where('transaction_id',$plan->stripe_id)->update([
+        'subscription_ends_at' => $plan->ends_at,
+    ]);
     }
     
 
