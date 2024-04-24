@@ -1,3 +1,4 @@
+
 <?php
 
 namespace App\Http\Controllers;
@@ -74,6 +75,7 @@ class SiteController extends Controller
             DB::table('header_section')->where('section',$request->section)->update([
                 'sub_title' => $request->sub_title,
                 'title' => $request->title,
+                 'sub_heading' => $request->sub_heading,
                 'image' => $filename,
               
               ]);
@@ -84,6 +86,7 @@ class SiteController extends Controller
                 'section' => 'header',
                 'sub_title' => $request->sub_title,
                 'title' => $request->title,
+                'sub_heading' => $request->sub_heading,
                 'image' => $filename,
               
               ]);
@@ -110,15 +113,31 @@ class SiteController extends Controller
             $filename = $this->sendimagetodirectory($request->image);
         }
 
-        $id =  DB::table('header_section')->insert([
+        $id =  DB::table('header_section')->insertGetId([
                 'section' => 'flag',
-                'sub_title' => $request->sub_title,
+              
                 'title' => $request->title,
                 'image' => $filename,
-                'subtitle_2' => $request->subtitle_2,
+             
           
           ]);
+          
+        if($request->has('features'))
+        {
+            
+        foreach($request->features  as $k => $value)
+        {
+             DB::table('header_section')
+             ->insert([
+                'feature_highlight' => $request->features[$k],
+                'section' => $id
+            ]);
+        }
 
+            
+        }
+        
+      
        return back();   
     }
 
@@ -134,13 +153,45 @@ class SiteController extends Controller
             $filename = $request->oldimage;
         }
 
-        $id =  DB::table('header_section')->where('id',$request->id)->update([
-            'sub_title' => $request->sub_title,
+         DB::table('header_section')->where('id',$request->id)->update([
                 'title' => $request->title,
                 'image' => $filename,
-                'subtitle_2' => $request->subtitle_2,
-          
+         
+ 
           ]);
+          
+
+        if($request->has('update_features_id'))
+        {
+         
+        foreach($request->update_features  as $k => $value)
+        {
+            
+        DB::table('header_section')->where('id',$request->update_features_id[$k])->update([
+        
+           'feature_highlight' => $request->update_features[$k],
+
+          ]);
+        }  
+            
+        }
+        
+         if($request->has('updatefeatures'))
+        {
+            
+        foreach($request->features  as $k => $value)
+        {
+             DB::table('header_section')
+             ->insert([
+                'feature_highlight' => $request->updatefeatures[$k],
+                'section' => $request->id,
+            ]);
+        }
+
+            
+        }
+        
+    
 
        return back();   
     }
@@ -302,6 +353,135 @@ class SiteController extends Controller
 
        return back();   
     }
+    
+       public function SaveBusinessSectionHeader(Request $request)
+    {
+
+
+     
+      $data = DB::table('header_section')->where('section',$request->section)->first();
+       if($data)
+       {
+              DB::table('header_section')->where('section',$request->section)->update([
+                'sub_title' => $request->sub_title_header,
+                'title' => $request->title_header,
+
+          ]);
+           
+       }else
+       {
+            DB::table('header_section')->insert([
+                'section' => 'business-header',
+                'sub_title' => $request->sub_title_header,
+                'title' => $request->title_header,
+
+          ]);  
+       }
+    
+
+       return back();   
+    }
+    
+        public function ContactSection()
+    {
+        $data = DB::table('header_section')->where('section','contact')->first();
+        return view('admin.website.contact-section',compact('data'));
+    }
+    
+        public function SaveContactSection(Request $request)
+    {
+
+
+     
+      $data = DB::table('header_section')->where('section',$request->section)->first();
+       if($data)
+       {
+              DB::table('header_section')->where('section',$request->section)->update([
+                'sub_title' => $request->sub_title,
+                'title' => $request->title,
+
+          ]);
+           
+       }else
+       {
+            DB::table('header_section')->insert([
+                'section' => 'contact',
+                'sub_title' => $request->sub_title,
+                'title' => $request->title,
+
+          ]);  
+       }
+    
+
+       return back();   
+    }
+    
+       public function CeoMessage()
+    {
+        $data = DB::table('header_section')->where('section','message')->first();
+        return view('admin.website.ceo-message',compact('data'));
+    }
+    
+           public function SaveCeoMessage(Request $request)
+    {
+
+
+     
+      $data = DB::table('header_section')->where('section',$request->section)->first();
+       if($data)
+       {
+              DB::table('header_section')->where('section',$request->section)->update([
+                'message' => $request->message,
+          ]);
+           
+       }else
+       {
+            DB::table('header_section')->insert([
+                'section' => 'message',
+                'message' => $request->message,
+          
+
+          ]);  
+       }
+    
+
+       return back();   
+    }
+    
+          public function SaveHighlightSectionHeader(Request $request)
+    {
+
+
+     
+      $data = DB::table('header_section')->where('section',$request->section)->first();
+       if($data)
+       {
+              DB::table('header_section')->where('section',$request->section)->update([
+                'sub_title' => $request->sub_title_header,
+         
+
+          ]);
+           
+       }else
+       {
+            DB::table('header_section')->insert([
+                'section' => 'highlight-header',
+                'sub_title' => $request->sub_title_header,
+
+          ]);  
+       }
+    
+
+       return back();   
+    }
+    
+    public function DeleteBusinessSection($id)
+    {
+        $id =  DB::table('header_section')->where('id',$id)->delete();
+
+       return back();   
+    }
+    
 
 
 
