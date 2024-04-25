@@ -50,10 +50,22 @@
                                      <input type="text" name="plan_title" class="form-control" required>
                                 </div>
 
-                                <div class="col-md-6">
-                                    <label>Duration (Insert days)</label>
+                                {{-- <div class="col-md-6">
+                                    <label>Duration (days)</label>
                                      <input type="text" required onkeypress="return onlyNumberKey(event)" name="duration" class="form-control">
+                                </div> --}}
+
+                                <div class="col-md-6">
+                                    <label>Billing Period</label>
+                                    <select required name="duration"  class="form-control">
+                                        <option value="week"> Weekly </option>
+                                        <option value="month"> Monthly </option>
+                                        <option value="year">Yearly </option>
+                            
+                                      
+                                    </select>
                                 </div>
+
 
                                 <div class="col-md-12">
                                     <label>Base Price</label>
@@ -92,14 +104,17 @@
                                      <input type="text" onkeypress="return onlyNumberKey(event)" name="per_user_price" class="form-control">
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <label>Choose modules</label>
-                                    <select required name="module" class="selectfrom form-control">
-                                        <option value="">Select modules</option>
+                                    <select required name="module[]" multiple class="selectfrom form-control">
                                      
-                                        <option value="Dashboard"> Dashboard </option>
+                             
                                         <option value="OKR Planner">OKR Planner  </option>
                                         <option value="OKR Mapper"> OKR Mapper  </option>
+                                        <option value="Epic Backlog"> Epic Backlog </option>
+                                        <option value="Flag">Flags</option>
+                                        <option value="Map">Map </option>
+                                        <option value="kpi">kpi  </option>
                                       
                                     </select>
                                 </div>
@@ -113,6 +128,20 @@
                             
                                       
                                     </select>
+                                </div>
+
+                                
+                                <div class="col-md-8">
+                                    <label>Features</label>
+                                     <input type="text" name="features[]" required class="form-control">
+                                </div>
+
+                                <div class="col-md-4">
+                                     <div class="btn btn-primary add_value mt-7">Add</div>
+                                </div>
+
+                                <div class="field_wrapper_key">
+
                                 </div>
                                 
 
@@ -220,6 +249,32 @@ $(document).ready(function() {
         }
     });
 });
+
+$(document).ready(function() {
+        var maxField = 10;
+        var addButton = $('.add_value');
+        var wrapper = $('.field_wrapper_key');
+
+        var x = 1;
+        $(addButton).click(function() {
+            //Check maximum number of input fields
+            if (x < maxField) {
+                x++; //Increment field counter
+                var fieldHTML =
+                '<div class="d-flex mb-3 mt-2 ml-3" style="width:150%"><br><br><input type="text" style="width:100%" class="form-control" name="features[]"  placeholder="Add Features" required><a href="javascript:void(0);"  class="remove_button btn btn-danger ml-3"><i class="fa fa-minus"></i></a></div>';
+
+                $(wrapper).append(fieldHTML); //Add field html
+            }else{
+                
+            }
+        });
+
+        $(wrapper).on('click', '.remove_button', function(e) {
+        e.preventDefault();
+        $(this).parent('div').remove(); 
+        x--;
+    });
+    });
 
 </script>
 @endsection

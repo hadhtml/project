@@ -9,6 +9,7 @@
         "braintree/braintree_php": "^6.17",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "laravel/cashier": "^13.17",
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/socialite": "^5.7",
@@ -16,7 +17,7 @@
         "laravel/ui": "^3.4",
         "laravolt/avatar": "^4.1",
         "maatwebsite/excel": "^3.1",
-        "stripe/stripe-php": "^13.16"
+        "stripe/stripe-php": "7.39"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

@@ -68,11 +68,83 @@
                             </li>
 
                             <li class="menu-item" aria-haspopup="true">
+                                <a href="{{ url('admin/all-plan') }}" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot"><span></span></i><span
+                                        class="menu-text">All  Plan</span>
+                                </a>
+                            </li>
+
+                            <li class="menu-item" aria-haspopup="true">
                                 <a href="{{ url('admin/user-plan') }}" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot"><span></span></i><span
                                         class="menu-text">All User Plan</span>
                                 </a>
                             </li>
+
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                    <a href="javascript:;" class="menu-link menu-toggle">
+                        <span class="material-symbols-outlined">subscriptions</span>
+                        <span class="menu-text">website Settings</span><i class="menu-arrow"></i>
+                    </a>
+                    <div class="menu-submenu">
+                        <i class="menu-arrow"></i>
+                        <ul class="menu-subnav">
+                            <li class="menu-item" aria-haspopup="true">
+                                <a href="{{ url('admin/allFaq') }}" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot"><span></span></i><span
+                                        class="menu-text">Faq</span>
+                                </a>
+                            </li>
+
+                            <li class="menu-item" aria-haspopup="true">
+                                <a href="{{ url('admin/header') }}" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot"><span></span></i><span
+                                        class="menu-text">Header</span>
+                                </a>
+                            </li>
+
+                            <li class="menu-item" aria-haspopup="true">
+                                <a href="{{ url('admin/section') }}" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot"><span></span></i><span
+                                        class="menu-text">Section</span>
+                                </a>
+                            </li>
+
+                            <li class="menu-item" aria-haspopup="true">
+                                <a href="{{ url('admin/business-section') }}" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot"><span></span></i><span
+                                        class="menu-text">Business Section</span>
+                                </a>
+                            </li>
+
+                            <li class="menu-item" aria-haspopup="true">
+                                <a href="{{ url('admin/footer-section') }}" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot"><span></span></i><span
+                                        class="menu-text">Footer</span>
+                                </a>
+                            </li>
+
+                            <li class="menu-item" aria-haspopup="true">
+                                <a href="{{ url('admin/all-contact') }}" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot"><span></span></i><span
+                                        class="menu-text">Contact</span>
+                                </a>
+                            </li>
+
+                            <li class="menu-item" aria-haspopup="true">
+                                <a href="{{ url('admin/key-feature') }}" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot"><span></span></i><span
+                                        class="menu-text">Key Feature</span>
+                                </a>
+                            </li>
+
+                          
+
+                           
 
                         </ul>
                     </div>

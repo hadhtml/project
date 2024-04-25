@@ -4,6 +4,9 @@ $var_objective = "mapper-org";
 @extends('components.main-layout')
 <title>ORG-OKR Mapper</title>
 @section('content')
+
+<div class="row rotatex">
+=======
 <div class="d-flex flex-row-reverse zoom-btn-section">
    <div>
       <button
@@ -37,6 +40,7 @@ $var_objective = "mapper-org";
 </div>
 <div class="rotatex">
    <div class="row">
+
    <div class="col-md-12">
       <div style="width: 100%; height: 5000px; padding: 50px;margin-top: 150px;">
          <!-- Node 1 -->
@@ -96,7 +100,11 @@ $var_objective = "mapper-org";
    window.addEventListener("load", function() {
    "use strict";
    
+
+   @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->get() as $t_l_c)
+
    @foreach(DB::table('team_link_child')->groupby('bussiness_key_id')->where('user_id' , Auth::id())->get() as $t_l_c)
+
    var slout_out_buisness_unit_key_result_{{ $t_l_c->bussiness_key_id }} = document.getElementById("buisness_unit_key_result_{{ $t_l_c->bussiness_key_id }}");
    @endforeach
    

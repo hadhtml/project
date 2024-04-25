@@ -1,3 +1,5 @@
+
+
 <!-- begin breadcrums -->
 @php
 $organization  = DB::table('organization')->where('user_id',Auth::id())->orWhere('user_id',Auth::user()->invitation_id)->first();
@@ -22,7 +24,7 @@ $organization  = DB::table('organization')->where('user_id',Auth::id())->orWhere
                                          
                                         </div>
                                         <div>
-                                            <a href="{{route('home')}}">Dashboard</a>
+                                            <a href="{{url('organization/dashboard')}}">Dashboard</a>
                                         </div>
                                     </div>
                                  

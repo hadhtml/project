@@ -1,3 +1,5 @@
+
+
 <?php
 
 use Illuminate\Support\Facades\Route;
@@ -18,8 +20,14 @@ use App\Http\Controllers\Admin\Auth\LoginController;
 
 Auth::routes(['verify' => true]);
 
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('organization/dashboard', [HomeController::class, 'index'])->name('home');
+
 Route::middleware('auth')->group(function () {
-    Route::get('/', [HomeController::class, 'index'])->name('home');
+    
     Route::get('/asgin-names', [HomeController::class, 'asignnames'])->name('asignnames');
     Route::POST('createmodulenames', [HomeController::class, 'createmodulenames'])->name('createmodulenames');
 
@@ -45,6 +53,7 @@ Route::middleware('auth')->group(function () {
         Route::get('users', 'MemberController@AllMembers')->name('users');
         Route::get('asgin-names', 'HomeController@asignmodule')->name('asignmodule');
         Route::POST('updatemodulenames', 'HomeController@updatemodulenames')->name('updatemodulenames');
+        Route::get('subscription', 'OrganizationController@subscription')->name('subscription');
     });
 
 
@@ -460,9 +469,7 @@ Route::name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')-
     Route::get('/profile','AdminController@profile')->name('profile');
     Route::post('/updateuserprofile','AdminController@updateuserprofile');
     Route::post('/updateusersecurity','AdminController@updateusersecurity');
-    Route::get('/addplanmodule','AdminController@addPlanModule');
-    Route::post('/save-plan','AdminController@SavePlan');
-    Route::get('/user-plan','AdminController@AllUserPlan');
+
 
     Route::name('users.')->prefix('users')->group(function(){
         Route::get('/allusers','AdminController@allusers');
@@ -473,3 +480,94 @@ Route::name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')-
     });    
 
 });
+
+
+Route::get('admin/addplanmodule', [App\Http\Controllers\SubscriptionController::class,'addPlanModule']);
+Route::post('admin/save-plan', [App\Http\Controllers\SubscriptionController::class,'SavePlan']);
+Route::get('admin//user-plan', [App\Http\Controllers\SubscriptionController::class,'AllUserPlan']);
+Route::get('admin/all-plan', [App\Http\Controllers\SubscriptionController::class,'AllPlan']);
+Route::get('admin/edit-plan/{id}', [App\Http\Controllers\SubscriptionController::class,'EditPlan']);
+Route::post('admin/update-plan', [App\Http\Controllers\SubscriptionController::class,'UpdatePlan']);
+
+Route::get('dashboard/organization/{id}/kpi/{type}', [App\Http\Controllers\KpiController::class,'ValueChartKpi']);
+Route::post('add-chart-kpi', [App\Http\Controllers\KpiController::class,'SaveKpiData']);
+Route::get('dashboard/getkpicheckin', [App\Http\Controllers\KpiController::class,'getkpimodal']);
+Route::post('add-kpi-check', [App\Http\Controllers\KpiController::class,'AddnewcheckIn']);
+Route::post('kpi-deletevalue', [App\Http\Controllers\KpiController::class,'DeleteheckInValue']);
+Route::post('update-new-kpi-value', [App\Http\Controllers\KpiController::class,'UpdateheckInValue']);
+Route::post('update-kpi-basic', [App\Http\Controllers\KpiController::class,'UpdateKpiData']);
+Route::post('add-kpi-flag', [App\Http\Controllers\KpiController::class,'AddnewKpiflag']);
+Route::post('dashboard/kpiflagupdate', [App\Http\Controllers\KpiController::class,'UpdateKpiflag']);
+Route::post('kpi-deleteflag', [App\Http\Controllers\KpiController::class,'DeleteKpiflag']);
+Route::post('kpi-savecomment', [App\Http\Controllers\KpiController::class,'savecommentkpi']);
+Route::post('updatecomment-kpi', [App\Http\Controllers\KpiController::class,'updatecommentkpi']);
+Route::post('deletecomment-kpi', [App\Http\Controllers\KpiController::class,'Deletecommentkpi']);
+Route::post('savereply-kpi', [App\Http\Controllers\KpiController::class,'savereplykpi']);
+Route::get('kpi-render', [App\Http\Controllers\KpiController::class,'ValueChartKpiRender']);
+Route::post('delete-kpi-chart', [App\Http\Controllers\KpiController::class,'DeleteKpiData']);
+Route::get('kpi-flag-search', [App\Http\Controllers\KpiController::class,'Searchkpiflag']);
+Route::post('dashboard/orderbykpistatus', [App\Http\Controllers\KpiController::class,'orderbykpistatus']);
+Route::get('kpi-checkin-search', [App\Http\Controllers\KpiController::class,'kpicheckinsearch']);
+
+
+// PYMENT
+Route::get('profile/client_token', [App\Http\Controllers\BraintreeController::class,'generateClientToken']);
+Route::get('boost/private-process-payment', [App\Http\Controllers\BraintreeController::class,'processPayment']);
+Route::post('paypal-pay', [App\Http\Controllers\BraintreeController::class,'paypalpay']);
+Route::get('boost-payment/{slug}', [App\Http\Controllers\BraintreeController::class,'paymentPage']);
+Route::post('stripe-post', [App\Http\Controllers\BraintreeController::class,'stripePost']);
+Route::get('/get-paypal-client-id', [App\Http\Controllers\BraintreeController::class,'getPaypalClientId']);
+Route::get('/cancel', [App\Http\Controllers\BraintreeController::class,'cancel'])->name('checkout.cancel');
+Route::get('stripe/checkout/success', [App\Http\Controllers\BraintreeController::class,'stripeCheckoutSuccess'])->name('stripe.checkout.success');
+Route::post('cancal-plan', [App\Http\Controllers\BraintreeController::class,'CancalPlan']);
+Route::post('upgarde-plan', [App\Http\Controllers\BraintreeController::class,'UpgradePlan']);
+
+// Site Setting
+Route::get('index', [App\Http\Controllers\SiteController::class,'Indexpage']);
+Route::get('admin/allFaq', [App\Http\Controllers\SiteController::class,'AllFaq']);
+Route::post('admin/save-faq', [App\Http\Controllers\SiteController::class,'SaveFaq']);
+Route::post('admin/update-faq', [App\Http\Controllers\SiteController::class,'UpdateFaq']);
+Route::get('admin/header', [App\Http\Controllers\SiteController::class,'HeaderSection']);
+Route::post('admin/save-header', [App\Http\Controllers\SiteController::class,'SaveHeader']);
+Route::get('admin/section', [App\Http\Controllers\SiteController::class,'FlagSection']);
+Route::post('admin/save-section', [App\Http\Controllers\SiteController::class,'SaveSection']);
+Route::post('admin/update-section', [App\Http\Controllers\SiteController::class,'UpdateSection']);
+Route::get('admin/business-section', [App\Http\Controllers\SiteController::class,'BusinessSection']);
+Route::post('admin/save-business-section', [App\Http\Controllers\SiteController::class,'SaveBusinessSection']);
+Route::post('admin/update-business-section', [App\Http\Controllers\SiteController::class,'UpdateBusinessSection']);
+Route::get('admin/footer-section', [App\Http\Controllers\SiteController::class,'FooterSection']);
+Route::post('admin/save-footer', [App\Http\Controllers\SiteController::class,'SaveFooterSection']);
+Route::post('save-contact', [App\Http\Controllers\SiteController::class,'SaveContact']);
+Route::get('admin/all-contact', [App\Http\Controllers\SiteController::class,'AllContact']);
+Route::get('admin/key-feature', [App\Http\Controllers\SiteController::class,'FeatureSection']);
+Route::post('admin/save-feature-section', [App\Http\Controllers\SiteController::class,'SaveFeatureSection']);
+Route::post('admin/update-feature-section', [App\Http\Controllers\SiteController::class,'UpdateFeatureSection']);
+Route::get('admin/delete-faq/{id}', [App\Http\Controllers\SiteController::class,'DeleteFaq']);
+Route::post('admin/save-business-section-header', [App\Http\Controllers\SiteController::class,'SaveBusinessSectionHeader']);
+Route::get('admin/contact-section', [App\Http\Controllers\SiteController::class,'ContactSection']);
+Route::post('admin/save-content-section', [App\Http\Controllers\SiteController::class,'SaveContactSection']);
+Route::get('admin/ceo-message', [App\Http\Controllers\SiteController::class,'CeoMessage']);
+Route::post('admin/save-message', [App\Http\Controllers\SiteController::class,'SaveCeoMessage']);
+Route::post('admin/save-highlights-section-header', [App\Http\Controllers\SiteController::class,'SaveHighlightSectionHeader']);
+Route::get('admin/delete-business-section/{id}', [App\Http\Controllers\SiteController::class,'DeleteBusinessSection']);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -24,7 +24,11 @@
                 </a>
             </li> -->
 
+
+             <li>
+
             <li>
+
                 <a href="{{ url('dashboard/mapper') }}/{{ Cmf::getmainorganizationslug()->slug }}/org"  class="nav-link"  title="" data-toggle="tooltip" data-placement="right" data-original-title="OKR Mapper">
                     <span class="material-symbols-outlined">link</span>
                 </a>
@@ -78,8 +82,3 @@
     </div>
     @include('components.subnav-component')
 </div>
-
-
-
-
-

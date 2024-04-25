@@ -44,7 +44,7 @@
                             <form  method="POST" action="{{ url('admin/update-plan') }}">
                                 @csrf
                               
-                             <input type="hidden" name="id" value="{{$data->id}}"> 
+                             <input type="hidden" name="id" value="{{$data->plan_id}}"> 
                             <div class="row">
 
                                 <div class="col-md-6">
@@ -52,13 +52,24 @@
                                      <input type="text" name="plan_title" value="{{$data->plan_title}}" class="form-control" required>
                                 </div>
 
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <label>Duration (Insert days)</label>
                                      <input type="text" required onkeypress="return onlyNumberKey(event)" value="{{$data->duration}}" name="duration" class="form-control">
+                                </div> --}}
+
+                                <div class="col-md-6">
+                                    <label>Billing Period</label>
+                                    <select required name="duration"  class="form-control">
+                                        <option  @if($data->billing_method == 'week') selected @endif value="week"> Weekly </option>
+                                        <option  @if($data->billing_method == 'month') selected @endif value="month"> Monthly </option>
+                                        <option  @if($data->billing_method == 'year') selected @endif value="year">Yearly </option>
+                            
+                                      
+                                    </select>
                                 </div>
 
                                 <div class="col-md-12">
-                                    <label>Base Price</label>
+                                    <label>Add Base Price </label>
                                     <select required name="base_price_status" required onchange="getval(this.value)" class="form-control">
                                         <option value="">Select Base Price</option>
                                      
@@ -71,12 +82,12 @@
 
                                 
                                 <div class="col-md-6 price" @if($data->base_price_status == 'price') style="display: block"  @else style="display: none" @endif>
-                                    <label>Base Price</label>
+                                    <label>Base Price ($)</label>
                                      <input type="text"  value="{{$data->base_price}}" id="lastvalue" onkeypress="return onlyNumberKey(event)" name="base_price" class="form-control">
                                 </div>
 
                                 <div class="col-md-6 price"@if($data->base_price_status == 'price') style="display: block"  @else style="display: none" @endif>
-                                    <label>Sale Price</label>
+                                    <label>Sale Price ($)</label>
                                      <input type="text"  value="{{$data->sale_price}}"  id="inputField"  onkeypress="return onlyNumberKey(event)" name="sale_price" class="form-control">
                               
                                      <span id="error" class="text-danger"></span>
