@@ -13,7 +13,7 @@
             </div>
             <div class="d-flex flex-row page-sub-titles align-items-center">
                 <div class="mr-2">
-                    <a href="{{route('home')}}">Dashboard</a>
+                    <a href="{{url('organization/dashboard')}}">Dashboard</a>
                 </div>
                 <div class="mr-2">
                     <p>All Users</p>
