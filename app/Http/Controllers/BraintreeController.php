@@ -247,7 +247,7 @@ class BraintreeController extends Controller
     public function getPaypalClientId()
 {
     return response()->json([
-        'paypal_client_id' => env('paypal_client_id')
+        'paypal_client_id' => env('PAYPAL_CLIENT_ID')
     ]);
 }
 
