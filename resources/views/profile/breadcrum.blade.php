@@ -22,7 +22,7 @@ $organization  = DB::table('organization')->where('user_id',Auth::id())->first()
             </div>
             <div class="d-flex flex-row page-sub-titles align-items-center">
                 <div class="mr-2">
-                    <a href="{{route('home')}}">Dashboard</a>
+                    <a href="{{url('organization/dashboard')}}">Dashboard</a>
                 </div>
                 <div class="mr-2">
                     <p>@if(url()->current() == route('settings.security')) Change Password @endif @if(url()->current() == route('settings.myprofile')) My Profile @endif</p>
