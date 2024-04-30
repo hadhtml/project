@@ -1,33 +1,28 @@
 @php
 $organization  = DB::table('organization')->where('user_id',Auth::id())->first();
 @endphp
-<div class="subheader subheader-solid breadcrums" id="kt_subheader">
-    <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
-        <div class="d-flex align-items-start flex-column flex-wrap mr-2">
-            <div class="d-flex flex-row align-items-center">
-                <div>
-                    @if(url()->current() == route('settings.security'))
-                    <span style="font-size:22px" class="material-symbols-outlined">key</span>
-                    @endif
-                    @if(url()->current() == route('settings.myprofile'))
-                    <span style="font-size:22px" class="material-symbols-outlined">person</span>
-                    @endif                    
-                </div>
-                <div class="ml-3">
-                    <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
-                      @if(url()->current() == route('settings.security')) Change Password @endif
-                      @if(url()->current() == route('settings.myprofile')) My Profile @endif
-                    </h5>
-                </div>
-            </div>
-            <div class="d-flex flex-row page-sub-titles align-items-center">
-                <div class="mr-2">
-                    <a href="{{url('organization/dashboard')}}">Dashboard</a>
-                </div>
-                <div class="mr-2">
-                    <p>@if(url()->current() == route('settings.security')) Change Password @endif @if(url()->current() == route('settings.myprofile')) My Profile @endif</p>
-                </div>
-            </div>
+<div class="app-toolbar-wrapper d-flex flex-stack flex-wrap gap-4 w-100">
+    <div class="page-title d-flex flex-column justify-content-center gap-1 me-3">
+        <div class="d-flex">
+            @if(url()->current() == route('settings.security'))
+            <span class="material-symbols-outlined">key</span>
+            <h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bold fs-3 m-0">Change Password
+            </h1>
+            @endif
+            @if(url()->current() == route('settings.myprofile'))
+            <span class="material-symbols-outlined">person</span>
+            <h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bold fs-3 m-0">My Profile
+            </h1>
+            @endif
         </div>
+        <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0">
+            <li class="breadcrumb-item text-muted">
+                <a href="{{url('organization/dashboard')}}" class="text-muted text-hover-primary">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item">
+                <span class="bullet bg-gray-500 w-5px h-2px"></span>
+            </li>
+            <li class="breadcrumb-item text-muted">@if(url()->current() == route('settings.security')) Change Password @endif @if(url()->current() == route('settings.myprofile')) My Profile @endif</li>
+        </ul>
     </div>
 </div>

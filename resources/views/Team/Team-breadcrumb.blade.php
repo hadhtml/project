@@ -17,6 +17,7 @@ if($organization->type == 'orgT')
 $team  = DB::table('organization')->where('id',$organization->org_id)->first();  
 }
 @endphp
+
 <div class="subheader subheader-solid breadcrums" id="kt_subheader">
    <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
       <!--begin::Info-->

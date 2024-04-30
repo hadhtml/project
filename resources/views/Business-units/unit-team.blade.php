@@ -280,7 +280,7 @@ $var_objective = "Org-Unit-team";
 <img src="{{asset('public/team.svg')}}"  width="120" height="120">
 <div><h6 class="text-center">No Records Found</h6></div>
 <div><p class="text-center">You may create your first {{ Cmf::getmodulename('level_three') }} by clicking the bellow button.</p></div>
-<button class="btn btn-primary btn-lg btn-theme btn-block ripple ml-32" style="width:40%" type="button" data-toggle="modal" data-target="#add-team">
+<button class="btn btn-flex btn-primary h-40px fs-7 fw-bold"  type="button" data-toggle="modal" data-target="#add-team">
     Add a {{ Cmf::getmodulename('level_three') }}
 </button>
 </div>

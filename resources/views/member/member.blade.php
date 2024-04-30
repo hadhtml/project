@@ -8,8 +8,8 @@ $var_objective = "Member";
    <div class="col-md-12">
       <div class="card">
          <div class="card-body p-10">
-            <div class="table-responsive">
-               <table class="table data-table exmaple" id="">
+            <div class="">
+               <table class="dt-container dt-bootstrap5 dt-empty-footer exmaple" id="kt_customers_table_wrapper">
                <thead>
                   <tr>
                      <td>

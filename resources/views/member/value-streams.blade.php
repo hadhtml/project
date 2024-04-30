@@ -209,7 +209,7 @@ $var_objective = "V-Stream";
 <img src="{{asset('public/business-unit.svg')}}"  width="120" height="120">
 <div><h6 class="text-center">No Records Found</h6></div>
 <div><p class="text-center">You may create a {{ Cmf::getmodulename("level_one") }} by clicking the button below.</p></div>
-<button class="btn btn-primary btn-lg btn-theme btn-block ripple ml-32" style="width:40%" type="button" data-toggle="modal" data-target="#add-business-value">
+<button class="btn btn-flex btn-primary h-40px fs-7 fw-bold"  type="button" data-toggle="modal" data-target="#add-business-value">
     Add {{ Cmf::getmodulename("level_two") }}
 </button>
 </div>

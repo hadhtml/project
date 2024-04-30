@@ -271,7 +271,7 @@ $var_objective = "Stream-team";
 <img src="{{asset('public/team.svg')}}"  width="100" height="100">
 <div><h6 class="text-center">No Records Found</h6></div>
 <div><p class="text-center">You may create your first Team by clicking the bellow button.</p></div>
-<button class="btn btn-primary btn-lg btn-theme btn-block ripple ml-32" style="width:40%" type="button" data-toggle="modal" data-target="#add-team-stream">
+<button class="btn btn-flex btn-primary h-40px fs-7 fw-bold"  type="button" data-toggle="modal" data-target="#add-team-stream">
     Add a Team
 </button>
 </div>

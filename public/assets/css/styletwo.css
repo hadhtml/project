@@ -1957,3 +1957,12 @@ button:focus {
     color: #0073e9;
     text-decoration: none;
 }
+.page-title .material-symbols-outlined{
+    font-size: 22px;
+    margin-right: 10px;
+}
+.breadcrumb-item .material-symbols-outlined{
+    font-size: 17px;
+    margin-right: 5px;
+
+}
