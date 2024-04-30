@@ -17998,29 +17998,13 @@ hr {
     pointer-events: none;
 }
 
-.form-control {
-    border-radius: 8px;
-    border: 1px solid var(--border-color, #EFEFEF);
-    background: var(--white, #FFF);
-    height: 58px;
-}
 
 .form-group {
     height: 77px;
     position: relative;
 }
 
-.form-control:focus {
-    box-shadow: none;
-}
 
-.form-control:focus~label {
-    bottom: 72px;
-}
-
-.form-control:valid~label {
-    bottom: 72px;
-}
 
 .social-buttons button {
     border-radius: 37px;
@@ -18354,11 +18338,6 @@ option {
 .nav-action .nav-icon:active {
     box-shadow: none !important;
     border: none !important;
-}
-
-
-.has-search .form-control {
-    padding-left: 2.375rem;
 }
 
 
@@ -18929,13 +18908,8 @@ option {
     line-height: normal;
 }
 
-.btn-icon {
-    border: 1px solid #EFEFEF !important;
-}
 
-.btn-icon:hover {
-    background-color: #f3f3f3 !important;
-}
+
 
 .card {
     border-radius: 12px;
@@ -19012,13 +18986,7 @@ option {
     text-decoration: none;
 }
 
-.modal-content {
-    padding: 16px 23px !important;
-}
 
-.modal-header {
-    border-bottom: none !important;
-}
 
 .modal-title {
     font-size: 26px;
@@ -19844,11 +19812,6 @@ input[type="radio"]:checked {
 {
     padding: 0px !important;
 }*/
-.modal-content {
-    border-radius: 13px;
-}
-
-
 
 
 /* Custom CSS to increase radio box size */
@@ -21941,7 +21904,7 @@ line-height: normal;
 
 .module-icon
 {
-    font-size: 40px;
+    font-size: 25px;
     background-color: #f3f3f3;
     padding: 15px;
     border-radius: 100px;

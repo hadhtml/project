@@ -4,240 +4,212 @@ $var_objective = "Member";
 @extends('components.main-layout')
 <title>All Users</title>
 @section('content')
-<div class="row">
-   <div class="col-md-12">
-      <div class="card">
-         <div class="card-body p-10">
-            <div class="">
-               <table class="dt-container dt-bootstrap5 dt-empty-footer exmaple" id="kt_customers_table_wrapper">
-               <thead>
-                  <tr>
-                     <td>
-                        <label class="form-checkbox">
-                        <input type="checkbox" id="checkAll">
-                        <span class="checkbox-label"></span>
-                        </label>
-                     </td>
-                     <td>Member</td>
-                     <td>Email address</td>
-                     <td>Phone Number</td>
-                     <td>Role</td>
-                     <td>Status</td>
-                     <td>Action</td>
-                  </tr>
-               </thead>
-               <tbody>
-                  @if (session('message'))
-                  <div class="alert alert-success mt-1" role="alert">
-                     {{ session('message') }}
+<link href="{{ url('public/assetsvone/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
+<div class="card">
+   <div class="card-body pt-0">
+      <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_customers_table">
+         <thead>
+            <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+               <th class="w-10px pe-2">
+                  <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
+                     <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_customers_table .form-check-input" value="1" />
                   </div>
+               </th>
+               <td class="min-w-125px">Member</td>
+               <td class="min-w-125px">Email</td>
+               <td class="min-w-125px">Role</td>
+               <td class="min-w-125px">Status</td>
+               <td class="text-end min-w-70px">Action</td>
+            </tr>
+         </thead>
+         <tbody class="fw-semibold text-gray-600">
+            @foreach($Member as $member)
+            @php
+            $name = $member->name.' '.$member->LastName;
+            @endphp
+            <tr>
+               <td>
+                  <div class="form-check form-check-sm form-check-custom form-check-solid">
+                     <input value="{{$member->ID}}" class="form-check-input" type="checkbox" value="1" />
+                  </div>
+               </td>
+               <td class="text-gray-600 text-hover-primary mb-1">{{$member->name}} {{$member->LastName}}</td>
+               <td class="text-gray-600 text-hover-primary mb-1">{{$member->email}}</td>
+               <td class="text-gray-600 text-hover-primary mb-1">{{$member->u_role}}</td>
+               <td>
+                  @if($member->u_status == 1)
+                  <span class="badge badge-pill badge-success">Active</span>
+                  @else
+                  <span class="badge badge-pill badge-danger">Blocked</span>
                   @endif
-                  @foreach($Member as $member)
-                  @php
-                  $name = $member->name.' '.$member->LastName;
-                  @endphp
-                  <tr>
-                     <td>
-                        <label class="form-checkbox">
-                        <input type="checkbox" class="checkbox check" value="{{$member->ID}}">
-                        <span class="checkbox-label"></span>
-                        </label>
-                     </td>
-                     <td class="image-cell">
-                        @if($member->image != NULL)
-                        <img src="{{asset('public/assets/images/'.$member->image)}}" alt="Example Image">
-                        @else
-                        <img src="{{ Avatar::create($name)->toBase64() }}" alt="Example Image">
-                        @endif
-                        <div>
-                           <div class="title">{{$member->name}} {{$member->LastName}}</div>
+                  <!--<span class="badge badge-pill badge-warning">Pending Invite</span>-->
+               </td>
+               <td class="text-end">
+                  <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions 
+                  <i class="ki-outline ki-down fs-5 ms-1"></i></a>
+                  <!--begin::Menu-->
+                  <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
+                     <!--begin::Menu item-->
+                     <div class="menu-item px-3">
+                        <a href="javascript:void(0)" data-toggle="modal" data-target="#edit-member{{$member->ID}}" class="menu-link px-3">View</a>
+                     </div>
+                     <!--end::Menu item-->
+                     <!--begin::Menu item-->
+                     <div class="menu-item px-3">
+                        <a href="javascript:void(0)" data-toggle="modal" onclick="deletemember({{$member->ID}},'{{$member->u_id}}')" data-target="#delete-member" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
+                     </div>
+                     <!--end::Menu item-->
+                  </div>
+                  <!--end::Menu-->
+               </td>
+            </tr>
+            <div class="modal fade" id="edit-member{{$member->ID}}" tabindex="-1" role="dialog" aria-labelledby="add-team" aria-hidden="true">
+                <div class="modal-dialog mw-650px" role="document">
+                    <div class="modal-content">
+                        <!--begin::Modal header-->
+                        <div class="modal-header pb-0 border-0 justify-content-end">
+                            <!--begin::Close-->
+                            <div class="btn btn-sm btn-icon btn-active-color-primary" data-dismiss="modal" aria-label="Close">
+                                <i class="ki-outline ki-cross fs-1"></i>
+                            </div>
+                            <!--end::Close-->
                         </div>
-                     </td>
-                     <td>{{$member->email}}</td>
-                     <td>{{$member->phone}}</td>
-                     <td>{{$member->u_role}}</td>
-                     <td>
-                        @if($member->u_status == 1)
-                        <span class="badge badge-pill badge-success">Active</span>
-                        @else
-                        <span class="badge badge-pill badge-danger">Blocked</span>
-                        @endif
-                        <!--<span class="badge badge-pill badge-warning">Pending Invite</span>-->
-                     </td>
-                     <td style="width: 100px;">
-                        <button class="btn-circle btn-tolbar" data-toggle="modal" data-target="#edit-member{{$member->ID}}">
-                        <span class="material-symbols-outlined" data-toggle="tooltip"
-                            data-placement="top" data-original-title="Edit">edit</span>
-                        </button>
-                        <button class="btn-circle btn-tolbar" data-toggle="modal" onclick="deletemember({{$member->ID}},'{{$member->u_id}}')" data-target="#delete-member">
-                        <span class="material-symbols-outlined" data-toggle="tooltip"
-                            data-placement="top" data-original-title="Delete">delete</span>
-                        </button>
-                     </td>
-                  </tr>
-                  <div class="modal fade" id="edit-member{{$member->ID}}" tabindex="-1" role="dialog" aria-labelledby="edit-member" aria-hidden="true">
-                     <div class="modal-dialog" role="document">
-                        <div class="modal-content" style="width: 526px !important;">
-                           <div class="modal-header">
-                              <div class="row">
-                                 <div class="col-md-12">
-                                    <h5 class="modal-title" id="create-epic">Edit User</h5>
-                                 </div>
-                                 <div class="col-md-12">
-                                    <p>Fill out the form & we'll send them an invite</p>
-                                 </div>
-                                 <span class="email-error-member" class="ml-3 text-danger"></span>
-                              </div>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <img src="{{asset('public/assets/images/icons/minus.svg')}}">
-                              </button>
+                        <div class="modal-body scroll-y mx-5 mx-xl-18 pt-0 pb-15">
+                        <form class="needs-validation" action="{{url('edit-member')}}" method="POST" enctype="multipart/form-data">
+                           @csrf    
+                           <input type="hidden"  name="member_id" value="{{$member->ID}}">
+                           <input type="hidden" id="member" name="user_id" value="{{$member->u_id}}">
+                           <div class="text-center mb-13">
+                              <h1 class="mb-3">Update User</h1>
                            </div>
-                           <div class="modal-body">
-                              <form class="needs-validation" action="{{url('edit-member')}}" method="POST" enctype="multipart/form-data">
-                                 @csrf    
-                                 <input type="hidden"  name="member_id" value="{{$member->ID}}">
-                                 <input type="hidden" id="member" name="user_id" value="{{$member->u_id}}">
-                                 <div class="row">
-                                    <div class="col-md-12 col-lg-12 col-xl-12">
-                                       <div class="form-group mb-0">
-                                          <input type="text" class="form-control" value="{{$member->Name}}" name="name" >
-                                          <label for="objective-name">First Name</label>
-                                       </div>
-                                    </div>
-                                    <div class="col-md-12 col-lg-12 col-xl-12">
-                                       <div class="form-group mb-0">
-                                          <input type="text" class="form-control" value="{{$member->LastName}}" id="member_name" name="last_member_name" required>
-                                          <label for="objective-name">Last Name</label>
-                                       </div>
-                                    </div>
-                                    <div class="col-md-12 col-lg-12 col-xl-12">
-                                       <div class="form-group mb-0">
-                                          <input type="email" class="form-control" name="email" onfocusout="checkemailedit(this.value)" value="{{$member->email}}" id="email_edit">
-                                          <label for="email" style="bottom:72px;">Email</label>
-                                       </div>
-                                    </div>
-                                    <div class="col-md-12 col-lg-12 col-xl-12">
-                                       <div class="form-group mb-0">
-                                          <input type="text" value="{{$member->phone}}" class="form-control" onkeypress="return onlyNumberKey(event)" name="phone" >
-                                          <label for="phone-number">Phone number</label>
-                                       </div>
-                                    </div>
-                                    <div class="col-md-12 col-lg-12 col-xl-12">
-                                       <div class="form-group mb-0">
-                                          <select class="form-control"  name="status">
-                                          <option @if($member->status == 1) selected @endif value="1">Active</option>
-                                          <option @if($member->status == 0) selected @endif value="0">Blocked</option>
-                                          </select>
-                                          <label for="small-description">Status</label>
-                                       </div>
-                                    </div>
-                                    <div class="col-md-12 col-lg-12 col-xl-12">
-                                       <div class="form-group mb-0">
-                                          <input type="text" class="form-control" value="{{$member->u_role}}"  name="role" >
-                                          <label for="role">Role</label>
-                                       </div>
-                                    </div>
-                                    <input type="hidden" id="old_image" name="old_image" value="{{ $member->image }}">
-                                    <div class="col-md-12 col-lg-12 col-xl-12">
-                                       @if($member->image != NULL)
-                                       <img src="{{asset('public/assets/images/'.$member->image)}}" style="width:100px; height:100px; object-fit:cover" alt="Example Image">
-                                       @endif
-                                       <div class="form-group mb-0">
-                                          <input type="file" class="form-control" name="image" >
-                                          <label for="profile">Profile Picture</label>
-                                       </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                       <button class="btn btn-primary btn-lg btn-theme btn-block ripple" id="edit-memeber" type="submit">Update</button>
-                                    </div>
-                                 </div>
-                              </form>
+                           <div class="d-flex flex-column mb-7 fv-row">
+                              <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                  <span class="required">First Name</span>
+                              </label>
+                              <input type="text" class="form-control form-control-solid" value="{{$member->Name}}" name="name" >
                            </div>
-                        </div>
+                           <div class="d-flex flex-column mb-7 fv-row">
+                              <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                  <span class="required">Last Name</span>
+                              </label>
+                              <input type="text" class="form-control form-control-solid" value="{{$member->LastName}}" id="member_name" name="last_member_name" required>
+                           </div>
+                           <div class="d-flex flex-column mb-7 fv-row">
+                              <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                  <span class="required">Email</span>
+                              </label>
+                              <input type="email" class="form-control form-control-solid" name="email" onfocusout="checkemailedit(this.value)" value="{{$member->email}}" id="email_edit">
+                           </div>
+                           <div class="d-flex flex-column mb-7 fv-row">
+                              <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                  <span class="required">Phone Number</span>
+                              </label>
+                              <input type="text" value="{{$member->phone}}" class="form-control form-control-solid" onkeypress="return onlyNumberKey(event)" name="phone" >
+                           </div>
+                           <div class="d-flex flex-column mb-7 fv-row">
+                              <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                  <span class="required">Role</span>
+                              </label>
+                              <input type="text" class="form-control form-control-solid" value="{{$member->u_role}}"  name="role" >
+                           </div>
+                           <div class="d-flex flex-column mb-7 fv-row">
+                              <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                  <span class="required">Status</span>
+                              </label>
+                              <select class="form-control form-control-solid"  name="status">
+                                 <option @if($member->status == 1) selected @endif value="1">Active</option>
+                                 <option @if($member->status == 0) selected @endif value="0">Blocked</option>
+                              </select>
+                           </div>
+                           @if($member->image != NULL)
+                           <div class="symbol symbol-80px symbol-lg-150px mb-4">
+                              <img src="{{asset('public/assets/images/'.$member->image)}}" style="width:100px; height:100px; object-fit:cover" alt="Example Image">
+                           </div>
+                           
+                           @endif
+                           <div class="d-flex flex-column mb-7 fv-row">
+                              <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                  <span class="required">Profile Picture</span>
+                              </label>
+                              <input type="file" class="form-control form-control-solid" id="add_image" name="image">
+                           </div>
+                           <div class="text-center pt-15">
+                                 <button type="submit" id="kt_modal_new_card_submit" class="btn btn-primary">
+                                     <span class="indicator-label">Submit</span>
+                                     <span class="indicator-progress">Please wait... 
+                                     <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                 </button>
+                             </div>
+                        </form>
                      </div>
                   </div>
-                  @endforeach
-                  <!-- Add more rows as needed -->
-               </tbody>
-            </table>
+               </div>
             </div>
-         </div>
-      </div>
+            @endforeach
+         </tbody>
+      </table>
    </div>
 </div>
-<div class="modal fade" id="create-member" tabindex="-1" role="dialog" aria-labelledby="create-member" aria-hidden="true">
-   <div class="modal-dialog" role="document">
-      <div class="modal-content" style="width: 526px !important;">
-         <div class="modal-header">
-            <div class="row">
-               <div class="col-md-12">
-                  <h5 class="modal-title" id="create-epic">Add User</h5>
-               </div>
-               <div class="col-md-12">
-                  <p>Fill out the form & we'll send them an invite</p>
-               </div>
-               <div id="success-member"  role="alert"></div>
-               <span id="email-error-member" class="ml-3 text-danger"></span>
+<div class="modal fade" id="create-member" tabindex="-1" role="dialog" aria-labelledby="add-team" aria-hidden="true">
+    <div class="modal-dialog mw-650px" role="document">
+        <div class="modal-content">
+            <!--begin::Modal header-->
+            <div class="modal-header pb-0 border-0 justify-content-end">
+                <!--begin::Close-->
+                <div class="btn btn-sm btn-icon btn-active-color-primary" data-dismiss="modal" aria-label="Close">
+                    <i class="ki-outline ki-cross fs-1"></i>
+                </div>
+                <!--end::Close-->
             </div>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <img src="{{asset('public/assets/images/icons/minus.svg')}}">
-            </button>
-         </div>
-         <div class="modal-body">
+            <div class="modal-body scroll-y mx-5 mx-xl-18 pt-0 pb-15">
             <form class="needs-validation" action="{{url('save-member')}}" autocomplete="off" enctype="multipart/form-data" method="POST">
                @csrf
-               <div class="row">
-                  <div class="col-md-12 col-lg-12 col-xl-12">
-                     <div class="form-group mb-0">
-                        <input autocomplete="off" type="text" class="form-control" id="member_name" name="member_name" required>
-                        <label for="objective-name">First Name</label>
-                     </div>
-                  </div>
-                  <div class="col-md-12 col-lg-12 col-xl-12">
-                     <div class="form-group mb-0">
-                        <input autocomplete="off" type="text" class="form-control" id="member_name" name="last_member_name" required>
-                        <label for="objective-name">Last Name</label>
-                     </div>
-                  </div>
-                  <div class="col-md-12 col-lg-12 col-xl-12">
-                     <div class="form-group mb-0">
-                        <input autocomplete="off" type="email" class="form-control" autocomplete="" id="email" name="email" onfocusout="checkemail(this.value)" required>
-                        <label for="objective-name" style="bottom:72px;">Email</label>
-                     </div>
-                  </div>
-                  <div class="col-md-12 col-lg-12 col-xl-12">
-                     <div class="form-group mb-0">
-                        <input autocomplete="off" type="text" class="form-control" name="phone" onkeypress="return onlyNumberKey(event)" id="phone_number" required>
-                        <label for="phone-number">Phone number</label>
-                     </div>
-                  </div>
-                  <!--    <div class="col-md-12 col-lg-12 col-xl-12">-->
-                  <!--    <div class="form-group mb-0">-->
-                  <!--       <select class="form-control" id="org_id" name="org_id" required>-->
-                  <!--        <option value="">Select Organization</option>-->
-                  <!--            <?php foreach(DB::table('organization')->where('user_id',Auth::id())->where('trash',NULL)->get() as $r){ ?>-->
-                  <!--              <option value="{{ $r->id }}">{{ $r->organization_name }}</option>-->
-                  <!--            <?php }  ?>-->
-                  <!--       </select>-->
-                  <!--        <label for="small-description">Organization</label>-->
-                  <!--    </div>-->
-                  <!--</div>  -->
-                  <div class="col-md-12 col-lg-12 col-xl-12">
-                     <div class="form-group mb-0">
-                        <input autocomplete="off" type="text" class="form-control" id="role" name="role" required>
-                        <label for="role">Role</label>
-                     </div>
-                  </div>
-                  <div class="col-md-12 col-lg-12 col-xl-12">
-                     <div class="form-group mb-0">
-                        <input type="file" class="form-control" id="add_image" name="add_image">
-                        <label for="profile">Profile Picture</label>
-                     </div>
-                  </div>
-                  <div class="col-md-12">
-                     <button class="btn btn-primary btn-lg btn-theme btn-block ripple" id="button-check" type="submit">Send Invitation</button>
-                  </div>
+               <div class="text-center mb-13">
+                  <h1 class="mb-3">Add User</h1>
                </div>
+               <div class="d-flex flex-column mb-7 fv-row">
+                  <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                      <span class="required">First Name</span>
+                  </label>
+                  <input autocomplete="off" type="text" class="form-control form-control-solid" id="member_name" name="member_name" required>
+               </div>
+               <div class="d-flex flex-column mb-7 fv-row">
+                  <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                      <span class="required">Last Name</span>
+                  </label>
+                  <input autocomplete="off" type="text" class="form-control form-control-solid" id="member_name" name="last_member_name" required>
+               </div>
+               <div class="d-flex flex-column mb-7 fv-row">
+                  <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                      <span class="required">Email</span>
+                  </label>
+                  <input autocomplete="off" type="email" class="form-control form-control-solid" autocomplete="" id="email" name="email" onfocusout="checkemail(this.value)" required>
+               </div>
+               <div class="d-flex flex-column mb-7 fv-row">
+                  <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                      <span class="required">Phone Number</span>
+                  </label>
+                  <input autocomplete="off" type="text" class="form-control form-control-solid" name="phone" onkeypress="return onlyNumberKey(event)" id="phone_number" required>
+               </div>
+               <div class="d-flex flex-column mb-7 fv-row">
+                  <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                      <span class="required">Role</span>
+                  </label>
+                  <input autocomplete="off" type="text" class="form-control form-control-solid" id="role" name="role" required>
+               </div>
+               <div class="d-flex flex-column mb-7 fv-row">
+                  <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                      <span class="required">Profile Picture</span>
+                  </label>
+                  <input type="file" class="form-control form-control-solid" id="add_image" name="add_image">
+               </div>
+               <div class="text-center pt-15">
+                     <button type="submit" id="kt_modal_new_card_submit" class="btn btn-primary">
+                         <span class="indicator-label">Submit</span>
+                         <span class="indicator-progress">Please wait... 
+                         <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                     </button>
+                 </div>
             </form>
          </div>
       </div>

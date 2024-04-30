@@ -214,87 +214,95 @@ $var_objective = "V-Stream";
 </button>
 </div>
 @endif
-<div class="modal fade" id="add-business-value" tabindex="-1" role="dialog" aria-labelledby="add-business-unit" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content" style="width: 526px !important;">
-            <div class="modal-header">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h5 class="modal-title" id="create-epic">Create {{ Cmf::getmodulename('level_two') }}</h5>
-                    </div>
-                    <div class="col-md-12">
-                        <p>Lorem ipsum dummy text for printing</p>
-                    </div>
+<div class="modal fade" id="add-business-value" tabindex="-1" aria-hidden="true">
+    <!--begin::Modal dialog-->
+    <div class="modal-dialog modal-dialog-centered mw-650px">
+        <!--begin::Modal content-->
+        <div class="modal-content rounded">
+            <!--begin::Modal header-->
+            <div class="modal-header pb-0 border-0 justify-content-end">
+                <!--begin::Close-->
+                <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                    <i class="ki-outline ki-cross fs-1"></i>
                 </div>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <img src="{{asset('public/assets/images/icons/minus.svg')}}">
-                </button>
+                <!--end::Close-->
             </div>
-            <div class="modal-body">
+            <!--begin::Modal header-->
+            <!--begin::Modal body-->
+            <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
+                <!--begin:Form-->
                 <form class="needs-validation" action="{{url('add-value-stream')}}" method="POST">
                     @csrf
+                    <div class="mb-13 text-center">
+                        <!--begin::Title-->
+                        <h1 class="mb-3">Create {{ Cmf::getmodulename('level_two') }}</h1>
+                        <!--end::Title-->
+                        <!--begin::Description-->
+                        <div class="text-muted fw-semibold fs-5">If you need more info, please check 
+                        <a href="#" class="fw-bold link-primary">Project Guidelines</a>.</div>
+                        <!--end::Description-->
+                    </div>
                     <input type="hidden" name="org_value_id" value="{{$organization->id}}">
-                    <div class="row">
-                        <div class="col-md-12 col-lg-12 col-xl-12">
-                            <div class="form-group mb-0">
-                                <input type="text" class="form-control" name="value_name" id="{{ Cmf::getmodulename('level_one') }}" required>
-                                <label for="{{ Cmf::getmodulename('level_one') }}">{{ Cmf::getmodulename('level_two') }}</label>
-                            </div>
-                        </div>
-                        @php
-                        $BCount = DB::table('business_units')->where('user_id',Auth::id())->orWhere('user_id',Auth::user()->invitation_id)->count();
-                        @endphp
-                        <!--  <div class="col-md-12 col-lg-12 col-xl-12">-->
-                        <!--    <div class="form-group mb-0">-->
-                        <!--        <select class="form-control" name="unit_id" required>-->
-                        <!--               <option value="">Select {{ Cmf::getmodulename("level_one") }}</option>-->
-                        <!--            <?php foreach(DB::table('business_units')->where('user_id',Auth::id())->get() as $r){ ?>-->
-                        <!--              <option value="{{ $r->id }}">{{ $r->business_name }}</option>-->
-                        <!--            <?php }  ?>-->
-                        <!--        </select>-->
-                        <!--        <label for="lead-manager">{{ Cmf::getmodulename("level_one") }}</label>-->
-                        <!--    </div>-->
-                        <!--</div>-->
-                        <!-- @if($BCount == 0)-->
-                        <!--<div class="alert alert-danger mt-1 ml-3" role="alert">-->
-                        <!--Add {{ Cmf::getmodulename("level_one") }} before assigning <a href="{{route('organization.level-one', Cmf::getmoduleslug('level_one'))}}" class="alert-link">Click here</a>.-->
-                        <!--</div>-->
-                        <!--@endif-->
-                        
-                        @php
-                        $memberCount = DB::table('members')->where('org_user',Auth::id())->orWhere('org_user',Auth::user()->invitation_id)->count();
-                        @endphp
-                        <div class="col-md-12 col-lg-12 col-xl-12">
-                            <div class="form-group mb-0">
-                                <select class="form-control" name="lead_manager" required>
-                                    <option value="NULL" selected>Select Lead</option>
-                                    <?php foreach(DB::table('members')->where('org_user',Auth::id())->orWhere('org_user',Auth::user()->invitation_id)->get() as $r){ ?>
-                                      <option value="{{ $r->id }}">{{ $r->name }} {{$r->last_name}}</option>
-                                    <?php }  ?>
-                                </select>
-                                <label for="lead-manager">Lead</label>
-                            </div>
-                        </div>
-                         @if($memberCount == 0)
-                        <div class="alert alert-danger mt-1 ml-3" role="alert">
-                        Add users before assigning <a href="{{route('settings.users')}}" class="alert-link">Click here</a>.
-                        </div>
-                        @endif
-                        <div class="col-md-12 col-lg-12 col-xl-12">
-                            <div class="form-group mb-0">
-                                <input type="text"  class="form-control" name="detail">
-                                <label for="small-description">Small Description</label>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <button class="btn btn-primary btn-lg btn-theme btn-block ripple" type="submit">Submit</button>
-                        </div>
+                    <div class="d-flex flex-column mb-8 fv-row">
+                        <!--begin::Label-->
+                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <span class="required">Enter {{ Cmf::getmodulename('level_two') }} Title</span>
+                        </label>
+                        <!--end::Label-->
+                        <input type="text" class="form-control form-control-solid" placeholder="Enter {{ Cmf::getmodulename('level_two') }} Title" name="value_name" id="{{ Cmf::getmodulename('level_one') }}" required>
+                    </div>
+                    @php
+                    $BCount = DB::table('business_units')->where('user_id',Auth::id())->orWhere('user_id',Auth::user()->invitation_id)->count();
+                    @endphp
+
+                    @php
+                    $memberCount = DB::table('members')->where('org_user',Auth::id())->orWhere('org_user',Auth::user()->invitation_id)->count();
+                    @endphp
+                    <div class="d-flex flex-column mb-8 fv-row">
+                        <!--begin::Label-->
+                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <span class="required">Lead</span>
+                        </label>
+                        <!--end::Label-->
+                        <select class="form-control form-control-solid" name="lead_manager" required>
+                            <option value="NULL" selected>Select Lead</option>
+                            <?php foreach(DB::table('members')->where('org_user',Auth::id())->orWhere('org_user',Auth::user()->invitation_id)->get() as $r){ ?>
+                              <option value="{{ $r->id }}">{{ $r->name }} {{$r->last_name}}</option>
+                            <?php }  ?>
+                        </select>
+                    </div>
+                    @if($memberCount == 0)
+                    <div class="alert alert-danger mt-1 ml-3" role="alert">
+                    Add users before assigning <a href="{{route('settings.users')}}" class="alert-link">Click here</a>.
+                    </div>
+                    @endif
+                    <div class="d-flex flex-column mb-8 fv-row">
+                        <!--begin::Label-->
+                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <span>Small Description</span>
+                        </label>
+                        <!--end::Label-->
+                        <textarea class="form-control form-control-solid" name="detail" rows="3" name="target_details" placeholder="Type Target Details"></textarea>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
+                            <span class="indicator-label">Submit</span>
+                            <span class="indicator-progress">Please wait... 
+                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                        </button>
                     </div>
                 </form>
+                <!--end:Form-->
             </div>
+            <!--end::Modal body-->
         </div>
+        <!--end::Modal content-->
     </div>
+    <!--end::Modal dialog-->
 </div>
+
+
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script>

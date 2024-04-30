@@ -6,39 +6,45 @@ $var_objective = "Jira";
 @section('content')
 <div class="row">
    <div class="col-md-12">
+      @if (session('message'))
+      <div class="alert alert-success mt-1" role="alert">
+         {{ session('message') }}
+      </div>
+      @endif
       <div class="card">
-         <div class="card-body p-10">
-            <table class="table data-table">
+         <div class="card-body">
+            <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_customers_table">
                <thead>
-                  <tr>
-                     <td>Jira Connect Name</td>
-                     <td>Jira Url</td>
-                     <td>Jira User Name</td>
-                     <td>Jira Token</td>
-                     <td>Action</td>
+                  <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+                     <td class="min-w-125px">Jira Connect Name</td>
+                     <td class="min-w-125px">Jira Url</td>
+                     <td class="min-w-125px">Jira User Name</td>
+                     <td class="text-end min-w-70px">Action</td>
                   </tr>
                </thead>
-               <tbody>
-                  @if (session('message'))
-                  <div class="alert alert-success mt-1" role="alert">
-                     {{ session('message') }}
-                  </div>
-                  @endif
+               <tbody class="fw-semibold text-gray-600">
                   @foreach($Jiradata as $data)
                   <tr>
-                     <td>{{$data->jira_name}}</td>
-                     <td>{{$data->jira_url}}</td>
-                     <td>{{$data->user_name}}</td>
-                     <td>{{ \Illuminate\Support\Str::limit($data->token,50, $end='...') }}</td>
-                     <td>
-                        <button class="btn-circle btn-tolbar" data-toggle="modal" data-target="#create{{$data->id}}">
-                        <span class="material-symbols-outlined" data-toggle="tooltip"
-                            data-placement="top" data-original-title="Edit">edit</span>
-                        </button>
-                        <button class="btn-circle btn-tolbar" data-toggle="modal" data-target="#delete{{$data->id}}">
-                        <span class="material-symbols-outlined" data-toggle="tooltip"
-                            data-placement="top" data-original-title="Delete">delete</span>
-                        </button>
+                     <td class="text-gray-600 text-hover-primary mb-1">{{$data->jira_name}}</td>
+                     <td class="text-gray-600 text-hover-primary mb-1">{{$data->jira_url}}</td>
+                     <td class="text-gray-600 text-hover-primary mb-1">{{$data->user_name}}</td>
+                     <td class="text-end">
+                        <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions 
+                        <i class="ki-outline ki-down fs-5 ms-1"></i></a>
+                        <!--begin::Menu-->
+                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
+                           <!--begin::Menu item-->
+                           <div class="menu-item px-3">
+                              <a href="javascript:void(0)" data-toggle="modal" data-target="#create{{$data->id}}" class="menu-link px-3">View</a>
+                           </div>
+                           <!--end::Menu item-->
+                           <!--begin::Menu item-->
+                           <div class="menu-item px-3">
+                              <a href="javascript:void(0)" data-toggle="modal" data-target="#delete{{$data->id}}" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
+                           </div>
+                           <!--end::Menu item-->
+                        </div>
+                        <!--end::Menu-->
                      </td>
                   </tr>
                   <div class="modal fade" id="delete{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -118,7 +124,7 @@ $var_objective = "Jira";
                         </div>
                      </div>
                   </div>
-                  @endforeach        
+                  @endforeach 
                </tbody>
             </table>
          </div>
