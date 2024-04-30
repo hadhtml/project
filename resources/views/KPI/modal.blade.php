@@ -33,13 +33,13 @@
                     
                         <div class="row">
                             <div class="col-md-12 col-lg-12 col-xl-12 mb-2">
-                                <div class="form-group mb-0">
-                                    <input type="text" class="form-control" name="title" required id="title">
-                                    <label for="objective-name">Title</label>
+                                <div class="d-flex flex-column mb-7 fv-row">
+                                    <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                        <span class="required">Title</span>
+                                    </label>
+                                    <input type="text" class="form-control form-control-solid" name="title" required id="title">
                                 </div>
                             </div>
-                       
-                         
                         </div>
 
                  
