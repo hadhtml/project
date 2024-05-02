@@ -1,155 +1,155 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <!-- MDB -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    {{-- <link rel="stylesheet" type="text/css" href="{{asset('public/assets/css/style.css')}}"> --}}
-    <link rel="icon" type="image/x-icon" href="{{asset('public/assets/images/icons/icon.ico')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('public/assets/css/style.css')}}">
-    
-    <title>CheckOut</title>
-    <style>
-        .StripeElement {
-            background-color: white;
-            padding: 8px 12px;
-            border-radius: 4px;
-            border: 1px solid transparent;
-            box-shadow: 0 1px 3px 0 #e6ebf1;
-            -webkit-transition: box-shadow 150ms ease;
-            transition: box-shadow 150ms ease;
-        }
-        .StripeElement--focus {
-            box-shadow: 0 1px 3px 0 #cfd7df;
-        }
-        .StripeElement--invalid {
-            border-color: #fa755a;
-        }
-        .StripeElement--webkit-autofill {
-            background-color: #fefde5 !important;
-        }
-    </style>
-</head>
-
-<body style="background: #f3f3f3;">
-
-<div class="container">
-
-<h2 style="text-align:center">Confirm and payment</h2>
-
-
-
-
-    <div class="row ml-5 d-flex">
-        <div class="col-md-10">
-            <div class="d-flex">
-                 <div class="p-2"><div id="paypal-button-container" style="width: 10%"></div>  </div> 
-
-
-                <div class="p-2">  
-                    {{-- <div id="paypal-button-container" style="max-width:100px;"></div>   --}}
-                    <button class="btn btn-dark d-flex" type="button">
-                    <img src="{{asset('public/credit-card.svg')}}"> <span>Stripe</span>
-                </button>
-            </div>
-            </form>
-
-    
-
-              </div>
-
-              
-                
-              <div id="cashier"></div>
-           
-
-              <div class="row" id="stripe">
-        
-                <div class="col-md-6">
-
-                    
-                    <form  action="{{ url('stripe-post') }}" method="post" id="subscribe-form">
-
-                        @csrf
-           
-                        <input type="hidden" id="plan" name="plan" value="{{$plan->plan_id}}">
-
-                        <div class="">
-                        <label for="card-holder-name">Card Holder Name</label>   
-                        <input id="card-holder-name" class="form-control" type="text">
-                        </div>   
-                        <div class="form-row">
-                            <label for="card-element">Credit or debit card</label>
-                            <div id="card-element" class="form-control">        
-                             </div>      
-                            <div id="card-errors" role="alert"></div>
-                        </div>
-                        <div class="stripe-errors"></div>    @if (count($errors) > 0)
-                        <div class="alert alert-danger">
-                            @foreach ($errors->all() as $error)
-                            {{ $error }}<br>
-                            @endforeach
-                        </div>
-                        @endif    
-                        <div class="form-group text-center mt-2">
-                            <button  id="card-button" type="button" data-secret="{{ $intent->client_secret }}" 
-                                 class="btn btn-lg btn-success btn-block">SUBMIT</button>
-                        </div>
-                    </form>
-
-                    
-               
+@php
+$var_objective = "checkout";
+@endphp
+@extends('components.main-layout')
+<title>CheckOut</title>
+@section('content')
+@php
+$organization  = DB::table('organization')->where('user_id',Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->first();
+@endphp
+<!--begin::Layout-->
+<div class="d-flex flex-column flex-lg-row">
+    <!--begin::Content-->
+    <div class="flex-lg-row-fluid me-lg-15 order-2 order-lg-1 mb-10 mb-lg-0">
+        <!--begin::Card-->
+        <div class="card card-flush pt-3 mb-5 mb-xl-10">
+            <!--begin::Card header-->
+            <div class="card-header">
+                <div class="card-title">
+                    <h2 class="fw-bold">Enter Payment Details</h2>
                 </div>
-
-                <div class="col-md-6 mt-7">
-
-                    <div class="card" style="width: 18rem;">
-                        <div class="card-body">
-                          <h5 class="card-title">{{$plan->plan_title}} Subscriptions Plan</h5>
-                          <p class="card-text">${{$plan->base_price}} / {{$plan->billing_method}}</p>
-                        
-                        </div>
-                      </div>
+            </div>
+            <!--end::Card header-->
+            <!--begin::Card body-->
+            <div class="card-body pt-3">
+                <div class="p-2"><div id="paypal-button-container" style="width: 100%"></div></div>
+                <div class="separator separator-dashed mb-7"></div> 
+                <form  action="{{ url('stripe-post') }}" method="post" id="subscribe-form">
+                     @csrf
+                    <input type="hidden" id="plan" name="plan" value="{{$plan->plan_id}}">
+                    <div class="d-flex flex-column mb-7 fv-row">
+                        <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                            <span class="required">Card Holder Name</span>
+                        </label>
+                        <input type="text" placeholder="Card Holder Name" class="form-control form-control-solid"  id="card-holder-name" name="name" placeholder="" />
+                     </div> 
+                    <div class="form-row">
+                        <label for="card-element">Credit or debit card</label>
+                        <div id="card-element" class="form-control">        
+                         </div>      
+                        <div id="card-errors" role="alert"></div>
                     </div>
-              </div>      
-
-    
-
-        
-            
-        
-         
-        
-                
-        
+                    <div class="stripe-errors"></div>    @if (count($errors) > 0)
+                    <div class="alert alert-danger">
+                        @foreach ($errors->all() as $error)
+                        {{ $error }}<br>
+                        @endforeach
+                    </div>
+                    @endif    
+                    <div class="form-group text-center mt-2">
+                        <button  id="card-button" type="button" data-secret="{{ $intent->client_secret }}" 
+                             class="btn btn-lg btn-success btn-block">SUBMIT</button>
+                    </div>
+                </form>
+            </div>
+            <!--end::Card body-->
         </div>
-
-
-
-      
     </div>
+    <!--end::Content-->
+    <!--begin::Sidebar-->
+    <div class="flex-column flex-lg-row-auto w-lg-250px w-xl-300px mb-10 order-1 order-lg-2">
+        <!--begin::Card-->
+        <div class="card card-flush mb-0" data-kt-sticky="true" data-kt-sticky-name="subscription-summary" data-kt-sticky-offset="{default: false, lg: '200px'}" data-kt-sticky-width="{lg: '250px', xl: '300px'}" data-kt-sticky-left="auto" data-kt-sticky-top="150px" data-kt-sticky-animation="false" data-kt-sticky-zindex="95">
+            <div class="card-header">
+                <div class="card-title">
+                    <h2>Summary</h2>
+                </div>
+            </div>
+            <div class="card-body pt-0 fs-6">
+                <div class="mb-7">
+                    <div class="d-flex align-items-center">
+                        <div class="symbol symbol-60px symbol-circle me-3">
+                            @if(auth()->user()->image)
+                            <img src="{{asset('public/assets/images/'.auth()->user()->image)}}">
+                            @else
+                            <img src="{{ Avatar::create(auth()->user()->name.' '.auth()->user()->last_name)->toBase64() }}">
+                            @endif
+                        </div>
+                        <div class="d-flex flex-column">
+                            <a href="#" class="fs-4 fw-bold text-gray-900 text-hover-primary me-2">{{ auth()->user()->name }} {{ auth()->user()->last_name }}</a>
+                            <a href="#" class="fw-semibold text-gray-600 text-hover-primary">{{ auth()->user()->email }}</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="separator separator-dashed mb-7"></div>
+                <div class="mb-7">
+                    <h5 class="mb-4">Product details</h5>
+                    <div class="mb-0">
+                        <span class="badge badge-light-info me-2">{{$plan->plan_title}}</span>
+                        <span class="fw-semibold text-gray-600">${{$plan->base_price}} / {{$plan->billing_method}}</span>
+                    </div>
+                </div>
+                <div class="separator separator-dashed mb-7"></div>
+                <div class="mb-10">
+                    <h5 class="mb-4">Subscription Details</h5>
+                    <table class="table fs-6 fw-semibold gs-0 gy-2 gx-2">
+                        <!--begin::Row-->
+                        <tr class="">
+                            <td class="text-gray-500">Subscription ID:</td>
+                            <td class="text-gray-800">sub_4567_8765</td>
+                        </tr>
+                        <!--end::Row-->
+                        <!--begin::Row-->
+                        <tr class="">
+                            <td class="text-gray-500">Started:</td>
+                            <td class="text-gray-800">15 Apr 2021</td>
+                        </tr>
+                        <!--end::Row-->
+                        <!--begin::Row-->
+                        <tr class="">
+                            <td class="text-gray-500">Status:</td>
+                            <td>
+                                <span class="badge badge-light-success">Active</span>
+                            </td>
+                        </tr>
+                        <!--end::Row-->
+                        <!--begin::Row-->
+                        <tr class="">
+                            <td class="text-gray-500">Next Invoice:</td>
+                            <td class="text-gray-800">15 Apr 2022</td>
+                        </tr>
+                        <!--end::Row-->
+                    </table>
+                    <!--end::Details-->
+                </div>
+            </div>
+            <!--end::Card body-->
+        </div>
+        <!--end::Card-->
+    </div>
+    <!--end::Sidebar-->
 </div>
-
-
-        
-     
-
-
-
-      
-  
-
-
-
+<!--end::Layout-->
+<style>
+    .StripeElement {
+        background-color: white;
+        padding: 8px 12px;
+        border-radius: 4px;
+        border: 1px solid transparent;
+        box-shadow: 0 1px 3px 0 #e6ebf1;
+        -webkit-transition: box-shadow 150ms ease;
+        transition: box-shadow 150ms ease;
+    }
+    .StripeElement--focus {
+        box-shadow: 0 1px 3px 0 #cfd7df;
+    }
+    .StripeElement--invalid {
+        border-color: #fa755a;
+    }
+    .StripeElement--webkit-autofill {
+        background-color: #fefde5 !important;
+    }
+</style>
 {{-- <script src="https://pay.google.com/gp/p/js/pay.js"></script>     --}}
 
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
@@ -385,6 +385,4 @@ var stripe = Stripe('{{ env('STRIPE_KEY') }}');
               
     }
     </script>
-
-</body>
-</html>
+@endsection

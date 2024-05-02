@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta property="og:locale" content="en_US" />
         <meta property="og:type" content="article" />
-        <link rel="shortcut icon" href="{{ url('public/assetsvone/media/logos/favicon.ico') }}" />
+        <link rel="icon" type="image/x-icon" href="{{asset('public/assets/images/icons/icon.ico')}}">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
         <link href="{{ url('public/assetsvone/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ url('public/assetsvone/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
@@ -268,6 +268,14 @@
                     @include('profile.sidebar')
                   
                     @endif
+
+                    @if ($var_objective == 'checkout')
+                  
+                    @include('profile.sidebar')
+                  
+                    @endif
+
+                    
 
                     @if ($var_objective == 'linking')     
                     @include('Business-units.Team-sidebar')
@@ -586,6 +594,12 @@
                                 @include('profile.breadcrum')
                               
                                 @endif
+
+                                @if ($var_objective == 'checkout')
+                                @include('profile.checkoutbreadcrum')
+                              
+                                @endif
+                                
 
                                 
                                 @if ($var_objective == 'leaderline-unit')
