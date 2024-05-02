@@ -104,8 +104,8 @@ class RegisterController extends Controller
         ]);
         }
 
-    
-
+        if($data['business_type'] == 'yes')
+        {
             DB::table('jira_setting')
             ->insert([
               'user_name' => $data['user_name'], 
@@ -116,10 +116,7 @@ class RegisterController extends Controller
       
       
               ]);
-        
-     
-       
-
+        }
         return $user;
     }
 }
