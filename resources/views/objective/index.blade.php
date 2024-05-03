@@ -209,8 +209,8 @@ $Currentsprint = DB::table('sprint')->where('user_id',Auth::id())->where('value_
                @if($sprint > 0)
                <div id="sprint-end">
                    {{$sprintValue->title}} {{$sprintValue->quarter_name}} {{$sprintValue->quarter_year}}
-                   <button class="btn btn-warning mb-2 text-white" type="button" disabled  style="height: 35px">In progress</button>
-                   <button class="btn btn-primary mr-1 mb-2" style="height: 35px" id="endquarterbutton" data-toggle="modal" data-target="#" onclick="Finishquarter('{{$sprintValue->quarter_name}}','{{$sprintValue->quarter_year}}')">Finish Quarter</button>
+                   <button class="btn btn-warning mb-2 text-white" type="button" disabled>In progress</button>
+                   <button class="btn btn-primary mr-1 mb-2" id="endquarterbutton" data-toggle="modal" data-target="#" onclick="Finishquarter('{{$sprintValue->quarter_name}}','{{$sprintValue->quarter_year}}')">Finish Quarter</button>
                </div>
                @else
                 <div id="sprint-end">
@@ -228,15 +228,13 @@ $Currentsprint = DB::table('sprint')->where('user_id',Auth::id())->where('value_
                  @if($Currentsprint->quarter_name == 'Q4')
                  Q1 {{$CurrentQuarter->year}}
                  @endif
-   
-                 <button class="btn btn-secondary mb-2" type="button" disabled  style="height: 35px">Not Started</button>
-                 {{-- <button class="btn btn-primary mb-2"  style="height: 35px"  onclick="Restartquarter({{$Currentsprint->id}})">Reopen {{$Currentsprint->quarter_name}} {{$Currentsprint->quarter_year}} </button> --}}
-                 <button class="btn btn-primary mb-2" disabled style="height: 35px"  type="button">Start Quarter</button>
+                 <button class="btn btn-secondary mb-2" type="button" disabled>Not Started</button>
+                 <button class="btn btn-primary mb-2" disabled type="button">Start Quarter</button>
                  @endif
                  @else
                  @if($CurrentQuarter) {{$CurrentQuarter->quarter_name}} {{$CurrentQuarter->year}}  @endif 
-                 <button class="btn btn-secondary mb-2" type="button" disabled  style="height: 35px">Not Started</button>
-                   <button class="btn btn-primary mb-2"  style="height: 35px"  onclick="startquarter()">Start Quarter</button>
+                 <button class="btn btn-secondary mb-2" type="button" disabled>Not Started</button>
+                   <button class="btn btn-primary mb-2"  onclick="startquarter()">Start Quarter</button>
                  @endif
               
          

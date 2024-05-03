@@ -782,23 +782,24 @@
 </div>
 
 
-<div class="modal fade" id="end-report" tabindex="-1" role="dialog" aria-labelledby="end-report" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content" style="width: 526px !important;">
-            <div class="modal-header">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h5 class="modal-title" id="create-epic"></h5>
-                    </div>
-               
-                      
+<div class="modal fade" id="end-report" tabindex="-1" role="dialog" aria-labelledby="add-team" aria-hidden="true">
+    <div class="modal-dialog mw-650px" role="document">
+        <div class="modal-content">
+            <!--begin::Modal header-->
+            <div class="modal-header pb-0 border-0 justify-content-end">
+                <!--begin::Close-->
+                <div class="btn btn-sm btn-icon btn-active-color-primary" data-dismiss="modal" aria-label="Close">
+                    <i class="ki-outline ki-cross fs-1"></i>
                 </div>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <img src="{{asset('public/assets/images/icons/minus.svg')}}">
-                </button>
+                <!--end::Close-->
             </div>
-            <div class="modal-body">
-                <div class="row">
+            <div class="modal-body scroll-y mx-5 mx-xl-18 pt-0 pb-15">
+            
+                <div class="text-center mb-13">
+                  <h1 class="mb-3" id="end-quartr">Create Initiative</h1>
+               </div>
+
+               <div class="row">
                     <div class="col-md-12">
                         <div id="success-sprint"  role="alert"></div>
                         <span id="sprint-error" class="text-danger"></span>
@@ -806,36 +807,16 @@
                 </div>
                 <form class="needs-validation" action="#" method="POST" novalidate>
                 @csrf
-            
                     <div class="row">
-                 
-
- 
- 
-                       <div class="col-md-12 col-lg-12 col-xl-12" id="end-quartr">
-                       
-                       </div>
                        <div class="col-md-12 col-lg-12 col-xl-12 mt-3" id="move-epic">
                        
                        </div>
- 
-                    
-               
- 
-                      
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                       <div class="text-center pt-15">
                             <button  class="btn btn-primary " onclick="endquarter();"  type="button">Finish Quarter </button>
-
-                          </div>
+                        </div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
  </div>
-
-
-
-
-
