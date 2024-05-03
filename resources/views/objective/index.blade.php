@@ -783,45 +783,48 @@ $formattedDates = $firstDayOfMonths->toDateString();
 }
 
 @endphp
-  <div class="modal fade" id="create-report" tabindex="-1" role="dialog" aria-labelledby="create-report" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content" style="width: 526px !important;">
-            <div class="modal-header">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h5 class="modal-title" id="create-epic">Start @if($CurrentQuarter) {{$CurrentQuarter->quarter_name}} {{$CurrentQuarter->year}}  @endif</h5>
-                    </div>
-                    <div class="col-md-12">
-                        <p>Provide title, description and confirm details.By startting, a baseline will be created in order to track progress.</p>
-                    </div>
-                      
+
+<div class="modal fade" id="create-report" tabindex="-1" role="dialog" aria-labelledby="add-team" aria-hidden="true">
+    <div class="modal-dialog mw-650px" role="document">
+        <div class="modal-content">
+            <!--begin::Modal header-->
+            <div class="modal-header pb-0 border-0 justify-content-end">
+                <!--begin::Close-->
+                <div class="btn btn-sm btn-icon btn-active-color-primary" data-dismiss="modal" aria-label="Close">
+                    <i class="ki-outline ki-cross fs-1"></i>
                 </div>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <img src="{{asset('public/assets/images/icons/minus.svg')}}">
-                </button>
+                <!--end::Close-->
             </div>
-            <div class="modal-body">
+            <div class="modal-body scroll-y mx-5 mx-xl-18 pt-0 pb-15">
+               <div class="text-center mb-13">
+                  <h1 class="mb-3">Start @if($CurrentQuarter) {{$CurrentQuarter->quarter_name}} {{$CurrentQuarter->year}}  @endif</h1>
+               </div>
+               <div class="text-muted fw-semibold fs-5 text-center">Provide title, description and confirm details.By startting, a baseline will be created in order to track progress.</div>
                 <div class="row">
                     <div class="col-md-12">
                         <div id="success-sprint"  role="alert"></div>
                         <span id="sprint-error" class="text-danger"></span>
                     </div>
                 </div>
-                <form class="needs-validation" action="#" method="POST" novalidate>
+                <form class="needs-validation mt-5" action="#" method="POST" novalidate>
                 @csrf
             
                     <div class="row">
                         <div class="col-md-12 col-lg-12 col-xl-12">
-                            <div class="form-group mb-0">
-                                <input type="text" class="form-control" id="q_title" required>
-                                <label for="objective-name">Title*</label>
-                            </div>
+                           <div class="d-flex flex-column mb-7 fv-row">
+                              <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                  <span class="required">Title</span>
+                              </label>
+                              <input type="text" class="form-control form-control-solid" id="q_title" required>
+                           </div>
                         </div>
 
                         <div class="col-md-12 col-lg-12 col-xl-12">
-                           <div class="form-group mb-0">
-                               <input type="text" class="form-control"  id="q_description" >
-                               <label for="small-description">Description</label>
+                           <div class="d-flex flex-column mb-7 fv-row">
+                              <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                  <span>Description</span>
+                              </label>
+                              <textarea class="form-control form-control-solid" rows="3" id="q_description"></textarea>
                            </div>
                        </div>
 
@@ -924,15 +927,18 @@ $formattedDates = $firstDayOfMonths->toDateString();
                         <input type="hidden"  @if($CurrentQuarter) value="{{$formattedDate}}" @endif id="q_end_date" required>
                         <input type="hidden"  @if($CurrentQuarter) value="{{$CurrentQuarter->quarter_name}}" @endif id="q_name" required>
                         <input type="hidden"  @if($CurrentQuarter) value="{{$CurrentQuarter->year}}" @endif id="q_year" required>
-
-                        
-                        
                         @if($CurrentQuarter)
                         <div class="col-md-12">
-                            <button id="savequarterbutton" class="btn btn-primary btn-lg btn-theme btn-block ripple mt-3" onclick="saveQuarter();"  type="button">Start  @if($CurrentQuarter) {{$CurrentQuarter->quarter_name}} {{$CurrentQuarter->year}} @endif</button>
+                           <div class="text-center pt-15">
+                              <button id="savequarterbutton" class="btn btn-primary" onclick="saveQuarter();"  type="button">Start  @if($CurrentQuarter) {{$CurrentQuarter->quarter_name}} {{$CurrentQuarter->year}} @endif</button>
+                           </div>
                         </div>
-                        @else 
-                        <span class="ml-2 text-danger">Create Initiative to track progress </span>
+                        @else
+                        <div class="col-md-12">
+                           <div class="text-center pt-15">
+                              <span class="ml-2 text-danger">Create Initiative to track progress </span>
+                           </div>
+                        </div>
                         @endif
                     </div>
                 </form>

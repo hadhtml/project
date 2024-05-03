@@ -112,10 +112,10 @@
                                         </div>
                                         <div class="col-md-8">
                                             <div class="membername">{{ $r->team_title }}</div>
-                                            @if($r->lead_id == 'Null')
-                                            
-                                            @else
+                                            @if($r->lead_id)
+                                            @if(DB::table('members')->where('id' , $r->lead_id)->first())
                                             <div class="memberdetail">Lead: {{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
+                                            @endif
                                             @endif
                                         </div>
                                         <div class="col-md-2 text-center mt-3">
