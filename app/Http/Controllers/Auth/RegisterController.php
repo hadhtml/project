@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
 use App\Helpers\Cmf;
 use App\Models\modulenames;
 use DB;
+use Carbon\Carbon;
 
 
 class RegisterController extends Controller
@@ -58,7 +59,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
 
@@ -104,8 +105,8 @@ class RegisterController extends Controller
         ]);
         }
 
-    
-
+        if($data['business_type'] == 'yes')
+        {
             DB::table('jira_setting')
             ->insert([
               'user_name' => $data['user_name'], 
@@ -116,9 +117,17 @@ class RegisterController extends Controller
       
       
               ]);
-        
-     
+        }
+
+        $newDateTime = Carbon::now()->addDays(14);
        
+        DB::table('user_plan')->insert([
+            'plan_id' => 'plan_2qf8GZaKJD',
+            'status' => 'active',
+            'subscription_ends_at' => $newDateTime,
+            'user_id' => $user->id,
+            'payment_type' => 'trail',
+        ]);
 
         return $user;
     }

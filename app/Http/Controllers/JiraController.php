@@ -46,7 +46,7 @@ class JiraController extends Controller
 
         $jiraBaclogValue = DB::table('backlog')
         ->where('jira_project',$request->id)
-        ->where('stream_id','!=',$request->unit_id)
+        ->where('unit_id','!=',$request->unit_id)
         ->where(function($query) {
             $query->where('user_id', Auth::id())
                   ->orWhere('user_id', Auth::user()->invitation_id);
@@ -278,13 +278,13 @@ class JiraController extends Controller
                 'epic_end_date' => $log->Duedate,
                 'jira_id' => $log->jira_id,
                 'progress' => $log->progress,
-                'stream_id' => $request->backlog_id,
+                'unit_id' => $request->backlog_id,
                 'jira_project' => $request->jira_project,
                 'user_id' => Auth::id(),
                  'position' => $counter,
                  'account_id' => $log->account_id, 
                  'type' => $request->type,
-                 'epic_status' => 'To Do', 
+                 'epic_status' => 'To Do',  
 
 
 
@@ -306,7 +306,8 @@ class JiraController extends Controller
                 'user_id' => Auth::id(),
                  'position' => $counter,
                  'account_id' => $log->account_id,
-                 'type' => $request->type,  
+                 'type' => $request->type, 
+                 'epic_status' => 'To Do',  
 
 
 

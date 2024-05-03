@@ -621,7 +621,7 @@ class FlagController extends Controller
         }
         if($request->tab == 'attachment')
         {
-            $extensions = attachments::where('value_id' , Cmf::gerescalatedmainid($request->id))->where('type' , 'flags')->orderby('id' , 'desc')->get();
+            $extensions = attachments::where('value_id' , Cmf::gerescalatedmainid($request->id))->groupBy('extension')->where('type' , 'flags')->orderby('id' , 'desc')->get();
             $attachments = attachments::where('value_id' , Cmf::gerescalatedmainid($request->id))->where('type' , 'flags')->orderby('id' , 'desc')->get();
             $data = flags::find(Cmf::gerescalatedmainid($request->id));
             $html = view('flags.tabs.attachments', compact('attachments','data','extensions'))->render();
@@ -630,7 +630,7 @@ class FlagController extends Controller
     }
     public function filterbyextension(Request $request)
     {
-        $extensions = attachments::where('value_id' , $request->id)->where('type' , 'flags')->orderby('id' , 'desc')->get();
+        $extensions = attachments::where('value_id' , $request->id)->groupBy('extension')->where('type' , 'flags')->orderby('id' , 'desc')->get();
         if($request->extention == 'All')
         {
             $attachments = attachments::where('value_id' , $request->id)->where('type' , 'flags')->orderby('id' , 'desc')->get();

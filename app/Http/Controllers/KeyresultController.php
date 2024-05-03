@@ -168,12 +168,12 @@ class KeyresultController extends Controller
         }
         if($request->tab == 'weighttab')
         {
-            // $data = key_result::find($request->id);
+            $data = key_result::find($request->id);
             $InitData = DB::table('initiative')->where('key_id',$request->id)->get();
             $InitDataCount = DB::table('initiative')->where('key_id',$request->id)->count();
             $Weight = DB::table('initiative')->where('key_id',$request->id)->sum('initiative_weight');
 
-            $html = view('keyresult.tabs.init-weight', compact('InitData','InitDataCount','Weight'))->render();
+            $html = view('keyresult.tabs.init-weight', compact('InitData','InitDataCount','Weight','data'))->render();
             return $html;
         }
         if($request->tab == 'charts')
@@ -186,7 +186,7 @@ class KeyresultController extends Controller
             if($report)
             {
                 $KEYChart =  DB::table('key_chart')->where('key_id',$request->id)->where('IndexCount',$report->IndexCount)->first();
-                if(!$KEYChart)
+                if($KEYChart)
                 {
 
                 }
@@ -320,6 +320,7 @@ class KeyresultController extends Controller
     public function removeweight(Request $request)
     {
         DB::table('key_result')->where('id' , $request->id)->update(array('weight' => 0));
+        DB::table('initiative')->where('key_id' , $request->id)->update(['initiative_weight' => 0]);
     }
     public function addweight(Request $request)
     {

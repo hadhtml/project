@@ -9,6 +9,8 @@ use Stripe;
 use Stripe\Plan;
 use App\Helpers\Cmf;
 use Illuminate\Support\Facades\Http;
+use Carbon\Carbon;
+
 
 class SubscriptionController extends Controller
 {
@@ -151,6 +153,7 @@ class SubscriptionController extends Controller
 
     public function AllPlan()
     {
+        $this->UpdateUserPlan();
         $data = DB::table('plan')->get();
         return view('admin.subscriptions.all-plan',compact('data'));
     }
@@ -221,5 +224,13 @@ class SubscriptionController extends Controller
 
   
 
+    }
+
+    public function UpdateUserPlan()
+    {
+      $currentDate = Carbon::now();
+      DB::table('user_plan')
+      ->whereDate('subscription_ends_at', '<', $currentDate)
+      ->update(['status' => 'Inactive']);
     }
 }

@@ -18,6 +18,11 @@ use Laravel\Cashier\Subscription;
 
 class BraintreeController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     
     public function generateClientToken()
     {
@@ -85,28 +90,24 @@ class BraintreeController extends Controller
      
     $plan = DB::table('plan')->where('plan_id',$slug)->first();
 
-    if($plan->base_price_status == 'free')
-    {
+   
 
-        $newDateTime = Carbon::now()->addDays($plan->duration);
+        // $newDateTime = Carbon::now()->addDays($plan->duration);
        
-        DB::table('user_plan')->insert([
-            'plan_id' => $plan->id,
-            'amount' => 0,
-            'status' => 1,
-            'plan_expire' => $newDateTime,
-            'user_id' => auth::id(),
-            'package_status' => 1,
+        // DB::table('user_plan')->insert([
+        //     'plan_id' => $plan->id,
+        //     'amount' => 0,
+        //     'status' => 1,
+        //     'plan_expire' => $newDateTime,
+        //     'user_id' => auth::id(),
+        //     'package_status' => 1,
 
-        ]);
+        // ]);
 
-     return redirect('organization/dashboard');
-
-    }else
-    {
+ 
      $intent = auth()->user()->createSetupIntent();
     return view('settings.payment',compact('plan','intent'));
-    }
+    
 
     
 
@@ -166,12 +167,13 @@ class BraintreeController extends Controller
         
         try {
         $subscription = $user->newSubscription($plan->plan_title, $request->plan)->create($request->payment_method);
-        DB::table('user_plan')->insert([
+        DB::table('user_plan')->where('user_id',auth::id())->update([
             'plan_id' => $request->plan,
             'status' => $subscription->stripe_status,
             'transaction_id' => $subscription->stripe_id,
             'user_id' => auth::id(),
             'payment_type' => 'stripe',
+            'subscription_ends_at' => NULL,
         ]);
         
 
@@ -319,7 +321,7 @@ public function UpgradePlan(Request $request)
     $user = Auth::user();
 
     $plan = DB::table('plan')->where('id',$request->plan_id)->first();
-    $user->subscription('Pro')->noProrate()->swap($plan->plan_id);
+    $user->subscription($plan->plan_title)->noProrate()->swap($plan->plan_id);
     
 
 }
