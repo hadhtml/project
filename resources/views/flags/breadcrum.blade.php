@@ -1,4 +1,3 @@
-
 @php
 if($organization->type == 'BU')
 {
@@ -23,374 +22,223 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
 }
 
 @endphp
-
-<div class="subheader subheader-solid breadcrums" id="kt_subheader">
-    <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
-        <!--begin::Info-->
-        <div class="d-flex align-items-start flex-column flex-wrap mr-2">
-            <!--begin::Page Title-->
-         
-          
-            <div class="d-flex flex-row">
-
-                <div>
-                    @if($flagtype == 'Impediment')
-                    <span style="font-size:22px" class="material-symbols-outlined">warning_off</span>
-                    @endif
-                    @if($flagtype == 'Risk')
-                    <span style="font-size:22px" class="material-symbols-outlined">emergency</span>
-                    @endif
-                    @if($flagtype == 'Blocker')
-                    <span style="font-size:22px" class="material-symbols-outlined">block</span>
-                    @endif
-                    @if($flagtype == 'Action')
-                    <span style="font-size:22px" class="material-symbols-outlined">call_to_action</span>
-                    @endif
-
-                </div>
-                <div>
-                    <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
-                        {{ $flagtype }}
-                    </h5>
-                </div>
-            </div>
-            <!-- Breadcrum Items -->
-           <div class="d-flex flex-row page-sub-titles align-items-center">
-                <div class="mr-2">
-                    <div class="d-flex align-items-center">
-                        <div>
-                            <span style="font-size:17px" class="material-symbols-outlined">auto_stories</span>
-                        </div>
-                        <div>
-                            <a style="text-decoration: none;" href="{{ route('organization.dashboard') }}">Dashboard</a>
-                        </div>
-                    </div>
-                </div>
-                @if($type == 'unit')
-                {{-- <div class="mr-2">
-                    <a style="text-decoration: none;" href="{{ route('organization.level-one', Cmf::getmoduleslug('level_one')) }}">
-                        Buisness Units
-                    </a>
-                </div> --}}
-                <div class="mr-2">
-                    <div class="d-flex align-items-center">
-                        <div>
-                            <span style="font-size:17px" class="material-symbols-outlined">domain</span>
-                        </div>
-                        <div>
-                            <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->business_name}}</a>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="mr-2">
-                    <div class="d-flex align-items-center">
-                        <div>
-                            @if($flagtype == 'Impediment')
-                            <span style="font-size:17px" class="material-symbols-outlined">warning_off</span>
-                            @endif
-                            @if($flagtype == 'Risk')
-                            <span style="font-size:17px" class="material-symbols-outlined">emergency</span>
-                            @endif
-                            @if($flagtype == 'Blocker')
-                            <span style="font-size:17px" class="material-symbols-outlined">block</span>
-                            @endif
-                            @if($flagtype == 'Action')
-                            <span style="font-size:17px" class="material-symbols-outlined">call_to_action</span>
-                            @endif
-                        </div>
-                        <div>
-                            <p>{{ $flagtype }} </p>
-                        </div>
-                    </div>
-                </div>
-                @endif
-                @if($type == 'stream')
-                @php
-                    $unit  = DB::table('business_units')->where('id' , $organization->unit_id)->first();
-                @endphp
-                <div class="mr-2">
-                    @if($organization->type == 'stream')
-                    <div class="d-flex align-items-center">
-                        <div>
-                            <span style="font-size:17px" class="material-symbols-outlined">domain</span>
-                        </div>
-                        <div>
-                            <a  href="{{url('dashboard/organization/'.$team->slug.'/portfolio/'.$team->type)}}" style="text-decoration: none;" >{{$team->business_name}}</a>
-                        </div>
-                    </div>
-                    @endif
-                </div>
-                <div class="mr-2">
-                    <div class="d-flex align-items-center">
-                        <div>
-                            <span style="font-size:17px" class="material-symbols-outlined">layers</span>
-                        </div>
-                        <div>
-                            <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->value_name}}</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="mr-2">
-                    <div class="d-flex align-items-center">
-                        <div>
-                            @if($flagtype == 'Impediment')
-                            <span style="font-size:17px" class="material-symbols-outlined">warning_off</span>
-                            @endif
-                            @if($flagtype == 'Risk')
-                            <span style="font-size:17px" class="material-symbols-outlined">emergency</span>
-                            @endif
-                            @if($flagtype == 'Blocker')
-                            <span style="font-size:17px" class="material-symbols-outlined">block</span>
-                            @endif
-                            @if($flagtype == 'Action')
-                            <span style="font-size:17px" class="material-symbols-outlined">call_to_action</span>
-                            @endif
-                        </div>
-                        <div>
-                            <p>{{ $flagtype }} </p>
-                        </div>
-                    </div>
-                </div>
-                @endif
-                @if($type == 'BU')
-                <div class="mr-2">
-                    <div class="d-flex align-items-center">
-                        <div>
-                            <span style="font-size:17px" class="material-symbols-outlined">domain</span>
-                        </div>
-                        <div>
-                            <a  href="{{url('dashboard/organization/'.$team->slug.'/portfolio/'.$team->type)}}" style="text-decoration: none;" >{{$team->business_name}}</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="mr-2">
-                    <div class="d-flex align-items-center">
-                        <div>
-                            <span style="font-size:17px" class="material-symbols-outlined">groups</span>
-                        </div>
-                        <div>
-                            <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->team_title}}</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="mr-2">
-                    <div class="d-flex align-items-center">
-                        <div>
-                            @if($flagtype == 'Impediment')
-                            <span style="font-size:17px" class="material-symbols-outlined">warning_off</span>
-                            @endif
-                            @if($flagtype == 'Risk')
-                            <span style="font-size:17px" class="material-symbols-outlined">emergency</span>
-                            @endif
-                            @if($flagtype == 'Blocker')
-                            <span style="font-size:17px" class="material-symbols-outlined">block</span>
-                            @endif
-                            @if($flagtype == 'Action')
-                            <span style="font-size:17px" class="material-symbols-outlined">call_to_action</span>
-                            @endif
-                        </div>
-                        <div>
-                            <p>{{ $flagtype }} </p>
-                        </div>
-                    </div>
-                </div>
-                @endif
-
-                @if($type == 'VS')
-                <div class="mr-2">
-                    <div class="d-flex align-items-center">
-                        <div>
-                            <span style="font-size:17px" class="material-symbols-outlined">domain</span>
-                        </div>
-                        <div>
-                            <a  href="{{url('dashboard/organization/'.$Unit->slug.'/portfolio/'.$Unit->type)}}" style="text-decoration: none;" >{{$Unit->business_name}}</a>
-                        </div>
-                    </div>
-      
-                </div>
-                <div class="mr-2">
-                    <div class="d-flex align-items-center">
-                        <div>
-                            <span style="font-size:17px" class="material-symbols-outlined">layers</span>
-                        </div>
-                        <div>
-                            <a  href="{{url('dashboard/organization/'.$team->slug.'/portfolio/'.$team->type)}}" style="text-decoration: none;" >{{$team->value_name}}</a>
-                        </div>
-                    </div>
-       
-                </div>
-                <div class="mr-2">
-                    <div class="d-flex align-items-center">
-                        <div>
-                            <span style="font-size:17px" class="material-symbols-outlined">groups</span>
-                        </div>
-                        <div>
-                            <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->team_title}}</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="mr-2">
-                    <div class="d-flex align-items-center">
-                        <div>
-                            @if($flagtype == 'Impediment')
-                            <span style="font-size:17px" class="material-symbols-outlined">warning_off</span>
-                            @endif
-                            @if($flagtype == 'Risk')
-                            <span style="font-size:17px" class="material-symbols-outlined">emergency</span>
-                            @endif
-                            @if($flagtype == 'Blocker')
-                            <span style="font-size:17px" class="material-symbols-outlined">block</span>
-                            @endif
-                            @if($flagtype == 'Action')
-                            <span style="font-size:17px" class="material-symbols-outlined">call_to_action</span>
-                            @endif                        </div>
-                        <div>
-                            <p>{{ $flagtype }} </p>                        
-                        </div>
-                    </div>
-            
-                 
-                </div>
-                @endif
-
-                @if($type == 'orgT')
-                <div class="mr-2">
-                    <div class="d-flex align-items-center">
-                        <div>
-                            <span style="font-size:17px" class="material-symbols-outlined">home</span>
-                        </div>
-                        <div>
-                            <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->team_title}}</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="mr-2">
-                    <div class="d-flex align-items-center">
-                        <div>
-                            @if($flagtype == 'Impediment')
-                            <span style="font-size:17px" class="material-symbols-outlined">warning_off</span>
-                            @endif
-                            @if($flagtype == 'Risk')
-                            <span style="font-size:17px" class="material-symbols-outlined">emergency</span>
-                            @endif
-                            @if($flagtype == 'Blocker')
-                            <span style="font-size:17px" class="material-symbols-outlined">block</span>
-                            @endif
-                            @if($flagtype == 'Action')
-                            <span style="font-size:17px" class="material-symbols-outlined">call_to_action</span>
-                            @endif
-                        </div>
-                        <div>
-                            <p>{{ $flagtype }} </p>
-                        </div>
-                    </div>
-                </div>
-                @endif
-
-                @if($type == 'org')
-                {{-- @if($organization->type == 'org')
-                <div class="mr-2">  
-                <a  href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" style="text-decoration: none;" >{{$organization->organization_name}}</a>
-                </div>
-                @endif --}}
-                <div class="mr-2">
-                    <div class="d-flex align-items-center">
-                        <div>
-                            @if($flagtype == 'Impediment')
-                            <span style="font-size:17px" class="material-symbols-outlined">warning_off</span>
-                            @endif
-                            @if($flagtype == 'Risk')
-                            <span style="font-size:17px" class="material-symbols-outlined">emergency</span>
-                            @endif
-                            @if($flagtype == 'Blocker')
-                            <span style="font-size:17px" class="material-symbols-outlined">block</span>
-                            @endif
-                            @if($flagtype == 'Action')
-                            <span style="font-size:17px" class="material-symbols-outlined">call_to_action</span>
-                            @endif
-                        </div>
-                        <div>
-                            <p>{{ $flagtype }} </p>
-                        </div>
-                    </div>
-                </div>
-                @endif
-            </div>
-            <!--End Breadcrum Items -->
+<div class="app-toolbar-wrapper d-flex flex-stack flex-wrap gap-4 w-100">
+    <div class="page-title d-flex flex-column justify-content-center gap-1 me-3">
+        <div class="d-flex">
+            @if($flagtype == 'Impediment')
+            <span class="material-symbols-outlined">warning_off</span>
+            @endif
+            @if($flagtype == 'Risk')
+            <span class="material-symbols-outlined">emergency</span>
+            @endif
+            @if($flagtype == 'Blocker')
+            <span class="material-symbols-outlined">block</span>
+            @endif
+            @if($flagtype == 'Action')
+            <span class="material-symbols-outlined">call_to_action</span>
+            @endif
+            <h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bold fs-3 m-0">{{ $flagtype }}
+            </h1>
         </div>
-        <!--end::Info-->
-        <!--begin::Toolbar-->
-        <div class="d-flex align-items-center toolbar">
+        <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0">
+            <li class="breadcrumb-item text-muted">
+                <span class="material-symbols-outlined">auto_stories</span>
+                <a href="{{url('organization/dashboard')}}" class="text-muted text-hover-primary">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item">
+                <span class="bullet bg-gray-500 w-5px h-2px"></span>
+            </li>
             @if($type == 'unit')
-            <div class="d-flex flex-row organization-drop align-items-center">
-                <div class="d-flex flex-column mr-3">
-                    <div>
-                        Team
-                        <select class="chkveg" multiple="multiple" >
-                        @foreach(DB::table('value_team')->where('org_id',$organization->id)->get() as $r)
-                            <option value="{{$r->id}}">{{$r->team_title}}</option>
-                        @endforeach
-                        </select>
-                        <button class="btn-circle btn-tolbar bg-transparent" type="button" onclick="getflagsbyteam();" >
-                           <img src="{{asset('public/assets/images/icons/filter.svg')}}" width="20" width="20">
-                        </button>
-                    </div>
-                </div>
-            </div>
+            <li class="breadcrumb-item text-muted">
+                <span class="material-symbols-outlined">domain</span>
+                <a href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" class="text-muted text-hover-primary">{{$organization->business_name}}</a>
+            </li>
+            <li class="breadcrumb-item">
+                <span class="bullet bg-gray-500 w-5px h-2px"></span>
+            </li>
+            <li class="breadcrumb-item text-muted">
+                @if($flagtype == 'Impediment')
+                <span class="material-symbols-outlined">warning_off</span>
+                @endif
+                @if($flagtype == 'Risk')
+                <span class="material-symbols-outlined">emergency</span>
+                @endif
+                @if($flagtype == 'Blocker')
+                <span class="material-symbols-outlined">block</span>
+                @endif
+                @if($flagtype == 'Action')
+                <span class="material-symbols-outlined">call_to_action</span>
+                @endif
+                {{ $flagtype }}
+            </li>
             @endif
             @if($type == 'stream')
-            <div class="d-flex flex-row organization-drop align-items-center">
-                <div class="d-flex flex-column mr-3">
-                    <div>
-                        Team
-                        <select class="chkveg" multiple="multiple" >
-                        @foreach(DB::table('value_team')->where('org_id',$organization->id)->get() as $r)
-                            <option value="{{$r->id}}">{{$r->team_title}}</option>
-                        @endforeach
-                        </select>
-                        <button class="btn-circle btn-tolbar bg-transparent" type="button" onclick="getflagsbyteam();" >
-                           <img src="{{asset('public/assets/images/icons/filter.svg')}}" width="20" width="20">
-                        </button>
-                    </div>
-                </div>
-            </div>
+            @php
+                $unit  = DB::table('business_units')->where('id' , $organization->unit_id)->first();
+            @endphp
+            @if($organization->type == 'stream')
+            <li class="breadcrumb-item text-muted">
+                <span class="material-symbols-outlined">domain</span>
+                <a href="{{url('dashboard/organization/'.$team->slug.'/portfolio/'.$team->type)}}" class="text-muted text-hover-primary">{{$team->business_name}}</a>
+            </li>
+            <li class="breadcrumb-item">
+                <span class="bullet bg-gray-500 w-5px h-2px"></span>
+            </li>
+            @endif
+            <li class="breadcrumb-item text-muted">
+                <span class="material-symbols-outlined">layers</span>
+                <a href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" class="text-muted text-hover-primary">{{$organization->value_name}}</a>
+            </li>
+            <li class="breadcrumb-item">
+                <span class="bullet bg-gray-500 w-5px h-2px"></span>
+            </li>
+            <li class="breadcrumb-item text-muted">
+                @if($flagtype == 'Impediment')
+                <span class="material-symbols-outlined">warning_off</span>
+                @endif
+                @if($flagtype == 'Risk')
+                <span class="material-symbols-outlined">emergency</span>
+                @endif
+                @if($flagtype == 'Blocker')
+                <span class="material-symbols-outlined">block</span>
+                @endif
+                @if($flagtype == 'Action')
+                <span class="material-symbols-outlined">call_to_action</span>
+                @endif
+                {{ $flagtype }}
+            </li>
+            @endif
+            @if($type == 'BU')
+            <li class="breadcrumb-item text-muted">
+                <span class="material-symbols-outlined">domain</span>
+                <a href="{{url('dashboard/organization/'.$team->slug.'/portfolio/'.$team->type)}}" class="text-muted text-hover-primary">{{$team->business_name}}</a>
+            </li>
+            <li class="breadcrumb-item">
+                <span class="bullet bg-gray-500 w-5px h-2px"></span>
+            </li>
+            <li class="breadcrumb-item text-muted">
+                <span class="material-symbols-outlined">groups</span>
+                <a href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" class="text-muted text-hover-primary">{{$organization->team_title}}</a>
+            </li>
+            <li class="breadcrumb-item">
+                <span class="bullet bg-gray-500 w-5px h-2px"></span>
+            </li>
+            <li class="breadcrumb-item text-muted">
+                @if($flagtype == 'Impediment')
+                <span class="material-symbols-outlined">warning_off</span>
+                @endif
+                @if($flagtype == 'Risk')
+                <span class="material-symbols-outlined">emergency</span>
+                @endif
+                @if($flagtype == 'Blocker')
+                <span class="material-symbols-outlined">block</span>
+                @endif
+                @if($flagtype == 'Action')
+                <span class="material-symbols-outlined">call_to_action</span>
+                @endif
+                {{ $flagtype }}
+            </li>
+            @endif
+            @if($type == 'VS')
+            <li class="breadcrumb-item text-muted">
+                <span class="material-symbols-outlined">domain</span>
+                <a href="{{url('dashboard/organization/'.$Unit->slug.'/portfolio/'.$Unit->type)}}" class="text-muted text-hover-primary">{{$Unit->business_name}}</a>
+            </li>
+            <li class="breadcrumb-item">
+                <span class="bullet bg-gray-500 w-5px h-2px"></span>
+            </li>
+            <li class="breadcrumb-item text-muted">
+                <span class="material-symbols-outlined">layers</span>
+                <a href="{{url('dashboard/organization/'.$team->slug.'/portfolio/'.$team->type)}}" class="text-muted text-hover-primary">{{$team->value_name}}</a>
+            </li>
+            <li class="breadcrumb-item">
+                <span class="bullet bg-gray-500 w-5px h-2px"></span>
+            </li>
+            <li class="breadcrumb-item text-muted">
+                <span class="material-symbols-outlined">groups</span>
+                <a href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" class="text-muted text-hover-primary">{{$organization->team_title}}</a>
+            </li>
+            <li class="breadcrumb-item">
+                <span class="bullet bg-gray-500 w-5px h-2px"></span>
+            </li>
+            <li class="breadcrumb-item text-muted">
+                @if($flagtype == 'Impediment')
+                <span class="material-symbols-outlined">warning_off</span>
+                @endif
+                @if($flagtype == 'Risk')
+                <span class="material-symbols-outlined">emergency</span>
+                @endif
+                @if($flagtype == 'Blocker')
+                <span class="material-symbols-outlined">block</span>
+                @endif
+                @if($flagtype == 'Action')
+                <span class="material-symbols-outlined">call_to_action</span>
+                @endif
+                {{ $flagtype }}
+            </li>
+            @endif
+            @if($type == 'orgT')
+            <li class="breadcrumb-item text-muted">
+                <span class="material-symbols-outlined">groups</span>
+                <a href="{{url('dashboard/organization/'.$organization->slug.'/portfolio/'.$organization->type)}}" class="text-muted text-hover-primary">{{$organization->team_title}}</a>
+            </li>
+            <li class="breadcrumb-item">
+                <span class="bullet bg-gray-500 w-5px h-2px"></span>
+            </li>
+            <li class="breadcrumb-item text-muted">
+                @if($flagtype == 'Impediment')
+                <span class="material-symbols-outlined">warning_off</span>
+                @endif
+                @if($flagtype == 'Risk')
+                <span class="material-symbols-outlined">emergency</span>
+                @endif
+                @if($flagtype == 'Blocker')
+                <span class="material-symbols-outlined">block</span>
+                @endif
+                @if($flagtype == 'Action')
+                <span class="material-symbols-outlined">call_to_action</span>
+                @endif
+                {{ $flagtype }}
+            </li>
             @endif
             @if($type == 'org')
-            <div class="d-flex flex-row organization-drop align-items-center">
-                <div class="d-flex flex-column mr-3">
-                    <div>
-                        Team
-                        <select class="chkveg" multiple="multiple" >
-                        @foreach(DB::table('value_team')->where('org_id',$organization->id)->get() as $r)
-                            <option value="{{$r->id}}">{{$r->team_title}}</option>
-                        @endforeach
-                        </select>
-                        <button class="btn-circle btn-tolbar bg-transparent" type="button" onclick="getflagsbyteam();" >
-                           <img src="{{asset('public/assets/images/icons/filter.svg')}}" width="20" width="20">
-                        </button>
-                    </div>
-                </div>
-            </div>
+            <li class="breadcrumb-item text-muted">
+                @if($flagtype == 'Impediment')
+                <span class="material-symbols-outlined">warning_off</span>
+                @endif
+                @if($flagtype == 'Risk')
+                <span class="material-symbols-outlined">emergency</span>
+                @endif
+                @if($flagtype == 'Blocker')
+                <span class="material-symbols-outlined">block</span>
+                @endif
+                @if($flagtype == 'Action')
+                <span class="material-symbols-outlined">call_to_action</span>
+                @endif
+                {{ $flagtype }}
+            </li>
             @endif
-            <div>
-                <div class="btn-group">
-                  <button type="button" class="btn btn-default btn-sm" style="border-top-right-radius:0px !important; border-bottom-right-radius:0px !important; padding-right: 0px !important; min-width: 80px !important; padding-left: 0px !important;" id="showboardbutton">View All</button>
-                  <button type="button" style="padding-right: 5px !important;" class="btn btn-danger dropdown-toggle dropdown-toggle-split archivebeardcimbgbutton" style=""  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src="{{url('public/assets/images/icons/angle-down.svg')}}" width="17">
-                    <span class="sr-only">Toggle Dropdown</span>
-                  </button>
-                  <div class="dropdown-menu">
-                    <a class="dropdown-item" href="javascript:void(0)" onclick="viewboards('all')">View All</a>
-                    <a class="dropdown-item" href="javascript:void(0)" onclick="viewboards('archived')">Archived</a>
-                  </div>
-                </div>
-                <button onclick="addnewflag({{ $organization->id }} , '{{$organization->type}}' , '{{ $flagtype }}')" class="button">Add New</button>
-                <input id="viewboards" value="all" type="hidden" name="">
+        </ul>
+    </div>
+    <div class="d-flex align-items-center gap-2 gap-lg-3">
+        <a href="#" class="btn btn-primary ps-7" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end" id="showboardbutton">View All <i class="ki-outline ki-down fs-2 me-0"></i></a>
+         <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold py-4 w-250px fs-6" data-kt-menu="true">
+            <div class="menu-item px-5">
+               <a class="menu-link px-5" href="javascript:void(0)" onclick="viewboards('archived')">Archived</a>
             </div>
-        </div>
+            <div class="menu-item px-5">
+               <a class="menu-link px-5" href="javascript:void(0)" onclick="viewboards('all')">View All</a>
+            </div>
+         </div>
+        <button onclick="addnewflag({{ $organization->id }} , '{{$organization->type}}' , '{{ $flagtype }}')" class="btn btn-flex btn-outline btn-color-gray-700 btn-active-color-primary bg-body h-40px fs-7 fw-bold">Add New</button>
+        <input id="viewboards" value="all" type="hidden" name="">
     </div>
 </div>
+
+
+
+
+
 <div class="modal" id="edit-epic" tabindex="-1" role="dialog" aria-labelledby="edit-epic" aria-hidden="true">
     <div class="modal-dialog modal-lg" id="modaldialog" role="document">
         <div class="modal-content newmodalcontent" id="newmodalcontent">
@@ -659,12 +507,12 @@ function viewboards(id) {
         success: function(res) {
             if(id == 'all')
             {
-                $('#showboardbutton').html('<img src="{{url("public/assets/images/icons/filter.svg")}}" width="20"> View All');
+                $('#showboardbutton').html('View All <i class="ki-outline ki-down fs-2 me-0"></i>');
                 $('#viewboards').val('all')
             }
             if(id == 'archived')
             {
-                $('#showboardbutton').html('<img src="{{url("public/assets/images/icons/filter.svg")}}" width="20"> Archived');
+                $('#showboardbutton').html('Archived <i class="ki-outline ki-down fs-2 me-0"></i>');
                 $('#viewboards').val('archived')
             }
            $('#showboards').html(res);

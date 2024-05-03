@@ -17,6 +17,9 @@
 
             </div>
         </div>
+        @php
+       $KEYChart = '';
+        @endphp
         @if ($KEYChart)
         @php
              

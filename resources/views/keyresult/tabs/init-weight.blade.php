@@ -17,7 +17,7 @@
 <div class="row mt-5 ml-3">
     <div class="col-md-1">
         <label class="checkbox checkbox-lg">
-            <input  class="check" @if($Weight  > 0) checked  @endif type="checkbox" />
+            <input  class="check" @if($Weight  > 0) checked  @endif  value="{{$data->id}}" type="checkbox" />
         </label>
     </div>
     <div class="col-md-6">
@@ -87,7 +87,7 @@
                     }
                 });
             } else {
-                var id = '';
+                var id = $(this).val();
                 $.ajax({
                     type: "POST",
                     url: "{{ url('dashboard/keyresult/removeweight') }}",
@@ -100,6 +100,9 @@
                     success: function(res) {
                         $('.weightvalue').hide();
                         $('#key_count').hide();
+                        $('#weight' + id).html('');
+                        $('.range-slider__range_init').val(0);
+                        $('#slider__range_init').val(0);
                     },
                     error: function(error) {
                         

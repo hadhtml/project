@@ -430,7 +430,7 @@ $var_objective = 'Pagekpi-'.$type;
                             <div class="d-flex flex-row">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <h5 class="modal-title" id="">New KPI</h5>
+                                        <h5 class="modal-title" id="">Nesw KPI</h5>
                                     </div>
                                     <div class="col-md-12">
                                         <p>Add a Kpi CVC file</p>
