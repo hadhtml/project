@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use App\Models\Organization;
 use Illuminate\Support\Str;
 
+
 class GoogleController extends Controller
 {
     public function redirectToGoogle()
@@ -71,6 +72,16 @@ class GoogleController extends Controller
                 $organization->code =  '#OR' . rand(1000, 9999);
                 $organization->type =  'org';
                 $organization->save();
+
+                $newDateTime = Carbon::now()->addDays(14);
+       
+                DB::table('user_plan')->insert([
+                    'plan_id' => 'plan_2qf8GZaKJD',
+                    'status' => 'active',
+                    'subscription_ends_at' => $newDateTime,
+                    'user_id' => $newUser->id,
+                    'payment_type' => 'trail',
+                ]);
 
 
                 Auth::login($newUser);
@@ -160,6 +171,16 @@ class GoogleController extends Controller
                     $organization->code =  '#OR' . rand(1000, 9999);
                     $organization->type =  'org';
                     $organization->save();
+
+                    $newDateTime = Carbon::now()->addDays(14);
+       
+                    DB::table('user_plan')->insert([
+                        'plan_id' => 'plan_2qf8GZaKJD',
+                        'status' => 'active',
+                        'subscription_ends_at' => $newDateTime,
+                        'user_id' =>  $newUser->id,
+                        'payment_type' => 'trail',
+                    ]);
 
         
 
