@@ -16,218 +16,174 @@ $var_objective = "Org-Unit";
 @endif
 @if(count($Unit) > 0)
 <div class="row">
-
-   
-       @foreach($Unit as $unit)
-       @php
-       $ValueCount = DB::table('value_stream')->where('unit_id',$unit->id)->count();
-       $TeamCount = DB::table('unit_team')->where('org_id',$unit->id)->count();
-       $member = DB::table('members')->where('org_user',Auth::id())->orWhere('org_user',Auth::user()->invitation_id)->count();
-       @endphp
-
-        <div class="col-md-4">
-            <div class="card business-card">
-                <div class="card-body pb-0">
-                    <div class="d-flex flex-row justify-content-between">
-                        <div>
-                            <h3>
-                                <a class="d-flex flex-row align-items-center" href="{{url('dashboard/organization/'.$unit->slug.'/dashboard/'.$unit->type)}}">
-                                    <div>
-                                        <span class="module-icon material-symbols-outlined mr-2">domain</span>
-                                    </div>
-                                    <div>
-                                        <span>{{ \Illuminate\Support\Str::limit($unit->business_name,25, $end='...') }}</span>
-                                    </div>
-                                </a>
-                            </h3>
+    @foreach($Unit as $unit)
+        @php
+           $ValueCount = DB::table('value_stream')->where('unit_id',$unit->id)->count();
+           $TeamCount = DB::table('unit_team')->where('org_id',$unit->id)->count();
+           $member = DB::table('members')->where('org_user',Auth::id())->orWhere('org_user',Auth::user()->invitation_id)->count();
+        @endphp
+        <div class="col-md-4 col-xl-4 mb-8">
+            <div class="card border-hover-primary">
+                <div class="card-header border-0 pt-9">
+                    <div class="card-title m-0">
+                        <div class="symbol symbol-50px w-50px bg-light">
+                            <span class="module-icon material-symbols-outlined mr-2">domain</span>
                         </div>
                     </div>
-                    <div class="content-section">
-                        <div class="row">
-                            <div class="col-md-12 mb-2">
-                                <div class="d-flex align-items-center">
-                                    <div class="mr-1">
-                                        <ion-icon style="font-size: 18px;" name="layers-outline"></ion-icon>
-                                    </div>
-                                    <a href="{{ url('dashboard/organization') }}/{{ $unit->slug }}/Value-Streams">
-                                        <small>{{ Cmf::getmodulename("level_two") }} ({{$ValueCount}})</small>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="d-flex align-items-center">
-                                    <div class="mr-1">
-                                        <ion-icon style="font-size: 18px;" name="people-outline"></ion-icon>
-                                    </div>
-                                    <a href="{{ url('dashboard/organization') }}/{{ $unit->slug }}/BU-TEAMS">
-                                        <small>{{ Cmf::getmodulename('level_three') }} ({{$TeamCount}})</small>
-                                    </a>
-                                </div>
-                            </div>
-                            
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="card-footer">
-                    <div class="d-flex flex-row align-items-center justify-content-between">
-                        <div class="d-flex flex-row align-items-center leader-section">
-                            @if($member > 0)
-                            @if($unit->lead_id)
-                            @foreach(DB::table('members')->get() as $r)
-                            @if($r->id == $unit->lead_id)
-
-                            <div class="mr-2">
-                                @if($r->image != NULL)
-                                <img src="{{asset('public/assets/images/'.$r->image)}}" alt="lead">
-                                @else
-                                <img src="{{ Avatar::create($r->name.' '.$r->last_name)->toBase64() }}" alt="lead">
-                                @endif
-                            </div>
-                            <div class="d-flex flex-column">
-                                <div>
-                                    <span class="text-primary">Lead</span>
-                                </div>
-                                <div>
-                                    <span>{{$r->name}} {{ $r->last_name }}</span>
-                                </div>
-                            </div>
-                            @endif
-                            @endforeach
-                            @else
-
-                            @endif
-                            @else
-                              <div>
-                                <a class="nav-link" href="{{route('settings.users')}}">
-                                    <button class="btn btn-primary">Assign</button>
-                                </a>
-                            </div>
-                            @endif
-                        </div>
-
-                        <div>
-                            <button class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                    <div class="card-toolbar">
+                        <button class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
                                 <i class="ki-solid ki-dots-vertical fs-2x"></i>
                             </button>
-                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px py-3" data-kt-menu="true">
-                                 <div class="menu-item px-3">
-                                    <a class="menu-link px-3"  data-toggle="modal" data-target="#edit{{$unit->id}}">Edit</a>
-                                </div>
-                                <div class="menu-item px-3 my-1">
-                                    <a class="menu-link px-3" data-toggle="modal" data-target="#delete{{$unit->id}}">Delete</a>
-                                </div>
+                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px py-3" data-kt-menu="true">
+                             <div class="menu-item px-3">
+                                <a class="menu-link px-3"  data-toggle="modal" data-target="#edit{{$unit->id}}">Edit</a>
+                            </div>
+                            <div class="menu-item px-3 my-1">
+                                <a class="menu-link px-3" data-toggle="modal" data-target="#delete{{$unit->id}}">Delete</a>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="card-body p-9">
+                    <a href="{{url('dashboard/organization/'.$unit->slug.'/dashboard/'.$unit->type)}}" class="fs-3 fw-bold text-gray-900">{{ \Illuminate\Support\Str::limit($unit->business_name,25, $end='...') }}</a>
+                    <p class="text-gray-500 fw-semibold fs-5 mt-1 mb-7">
+                        {{ \Illuminate\Support\Str::limit($unit->detail,30, $end='...') }}
+                    </p>
+                    <div class="d-flex flex-wrap mb-5">
+                        <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-7 mb-3">
+                            <div class="fs-6 text-gray-800 fw-bold">{{$ValueCount}}</div>
+                            <div class="fw-semibold text-gray-500">{{ Cmf::getmodulename("level_two") }}</div>
+                        </div>
+                        <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mb-3">
+                            <div class="fs-6 text-gray-800 fw-bold">{{$TeamCount}}</div>
+                            <div class="fw-semibold text-gray-500">{{ Cmf::getmodulename('level_three') }}</div>
+                        </div>
+                    </div>
+                    @if($member > 0)
+                    @if($unit->lead_id)
+                    @foreach(DB::table('members')->get() as $r)
+                    @if($r->id == $unit->lead_id)
+                    <div class="symbol-group symbol-hover">
+                        <div class="symbol symbol-35px symbol-circle">
+                            @if($r->image != NULL)
+                            <img src="{{asset('public/assets/images/'.$r->image)}}" alt="lead">
+                            @else
+                            <img src="{{ Avatar::create($r->name.' '.$r->last_name)->toBase64() }}" alt="lead">
+                            @endif
+                        </div>
+                        {{$r->name}} {{ $r->last_name }}
+                    </div>
+                    @endif
+                    @endforeach
+                    @else
+
+                    @endif
+                    @else
+                    <div>
+                        <a class="nav-link" href="{{route('settings.users')}}">
+                            <button class="btn btn-primary">Assign</button>
+                        </a>
+                    </div>
+                    @endif
+                </div>
             </div>
         </div>
-
-
-        <!-- Models -->
-
-       
-
-
-<div class="modal fade" id="delete{{$unit->id}}" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <!--begin::Modal content-->
-        <div class="modal-content">
-            <!--begin::Modal header-->
-            <div class="modal-header pb-0 border-0 justify-content-end">
-                <!--begin::Close-->
-                <div class="btn btn-sm btn-icon btn-active-color-primary" data-dismiss="modal">
-                    <i class="ki-outline ki-cross fs-1"></i>
+        <div class="modal fade" id="delete{{$unit->id}}" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <!--begin::Modal content-->
+                <div class="modal-content">
+                    <!--begin::Modal header-->
+                    <div class="modal-header pb-0 border-0 justify-content-end">
+                        <!--begin::Close-->
+                        <div class="btn btn-sm btn-icon btn-active-color-primary" data-dismiss="modal">
+                            <i class="ki-outline ki-cross fs-1"></i>
+                        </div>
+                        <!--end::Close-->
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-13 text-center">
+                            <h1 class="mb-3">Delete {{ Cmf::getmodulename("level_one") }}</h1>
+                        </div>
+                        <form method="POST">
+                         @csrf   
+                         <input type="hidden" name="delete_id" id="delete_id" value="{{$unit->id}}">
+                      
+                        <div class="modal-body">
+                            <div class="modal-body-error"></div>
+                            <div class="d-flex flex-column mb-8 fv-row">
+                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                    <span class="required">Write {{ Cmf::getmodulename('level_one') }} name and hit confirm</span>
+                                </label>
+                                <input type="text" name="bu_name"  id="bu_name{{$unit->id}}" class="form-control form-control-solid" placeholder="Write {{ Cmf::getmodulename('level_one') }} name and hit confirm" required>
+                            </div>                    
+                        </div>
+                        <div class="text-center">
+                            <button type="button" onclick="DeleteUnit({{$unit->id}});" class="btn btn-danger">
+                                <span class="indicator-label">Submit</span>
+                                <span class="indicator-progress">Please wait... 
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                            </button>
+                        </div>
+                        </form>
+                    </div>
                 </div>
-                <!--end::Close-->
-            </div>
-            <div class="modal-body">
-                <div class="mb-13 text-center">
-                    <h1 class="mb-3">Delete {{ Cmf::getmodulename("level_one") }}</h1>
-                </div>
-                <form method="POST">
-                 @csrf   
-                 <input type="hidden" name="delete_id" id="delete_id" value="{{$unit->id}}">
-              
-                <div class="modal-body">
-                    <div class="modal-body-error"></div>
-                    <div class="d-flex flex-column mb-8 fv-row">
-                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                            <span class="required">Write {{ Cmf::getmodulename('level_one') }} name and hit confirm</span>
-                        </label>
-                        <input type="text" name="bu_name"  id="bu_name{{$unit->id}}" class="form-control form-control-solid" placeholder="Write {{ Cmf::getmodulename('level_one') }} name and hit confirm" required>
-                    </div>                    
-                </div>
-                <div class="text-center">
-                    <button type="button" onclick="DeleteUnit({{$unit->id}});" class="btn btn-danger">
-                        <span class="indicator-label">Submit</span>
-                        <span class="indicator-progress">Please wait... 
-                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                    </button>
-                </div>
-                </form>
             </div>
         </div>
-    </div>
-</div>
-
-<div class="modal fade" id="edit{{$unit->id}}" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered mw-650px">
-        <!--begin::Modal content-->
-        <div class="modal-content">
-            <!--begin::Modal header-->
-            <div class="modal-header pb-0 border-0 justify-content-end">
-                <!--begin::Close-->
-                <div class="btn btn-sm btn-icon btn-active-color-primary" data-dismiss="modal">
-                    <i class="ki-outline ki-cross fs-1"></i>
+        <div class="modal fade" id="edit{{$unit->id}}" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered mw-650px">
+                <!--begin::Modal content-->
+                <div class="modal-content">
+                    <!--begin::Modal header-->
+                    <div class="modal-header pb-0 border-0 justify-content-end">
+                        <!--begin::Close-->
+                        <div class="btn btn-sm btn-icon btn-active-color-primary" data-dismiss="modal">
+                            <i class="ki-outline ki-cross fs-1"></i>
+                        </div>
+                        <!--end::Close-->
+                    </div>
+                    <div class="modal-body">
+                        <form class="needs-validation" action="{{url('update-business-unit')}}" method="POST">
+                            @csrf
+                            <div class="mb-13 text-center">
+                                <h1 class="mb-3">Update {{ Cmf::getmodulename("level_one") }}</h1>
+                            </div>
+                            <input type="hidden" name="unit_id" value="{{$unit->id}}">
+                            <input type="hidden" name="org_id" value="{{ DB::table('organization')->where('user_id' ,Auth::id())->orWhere('user_id',Auth::user()->invitation_id)->first()->id }}">
+                            <div class="d-flex flex-column mb-8 fv-row">
+                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                    <span class="required">{{ Cmf::getmodulename("level_one") }} Title</span>
+                                </label>
+                                <input type="text" class="form-control form-control-solid" name="unit_name" value="{{$unit->business_name}}" required>
+                            </div>
+                            <div class="d-flex flex-column mb-8 fv-row">
+                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                    <span class="required">Select Lead</span>
+                                </label>
+                                <select class="form-control form-control-solid" required name="lead_manager">
+                                    <?php foreach(DB::table('members')->where('org_user',Auth::id())->get() as $r){ ?>
+                                      <option @if($r->id == $unit->lead_id) selected @endif value="{{ $r->id }}">{{ $r->name }} {{ $r->last_name }}</option>
+                                    <?php }  ?>
+                                </select>
+                            </div>
+                            <div class="d-flex flex-column mb-8 fv-row">
+                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                    <span>Type {{ Cmf::getmodulename('level_one') }} Details</span>
+                                </label>
+                                <textarea class="form-control form-control-solid" rows="3" name="unit_detail" placeholder="Type {{ Cmf::getmodulename('level_one') }} Details">{{$unit->detail}}</textarea>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
+                                    <span class="indicator-label">Submit</span>
+                                    <span class="indicator-progress">Please wait... 
+                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <!--end::Close-->
-            </div>
-            <div class="modal-body">
-                <form class="needs-validation" action="{{url('update-business-unit')}}" method="POST">
-                    @csrf
-                    <div class="mb-13 text-center">
-                        <h1 class="mb-3">Update {{ Cmf::getmodulename("level_one") }}</h1>
-                    </div>
-                    <input type="hidden" name="unit_id" value="{{$unit->id}}">
-                    <input type="hidden" name="org_id" value="{{ DB::table('organization')->where('user_id' ,Auth::id())->orWhere('user_id',Auth::user()->invitation_id)->first()->id }}">
-                    <div class="d-flex flex-column mb-8 fv-row">
-                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                            <span class="required">{{ Cmf::getmodulename("level_one") }} Title</span>
-                        </label>
-                        <input type="text" class="form-control form-control-solid" name="unit_name" value="{{$unit->business_name}}" required>
-                    </div>
-                    <div class="d-flex flex-column mb-8 fv-row">
-                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                            <span class="required">Select Lead</span>
-                        </label>
-                        <select class="form-control form-control-solid" required name="lead_manager">
-                            <?php foreach(DB::table('members')->where('org_user',Auth::id())->get() as $r){ ?>
-                              <option @if($r->id == $unit->lead_id) selected @endif value="{{ $r->id }}">{{ $r->name }} {{ $r->last_name }}</option>
-                            <?php }  ?>
-                        </select>
-                    </div>
-                    <div class="d-flex flex-column mb-8 fv-row">
-                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                            <span>Type {{ Cmf::getmodulename('level_one') }} Details</span>
-                        </label>
-                        <textarea class="form-control form-control-solid" rows="3" name="unit_detail" placeholder="Type {{ Cmf::getmodulename('level_one') }} Details">{{$unit->detail}}</textarea>
-                    </div>
-                    <div class="text-center">
-                        <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
-                            <span class="indicator-label">Submit</span>
-                            <span class="indicator-progress">Please wait... 
-                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                        </button>
-                    </div>
-                </form>
             </div>
         </div>
-    </div>
-</div>
-@endforeach
-   
+    @endforeach
 </div>
 
 @else

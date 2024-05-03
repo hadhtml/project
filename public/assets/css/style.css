@@ -18915,7 +18915,7 @@ option {
     border-radius: 12px;
     background: var(--white, #FFF);
     box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.05);
-    border: transparent !important;
+/*    border: transparent;*/
 }
 
 .objective-header {
@@ -21905,9 +21905,7 @@ line-height: normal;
 .module-icon
 {
     font-size: 25px;
-    background-color: #f3f3f3;
     padding: 15px;
-    border-radius: 100px;
 }
 
 
