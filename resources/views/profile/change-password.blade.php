@@ -14,23 +14,23 @@ $var_objective = "security";
             </div>
             @endif
             <form method="POST" action="{{url('update-password')}}">
-               @csrf  
-               <div class="col-md-12 col-lg-12 col-xl-12">
-                  <div class="form-group mb-0">
-                     <input type="password" class="form-control form-control-lg form-control-solid mb-2" value="" name="old_password" placeholder="" />
-                     <label for="objective-name">Current password</label>
-                  </div>
+               @csrf
+               <div class="d-flex flex-column mb-7 fv-row">
+                  <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                      <span class="required">Current password</span>
+                  </label>
+                  <input type="password" class="form-control form-control-solid" value="" name="old_password" placeholder="" />
                   @error('old_password')
                   <span class="" role="alert">
                   <strong>{{ $message }}</strong>
                   </span>
                   @enderror
                </div>
-               <div class="col-md-12 col-lg-12 col-xl-12">
-                  <div class="form-group mb-0">
-                     <input type="password" class="form-control form-control-lg form-control-solid" value="" name="password" placeholder="" />
-                     <label for="objective-name">New password</label>
-                  </div>
+               <div class="d-flex flex-column mb-7 fv-row">
+                  <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                      <span class="required">New password</span>
+                  </label>
+                  <input type="password" class="form-control form-control-solid" value="" name="password" placeholder="" />
                   @error('password')
                   <span class="custom_error" role="alert">
                   <strong>{{ $message }} 
@@ -43,11 +43,11 @@ $var_objective = "security";
                   </span>
                   @enderror
                </div>
-               <div class="col-md-12 col-lg-12 col-xl-12">
-                  <div class="form-group mb-0 mt-4">
-                     <input type="password" class="form-control form-control-lg form-control-solid" value="" name="password_confirmation" placeholder="" />
-                     <label for="objective-name">Verify password</label>
-                  </div>
+               <div class="d-flex flex-column mb-7 fv-row">
+                  <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                      <span class="required">Current password</span>
+                  </label>
+                  <input type="password" class="form-control form-control-solid" value="" name="password_confirmation" placeholder="" />
                   @error('password_confirmation')
                   <span class="custom_error" role="alert">
                   <strong>{{ $message }}</strong>

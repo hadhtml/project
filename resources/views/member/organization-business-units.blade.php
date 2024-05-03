@@ -145,8 +145,6 @@ $var_objective = "Org-Unit";
             <div class="modal-body">
                 <div class="mb-13 text-center">
                     <h1 class="mb-3">Delete {{ Cmf::getmodulename("level_one") }}</h1>
-                    <div class="text-muted fw-semibold fs-5">If you need more info, please check 
-                    <a href="#" class="fw-bold link-primary">Project Guidelines</a>.</div>
                 </div>
                 <form method="POST">
                  @csrf   
@@ -191,8 +189,6 @@ $var_objective = "Org-Unit";
                     @csrf
                     <div class="mb-13 text-center">
                         <h1 class="mb-3">Update {{ Cmf::getmodulename("level_one") }}</h1>
-                        <div class="text-muted fw-semibold fs-5">If you need more info, please check 
-                        <a href="#" class="fw-bold link-primary">Project Guidelines</a>.</div>
                     </div>
                     <input type="hidden" name="unit_id" value="{{$unit->id}}">
                     <input type="hidden" name="org_id" value="{{ DB::table('organization')->where('user_id' ,Auth::id())->orWhere('user_id',Auth::user()->invitation_id)->first()->id }}">
@@ -264,8 +260,6 @@ $var_objective = "Org-Unit";
                     @csrf
                     <div class="mb-13 text-center">
                         <h1 class="mb-3">Create {{ Cmf::getmodulename("level_one") }}</h1>
-                        <div class="text-muted fw-semibold fs-5">If you need more info, please check 
-                        <a href="#" class="fw-bold link-primary">Project Guidelines</a>.</div>
                     </div>
                     <input type="hidden" name="org_unit_id" value="{{ DB::table('organization')->where('user_id' ,Auth::id())->orWhere('user_id',Auth::user()->invitation_id)->first()->id }}">
 

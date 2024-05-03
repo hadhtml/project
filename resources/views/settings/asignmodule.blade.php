@@ -10,25 +10,25 @@ $var_objective = "Jira";
          <div class="card-body p-10">
             <form class="needs-validation pt-2" method="POST" action="{{ route('settings.updatemodulenames') }}">
                  @csrf
-                 <div class="row">
-                     <div class="col-md-12 col-lg-12 col-xl-12">
-                         <div class="form-group mb-0">
-                             <input type="text" class="form-control @error('level_one') is-invalid @enderror" name="level_one" value="{{ Cmf::getmodulename('level_one') }}"  id="level_one" required>
-                             <label for="level_one">Level One</label>
-                         </div>
-                     </div>
-                      <div class="col-md-12 col-lg-12 col-xl-12">
-                         <div class="form-group mb-0">
-                             <input type="text" class="form-control @error('level_two') is-invalid @enderror" name="level_two" value="{{ Cmf::getmodulename('level_two') }}"  id="level_two" required>
-                             <label for="level_two">Level Two</label>
-                         </div>
-                     </div>
-                      <div class="col-md-12 col-lg-12 col-xl-12">
-                         <div class="form-group mb-0">
-                             <input type="text" class="form-control @error('level_three') is-invalid @enderror" name="level_three" value="{{ Cmf::getmodulename('level_three') }}"  id="level_three" required>
-                             <label for="level_three">Level Three</label>
-                         </div>
-                     </div>                                
+                <div class="d-flex flex-column mb-7 fv-row">
+                  <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                      <span class="required">Level One</span>
+                  </label>
+                  <input type="text" class="form-control form-control-solid" name="level_one" value="{{ Cmf::getmodulename('level_one') }}"  id="level_one" required>
+                </div>
+                <div class="d-flex flex-column mb-7 fv-row">
+                  <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                      <span class="required">Level Two</span>
+                  </label>
+                  <input type="text" class="form-control form-control-solid" name="level_two" value="{{ Cmf::getmodulename('level_two') }}"  id="level_two" required>
+                </div>
+                <div class="d-flex flex-column mb-7 fv-row">
+                  <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                      <span class="required">Level Three</span>
+                  </label>
+                  <input type="text" class="form-control form-control-solid" name="level_three" value="{{ Cmf::getmodulename('level_three') }}"  id="level_three" required>
+                </div>
+                 <div class="row">                          
                      <div class="col-md-12 py-2">
                          <button id="createmodulenamesbutton" class="btn btn-primary btn-lg btn-theme ripple">Update Names</button>
                      </div>

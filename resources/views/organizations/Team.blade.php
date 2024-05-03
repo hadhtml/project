@@ -328,8 +328,6 @@
                     <input type="hidden" name="team_unit_id" value="{{ $organization->id }}">
                     <div class="text-center mb-13">
                         <h1 class="mb-3">Add Team</h1>
-                        <div class="text-muted fw-semibold fs-5">If you need more info, please check out 
-                        <a href="javascript:void(0)" class="link-primary fw-bold">FAQ Page</a>.</div>
                     </div>
                     <input type="hidden" name="org_stream_id" value="{{$organization->id}}">
                     <div class="d-flex flex-column mb-7 fv-row">

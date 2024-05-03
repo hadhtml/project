@@ -234,13 +234,7 @@ $var_objective = "V-Stream";
                 <form class="needs-validation" action="{{url('add-value-stream')}}" method="POST">
                     @csrf
                     <div class="mb-13 text-center">
-                        <!--begin::Title-->
                         <h1 class="mb-3">Create {{ Cmf::getmodulename('level_two') }}</h1>
-                        <!--end::Title-->
-                        <!--begin::Description-->
-                        <div class="text-muted fw-semibold fs-5">If you need more info, please check 
-                        <a href="#" class="fw-bold link-primary">Project Guidelines</a>.</div>
-                        <!--end::Description-->
                     </div>
                     <input type="hidden" name="org_value_id" value="{{$organization->id}}">
                     <div class="d-flex flex-column mb-8 fv-row">

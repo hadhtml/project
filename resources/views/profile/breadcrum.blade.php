@@ -9,11 +9,6 @@ $organization  = DB::table('organization')->where('user_id',Auth::id())->first()
             <h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bold fs-3 m-0">Change Password
             </h1>
             @endif
-            @if(url()->current() == route('settings.security'))
-            <span class="material-symbols-outlined">key</span>
-            <h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bold fs-3 m-0">Change Password
-            </h1>
-            @endif
             @if(url()->current() == url('organization/dashboard'))
             <span class="material-symbols-outlined">subscriptions</span>
             <h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bold fs-3 m-0">Choose Your Plan
