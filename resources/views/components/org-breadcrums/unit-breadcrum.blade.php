@@ -1,110 +1,54 @@
-
-<div class="subheader subheader-solid breadcrums" id="kt_subheader">
-    <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
-        <!--begin::Info-->
-        <div class="d-flex align-items-start flex-column flex-wrap mr-2">
-            <!--begin::Page Title-->
-            <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
-                @if($var_objective == 'mapper-unit')
-                    OKR Mapper
-                @else
+<div class="app-toolbar-wrapper d-flex flex-stack flex-wrap gap-4 w-100">
+    <div class="page-title d-flex flex-column justify-content-center gap-1 me-3">
+        <div class="d-flex">
+            @if($var_objective == 'mapper-unit')
+            <h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bold fs-3 m-0">
+            OKR Mapper
+            </h1>
+            @else
                 @if(isset($organization))
-                <div class="d-flex flex-row align-items-center">
-                    <div>
-                        <span style="font-size:22px" class="material-symbols-outlined">domain</span>
-                    </div>
-                    <div>
-                        <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
-                            {{ DB::table('business_units')->where('id',$organization->id)->first()->business_name }}
-
-                        </h5>
-                    </div>
-                </div>
+                    <h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bold fs-3 m-0">
+                    {{ DB::table('business_units')->where('id',$organization->id)->first()->business_name }}
+                    </h1>
                 @else
-                
-            <div class="d-flex flex-row align-items-center">
-                <div>
-                    <span style="font-size:22px" class="material-symbols-outlined">domain</span>
-                </div>
-                <div>
-                    <h5 class="text-dark font-weight-bold ml-2">
-                        {{ Cmf::getmodulename("level_one") }}
-                    </h5>
-                </div>
-            </div>
+                <span class="material-symbols-outlined">domain</span>
+                <h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bold fs-3 m-0">
+                {{ Cmf::getmodulename("level_one") }}
+                </h1>
                 @endif
-                @endif
-            </h5>
-            <!-- Breadcrum Items -->
-            <div class="d-flex flex-row page-sub-titles align-items-center">
-                <div class="mr-2">
-                    <div class="d-flex flex-row align-items-center">
-                        <div>
-                            <span style="font-size:17px" class="material-symbols-outlined">auto_stories</span>
-                        </div>
-                        <div>
-                             <a href="{{url('organization/dashboard')}}">Dashboard</a>
-
-                        </div>
-                    </div>
-                </div>
-                @if(isset($organization))
-                <div class="mr-2">
-                    <div class="d-flex flex-row align-items-center">
-                        <div>
-                            <span style="font-size:17px" class="material-symbols-outlined">domain</span>
-                        </div>
-                        <div>
-                            <p>{{ DB::table('business_units')->where('id' , $organization->id)->first()->business_name }}</p>
-
-
-                        </div>
-                    </div>
-                </div>
-                @endif
-                @if($var_objective == 'mapper-unit')
-                    <div class="mr-2">
-                        <p>OKR Mapper</p>
-                    </div>
-                @else
-                    @if(isset($organization))
-                    <div class="mr-2">
-                        <div class="d-flex flex-row align-items-center">
-                            <div>
-                                <span style="font-size:17px" class="material-symbols-outlined">auto_stories</span>
-                            </div>
-                            <div>
-                                <a href="{{route('organization.level-one', Cmf::getmoduleslug('level_one'))}}">BU-Dashboard</a>
-    
-                            </div>
-                        </div>
-                    </div>
-                    @else
-                    <div class="d-flex flex-row align-items-center">
-                        <div>
-                            <span style="font-size:17px" class="material-symbols-outlined">domain</span>
-                        </div>
-                        <div>
-                            <a href="{{route('organization.level-one', Cmf::getmoduleslug('level_one'))}}">{{ Cmf::getmodulename("level_one") }}</a>
-
-                        </div>
-                    </div>
-                    @endif
-                @endif
-            </div>
-            <!--End Breadcrum Items -->
+            @endif
         </div>
-        <!--end::Info-->
-        <!--begin::Toolbar-->
+        <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0">
+            <li class="breadcrumb-item text-muted">
+                <a href="{{url('organization/dashboard')}}" class="text-muted text-hover-primary">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item">
+                <span class="bullet bg-gray-500 w-5px h-2px"></span>
+            </li>
+            @if(isset($organization))
+            <li class="breadcrumb-item text-muted">{{ DB::table('business_units')->where('id' , $organization->id)->first()->business_name }}</li>
+            @endif
+
+            @if($var_objective == 'mapper-unit')
+                <li class="breadcrumb-item text-muted">OKR Mapper</li>
+            @else
+                @if(isset($organization))
+                <li class="breadcrumb-item text-muted">
+                    <span class="material-symbols-outlined">auto_stories</span>
+                    <a href="{{route('organization.level-one', Cmf::getmoduleslug('level_one'))}}" class="text-muted text-hover-primary">BU-Dashboard</a>
+                </li>
+                @else
+                <li class="breadcrumb-item text-muted">
+                    <span class="material-symbols-outlined">domain</span>
+                    <a href="{{route('organization.level-one', Cmf::getmoduleslug('level_one'))}}" class="text-muted text-hover-primary">{{ Cmf::getmodulename("level_one") }}</a>
+                </li>
+                @endif
+            @endif
+        </ul>
+    </div>
+    <div class="d-flex align-items-center gap-2 gap-lg-3">
         @if(!isset($organization))
-        <div class="d-flex align-items-center toolbar">
-            <div>
-                <button class="button" type="button" data-toggle="modal" data-target="#add-business-unit">
-                    Add {{ Cmf::getmodulename('level_one') }}
-                </button>
-            </div>
-        </div>
+        <a href="javascript:void(0)" class="btn btn-flex btn-outline btn-color-gray-700 btn-active-color-primary bg-body h-40px fs-7 fw-bold" data-toggle="modal" data-target="#add-business-unit">Add {{ Cmf::getmodulename('level_one') }}</a>
         @endif
-        <!--end::Toolbar-->
     </div>
 </div>

@@ -271,7 +271,50 @@
                 @if(!$data->epic_name)
                     $('#edit-epic-modal-new').modal('hide');
                 @endif
+
+                handleDivClick("{{$data->initiative_id}}");
             }
         });
     }));
+
+
+    var currentSectionIndices = {};
+
+function handleDivClick(x)
+{
+     $.ajax({
+     type: "GET",
+    url: "{{ url('get-month') }}",
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    data: {
+    x:x,
+
+    },
+    success: function(response) {
+        console.log(response.loop_index);
+        // $("#initiative"+x).collapse('toggle');  
+        if(response.loop_index)
+        {
+        currentSectionIndices[x] = response.loop_index;
+
+        }else
+        {
+        currentSectionIndices[x] = 0;
+        }
+        var container = document.querySelector("#container-scroll-" + x);
+        var sections = Array.from(document.querySelectorAll("#section-"+x));
+
+
+           var sectionWidth = sections[0].offsetWidth;
+           container.style.transform = `translateX(-${sectionWidth * currentSectionIndices[x]}px)`;
+
+
+    }
+    
+});  
+
+
+}
 </script>
