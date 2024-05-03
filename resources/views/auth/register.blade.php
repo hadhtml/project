@@ -114,12 +114,20 @@
                                       <div class="separator separator-content my-14">
                                          <span class="w-125px text-gray-500 fw-semibold fs-7">Or with email</span>
                                       </div>
-                                      <div class="fv-row mb-8">
-                                         <input type="text" placeholder="First Name" name="name" autocomplete="off" class="form-control bg-transparent" />
+                                      <div class="row">
+                                          <div class="col-md-6">
+                                              <div class="fv-row mb-8">
+                                                 <input type="text" placeholder="First Name" name="name" autocomplete="off" class="form-control bg-transparent" />
+                                              </div>
+                                          </div>
+                                          <div class="col-md-6">
+                                              <div class="fv-row mb-8">
+                                                 <input type="text" placeholder="Last Name" name="last_name" autocomplete="off" class="form-control bg-transparent" />                        
+                                              </div>
+                                          </div>
                                       </div>
-                                      <div class="fv-row mb-8">
-                                         <input type="text" placeholder="Last Name" name="last_name" autocomplete="off" class="form-control bg-transparent" />                        
-                                      </div>
+                                      
+                                      
                                       <div class="fv-row mb-8">
                                          <input type="text" placeholder="Organization Name" name="org_name" autocomplete="off" class="form-control bg-transparent" />                        
                                       </div>

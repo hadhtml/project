@@ -4,9 +4,6 @@ $var_objective = "mapper-org";
 @extends('components.main-layout')
 <title>ORG-OKR Mapper</title>
 @section('content')
-
-<div class="row rotatex">
-=======
 <div class="d-flex flex-row-reverse zoom-btn-section">
    <div>
       <button
@@ -42,7 +39,7 @@ $var_objective = "mapper-org";
    <div class="row">
 
    <div class="col-md-12">
-      <div style="width: 100%; height: 5000px; padding: 50px;margin-top: 150px;">
+      <div style="width: 5000px; height: 5000px; padding: 50px;background-color: white;">
          <!-- Node 1 -->
          <div id="node_1" class="node" style="transform: translate(-60px, -60px);">
             <div class="node-name slot-active drag-impo-grab">
@@ -175,13 +172,13 @@ $var_objective = "mapper-org";
    @foreach(DB::table('unit_team')->where('org_id'  , $b->id)->get() as $b_t)
    new PlainDraggable(buisnessunitteam{{ $b_t->id }}, {
    onMove: function() {
-   @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $draglinekey =>  $drag)
-   line{{ $draglinekey+1 }}.position();
-   @endforeach
+         @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $draglinekey =>  $drag)
+         line{{ $draglinekey+1 }}.position();
+         @endforeach
    },
    // onMoveStart: function() { line.dash = {animation: true}; },
    onDragEnd: function() {
-   @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $draglinekey =>  $drag)
+         @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $draglinekey =>  $drag)
          line{{ $draglinekey+1 }}.dash = false;
          @endforeach
    },
@@ -190,52 +187,53 @@ $var_objective = "mapper-org";
    @endforeach
    new PlainDraggable(buisnessunit{{ $b->id }}, {
    onMove: function() {
-   @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $draglinekey =>  $drag)
-   line{{ $draglinekey+1 }}.position();
-   @endforeach
-   },
-   // onMoveStart: function() { line.dash = {animation: true}; },
-   onDragEnd: function() {
-   @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $draglinekey =>  $drag)
-         line{{ $draglinekey+1 }}.dash = false;
-         @endforeach
-   },
-   autoScroll:true,
-   });
-   @foreach($valuestream as $v)
-   new PlainDraggable(valuestream{{ $v->id }}, {
-   onMove: function() {
-   @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $draglinekey =>  $drag)
-   line{{ $draglinekey+1 }}.position();
-   @endforeach
-   },
-   // onMoveStart: function() { line.dash = {animation: true}; },
-   onDragEnd: function() {
-   @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $draglinekey =>  $drag)
-         line{{ $draglinekey+1 }}.dash = false;
-         @endforeach
-   },
-   autoScroll:true,
-   });
-   
-   @foreach(DB::table('value_team')->where('org_id'  , $v->id)->get() as $key_value_stream_team => $v_t)
-   
-    new PlainDraggable(valuestreamteam{{ $v_t->id }}, {
-       onMove: function() {
          @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $draglinekey =>  $drag)
          line{{ $draglinekey+1 }}.position();
          @endforeach
-       },
-       // onMoveStart: function() { line.dash = {animation: true}; },
-       onDragEnd: function() {
+   },
+   // onMoveStart: function() { line.dash = {animation: true}; },
+   onDragEnd: function() {
          @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $draglinekey =>  $drag)
          line{{ $draglinekey+1 }}.dash = false;
          @endforeach
-       },
-       autoScroll:true,
-     });
-   
-   @endforeach
+   },
+   autoScroll:true,
+   });
+      @foreach($valuestream as $v)
+         new PlainDraggable(valuestream{{ $v->id }}, {
+         onMove: function() {
+               @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $draglinekey =>  $drag)
+               line{{ $draglinekey+1 }}.position();
+               @endforeach
+         },
+         // onMoveStart: function() { line.dash = {animation: true}; },
+         onDragEnd: function() {
+               @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $draglinekey =>  $drag)
+               line{{ $draglinekey+1 }}.dash = false;
+               @endforeach
+         },
+         autoScroll:true,
+         });
+      
+         @foreach(DB::table('value_team')->where('org_id'  , $v->id)->get() as $key_value_stream_team => $v_t)
+         
+          new PlainDraggable(valuestreamteam{{ $v_t->id }}, {
+             onMove: function() {
+               @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $draglinekey =>  $drag)
+               line{{ $draglinekey+1 }}.position();
+               @endforeach
+             },
+             // onMoveStart: function() { line.dash = {animation: true}; },
+             onDragEnd: function() {
+               @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $draglinekey =>  $drag)
+               line{{ $draglinekey+1 }}.dash = false;
+               @endforeach
+             },
+             autoScroll:true,
+           });
+         
+         @endforeach
+      @endforeach
    @endforeach
    @endforeach
    });
@@ -296,12 +294,6 @@ $var_objective = "mapper-org";
      boxorgteambox.style.transform = `translate(1850px , ${orgteamboxcumulativeHeight}px)`;
      orgteamboxcumulativeHeight += boxorgteambox.offsetHeight + 10;
    });
-
-
-
-   
-
-   
  });
 </script>
 @endsection

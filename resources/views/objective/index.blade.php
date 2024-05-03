@@ -321,11 +321,11 @@ $Currentsprint = DB::table('sprint')->where('user_id',Auth::id())->where('value_
                         $trimmedStringobj = trim($objedit);
                         @endphp
                         <div class="action ml-0">
-                           <button class="btn btn-icon btn-circle btn-tolbar ml-auto " onclick="editobjective(event , {{$obj->id}} , '{{$organization->slug}}')">
-                           <span class="material-symbols-outlined">edit</span>
+                           <button onclick="editobjective(event , {{$obj->id}} , '{{$organization->slug}}')" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
+                               <i class="ki-outline ki-pencil fs-1 text-gray-500 me-n1"></i>
                            </button>
-                           <button class="btn btn-icon btn-circle btn-tolbar delete-obj mr-2" onclick="deleteobj(event ,{{$obj->id}})">
-                           <span class="material-symbols-outlined">delete</span>
+                           <button onclick="deleteobj(event ,{{$obj->id}})" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
+                               <i class="ki-outline ki-trash fs-1 text-gray-500 me-n1"></i>
                            </button>
                         </div>
                      </div>
@@ -419,11 +419,11 @@ $Currentsprint = DB::table('sprint')->where('user_id',Auth::id())->where('value_
                                           $trimmedStringkey = trim($keyedit);
                                           @endphp
                                           <div class="action ml-0">
-                                             <button class="btn btn-icon btn-circle bg-white btn-tolbar ml-auto" onclick="editobjectivekey(event,{{$key->id}})">
-                                             <span class="material-symbols-outlined">edit</span>
+                                             <button onclick="editobjectivekey(event,{{$key->id}})" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
+                                                 <i class="ki-outline ki-pencil fs-1 text-gray-500 me-n1"></i>
                                              </button>
-                                             <button class="btn btn-icon btn-circle bg-white btn-tolbar"  onclick="deleteobjkey(event,{{$key->id}},'{{$obj->id}}')" data-toggle="modal" data-target="#delete-objective-key">
-                                             <span class="material-symbols-outlined">delete</span>
+                                             <button data-toggle="modal" data-target="#delete-objective-key" onclick="deleteobjkey(event,{{$key->id}},'{{$obj->id}}')" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
+                                                 <i class="ki-outline ki-trash fs-1 text-gray-500 me-n1"></i>
                                              </button>
                                           </div>
                                        </div>
@@ -516,13 +516,11 @@ $Currentsprint = DB::table('sprint')->where('user_id',Auth::id())->where('value_
                                                             $trimmedStringinit = trim($initedit);
                                                             @endphp
                                                             <div class="action ml-0">
-                                                               <button
-                                                                  class="btn btn-icon btn-circle bg-white btn-tolbar ml-auto" onclick="editinitiative({{$initiative->id}},'{{$initiative->initiative_name}}','{{$initiative->initiative_start_date}}','{{$initiative->initiative_end_date}}','{{$trimmedStringinit}}','{{$initiative->initiative_weight}}','{{$key->id}}','{{$obj->id}}','{{$key->key_end_date}}')" data-toggle="modal" data-target="#edit-initiative">
-                                                               <span class="material-symbols-outlined">edit</span>
+                                                               <button onclick="editinitiative({{$initiative->id}},'{{$initiative->initiative_name}}','{{$initiative->initiative_start_date}}','{{$initiative->initiative_end_date}}','{{$trimmedStringinit}}','{{$initiative->initiative_weight}}','{{$key->id}}','{{$obj->id}}','{{$key->key_end_date}}')" data-toggle="modal" data-target="#edit-initiative" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
+                                                                   <i class="ki-outline ki-pencil fs-1 text-gray-500 me-n1"></i>
                                                                </button>
-                                                               <button
-                                                                  class="btn btn-icon btn-circle bg-white btn-tolbar" onclick="deletekeyinitiative({{$initiative->id}},'{{$key->id}}','{{$obj->id}}')" data-toggle="modal" data-target="#delete-initiative-key">
-                                                               <span class="material-symbols-outlined">delete</span>
+                                                               <button onclick="deletekeyinitiative({{$initiative->id}},'{{$key->id}}','{{$obj->id}}')" data-toggle="modal" data-target="#delete-initiative-key" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
+                                                                   <i class="ki-outline ki-trash fs-1 text-gray-500 me-n1"></i>
                                                                </button>
                                                             </div>
                                                          </div>

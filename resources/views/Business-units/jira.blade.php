@@ -3,36 +3,36 @@ $Backlog = DB::table('backlog_unit')->get();
 $jir = DB::table('jira_setting')->where('user_id',Auth::id())->first();
 @endphp
 @if(count($jiradata) > 0)
-<table id="example" class="table">
-   <thead>
-      <tr>
-         <td>
-            <label class="form-checkbox">
-            <input type="checkbox" id="checkAlljira">
-            <span class="checkbox-label"></span>
-            </label>
-         </td>
-         <td>Summary</td>
-         <td>Description</td>
-      </tr>
-   </thead>
-   <tbody id="check">
-     
-      @foreach($jiradata as $data)
-      <tr>
-         <td>
-            <label class="form-checkbox">
-            <input type="checkbox" class="check-jira"  value="{{$data->id}}" name="jira_epic[]"> 
-            <span class="checkbox-label"></span>
-            </label>
-         </td>
-         <td>{{$data->Summary}}</td>
-         <td>{{$data->detail}}</td>
-      </tr>
-      @endforeach
-    
-   </tbody>
-</table>
+<div class="col-md-12">
+   <table class="table align-middle table-row-dashed fs-6 gy-5">
+      <thead>
+         <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+            <td class="w-10px pe-2">
+               <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
+                  <input class="form-check-input" type="checkbox" id="checkAlljira" />
+               </div>
+            </td>
+            <td class="min-w-125px">Summary</td>
+            <td class="text-center min-w-70px">Description</td>
+         </tr>
+      </thead>
+      <tbody id="check" class="fw-semibold text-gray-600">
+        
+         @foreach($jiradata as $data)
+         <tr>
+            <td>
+               <div class="form-check form-check-sm form-check-custom form-check-solid">
+                  <input type="checkbox" class="check-jira form-check-input"  value="{{$data->id}}" name="jira_epic[]"> 
+               </div>
+            </td>
+            <td>{{$data->Summary}}</td>
+            <td>{{$data->detail}}</td>
+         </tr>
+         @endforeach
+       
+      </tbody>
+   </table>
+</div>
 @else
 No Data Found
 @endif
@@ -44,7 +44,7 @@ No Data Found
       One time download
       </label>
    </div>
-   <div class="form-check mt-1">
+   <div class="form-check mt-3">
       <input class="form-check-input" type="radio" required name="flex" @if($jir) @if($jir->sync == 'on') checked @endif @endif value="on" id="flexRadioDefault2" >
       <label class="form-check-label ml-2 mt-1" for="flexRadioDefault2">
       Keep Synching
@@ -53,7 +53,11 @@ No Data Found
 </div>
 @endif
 <div class="col-md-12">
-   <button class="btn btn-primary btn-lg btn-theme btn-block ripple mt-3" id="date1-end" disabled  type="submit">Download</button>
+   <div class="text-center pt-15">
+      <button type="submit" id="date1-end" class="btn btn-primary" disabled>
+          <span class="indicator-label">Download</span>
+      </button>
+  </div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>

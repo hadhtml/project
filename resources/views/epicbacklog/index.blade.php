@@ -536,63 +536,59 @@ $var_objective = 'TBaclog-' . $type;
       </div>
    </div>
 </div>
-<div class="modal fade" id="create-jira-epic" tabindex="-1" role="dialog" aria-labelledby="create-epic"
-   aria-hidden="true">
-   <div class="modal-dialog" role="document">
-      <div class="modal-content" style="width: 526px !important; padding: 12px !important;">
-         <div class="modal-header">
-            <div class="row">
-               <div class="col-md-12">
-                  <h5 class="modal-title" id="create-epic">Download Epics from Jira</h5>
-               </div>
-               <div class="col-md-12">
-                  <p>Fill out the form, submit and hit the save button.</p>
-               </div>
-               <div id="" role="alert"></div>
-               <span id="" class="ml-3 text-danger"></span>
+
+<div class="modal fade" id="create-jira-epic" tabindex="-1" aria-hidden="true">
+   <div class="modal-dialog modal-dialog-centered mw-650px">
+      <div class="modal-content rounded">
+         <div class="modal-header pb-0 border-0 justify-content-end">
+            <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+               <i class="ki-outline ki-cross fs-1"></i>
             </div>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <img src="{{ asset('public/assets/images/icons/minus.svg') }}">
-            </button>
          </div>
-         @php
-         $jira = DB::table('jira_setting')->where('user_id',Auth::id())->orWhere('user_id',Auth::user()->invitation_id)->count();
-         @endphp
-         <div class="modal-body p-0">
-            <form class="needs-validation" action="{{ url('assign-jira-epic') }}" method="POST">
-               @csrf
-               <input type="hidden" name="backlog_id" value="{{ $organization->id }}">
-               <input type="hidden" name="type" value="{{ $organization->type }}">
-               @if($jira > 0)
-               <div class="col-md-12 col-lg-12 col-xl-12">
-                  <div class="form-group mb-0">
-                     <select class="form-control" onchange="get_jira_project(this.value)" id="JIRA"
-                        name="jira_name" required>
+         <div class="modal-body py-10 px-lg-17">
+            <div class="mb-13 text-center">
+               <h1 class="mb-3">Download Epics from Jira</h1>
+            </div>
+            <div class="scroll-y me-n7 pe-7" id="kt_modal_new_address_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_new_address_header" data-kt-scroll-wrappers="#kt_modal_new_address_scroll" data-kt-scroll-offset="300px">
+               @php
+               $jira = DB::table('jira_setting')->where('user_id',Auth::id())->orWhere('user_id',Auth::user()->invitation_id)->count();
+               @endphp
+               <form class="needs-validation" action="{{ url('assign-jira-epic') }}" method="POST">
+                  @csrf
+                  <input type="hidden" name="backlog_id" value="{{ $organization->id }}">
+                  <input type="hidden" name="type" value="{{ $organization->type }}">
+                  @if($jira > 0)
+                  <div class="d-flex flex-column mb-7 fv-row">
+                     <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                         <span class="required">Choose Jira Connect</span>
+                     </label>
+                     <select class="form-control form-control-solid" onchange="get_jira_project(this.value)" id="JIRA"
+                           name="jira_name" required>
                         <option value="">Select Jira Connect</option>
                         <?php foreach(DB::table('jira_setting')->where('user_id',Auth::id())->orWhere('user_id',Auth::user()->invitation_id)->get() as $r){ ?>
                         <option value="{{ $r->id }}">{{ $r->jira_name }}</option>
                    
                         <?php }  ?>
                      </select>
-                     <label for="small-description">Choose Jira Connect</label>
                   </div>
-               </div>
-               @else
-               <div class="alert alert-danger mt-1 ml-3" role="alert">
-                  Connect your Jira account in the settings. <a href="{{ route('settings.jirasettings') }}" class="alert-link">Click here</a>.
-               </div>
-               @endif
-               <div class="col-md-12 col-lg-12 col-xl-12">
-                  <div class="form-group mb-0">
-                     <select class="form-control" onchange="c_jira(this.value)" id="jira-project"
-                        name="jira_project" required>
+                  @else
+                  <div class="alert alert-danger mt-1 ml-3" role="alert">
+                     Connect your Jira account in the settings. <a href="{{ route('settings.jirasettings') }}" class="alert-link">Click here</a>.
+                  </div>
+                  @endif
+                  <div class="d-flex flex-column mb-7 fv-row">
+                     <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                         <span class="required">Choose Jira Project</span>
+                     </label>
+                     <select class="form-control form-control-solid" onchange="c_jira(this.value)" id="jira-project"
+                           name="jira_project" required>
+                           <option value="">Select</option>
                      </select>
-                     <label for="small-description" style="bottom:72px;">Choose Jira Project</label>
                   </div>
-               </div>
-               <div class="row" id="jita-data">
-               </div>
-            </form>
+                  <div class="row" id="jita-data">
+                  </div>
+               </form>
+            </div>
          </div>
       </div>
    </div>
