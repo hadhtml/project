@@ -89,27 +89,39 @@ $var_objective = "Jira";
            
                
                   @php
-                  $plan = DB::table('plan')->where('plan_id',$data->stripe_price)->first();
+                  $plan = DB::table('plan')->where('plan_id',$data->plan_id)->first();
                   @endphp
                   <tr>
                     
-                     <td> {{$data->name}}</td>
-                     <td>@if($plan) ${{$plan->base_price}} @endif</td>
+                     <td> {{$plan->plan_title}}</td>
+                     @if($data->transaction_id != '')
+                     <td>@if($plan) £{{$plan->base_price}} @endif</td>
+                     @else
+                    <td> Free </td>
+                     @endif
                      <td>{{ \Carbon\Carbon::parse($data->created_at)->format('d M Y')}}</td>
-                      @if($data->ends_at != NULL)
-                     <td>{{ \Carbon\Carbon::parse($data->ends_at)->format('d M Y')}}</td>
+                      @if($data->subscription_ends_at != NULL)
+                     <td>{{ \Carbon\Carbon::parse($data->subscription_ends_at)->format('d M Y')}}</td>
                      @else
                       <td>NULL</td>
                      @endif
+
                      <td>
+                      @if($data->transaction_id != Null)
                         <label class="switch">
-                           <input type="checkbox" id="switcher" @if($data->ends_at == NULL) checked @endif  value="{{$data->name}}">
+                           <input type="checkbox" id="switcher" @if($data->subscription_ends_at == NULL) checked @endif  value="{{$plan->plan_title}}">
                            <span class="slider round"></span>
-                         </label>                  
+                         </label>
+                       @endif                    
                         </td>
                     
                         <td>
-                           <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Upgrade</button>
+                          @if($data->transaction_id != '')
+                           <button type="button" class="btn btn-primary"  data-toggle="modal" data-target=".bd-example-modal-lg">Upgrade</button>
+                           @else
+                           <button type="button" class="btn btn-primary" disabled >Upgrade</button>
+
+                           @endif
                         </td>
              
                   </tr>
@@ -123,7 +135,7 @@ $var_objective = "Jira";
    </div>
 </div>
 @php
-$plan = DB::table('plan')->where('plan_id','!=',$data->stripe_price)->get();
+$plan = DB::table('plan')->where('plan_id','!=',$plan->plan_id)->where('base_price_status','!=','free')->get();
 @endphp
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
    <div class="modal-dialog modal-lg">
@@ -137,7 +149,7 @@ $plan = DB::table('plan')->where('plan_id','!=',$data->stripe_price)->get();
            <div class="card-body">
              <h5 class="card-title text-secondary" >{{$p->plan_title}}</h5>
              
-             <p class="card-text">${{$p->base_price}} / {{$p->billing_method}}.</p>
+             <p class="card-text"> £ {{$p->base_price}} / {{$p->billing_method}}.</p>
            </div>
            <div class="card-footer">
              <button type="button" onclick="upgradePlan({{$p->id}},'{{$data->id}}')" class="btn btn-primary">Upgrade</button>

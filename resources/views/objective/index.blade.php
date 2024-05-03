@@ -201,7 +201,7 @@ $Currentsprint = DB::table('sprint')->where('user_id',Auth::id())->where('value_
 @endphp
 <div class="row">
    <div class="col-md-12">
-      <div class="card">
+      <div class="">
          <div class="card-body">
        
             <div id="parentCollapsible">

@@ -20,11 +20,14 @@ $var_objective = "Jira";
                $carbonDate = \Carbon\Carbon::create(null, $monthNumber + 1, 1);
                $monthName = $carbonDate->format('F');
                @endphp
-               <p class="ml-2">Selected Month <b>{{$monthName}}</b></p>
+               <!-- <p class="ml-2">Selected Month <b>{{$monthName}}</b></p> -->
                <div class="row mt-1">
                   <div class="col-md-12 col-lg-12 col-xl-12">
-                     <div class="form-group mb-0">
-                        <select class="form-control" name="month">
+                     <div class="d-flex flex-column mb-7 fv-row">
+                        <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                            <span class="required">Select Month</span>
+                        </label>
+                        <select class="form-control form-control-solid" name="month">
                         <option @if($month) @if($month->month == 0) selected @endif @endif value='0'>January</option>
                         <option @if($month) @if($month->month == 1) selected @endif @endif value='1'>February</option>
                         <option @if($month) @if($month->month == 2) selected @endif @endif value='2'>March</option>
@@ -38,7 +41,6 @@ $var_objective = "Jira";
                         <option @if($month) @if($month->month == 10) selected @endif @endif value='10'>November</option>
                         <option @if($month) @if($month->month == 11) selected @endif @endif value='11'>December</option>
                         </select>
-                        <label for="lead-manager">Select Month</label>
                      </div>
                   </div>
                   <div class="col-md-12">
