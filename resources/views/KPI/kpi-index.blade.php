@@ -66,27 +66,30 @@ $var_objective = 'Pagekpi-'.$type;
                                         <div>
                                             <div class="dropdown">
                                                 
-                                                <button onclick="resetZoom({{$chart_data->id}})" class="btn btn-circle btn-xl btn-tolbar">
+                                                <button onclick="resetZoom({{$chart_data->id}})" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none">
                                                       <path d="M18.3327 10.0001C18.3327 14.6001 14.5993 18.3334 9.99935 18.3334C5.39935 18.3334 2.59102 13.7001 2.59102 13.7001M2.59102 13.7001H6.35768M2.59102 13.7001V17.8667M1.66602 10.0001C1.66602 5.40008 5.36602 1.66675 9.99935 1.66675C15.5577 1.66675 18.3327 6.30008 18.3327 6.30008M18.3327 6.30008V2.13341M18.3327 6.30008H14.6327" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                                     </svg>
                                                 </button>
                                                 
-                                                <button class="btn btn-circle btn-xl btn-tolbar dropdown-toggle"
-                                                    type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                    <img src="{{ asset('public/assets/images/icons/dots.svg') }}">
+                                                <button class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                                                    <i class="ki-solid ki-dots-vertical fs-2x"></i>
                                                 </button>
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                    <a class="dropdown-item" href="javascript:void(0);"
+                                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px py-3" data-kt-menu="true">
+                                                    <div class="menu-item px-3">
+                                                        <a class="menu-link px-3" href="javascript:void(0);"
                                                         onclick="editkpichart({{ $chart_data->id }});" data-toggle="modal"
                                                         data-target="#edit-kpi-modal-new">Edit Values</a>
-                                                        <a class="dropdown-item" href="javascript:void(0);"
+                                                    </div>
+                                                    <div class="menu-item px-3 my-1">
+                                                        <a class="menu-link px-3" href="javascript:void(0);"
                                                         data-toggle="modal" data-target="#edit-chart-kpi{{$chart_data->id}}">Edit Basic Detail</a>
-                                                    <a class="dropdown-item" href="javascript:void(0);"
+                                                    </div>
+                                                    <div class="menu-item px-3 my-1">
+                                                        <a class="menu-link px-3" href="javascript:void(0);"
                                                         onclick="deletechart({{ $chart_data->id }});"
                                                         data-toggle="modal" data-target="#delete{{$chart_data->id}}">Delete Kpi</a>
-                                                       
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
