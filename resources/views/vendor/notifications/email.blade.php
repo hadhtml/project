@@ -117,8 +117,8 @@
          <tr>
             <td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;">
                <![endif]-->
-               <div style="background: #5379fc;background-color: #5379fc;Margin:0px auto;max-width:600px;">
-                  <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#5379fc;background-color:#5379fc;width:100%;">
+               <div style="Margin:0px auto;max-width:600px;">
+                  <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
          <tbody>
          <tr>
          <td style="border:#dddddd solid 1px;border-top:0px;direction:ltr;font-size:0px;padding:20px 0;text-align:center;vertical-align:top;">
@@ -137,7 +137,7 @@
          <tbody>
          <tr>
          <td style="width:200px;background-color: white;border-radius: 15px;">
-         <img height="auto" src="https://dev.outcomemet.com/public/assets/images/icons/logo.svg" style="border:0;display:block;outline:none;text-decoration:none;width:100%;" width="64" />
+         <img height="auto" src="https://dev.outcomemet.com/public/assetsindex/assets/img/logo.png" style="border:0;display:block;outline:none;text-decoration:none;width:100%;" width="64" />
          </td>
          </tr>
          </tbody>
@@ -146,14 +146,14 @@
          </tr>
          <tr>
          <td align="center" style="font-size:0px;padding:10px 25px;padding-bottom:40px;word-break:break-word;">
-         <div style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:28px;font-weight:bold;line-height:1;text-align:center;color:white;">
+         <div style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:28px;font-weight:bold;line-height:1;text-align:center;color:black;">
          Welcome to {{ env('APP_NAME') }}
          </div>
          </td>
          </tr>
          <tr>
          <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-         <div style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:16px;line-height:22px;text-align:left;color:white;">
+         <div style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:16px;line-height:22px;text-align:left;color:black;">
          Hello!<br><br>
          Tap the button below to confirm your email address. If you didn't create an account with Paste, you can safely delete this email.
          </div>

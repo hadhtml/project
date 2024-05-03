@@ -1,5 +1,5 @@
 @extends('admin.layouts.main-layout')
-@section('title','All Agents')
+@section('title','Add Plan')
 @section('content')
 
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
@@ -11,17 +11,13 @@
                 <div class=" container-fluid  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
                     <div class="d-flex align-items-center flex-wrap mr-1">
                         <div class="d-flex align-items-baseline flex-wrap mr-5">
-                            <h5 class="text-dark font-weight-bold my-1 mr-5">Clone User</h5>
+                            
                             <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
                                 <li class="breadcrumb-item">
                                     <a href="{{ url('admin/dashboard') }}" class="text-muted">Dashboard</a>
                                 </li>
-                                <li class="breadcrumb-item">
-                                    <a href="javascript::void(0)" class="text-muted">Manage Users</a>
-                                </li>
-                                <li class="breadcrumb-item">
-                                    <a href="{{ url('admin/users/cloneuser') }}" class="text-muted">Clone User</a>
-                                </li>
+                            
+                               
                             </ul>
                         </div>
                     </div>
@@ -115,6 +111,8 @@
                                         <option value="Flag">Flags</option>
                                         <option value="Map">Map </option>
                                         <option value="kpi">kpi  </option>
+                                        <option value="Reports">Reports </option>
+                                        
                                       
                                     </select>
                                 </div>

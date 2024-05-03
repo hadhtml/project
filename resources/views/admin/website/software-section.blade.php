@@ -24,16 +24,16 @@
                                     <li class="breadcrumb-item ml-40">
                                         <a href="javascript::void(0)" class="btn btn-primary" data-toggle="modal"
                                             data-target="#exampleModal">
-                                            Add Business Section
+                                            Add Software Section
                                         </a>
                                     </li>
                                     
-                                     <li class="breadcrumb-item ml-40">
+                                     {{-- <li class="breadcrumb-item ml-40">
                                         <a href="javascript::void(0)" class="btn btn-primary" data-toggle="modal"
                                             data-target="#exampleModalNew">
-                                            Add Business Section Header
+                                            Add Software Section Header
                                         </a>
-                                    </li>
+                                    </li> --}}
 
                                 </ul>
                             </div>
@@ -73,7 +73,7 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <a onclick="return confirm('Are You Sure You want to Delete This')" href="{{ url('admin/delete-business-section/' . $r->id) }}" class="btn"><i
+                                            <a onclick="return confirm('Are You Sure You want to Delete This')" href="{{ url('admin/delete-software-section/' . $r->id) }}" class="btn"><i
                                                     class="fa fa-trash"></i></a>
                                         </td>
                                     </tr>
@@ -92,7 +92,7 @@
                                                 </div>
                                                 <div class="modal-body">
 
-                                                    <form method="POST" action="{{ url('admin/update-business-section') }}" enctype="multipart/form-data">
+                                                    <form method="POST" action="{{ url('admin/update-software-section') }}" enctype="multipart/form-data">
                                                         @csrf
                                                         <input type="hidden" name="id" value="{{$r->id}}">
                                                         <input type="hidden" name="oldimage" value="{{$r->image}}">
@@ -109,15 +109,6 @@
                                                                 <textarea col="3"  name="sub_title" class="form-control" required>{{$r->sub_title}}</textarea>
                                                             </div>
                                 
-                                                            <div class="col-md-6">
-                                                                <label>Btn Text</label>
-                                                                <input type="text" value="{{$r->btn_text}}" name="btn_text" class="form-control" required>
-                                                            </div>
-
-                                                            <div class="col-md-6">
-                                                                <label>Btn Link</label>
-                                                                <input type="text" value="{{$r->btn_link}}" name="btn_link" class="form-control" required>
-                                                            </div>
                                 
                                                             <div class="col-md-12">
                                                                 <img src="{{asset('public/images/'.$r->image)}}" height="30" class="mt-1 mb-1" weight="30">
@@ -160,14 +151,14 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add Business Section</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Add Software Section</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
 
-                    <form method="POST" action="{{ url('admin/save-business-section') }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ url('admin/save-software-section') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
 
@@ -181,18 +172,10 @@
                                 <textarea type="text" col="3" name="sub_title" class="form-control" required></textarea>
                             </div>
 
-                            <div class="col-md-6">
-                                <label>Btn Text</label>
-                                <input type="text" name="btn_text" class="form-control" required>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label>Btn Link</label>
-                                <input type="text" name="btn_link" class="form-control" required>
-                            </div>
+                           
 
                             <div class="col-md-12">
-                                <label>Icon</label>
+                                <label>Image</label>
                                 <input type="file" name="image" class="form-control" required>
                             </div>
 
@@ -220,7 +203,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add Business Section Header</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Add Software Section Header</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

@@ -1,5 +1,5 @@
 @extends('admin.layouts.main-layout')
-@section('title','Header Section')
+@section('title','Content Section')
 @section('content')
 
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
@@ -31,41 +31,33 @@
                     <div class="card-title">
                         <h3 class="card-label">
                             
-                            <div class="text-muted pt-2 font-size-sm">Header Section</div>
+                            <div class="text-muted pt-2 font-size-sm">Content Section</div>
                         </h3>
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <form  method="POST" action="{{ url('admin/save-header') }}" enctype="multipart/form-data">
+                            <form  method="POST" action="{{ url('admin/save-content-section') }}" enctype="multipart/form-data">
                                 @csrf
                              
-                            <input type="hidden" name="oldimage" value="{{$data->image}}">
-                            <input type="hidden" name="section" value="{{$data->section}}">      
+                           
+                            <input type="hidden" name="section" @if($data) value="{{$data->section}}" @endif>      
                             <div class="row">
 
                                 <div class="col-md-12">
                                     <label>Title</label>
-                                     <input type="text" value="{{$data->title}}" name="title" class="form-control" required>
+                                     <input type="text" @if($data) value="{{$data->title}}" @endif name="title" class="form-control" required>
                                 </div>
                                 
-                                   <div class="col-md-12">
-                                    <label>Sub Heading</label>
-                                     <input type="text" value="{{$data->sub_heading}}" name="sub_heading" class="form-control" required>
-                                </div>
+                              
 
                                 <div class="col-md-12">
                                     <label>Subtitle</label>
-                                     <input type="text"  name="sub_title" value="{{$data->sub_title}}" class="form-control" required>
+                                     <textarea col="3"  name="sub_title"  class="form-control" required> @if($data) {{$data->sub_title}} @endif </textarea>
                                 </div>
 
-                                <img src="{{asset('public/images/'.$data->image)}}" height="100" weight="100">
-
-                                <div class="col-md-12">
-                                    <label>Image</label>
-                                     <input type="file" value="{{$data->image}}"  name="image" class="form-control" >
-                                </div>
+                            
 
                          
 

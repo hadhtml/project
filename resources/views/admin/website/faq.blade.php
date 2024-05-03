@@ -66,7 +66,7 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <a onclick="return confirm('Are You Sure You want to Delete This')" href="{{ url('admin/delete-plan/' . $r->id) }}" class="btn"><i
+                                            <a onclick="return confirm('Are You Sure You want to Delete This')" href="{{ url('admin/delete-faq/' . $r->id) }}" class="btn"><i
                                                     class="fa fa-trash"></i></a>
                                         </td>
                                     </tr>

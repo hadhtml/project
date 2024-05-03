@@ -1,179 +1,90 @@
 <!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <!-- MDB -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="{{asset('public/assets/css/style.css')}}">
-    <link rel="icon" type="image/x-icon" href="{{asset('public/assets/images/icons/icon.ico')}}">
-    <title>Login</title>
-    <style type="text/css">
-    </style>
-</head>
-
-<body style="background: #f3f3f3;">
-<style type="text/css">
-    .form-group>label {
-        bottom: 72px !important;
-    }
-</style>
-   
-    <div class="d-flex flex-column flex-root">
-        <div class="container p-5" >
-            <div class="card">
-                <div class="card-body p-0">
-                    <!--begin::Login-->
-                <div class="login login-2 login-signin-on d-flex flex-column flex-lg-row flex-column-fluid bg-white">
-                    <!--begin::Aside-->
-                    <div class="login-aside order-2 order-lg-1 d-flex flex-row-auto position-relative overflow-hidden">
-                        <!--begin: Aside Container-->
-                        <div class="d-flex flex-column-fluid flex-column justify-content-between py-9 px-7 py-lg-10 px-lg-10">
-                            <div class="d-flex flex-column-fluid flex-column flex-center">
-                                <!-- <div class="login-nav-links pt-md-1 pb-md-3 pt-sm-5 px-lg-0 pt-5 px-7">
-                                    <div class="d-flex flex-row">
-                                        <div>
-                                            <a href="{{url('/login')}}" class="active">Sign in</a>
-                                        </div>
-            
-                                        <div>
-                                            <a href="{{url('/register')}}">Create account</a>
-                                        </div>
+<html lang="en">
+    <head>
+        <title>Login</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta property="og:locale" content="en_US" />
+        <meta property="og:type" content="article" />
+        <link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+        <link href="{{ url('public/assetsvone/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ url('public/assetsvone/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />    
+    </head>
+    <body id="kt_body" class="app-blank">
+        <script>var defaultThemeMode = "light"; var themeMode; if ( document.documentElement ) { if ( document.documentElement.hasAttribute("data-bs-theme-mode")) { themeMode = document.documentElement.getAttribute("data-bs-theme-mode"); } else { if ( localStorage.getItem("data-bs-theme") !== null ) { themeMode = localStorage.getItem("data-bs-theme"); } else { themeMode = defaultThemeMode; } } if (themeMode === "system") { themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; } document.documentElement.setAttribute("data-bs-theme", themeMode); }</script>
+        <div class="d-flex flex-column flex-root" id="kt_app_root">
+            <div class="d-flex flex-column flex-lg-row flex-column-fluid">
+                <div class="d-flex flex-column flex-lg-row-fluid w-lg-50 p-10 order-2 order-lg-1">
+                    <div class="d-flex flex-center flex-column flex-lg-row-fluid">
+                        <div class="w-lg-500px p-10">
+                            <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" data-kt-redirect-url="{{ route('login') }}" action="{{ route('login') }}">
+                                <div class="mb-11">
+                                    <h1 class="text-gray-900 fw-bolder mb-3 sign">Sign In</h1>
+                                    <div class="text-gray-500 fw-semibold fs-6">Your Social Campaigns</div>
+                                </div>
+                                <div class="row g-3 mb-9">
+                                    <!--begin::Col-->
+                                    <div class="col-md-6">
+                                        <a href="{{url('/auth/google')}}" class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100 cs-btn">
+                                        <img alt="Logo" src="{{ url('public/assetsvone/media/svg/brand-logos/google-icon.svg') }}" class="h-15px me-3" />Google</a>
                                     </div>
-                                </div> -->
-                                <div class="row auth-form">
-                                    <div class="col-md-12">
-                                        <h3>Sign in</h3>
-                                        <p>Enter your email and password to login.</p>
+                                    <div class="col-md-6">
+                                        <a href="{{url('/auth/facebook')}}" class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100  cs-btn">
+                                        <img alt="Logo" src="{{ url('public/assetsvone/media/svg/brand-logos/facebook-2.svg') }}" class="theme-light-show h-15px me-3" />
+                                        <img alt="Logo" src="assets/" class="theme-dark-show h-15px me-3" />Facebook</a>
                                     </div>
                                 </div>
-                                
-                                <div class="row social-buttons mb-2">
-                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 p-2">
-                                        <a class="auth-buttons" href="{{url('/auth/google')}}">
-                                            <button class="btn btn-white btn-block">
-                                                <img src="{{asset('public/assets/images/icons/google.svg')}}">
-                                                 &nbsp;&nbsp;Google
-                                            </button>
-                                        </a>
-                                    </div>
-                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 p-2">
-                                        <a class="auth-buttons" href="{{url('/auth/facebook')}}">
-                                            <button class="btn btn-white btn-block">
-                                                <img src="{{asset('public/assets/images/icons/facebook.svg')}}">
-                                                &nbsp;&nbsp;Facebook
-                                            </button>
-                                            </a>
-                                    </div>
-                                    {{-- <div class="col-xl-6 col-lg-6 col-md-6 p-2">
-                                        <button class="btn btn-white btn-block">
-                                            <img src="{{asset('public/assets/images/icons/apple.svg')}}">
-                                            Apple
-                                        </button>
-                                    </div> --}}
+                                <div class="separator separator-content my-14">
+                                    <span class="w-125px text-gray-500 fw-semibold fs-7">Or with email</span>
                                 </div>
-                                <!-- <div class="row mt-1">
-                                    <div class="col-md-12">
-                                        <h2 class="separator-hr"><span>Or</span></h2>
-                                    </div>
-                                </div> -->
-                                <div class="input-fields-area py-lg-0">
-                                    
-                                    <form class="needs-validation pt-2" method="POST" action="{{ route('login') }}">
-                                        @csrf
-                                        <div class="row">
-                                            
-                                            <div class="col-md-12 col-lg-12 col-xl-12">
-                                                <div class="form-group mb-0">
-                                                    
-                                                    <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}"  id="email" required>
-                                                    <label for="email">Email</label>
-                                                   
-                                                </div>
-                                               
-                                            </div>
-
-                                            @error('email')
-                                            <span class="invalid-feedback mb-3 ml-5 mt-0" style="display:block !important" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                             @enderror
-                                           
-                                            <div class="col-md-12 col-lg-12 col-xl-12">
-                                                <div class="form-group mb-0 position-relative">
-                                                    <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" id="Password" required>
-                                                    <label for="Password">Password</label>
-                                                    <span class="toggle-password" onclick="togglePasswordVisibility('Password')"><i class="fas fa-eye"></i></span>
-                                                    @error('password')
-                                                    <span class="invalid-feedback" style="display:block !important" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
-                                                @enderror
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="col-md-12 py-2">
-                                                <button class="btn btn-primary btn-lg btn-theme btn-block ripple">Sign In</button>
-                                            </div>
-                                        </div>
-
-                                        @if (Route::has('password.request'))
-                                        <div class="row py-3">
-                                        <div class="col-md-12 text-center">
-                                        <a class="btn btn-link" href="{{ route('password.request') }}">
-                                            {{ __('Forgot Your Password?') }}
-                                        </a>
-                                    </div>
+                                <div class="fv-row mb-8">
+                                    <input type="email" class="form-control bg-transparent @error('email') is-invalid @enderror" class="form-control " name="email" value="{{ old('email') }}"  id="email" required>
+                                    @error('email')
+                                    <span class="invalid-feedback mb-3 ml-5 mt-0" style="display:block !important" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
-                                    @endif
-                                    </form>
-                                    
-                                    <div class="row py-3">
-                                        <div class="col-md-12 text-center">
-                                            <p>Don't have an account? <a href="{{url('/register')}}">Sign Up</a> </p>
-                                        </div>
-                                    </div>
-                                    
+                                <div class="fv-row mb-3">
+                                    <input type="password" class="form-control bg-transparent @error('password') is-invalid @enderror" class="form-control " name="password" id="Password" required>
                                 </div>
-                            </div>
+                                <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
+                                    <div></div>
+                                    <a href="{{ route('password.request') }}" class="link-primary">Forgot Password ?</a>
+                                </div>
+                                <div class="d-grid mb-10">
+                                    <button type="submit" id="kt_sign_in_submit" class="btn btn-primary cs-btn">
+                                        <span class="indicator-label">Sign In</span>
+                                        <span class="indicator-progress">Please wait... 
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                    </button>
+                                </div>
+                                <div class="text-gray-500 text-center fw-semibold fs-6">Not a Member yet? 
+                                <a href="{{ url('register') }}" class="link-primary">Sign up</a></div>
+                            </form>
                         </div>
                     </div>
-                    <!--begin::Aside-->
-                    @include('components.authsidebar')
-                    <!--begin::Content-->
-                
                 </div>
+                <div class="d-flex flex-lg-row-fluid w-lg-50 bgi-size-cover bgi-position-center order-1 order-lg-2" style="background-image: url('{{ url("") }}/public/assetsvone/media/misc/auth-bg.png')">
+                    <div class="d-flex flex-column flex-center py-7 py-lg-15 px-5 px-md-15 w-100">
+                        <a href="{{ url('') }}" class="mb-0 mb-lg-12">
+                            <img alt="Logo" src="{{ url('public/assetsindex/assets/img/logo.png') }}" class="h-60px h-lg-75px" />
+                        </a>
+                        <h1 class="d-none d-lg-block text-white fs-2qx fw-bolder mb-7">Fast, Efficient and Productive</h1>
+                        <div class="d-none d-lg-block text-white fs-base">In this kind of post, 
+                        <a href="{{ url('') }}" class="opacity-75-hover text-warning fw-bold me-1">the blogger</a>introduces a person they’ve interviewed 
+                        <br />and provides some background information about 
+                        <a href="{{ url('') }}" class="opacity-75-hover text-warning fw-bold me-1">the interviewee</a>and their 
+                        <br />work following this is a transcript of the interview.</div>
+                        <img class="d-none d-lg-block mx-auto w-275px w-md-50 w-xl-500px mb-10 mb-lg-20" src="{{ url('public/assetsvone/media/misc/auth-screens.png') }}" alt="" />
+                    </div>
                 </div>
             </div>
         </div>
-        
-    </div>
-</body>
-<!-- MDB -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
-<script type="text/javascript">
-function togglePasswordVisibility(fieldId) {
-    const passwordField = document.querySelector(`#${fieldId}`);
-    const icon = document.querySelector(`[onclick="togglePasswordVisibility('${fieldId}')"] i`);
-
-    if (passwordField.type === 'password') {
-        passwordField.type = 'text';
-        icon.classList.remove('fa-eye');
-        icon.classList.add('fa-eye-slash');
-    } else {
-        passwordField.type = 'password';
-        icon.classList.remove('fa-eye-slash');
-        icon.classList.add('fa-eye');
-    }
-}
-</script>
-
+        <script>var hostUrl = "assets/";</script>
+        <script src="{{ url('public/assetsvone/plugins/global/plugins.bundle.js') }}"></script>
+        <script src="{{ url('public/assetsvone/js/scripts.bundle.js') }}"></script>
+        <script src="{{ url('public/assetsvone/js/custom/authentication/sign-in/general.js') }}"></script>
+    </body>
 </html>

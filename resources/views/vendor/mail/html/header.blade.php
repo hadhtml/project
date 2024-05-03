@@ -2,7 +2,7 @@
 <td class="header">
 <a href="#" style="display: inline-block;">
 @php
-    $img = 'http://dev.agileprolific.com/public/assets/images/icons/logo.svg';
+    $img = 'https://dev.outcomemet.com/public/assetsindex/assets/img/logo.png';
 @endphp       
 <img src="{{$img}}" width="200" height="54" alt="agileprolific" style="display:block" class="CToWUd"/>
 

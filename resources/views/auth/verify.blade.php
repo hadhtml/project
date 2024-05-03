@@ -1,86 +1,133 @@
 <!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <!-- MDB -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="{{asset('public/assets/css/style.css')}}">
-    <link rel="icon" type="image/x-icon" href="{{asset('public/assets/images/icons/icon.ico')}}">
-    <title>{{ __('verification') }}</title>
-    <style type="text/css">
-    </style>
-</head>
-
-<body>
-    <div class="d-flex flex-column flex-root">
-        <div class="container p-5" >
-            <div class="card" style="height: 50vh !important;">
-                <div class="card-body p-0">
-                    <!--begin::Login-->
-                    <div class="login login-2 login-signin-on d-flex flex-column flex-lg-row flex-column-fluid bg-white">
-                        <!--begin::Aside-->
-                        <div class="login-aside order-2 order-lg-1 d-flex flex-row-auto position-relative overflow-hidden">
-                            <!--begin: Aside Container-->
-                            <div class="d-flex flex-column-fluid flex-column justify-content-between py-9 px-7 py-lg-10 px-lg-30">
-                                <div class="d-flex flex-column-fluid flex-column flex-center">
-                                    <div class="login-nav-links pt-md-1 pb-md-3 pt-sm-5 px-lg-0 pt-5 px-7">
-                                   
+<html lang="en">
+    <head>
+        <title>Register</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
+        <link href="{{ url('public/assetsvone/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ url('public/assetsvone/css/style.bundle.css') }}" rel="stylesheet" type="text/css" /> 
+    </head>
+    <body id="kt_body" class="app-blank">
+        <script>var defaultThemeMode = "light"; var themeMode; if ( document.documentElement ) { if ( document.documentElement.hasAttribute("data-bs-theme-mode")) { themeMode = document.documentElement.getAttribute("data-bs-theme-mode"); } else { if ( localStorage.getItem("data-bs-theme") !== null ) { themeMode = localStorage.getItem("data-bs-theme"); } else { themeMode = defaultThemeMode; } } if (themeMode === "system") { themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; } document.documentElement.setAttribute("data-bs-theme", themeMode); }</script>
+        <div class="d-flex flex-column flex-root" id="kt_app_root">
+            <div class="d-flex flex-column flex-lg-row flex-column-fluid stepper stepper-pills stepper-column stepper-multistep" id="kt_create_account_stepper">
+                <div class="d-flex flex-column flex-lg-row-auto w-lg-350px w-xl-500px">
+                    <div class="d-flex flex-column position-lg-fixed top-0 bottom-0 w-lg-350px w-xl-500px scroll-y bgi-size-cover bgi-position-center" style="background-image: url('{{ url("") }}/public/assetsvone/media/misc/auth-bg.png')">
+                        <div class="d-flex flex-center py-10 py-lg-20 mt-lg-20">
+                            <a href="{{ url('') }}">
+                                <img alt="Logo" src="{{ url('public/assetsindex/assets/img/logo.png') }}" class="h-70px" />
+                            </a>
+                        </div>
+                        <div class="d-flex flex-row-fluid justify-content-center p-10">
+                            <div class="stepper-nav">
+                                <div class="stepper-item" data-kt-stepper-element="nav">
+                                    <div class="stepper-wrapper">
+                                        <div class="stepper-icon rounded-3">
+                                            <i class="ki-outline ki-check fs-2 stepper-check"></i>
+                                            <span class="stepper-number">1</span>
+                                        </div>
+                                        <div class="stepper-label">
+                                            <h3 class="stepper-title fs-2">sign-up</h3>
+                                            <div class="stepper-desc fw-normal">Do sign-up</div>
+                                        </div>
                                     </div>
-                                    <div class="input-fields-area py-lg-10">
-                                       <h3>{{ __('Verify Your Email Address') }}</h3>
-                                        @if (session('resent'))
-                                            <div class="alert alert-success" role="alert">
-                                                {{ __('A fresh verification link has been sent to your email address.') }}
-                                            </div>
-                                        @endif
-
-                                        {{ __('Before proceeding, please check your email for a verification link.') }}
-                                        {{ __('If you did not receive the email') }},
-                                        <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
-                                            @csrf
-                                            <button type="submit" class="btn btn-primary btn-lg btn-theme btn-block ripple mt-3">{{ __('click here to request another') }}</button>.
-                                        </form>
+                                    <div class="stepper-line h-40px"></div>
+                                </div>
+                                <div class="stepper-item" data-kt-stepper-element="nav">
+                                    <div class="stepper-wrapper">
+                                        <div class="stepper-icon rounded-3">
+                                            <i class="ki-outline ki-check fs-2 stepper-check"></i>
+                                            <span class="stepper-number">2</span>
+                                        </div>
+                                        <div class="stepper-label">
+                                            <h3 class="stepper-title fs-2">Organization Structure </h3>
+                                            <div class="stepper-desc fw-normal">Check out the orginization structure.</div>
+                                        </div>
+                                    </div>
+                                    <div class="stepper-line h-40px"></div>
+                                </div>
+                                <div class="stepper-item" data-kt-stepper-element="nav">
+                                    <div class="stepper-wrapper">
+                                        <div class="stepper-icon">
+                                            <i class="ki-outline ki-check fs-2 stepper-check"></i>
+                                            <span class="stepper-number">3</span>
+                                        </div>
+                                        <div class="stepper-label">
+                                            <h3 class="stepper-title fs-2">Setup Workflow</h3>
+                                            <div class="stepper-desc fw-normal">Setup your flow work</div>
+                                        </div>
+                                    </div>
+                                    <div class="stepper-line h-40px"></div>
+                                </div>
+                                <div class="stepper-item current">
+                                    <div class="stepper-wrapper">
+                                        <div class="stepper-icon">
+                                            <i class="ki-outline ki-check fs-2 stepper-check"></i>
+                                            <span class="stepper-number">4</span>
+                                        </div>
+                                        <div class="stepper-label">
+                                            <h3 class="stepper-title fs-2">Verification</h3>
+                                            <div class="stepper-desc fw-normal">Verify your Email</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!--begin::Aside-->
-                        @include('components.authsidebar')
-                        <!--begin::Content-->
-                    
+                        <div class="d-flex flex-center flex-wrap px-5 py-10">
+                            <div class="d-flex fw-normal">
+                                <a href="{{ url('') }}" class="text-success px-5" target="_blank">Terms</a>
+                                <a href="{{ url('') }}" class="text-success px-5" target="_blank">Plans</a>
+                                <a href="{{ url('') }}" class="text-success px-5" target="_blank">Contact Us</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <!--begin::Aside-->
+                <!--begin::Body-->
+                <div class="d-flex flex-column flex-lg-row-fluid py-10">
+                    <!--begin::Content-->
+                    <div class="d-flex flex-center flex-column flex-column-fluid">
+                        <!--begin::Wrapper-->
+                        <div class="w-lg-650px w-xl-700px p-10 p-lg-15 mx-auto">
+                            <div class="w-100">
+                                  <div class=" mb-11">
+                                     <h1 class="text-gray-900 fw-bolder mb-3 sign">Verification</h1>
+                                     <div class="text-gray-500 fw-semibold fs-6">Before proceeding, please check your email for a verification link.</div>
+                                     <div class="text-gray-500 fw-semibold fs-6">If you did not receive the email</div>
+                                  </div>
+                                  <div class="input-fields-area py-lg-10">
+                                    @if (session('resent'))
+                                        <div class="alert alert-success" role="alert">
+                                            {{ __('A fresh verification link has been sent to your email address.') }}
+                                        </div>
+                                    @endif
+
+                                    <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
+                                        @csrf
+
+                                        <button type="submit" class="btn btn-lg btn-primary">
+                                            <span class="indicator-label">Click here to request another 
+                                            <i class="ki-outline ki-arrow-right fs-4 ms-2"></i></span>
+                                            <span class="indicator-progress">Please wait... 
+                                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Wrapper-->
+                    </div>
+                    <!--end::Content-->
+                </div>
+                <!--end::Body-->
             </div>
+            <!--end::Authentication - Multi-steps-->
         </div>
-
-    </div>
-</body>
-<!-- MDB -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
-<script type="text/javascript">
-function togglePasswordVisibility(fieldId) {
-    const passwordField = document.querySelector(`#${fieldId}`);
-    const icon = document.querySelector(`[onclick="togglePasswordVisibility('${fieldId}')"] i`);
-
-    if (passwordField.type === 'password') {
-        passwordField.type = 'text';
-        icon.classList.remove('fa-eye');
-        icon.classList.add('fa-eye-slash');
-    } else {
-        passwordField.type = 'password';
-        icon.classList.remove('fa-eye-slash');
-        icon.classList.add('fa-eye');
-    }
-}
-</script>
-
+        <script>var hostUrl = "assets/";</script>
+        <script src="{{ url('public/assetsvone/plugins/global/plugins.bundle.js') }}"></script>
+        <script src="{{ url('public/assetsvone/js/scripts.bundle.js') }}"></script>
+        <script src="{{ url('public/assetsvone/js/custom/utilities/modals/create-account.js') }}"></script>
+    </body>
 </html>
