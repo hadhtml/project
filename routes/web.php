@@ -550,6 +550,9 @@ Route::get('admin/ceo-message', [App\Http\Controllers\SiteController::class,'Ceo
 Route::post('admin/save-message', [App\Http\Controllers\SiteController::class,'SaveCeoMessage']);
 Route::post('admin/save-highlights-section-header', [App\Http\Controllers\SiteController::class,'SaveHighlightSectionHeader']);
 Route::get('admin/delete-business-section/{id}', [App\Http\Controllers\SiteController::class,'DeleteBusinessSection']);
+Route::get('admin/software-section', [App\Http\Controllers\SiteController::class,'SoftwareSection']);
+Route::post('admin/save-software-section', [App\Http\Controllers\SiteController::class,'SaveSoftwareSection']);
+Route::post('admin/update-software-section', [App\Http\Controllers\SiteController::class,'UpdateSoftwareSection']);
 
 
 
