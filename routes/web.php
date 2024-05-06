@@ -553,6 +553,9 @@ Route::get('admin/delete-business-section/{id}', [App\Http\Controllers\SiteContr
 Route::get('admin/software-section', [App\Http\Controllers\SiteController::class,'SoftwareSection']);
 Route::post('admin/save-software-section', [App\Http\Controllers\SiteController::class,'SaveSoftwareSection']);
 Route::post('admin/update-software-section', [App\Http\Controllers\SiteController::class,'UpdateSoftwareSection']);
+Route::get('admin/delete-section-highlight/{id}', [App\Http\Controllers\SiteController::class,'DeleteHighlightSection']);
+
+
 
 
 
