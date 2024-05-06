@@ -275,7 +275,7 @@ $.get(url, function(data) {
         setTimeout(function() {
         window.location.href = res;
         $('#cashier').html('');
-        }, 2000);
+        }, 1000);
         }
 
     })
@@ -357,9 +357,7 @@ var stripe = Stripe('{{ env('STRIPE_KEY') }}');
 
     function payment(payment_method)
     {
-
-
-                $('#card-button').html('<i class="fa fa-spin fa-spinner"></i>');
+            $('#card-button').html('<i class="fa fa-spin fa-spinner"></i>');
                 var plan  = "{{$plan->plan_id}}";   
                 var url1 = "{{url('stripe-post')}}";
                 $.ajax({
