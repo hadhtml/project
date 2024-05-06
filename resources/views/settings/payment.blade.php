@@ -21,13 +21,11 @@ $organization  = DB::table('organization')->where('user_id',Auth::id())->orWhere
             </div>
             <!--end::Card header-->
             <!--begin::Card body-->
-
             <div id="cashier"></div>
-           
             <div class="card-body pt-3">
                 <div class="p-2">
-                    {{-- <div id="paypal-button-container" style="width: 100%"></div> --}}
-                </div>
+                    <!-- <div id="paypal-button-container" style="width: 100%"></div> -->
+            </div>
                 <div class="separator separator-dashed mb-7"></div> 
                 <form  action="{{ url('stripe-post') }}" method="post" id="subscribe-form">
                      @csrf
@@ -91,7 +89,7 @@ $organization  = DB::table('organization')->where('user_id',Auth::id())->orWhere
                     <h5 class="mb-4">Product details</h5>
                     <div class="mb-0">
                         <span class="badge badge-light-info me-2">{{$plan->plan_title}}</span>
-                        <span class="fw-semibold text-gray-600">£{{$plan->base_price}} / {{$plan->billing_method}}</span>
+                        <span class="fw-semibold text-gray-600">${{$plan->base_price}} / {{$plan->billing_method}}</span>
                     </div>
                 </div>
                 <div class="separator separator-dashed mb-7"></div>
@@ -277,7 +275,7 @@ $.get(url, function(data) {
         setTimeout(function() {
         window.location.href = res;
         $('#cashier').html('');
-        }, 1000);
+        }, 2000);
         }
 
     })
@@ -359,7 +357,9 @@ var stripe = Stripe('{{ env('STRIPE_KEY') }}');
 
     function payment(payment_method)
     {
-        
+
+
+                $('#card-button').html('<i class="fa fa-spin fa-spinner"></i>');
                 var plan  = "{{$plan->plan_id}}";   
                 var url1 = "{{url('stripe-post')}}";
                 $.ajax({
@@ -381,7 +381,7 @@ var stripe = Stripe('{{ env('STRIPE_KEY') }}');
                    setTimeout(function() {
                     window.location.href = data;
                     $('#cashier').html('');
-                }, 3000);
+                }, 2000);
                     // }
            
                 }
