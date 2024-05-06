@@ -1547,4 +1547,13 @@ public function updatecommentkey(Request $request)
 
     }
 
+    public function subscription()
+    {
+    
+        $data = DB::table('user_plan')->where('user_id',Auth::id())->first();
+        return view('settings.subscription',compact('data'));
+
+    }
+
+
 }

@@ -28,7 +28,7 @@ class HomeController extends Controller
     }
     public function dashboard()
     {
-        if(DB::table('subscriptions')->where('user_id',Auth::id())->count() == 1)
+        if(DB::table('user_plan')->where('user_id',Auth::id())->where('status','active')->count() == 1)
         {
           $organization  = Organization::where('user_id',Auth::id())->orWhere('user_id',Auth::user()->invitation_id)->where('trash',NULL)->first();
           return view('organizations.dashboard',compact('organization'));

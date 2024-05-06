@@ -40,12 +40,16 @@ $EpicsBacklog = DB::table('team_backlog')->where('epic_title','!=',NULL)->where(
 $Impediments = DB::table('flags')->where('flag_status','!=','doneflag')->where('flag_type','Impediment')->where('business_units',$organization->id)->where('flag_title','!=',NULL)->where('board_type','orgT')->count();
 }
 
-$sub = DB::table('subscriptions')->where('user_id',Auth::id())->first();
-if($sub)
+$subscription = DB::table('subscriptions')->where('user_id',Auth::id())->orderby('id','DESC')->first();
+if($subscription)
 {
-$per = DB::table('plan')->where('plan_id',$sub->stripe_price)->first();
+    $per = DB::table('subscriptions')->where('user_id',Auth::id())
+       ->leftJoin('plan', 'subscriptions.stripe_price', '=', 'plan.plan_id')->where('subscriptions.stripe_status','active')->select('plan.*')->first();
+}else
+{
+    $per = DB::table('user_plan')->where('user_id',Auth::id())
+       ->leftJoin('plan', 'user_plan.plan_id', '=', 'plan.plan_id')->where('user_plan.status','active')->select('plan.*')->first();
 }
-
 
 @endphp
 <div class="row">

@@ -1,5 +1,5 @@
 @extends('admin.layouts.main-layout')
-@section('title','All Agents')
+@section('title','All Plan')
 @section('content')
 
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
@@ -33,8 +33,8 @@
                 <div class="card-header flex-wrap py-5">
                     <div class="card-title">
                         <h3 class="card-label">
-                            All Users
-                            <div class="text-muted pt-2 font-size-sm">Manage All Users</div>
+                            All Plans
+                            <div class="text-muted pt-2 font-size-sm">Manage All Plan</div>
                         </h3>
                     </div>
                 </div>
@@ -44,7 +44,9 @@
                             <tr>
                                 <th>Plan Title</th>
                                 <th>Price</th>
-                                <th>Status</th>
+                                <th>Plan Id Stripe</th>
+                                <th>Plan Id Paypal</th>
+                                <th>Created</th>
                                 <th>Edit</th>
                             </tr>
                         </thead>
@@ -57,7 +59,9 @@
                                     @else
                                     <td>Free</td>
                                     @endif
-                                    <td>{{$r->status}}</td>
+                                    <td>{{$r->plan_id}}</td>
+                                    <td>{{$r->paypal_id}}</td>
+                                    <td>{{ \Carbon\Carbon::parse($r->created_at)->format('M d y')}}</td>
                                     <td>
                                         <a href="{{url('admin/edit-plan/'.$r->id)}}" class="btn"><i class="fa fa-edit"></i></a>
                                     </td>

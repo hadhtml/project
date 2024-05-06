@@ -14,10 +14,15 @@ if($organization->type == 'orgT')
 $team  = DB::table('organization')->where('id',$organization->org_id)->first();  
 }
 
-$sub = DB::table('subscriptions')->where('user_id',Auth::id())->first();
-if($sub)
+$subscription = DB::table('subscriptions')->where('user_id',Auth::id())->orderby('id','DESC')->first();
+if($subscription)
 {
-$per = DB::table('plan')->where('plan_id',$sub->stripe_price)->first();
+    $per = DB::table('subscriptions')->where('user_id',Auth::id())
+       ->leftJoin('plan', 'subscriptions.stripe_price', '=', 'plan.plan_id')->where('subscriptions.stripe_status','active')->select('plan.*')->first();
+}else
+{
+    $per = DB::table('user_plan')->where('user_id',Auth::id())
+       ->leftJoin('plan', 'user_plan.plan_id', '=', 'plan.plan_id')->where('user_plan.status','active')->select('plan.*')->first();
 }
 @endphp
 <div id="kt_app_sidebar" class="app-sidebar flex-column" data-kt-drawer="true" data-kt-drawer-name="app-sidebar" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="250px" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">

@@ -27,6 +27,12 @@
                                             Add Section
                                         </a>
                                     </li>
+                                     <li class="breadcrumb-item ml-40">
+                                        <a href="javascript::void(0)" class="btn btn-primary" data-toggle="modal"
+                                            data-target="#exampleModalNew">
+                                            Add Section Header
+                                        </a>
+                                    </li>
 
                                 </ul>
                             </div>
@@ -97,19 +103,34 @@
                                                                 <input type="text" value="{{$r->title}}" name="title" class="form-control" required>
                                                             </div>
                                 
+                                                             @php
+                                                             
+                                                             $decodedArray = DB::table('header_section')->where('section',$r->id)->get();
+                                                            
+                                                             @endphp
+                                                             
                                                             <div class="col-md-12">
-                                                                <label>Subtitle</label>
-                                                                <input type="text" value="{{$r->sub_title}}" name="sub_title" class="form-control" required>
+                                                                <label>Feature</label>
+                                                            @if(count($decodedArray) > 0)    
+                                                             @foreach ($decodedArray as $item)
+                                                                <input type="hidden" name="update_features_id[]" value="{{$item->id}}">
+                                                                <input type="text" value="{{$item->feature_highlight}}" name="update_features[]" class="form-control" required>
+                                                             @endforeach
+                                                             @endif
+                                                               
                                                             </div>
+                                                            
+                                                               <div class="col-md-12 mt-2">
+                                                                <button class="btn btn-info add_value_edit" type="button">Add Feature</button>
+                                                                </div>
+                                                                
+                                                                <div class="field_wrapper_key_edit"></div>
                                 
-                                                            <div class="col-md-12">
-                                                                <label>SubTitle 1</label>
-                                                                <input type="text" value="{{$r->subtitle_2}}" name="subtitle_2" class="form-control" required>
-                                                            </div>
+                                                           
                                 
                                                             <div class="col-md-12">
                                                                 <img src="{{asset('public/images/'.$r->image)}}" height="30" class="mt-1 mb-1" weight="30">
-                                                                <label>Logo</label>
+                                                                <label>Image</label>
                                                                 <input type="file" value="{{$r->image}}" name="image" class="form-control">
                                                             </div>
 
@@ -148,7 +169,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add Section</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Add Highlights</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -163,21 +184,64 @@
                                 <label>Title</label>
                                 <input type="text" name="title" class="form-control" required>
                             </div>
-
-                            <div class="col-md-12">
-                                <label>Subtitle</label>
-                                <input type="text" name="sub_title" class="form-control" required>
+                            
+                            
+                            <div class="col-md-12 mt-2">
+                            <button class="btn btn-info add_value" type="button">Add Feature</button>
                             </div>
+                            
+                            <div class="field_wrapper_key"></div>
+
+                         
 
                             <div class="col-md-12">
-                                <label>SubTitle 1</label>
-                                <input type="text" name="subtitle_2" class="form-control" required>
-                            </div>
-
-                            <div class="col-md-12">
-                                <label>Logo</label>
+                                <label>Image</label>
                                 <input type="file" name="image" class="form-control" required>
                             </div>
+
+                        </div>
+
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    @php
+    $content = DB::table('header_section')->where('section','highlight-header')->first();
+    @endphp
+    
+        <div class="modal fade" id="exampleModalNew" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Highlights Section Header</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <form method="POST" action="{{ url('admin/save-highlights-section-header') }}" enctype="multipart/form-data">
+                        @csrf
+                        <div class="row">
+                               
+                            <input type="hidden" name="section" @if($content) value="{{$content->section}}" @endif >   
+
+                            <div class="col-md-12">
+                                <label>Description </label>
+                                <textarea  col="3" name="sub_title_header" class="form-control" required>@if($content) {{$content->sub_title}} @endif</textarea>
+                            </div>
+
+                       
 
                         </div>
 
@@ -200,7 +264,59 @@
     <script>
 
  
+$(document).ready(function() {
+        var maxField = 10;
+        var addButton = $('.add_value');
+        var wrapper = $('.field_wrapper_key');
 
+        var x = 1;
+        $(addButton).click(function() {
+            //Check maximum number of input fields
+            if (x < maxField) {
+                x++; //Increment field counter
+                var fieldHTML =
+                '<div class="d-flex mb-3 mt-2 ml-3" style="width:150%"><br><br><input type="text" style="width:100%" class="form-control" name="features[]"  placeholder="Add Features" required><a href="javascript:void(0);"  class="remove_button btn btn-danger ml-3"><i class="fa fa-minus"></i></a></div>';
+
+                $(wrapper).append(fieldHTML); //Add field html
+            }else{
+                
+            }
+        });
+
+        $(wrapper).on('click', '.remove_button', function(e) {
+        e.preventDefault();
+        $(this).parent('div').remove(); 
+        x--;
+    });
+    });
+    
+    
+     
+$(document).ready(function() {
+        var maxField = 10;
+        var addButton = $('.add_value_edit');
+        var wrapper = $('.field_wrapper_key_edit');
+
+        var x = 1;
+        $(addButton).click(function() {
+            //Check maximum number of input fields
+            if (x < maxField) {
+                x++; //Increment field counter
+                var fieldHTML =
+                '<div class="d-flex mb-3 mt-2 ml-3" style="width:150%"><br><br><input type="text" style="width:100%" class="form-control" name="updatefeatures[]"  placeholder="Add Features" required><a href="javascript:void(0);"  class="remove_button btn btn-danger ml-3"><i class="fa fa-minus"></i></a></div>';
+
+                $(wrapper).append(fieldHTML); //Add field html
+            }else{
+                
+            }
+        });
+
+        $(wrapper).on('click', '.remove_button', function(e) {
+        e.preventDefault();
+        $(this).parent('div').remove(); 
+        x--;
+    });
+    });
 
 
 

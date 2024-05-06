@@ -1,4 +1,3 @@
-
 <?php
 
 namespace App\Http\Controllers;
@@ -481,7 +480,55 @@ class SiteController extends Controller
 
        return back();   
     }
+
+    public function SoftwareSection()
+    {
+        $data = DB::table('header_section')->where('section','software')->get();
+        return view('admin.website.software-section',compact('data'));
+    }
+
+    public function SaveSoftwareSection(Request $request)
+    {
+
+
+        
+        if($request->has('image'))
+        {
+            $filename = $this->sendimagetodirectory($request->image);
+        }
+     
+        $id =  DB::table('header_section')->insert([
+                'section' => 'software',
+                'sub_title' => $request->sub_title,
+                'title' => $request->title,
+                'image' => $filename,
+          
+          ]);
+
+       return back();   
+    }
     
+
+    public function UpdateSoftwareSection(Request $request)
+    {
+
+        if($request->has('image'))
+        {
+            $filename = $this->sendimagetodirectory($request->image);
+        }else
+        {
+            $filename = $request->oldimage;
+        }
+
+        $id =  DB::table('header_section')->where('id',$request->id)->update([
+            'sub_title' => $request->sub_title,
+            'title' => $request->title,
+            'image' => $filename,
+          
+          ]);
+
+       return back();   
+    }
 
 
 

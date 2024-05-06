@@ -9,11 +9,16 @@ $Unit = DB::table('business_units')
     })
     ->first();
 
-    $sub = DB::table('subscriptions')->where('user_id',Auth::id())->first();
-    if($sub)
-    {
-    $per = DB::table('plan')->where('plan_id',$sub->stripe_price)->first();
-    }
+$subscription = DB::table('subscriptions')->where('user_id',Auth::id())->orderby('id','DESC')->first();
+if($subscription)
+{
+    $per = DB::table('subscriptions')->where('user_id',Auth::id())
+       ->leftJoin('plan', 'subscriptions.stripe_price', '=', 'plan.plan_id')->where('subscriptions.stripe_status','active')->select('plan.*')->first();
+}else
+{
+    $per = DB::table('user_plan')->where('user_id',Auth::id())
+       ->leftJoin('plan', 'user_plan.plan_id', '=', 'plan.plan_id')->where('user_plan.status','active')->select('plan.*')->first();
+}
 @endphp  
 <h6 class="mt-3 mb-3">{{ Cmf::getmodulename("level_two") }}</h6>
 <div class="menu-item">

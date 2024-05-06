@@ -102,7 +102,8 @@
   <tr class="">
 <td class="">
 @php
-$img = 'https://dev.outcomemet.com/public/assets/images/icons/icon-color.png';
+$img = 'https://dev.outcomemet.com/public/assetsindex/assets/img/logo.png';
+
 @endphp 
 
 <img alt="robot picture" class="" height="155" src="{{ url('public/assets/images/icons/icon-color.png') }}" width="155">

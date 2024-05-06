@@ -110,7 +110,7 @@
                             <li class="menu-item" aria-haspopup="true">
                                 <a href="{{ url('admin/section') }}" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot"><span></span></i><span
-                                        class="menu-text">Section</span>
+                                        class="menu-text">Highlights Section</span>
                                 </a>
                             </li>
 
@@ -131,7 +131,7 @@
                             <li class="menu-item" aria-haspopup="true">
                                 <a href="{{ url('admin/all-contact') }}" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot"><span></span></i><span
-                                        class="menu-text">Contact</span>
+                                        class="menu-text">All Contact</span>
                                 </a>
                             </li>
 
@@ -141,7 +141,30 @@
                                         class="menu-text">Key Feature</span>
                                 </a>
                             </li>
+                            
+                              <li class="menu-item" aria-haspopup="true">
+                                <a href="{{ url('admin/contact-section') }}" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot"><span></span></i><span
+                                        class="menu-text">Contact Section</span>
+                                </a>
+                            </li>
 
+
+                              <li class="menu-item" aria-haspopup="true">
+                                <a href="{{ url('admin/ceo-message') }}" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot"><span></span></i><span
+                                        class="menu-text">CEO Message</span>
+                                </a>
+                            </li>
+
+                            
+
+                            <li class="menu-item" aria-haspopup="true">
+                                <a href="{{ url('admin/software-section') }}" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot"><span></span></i><span
+                                        class="menu-text">Software Section</span>
+                                </a>
+                            </li>
                           
 
                            
