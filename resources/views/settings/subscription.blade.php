@@ -118,8 +118,7 @@ $var_objective = "Jira";
                         <td>
                        
                            <button type="button" class="btn btn-primary"  data-toggle="modal" data-target=".bd-example-modal-lg">Upgrade</button>
-                           @else
-                           <button type="button" class="btn btn-primary" disabled >Upgrade</button>
+                          
 
                        
                         </td>
