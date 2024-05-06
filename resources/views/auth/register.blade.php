@@ -114,30 +114,28 @@
                                       <div class="separator separator-content my-14">
                                          <span class="w-125px text-gray-500 fw-semibold fs-7">Or with email</span>
                                       </div>
-                                      <div class="fv-row mb-8 row">
-                                        <div class="col-md-6">
-                                            <input type="text" placeholder="First Name" name="name" autocomplete="off" class="form-control bg-transparent" />
-                                        </div>
-                                        <div class="col-md-6">
-                                            <input type="text" placeholder="Last Name" name="last_name" autocomplete="off" class="form-control bg-transparent" />                        
-                                        </div>    
-                                      </div>
-                                    
-                                      <div class="fv-row mb-8 row">
-                                        <div class="col-md-6">
-                                            <input type="text" placeholder="Organization Name" name="org_name" autocomplete="off" class="form-control bg-transparent" />                        
-
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <input type="text" placeholder="Email" name="email" autocomplete="off" class="form-control bg-transparent" />
-
-                                        </div>
+                                      <div class="row">
+                                          <div class="col-md-6">
+                                              <div class="fv-row mb-8">
+                                                 <input type="text" placeholder="First Name" name="name" autocomplete="off" class="form-control bg-transparent" />
+                                              </div>
+                                          </div>
+                                          <div class="col-md-6">
+                                              <div class="fv-row mb-8">
+                                                 <input type="text" placeholder="Last Name" name="last_name" autocomplete="off" class="form-control bg-transparent" />                        
+                                              </div>
+                                          </div>
                                       </div>
                                       
-                                      <div class="fv-row mb-8 row" data-kt-password-meter="true">
-                                        <div class="col-md-6">
-                                            <div class="mb-1">
+                                      
+                                      <div class="fv-row mb-8">
+                                         <input type="text" placeholder="Organization Name" name="org_name" autocomplete="off" class="form-control bg-transparent" />                        
+                                      </div>
+                                      <div class="fv-row mb-8">
+                                         <input type="text" placeholder="Email" name="email" autocomplete="off" class="form-control bg-transparent" />
+                                      </div>
+                                      <div class="fv-row mb-8" data-kt-password-meter="true">
+                                         <div class="mb-1">
                                             <div class="position-relative mb-3">
                                                <input class="form-control bg-transparent" type="password" placeholder="Password" name="password" autocomplete="off" />
                                                <span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2" data-kt-password-meter-control="visibility">
@@ -153,14 +151,6 @@
                                             </div>
                                          </div>
                                          <div class="text-muted">Use 8 or more characters with a mix of letters, numbers & symbols.</div>
-                                        </div>
-                                        
-                                        <div class="col-md-6">
-                                            <input id="password-confirm" type="password" class="form-control bg-transparent" placeholder="Confirm Password" name="password_confirmation" required autocomplete="new-password">
-
-                                        </div>
-                                        
-                            
                                       </div>
                                    </div>
                                 </div>
@@ -168,11 +158,6 @@
                                     <div class="w-100">
                                         <div class="pb-10 pb-lg-15">
                                             <h2 class="fw-bold text-gray-900">Organizational Structure</h2>
-                                            <p> 1. Business Units: Distinct operational entities within the organization, organized around products, services, or markets, each with its own strategies, goals, and resources.</p>
-
-                                            <p> 2. Value Streams: Sequences of steps delivering customer value, representing end-to-end processes focusing on work flow and product/service creation.</p>
-
-                                            <p> 3. Teams: Groups of individuals with complementary skills working within business units or value streams, collaborating closely to achieve specific objectives and contribute to organizational success.</p>
                                         </div>
                                         <div class="mb-10 fv-row">
                                             <input type="text" class="form-control form-control-lg form-control-solid @error('level_one') is-invalid @enderror" placeholder="Level One" name="level_one" value="{{ old('level_one') }}"  id="level_one" required>
@@ -190,7 +175,6 @@
                                     <div class="w-100">
                                         <div class="pb-10 pb-lg-12">
                                             <h2 class="fw-bold text-gray-900">Setup Workflow</h2>
-                                            <p>Users can define the starting month of the financial year, allowing alignment of reporting and budgeting cycles with operational schedules, enhancing financial planning and analysis.</p>
                                         </div>
                                         @php
                                         $month = DB::table('settings')->where('user_id',Auth::id())->first();
@@ -226,36 +210,33 @@
                                                 <option value='yes'>Yes</option>
                                                 <option selected value='no'>No</option>
                                             </select>
-                                            
                                         </div>
-
-                                        <div class="fv-row mb-10 row" id="jiraaccount" style="display: none">
-                                                                <div class="col-md-12">
-                                                                  
-                                                                      <input type="text" placeholder="Jira Connect Name" class="form-control form-control-lg form-control-solid mb-3" name="jira_name"  >
-                                                                      
-                                                                
-                                                                </div>
-                                                                <div class="col-md-12">
-                                                                 
-                                                                      <input type="url" placeholder="Jira Url"  class="form-control form-control-lg form-control-solid mb-3" name="jira_url"  >
-                                                                      
-                                                                 
-                                                                </div>
-                                                                <div class="col-md-12 ">
-                                                                   
-                                                                      <input type="text" placeholder="Jira User Name" class="form-control form-control-lg form-control-solid mb-3" name="user_name"   >
-                                                                     
-                                                                   
-                                                                </div>
-                                                                <div class="col-md-12">
-                                                                  
-                                                                      <input type="text" placeholder="Jira Token" class="form-control form-control-lg form-control-solid" name="token"  >
-                                                                     
-                                                                
-                                                                </div>
-                                                               
-                                                             </div>
+                                        <div class="row" id="jiraaccount" style="display: none">
+                                            <div class="col-md-12 col-lg-12 col-xl-12">
+                                                <div class="fv-row mb-8">
+                                                    <label class="form-label required">Jira Connect Name</label>
+                                                    <input type="text" name="jira_name" autocomplete="off" class="form-control form-control-lg form-control-solid" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-lg-12 col-xl-12">
+                                               <div class="fv-row mb-8">
+                                                  <label class="form-label required">Jira Url</label>
+                                                  <input type="url" class="form-control form-control-lg form-control-solid" name="jira_url"  id="team-title" >
+                                               </div>
+                                            </div>
+                                            <div class="col-md-12 col-lg-12 col-xl-12">
+                                               <div class="fv-row mb-8">
+                                                <label class="form-label required">Jira User Name</label>
+                                                  <input type="text" class="form-control form-control-lg form-control-solid" name="user_name"  id="team-title" >
+                                               </div>
+                                            </div>
+                                            <div class="col-md-12 col-lg-12 col-xl-12">
+                                               <div class="fv-row mb-8">
+                                                <label class="form-label required">Jira Token</label>
+                                                  <input type="text" class="form-control form-control-lg form-control-solid" name="token"  id="team-title" >
+                                               </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <!--end::Wrapper-->
                                 </div>
@@ -299,14 +280,13 @@
                 $('#level_three').val('Teams');
             }
             function jirraaccount(id) {
-             
-            if(id == 'yes')
-            {
-                $('#jiraaccount').show();
-            }else
-            {
-                $('#jiraaccount').hide();
-            }
+
+                if(id == 'yes') {
+                  $('#jiraaccount').show();
+                }else
+                {
+                    $('#jiraaccount').hide();
+                }
             }
             $('#kt_create_account_form').on('submit',(function(e) {
                 e.preventDefault();
@@ -356,21 +336,6 @@
                     }
                 });
             }));
-
-            $(document).ready(function() {
-
-            $('#gridCheck').change(function() {
-                if($(this).is(":checked")) {
-                
-                $('#jiraaccount').show();
-                }else
-                {
-                    $('#jiraaccount').hide();
-                    // $('#jiraaccount').html('');  
-                }
-            });
-            });
-
         </script>
     </body>
 </html>
