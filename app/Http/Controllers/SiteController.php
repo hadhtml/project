@@ -174,15 +174,17 @@ class SiteController extends Controller
         }  
             
         }
+
+    
         
-         if($request->has('updatefeatures'))
+         if($request->has('newupdatefeatures'))
         {
             
-        foreach($request->features  as $k => $value)
+        foreach($request->newupdatefeatures  as $k => $value)
         {
              DB::table('header_section')
              ->insert([
-                'feature_highlight' => $request->updatefeatures[$k],
+                'feature_highlight' => $request->newupdatefeatures[$k],
                 'section' => $request->id,
             ]);
         }
@@ -526,6 +528,13 @@ class SiteController extends Controller
             'image' => $filename,
           
           ]);
+
+       return back();   
+    }
+
+    public function DeleteHighlightSection($id)
+    {
+        $id =  DB::table('header_section')->where('id',$id)->delete();
 
        return back();   
     }

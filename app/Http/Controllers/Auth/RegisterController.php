@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
 use App\Helpers\Cmf;
 use App\Models\modulenames;
 use DB;
+use Carbon\Carbon;
 
 
 class RegisterController extends Controller
@@ -117,6 +118,16 @@ class RegisterController extends Controller
       
               ]);
         }
+
+        $newDateTime = Carbon::now()->addDays(14);
+       
+        DB::table('user_plan')->insert([
+            'plan_id' => 'plan_2qf8GZaKJD',
+            'status' => 'active',
+            'subscription_ends_at' => $newDateTime,
+            'user_id' => $user->id,
+            'payment_type' => 'trail',
+        ]);
         return $user;
     }
 }
