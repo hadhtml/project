@@ -72,7 +72,7 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <a onclick="return confirm('Are You Sure You want to Delete This')" href="{{ url('admin/delete-section/' . $r->id) }}" class="btn"><i
+                                            <a onclick="return confirm('Are You Sure You want to Delete This')" href="{{ url('admin/delete-section-highlight/' . $r->id) }}" class="btn"><i
                                                     class="fa fa-trash"></i></a>
                                         </td>
                                     </tr>
@@ -303,7 +303,7 @@ $(document).ready(function() {
             if (x < maxField) {
                 x++; //Increment field counter
                 var fieldHTML =
-                '<div class="d-flex mb-3 mt-2 ml-3" style="width:150%"><br><br><input type="text" style="width:100%" class="form-control" name="updatefeatures[]"  placeholder="Add Features" required><a href="javascript:void(0);"  class="remove_button btn btn-danger ml-3"><i class="fa fa-minus"></i></a></div>';
+                '<div class="d-flex mb-3 mt-2 ml-3" style="width:150%"><br><br><input type="text" style="width:100%" class="form-control" name="newupdatefeatures[]"  placeholder="Add Features" required><a href="javascript:void(0);"  class="remove_button btn btn-danger ml-3"><i class="fa fa-minus"></i></a></div>';
 
                 $(wrapper).append(fieldHTML); //Add field html
             }else{
