@@ -211,6 +211,32 @@
                                                 <option selected value='no'>No</option>
                                             </select>
                                         </div>
+                                        <div class="row" id="jiraaccount" style="display: none">
+                                            <div class="col-md-12 col-lg-12 col-xl-12">
+                                                <div class="fv-row mb-8">
+                                                    <label class="form-label required">Jira Connect Name</label>
+                                                    <input type="text" name="jira_name" autocomplete="off" class="form-control form-control-lg form-control-solid" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-lg-12 col-xl-12">
+                                               <div class="fv-row mb-8">
+                                                  <label class="form-label required">Jira Url</label>
+                                                  <input type="url" class="form-control form-control-lg form-control-solid" name="jira_url"  id="team-title" >
+                                               </div>
+                                            </div>
+                                            <div class="col-md-12 col-lg-12 col-xl-12">
+                                               <div class="fv-row mb-8">
+                                                <label class="form-label required">Jira User Name</label>
+                                                  <input type="text" class="form-control form-control-lg form-control-solid" name="user_name"  id="team-title" >
+                                               </div>
+                                            </div>
+                                            <div class="col-md-12 col-lg-12 col-xl-12">
+                                               <div class="fv-row mb-8">
+                                                <label class="form-label required">Jira Token</label>
+                                                  <input type="text" class="form-control form-control-lg form-control-solid" name="token"  id="team-title" >
+                                               </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <!--end::Wrapper-->
                                 </div>
@@ -254,7 +280,13 @@
                 $('#level_three').val('Teams');
             }
             function jirraaccount(id) {
-                alert(id)
+
+                if(id == 'yes') {
+                  $('#jiraaccount').show();
+                }else
+                {
+                    $('#jiraaccount').hide();
+                }
             }
             $('#kt_create_account_form').on('submit',(function(e) {
                 e.preventDefault();
