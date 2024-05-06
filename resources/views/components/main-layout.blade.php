@@ -15,6 +15,7 @@
         <!-- External Links -->
         <input type="hidden" value="{{ url('') }}" id="mainurl">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/kanban.css') }}">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
         <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-bs4.min.css" rel="stylesheet">
         <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
@@ -713,6 +714,10 @@
         <script src="{{ url('public/assetsvone/js/custom/apps/chat/chat.js') }}"></script>
         <script src="{{ url('public/assetsvone/js/custom/utilities/modals/upgrade-plan.js') }}"></script>
         <script src="{{ url('public/assetsvone/js/custom/utilities/modals/users-search.js') }}"></script>
+
+
+        <script src="{{ url('public/assetsvone/js/custom/utilities/modals/create-account.js') }}"></script>
+
 
         @include('components.script')
 
