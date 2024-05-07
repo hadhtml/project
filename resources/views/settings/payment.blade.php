@@ -21,8 +21,11 @@ $organization  = DB::table('organization')->where('user_id',Auth::id())->orWhere
             </div>
             <!--end::Card header-->
             <!--begin::Card body-->
+            <div id="cashier"></div>
             <div class="card-body pt-3">
-                <div class="p-2"><div id="paypal-button-container" style="width: 100%"></div></div>
+                <div class="p-2">
+                    <!-- <div id="paypal-button-container" style="width: 100%"></div> -->
+            </div>
                 <div class="separator separator-dashed mb-7"></div> 
                 <form  action="{{ url('stripe-post') }}" method="post" id="subscribe-form">
                      @csrf
@@ -354,7 +357,7 @@ var stripe = Stripe('{{ env('STRIPE_KEY') }}');
 
     function payment(payment_method)
     {
-        
+            $('#card-button').html('<i class="fa fa-spin fa-spinner"></i>');
                 var plan  = "{{$plan->plan_id}}";   
                 var url1 = "{{url('stripe-post')}}";
                 $.ajax({
@@ -376,7 +379,7 @@ var stripe = Stripe('{{ env('STRIPE_KEY') }}');
                    setTimeout(function() {
                     window.location.href = data;
                     $('#cashier').html('');
-                }, 1000);
+                }, 2000);
                     // }
            
                 }

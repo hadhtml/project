@@ -116,9 +116,12 @@ $var_objective = "Jira";
                         </td>
                     
                         <td>
-                       
+                          @if($data->transaction_id != '')
                            <button type="button" class="btn btn-primary"  data-toggle="modal" data-target=".bd-example-modal-lg">Upgrade</button>
-                          
+                            @else
+                           <button type="button" class="btn btn-primary"  data-toggle="modal" data-target=".bd-example-modal-lg-new">Upgrade</button>
+                           
+                           @endif 
 
                        
                         </td>
@@ -166,6 +169,38 @@ $plan = DB::table('plan')->where('plan_id','!=',$plan->plan_id)->where('base_pri
      </div>
    </div>
  </div>
+
+
+ <div class="modal fade bd-example-modal-lg-new" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+     <div id="cashier"></div>
+      @if(count($plan) > 0)
+     
+      <div class="card-group">
+        @foreach($plan as $p)
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title text-secondary" >{{$p->plan_title}}</h5>
+            
+            <p class="card-text"> £ {{$p->base_price}} / {{$p->billing_method}}.</p>
+          </div>
+          <div class="card-footer">
+            <a href="{{url('boost-payment/'.$p->plan_id)}}" class="btn btn-sm btn-primary">Upgrade</a>
+          </div>
+        </div>
+        @endforeach
+     
+      </div>
+  
+
+      @endif
+
+    
+
+    </div>
+  </div>
+</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script> 
