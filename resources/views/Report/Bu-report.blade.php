@@ -404,24 +404,22 @@ $formattedDate = $lastDayOfMonth->toDateString();
 }
 
 @endphp
-  <div class="modal fade" id="create-report" tabindex="-1" role="dialog" aria-labelledby="create-report" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content" style="width: 526px !important;">
-            <div class="modal-header">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h5 class="modal-title" id="create-epic">Create Quarter/Sprint</h5>
-                    </div>
-                    <div class="col-md-12">
-                        <p>Fill out the form, submit and hit the save button.</p>
-                    </div>
-                      
+<div class="modal fade" id="create-report" tabindex="-1" role="dialog" aria-labelledby="add-team" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered mw-650px" role="document">
+        <div class="modal-content">
+            <!--begin::Modal header-->
+            <div class="modal-header pb-0 border-0 justify-content-end">
+                <!--begin::Close-->
+                <div class="btn btn-sm btn-icon btn-active-color-primary" data-dismiss="modal" aria-label="Close">
+                    <i class="ki-outline ki-cross fs-1"></i>
                 </div>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <img src="{{asset('public/assets/images/icons/minus.svg')}}">
-                </button>
+                <!--end::Close-->
             </div>
-            <div class="modal-body">
+            <div class="modal-body scroll-y mx-5 mx-xl-18 pt-0 pb-15">
+            
+                <div class="text-center mb-13">
+                  <h1 class="mb-3" id="end-quartr">Create Quarter/Sprint</h1>
+               </div>
                 <div class="row">
                     <div class="col-md-12">
                         <div id="success-sprint"  role="alert"></div>
@@ -433,33 +431,42 @@ $formattedDate = $lastDayOfMonth->toDateString();
             
                     <div class="row">
                         <div class="col-md-12 col-lg-12 col-xl-12">
-                            <div class="form-group mb-0">
-                                <input type="text" class="form-control" id="q_title" required>
-                                <label for="objective-name">Quarter Title</label>
+                            <div class="d-flex flex-column mb-7 fv-row">
+                                <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                    <span class="required">Quarter Title</span>
+                                </label>
+                                <input type="text" class="form-control form-control-solid" id="q_title" required>
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-6 col-xl-6">
-                            <div class="form-group mb-0">
-                                <input type="date" class="form-control" min="{{ date('Y-m-d') }}" id="q_start_date"  required>
-                                <label for="start-date" style="bottom:72px;">Start Date</label>
+                            <div class="d-flex flex-column mb-7 fv-row">
+                                <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                    <span class="required">Start Date</span>
+                                </label>
+                                <input type="date" class="form-control form-control-solid" min="{{ date('Y-m-d') }}" id="q_start_date"  required>
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-6 col-xl-6">
-                            <div class="form-group mb-0">
-                                <input type="date" class="form-control" @if($CurrentQuarter) value="{{$formattedDate}}" @endif id="q_end_date" required>
-                                <label for="end-date">End Date</label>
+                            <div class="d-flex flex-column mb-7 fv-row">
+                                <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                    <span class="required">End Date</span>
+                                </label>
+                                <input type="date" class="form-control form-control-solid" @if($CurrentQuarter) value="{{$formattedDate}}" @endif id="q_end_date" required>
                             </div>
-                        </div>
-                        
+                        </div>                        
                         <div class="col-md-12 col-lg-12 col-xl-12">
-                            <div class="form-group mb-0">
-                                <input type="text" class="form-control"  id="q_description" >
-                                <label for="small-description">Description</label>
+                            <div class="d-flex flex-column mb-7 fv-row">
+                                <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                    <span class="required">Description</span>
+                                </label>
+                                <textarea class="form-control" id="q_description" row="3"></textarea>
                             </div>
                         </div>
-
                         <div class="col-md-12">
-                            <button id="savequarterbutton" class="btn btn-primary btn-lg btn-theme btn-block ripple mt-3" onclick="saveQuarter();"  type="button">Start</button>
+                            <div class="text-center pt-15">
+                                 <button id="savequarterbutton" class="btn btn-primary" onclick="saveQuarter();"  type="button">Start</button>
+                             </div>
+                            
                         </div>
                     </div>
                 </form>
