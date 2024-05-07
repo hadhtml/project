@@ -719,9 +719,9 @@
         <script src="{{ url('public/assetsvone/js/custom/utilities/modals/create-account.js') }}"></script>
 
         
-        <script src="{{ url('public/assetsvone/js/custom/apps/customers/list/export.js') }}"></script>
+        <!-- <script src="{{ url('public/assetsvone/js/custom/apps/customers/list/export.js') }}"></script> -->
         <script src="{{ url('public/assetsvone/js/custom/apps/customers/list/list.js') }}"></script>
-        <script src="{{ url('public/assetsvone/js/custom/apps/customers/add.js') }}"></script>
+        <!-- <script src="{{ url('public/assetsvone/js/custom/apps/customers/add.js') }}"></script> -->
         <script src="{{ url('public/assetsvone/js/widgets.bundle.js') }}"></script>
         <script src="{{ url('public/assetsvone/js/custom/widgets.js') }}"></script>
         <script src="{{ url('public/assetsvone/js/custom/apps/chat/chat.js') }}"></script>
