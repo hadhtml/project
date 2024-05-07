@@ -89,7 +89,7 @@ $organization  = DB::table('organization')->where('user_id',Auth::id())->orWhere
                     <h5 class="mb-4">Product details</h5>
                     <div class="mb-0">
                         <span class="badge badge-light-info me-2">{{$plan->plan_title}}</span>
-                        <span class="fw-semibold text-gray-600">${{$plan->base_price}} / {{$plan->billing_method}}</span>
+                        <span class="fw-semibold text-gray-600">£{{$plan->base_price}} / {{$plan->billing_method}}</span>
                     </div>
                 </div>
                 <div class="separator separator-dashed mb-7"></div>
