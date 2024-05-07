@@ -1,6 +1,6 @@
 <script src="{{ url('public/assets/bootstrap-typeahead.min.js') }}"></script>
 <script src="{{ url('public/assets/mention.js') }}"></script>
-<div class="row">
+<div class="row mb-3 mt-3">
     <div class="col-md-12 col-lg-12 col-xl-12 @if($comments->count() > 1) paddingrightzero @endif">
         <div class="d-flex flex-row align-items-center justify-content-between block-header">
             <div class="d-flex flex-row align-items-center">
@@ -33,7 +33,7 @@
                     <a class="dropdown-item" onclick="showorderby('asc',{{ $data->id }},'flag_comments')" href="javascript:void(0)">Older</a>
                   </div>
                 </div>
-                <span onclick="writecomment()" class="btn btn-default btn-sm">Add</span>
+                <span onclick="writecomment()" class="btn btn-primary btn-sm">Add</span>
             </div>
         </div>
     </div>
@@ -81,7 +81,7 @@
             @php
                 $user = DB::table('users')->where('id',$r->user_id)->first();
             @endphp
-            <div class="card comment-card-new">
+            <div class="comment-card-new">
                 <div class="deletecomment commentdelete{{ $r->id }}">
                     <div class="row">
                         <div class="col-md-10">
@@ -197,7 +197,7 @@
             @php
                 $puser = DB::table('users')->where('id',$p->user_id)->first();
             @endphp
-                <div class="card comment-card-new reply-card">
+                <div class="comment-card-new reply-card">
                     <div class="deletecomment" id="commentdelete{{ $p->id }}">
                         <div class="row">
                             <div class="col-md-10">

@@ -216,35 +216,38 @@
         </div>
     </div>
 </div>
+ 
 
-<div class="modal fade" id="delete-objective" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Delete Objective</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+<div class="modal fade" id="delete-objective" tabindex="-1" role="dialog" aria-labelledby="add-team" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <!--begin::Modal header-->
+            <div class="modal-header pb-0 border-0 justify-content-end">
+                <!--begin::Close-->
+                <div class="btn btn-sm btn-icon btn-active-color-primary" data-dismiss="modal" aria-label="Close">
+                    <i class="ki-outline ki-cross fs-1"></i>
+                </div>
+                <!--end::Close-->
+            </div>
+            <div class="modal-body scroll-y mx-5 mx-xl-18 pt-0 pb-15">
+               <div id="success-obj-delete"  role="alert"></div>
+                <form method="POST" action="">
+                    @csrf   
+                    <input type="hidden" name="obj_delete_id" id="obj_delete_id">
+                    <div class="modal-body">
+                        <div class="text-center mb-13">
+                          <h1 class="mb-3" id="end-quartr">Delete Objective</h1>
+                          <p>Are you sure you want to delete this Objective?</p>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="button" id="deleteobjectivebutton" onclick="deleteobjectivemain();" class="btn btn-primary">Confirm</button>
+                    </div>
+                </form>
+           </div>
         </div>
-        <div id="success-obj-delete"  role="alert"></div>
-
-        <form method="POST" action="">
-         @csrf   
-         <input type="hidden" name="obj_delete_id" id="obj_delete_id">
-        <div class="modal-body">
-          
-        Are you sure you want to delete this Objective?
-
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" id="deleteobjectivebutton" onclick="deleteobjectivemain();" class="btn btn-danger">Confirm</button>
-        </div>
-        </form>
-      </div>
     </div>
-  </div>
-
+</div>
 
 <!-- Create Initiative -->
 <div class="modal fade" id="create-initiative" tabindex="-1" role="dialog" aria-labelledby="add-team" aria-hidden="true">

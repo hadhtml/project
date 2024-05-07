@@ -257,6 +257,8 @@
                                         <i class="ki-outline ki-arrow-right fs-4 ms-1"></i></button>
                                     </div>
                                 </div>
+                                <div class="text-gray-500 text-center fw-semibold fs-6">Already Member yet 
+                                <a href="{{ url('login') }}" class="link-primary">Sign In</a></div>
                                 <!--end::Actions-->
                             </form>
                             <!--end::Form-->

@@ -88,7 +88,7 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="membername">{{ $r->team_title }}</div>
-                                        <div class="memberdetail">Lead: {{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
+                                        <div class="memberdetail">Lead: @if(DB::table('members')->where('id' , $r->lead_id)->first()) {{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }} @endif</div>
                                     </div>
                                     <div class="col-md-2 text-center mt-3">
                                         @if($data->team_id == $r->id)
@@ -113,7 +113,7 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="membername">{{ $r->team_title }}</div>
-                                        <div class="memberdetail">Lead: {{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
+                                        <div class="memberdetail">Lead: @if(DB::table('members')->where('id' , $r->lead_id)->first()) {{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }} @endif</div>
                                     </div>
                                     <div class="col-md-2 text-center mt-3">
                                         @if($data->team_id == $r->id)
@@ -138,7 +138,7 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="membername">{{ $r->team_title }}</div>
-                                        <div class="memberdetail">Lead: {{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
+                                        <div class="memberdetail">Lead: @if(DB::table('members')->where('id' , $r->lead_id)->first()) {{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }} @endif</div>
                                     </div>
                                     <div class="col-md-2 text-center mt-3">
                                         @if($data->team_id == $r->id)
@@ -166,7 +166,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="membername">{{ $r->team_title }}</div>
-                                    <div class="memberdetail">Lead: {{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
+                                    <div class="memberdetail">Lead: @if(DB::table('members')->where('id' , $r->lead_id)->first()) {{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }} @endif</div>
                                 </div>
                                 <div class="col-md-2 text-center mt-3">
                                     @if($data->team_id == $r->id)
@@ -193,7 +193,7 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="membername">{{ $r->team_title }}</div>
-                                <div class="memberdetail">Lead: {{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
+                                <div class="memberdetail">Lead: @if(DB::table('members')->where('id' , $r->lead_id)->first()) {{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }} @endif</div>
                             </div>
                             <div class="col-md-2 text-center mt-3">
                                 @if($data->team_id == $r->id)
@@ -220,7 +220,7 @@
                         </div>
                         <div class="col-md-8">
                             <div class="membername">{{ $r->team_title }}</div>
-                            <div class="memberdetail">Lead: {{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }}</div>
+                            <div class="memberdetail">Lead: @if(DB::table('members')->where('id' , $r->lead_id)->first()) {{ DB::table('members')->where('id' , $r->lead_id)->first()->name }} {{ DB::table('members')->where('id' , $r->lead_id)->first()->last_name }} @endif</div>
                         </div>
                         <div class="col-md-2 text-center mt-3">
                             @if($data->team_id == $r->id)

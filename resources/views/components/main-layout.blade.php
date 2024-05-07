@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
         <link href="{{ url('public/assetsvone/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ url('public/assetsvone/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
-
+        <link href="{{ url('public/assetsvone/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
 
         <!-- External Links -->
         <input type="hidden" value="{{ url('') }}" id="mainurl">
@@ -718,6 +718,16 @@
 
         <script src="{{ url('public/assetsvone/js/custom/utilities/modals/create-account.js') }}"></script>
 
+        
+        <script src="{{ url('public/assetsvone/js/custom/apps/customers/list/export.js') }}"></script>
+        <script src="{{ url('public/assetsvone/js/custom/apps/customers/list/list.js') }}"></script>
+        <script src="{{ url('public/assetsvone/js/custom/apps/customers/add.js') }}"></script>
+        <script src="{{ url('public/assetsvone/js/widgets.bundle.js') }}"></script>
+        <script src="{{ url('public/assetsvone/js/custom/widgets.js') }}"></script>
+        <script src="{{ url('public/assetsvone/js/custom/apps/chat/chat.js') }}"></script>
+        <script src="{{ url('public/assetsvone/js/custom/utilities/modals/upgrade-plan.js') }}"></script>
+        <script src="{{ url('public/assetsvone/js/custom/utilities/modals/create-campaign.js') }}"></script>
+        <script src="{{ url('public/assetsvone/js/custom/utilities/modals/users-search.js') }}"></script>
 
         @include('components.script')
 
