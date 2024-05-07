@@ -154,7 +154,7 @@ $plan = DB::table('plan')->where('plan_id','!=',$plan->plan_id)->where('base_pri
              <p class="card-text"> £ {{$p->base_price}} / {{$p->billing_method}}.</p>
            </div>
            <div class="card-footer">
-             <button type="button" onclick="upgradePlan({{$p->id}},'{{$data->id}}')" class="btn btn-primary">Upgrade</button>
+             <button type="button" onclick="upgradePlan({{$p->id}},'{{$data->id}}')" id="update-plan" class="btn btn-primary">Upgrade</button>
            </div>
          </div>
          @endforeach
@@ -233,7 +233,7 @@ $plan = DB::table('plan')->where('plan_id','!=',$plan->plan_id)->where('base_pri
 function upgradePlan(plan_id,old_id)
 {
 
-
+  $('#update-plan').html('<i class="fa fa-spin fa-spinner"></i>');
    $.ajax({
    url:"{{url('upgarde-plan')}}", 
    type:"post",
@@ -248,7 +248,7 @@ function upgradePlan(plan_id,old_id)
       setTimeout(function() {
       location.reload(); 
       $('#cashier').html('');
-      }, 1000);
+      }, 3000);
          
    }
 
