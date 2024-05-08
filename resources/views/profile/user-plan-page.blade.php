@@ -28,7 +28,7 @@ $organization  = DB::table('organization')->where('user_id',Auth::id())->orWhere
                                 <h1 class="text-gray-900 mb-5 fw-bolder">{{$p->plan_title}}</h1>
                                 <div class="text-center">
                                     @if($p->base_price_status ==  'price')
-                                    <span class="mb-2 text-primary">$</span>
+                                    <span class="mb-2 text-primary">£</span>
                                     <span class="fs-3x fw-bold text-primary">{{$p->base_price}}</span>
                                     <span class="fs-7 fw-semibold opacity-50">/ 
                                     <span data-kt-element="period">{{$p->billing_method}}</span></span>

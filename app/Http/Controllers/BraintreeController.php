@@ -90,23 +90,28 @@ class BraintreeController extends Controller
      
     $plan = DB::table('plan')->where('plan_id',$slug)->first();
 
+    $newDateTime = Carbon::now()->addDays(14);
+    if($plan->base_price_status == 'free')
+    {
+        DB::table('user_plan')->insert([
+            'plan_id' => 'plan_2qf8GZaKJD',
+            'status' => 'active',
+            'subscription_ends_at' => $newDateTime,
+            'user_id' => auth::id(),
+            'payment_type' => 'trail',
+        ]);
+        return redirect(route('organization.dashboard'));   
+    }else
+    {
+        $intent = auth()->user()->createSetupIntent();
+        return view('settings.payment',compact('plan','intent'));
+    }
    
 
-        // $newDateTime = Carbon::now()->addDays($plan->duration);
-       
-        // DB::table('user_plan')->insert([
-        //     'plan_id' => $plan->id,
-        //     'amount' => 0,
-        //     'status' => 1,
-        //     'plan_expire' => $newDateTime,
-        //     'user_id' => auth::id(),
-        //     'package_status' => 1,
 
-        // ]);
 
  
-     $intent = auth()->user()->createSetupIntent();
-    return view('settings.payment',compact('plan','intent'));
+    
     
 
     
