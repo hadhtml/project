@@ -15,7 +15,7 @@ $organization  = DB::table('organization')->where('user_id',Auth::id())->orWhere
             </div>
             <div class="row g-10">
                 @php
-                $plan = DB::table('plan')->where('status','Active')->orderby('id','DESC')->get();
+                $plan = DB::table('plan')->where('status','Active')->get();
                 @endphp
                 @foreach($plan as $p)
                 @php
