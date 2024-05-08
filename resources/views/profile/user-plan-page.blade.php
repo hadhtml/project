@@ -15,7 +15,7 @@ $organization  = DB::table('organization')->where('user_id',Auth::id())->orWhere
             </div>
             <div class="row g-10">
                 @php
-                $plan = DB::table('plan')->where('status','Active')->orderby('id','DESC')->get();
+                $plan = DB::table('plan')->where('status','Active')->get();
                 @endphp
                 @foreach($plan as $p)
                 @php
@@ -30,7 +30,7 @@ $organization  = DB::table('organization')->where('user_id',Auth::id())->orWhere
                                     @if($p->base_price_status ==  'price')
                                     <span class="mb-2 text-primary">£</span>
                                     <span class="fs-3x fw-bold text-primary">{{$p->base_price}}</span>
-                                    <span class="fs-7 fw-semibold opacity-50">/ 
+                                    <span class="fs-7 fw-semibold opacity-50"> user / 
                                     <span data-kt-element="period">{{$p->billing_method}}</span></span>
                                     @else
                                     <span class="fs-3x fw-bold text-primary">Free</span>

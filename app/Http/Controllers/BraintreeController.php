@@ -326,7 +326,11 @@ public function UpgradePlan(Request $request)
     $user = Auth::user();
 
     $plan = DB::table('plan')->where('id',$request->plan_id)->first();
-    $user->subscription($plan->plan_title)->noProrate()->swap($plan->plan_id);
+    $data = $user->subscription($plan->plan_title)->noProrate()->swap($plan->plan_id);
+
+    DB::table('user_plan')->where('user_id',auth::id())->update([
+        'plan_id' => $plan->plan_id,
+    ]);
     
 
 }

@@ -55,7 +55,7 @@
                                 <tr>
                                     <td>{{$r->plan_title}}</td>
                                     @if($r->base_price_status ==  'price')
-                                    <td>${{$r->base_price}}</td>
+                                    <td>£{{$r->base_price}}</td>
                                     @else
                                     <td>Free</td>
                                     @endif

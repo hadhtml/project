@@ -99,15 +99,15 @@ class MemberController extends Controller
             $message->subject($subject);
         });
 
-        $plan = DB::table('user_plan')->where('user_id',Auth::id())->first();
+        $plan = DB::table('subscriptions')->where('user_id',Auth::id())->first();
 
-        if($plan->transaction_id != '')
+        if($plan)
         {
             \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
   
-            $subscription = Subscription::retrieve($plan->transaction_id);
+            $subscription = Subscription::retrieve($plan->stripe_id );
             
-            $stripe = \Stripe\Subscription::update($plan->transaction_id, [
+            $stripe = \Stripe\Subscription::update($plan->stripe_id , [
                
                 'proration_behavior' => 'always_invoice',
                 'items' => [

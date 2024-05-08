@@ -87,13 +87,13 @@ $var_objective = "Jira";
                </thead>
                <tbody>
            
-               
+                 @if($data)
                   @php
                   $plan = DB::table('plan')->where('plan_id',$data->plan_id)->first();
                   @endphp
                   <tr>
                     
-                     <td> {{$plan->plan_title}}</td>
+                     <td> @if($plan){{$plan->plan_title}}@endif</td>
                      @if($data->transaction_id != '')
                      <td>@if($plan) £{{$plan->base_price}} @endif</td>
                      @else
@@ -127,6 +127,7 @@ $var_objective = "Jira";
                         </td>
              
                   </tr>
+                  @endif
           
                  
                    
@@ -136,6 +137,7 @@ $var_objective = "Jira";
       </div>
    </div>
 </div>
+@if($data)
 @php
 $plan = DB::table('plan')->where('plan_id','!=',$plan->plan_id)->where('base_price_status','!=','free')->get();
 @endphp
@@ -154,7 +156,7 @@ $plan = DB::table('plan')->where('plan_id','!=',$plan->plan_id)->where('base_pri
              <p class="card-text"> £ {{$p->base_price}} / {{$p->billing_method}}.</p>
            </div>
            <div class="card-footer">
-             <button type="button" onclick="upgradePlan({{$p->id}},'{{$data->id}}')" class="btn btn-primary">Upgrade</button>
+             <button type="button" onclick="upgradePlan({{$p->id}},'{{$data->id}}')" id="update-plan" class="btn btn-primary">Upgrade</button>
            </div>
          </div>
          @endforeach
@@ -202,6 +204,8 @@ $plan = DB::table('plan')->where('plan_id','!=',$plan->plan_id)->where('base_pri
   </div>
 </div>
 
+@endif
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script> 
    $(document).ready(function() {
@@ -233,7 +237,7 @@ $plan = DB::table('plan')->where('plan_id','!=',$plan->plan_id)->where('base_pri
 function upgradePlan(plan_id,old_id)
 {
 
-
+  $('#update-plan').html('<i class="fa fa-spin fa-spinner"></i>');
    $.ajax({
    url:"{{url('upgarde-plan')}}", 
    type:"post",
@@ -248,7 +252,7 @@ function upgradePlan(plan_id,old_id)
       setTimeout(function() {
       location.reload(); 
       $('#cashier').html('');
-      }, 1000);
+      }, 3000);
          
    }
 
