@@ -87,13 +87,13 @@ $var_objective = "Jira";
                </thead>
                <tbody>
            
-               
+                 @if($data)
                   @php
                   $plan = DB::table('plan')->where('plan_id',$data->plan_id)->first();
                   @endphp
                   <tr>
                     
-                     <td> {{$plan->plan_title}}</td>
+                     <td> @if($plan){{$plan->plan_title}}@endif</td>
                      @if($data->transaction_id != '')
                      <td>@if($plan) £{{$plan->base_price}} @endif</td>
                      @else
@@ -127,6 +127,7 @@ $var_objective = "Jira";
                         </td>
              
                   </tr>
+                  @endif
           
                  
                    
@@ -136,6 +137,7 @@ $var_objective = "Jira";
       </div>
    </div>
 </div>
+@if($data)
 @php
 $plan = DB::table('plan')->where('plan_id','!=',$plan->plan_id)->where('base_price_status','!=','free')->get();
 @endphp
@@ -201,6 +203,8 @@ $plan = DB::table('plan')->where('plan_id','!=',$plan->plan_id)->where('base_pri
     </div>
   </div>
 </div>
+
+@endif
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script> 
