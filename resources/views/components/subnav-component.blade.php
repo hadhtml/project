@@ -4,11 +4,11 @@ $organization = DB::table('organization')->where('user_id',Auth::id())->orWhere(
 $subscription = DB::table('subscriptions')->where('user_id',Auth::id())->orderby('id','DESC')->first();
 if($subscription)
 {
-    $per = DB::table('subscriptions')->where('user_id',Auth::id())
+    $per = DB::table('subscriptions')->where('user_id',Auth::id())->orWhere('user_id', Auth::user()->invitation_id)
        ->leftJoin('plan', 'subscriptions.stripe_price', '=', 'plan.plan_id')->where('subscriptions.stripe_status','active')->select('plan.*')->first();
 }else
 {
-    $per = DB::table('user_plan')->where('user_id',Auth::id())
+    $per = DB::table('user_plan')->where('user_id',Auth::id())->orWhere('user_id', Auth::user()->invitation_id)
        ->leftJoin('plan', 'user_plan.plan_id', '=', 'plan.plan_id')->where('user_plan.status','active')->select('plan.*')->first();
 }
 
