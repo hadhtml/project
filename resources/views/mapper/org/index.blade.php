@@ -103,7 +103,6 @@ $var_objective = "mapper-org";
    "use strict";
    
 
-   @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->get() as $t_l_c)
 
    @foreach(DB::table('team_link_child')->groupby('bussiness_key_id')->where('user_id' , Auth::id())->get() as $t_l_c)
 
@@ -239,7 +238,6 @@ $var_objective = "mapper-org";
          
          @endforeach
       @endforeach
-   @endforeach
    @endforeach
    });
 
