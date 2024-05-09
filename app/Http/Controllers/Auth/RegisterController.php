@@ -119,6 +119,16 @@ class RegisterController extends Controller
               ]);
         }
 
+        $newDateTime = Carbon::now()->addDays(30);
+        DB::table('user_plan')->insert([
+            'plan_id' => $data['plan-id'],
+            'status' => 'active',
+            'subscription_ends_at' => $newDateTime,
+            'user_id' => $user->id,
+            'payment_type' => 'trail',
+            'package_status' =>  $data['max-user'],
+        ]);
+
      
         return $user;
     }

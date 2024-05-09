@@ -1,5 +1,6 @@
 @php
-$organization = DB::table('organization')->where('user_id',Auth::id())->where('trash',NULL)->first();    
+$organization = DB::table('organization')->where('user_id',Auth::id())->where('trash',NULL)->first();
+$data = DB::table('user_plan')->where('user_id',Auth::id())->first();    
 @endphp
 <h6 class="mt-3 mb-3">Settings</h6>
 
@@ -51,6 +52,7 @@ $organization = DB::table('organization')->where('user_id',Auth::id())->where('t
         <span class="menu-title">Change Password</span>
     </a>
 </div>
+@if($data->transaction_id != '')
 <div class="menu-item">
     <a href="{{route('settings.subscription')}}"  class="menu-link @if (url()->current() == route('settings.subscription'))  active @endif">
         <span class="menu-icon">
@@ -59,3 +61,4 @@ $organization = DB::table('organization')->where('user_id',Auth::id())->where('t
         <span class="menu-title">Subscription</span>
     </a>
 </div>
+@endif

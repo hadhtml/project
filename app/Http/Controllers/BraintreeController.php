@@ -88,33 +88,13 @@ class BraintreeController extends Controller
     {
    
      
-    $plan = DB::table('plan')->where('plan_id',$slug)->first();
+    $plan = DB::table('plan')->where('slug',$slug)->first();
 
-    $newDateTime = Carbon::now()->addDays(14);
-    if($plan->base_price_status == 'free')
-    {
-        DB::table('user_plan')->insert([
-            'plan_id' => 'plan_2qf8GZaKJD',
-            'status' => 'active',
-            'subscription_ends_at' => $newDateTime,
-            'user_id' => auth::id(),
-            'payment_type' => 'trail',
-        ]);
-        return redirect(route('organization.dashboard'));   
-    }else
-    {
+  
         $intent = auth()->user()->createSetupIntent();
         return view('settings.payment',compact('plan','intent'));
-    }
-   
 
 
-
- 
-    
-    
-
-    
 
     }
 
@@ -159,7 +139,16 @@ class BraintreeController extends Controller
 
 
         // }
+        
+        $userPlan = DB::table('user_plan')->where('user_id',Auth::id())->first();
+        if($userPlan->package_status == '' || $userPlan->package_status == 0 )
+        {
+          $Quantity = 1; 
 
+        }else
+        {
+        $Quantity =  $userPlan->package_status + 1;
+        }
         
         $user->createOrGetStripeCustomer();
         $paymentMethod = $request->payment_method;
@@ -171,7 +160,7 @@ class BraintreeController extends Controller
 
         
         try {
-        $subscription = $user->newSubscription($plan->plan_title, $request->plan)->create($request->payment_method);
+        $subscription = $user->newSubscription($plan->plan_title, $request->plan)->quantity($Quantity)->create($request->payment_method);
         DB::table('user_plan')->where('user_id',auth::id())->update([
             'plan_id' => $request->plan,
             'status' => $subscription->stripe_status,
@@ -183,9 +172,10 @@ class BraintreeController extends Controller
         
 
         $url = url('organization/dashboard');
-         return $url;
+         return response(['success' => true, 'data' => $url]);
         } catch (\Exception $e) {
-         return $e->getMessage();
+         return response(['success' => true, 'data' => $e->getMessage()]);
+
         }
     
        
@@ -253,7 +243,7 @@ class BraintreeController extends Controller
     public function getPaypalClientId()
 {
     return response()->json([
-        'paypal_client_id' => env('PAYPAL_CLIENT_ID')
+        'paypal_client_id' => env('STRIPE_KEY')
     ]);
 }
 
