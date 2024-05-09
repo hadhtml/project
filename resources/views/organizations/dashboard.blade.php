@@ -39,11 +39,11 @@
         $subscription = DB::table('subscriptions')->where('user_id',Auth::id())->orderby('id','DESC')->first();
         if($subscription)
         {
-            $per = DB::table('subscriptions')->where('user_id',Auth::id())
+            $per = DB::table('subscriptions')->where('user_id',Auth::id())->orWhere('user_id', Auth::user()->invitation_id)
             ->leftJoin('plan', 'subscriptions.stripe_price', '=', 'plan.plan_id')->where('subscriptions.stripe_status','active')->select('plan.*')->first();
         }else
         {
-            $per = DB::table('user_plan')->where('user_id',Auth::id())
+            $per = DB::table('user_plan')->where('user_id',Auth::id())->orWhere('user_id', Auth::user()->invitation_id)
             ->leftJoin('plan', 'user_plan.plan_id', '=', 'plan.plan_id')->where('user_plan.status','active')->select('plan.*')->first();
         }
     @endphp
@@ -51,7 +51,35 @@
     
     <div class="row">
         <div class="col-md-12">
+            @if(Auth::user()->invitation_id == '')
+            @php
+        
+            $data = DB::table('user_plan')->where('user_id',Auth::id())->where('transaction_id','=',null)->first();
+            if($data)
+            {
+                $plan = DB::table('plan')->where('status','Active')->where('plan_id',$data->plan_id)->first();
+      
+            
+            $endDate = $data->subscription_ends_at;
+            
+        
+            $now = now();
+            $remainingDays = max(0, $now->diffInDays($endDate)); 
+            if ($remainingDays > 0) {
+                echo '<div class="alert alert-danger  fade show" role="alert">
+                    Your free trial is expiring after <strong>'.$remainingDays.' days</strong>. Subscribe to keep using the system.
+                    <a href="'.url('boost-payment/'.$plan->slug).'" class="btn btn-dark">
+                        <span aria-hidden="true">Check Plans</span>
+                    </a>
+                </div>';
+            } else {
+                echo "Expired";
+            }
+        }
+        @endphp
+        @endif
             <div class="row">
+ 
                 @if($per)
                 @foreach(explode(',',$per->module) as $info) 
                 @if($info == 'OKR Planner')
