@@ -114,6 +114,13 @@
                                       <div class="separator separator-content my-14">
                                          <span class="w-125px text-gray-500 fw-semibold fs-7">Or with email</span>
                                       </div>
+                                      <input type="hidden" name="plan-id" id="plan-id" required>
+                                      <input type="hidden" name="max-user" id="max-user">
+
+                                      
+                                 
+
+
                                       <div class="row">
                                           <div class="col-md-6">
                                               <div class="fv-row mb-8">
@@ -203,6 +210,7 @@
                                                 <option @if($month) @if($month->month == 11) selected @endif @endif value='11'>December</option>
                                             </select>
                                         </div>
+
                                         <div class="fv-row mb-10">
                                             <label class="form-label required">Connect your Jira account</label>
                                              <select onchange="jirraaccount(this.value)" name="business_type" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="Select..." data-allow-clear="true" data-hide-search="true">
@@ -237,9 +245,93 @@
                                                </div>
                                             </div>
                                         </div>
+
+                                        @php
+                                            $plan = DB::table('plan')->where('status','Active')->get();
+                                            @endphp
+                                            @foreach($plan as $p)
+                                            @php
+                                            $dataArray = explode(',', $p->module);
+                                            @endphp
+
+                  
+
+                                        <div class="row mb-10">
+                                        <div class="col-md-12">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div>
+                                                        <div class="d-flex flex-row justify-content-between">
+                                                            <div>
+                                                                <h1 class="text-gray-900 mb-5 fw-bolder">{{$p->plan_title}}</h1>
+                                                                <div class="text-gray-600 fw-semibold mb-5">
+                                                                    Optimal for 10+ team size<br> and new startup                                                 
+                                                                </div>
+                                                                <div class="w-100 mb-10">  
+                                                                    <!--begin::Item-->
+                                                                    @foreach($dataArray as $arr)                                               
+                                                                    <div class="d-flex align-items-center mb-5">
+                                                                               
+                                                                    <span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">
+                                                                        {{$arr}}                                                
+                                                                    </span> 
+                                                                        <i class="ki-outline ki-check-circle fs-1 text-success"></i>                                                                                                                                                      
+                                                                    </div>
+                                                                    @endforeach
+                                                                    <!--end::Item--> 
+                                                                                                    
+                                                                                                        
+                                                                        
+                                                            </div>
+                                                            </div>
+                                                            <div>
+                                                                <div class="min-w-200px bg-primary text-center card-rounded py-12">                               
+
+                                                                    <div class="fs-5x text-white d-flex justify-content-center align-items-start">
+                                                                        <span class="fs-2 mt-3">£</span>
+                                                                        
+                                                                        <span class="lh-sm fw-semibold" data-kt-plan-price-month="99" data-kt-plan-price-annual="399">
+                                                                            {{$p->base_price}}
+                                                                        </span>                                    
+                                                                    </div>
+
+                                                                    <div class="text-white fw-bold mb-7"> User / {{$p->billing_method}} </div>
+
+                                                                    <button type="button"  onclick="GetPlan({{$p->id}},'{{$p->base_price}}','{{$p->plan_id}}')" class="btn bg-white bg-opacity-20 bg-hover-white text-hover-primary text-white fw-bold mx-auto">Start Free Trial</button>                                 
+                                                                </div>
+                                                            </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row" id="plan">
+                                                        <div class="col-md-6" id="user-{{$p->id}}">
+                                                          
+                                                        </div>
+
+                                                        <div class="col-md-6" id="price-{{$p->id}}">
+                                                          
+                                                        </div>
+                                                         </div>
+                                                       
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                     
+
+                                        @endforeach
+
+                                   
                                     </div>
+
                                     <!--end::Wrapper-->
                                 </div>
+
+
+                                
                                 @csrf
                                 <div class="d-flex flex-stack pt-15">
                                     <div class="mr-2">
@@ -257,6 +349,8 @@
                                         <i class="ki-outline ki-arrow-right fs-4 ms-1"></i></button>
                                     </div>
                                 </div>
+                                <div class="text-gray-500 text-center fw-semibold fs-6">Already Member yet 
+                                <a href="{{ url('login') }}" class="link-primary">Sign In</a></div>
                                 <!--end::Actions-->
                             </form>
                             <!--end::Form-->
@@ -336,6 +430,28 @@
                     }
                 });
             }));
+
+            var activeCard = null;
+
+function GetPlan(id, price, plan_id) {
+    $('#user-' + id).html('How Many User Do you Have? <input class="form-control w-50" id="input-' + id + '" onkeyup="getprice(this.value, ' + price + ', ' + id + ')" type="number">');
+    
+    // Remove fields from the previously active card
+    if (activeCard !== null && activeCard !== id) {
+        $('#user-' + activeCard).empty();
+        $('#price-' + activeCard).empty();
+        
+    }
+    
+    $('#plan-id').val(plan_id);
+    activeCard = id;
+}
+
+function getprice(value, price, id) {
+    var total = value * price;
+    $('#price-' + id).html('<span class="mt-3"> £ ' + total.toFixed(2) + ' </span> <p>You will be charged after 30 days</p>');
+    $('#max-user').val(value);
+}
         </script>
     </body>
 </html>
