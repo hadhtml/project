@@ -171,36 +171,36 @@
                     </div>
                 </div>
 
-                <div class="modal fade" id="delete{{ $team->id }}" tabindex="-1" role="dialog"
-                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Delete Team</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
+<div class="modal fade" id="delete{{ $team->id }}" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Team</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
 
 
-                            <form method="POST" action="{{ url('delete-org-team') }}">
-                                @csrf
-                                <input type="hidden" name="delete_id" value="{{ $team->id }}">
+            <form method="POST" action="{{ url('delete-org-team') }}">
+                @csrf
+                <input type="hidden" name="delete_id" value="{{ $team->id }}">
 
 
-                                <div class="modal-body">
+                <div class="modal-body">
 
-                                    Are you sure you want to delete this Team?
+                    Are you sure you want to delete this Team?
 
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-danger">Confirm</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
                 </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger">Confirm</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
                 <div class="modal fade" id="edit{{ $team->id }}" tabindex="-1" role="dialog"
                     aria-labelledby="add-team" aria-hidden="true">
@@ -327,12 +327,12 @@
                     @csrf
                     <input type="hidden" name="team_unit_id" value="{{ $organization->id }}">
                     <div class="text-center mb-13">
-                        <h1 class="mb-3">Add Team</h1>
+                        <h1 class="mb-3">Add {{ Cmf::getmodulename('level_three') }}</h1>
                     </div>
                     <input type="hidden" name="org_stream_id" value="{{$organization->id}}">
                     <div class="d-flex flex-column mb-7 fv-row">
                         <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
-                            <span class="required">Team Name</span>
+                            <span class="required">{{ Cmf::getmodulename('level_three') }} Name</span>
                         </label>
                         <input type="text" class="form-control form-control-solid" name="team_title" id="team-title" required>
                     </div>
