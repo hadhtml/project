@@ -1,5 +1,5 @@
 @php
-$var_objective = "security";
+$var_objective = "security3";
 @endphp
 @extends('components.main-layout')
 <title>Choose Your Plan</title>
@@ -11,46 +11,94 @@ $organization  = DB::table('organization')->where('user_id',Auth::id())->orWhere
     <div class="card-body p-lg-17">
         <div class="d-flex flex-column">
             <div class="mb-13 text-center">
-                <h1 class="fs-2hx fw-bold mb-5">Choose Your Plan</h1>
+                <h1 class="fs-2hx fw-bold mb-5">CheckOut</h1>
             </div>
-            <div class="row g-10">
+     
                 @php
-                $plan = DB::table('plan')->where('status','Active')->get();
+                $data = DB::table('user_plan')->where('user_id',Auth::id())->first();
+                $plan = DB::table('plan')->where('status','Active')->where('plan_id',$data->plan_id)->first();
                 @endphp
-                @foreach($plan as $p)
+               
                 @php
-                $dataArray = explode(',', $p->module);
+                $dataArray = explode(',', $plan->module);
+                $total  = ($plan->base_price * $data->package_status); 
                 @endphp
-                <div class="col-xl-4">
-                    <div class="d-flex h-100 align-items-center">
-                        <div class="w-100 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75 py-15 px-10">
-                            <div class="mb-7 text-center">
-                                <h1 class="text-gray-900 mb-5 fw-bolder">{{$p->plan_title}}</h1>
-                                <div class="text-center">
-                                    @if($p->base_price_status ==  'price')
-                                    <span class="mb-2 text-primary">£</span>
-                                    <span class="fs-3x fw-bold text-primary">{{$p->base_price}}</span>
-                                    <span class="fs-7 fw-semibold opacity-50"> user / 
-                                    <span data-kt-element="period">{{$p->billing_method}}</span></span>
-                                    @else
-                                    <span class="fs-3x fw-bold text-primary">Free</span>
-                                    @endif
+               <div class="row">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <div>
+                                <div class="d-flex flex-row justify-content-between">
+                                    <div>
+                                        <h1 class="text-gray-900 mb-5 fw-bolder">{{$plan->plan_title}}</h1>
+                                        <div class="text-gray-600 fw-semibold mb-5">
+                                            Optimal for 10+ team size<br> and new startup                                                 
+                                        </div>
+                                        <div class="w-100 mb-10">  
+                                            <!--begin::Item-->
+                                            @foreach($dataArray as $arr)                                               
+                                            <div class="d-flex align-items-center mb-5">
+                                                       
+                                            <span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">
+                                                {{$arr}}                                                
+                                            </span> 
+                                                <i class="ki-outline ki-check-circle fs-1 text-success"></i>                                                                                                                                                      
+                                            </div>
+                                            @endforeach
+                                            <!--end::Item--> 
+                                                                            
+                                                                                
+                                                
+                                    </div>
+                                    </div>
+                                    <div>
+                                        <div class="min-w-300px bg-primary text-center card-rounded py-12">                               
+
+                                            <div class="fs-5x text-white d-flex justify-content-center align-items-start">
+                                                <span class="fs-2 mt-3">£</span>
+                                                
+                                                <span class="lh-sm fw-semibold" data-kt-plan-price-month="99" data-kt-plan-price-annual="399">
+                                                    {{$plan->base_price}}
+                                                </span>                                    
+                                            </div>
+
+                                            <div class="text-white fw-bold mb-7">user / {{$plan->billing_method}}</div>
+                                            @if($data->package_status == '' || $data->package_status == 0 )
+                                            <div class="text-white fw-bold mb-3">No Of User : 0</div>
+                                            @else
+                                            <div class="text-white fw-bold mb-3">No Of User : {{$data->package_status}}</div>
+
+                                            @endif
+                                            @if($data->package_status == '' || $data->package_status == 0 )
+                                            <div class="text-white fw-bold mb-3">Due Amount : £ {{$plan->base_price}}</div>
+                                            @else
+                                            <div class="text-white fw-bold mb-3">Due Amount : £ {{$total}}</div>
+                                            @endif
+                                            <a href="{{url('boost-payment/'.$plan->slug)}}" style="text-color:white" class="btn btn-light">CheckOut</a>
+                                        </div>
+                                    </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="w-100 mb-10">
-                                @foreach($dataArray as $arr)
-                                <div class="d-flex align-items-center mb-5">
-                                    <span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">{{$arr}}</span>
-                                    <i class="ki-outline ki-check-circle fs-1 text-success"></i>
+
+                                <div class="row" id="plan">
+                                <div class="col-md-6" >
+                                  
                                 </div>
-                                @endforeach
+
+                                <div class="col-md-6">
+                                  
+                                </div>
+                                 </div>
+                               
+
                             </div>
-                            <a href="{{url('boost-payment/'.$p->plan_id)}}" class="btn btn-sm btn-primary">Select</a>
+
                         </div>
                     </div>
+                    
                 </div>
-                @endforeach
-            </div>
+             
+           
         </div>
     </div>
 </div>
