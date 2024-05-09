@@ -22,7 +22,8 @@ class JiraController extends Controller
     
       public function __construct()
     {
-        $this->middleware('auth');
+      $this->middleware(['auth','check.subscription']);
+
     }
     public function financialsettings()
     {
@@ -329,9 +330,15 @@ class JiraController extends Controller
     public function JiraSetting()
      {
          
-      $Jiradata = DB::table('jira_setting')->where('user_id',Auth::id())->orWhere('user_id',Auth::user()->invitation_id)->get();
+      if(Auth::user()->invitation_id == '')
+      {
+      $Jiradata = DB::table('jira_setting')->where('user_id',Auth::id())->get();
        return view('settings.jira-setting',compact('Jiradata'));  
-     }
+      }else
+      {
+        return redirect(route('organization.dashboard'));
+      }
+    }
      
      public function AddJiraSetting(Request $request)
      {
@@ -405,7 +412,7 @@ class JiraController extends Controller
   
       }
      
-      return redirect()->back();
+      return redirect()->back()->with('message', 'FinancialYear Setting Updated Successfully');
 
     
     }

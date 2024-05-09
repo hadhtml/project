@@ -20,9 +20,11 @@ use Carbon\Carbon;
 class FlagController extends Controller
 {
     public function __construct()
-    {
-        $this->middleware(['auth','verified']);
-    }
+  {
+    $this->middleware(['auth','check.subscription']);
+
+  }
+
     public function flags($organizationid , $flagtype , $type)
     {
         if($flagtype == 'risk')

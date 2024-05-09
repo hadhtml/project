@@ -18,6 +18,12 @@ use Carbon\Carbon;
 
 class MapperController extends Controller
 {
+    public function __construct()
+    {
+      $this->middleware(['auth','check.subscription']);
+  
+    }
+  
     public function saveteamlevellinking(Request $request)
     {
         $add = new team_link_child();
