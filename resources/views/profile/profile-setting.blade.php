@@ -47,6 +47,7 @@ $organization  = DB::table('organization')->where('user_id',Auth::id())->orWhere
                         <input type="text" class="form-control form-control-solid" readonly value="{{$user->email}}" name="email" placeholder="" />
                      </div>
                   </div>
+                  @if(Auth::user()->invitation_id == '')
                   <div class="col-md-6 col-lg-6 col-xl-6">
                      <div class="d-flex flex-column mb-7 fv-row">
                         <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
@@ -55,6 +56,7 @@ $organization  = DB::table('organization')->where('user_id',Auth::id())->orWhere
                         <input type="text" class="form-control form-control-solid"  value="{{$organization->organization_name}}" name="org_name" placeholder="" />
                      </div>
                   </div>
+                  @endif
                   <input type="hidden" id="old_image" name="old_image" value="{{ $user->image }}">
                   <div class="col-md-12 col-lg-12 col-xl-12">
                      <div class="d-flex flex-column mb-7 fv-row">

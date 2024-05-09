@@ -107,7 +107,7 @@ $var_objective = "Jira";
                      @endif
 
                      <td>
-                      @if($data->transaction_id != Null)
+                      @if($data->transaction_id != '')
                         <label class="switch">
                            <input type="checkbox" id="switcher" @if($data->subscription_ends_at == NULL) checked @endif  value="{{$plan->plan_title}}">
                            <span class="slider round"></span>

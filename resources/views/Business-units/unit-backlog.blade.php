@@ -230,7 +230,7 @@ $var_objective = "Backlog-Unit";
    <div>
       <p class="text-center">You may create your first Epic by clicking the bellow button</p>
    </div>
-   <button class="btn btn-primary btn-lg btn-theme btn-block ripple ml-25" style="width:50%"  data-toggle="modal" data-target="#create-unitbacklog-epic">
+   <button class="btn btn-primary btn-lg btn-theme btn-block ripple"  data-toggle="modal" data-target="#create-unitbacklog-epic">
    Add an Epic
    </button>
 </div>
