@@ -34,64 +34,72 @@ $var_objective = "Org-Unit-team";
 
     @endphp
 <div class="col-md-4">
-    <div class="card business-card">
-        <div class="card-body">
-            <div class="d-flex flex-row justify-content-between">
-                <div class="d-flex flex-row">
-                    <div class="mr-2">
-                        <img  class="gixie" data-item-id="{{ $team->id }}" style="width: 40px; object-fit: cover; border-radius: 10px; height: 40px;">
-                    </div>
-                    <div>
-                        <h3 class="mb-0">
-                            <a href="{{url('dashboard/organization/'.$team->slug.'/dashboard/BU')}}">{{$team->team_title}}</a>
-                        </h3>
-                        <small>
-                            {{$dataCount}} total members
-                        </small>
-                    </div>
+    <div class="card border-hover-primary">
+        <div class="card-header border-0 pt-9">
+            <div class="card-title m-0">
+                <div class="symbol symbol-50px w-50px bg-light">
+                    <img  class="gixie" data-item-id="{{ $team->id }}" style="width: 50px;object-fit: cover;border-radius: 10px;height: 50px;">
                 </div>
-                <div>
-                    <div class="dropdown d-flex">
-                        <button class="btn btn-circle dropdown-toggle btn-tolbar bg-transparent" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src="{{ url('public/assets/svg/dropdowndots.svg') }}">
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item"  data-toggle="modal" data-target="#edit{{$team->id}}">Edit</a>
-                            <a class="dropdown-item" data-toggle="modal" data-target="#delete{{$team->id}}">Delete</a>
-                        </div>
+            </div>
+            <div class="card-toolbar">
+                <button class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                        <i class="ki-solid ki-dots-vertical fs-2x"></i>
+                    </button>
+                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px py-3" data-kt-menu="true">
+                     <div class="menu-item px-3">
+                        <a class="menu-link px-3"  data-toggle="modal" data-target="#edit{{$team->id}}">Edit</a>
+                    </div>
+                    <div class="menu-item px-3 my-1">
+                        <a class="menu-link px-3" data-toggle="modal" data-target="#delete{{$team->id}}">Delete</a>
                     </div>
                 </div>
             </div>
-            <div class="d-flex justify-content-between align-items-center leader-section mt-4">
-                <div>
-                    @if($team->lead_id)
-                        @foreach(DB::table('members')->get() as $r)
-                            @if($r->id == $team->lead_id)
-
-                                <div class="d-flex flex-row align-items-center">
-                                    <div class="mr-2">
-                                        @if($r->image != NULL)
-                                        <img src="{{asset('public/assets/images/'.$r->image)}}" alt="Example Image">
-                                        @else
-                                        <img src="{{ Avatar::create($r->name.' '.$r->last_name)->toBase64() }}" alt="Example Image">
-                                        @endif
-                                    </div>
-
-                                    <div class="d-flex flex-column">
-                                        <div>
-                                            <span class="text-primary">Lead</span>
-                                        </div>
-                                        <div>
-                                            <span>{{$r->name}} {{ $r->last_name }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
-                        @endforeach
-                    @endif
+        </div>
+        <div class="card-body p-9">
+            <a href="{{url('dashboard/organization/'.$team->slug.'/dashboard/VS')}}" class="fs-3 fw-bold text-gray-900">{{$team->team_title}}</a>
+            <p class="text-gray-500 fw-semibold fs-5 mt-1 mb-7">
+                {{$dataCount}} total members
+            </p>
+            <div class="d-flex flex-wrap mb-5">
+                <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-7 mb-3">
+                    <div class="fs-6 text-gray-800 fw-bold">{{$ObjResultcount}}</div>
+                    <div class="fw-semibold text-gray-500">Epics</div>
                 </div>
-                <div>
-                    <div class="d-flex align-items-center flex-lg-fill my-1">
+                <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mb-3">
+                    <div class="fs-6 text-gray-800 fw-bold">{{$ObjResultcount}}</div>
+                    <div class="fw-semibold text-gray-500">Objectives</div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center leader-section mt-4">
+                 <div>
+                     @if($team->lead_id)
+                         @foreach(DB::table('members')->get() as $r)
+                         @if($r->id == $team->lead_id)
+ 
+                                 <div class="d-flex flex-row align-items-center">
+                                     <div class="mr-2">
+                                         @if($r->image != NULL)
+                                         <img src="{{asset('public/assets/images/'.$r->image)}}" alt="Example Image">
+                                         @else
+                                         <img src="{{ Avatar::create($r->name.' '.$r->last_name)->toBase64() }}" alt="Example Image">
+                                         @endif
+                                     </div>
+ 
+                                     <div class="d-flex flex-column">
+                                         <div>
+                                             <span class="text-primary">Lead</span>
+                                         </div>
+                                         <div>
+                                             <span>{{$r->name}} {{ $r->last_name }}</span>
+                                         </div>
+                                     </div>
+                                 </div>
+                             @endif
+                         @endforeach
+                     @endif
+                 </div>
+                 <div>
+                     <div class="d-flex align-items-center flex-lg-fill my-1">
                         <div class="symbol-group symbol-hover">
                             @foreach($firstTwoIds as $member)
                             @foreach(DB::table('members')->get() as $r)
@@ -111,82 +119,54 @@ $var_objective = "Org-Unit-team";
                              @endif
                              @endforeach
                              @endforeach
-                             @if($dataCount > 3)
+                             @if($dataCount > 2)
                              <div style="width:42px; height:42px; padding: 10px; font-size: 12px;" class="symbol symbol-30  symbol-circle symbol-light" data-toggle="tooltip" title="" data-original-title="More users">
                                  <span class="symbol-label">{{$remainingCount}}+</span>
                              </div>
                              @endif
                          </div>
-                    </div>
-                </div>
-            </div>
+                     </div>
+                 </div>
+             </div>
 
-            <div class="row counter-section">
-                <div class="col-md-6 pr-2">
-                    <div class="counter-card d-flex flex-row align-items-center">
-                        <div class="mr-1">
-                            <span class="material-symbols-outlined text-secondary">bolt</span>
-                        </div>
-                        <div class="d-flex flex-column">
-                            <div>
-                                <b>{{$EpicResultcount}}</b>
-                            </div>
-                            <div>
-                                <small class="text-secondary">Epics</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 pl-2">
-                    <div class="counter-card d-flex flex-row align-items-center">
-                        <div class="mr-1">
-                            <span class="material-symbols-outlined text-secondary">adjust</span>
-                        </div>
-                        <div class="d-flex flex-column">
-                            <div>
-                                <b>{{$ObjResultcount}}</b>
-                            </div>
-                            <div>
-                                <small class="text-secondary">Objectives</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
         </div>
     </div>
 </div>
-
-<div class="modal fade" id="delete{{$team->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Delete {{ Cmf::getmodulename('level_three') }}</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+<div class="modal fade" id="delete{{$team->id}}" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <!--begin::Modal content-->
+        <div class="modal-content">
+            <!--begin::Modal header-->
+            <div class="modal-header pb-0 border-0 justify-content-end">
+                <!--begin::Close-->
+                <div class="btn btn-sm btn-icon btn-active-color-primary" data-dismiss="modal">
+                    <i class="ki-outline ki-cross fs-1"></i>
+                </div>
+                <!--end::Close-->
+            </div>
+            <div class="modal-body">
+                <div class="mb-13 text-center">
+                    <h1 class="mb-3">Delete {{ Cmf::getmodulename("level_three") }}</h1>
+                </div>
+                <form method="POST" action="{{url('delete-unit-team')}}">
+                 @csrf   
+                 <input type="hidden" name="delete_id" value="{{$team->id}}">
+                <div class="text-center">
+                    Are you sure you want to delete this {{ Cmf::getmodulename('level_three') }}?                    
+                </div>
+                <div class="text-center pt-15">
+                    <button type="submit" class="btn btn-danger">
+                        <span class="indicator-label">Submit</span>
+                        <span class="indicator-progress">Please wait... 
+                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                    </button>
+                </div>
+                </form>
+            </div>
         </div>
-      
-
-        <form method="POST" action="{{url('delete-unit-team')}}">
-         @csrf   
-         <input type="hidden" name="delete_id" value="{{$team->id}}">
-       
-
-        <div class="modal-body">
-          
-        Are you sure you want to delete this {{ Cmf::getmodulename('level_three') }}?
-
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-danger">Confirm</button>
-        </div>
-        </form>
-      </div>
     </div>
-  </div>
+</div>
         
         <div class="modal fade" id="edit{{$team->id}}" tabindex="-1" role="dialog" aria-labelledby="add-team" aria-hidden="true">
             <div class="modal-dialog" role="document">
