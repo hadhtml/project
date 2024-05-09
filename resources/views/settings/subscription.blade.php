@@ -139,7 +139,7 @@ $var_objective = "Jira";
 </div>
 @if($data)
 @php
-$plan = DB::table('plan')->where('plan_id','!=',$plan->plan_id)->where('base_price_status','!=','free')->get();
+$plan = DB::table('plan')->where('plan_id','!=',$plan->plan_id)->where('base_price_status','!=','free')->where('status','=','Active')->get();
 @endphp
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
    <div class="modal-dialog modal-lg">
