@@ -131,15 +131,11 @@ $var_objective = "Org-Unit";
         </div>
         <div class="modal fade" id="edit{{$unit->id}}" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered mw-650px">
-                <!--begin::Modal content-->
                 <div class="modal-content">
-                    <!--begin::Modal header-->
                     <div class="modal-header pb-0 border-0 justify-content-end">
-                        <!--begin::Close-->
                         <div class="btn btn-sm btn-icon btn-active-color-primary" data-dismiss="modal">
                             <i class="ki-outline ki-cross fs-1"></i>
                         </div>
-                        <!--end::Close-->
                     </div>
                     <div class="modal-body">
                         <form class="needs-validation" action="{{url('update-business-unit')}}" method="POST">
