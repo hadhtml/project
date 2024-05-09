@@ -231,6 +231,6 @@ class SubscriptionController extends Controller
       $currentDate = Carbon::now();
       DB::table('user_plan')
       ->whereDate('subscription_ends_at', '<', $currentDate)
-      ->update(['status' => 'Inactive']);
+      ->update(['status' => 'inactive']);
     }
 }
