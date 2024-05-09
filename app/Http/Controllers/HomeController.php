@@ -28,7 +28,15 @@ class HomeController extends Controller
     }
     public function dashboard()
     {
-        if(DB::table('user_plan')->where('user_id',Auth::id())->where('status','active')->count() == 1)
+      $organization = DB::table('user_plan')
+      ->where('status','active')
+      ->where(function ($query) {
+          $query->where('user_id', Auth::id())
+              ->orWhere('user_id', Auth::user()->invitation_id);
+      })
+      ->first();
+
+        if($organization)
         {
           $organization  = Organization::where('user_id',Auth::id())->orWhere('user_id',Auth::user()->invitation_id)->where('trash',NULL)->first();
           return view('organizations.dashboard',compact('organization'));
@@ -44,9 +52,9 @@ class HomeController extends Controller
     }
     public function asignnames()
     {
-        if(modulenames::where('user_id' , Auth::id())->count() == 1)
+        if(modulenames::where('user_id' , Auth::id())->orWhere('user_id',Auth::user()->invitation_id)->count() == 1)
         {
-          $organization  = Organization::where('user_id',Auth::id())->where('trash',NULL)->first();
+          $organization  = Organization::where('user_id',Auth::id())->orWhere('user_id',Auth::user()->invitation_id)->where('trash',NULL)->first();
           return redirect(route('organization.dashboard'));
         }
         else
