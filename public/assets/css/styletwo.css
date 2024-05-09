@@ -1,5 +1,7 @@
 /*Usama Style for new design*/
-
+.text-right{
+    text-align: right;
+}
 .modal-header .positionrelative{
     position: relative;
 }

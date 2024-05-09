@@ -60,7 +60,18 @@ $var_objective = "Member";
                      <input value="{{$member->ID}}" class="form-check-input" type="checkbox" value="1" />
                   </div>
                </td>
-               <td class="text-gray-600 text-hover-primary mb-1">{{$member->name}}</td>
+               <td class="text-gray-600 text-hover-primary mb-1">
+                  <div class="symbol-group symbol-hover">
+                     <div class="symbol symbol-35px symbol-circle">
+                         @if($member->image != NULL)
+                         <img src="{{asset('public/assets/images/'.$member->image)}}" alt="lead">
+                         @else
+                         <img src="{{ Avatar::create($member->name.' '.$member->LastName)->toBase64() }}" alt="lead">
+                         @endif
+                     </div>
+                     {{$member->name}}
+                  </div>
+               </td>
                <td class="text-gray-600 text-hover-primary mb-1">{{$member->LastName}}</td>
                <td class="text-gray-600 text-hover-primary mb-1">{{$member->email}}</td>
                <td class="text-gray-600 text-hover-primary mb-1">{{$member->u_role}}</td>
