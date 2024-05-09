@@ -108,27 +108,23 @@ $var_objective = 'Report-'.$type;
                                           <path d="M12.0001 21.02C8.24008 21.02 4.69008 18.82 2.25008 15C1.19008 13.35 1.19008 10.66 2.25008 8.99998C4.70008 5.17998 8.25008 2.97998 12.0001 2.97998C15.7501 2.97998 19.3001 5.17998 21.7401 8.99998C22.8001 10.65 22.8001 13.34 21.7401 15C19.3001 18.82 15.7501 21.02 12.0001 21.02ZM12.0001 4.47998C8.77008 4.47998 5.68008 6.41998 3.52008 9.80998C2.77008 10.98 2.77008 13.02 3.52008 14.19C5.68008 17.58 8.77008 19.52 12.0001 19.52C15.2301 19.52 18.3201 17.58 20.4801 14.19C21.2301 13.02 21.2301 10.98 20.4801 9.80998C18.3201 6.41998 15.2301 4.47998 12.0001 4.47998Z" fill="#292D32"/>
                                         </svg>
                                 </button>
-                                <div class="modal fade bd-example-modal-lg{{$r->id}}" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                  <div class="modal-dialog modal-lg">
-                                    <div class="modal-content">
-                                            <div class="modal-header text-left">
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <h5 class="modal-title" id="create-objective">Choose Report Type</h5>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <p>Select the report type you want to generate.</p>
-                                                    </div>
-                                                    <div id="success-obj" role="alert"></div>
-                                                    <span id="obj-feild-error" class="ml-3 text-danger"></span>
-                                    
+                                <div class="modal fade bd-example-modal-lg{{$r->id}}" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="add-team" aria-hidden="true">
+                                    <div class="modal-dialog mw-650px" role="document">
+                                        <div class="modal-content">
+                                            <!--begin::Modal header-->
+                                            <div class="modal-header pb-0 border-0 justify-content-end">
+                                                <!--begin::Close-->
+                                                <div class="btn btn-sm btn-icon btn-active-color-primary" data-dismiss="modal" aria-label="Close">
+                                                    <i class="ki-outline ki-cross fs-1"></i>
                                                 </div>
-                                
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <img src="{{asset('public/assets/images/icons/minus.svg')}}">
-                                                </button>
+                                                <!--end::Close-->
                                             </div>
-                                            <div class="modal-body text-left">
+                                            <div class="modal-body scroll-y  pt-0 pb-15">
+                                            
+                                                <div class="text-center mb-13">
+                                                  <h1 class="mb-3" id="end-quartr">Choose Report Type</h1>
+                                                  <div class="text-muted fw-semibold fs-5">Select the report type you want to generate.</div>
+                                               </div>
                                                 <div class="row">
                                                     <!-- Report 1 -->
                                                     <div class="col-md-12 text-left">
