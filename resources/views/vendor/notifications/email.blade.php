@@ -174,15 +174,15 @@
          <tr>
          </tr>
          </table>
-         <div style="margin-top: 30px; font-family:'Helvetica Neue',Arial,sans-serif;font-size:16px;line-height:22px;text-align:left;color:white;">
+         <div style="margin-top: 30px; font-family:'Helvetica Neue',Arial,sans-serif;font-size:16px;line-height:22px;text-align:left;color:black;">
              @lang("If you’re having trouble clicking the \":actionText\" button, copy and paste the URL below\n".
-                'into your web browser:') <a style="color: white;" href="{{ $actionUrl }}">{{ $actionUrl }}</a>
+                'into your web browser:') <a style="color: black;" href="{{ $actionUrl }}">{{ $actionUrl }}</a>
          </div>
          </td>
          </tr>
          <tr>
-         <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-         <div style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:14px;line-height:20px;text-align:left;color:white;">
+         <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;color:black">
+         <div style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:14px;line-height:20px;text-align:left;color:black;">
          Best regards,<br><br> Hadilton Barbosa<br>OutcomeMet, CEO and Founder<br>
          {{-- <a href="{{ url('') }}" style="color:#2F67F6">{{ url('') }}</a> --}}
          </div>

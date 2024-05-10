@@ -200,30 +200,30 @@ class Cmf
     {
         if($level == 'level_one')
         {
-            return modulenames::where('user_id' , Auth::id())->first()->level_one;
+            return modulenames::where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->first()->level_one;
         }
         if($level == 'level_two')
         {
-            return modulenames::where('user_id' , Auth::id())->first()->level_two;
+            return modulenames::where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->first()->level_two;
         }
         if($level == 'level_three')
         {
-            return modulenames::where('user_id' , Auth::id())->first()->level_three;
+            return modulenames::where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->first()->level_three;
         }
     }
     public static function getmoduleslug($level)
     {
         if($level == 'level_one')
         {
-            return modulenames::where('user_id' , Auth::id())->first()->slug_one;
+            return modulenames::where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->first()->slug_one;
         }
         if($level == 'level_two')
         {
-            return modulenames::where('user_id' , Auth::id())->first()->slug_two;
+            return modulenames::where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->first()->slug_two;
         }
         if($level == 'level_three')
         {
-            return modulenames::where('user_id' , Auth::id())->first()->slug_three;
+            return modulenames::where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->first()->slug_three;
         }
     }
     public static function outputscript($id , $type)

@@ -38,7 +38,7 @@ $var_objective = "Member";
             <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
                <th class="w-10px pe-2">
                   <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
-                     <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_customers_table .form-check-input" value="1" />
+                     <input class="form-check-input checkAll" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_customers_table .form-check-input" value="1" />
                   </div>
                </th>
                <td class="min-w-125px">First Name</td>
@@ -60,18 +60,7 @@ $var_objective = "Member";
                      <input value="{{$member->ID}}" class="form-check-input" type="checkbox" value="1" />
                   </div>
                </td>
-               <td class="text-gray-600 text-hover-primary mb-1">
-                  <div class="symbol-group symbol-hover">
-                     <div class="symbol symbol-35px symbol-circle">
-                         @if($member->image != NULL)
-                         <img src="{{asset('public/assets/images/'.$member->image)}}" alt="lead">
-                         @else
-                         <img src="{{ Avatar::create($member->name.' '.$member->LastName)->toBase64() }}" alt="lead">
-                         @endif
-                     </div>
-                     {{$member->name}}
-                  </div>
-               </td>
+               <td class="text-gray-600 text-hover-primary mb-1">{{$member->name}}</td>
                <td class="text-gray-600 text-hover-primary mb-1">{{$member->LastName}}</td>
                <td class="text-gray-600 text-hover-primary mb-1">{{$member->email}}</td>
                <td class="text-gray-600 text-hover-primary mb-1">{{$member->u_role}}</td>
@@ -226,6 +215,7 @@ $var_objective = "Member";
                       <span class="required">Email</span>
                   </label>
                   <input autocomplete="off" type="email" class="form-control form-control-solid" autocomplete="" id="email" name="email" onfocusout="checkemail(this.value)" required>
+                  <div id="email-error-member"></div>
                </div>
                <div class="d-flex flex-column mb-7 fv-row">
                   <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
@@ -246,7 +236,7 @@ $var_objective = "Member";
                   <input type="file" class="form-control form-control-solid" id="add_image" name="add_image">
                </div>
                <div class="text-center pt-15">
-                     <button type="submit" id="kt_modal_new_card_submit" class="btn btn-primary">
+                     <button type="submit" id="kt_modal_new_card_submit" class="btn btn-primary button-error">
                          <span class="indicator-label">Submit</span>
                          <span class="indicator-progress">Please wait... 
                          <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
@@ -370,7 +360,7 @@ $var_objective = "Member";
        
        });
        
-   $("#checkAll").click(function () {
+   $(".checkAll").click(function () {
    $('input:checkbox').not(this).prop('checked', this.checked);
    
       var selectedOptions = [];
@@ -379,14 +369,14 @@ $var_objective = "Member";
         
    });
    
-   if(selectedOptions.length > 0){
-   if(this.checked)
-   {
-     $('#delete-button-user').show();  
-   }else{
-     $('#delete-button-user').hide();  
-   }
-   }
+   // if(selectedOptions.length > 0){
+   // if(this.checked)
+   // {
+   //   $('#delete-button-user').show();  
+   // }else{
+   //   $('#delete-button-user').hide();  
+   // }
+   // }
    });
    
       function onlyNumberKey(evt) {
@@ -412,15 +402,15 @@ $var_objective = "Member";
    
            },
            success: function(res) {
-               
+            
            if(res == 1)
            {
-           $('#button-check').attr('disabled',true); 
+           $('.button-error').attr('disabled',true); 
            $('#email-error-member').html('<strong class="text-danger">Email Already Taken</strong>');
            }
            if(res == 2)
            {
-           $('#button-check').attr('disabled',false);
+           $('.button-error').attr('disabled',false);
            $('#email-error-member').html('');
            }    
              

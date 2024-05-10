@@ -6,7 +6,14 @@ $var_objective = "Jira";
 @section('content')
 <div class="row">
    <div class="col-md-12">
+
+      
       <div class="card">
+         @if (session('message'))
+         <div class="alert alert-success mt-1" role="alert">
+            {{ session('message') }}
+         </div>
+         @endif
          <div class="card-body p-10">
             <form class="needs-validation" action="{{url('add-financial-year')}}" method="POST">
                @csrf

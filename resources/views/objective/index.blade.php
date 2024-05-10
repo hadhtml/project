@@ -610,10 +610,21 @@ $Currentsprint = DB::table('sprint')->where('user_id',Auth::id())->where('value_
                                                                                                 @endforeach
                                                                                              @endif
                                                                                              {{-- button div --}}
+                                                                                             @if($CurrentQuarter) 
+                                                                                             @if($q->id < $CurrentQuarter->quarter_id)
                                                                                              <button
-                                                                                             class="btn  btn-primary border-1 ml-3 no-drag" @if($CurrentQuarter) @if($q->id < $CurrentQuarter->quarter_id) disabled @endif  @endif onclick="addepicmonth({{$month->id}},'{{$month->month}}','{{$q->id}}','{{$initiative->id}}','{{$key->id}}','{{$obj->id}}')" id="month-{{$month->id}}-{{$organization->type}}-{{$organization->id}}-{{$obj->id}}-{{$key->id}}-{{$initiative->id}}" data-toggle="modal" data-target="#create-epic-month" draggable="false">
+                                                                                             class="btn  btn-primary border-1 ml-3 no-drag"  disabled id="month-{{$month->id}}-{{$organization->type}}-{{$organization->id}}-{{$obj->id}}-{{$key->id}}-{{$initiative->id}}" data-toggle="modal" data-target="#create-epic-month" draggable="false">
                                                                                              Add Epics
                                                                                              </button>
+                                                                                             @else
+                                                                                             <button
+                                                                                             class="btn  btn-primary border-1 ml-3 no-drag"  onclick="addepicmonth({{$month->id}},'{{$month->month}}','{{$q->id}}','{{$initiative->id}}','{{$key->id}}','{{$obj->id}}')" id="month-{{$month->id}}-{{$organization->type}}-{{$organization->id}}-{{$obj->id}}-{{$key->id}}-{{$initiative->id}}" data-toggle="modal" data-target="#create-epic-month" draggable="false">
+                                                                                             Add Epics
+                                                                                             </button>
+                                                                                             @endif
+                                                                                             @endif
+                                                                                            
+                                                                                             
                                                                                              
                                                                                           </div>
                                                                                           @endforeach

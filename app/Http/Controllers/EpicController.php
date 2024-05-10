@@ -23,8 +23,10 @@ class EpicController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+      $this->middleware(['auth','check.subscription']);
+  
     }
+  
     public function getepicmodal(Request $request)
     {
         $data = Epic::find($request->id);
