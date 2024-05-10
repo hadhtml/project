@@ -91,7 +91,6 @@
                         <div class="form-group mb-0">
                             <label for="epic_end_date">End Date</label>
                             <input id="epic_end_date" type="date" class="form-control" value="{{ date('Y-m-d',strtotime($data->epic_end_date)) }}" name="epic_end_date" name="edit_epic_end_date" required>
-                            
                         </div>
                     </div>
                     <div class="col-md-12 col-lg-12 col-xl-12">
