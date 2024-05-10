@@ -538,7 +538,7 @@ $var_objective = 'TBaclog-' . $type;
    <div class="modal-dialog modal-dialog-centered mw-650px">
       <div class="modal-content rounded">
          <div class="modal-header pb-0 border-0 justify-content-end">
-            <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+            <div class="btn btn-sm btn-icon btn-active-color-primary" data-dismiss="modal">
                <i class="ki-outline ki-cross fs-1"></i>
             </div>
          </div>

@@ -727,6 +727,7 @@
     padding: 5px !important;
 }
 .modalheaderforapend{
+    display: unset !important;
     padding-top: 20px !important;
     padding-bottom: 20px;
 }
