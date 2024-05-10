@@ -10,11 +10,12 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
         <link href="{{ url('public/assetsvone/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ url('public/assetsvone/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
-
+        <link href="{{ url('public/assetsvone/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
 
         <!-- External Links -->
         <input type="hidden" value="{{ url('') }}" id="mainurl">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/kanban.css') }}">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
         <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-bs4.min.css" rel="stylesheet">
         <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
@@ -270,6 +271,12 @@
                     @endif
 
                     @if ($var_objective == 'checkout')
+                  
+                    @include('profile.sidebar')
+                  
+                    @endif
+
+                    @if ($var_objective == 'invoice')
                   
                     @include('profile.sidebar')
                   
@@ -660,6 +667,11 @@
                                 @include('KPI.kpi-breadcrumb')
                                 @include('KPI.modal')  
                                 @endif
+
+                                @if ($var_objective == 'invoice')
+                                @include('profile.invoicebreadcrumb')
+                              
+                                @endif
                             </div>
                         </div>
                         <div class="d-flex flex-column flex-column-fluid">
@@ -712,6 +724,20 @@
         <script src="{{ url('public/assetsvone/js/custom/widgets.js') }}"></script>
         <script src="{{ url('public/assetsvone/js/custom/apps/chat/chat.js') }}"></script>
         <script src="{{ url('public/assetsvone/js/custom/utilities/modals/upgrade-plan.js') }}"></script>
+        <script src="{{ url('public/assetsvone/js/custom/utilities/modals/users-search.js') }}"></script>
+
+
+        <script src="{{ url('public/assetsvone/js/custom/utilities/modals/create-account.js') }}"></script>
+
+        
+        <!-- <script src="{{ url('public/assetsvone/js/custom/apps/customers/list/export.js') }}"></script> -->
+        <script src="{{ url('public/assetsvone/js/custom/apps/customers/list/list.js') }}"></script>
+        <!-- <script src="{{ url('public/assetsvone/js/custom/apps/customers/add.js') }}"></script> -->
+        <script src="{{ url('public/assetsvone/js/widgets.bundle.js') }}"></script>
+        <script src="{{ url('public/assetsvone/js/custom/widgets.js') }}"></script>
+        <script src="{{ url('public/assetsvone/js/custom/apps/chat/chat.js') }}"></script>
+        <script src="{{ url('public/assetsvone/js/custom/utilities/modals/upgrade-plan.js') }}"></script>
+        <script src="{{ url('public/assetsvone/js/custom/utilities/modals/create-campaign.js') }}"></script>
         <script src="{{ url('public/assetsvone/js/custom/utilities/modals/users-search.js') }}"></script>
 
         @include('components.script')
