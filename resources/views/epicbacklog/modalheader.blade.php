@@ -319,7 +319,7 @@
     <span onclick="maximizemodal()" class="d-none" id="close_fullscreen">
         <span class="material-symbols-outlined">close_fullscreen</span>
     </span>
-    <img data-dismiss="modal" class="closeimage" aria-label="Close" src="{{url('public/assets/svg/cross.svg')}}">
+    <img data-bs-dismiss="modal" class="closeimage" aria-label="Close" src="{{url('public/assets/svg/cross.svg')}}">
 </div>
 <script type="text/javascript">
 $('.saveepicflagheader').on('submit',(function(e) {

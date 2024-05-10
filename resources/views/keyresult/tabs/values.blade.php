@@ -353,8 +353,7 @@
                                         <label for="flag_assignee">Participants <small
                                                 class="text-danger">*</small></label>
                                     </div>
-                                    <select required id="js-select1" multiple="multiple" name="participant[]">
-                                    
+                                    <select required id="js-select1" multiple="multiple" class="form-control" name="participant[]">
                                         @foreach (DB::table('members')->where('org_user', Auth::id())->get() as $r)
                                             <option value="{{ $r->id }}">{{ $r->name }}
                                                 {{ $r->last_name }}</option>
@@ -549,7 +548,7 @@
                             <div class="form-group mb-0" style="margin-bottom:-30px !important ">
                                 <label for="flag_assignee">Participants <small class="text-danger">*</small></label>
                             </div>
-                            <select required id="js-select2{{ $val->id }}" multiple="multiple"
+                            <select required id="js-select2{{ $val->id }}" class="form-control" multiple="multiple"
                                 name="participant[]">
                                 <option value="">Select Assignee</option>
                                 @foreach (DB::table('members')->where('org_user', Auth::id())->get() as $r)

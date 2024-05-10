@@ -274,24 +274,23 @@ $var_objective = 'TBaclog-' . $type;
                         </div>
                      </td>
                      <td class="text-end">
-                        <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions 
-                        <i class="ki-outline ki-down fs-5 ms-1"></i></a>
-                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                           <div class="menu-item px-3">
-                              <a href="javascript:void(0)" onclick="editbacklogepic({{ $backlog->id }} , 'team_backlog')" class="menu-link px-3">Edit</a>
-                           </div>
-                           <div class="menu-item px-3">
-                              <a href="javascript:void(0)" data-toggle="modal" data-target="#delete{{ $backlog->id }}" class="menu-link px-3">Delete</a>
-                           </div>
+
+                        <div class="action ml-0">
                            @if ($backlog->backlog_id == NULL)
-                           <div class="menu-item px-3">
-                              <a href="{{url('dashboard/epicbacklog/clone/'.$backlog->id.'/'.$organization->type)}}" class="menu-link px-3">Clone</a>
-                           </div>
+                           <a href="{{url('dashboard/epicbacklog/clone/'.$backlog->id.'/'.$organization->type)}}" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
+                               <i class="ki-outline ki-copy fs-1 text-gray-500 me-n1"></i>
+                           </a>
                            @else
-                           <div class="menu-item px-3">
-                              <a href="{{url('dashboard/epicbacklog/clone/'.$backlog->backlog_id.'/'.$organization->type)}}"  class="menu-link px-3">Clone</a>
-                           </div>
+                           <a href="{{url('dashboard/epicbacklog/clone/'.$backlog->backlog_id.'/'.$organization->type)}}" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
+                               <i class="ki-outline ki-copy fs-1 text-gray-500 me-n1"></i>
+                           </a>
                            @endif
+                           <button onclick="editbacklogepic({{ $backlog->id }} , 'team_backlog')" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
+                               <i class="ki-outline ki-pencil fs-1 text-gray-500 me-n1"></i>
+                           </button>
+                           <button data-toggle="modal" data-target="#delete{{ $backlog->id }}" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
+                               <i class="ki-outline ki-trash fs-1 text-gray-500 me-n1"></i>
+                           </button>
                         </div>
                      </td>
                   </tr>
@@ -410,18 +409,18 @@ $var_objective = 'TBaclog-' . $type;
    </div>
 </div>
 @else
-<div style="position:absolute;right:30%;top:40%;" class="text-center">
-   <img src="{{ asset('public/epic-backlog.svg') }}" width="120" height="120">
-   <div>
-      <h6 class="text-center">No Records Found</h6>
-   </div>
-   <div>
-      <p class="text-center">You may create your first Epic by clicking the bellow button</p>
-   </div>
-   <button class="btn btn-primary btn-lg btn-theme btn-block ripple" onclick="addnewbacklogepic()">
-   Add an Epic
-   </button>
-</div>
+<div class="card">
+    <div class="card-body">
+       <div class="text-center">
+          <img src="{{ asset('public/epic-backlog.svg') }}" alt="" width="120" height="120" class="mw-100">
+       </div>
+       <div class="card-px text-center  pt-15 pb-15">
+          <h2 class="fs-2x fw-bold mb-0">No Records Found</h2>
+          <p class="text-gray-500 fs-4 fw-semibold py-7">You may create your first Epic by clicking the bellow button</p>
+          <a  onclick="addnewbacklogepic()" href="javascript:void(0)" class="btn btn-primary er fs-6 px-8 py-4">Add an Epic</a>
+       </div>
+    </div>
+ </div>
 @endif
 </div>
 <div class="modal fade" id="assign-Teambacklog-epic" tabindex="-1" role="dialog" aria-labelledby="add-team" aria-hidden="true">
