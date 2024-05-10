@@ -170,7 +170,7 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
     <div class="d-flex align-items-center gap-2 gap-lg-3">
         <a href="#" class="btn btn-flex btn-outline btn-color-gray-700 btn-active-color-primary bg-body h-40px fs-7 fw-bold" data-toggle="modal"  data-target="#create-jira-epic">Connect Jira</a>
 
-        <a href="#" class="btn btn-flex btn-primary h-40px fs-7 fw-bold" id="backlog-assign" onclick="get_epic();" style="display:none" data-toggle="modal"  data-target="#">Connect Jira</a>
+        <a href="#" class="btn btn-flex btn-primary h-40px fs-7 fw-bold" id="backlog-assign" onclick="get_epic();" style="display:none" data-toggle="modal"  data-target="#">Assign Backlog</a>
 
         <a href="javascript:void(0)" class="btn btn-flex btn-outline btn-color-gray-700 btn-active-color-primary bg-body h-40px fs-7 fw-bold" onclick="addnewbacklogepic()">Add New</a>
 
