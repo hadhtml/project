@@ -520,7 +520,9 @@ Route::get('/get-paypal-client-id', [App\Http\Controllers\BraintreeController::c
 Route::get('/cancel', [App\Http\Controllers\BraintreeController::class,'cancel'])->name('checkout.cancel');
 Route::get('stripe/checkout/success', [App\Http\Controllers\BraintreeController::class,'stripeCheckoutSuccess'])->name('stripe.checkout.success');
 Route::post('cancal-plan', [App\Http\Controllers\BraintreeController::class,'CancalPlan']);
-Route::post('upgarde-plan', [App\Http\Controllers\BraintreeController::class,'UpgradePlan']);
+Route::post('upgarde-plan', [App\Http\Controllers\SubscriptionController::class,'UpgradePlan']);
+Route::get('user/invoice/{invoiceId}', [App\Http\Controllers\BraintreeController::class,'UserInvoice']);
+
 
 // Site Setting
 Route::get('index', [App\Http\Controllers\SiteController::class,'Indexpage']);
