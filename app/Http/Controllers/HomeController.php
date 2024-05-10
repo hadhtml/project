@@ -38,7 +38,7 @@ class HomeController extends Controller
 
         if($organization)
         {
-          $organization  = Organization::where('user_id',Auth::id())->orWhere('user_id',Auth::user()->invitation_id)->where('trash',NULL)->first();
+          $organization  = Organization::where('user_id',Auth::id())->orWhere('user_id',Auth::user()->invitation_id)->first();
           return view('organizations.dashboard',compact('organization'));
         }else
         {
