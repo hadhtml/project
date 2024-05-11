@@ -3,8 +3,14 @@ $organization = DB::table('organization')->where('user_id',Auth::id())->where('t
 $data = array();
 if(Auth::user()->invitation_id == '')
 {
- $data = DB::table('user_plan')->where('user_id',Auth::id())->first();    
+ $data = DB::table('user_plan')->where('user_id',Auth::id())->first();
+ $user = Auth::user();
+$invoices = $user->invoicesIncludingPending();    
 }
+
+
+
+
 @endphp
 <h6 class="mt-3 mb-3">Settings</h6>
 
@@ -70,3 +76,50 @@ if(Auth::user()->invitation_id == '')
 </div>
 @endif
 @endif
+
+<div data-kt-menu-trigger="click" class="menu-item here menu-accordion">
+    <!--begin:Menu link-->
+    <span class="menu-link">
+      <span class="menu-bullet">
+        <span class="material-symbols-outlined">
+            payments
+            </span>
+      </span>
+      <span class="menu-title">Invoice Manager</span>
+    
+    </span>
+    <!--end:Menu link-->
+    <!--begin:Menu sub-->
+    <div class="menu-sub menu-sub-accordion" kt-hidden-height="85" style="display: none; overflow: hidden;">
+      <!--begin:Menu item-->
+      <div data-kt-menu-trigger="click" class="menu-item here menu-accordion">
+        <!--begin:Menu link-->
+        <span class="menu-link">
+          <span class="menu-bullet">
+            <span class="bullet bullet-dot"></span>
+          </span>
+          <span class="menu-title">View Invoices</span>
+          <span class="menu-arrow"></span>
+        </span>
+   
+        <div class="menu-sub menu-sub-accordion menu-active-bg" kt-hidden-height="127" style="display: none; overflow: hidden;">
+        @foreach ($invoices as $key =>  $invoice)
+          <div class="menu-item">
+  
+            <a class="menu-link" href="{{url('user/invoice/'.$invoice->id)}}">
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title">Invoice {{$key + 1}}</span>
+            </a>
+          
+          </div>
+          @endforeach
+         
+        </div>
+   
+      </div>
+   
+    </div>
+
+  </div>

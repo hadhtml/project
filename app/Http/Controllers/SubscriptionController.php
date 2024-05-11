@@ -10,6 +10,9 @@ use Stripe\Plan;
 use App\Helpers\Cmf;
 use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
+use Stripe\Subscription;
+use Auth;
+// use Laravel\Cashier\Subscription;
 
 
 class SubscriptionController extends Controller
@@ -233,4 +236,44 @@ class SubscriptionController extends Controller
       ->whereDate('subscription_ends_at', '<', $currentDate)
       ->update(['status' => 'inactive']);
     }
+
+
+    public function UpgradePlan(Request $request)
+{
+    
+    $stripe = \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+
+   
+    $data = DB::table('subscriptions')->where('user_id',auth::id())->first();
+    $subscriptionId = $data->stripe_id;
+    $subscription = Subscription::retrieve($subscriptionId);
+    $plan = DB::table('plan')->where('id',$request->plan_id)->first();
+    $stripe = \Stripe\Subscription::update($subscriptionId, [
+        'cancel_at_period_end' => false,
+        'proration_behavior' => 'always_invoice',
+        'items' => [
+          [
+            'id' => $subscription->items->data[0]->id,
+            'price' => $plan->plan_id,
+            'quantity' => $subscription->quantity,
+
+          ],
+        ],
+      ]);
+
+
+     DB::table('user_plan')->where('user_id',auth::id())->update([
+        'plan_id' => $plan->plan_id,
+      ]);
+
+      
+     DB::table('subscriptions')->where('user_id',auth::id())->where('stripe_id',$subscriptionId)->update([
+      'stripe_price' => $plan->plan_id,
+      'quantity' => $subscription->quantity,
+      'name' => $plan->plan_title,
+    ]);
+  
+    
+
+}
 }

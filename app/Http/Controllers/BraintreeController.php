@@ -16,6 +16,7 @@ use Stripe\Plan;
 use Laravel\Cashier\Billable;
 use Laravel\Cashier\Subscription;
 
+
 class BraintreeController extends Controller
 {
 
@@ -308,22 +309,32 @@ public function CancalPlan(Request $request)
 }
 
 
-public function UpgradePlan(Request $request)
-{
-    $stripe = \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+// public function UpgradePlan(Request $request)
+// {
+//     $stripe = \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
 
 
-    $user = Auth::user();
+//     $user = Auth::user();
 
-    $plan = DB::table('plan')->where('id',$request->plan_id)->first();
-    $data = $user->subscription($plan->plan_title)->noProrate()->swap($plan->plan_id);
+//     $plan = DB::table('plan')->where('id',$request->plan_id)->first();
+//     $data = $user->subscription($plan->plan_title)->noProrate()->swap($plan->plan_id);
 
-    DB::table('user_plan')->where('user_id',auth::id())->update([
-        'plan_id' => $plan->plan_id,
-    ]);
+//     DB::table('user_plan')->where('user_id',auth::id())->update([
+//         'plan_id' => $plan->plan_id,
+//     ]);
     
 
-}
+// }
 
+public function UserInvoice($invoiceId)
+{
+    $user = Auth::user();
+    \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+
+    $invoice = $user->findInvoice($invoiceId);
+    $subscription = Subscription::where('stripe_id', $invoice->subscription)->first();
+    $alldata = DB::table('plan')->where('plan_id',$subscription->stripe_price)->first();
+    return view('settings.invoice',compact('invoice','alldata'));
+}
 
 }

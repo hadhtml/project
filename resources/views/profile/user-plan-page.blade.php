@@ -16,11 +16,13 @@ $organization  = DB::table('organization')->where('user_id',Auth::id())->orWhere
      
                 @php
                 
+                
                 $data = DB::table('user_plan')->where('user_id',Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->first();
-                $plan = DB::table('plan')->where('status','Active')->where('plan_id',$data->plan_id)->first();
+             
                 @endphp
-               
+               @if($data)
                 @php
+                $plan = DB::table('plan')->where('status','Active')->where('plan_id',$data->plan_id)->first();
                 $dataArray = explode(',', $plan->module);
                 $total  = ($plan->base_price * $data->package_status); 
                 @endphp
@@ -102,6 +104,8 @@ $organization  = DB::table('organization')->where('user_id',Auth::id())->orWhere
                 </div>
                 @else
                 Subscription inactive
+                @endif
+
                 @endif
              
            

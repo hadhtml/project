@@ -277,6 +277,12 @@
                   
                     @endif
 
+                    @if ($var_objective == 'invoice')
+                  
+                    @include('profile.sidebar')
+                  
+                    @endif
+
                     
 
                     @if ($var_objective == 'linking')     
@@ -661,6 +667,11 @@
                                 @if ($var_objective == 'Pagekpi-org')
                                 @include('KPI.kpi-breadcrumb')
                                 @include('KPI.modal')  
+                                @endif
+
+                                @if ($var_objective == 'invoice')
+                                @include('profile.invoicebreadcrumb')
+                              
                                 @endif
                             </div>
                         </div>
