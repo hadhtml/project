@@ -12,13 +12,16 @@
                 <img alt="Logo" src="{{asset('public/assets/images/icons/logo-2.png')}}" class="h-25px theme-dark-show" />
             </a>
         </div>
+        @php
+        $organization  = DB::table('organization')->where('user_id',Auth::id())->first();
+        @endphp
         <div class="app-navbar flex-grow-1 justify-content-end" id="kt_app_header_navbar">
             <div class="app-navbar-item ms-2 ms-lg-6" id="kt_header_user_menu_toggle">
                 <div class="cursor-pointer symbol symbol-circle symbol-30px symbol-lg-45px" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
-                    @if(auth()->user()->image)
-                    <img src="{{asset('public/assets/images/'.auth()->user()->image)}}">
+                    @if($organization->logo)
+                    <img src="{{asset('public/assets/images/'.$organization->logo)}}">
                     @else
-                    <img src="{{ Avatar::create(auth()->user()->name.' '.auth()->user()->last_name)->toBase64() }}">
+                    <img src="{{asset('public/assets/images/logo-placeholder-removebg-preview.png')}}">
                     @endif
                 </div>
                 <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px" data-kt-menu="true">
@@ -45,9 +48,9 @@
                     <div class="menu-item px-5">
                         <a href="{{route('settings.security')}}" class="menu-link px-5">Security</a>
                     </div>
-                    <div class="menu-item px-5 my-1">
+                    {{-- <div class="menu-item px-5 my-1">
                         <a href="{{ route('settings.jirasettings') }}" class="menu-link px-5">Account Settings</a>
-                    </div>
+                    </div> --}}
                     <div class="separator my-2"></div>
                     <div class="menu-item px-5" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="left-start" data-kt-menu-offset="-15px, 0">
                         <a href="javascript:void(0)" class="menu-link px-5">
