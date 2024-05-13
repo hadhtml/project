@@ -1,5 +1,5 @@
 @php
-$var_objective = "checkout1";
+$var_objective = "checkout";
 @endphp
 @extends('components.main-layout')
 <title>CheckOut</title>

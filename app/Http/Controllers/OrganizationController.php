@@ -1170,7 +1170,18 @@ public function UpdateProfile(Request $request)
         $user->last_name = $request->last_name;
         $user->save();
 
-        $organization  = Organization::where('user_id',Auth::id())->update(['organization_name' => $request->org_name]);
+        $logo = '';
+
+        if($request->has('logo'))
+        {
+          $logo = $this->sendimagetodirectory($request->logo);
+        }else{
+
+          $logo = $request->old_logo;
+
+        }
+
+        $organization  = Organization::where('user_id',Auth::id())->update(['organization_name' => $request->org_name,'logo' => $logo]);
 
     
 
