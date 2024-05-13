@@ -13,7 +13,7 @@
             </a>
         </div>
         @php
-        $organization  = DB::table('organization')->where('user_id',Auth::id())->first();
+        $organization  = DB::table('organization')->where('user_id',Auth::id())->orWhere('user_id',Auth::user()->invitation_id)->first();
         @endphp
         <div class="app-navbar flex-grow-1 justify-content-end" id="kt_app_header_navbar">
             <div class="app-navbar-item ms-2 ms-lg-6" id="kt_header_user_menu_toggle">
