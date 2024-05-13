@@ -321,36 +321,36 @@ $var_objective = 'Report-'.$type;
                                 </button>
                             </td>
                         </tr>
-                        <div class="modal fade" id="delete-report{{$r->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <h5 class="modal-title text-center" id="exampleModalLabel">Delete Quarter</h5>
-                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                  </button>
+                               
+                <div class="modal fade" id="delete-report{{$r->id}}" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header pb-0 border-0 justify-content-end">
+                                <div class="btn btn-sm btn-icon btn-active-color-primary" data-dismiss="modal">
+                                    <i class="ki-outline ki-cross fs-1"></i>
                                 </div>
-                              
-                        
+                            </div>
+                            <div class="modal-body">
+                                <div class="mb-13 text-center">
+                                    <h1 class="mb-3">Delete Quarter</h1>
+                                </div>
                                 <form method="POST" action="{{url('delete-report')}}">
 
                                     @csrf
                                     <input type="hidden" name="sprint_id" value="{{$r->id}}">  
-                                   <div class="modal-body">
+                                   <div class="modal-body text-center">
                                      
                                    Are you sure you want to Delete this Quarter?
                            
                                    </div>
-                                   <div class="modal-footer">
-                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                   <div class="text-center">
                                      <button type="submit"  class="btn btn-danger">Confirm</button>
                                    </div>
                                 </form>
-                               
-                                
-                              </div>
                             </div>
-                          </div>
+                        </div>
+                    </div>
+                </div>
                         @endforeach
 
                      
@@ -366,14 +366,18 @@ $var_objective = 'Report-'.$type;
 </div>
 
 @else
-<div style="position:absolute;right:30%;top:40%;" class="text-center">
-    <img src="{{asset('public/reports.svg')}}"  width="120" height="120">
-    <div><h6 class="text-center">No Records Found</h6></div>
-    <div><p class="text-center">You don’t have a running quarter/sprint yet..</p></div>
-    <button class="btn btn-primary btn-lg btn-theme btn-block ripple ml-20" style="width:50%" type="button" data-toggle="modal" data-target="#create-report">
-        Start a Quarter
-    </button>
+<div class="card">
+    <div class="card-body">
+       <div class="text-center">
+          <img src="{{ asset('public/epic-backlog.svg') }}" alt="" width="120" height="120" class="mw-100">
+       </div>
+       <div class="card-px text-center  pt-15 pb-15">
+          <h2 class="fs-2x fw-bold mb-0">No Records Found</h2>
+          <p class="text-gray-500 fs-4 fw-semibold py-7">You don’t have a running quarter/sprint yet..</p>
+          <a data-toggle="modal" data-target="#create-report" href="#" class="btn btn-primary er fs-6 px-8 py-4">Start a Quarter</a>
+       </div>
     </div>
+ </div>
 @endif
 @php
 $currentDate = \Carbon\Carbon::now();
@@ -455,7 +459,7 @@ $formattedDate = $lastDayOfMonth->toDateString();
                                 <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
                                     <span class="required">Description</span>
                                 </label>
-                                <textarea class="form-control" id="q_description" row="3"></textarea>
+                                <textarea class="form-control form-control-solid" id="q_description" row="3"></textarea>
                             </div>
                         </div>
                         <div class="col-md-12">
