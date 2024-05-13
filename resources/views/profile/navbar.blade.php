@@ -6,7 +6,7 @@ if(Auth::user()->invitation_id == '')
 {
  $data = DB::table('user_plan')->where('user_id',Auth::id())->first();
  $user = Auth::user();
-$invoices = $user->invoicesIncludingPending();    
+ $invoices = $user->invoicesIncludingPending();    
 }
 
 
@@ -105,7 +105,9 @@ $invoices = $user->invoicesIncludingPending();
         </span>
    
         <div class="menu-sub menu-sub-accordion menu-active-bg" kt-hidden-height="127" style="display: none; overflow: hidden;">
-        @foreach ($invoices as $key =>  $invoice)
+        
+          @if(count($invoices) > 0)   
+          @foreach ($invoices as $key =>  $invoice)
           <div class="menu-item">
   
             <a class="menu-link" href="{{url('user/invoice/'.$invoice->id)}}">
@@ -117,6 +119,7 @@ $invoices = $user->invoicesIncludingPending();
           
           </div>
           @endforeach
+          @endif
          
         </div>
    
