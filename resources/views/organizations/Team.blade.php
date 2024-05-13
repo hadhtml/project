@@ -62,7 +62,7 @@
             </div>
         </div>
         <div class="card-body p-9">
-            <a href="{{url('dashboard/organization/'.$team->slug.'/dashboard/VS')}}" class="fs-3 fw-bold text-gray-900">{{$team->team_title}}</a>
+            <a href="{{url('dashboard/organization/'.$team->slug.'/dashboard/orgT')}}" class="fs-3 fw-bold text-gray-900">{{$team->team_title}}</a>
             <p class="text-gray-500 fw-semibold fs-5 mt-1 mb-7">
                 {{$dataCount}} total members
             </p>
