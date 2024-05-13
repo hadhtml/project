@@ -1,6 +1,7 @@
 @php
 $organization = DB::table('organization')->where('user_id',Auth::id())->where('trash',NULL)->first();
 $data = array();
+$invoices = array();
 if(Auth::user()->invitation_id == '')
 {
  $data = DB::table('user_plan')->where('user_id',Auth::id())->first();
@@ -77,6 +78,7 @@ $invoices = $user->invoicesIncludingPending();
 @endif
 @endif
 
+@if(Auth::user()->invitation_id == '')
 <div data-kt-menu-trigger="click" class="menu-item here menu-accordion">
     <!--begin:Menu link-->
     <span class="menu-link">
@@ -123,3 +125,5 @@ $invoices = $user->invoicesIncludingPending();
     </div>
 
   </div>
+
+  @endif
