@@ -8,10 +8,13 @@ $var_objective = "mapper-org";
    .node{
       padding-right: 0px !important;
    }
+   .app-content{
+      background-color: transparent !important;
+   }
 </style>
 <div class="row rotatex">
    <div class="col-md-12">
-      <div style="width: 100%; height: 5000px; padding: 50px;margin-top: 150px;">
+      <div style="width: 5000px; height: 5000px; padding: 50px;">
          <!-- Node 1 -->
          <div id="node_1" class="node" style="transform: translate(600px, -60px);">
             <div class="node-name slot-active drag-impo-grab">
