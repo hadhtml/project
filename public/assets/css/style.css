@@ -20480,13 +20480,14 @@ input[type="radio"]:checked {
 
 
 .comment-card-new {
-    box-shadow: none;
     margin: 10px 0px;
-    height: 264px;
-    width: 94%;
-    padding: 0px;
+    width: 100%;
+    position: relative;
     box-shadow: 0px 2px 2px 4px rgb(87 106 134 / 20%);
     border-radius: 10px;
+}
+.comment-card-new .card-body{
+    padding: 2rem 2.25rem;
 }
 
 .comment-card-new .user-image {

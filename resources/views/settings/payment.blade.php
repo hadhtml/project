@@ -21,8 +21,11 @@ $organization  = DB::table('organization')->where('user_id',Auth::id())->orWhere
             </div>
             <!--end::Card header-->
             <!--begin::Card body-->
+            <div id="cashier"></div>
             <div class="card-body pt-3">
-                <div class="p-2"><div id="paypal-button-container" style="width: 100%"></div></div>
+                <div class="p-2">
+                    <!-- <div id="paypal-button-container" style="width: 100%"></div> -->
+            </div>
                 <div class="separator separator-dashed mb-7"></div> 
                 <form  action="{{ url('stripe-post') }}" method="post" id="subscribe-form">
                      @csrf
@@ -86,7 +89,7 @@ $organization  = DB::table('organization')->where('user_id',Auth::id())->orWhere
                     <h5 class="mb-4">Product details</h5>
                     <div class="mb-0">
                         <span class="badge badge-light-info me-2">{{$plan->plan_title}}</span>
-                        <span class="fw-semibold text-gray-600">${{$plan->base_price}} / {{$plan->billing_method}}</span>
+                        <span class="fw-semibold text-gray-600">£{{$plan->base_price}} / {{$plan->billing_method}}</span>
                     </div>
                 </div>
                 <div class="separator separator-dashed mb-7"></div>
@@ -157,190 +160,74 @@ $organization  = DB::table('organization')->where('user_id',Auth::id())->orWhere
 
 
 
-<script>
-
-  
-
-
-
-   
-// var url = "{{ url('get-paypal-client-id') }}";
-// $.get(url, function(data) {
-//     var paypalClientId = data.paypal_client_id;
-//     var paypalScriptUrl = 'https://www.paypal.com/sdk/js?client-id=' + paypalClientId + '&currency=USD&disable-funding=card,paylater';
-
-//     var scriptElement = document.createElement('script');
-//     scriptElement.src = paypalScriptUrl;
-
-//     scriptElement.onload = function() {
-//         var value = "{{$plan->base_price}}";
-//    var plan_id = "{{$plan->id}}";
-//     paypal.Buttons({
-//         createOrder: function(data, actions) {
-//             return actions.order.create({
-//                 purchase_units: [{
-//                     amount: {
-//                         value: value
-//                     }
-//                 }]
-//             });
-//         },
-
-//         onApprove: function(data, actions) {
-//             return actions.order.capture().then(function(orderData) {
-//                 console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
-//                 var transaction = orderData.purchase_units[0].payments.captures[0];
-             
-//                  paypalpay(plan_id,value,transaction.id);
-
-//             });
-//         }
-//     }).render('#paypal-button-container');
-
-//     };
-
-//     document.body.appendChild(scriptElement);
-// });
-
-
-//     function paypalpay(plan_id,value,transaction)
-//     {
-//     var url1 = "{{url('paypal-pay')}}";    
-
-//     $.ajax({
-//         url:url1, 
-//         type:"post",
-//         headers: {
-//                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-//             },
-//         data:{plan_id:plan_id,value:value,transaction:transaction},
-//         success:function(res){
-//         // $('.message').html(res.message);
-//         window.location.href = res;
-//         }
-
-//     })
-
-//     }
-
-
-var url = "{{ url('get-paypal-client-id') }}";
-$.get(url, function(data) {
-    var paypalClientId = data.paypal_client_id;
-    var paypalScriptUrl = 'https://www.paypal.com/sdk/js?client-id=' + paypalClientId + '&disable-funding=card,credit&vault=true&intent=subscription';
-
-    var scriptElement = document.createElement('script');
-    scriptElement.src = paypalScriptUrl;
-
-    scriptElement.onload = function() {
-      
-   var plan_id = "{{$plan->paypal_id}}";
-   paypal.Buttons({
-        
-        createSubscription: function(data, actions) {
-          return actions.subscription.create({
-           'plan_id': plan_id 
-           });
-         },
-         onApprove: function(data, actions) {
-        //    alert('You have successfully subscribed to ' + data.subscriptionID);
-           paypalpay(plan_id,data.subscriptionID); 
-         }
-       }).render('#paypal-button-container');
-
-    };
-
-    document.body.appendChild(scriptElement);
-});
-
-
-    function paypalpay(plan_id,transaction)
-    {
-    var url1 = "{{url('paypal-pay')}}";    
-
-    $.ajax({
-        url:url1, 
-        type:"post",
-        headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-        data:{plan_id:plan_id,transaction:transaction},
-        success:function(res){
-        // $('.message').html(res.message);
-
-        $('#cashier').html('<div class="alert alert-success" role="alert">Subscribed To Plan Successfully </div>');
-        setTimeout(function() {
-        window.location.href = res;
-        $('#cashier').html('');
-        }, 1000);
-        }
-
-    })
-
-    }
-</script>
 
 
 
     
 
 <script src="https://js.stripe.com/v3/"></script>
-<script>    
-var stripe = Stripe('{{ env('STRIPE_KEY') }}');
+<script> 
 
-    var elements = stripe.elements();
-    var style = {
-        base: {
-            color: '#32325d',
-            fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-            fontSmoothing: 'antialiased',
-            fontSize: '16px',
-            '::placeholder': {
-                color: '#aab7c4'
+var url = "{{ url('get-paypal-client-id') }}";
+$.get(url, function(data) {
+    var paypalClientId = data.paypal_client_id;
+    var stripe = Stripe(paypalClientId);
+
+var elements = stripe.elements();
+var style = {
+    base: {
+        color: '#32325d',
+        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+        fontSmoothing: 'antialiased',
+        fontSize: '16px',
+        '::placeholder': {
+            color: '#aab7c4'
+        }
+    },
+    invalid: {
+        color: '#fa755a',
+        iconColor: '#fa755a'
+    }
+};    
+var card = elements.create('card', {hidePostalCode: true,
+    style: style});   
+     card.mount('#card-element');    
+    card.addEventListener('change', function(event) {
+    var displayError = document.getElementById('card-errors');
+    if (event.error) {
+        displayError.textContent = event.error.message;
+    } else {
+        displayError.textContent = '';
+    }
+});    
+const cardHolderName = document.getElementById('card-holder-name');
+const cardButton = document.getElementById('card-button');
+const clientSecret = cardButton.dataset.secret;    
+cardButton.addEventListener('click', async (e) => {
+
+    const { setupIntent, error } = await stripe.confirmCardSetup(
+        clientSecret, {
+            payment_method: {
+                card: card,
+                billing_details: { name: cardHolderName.value }
             }
-        },
-        invalid: {
-            color: '#fa755a',
-            iconColor: '#fa755a'
         }
-    };    
-    var card = elements.create('card', {hidePostalCode: true,
-        style: style});   
-         card.mount('#card-element');    
-        card.addEventListener('change', function(event) {
-        var displayError = document.getElementById('card-errors');
-        if (event.error) {
-            displayError.textContent = event.error.message;
-        } else {
-            displayError.textContent = '';
-        }
-    });    
-    const cardHolderName = document.getElementById('card-holder-name');
-    const cardButton = document.getElementById('card-button');
-    const clientSecret = cardButton.dataset.secret;    
-    cardButton.addEventListener('click', async (e) => {
+        );      
+        if (error) 
+        {
+        var errorElement = document.getElementById('card-errors');
+        errorElement.textContent = error.message; 
+    } else {            
+            // paymentMethodHandler(setupIntent.payment_method);
+            payment(setupIntent.payment_method);
 
-        const { setupIntent, error } = await stripe.confirmCardSetup(
-            clientSecret, {
-                payment_method: {
-                    card: card,
-                    billing_details: { name: cardHolderName.value }
-                }
-            }
-            );      
-            if (error) 
-            {
-            var errorElement = document.getElementById('card-errors');
-            errorElement.textContent = error.message; 
-        } else {            
-                // paymentMethodHandler(setupIntent.payment_method);
-                payment(setupIntent.payment_method);
-
-       
-        }
-      
-        
-    });    
+   
+    }
+  
+    
+});  
+});
+  
     // function paymentMethodHandler(payment_method) {
     //     var form = document.getElementById('subscribe-form');
     //     var hiddenInput = document.createElement('input');
@@ -354,7 +241,7 @@ var stripe = Stripe('{{ env('STRIPE_KEY') }}');
 
     function payment(payment_method)
     {
-        
+            $('#card-button').html('<i class="fa fa-spin fa-spinner"></i>');
                 var plan  = "{{$plan->plan_id}}";   
                 var url1 = "{{url('stripe-post')}}";
                 $.ajax({
@@ -364,20 +251,20 @@ var stripe = Stripe('{{ env('STRIPE_KEY') }}');
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                 data:{payment_method:payment_method,plan:plan},
-                success:function(data){
-                    // if(data == 1)
-                    // {
-                    // $('#cashier').html('<div class="alert alert-danger" role="alert">Already subscribed To Plan </div>');
+                success:function(res){
+                    if(res.success == false)
+                    {
+                    $('#cashier').html('<div class="alert alert-danger" role="alert">'+res.data+'</div>');
+                    $('#card-button').html('<button  id="card-button" type="button" data-secret="{{ $intent->client_secret }}" class="btn btn-lg btn-success btn-block">SUBMIT</button>');
 
-                    // }else
-                    // {
-
+                    }else
+                    {
                    $('#cashier').html('<div class="alert alert-success" role="alert">Subscribed To Plan Successfully </div>');
                    setTimeout(function() {
-                    window.location.href = data;
+                    window.location.href = res.data;
                     $('#cashier').html('');
-                }, 1000);
-                    // }
+                }, 2000);
+                    }
            
                 }
 

@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
         <link href="{{ url('public/assetsvone/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ url('public/assetsvone/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
-
+        <link href="{{ url('public/assetsvone/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
 
         <!-- External Links -->
         <input type="hidden" value="{{ url('') }}" id="mainurl">
@@ -26,6 +26,7 @@
         <script src="{{url('public/assets/Random-Pixel/dist/gixi-min.js')}}"></script>
         <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/style.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/styletwo.css') }}">
+        <script src="//code.tidio.co/iuyaftwehxdry2ttyq7ozimm6gykitnw.js" async></script>
     </head>
     <body id="kt_app_body" data-kt-app-header-fixed="true" data-kt-app-header-fixed-mobile="true" data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true" data-kt-app-sidebar-hoverable="true" data-kt-app-sidebar-push-toolbar="true" data-kt-app-sidebar-push-footer="true" data-kt-app-aside-enabled="true" data-kt-app-aside-fixed="true" data-kt-app-aside-push-toolbar="true" data-kt-app-aside-push-footer="true" class="app-default">
         <script>var defaultThemeMode = "light"; var themeMode; if ( document.documentElement ) { if ( document.documentElement.hasAttribute("data-bs-theme-mode")) { themeMode = document.documentElement.getAttribute("data-bs-theme-mode"); } else { if ( localStorage.getItem("data-bs-theme") !== null ) { themeMode = localStorage.getItem("data-bs-theme"); } else { themeMode = defaultThemeMode; } } if (themeMode === "system") { themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; } document.documentElement.setAttribute("data-bs-theme", themeMode); }</script>
@@ -271,6 +272,12 @@
                     @endif
 
                     @if ($var_objective == 'checkout')
+                  
+                    @include('profile.sidebar')
+                  
+                    @endif
+
+                    @if ($var_objective == 'invoice')
                   
                     @include('profile.sidebar')
                   
@@ -661,6 +668,11 @@
                                 @include('KPI.kpi-breadcrumb')
                                 @include('KPI.modal')  
                                 @endif
+
+                                @if ($var_objective == 'invoice')
+                                @include('profile.invoicebreadcrumb')
+                              
+                                @endif
                             </div>
                         </div>
                         <div class="d-flex flex-column flex-column-fluid">
@@ -718,6 +730,16 @@
 
         <script src="{{ url('public/assetsvone/js/custom/utilities/modals/create-account.js') }}"></script>
 
+        
+        <!-- <script src="{{ url('public/assetsvone/js/custom/apps/customers/list/export.js') }}"></script> -->
+        <script src="{{ url('public/assetsvone/js/custom/apps/customers/list/list.js') }}"></script>
+        <!-- <script src="{{ url('public/assetsvone/js/custom/apps/customers/add.js') }}"></script> -->
+        <script src="{{ url('public/assetsvone/js/widgets.bundle.js') }}"></script>
+        <script src="{{ url('public/assetsvone/js/custom/widgets.js') }}"></script>
+        <script src="{{ url('public/assetsvone/js/custom/apps/chat/chat.js') }}"></script>
+        <script src="{{ url('public/assetsvone/js/custom/utilities/modals/upgrade-plan.js') }}"></script>
+        <script src="{{ url('public/assetsvone/js/custom/utilities/modals/create-campaign.js') }}"></script>
+        <script src="{{ url('public/assetsvone/js/custom/utilities/modals/users-search.js') }}"></script>
 
         @include('components.script')
 

@@ -18,13 +18,15 @@ use App\Helpers\Jira;
 use Laravolt\Avatar\Avatar;
 use Illuminate\Support\Facades\Storage;
 use Exception;
+use Stripe\Subscription;
 
 class MemberController extends Controller
 {
     
      public function __construct()
     {
-    $this->middleware('auth');
+        $this->middleware(['auth','check.subscription']);
+
     }
     
     public function AllMembers()
@@ -98,7 +100,30 @@ class MemberController extends Controller
             $message->subject($subject);
         });
 
+        $plan = DB::table('subscriptions')->where('user_id',Auth::id())->first();
+
+        if($plan)
+        {
+            \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+  
+            $subscription = Subscription::retrieve($plan->stripe_id );
+            
+            $stripe = \Stripe\Subscription::update($plan->stripe_id , [
+               
+                'proration_behavior' => 'always_invoice',
+                'items' => [
+                  [
+                    'id' => $subscription->items->data[0]->id,
+                    'quantity' => $subscription->quantity + 1,
+                  ],
+                ],
+              ]);
+        }
+
+
+
     } catch (\Error $ex) {
+        
 
         return redirect()->back()->with('message', 'Member Added Successfully');
 

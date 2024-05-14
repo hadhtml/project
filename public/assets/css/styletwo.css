@@ -1,5 +1,7 @@
 /*Usama Style for new design*/
-
+.text-right{
+    text-align: right;
+}
 .modal-header .positionrelative{
     position: relative;
 }
@@ -200,11 +202,13 @@
     color: #000;
     border-right: 2px solid #547aff;
 }
-
+#epicinputtoshow{
+    position: relative;
+}
 .searchepic-box{
     display: none;
     height: 264px;
-    width: 94%;
+    width: 97%;
     overflow: auto;
     padding: 10px;
     box-shadow: 0 10px 24px rgb(87 106 134 / 20%);
@@ -723,6 +727,7 @@
     padding: 5px !important;
 }
 .modalheaderforapend{
+    display: unset !important;
     padding-top: 20px !important;
     padding-bottom: 20px;
 }

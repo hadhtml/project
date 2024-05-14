@@ -16,6 +16,7 @@ use Stripe\Plan;
 use Laravel\Cashier\Billable;
 use Laravel\Cashier\Subscription;
 
+
 class BraintreeController extends Controller
 {
 
@@ -88,28 +89,13 @@ class BraintreeController extends Controller
     {
    
      
-    $plan = DB::table('plan')->where('plan_id',$slug)->first();
+    $plan = DB::table('plan')->where('slug',$slug)->first();
 
-   
+  
+        $intent = auth()->user()->createSetupIntent();
+        return view('settings.payment',compact('plan','intent'));
 
-        // $newDateTime = Carbon::now()->addDays($plan->duration);
-       
-        // DB::table('user_plan')->insert([
-        //     'plan_id' => $plan->id,
-        //     'amount' => 0,
-        //     'status' => 1,
-        //     'plan_expire' => $newDateTime,
-        //     'user_id' => auth::id(),
-        //     'package_status' => 1,
 
-        // ]);
-
- 
-     $intent = auth()->user()->createSetupIntent();
-    return view('settings.payment',compact('plan','intent'));
-    
-
-    
 
     }
 
@@ -154,7 +140,16 @@ class BraintreeController extends Controller
 
 
         // }
+        
+        $userPlan = DB::table('user_plan')->where('user_id',Auth::id())->first();
+        if($userPlan->package_status == '' || $userPlan->package_status == 0 )
+        {
+          $Quantity = 1; 
 
+        }else
+        {
+        $Quantity =  $userPlan->package_status + 1;
+        }
         
         $user->createOrGetStripeCustomer();
         $paymentMethod = $request->payment_method;
@@ -166,7 +161,7 @@ class BraintreeController extends Controller
 
         
         try {
-        $subscription = $user->newSubscription($plan->plan_title, $request->plan)->create($request->payment_method);
+        $subscription = $user->newSubscription($plan->plan_title, $request->plan)->quantity($Quantity)->create($request->payment_method);
         DB::table('user_plan')->where('user_id',auth::id())->update([
             'plan_id' => $request->plan,
             'status' => $subscription->stripe_status,
@@ -178,9 +173,10 @@ class BraintreeController extends Controller
         
 
         $url = url('organization/dashboard');
-         return $url;
+         return response(['success' => true, 'data' => $url]);
         } catch (\Exception $e) {
-         return $e->getMessage();
+         return response(['success' => true, 'data' => $e->getMessage()]);
+
         }
     
        
@@ -248,7 +244,7 @@ class BraintreeController extends Controller
     public function getPaypalClientId()
 {
     return response()->json([
-        'paypal_client_id' => env('PAYPAL_CLIENT_ID')
+        'paypal_client_id' => env('STRIPE_KEY')
     ]);
 }
 
@@ -313,18 +309,32 @@ public function CancalPlan(Request $request)
 }
 
 
-public function UpgradePlan(Request $request)
-{
-    $stripe = \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+// public function UpgradePlan(Request $request)
+// {
+//     $stripe = \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
 
 
-    $user = Auth::user();
+//     $user = Auth::user();
 
-    $plan = DB::table('plan')->where('id',$request->plan_id)->first();
-    $user->subscription($plan->plan_title)->noProrate()->swap($plan->plan_id);
+//     $plan = DB::table('plan')->where('id',$request->plan_id)->first();
+//     $data = $user->subscription($plan->plan_title)->noProrate()->swap($plan->plan_id);
+
+//     DB::table('user_plan')->where('user_id',auth::id())->update([
+//         'plan_id' => $plan->plan_id,
+//     ]);
     
 
-}
+// }
 
+public function UserInvoice($invoiceId)
+{
+    $user = Auth::user();
+    \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+
+    $invoice = $user->findInvoice($invoiceId);
+    $subscription = Subscription::where('stripe_id', $invoice->subscription)->first();
+    $alldata = DB::table('plan')->where('plan_id',$subscription->stripe_price)->first();
+    return view('settings.invoice',compact('invoice','alldata'));
+}
 
 }

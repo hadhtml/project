@@ -7,9 +7,20 @@
             <div class="btn btn-icon btn-active-color-primary w-35px h-35px ms-3 me-2 d-flex d-lg-none" id="kt_app_sidebar_mobile_toggle">
                 <i class="ki-outline ki-abstract-14 fs-2"></i>
             </div>
+
+        @php
+        $organization  = DB::table('organization')->where('user_id',Auth::id())->orWhere('user_id',Auth::user()->invitation_id)->first();
+        @endphp
             <a href="{{ url('organization/dashboard') }}" class="app-sidebar-logo">
-                <img alt="Logo" src="{{asset('public/assets/images/icons/logo-2.png')}}" class="h-25px theme-light-show" />
+
+                @if($organization->logo)
+                <img src="{{asset('public/assets/images/'.$organization->logo)}}" class="h-25px theme-light-show">
+                @else
+                <img src="{{asset('public/assets/images/logo-placeholder-removebg-preview.png')}}" class="h-25px theme-light-show">
+                @endif
+                {{-- <img alt="Logo" src="{{asset('public/assets/images/icons/logo-2.png')}}" class="h-25px theme-light-show" /> --}}
                 <img alt="Logo" src="{{asset('public/assets/images/icons/logo-2.png')}}" class="h-25px theme-dark-show" />
+                
             </a>
         </div>
         <div class="app-navbar flex-grow-1 justify-content-end" id="kt_app_header_navbar">
@@ -45,9 +56,9 @@
                     <div class="menu-item px-5">
                         <a href="{{route('settings.security')}}" class="menu-link px-5">Security</a>
                     </div>
-                    <div class="menu-item px-5 my-1">
+                    {{-- <div class="menu-item px-5 my-1">
                         <a href="{{ route('settings.jirasettings') }}" class="menu-link px-5">Account Settings</a>
-                    </div>
+                    </div> --}}
                     <div class="separator my-2"></div>
                     <div class="menu-item px-5" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="left-start" data-kt-menu-offset="-15px, 0">
                         <a href="javascript:void(0)" class="menu-link px-5">

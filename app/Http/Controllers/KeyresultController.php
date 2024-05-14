@@ -24,6 +24,13 @@ use Carbon\Carbon;
 
 class KeyresultController extends Controller
 {
+
+    public function __construct()
+  {
+    $this->middleware(['auth','check.subscription']);
+
+  }
+
     public function getkeyresult(Request $request)
     {
         $data = key_result::find($request->id);

@@ -23,8 +23,10 @@ class EpicController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+      $this->middleware(['auth','check.subscription']);
+  
     }
+  
     public function getepicmodal(Request $request)
     {
         $data = Epic::find($request->id);
@@ -1188,6 +1190,10 @@ class EpicController extends Controller
         $month =  $request->month;
         $day =  date('d');
         $date = $year . "-" . str_pad($month, 2, "0", STR_PAD_LEFT) . "-" . str_pad($day, 2, "0", STR_PAD_LEFT);
+
+        $epic_end_date = date("Y") . "-" . str_pad($month, 2, "0", STR_PAD_LEFT) . "-" . str_pad(date("t"), 2, "0", STR_PAD_LEFT);
+
+
         $createepic = new Epic();
         $createepic->epic_status = 'To Do';
         $createepic->initiative_id = $request->initiative_id;
@@ -1199,10 +1205,11 @@ class EpicController extends Controller
         $createepic->buisness_unit_id = $request->buisness_unit_id;
         $createepic->epic_type = $request->epic_type;
         $createepic->save();
+
         $update = Epic::find($createepic->id);
         $update->trash = $createepic->created_at;
         $update->epic_start_date = $date;
-        $update->epic_end_date = $date;
+        $update->epic_end_date = $epic_end_date;
         $update->save();
         $activity = 'Created Epic on '.Cmf::date_format_new($update->created_at).' at '.Cmf::date_format_time($update->created_at);
         Cmf::save_activity(Auth::id() , $activity,'epics',$update->id , 'image');

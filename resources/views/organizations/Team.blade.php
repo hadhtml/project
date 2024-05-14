@@ -40,263 +40,209 @@
 
                 @endphp
                 <div class="col-md-4">
-                    <div class="card business-card">
-                        <div class="card-body">
-                            <div class="d-flex flex-row justify-content-between">
-                                <div class="d-flex flex-row">
-                                    <div class="mr-2">
-                                        <img class="gixie" data-item-id="{{ $team->id }}"
-                                            style="width: 40px; object-fit: cover; border-radius: 10px; height: 40x;">
-                                    </div>
-                                    <div>
-                                        <h3 class="mb-0">
-                                            <a
-                                                href="{{ url('dashboard/organization/' . $team->slug . '/dashboard/orgT') }}">{{ $team->team_title }}</a>
-                                        </h3>
-                                        <small>
-                                            {{ $dataCount }} total members
-                                        </small>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="dropdown d-flex">
-                                        <button class="btn btn-circle dropdown-toggle btn-tolbar bg-transparent"
-                                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
-                                            <img src="{{ url('public/assets/svg/dropdowndots.svg') }}">
-                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" data-toggle="modal"
-                                                data-target="#edit{{ $team->id }}">Edit</a>
-                                            <a class="dropdown-item" data-toggle="modal"
-                                                data-target="#delete{{ $team->id }}">Delete</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center leader-section mt-4">
-                                <div>
-                                    @if ($team->lead_id)
-                                        @foreach (DB::table('members')->get() as $r)
-                                            @if ($r->id == $team->lead_id)
-                                                <div class="d-flex flex-row align-items-center">
-                                                    <div class="mr-2">
-                                                        @if ($r->image != null)
-                                                            <img src="{{ asset('public/assets/images/' . $r->image) }}"
-                                                                alt="Example Image">
-                                                        @else
-                                                            <img src="{{ Avatar::create($r->name.' '.$r->last_name)->toBase64() }}"
-                                                                alt="Example Image">
-                                                        @endif
-                                                    </div>
-
-                                                    <div class="d-flex flex-column">
-                                                        <div>
-                                                            <span class="text-primary">Lead</span>
-                                                        </div>
-                                                        <div>
-                                                            <span>{{ $r->name }} {{ $r->last_name }}</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            @endif
-                                        @endforeach
-                                    @endif
-                                </div>
-                                <div>
-                                    <div class="d-flex align-items-center flex-lg-fill my-1">
-                                        <div class="symbol-group symbol-hover">
-                                            @foreach($firstTwoIds as $member)
-                                            @foreach(DB::table('members')->get() as $r)
-                                            @if($r->id == $member)
-                                            @php
-                                            $name = $r->name.' '.$r->last_name;
-                                            @endphp
-                                            
-                                             <div class="symbol symbol-30 symbol-circle" data-toggle="tooltip" title="" data-original-title="{{$name}}">
-                                                 @if($r->image != NULL)
-                                                         <img src="{{asset('public/assets/images/'.$r->image)}}" alt="Example Image">
-                                                         @else
-                                                         <img src="{{ Avatar::create($name)->toBase64() }}" alt="Example Image">
-                                                         @endif
-                                             </div>
-                                             @endif
-                                             @endforeach
-                                             @endforeach
-                                             @if($dataCount > 2)
-                                             <div style="width:42px; height:42px; padding: 10px; font-size: 12px;" class="symbol symbol-30  symbol-circle symbol-light" data-toggle="tooltip" title="" data-original-title="More users">
-                                                 <span class="symbol-label">{{$remainingCount}}+</span>
-                                             </div>
-                                             @endif
-                                           
+                    <div class="card border-hover-primary">
+        <div class="card-header border-0 pt-9">
+            <div class="card-title m-0">
+                <div class="symbol symbol-50px w-50px bg-light">
+                    <img  class="gixie" data-item-id="{{ $team->id }}" style="width: 50px;object-fit: cover;border-radius: 10px;height: 50px;">
+                </div>
+            </div>
+            <div class="card-toolbar">
+                <button class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                        <i class="ki-solid ki-dots-vertical fs-2x"></i>
+                    </button>
+                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px py-3" data-kt-menu="true">
+                     <div class="menu-item px-3">
+                        <a class="menu-link px-3"  data-toggle="modal" data-target="#edit{{ $team->id }}">Edit</a>
+                    </div>
+                    <div class="menu-item px-3 my-1">
+                        <a class="menu-link px-3" data-toggle="modal" data-target="#delete{{$team->id}}">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body p-9">
+            <a href="{{url('dashboard/organization/'.$team->slug.'/dashboard/orgT')}}" class="fs-3 fw-bold text-gray-900">{{$team->team_title}}</a>
+            <p class="text-gray-500 fw-semibold fs-5 mt-1 mb-7">
+                {{$dataCount}} total members
+            </p>
+            <div class="d-flex flex-wrap mb-5">
+                <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-7 mb-3">
+                    <div class="fs-6 text-gray-800 fw-bold">{{$ObjResultcount}}</div>
+                    <div class="fw-semibold text-gray-500">Epics</div>
+                </div>
+                <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mb-3">
+                    <div class="fs-6 text-gray-800 fw-bold">{{$ObjResultcount}}</div>
+                    <div class="fw-semibold text-gray-500">Objectives</div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center leader-section mt-4">
+                 <div>
+                     @if($team->lead_id)
+                         @foreach(DB::table('members')->get() as $r)
+                         @if($r->id == $team->lead_id)
+ 
+                                 <div class="d-flex flex-row align-items-center">
+                                     <div class="mr-2">
+                                         @if($r->image != NULL)
+                                         <img src="{{asset('public/assets/images/'.$r->image)}}" alt="Example Image">
+                                         @else
+                                         <img src="{{ Avatar::create($r->name.' '.$r->last_name)->toBase64() }}" alt="Example Image">
+                                         @endif
+                                     </div>
+ 
+                                     <div class="d-flex flex-column">
+                                         <div>
+                                             <span class="text-primary">Lead</span>
                                          </div>
-                                    </div>
-                                </div>
-                            </div>
+                                         <div>
+                                             <span>{{$r->name}} {{ $r->last_name }}</span>
+                                         </div>
+                                     </div>
+                                 </div>
+                             @endif
+                         @endforeach
+                     @endif
+                 </div>
+                 <div>
+                     <div class="d-flex align-items-center flex-lg-fill my-1">
+                        <div class="symbol-group symbol-hover">
+                            @foreach($firstTwoIds as $member)
+                            @foreach(DB::table('members')->get() as $r)
+                            @if($r->id == $member)
+                            @php
+                            $name = $r->name.' '.$r->last_name;
+                            @endphp
+ 
+                             <div class="symbol symbol-30 symbol-circle" data-toggle="tooltip" title="" data-original-title="{{$name}}">
+                                 @if($r->image != NULL)
+                                         <img src="{{asset('public/assets/images/'.$r->image)}}" alt="Example Image">
+                                         @else
+                                         <img src="{{ Avatar::create($name)->toBase64() }}" alt="Example Image">
+                                         @endif
+                             </div>
+                             
+                             @endif
+                             @endforeach
+                             @endforeach
+                             @if($dataCount > 2)
+                             <div style="width:42px; height:42px; padding: 10px; font-size: 12px;" class="symbol symbol-30  symbol-circle symbol-light" data-toggle="tooltip" title="" data-original-title="More users">
+                                 <span class="symbol-label">{{$remainingCount}}+</span>
+                             </div>
+                             @endif
+                         </div>
+                     </div>
+                 </div>
+             </div>
 
-                            <div class="row counter-section">
-                                <div class="col-md-6 pr-2">
-                                    <div class="counter-card d-flex flex-row align-items-center">
-                                        <div class="mr-1">
-                                            <span class="material-symbols-outlined text-secondary">bolt</span>
-                                        </div>
-                                        <div class="d-flex flex-column">
-                                            <div>
-                                                <b>{{ $EpicResultcount }}</b>
-                                            </div>
-                                            <div>
-                                                <small class="text-secondary">Epics</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 pl-2">
-                                    <div class="counter-card d-flex flex-row align-items-center">
-                                        <div class="mr-1">
-                                            <span class="material-symbols-outlined text-secondary">adjust</span>
-                                        </div>
-                                        <div class="d-flex flex-column">
-                                            <div>
-                                                <b>{{ $ObjResultcount }}</b>
-                                            </div>
-                                            <div>
-                                                <small class="text-secondary">Objectives</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
-                        </div>
-                    </div>
+        </div>
+    </div>
                 </div>
-
-                <div class="modal fade" id="delete{{ $team->id }}" tabindex="-1" role="dialog"
-                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Delete Team</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-
-
-                            <form method="POST" action="{{ url('delete-org-team') }}">
-                                @csrf
-                                <input type="hidden" name="delete_id" value="{{ $team->id }}">
-
-
-                                <div class="modal-body">
-
-                                    Are you sure you want to delete this Team?
-
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-danger">Confirm</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+<div class="modal fade" id="delete{{ $team->id }}" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <!--begin::Modal content-->
+        <div class="modal-content">
+            <!--begin::Modal header-->
+            <div class="modal-header pb-0 border-0 justify-content-end">
+                <!--begin::Close-->
+                <div class="btn btn-sm btn-icon btn-active-color-primary" data-dismiss="modal">
+                    <i class="ki-outline ki-cross fs-1"></i>
                 </div>
+                <!--end::Close-->
+            </div>
+            <div class="modal-body">
+                <div class="mb-13 text-center">
+                    <h1 class="mb-3">Delete {{ Cmf::getmodulename("level_three") }}</h1>
+                </div>
+                <form method="POST" action="{{ url('delete-org-team') }}">
+                @csrf
+                <input type="hidden" name="delete_id" value="{{ $team->id }}">
+                <div class="text-center">
+                    Are you sure you want to delete this Team?                    
+                </div>
+                <div class="text-center pt-15">
+                    <button type="submit" class="btn btn-danger">
+                        <span class="indicator-label">Submit</span>
+                        <span class="indicator-progress">Please wait... 
+                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                    </button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
-                <div class="modal fade" id="edit{{ $team->id }}" tabindex="-1" role="dialog"
-                    aria-labelledby="add-team" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content" style="width: 526px !important;">
-                            <div class="modal-header">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <h5 class="modal-title" id="create-epic">Update Team</h5>
+<div class="modal fade" id="edit{{$team->id}}" tabindex="-1" role="dialog" aria-labelledby="add-team" aria-hidden="true">
+    <div class="modal-dialog mw-650px" role="document">
+        <div class="modal-content">
+            <div class="modal-header pb-0 border-0 justify-content-end">
+                <div class="btn btn-sm btn-icon btn-active-color-primary" data-dismiss="modal" aria-label="Close">
+                    <i class="ki-outline ki-cross fs-1"></i>
+                </div>
+            </div>
+            <div class="modal-body scroll-y mx-5 mx-xl-18 pt-0 pb-15">
+                    <form class="needs-validation" action="{{ url('update-team-org') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="id" value="{{$team->id}}">
+                        <div class="text-center mb-13">
+                            <h1 class="mb-3">Update {{ Cmf::getmodulename('level_three') }}</h1>
+                        </div>
+                        <div class="d-flex flex-column mb-7 fv-row">
+                            <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                <span class="required">{{ Cmf::getmodulename('level_three') }} Name</span>
+                            </label>
+                            <input type="text" class="form-control form-control-solid"  value="{{$team->team_title}}" name="team_title" id="team-title" required>
+                        </div>
+                        <div class="d-flex flex-column mb-7 fv-row">
+                            <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                <span class="required">Lead</span>
+                            </label>
+                            <select class="form-control form-control-solid" name="lead_manager_team">
+                                <?php foreach(DB::table('members')->where('org_user',Auth::id())->orWhere('org_user',Auth::user()->invitation_id)->get() as $r){ ?>
+                                  <option @if($r->id == $team->lead_id) selected @endif value="{{ $r->id }}">{{ $r->name }} {{ $r->last_name }}</option>
+                                <?php }  ?>
+                            </select>
+                        </div>
+                        <div class="mb-10">
+                            <div class="fs-6 fw-semibold mb-2">Please Select User From User List</div>
+                            <div class="mh-300px scroll-y me-n7 pe-7" id="myTable">
+                                @foreach(DB::table('members')->where('org_user',Auth::id())->orWhere('org_user',Auth::user()->invitation_id)->get() as $r)                   
+                                <div class="d-flex flex-stack py-4 border-bottom border-gray-300 border-bottom-dashed searchuser">
+                                    <div class="d-flex align-items-center">
+                                        <div class="symbol symbol-35px symbol-circle">
+                                            @if ($r->image != null)
+                                                <img src="{{ asset('public/assets/images/' . $r->image) }}"
+                                                    alt="Example Image">
+                                            @else
+                                            <img width="45px" height="45px" src="{{ Avatar::create($r->name.' '.$r->last_name)->toBase64() }}" alt="Example Image">
+                                            @endif
+                                        </div>
+                                        <div class="ms-5">
+                                            <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary mb-2">{{ $r->name }} {{ $r->last_name }}</a>
+                                            <div class="fw-semibold text-muted">{{ $r->email }}</div>
+                                        </div>
                                     </div>
-                                    <div class="col-md-12">
-                                        <p>Lorem ipsum dummy text for printing</p>
+                                    <div class="ms-2">
+                                        <input type="checkbox" @foreach(explode(',',$team->member) as $t) @if($r->id == $t) checked @endif @endforeach value="{{$r->id}}" name="member[]">
                                     </div>
                                 </div>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <img src="{{ asset('public/assets/images/icons/minus.svg') }}">
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form class="needs-validation" action="{{ url('update-team-org') }}" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="id" value="{{ $team->id }}">
-                                    <div class="row">
-                                        <div class="col-md-12 col-lg-12 col-xl-12">
-                                            <div class="form-group mb-0">
-                                                <input type="text" class="form-control"
-                                                    value="{{ $team->team_title }}" name="team_title" id="team-title"
-                                                    required>
-                                                <label for="team-title">Name</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 col-lg-12 col-xl-12">
-                                            <div class="form-group mb-0">
-                                                <select class="form-control" name="lead_manager_team">
-                                                    <?php foreach(DB::table('members')->where('org_user',Auth::id())->orWhere('org_user',Auth::user()->invitation_id)->get() as $r){ ?>
-                                                    <option @if ($r->id == $team->lead_id) selected @endif
-                                                        value="{{ $r->id }}">{{ $r->name }}
-                                                        {{ $r->last_name }}</option>
-                                                    <?php }  ?>
-                                                </select>
-                                                <label for="lead-manager">Lead</label>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-12 col-lg-12 col-xl-12">
-                                            <div class="d-flex flex-row align-items-center justify-content-between mt-4">
-                                                <div>
-                                                    Organization Member
-                                                </div>
-                                                <div>
-                                                    <input type="text" class="form-control input-sm"
-                                                        placeholder="Search..." name="">
-                                                </div>
-                                            </div>
-                                            <hr>
-                                        </div>
-                                        <div class="col-md-12 col-lg-12 col-xl-12 member-area">
-                                            @foreach (DB::table('members')->where('org_user', Auth::id())->orWhere('org_user',Auth::user()->invitation_id)->get() as $r)
-                                                <div
-                                                    class="d-flex flex-row align-items-center justify-content-between single-member">
-                                                    <div class="d-flex flex-row align-items-center ">
-                                                        <div>
-                                                            @if ($r->image != null)
-                                                                <img width="45px" height="45px"
-                                                                    src="{{ asset('public/assets/images/' . $r->image) }}"
-                                                                    alt="Example Image">
-                                                            @else
-                                                            <img width="45px" height="45px" src="{{ Avatar::create($r->name.' '.$r->last_name)->toBase64() }}" alt="Example Image">
-
-                                                            @endif
-
-                                                        </div>
-                                                        <div class="d-flex flex-column ml-3">
-                                                            <p>{{ $r->name }} {{ $r->last_name }}</p>
-                                                            <small>{{ $r->email }}</small>
-                                                        </div>
-                                                    </div>
-                                                    <div>
-                                                        <input type="checkbox"
-                                                            @foreach (explode(',', $team->member) as $t) @if ($r->id == $t) checked @endif @endforeach
-                                                            value="{{ $r->id }}" name="member[]">
-                                                    </div>
-                                                </div>
-                                            @endforeach
-
-                                        </div>
-                                        <div class="col-md-12 mt-7">
-                                            <button class="btn btn-primary btn-lg btn-theme btn-block ripple"
-                                                type="submit">Submit</button>
-                                        </div>
-                                    </div>
-                                </form>
+                                @endforeach
                             </div>
                         </div>
-                    </div>
+                        <div class="text-center pt-15">
+                            <button type="submit" id="kt_modal_new_card_submit" class="btn btn-primary">
+                                <span class="indicator-label">Submit</span>
+                                <span class="indicator-progress">Please wait... 
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                            </button>
+                        </div>
+                    </form>
                 </div>
+            </div>
+        </div>
+    </div>
             @endforeach
     
     </div>
@@ -327,12 +273,12 @@
                     @csrf
                     <input type="hidden" name="team_unit_id" value="{{ $organization->id }}">
                     <div class="text-center mb-13">
-                        <h1 class="mb-3">Add Team</h1>
+                        <h1 class="mb-3">Add {{ Cmf::getmodulename('level_three') }}</h1>
                     </div>
                     <input type="hidden" name="org_stream_id" value="{{$organization->id}}">
                     <div class="d-flex flex-column mb-7 fv-row">
                         <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
-                            <span class="required">Team Name</span>
+                            <span class="required">{{ Cmf::getmodulename('level_three') }} Name</span>
                         </label>
                         <input type="text" class="form-control form-control-solid" name="team_title" id="team-title" required>
                     </div>

@@ -40,29 +40,26 @@ $var_objective = 'TBaclog-' . $type;
             <table class="table data-table example" id="olddata">
                <thead>
                   <tr>
-                     <td>
-                        <label class="form-checkbox">
-                        <input type="checkbox" id="checkAll">
-                        <span class="checkbox-label"></span>
-                        </label>
+                     <td class="w-10px pe-2">
+                        <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
+                           <input class="form-check-input" type="checkbox" id="checkAll" />
+                        </div>
                      </td>
-                     <td>ID</td>
-                     <td>Title</td>
-                     <!-- <td>Quarter</td> -->
-                     <td>Start/End Date</td>
-                     <td>Status</td>
-                     <td>Progress</td>
-                     <td>Action</td>
+                     <td class="min-w-125px">ID</td>
+                     <td class="min-w-125px">Title</td>
+                     <td class="min-w-125px">Start/End Date</td>
+                     <td class="min-w-125px">Status</td>
+                     <td class="min-w-125px">Progress</td>
+                     <td class="text-end min-w-70px">Action</td>
                   </tr>
                </thead>
                <tbody class="boards" id="backlog-board">
                   @foreach ($Backlog as $backlog)
                   <tr id="backlog-{{ $backlog->id }}" class="draggable">
                      <td>
-                        <label class="form-checkbox">
-                        <input type="checkbox" class="checkbox check" value="{{ $backlog->id }}">
-                        <span class="checkbox-label"></span>
-                        </label>
+                        <div class="form-check form-check-sm form-check-custom form-check-solid">
+                           <input type="checkbox" class="form-check-input checkbox check" value="{{ $backlog->id }}">
+                        </div>
                      </td>
                      <td class="">
                         <div class="epic_id mr-3 mt-1" style="display: flex;">
@@ -73,12 +70,6 @@ $var_objective = 'TBaclog-' . $type;
                      <td>
                         {{ $backlog->epic_title }}
                      </td>
-                     <!-- <td>
-                        @if ($backlog->assign_status == null)
-                        Assign
-                        <img src="{{ url('public/assets/svg/asignteam.svg') }}" data-toggle="modal"  data-target="#assign-unitbacklog-epic{{ $backlog->id }}">
-                        @endif
-                     </td> -->
                      <div class="modal fade" id="assign-unitbacklog-epic{{ $backlog->id }}"
                         tabindex="-1" role="dialog" aria-labelledby="create-epic" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -282,49 +273,56 @@ $var_objective = 'TBaclog-' . $type;
                            </div>
                         </div>
                      </td>
-                     <td>
-                        <button class="btn-circle btn-tolbar" onclick="editbacklogepic({{ $backlog->id }} , 'team_backlog')">
-                           <span class="material-symbols-outlined" data-toggle="tooltip" data-placement="top" data-original-title="Edit" style="font-size: 18px;"> edit </span>
-                        </button>
-                        <button class="btn-circle btn-tolbar" data-toggle="modal" data-target="#delete{{ $backlog->id }}">
-                           <span class="material-symbols-outlined" data-toggle="tooltip" data-placement="top" data-original-title="Delete" style="font-size: 18px;"> delete </span>
-                        </button>
-                        @if ($backlog->backlog_id == NULL)
-                        <button class="btn-circle btn-tolbar">
-                           <a href="{{url('dashboard/epicbacklog/clone/'.$backlog->id.'/'.$organization->type)}}" class="material-symbols-outlined" data-toggle="tooltip" data-placement="top" data-original-title="Clone" style="font-size: 18px;text-decoration: none;color: #3e413e;"> cyclone </a>
-                        </button>
-                        @else
-                        <button class="btn-circle btn-tolbar">
-                           <a href="{{url('dashboard/epicbacklog/clone/'.$backlog->backlog_id.'/'.$organization->type)}}" class="material-symbols-outlined" data-toggle="tooltip" data-placement="top" data-original-title="Clone" style="font-size: 18px;text-decoration: none;color: #3e413e;"> cyclone </a>
-                        </button>
-                        @endif   
+                     <td class="text-end">
+
+                        <div class="action ml-0">
+                           @if ($backlog->backlog_id == NULL)
+                           <a href="{{url('dashboard/epicbacklog/clone/'.$backlog->id.'/'.$organization->type)}}" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
+                               <i class="ki-outline ki-copy fs-1 text-gray-500 me-n1"></i>
+                           </a>
+                           @else
+                           <a href="{{url('dashboard/epicbacklog/clone/'.$backlog->backlog_id.'/'.$organization->type)}}" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
+                               <i class="ki-outline ki-copy fs-1 text-gray-500 me-n1"></i>
+                           </a>
+                           @endif
+                           <button onclick="editbacklogepic({{ $backlog->id }} , 'team_backlog')" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
+                               <i class="ki-outline ki-pencil fs-1 text-gray-500 me-n1"></i>
+                           </button>
+                           <button data-toggle="modal" data-target="#delete{{ $backlog->id }}" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
+                               <i class="ki-outline ki-trash fs-1 text-gray-500 me-n1"></i>
+                           </button>
+                        </div>
                      </td>
                   </tr>
-                  <div class="modal fade" id="delete{{ $backlog->id }}" tabindex="-1"
-                     role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                     <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                           <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">Delete Backlog</h5>
-                              <button type="button" class="close" data-dismiss="modal"
-                                 aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                              </button>
-                           </div>
-                           <form method="POST" action="{{ url('delete-team-backlog') }}">
-                              @csrf
-                              <input type="hidden" name="delete_id" value="{{ $backlog->id }}">
-                              <div class="modal-body">
-                                 Are you sure you want to delete this Backlog?
+                  <div class="modal fade" id="delete{{ $backlog->id }}" tabindex="-1" role="dialog" aria-labelledby="add-team" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                              <!--begin::Modal header-->
+                              <div class="modal-header pb-0 border-0 justify-content-end">
+                                  <!--begin::Close-->
+                                  <div class="btn btn-sm btn-icon btn-active-color-primary" data-dismiss="modal" aria-label="Close">
+                                      <i class="ki-outline ki-cross fs-1"></i>
+                                  </div>
+                                  <!--end::Close-->
                               </div>
-                              <div class="modal-footer">
-                                 <button type="button" class="btn btn-secondary"
-                                    data-dismiss="modal">Close</button>
-                                 <button type="submit" class="btn btn-danger">Confirm</button>
-                              </div>
-                           </form>
-                        </div>
-                     </div>
+                              <div class="modal-body scroll-y mx-5 mx-xl-18 pt-0 pb-15">
+                                 <div id="success-obj-delete"  role="alert"></div>
+                                 <form method="POST" action="{{ url('delete-team-backlog') }}">
+                                    @csrf
+                                    <input type="hidden" name="delete_id" value="{{ $backlog->id }}">
+                                      <div class="modal-body">
+                                          <div class="text-center mb-13">
+                                            <h1 class="mb-3" id="end-quartr">Delete Backlog</h1>
+                                            <p>Are you sure you want to delete this Backlog?</p>
+                                          </div>
+                                      </div>
+                                      <div class="text-center">
+                                          <button type="submit" id="deleteobjectivebutton" class="btn btn-primary">Confirm</button>
+                                      </div>
+                                  </form>
+                             </div>
+                          </div>
+                      </div>
                   </div>
                   <div class="modal fade" id="create{{$backlog->id}}" tabindex="-1" role="dialog" aria-labelledby="create-epic" aria-hidden="true">
                      <div class="modal-dialog" role="document">
@@ -411,125 +409,124 @@ $var_objective = 'TBaclog-' . $type;
    </div>
 </div>
 @else
-<div style="position:absolute;right:30%;top:40%;" class="text-center">
-   <img src="{{ asset('public/epic-backlog.svg') }}" width="120" height="120">
-   <div>
-      <h6 class="text-center">No Records Found</h6>
-   </div>
-   <div>
-      <p class="text-center">You may create your first Epic by clicking the bellow button</p>
-   </div>
-   <button class="btn btn-primary btn-lg btn-theme btn-block ripple" onclick="addnewbacklogepic()">
-   Add an Epic
-   </button>
-</div>
+<div class="card">
+    <div class="card-body">
+       <div class="text-center">
+          <img src="{{ asset('public/epic-backlog.svg') }}" alt="" width="120" height="120" class="mw-100">
+       </div>
+       <div class="card-px text-center  pt-15 pb-15">
+          <h2 class="fs-2x fw-bold mb-0">No Records Found</h2>
+          <p class="text-gray-500 fs-4 fw-semibold py-7">You may create your first Epic by clicking the bellow button</p>
+          <a  onclick="addnewbacklogepic()" href="javascript:void(0)" class="btn btn-primary er fs-6 px-8 py-4">Add an Epic</a>
+       </div>
+    </div>
+ </div>
 @endif
 </div>
-<div class="modal fade" id="assign-Teambacklog-epic" tabindex="-1" role="dialog" aria-labelledby="create-epic"
-   aria-hidden="true">
-   <div class="modal-dialog" role="document">
-      <div class="modal-content" style="width: 526px !important;">
-         <div class="modal-header">
-            <div class="row">
-               <div class="col-md-12">
-                  <h5 class="modal-title" id="create-epic">Assign Backlog Epic</h5>
-               </div>
-               <div class="col-md-12">
-                  <p>Fill out the form, submit and hit the save button.</p>
-               </div>
-               <div id="" role="alert"></div>
-               <span id="" class="ml-3 text-danger"></span>
+<div class="modal fade" id="assign-Teambacklog-epic" tabindex="-1" role="dialog" aria-labelledby="add-team" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered mw-650px" role="document">
+        <div class="modal-content">
+            <!--begin::Modal header-->
+            <div class="modal-header pb-0 border-0 justify-content-end">
+               
+                <!--begin::Close-->
+                <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="ki-outline ki-cross fs-1"></i>
+                </div>
+                <!--end::Close-->
             </div>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <img src="{{ asset('public/assets/images/icons/minus.svg') }}">
-            </button>
-         </div>
-         <div class="modal-body">
+            <div class="modal-body scroll-y mx-5 mx-xl-18 pt-0 pb-15">
+               <div class="text-center mb-13">
+                 <h1 class="mb-3" id="end-quartr">Assign Backlog Epic</h1>
+               </div>
             <form class="needs-validation" action="{{ url('assign-teambacklog-epic') }}" method="POST">
                @csrf
                <input type="hidden" name="backlog_id" id="backlog-id">
                <input type="hidden" name="team_type" value="{{ $organization->type }}">
                <div class="row">
                   @if ($organization->type == 'BU')
-                  <div class="col-md-12 col-lg-12 col-xl-12">
-                     <div class="form-group mb-0">
-                        <select class="form-control category" id="" name="stream_obj" required>
-                           <option value="">Select Business Team</option>
-                           <?php foreach(DB::table('unit_team')->where('org_id',$organization->org_id)->get() as $r){ ?>
-                           <option value="{{ $r->id }}">{{ $r->team_title }}</option>
-                           <?php }  ?>
-                        </select>
-                        <label for="small-description">Choose Team</label>
-                     </div>
+                  <div class="d-flex flex-column mb-7 fv-row">
+                     <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                         <span class="required">Choose Team</span>
+                     </label>
+                     <select class="form-control category form-control-solid" id="" name="stream_obj" required>
+                        <option value="">Select Business Team</option>
+                        <?php foreach(DB::table('unit_team')->where('org_id',$organization->org_id)->get() as $r){ ?>
+                        <option value="{{ $r->id }}">{{ $r->team_title }}</option>
+                        <?php }  ?>
+                     </select>
                   </div>
                   @endif
                   @if ($organization->type == 'VS')
-                  <div class="col-md-12 col-lg-12 col-xl-12">
-                     <div class="form-group mb-0">
-                        <select class="form-control category" id="" name="stream_obj" required>
-                           <option value="">Select Value Team</option>
-                           <?php foreach(DB::table('value_team')->where('org_id',$organization->org_id)->get() as $r){ ?>
-                           <option value="{{ $r->id }}">{{ $r->team_title }}</option>
-                           <?php }  ?>
-                        </select>
-                        <label for="small-description">Choose Team</label>
-                     </div>
+                  <div class="d-flex flex-column mb-7 fv-row">
+                     <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                         <span class="required">Choose Team</span>
+                     </label>
+                     <select class="form-control category form-control-solid" id="" name="stream_obj" required>
+                        <option value="">Select Value Team</option>
+                        <?php foreach(DB::table('value_team')->where('org_id',$organization->org_id)->get() as $r){ ?>
+                        <option value="{{ $r->id }}">{{ $r->team_title }}</option>
+                        <?php }  ?>
+                     </select>
                   </div>
                   @endif
                   @if ($organization->type == 'org')
-                  <div class="col-md-12 col-lg-12 col-xl-12">
-                     <div class="form-group mb-0">
-                        <select class="form-control category" id="" name="stream_obj" required>
-                           <option value="">Select Organization</option>
-                           <?php foreach(DB::table('organization')->where('id',$organization->id)->get() as $r){ ?>
-                           <option value="{{ $r->id }}">{{ $r->organization_name }}</option>
-                           <?php }  ?>
-                        </select>
-                        <label for="small-description">Choose Organization</label>
-                     </div>
+                  <div class="d-flex flex-column mb-7 fv-row">
+                     <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                         <span class="required">Choose Organization</span>
+                     </label>
+                     <select class="form-control category form-control-solid" id="" name="stream_obj" required>
+                        <option value="">Select Organization</option>
+                        <?php foreach(DB::table('organization')->where('id',$organization->id)->get() as $r){ ?>
+                        <option value="{{ $r->id }}">{{ $r->organization_name }}</option>
+                        <?php }  ?>
+                     </select>
                   </div>
                   @endif
-                  <div class="col-md-12 col-lg-12 col-xl-12">
-                     <div class="form-group mb-0">
-                        <select name="locstate" id="" onchange="getvaluekey(this.value)"
-                           class="form-control obj" value="" required>
-                        </select>
-                        <label for="small-description">Choose Objective</label>
-                     </div>
+                  <div class="d-flex flex-column mb-7 fv-row">
+                     <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                         <span class="required">Choose Objective</span>
+                     </label>
+                     <select name="locstate" id="" onchange="getvaluekey(this.value)"
+                           class="form-control obj form-control-solid" value="" required>
+                     </select>
                   </div>
-                  <div class="col-md-12 col-lg-12 col-xl-12">
-                     <div class="form-group mb-0">
-                        <select name="lockey" id="" onchange="getvalueintit(this.value)"
-                           class="form-control key" value="" required>
-                        </select>
-                        <label for="small-description">Choose Key Result</label>
-                     </div>
+                  <div class="d-flex flex-column mb-7 fv-row">
+                     <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                         <span class="required">Choose Key Result</span>
+                     </label>
+                     <select name="lockey" id="" onchange="getvalueintit(this.value)"
+                           class="form-control key form-control-solid" value="" required>
+                     </select>
                   </div>
-                  <div class="col-md-12 col-lg-12 col-xl-12">
-                     <div class="form-group mb-0">
-                        <select name="locinit" id="" class="form-control init" value=""
+                  <div class="d-flex flex-column mb-7 fv-row">
+                     <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                         <span class="required">Choose initiative</span>
+                     </label>
+                     <select name="locinit" id="" class="form-control init form-control-solid" value=""
                            required>
-                        </select>
-                        <label for="small-description">Choose initiative</label>
-                     </div>
+                     </select>
                   </div>
                   <div class="col-md-6 col-lg-6 col-xl-6">
-                     <div class="form-group mb-0">
-                        <input type="date" class="form-control"  name="start_date[]"
+                     <div class="d-flex flex-column mb-7 fv-row">
+                        <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                            <span class="required">Start Date</span>
+                        </label>
+                        <input type="date" class="form-control form-control-solid"  name="start_date[]"
                            value="{{ date('Y-m-d') }}" min="{{ date('Y-m-d') }}" required>
-                        <label for="start-date">Start Date</label>
                      </div>
                   </div>
                   <div class="col-md-6 col-lg-6 col-xl-6">
-                     <div class="form-group mb-0">
-                        <input type="date" class="form-control" min="{{ date('Y-m-d') }}" name="end_date[]" required>
-                        <label for="start-date">End Date</label>
+                     <div class="d-flex flex-column mb-7 fv-row">
+                        <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                            <span class="required">Start Date</span>
+                        </label>
+                        <input type="date" class="form-control form-control-solid" min="{{ date('Y-m-d') }}" name="end_date[]" required>
                      </div>
                   </div>
-                  <div class="col-md-12">
-                     <button class="btn btn-primary btn-lg btn-theme btn-block ripple mt-3"
-                        type="submit">Assign Epics</button>
-                  </div>
+                  <div class="text-center pt-15">
+                     <button type="submit" class="btn btn-primary">Assign Epics</button>
+                 </div>
                </div>
             </form>
          </div>
@@ -541,7 +538,7 @@ $var_objective = 'TBaclog-' . $type;
    <div class="modal-dialog modal-dialog-centered mw-650px">
       <div class="modal-content rounded">
          <div class="modal-header pb-0 border-0 justify-content-end">
-            <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+            <div class="btn btn-sm btn-icon btn-active-color-primary" data-dismiss="modal">
                <i class="ki-outline ki-cross fs-1"></i>
             </div>
          </div>

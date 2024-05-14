@@ -26,8 +26,10 @@ class EpicBacklogController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+      $this->middleware(['auth','check.subscription']);
+  
     }
+  
     public function index($id,$type)
     {
         if($type == 'BU')

@@ -131,15 +131,11 @@ $var_objective = "Org-Unit";
         </div>
         <div class="modal fade" id="edit{{$unit->id}}" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered mw-650px">
-                <!--begin::Modal content-->
                 <div class="modal-content">
-                    <!--begin::Modal header-->
                     <div class="modal-header pb-0 border-0 justify-content-end">
-                        <!--begin::Close-->
                         <div class="btn btn-sm btn-icon btn-active-color-primary" data-dismiss="modal">
                             <i class="ki-outline ki-cross fs-1"></i>
                         </div>
-                        <!--end::Close-->
                     </div>
                     <div class="modal-body">
                         <form class="needs-validation" action="{{url('update-business-unit')}}" method="POST">
@@ -187,14 +183,18 @@ $var_objective = "Org-Unit";
 </div>
 
 @else
-<div style="position:absolute;right:27%;top:40%;" class="text-center">
-<img src="{{asset('public/business-unit.svg')}}"  width="120" height="120">
-<div><h6 class="text-center">No Records Found</h6></div>
-<div><p class="text-center">You may create a {{ Cmf::getmodulename("level_one") }} by clicking the button below.</p></div>
-<button class="btn btn-flex btn-primary h-40px fs-7 fw-bold"  type="button" data-toggle="modal" data-target="#add-business-unit">
-    Add {{ Cmf::getmodulename("level_one") }}
-</button>
-</div>
+<div class="card">
+    <div class="card-body">
+       <div class="text-center">
+          <img src="{{ asset('public/epic-backlog.svg') }}" alt="" width="120" height="120" class="mw-100">
+       </div>
+       <div class="card-px text-center  pt-15 pb-15">
+          <h2 class="fs-2x fw-bold mb-0">No Records Found</h2>
+          <p class="text-gray-500 fs-4 fw-semibold py-7">You may create a {{ Cmf::getmodulename("level_one") }} by clicking the button below.</p>
+          <a data-toggle="modal" data-target="#add-business-unit" href="#" class="btn btn-primary er fs-6 px-8 py-4">Add {{ Cmf::getmodulename("level_one") }}</a>
+       </div>
+    </div>
+ </div>
 @endif
 
 

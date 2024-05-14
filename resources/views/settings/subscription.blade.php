@@ -87,13 +87,13 @@ $var_objective = "Jira";
                </thead>
                <tbody>
            
-               
+                 @if($data)
                   @php
                   $plan = DB::table('plan')->where('plan_id',$data->plan_id)->first();
                   @endphp
                   <tr>
                     
-                     <td> {{$plan->plan_title}}</td>
+                     <td> @if($plan){{$plan->plan_title}}@endif</td>
                      @if($data->transaction_id != '')
                      <td>@if($plan) £{{$plan->base_price}} @endif</td>
                      @else
@@ -107,7 +107,7 @@ $var_objective = "Jira";
                      @endif
 
                      <td>
-                      @if($data->transaction_id != Null)
+                      @if($data->transaction_id != '')
                         <label class="switch">
                            <input type="checkbox" id="switcher" @if($data->subscription_ends_at == NULL) checked @endif  value="{{$plan->plan_title}}">
                            <span class="slider round"></span>
@@ -116,14 +116,18 @@ $var_objective = "Jira";
                         </td>
                     
                         <td>
-                       
+                          @if($data->transaction_id != '')
                            <button type="button" class="btn btn-primary"  data-toggle="modal" data-target=".bd-example-modal-lg">Upgrade</button>
-                          
+                            @else
+                           <button type="button" class="btn btn-primary"  data-toggle="modal" data-target=".bd-example-modal-lg-new">Upgrade</button>
+                           
+                           @endif 
 
                        
                         </td>
              
                   </tr>
+                  @endif
           
                  
                    
@@ -133,8 +137,9 @@ $var_objective = "Jira";
       </div>
    </div>
 </div>
+@if($data)
 @php
-$plan = DB::table('plan')->where('plan_id','!=',$plan->plan_id)->where('base_price_status','!=','free')->get();
+$plan = DB::table('plan')->where('plan_id','!=',$plan->plan_id)->where('base_price_status','!=','free')->where('status','=','Active')->get();
 @endphp
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
    <div class="modal-dialog modal-lg">
@@ -151,7 +156,7 @@ $plan = DB::table('plan')->where('plan_id','!=',$plan->plan_id)->where('base_pri
              <p class="card-text"> £ {{$p->base_price}} / {{$p->billing_method}}.</p>
            </div>
            <div class="card-footer">
-             <button type="button" onclick="upgradePlan({{$p->id}},'{{$data->id}}')" class="btn btn-primary">Upgrade</button>
+             <button type="button" onclick="upgradePlan({{$p->id}},'{{$data->id}}')" id="update-plan" class="btn btn-primary">Upgrade</button>
            </div>
          </div>
          @endforeach
@@ -166,6 +171,40 @@ $plan = DB::table('plan')->where('plan_id','!=',$plan->plan_id)->where('base_pri
      </div>
    </div>
  </div>
+
+
+ <div class="modal fade bd-example-modal-lg-new" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+     <div id="cashier"></div>
+      @if(count($plan) > 0)
+     
+      <div class="card-group">
+        @foreach($plan as $p)
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title text-secondary" >{{$p->plan_title}}</h5>
+            
+            <p class="card-text"> £ {{$p->base_price}} / {{$p->billing_method}}.</p>
+          </div>
+          <div class="card-footer">
+            <a href="{{url('boost-payment/'.$p->plan_id)}}" class="btn btn-sm btn-primary">Upgrade</a>
+          </div>
+        </div>
+        @endforeach
+     
+      </div>
+  
+
+      @endif
+
+    
+
+    </div>
+  </div>
+</div>
+
+@endif
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script> 
@@ -198,7 +237,7 @@ $plan = DB::table('plan')->where('plan_id','!=',$plan->plan_id)->where('base_pri
 function upgradePlan(plan_id,old_id)
 {
 
-
+  $('#update-plan').html('<i class="fa fa-spin fa-spinner"></i>');
    $.ajax({
    url:"{{url('upgarde-plan')}}", 
    type:"post",
@@ -213,7 +252,7 @@ function upgradePlan(plan_id,old_id)
       setTimeout(function() {
       location.reload(); 
       $('#cashier').html('');
-      }, 1000);
+      }, 3000);
          
    }
 

@@ -4,9 +4,10 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use App\Models\modulenames;
+use DB;
 use Auth;
-class Dynamicnames
+
+class CheckSubscriptionStatus
 {
     /**
      * Handle an incoming request.
@@ -17,9 +18,18 @@ class Dynamicnames
      */
     public function handle(Request $request, Closure $next)
     {
-        if (modulenames::where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->count() == 0) {
-            return redirect(route('asignnames'));
-        }
+
+        $subscription = DB::table('user_plan')
+        ->where('status', 'active')
+        ->where(function ($query) {
+            $query->where('user_id', Auth::id())
+                ->orWhere('user_id', Auth::user()->invitation_id);
+        })
+        ->first();
+
+    if (!$subscription || $subscription->status !== 'active') {
+        return response()->json(['error' => 'Subscription inactive'], 403); // Or redirect to a route
+    }
         return $next($request);
     }
 }

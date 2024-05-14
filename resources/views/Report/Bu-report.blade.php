@@ -108,27 +108,23 @@ $var_objective = 'Report-'.$type;
                                           <path d="M12.0001 21.02C8.24008 21.02 4.69008 18.82 2.25008 15C1.19008 13.35 1.19008 10.66 2.25008 8.99998C4.70008 5.17998 8.25008 2.97998 12.0001 2.97998C15.7501 2.97998 19.3001 5.17998 21.7401 8.99998C22.8001 10.65 22.8001 13.34 21.7401 15C19.3001 18.82 15.7501 21.02 12.0001 21.02ZM12.0001 4.47998C8.77008 4.47998 5.68008 6.41998 3.52008 9.80998C2.77008 10.98 2.77008 13.02 3.52008 14.19C5.68008 17.58 8.77008 19.52 12.0001 19.52C15.2301 19.52 18.3201 17.58 20.4801 14.19C21.2301 13.02 21.2301 10.98 20.4801 9.80998C18.3201 6.41998 15.2301 4.47998 12.0001 4.47998Z" fill="#292D32"/>
                                         </svg>
                                 </button>
-                                <div class="modal fade bd-example-modal-lg{{$r->id}}" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                  <div class="modal-dialog modal-lg">
-                                    <div class="modal-content">
-                                            <div class="modal-header text-left">
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <h5 class="modal-title" id="create-objective">Choose Report Type</h5>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <p>Select the report type you want to generate.</p>
-                                                    </div>
-                                                    <div id="success-obj" role="alert"></div>
-                                                    <span id="obj-feild-error" class="ml-3 text-danger"></span>
-                                    
+                                <div class="modal fade bd-example-modal-lg{{$r->id}}" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="add-team" aria-hidden="true">
+                                    <div class="modal-dialog mw-650px" role="document">
+                                        <div class="modal-content">
+                                            <!--begin::Modal header-->
+                                            <div class="modal-header pb-0 border-0 justify-content-end">
+                                                <!--begin::Close-->
+                                                <div class="btn btn-sm btn-icon btn-active-color-primary" data-dismiss="modal" aria-label="Close">
+                                                    <i class="ki-outline ki-cross fs-1"></i>
                                                 </div>
-                                
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <img src="{{asset('public/assets/images/icons/minus.svg')}}">
-                                                </button>
+                                                <!--end::Close-->
                                             </div>
-                                            <div class="modal-body text-left">
+                                            <div class="modal-body scroll-y  pt-0 pb-15">
+                                            
+                                                <div class="text-center mb-13">
+                                                  <h1 class="mb-3" id="end-quartr">Choose Report Type</h1>
+                                                  <div class="text-muted fw-semibold fs-5">Select the report type you want to generate.</div>
+                                               </div>
                                                 <div class="row">
                                                     <!-- Report 1 -->
                                                     <div class="col-md-12 text-left">
@@ -325,36 +321,36 @@ $var_objective = 'Report-'.$type;
                                 </button>
                             </td>
                         </tr>
-                        <div class="modal fade" id="delete-report{{$r->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <h5 class="modal-title text-center" id="exampleModalLabel">Delete Quarter</h5>
-                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                  </button>
+                               
+                <div class="modal fade" id="delete-report{{$r->id}}" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header pb-0 border-0 justify-content-end">
+                                <div class="btn btn-sm btn-icon btn-active-color-primary" data-dismiss="modal">
+                                    <i class="ki-outline ki-cross fs-1"></i>
                                 </div>
-                              
-                        
+                            </div>
+                            <div class="modal-body">
+                                <div class="mb-13 text-center">
+                                    <h1 class="mb-3">Delete Quarter</h1>
+                                </div>
                                 <form method="POST" action="{{url('delete-report')}}">
 
                                     @csrf
                                     <input type="hidden" name="sprint_id" value="{{$r->id}}">  
-                                   <div class="modal-body">
+                                   <div class="modal-body text-center">
                                      
                                    Are you sure you want to Delete this Quarter?
                            
                                    </div>
-                                   <div class="modal-footer">
-                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                   <div class="text-center">
                                      <button type="submit"  class="btn btn-danger">Confirm</button>
                                    </div>
                                 </form>
-                               
-                                
-                              </div>
                             </div>
-                          </div>
+                        </div>
+                    </div>
+                </div>
                         @endforeach
 
                      
@@ -370,14 +366,18 @@ $var_objective = 'Report-'.$type;
 </div>
 
 @else
-<div style="position:absolute;right:30%;top:40%;" class="text-center">
-    <img src="{{asset('public/reports.svg')}}"  width="120" height="120">
-    <div><h6 class="text-center">No Records Found</h6></div>
-    <div><p class="text-center">You don’t have a running quarter/sprint yet..</p></div>
-    <button class="btn btn-primary btn-lg btn-theme btn-block ripple ml-20" style="width:50%" type="button" data-toggle="modal" data-target="#create-report">
-        Start a Quarter
-    </button>
+<div class="card">
+    <div class="card-body">
+       <div class="text-center">
+          <img src="{{ asset('public/epic-backlog.svg') }}" alt="" width="120" height="120" class="mw-100">
+       </div>
+       <div class="card-px text-center  pt-15 pb-15">
+          <h2 class="fs-2x fw-bold mb-0">No Records Found</h2>
+          <p class="text-gray-500 fs-4 fw-semibold py-7">You don’t have a running quarter/sprint yet..</p>
+          <a data-toggle="modal" data-target="#create-report" href="#" class="btn btn-primary er fs-6 px-8 py-4">Start a Quarter</a>
+       </div>
     </div>
+ </div>
 @endif
 @php
 $currentDate = \Carbon\Carbon::now();
@@ -404,24 +404,22 @@ $formattedDate = $lastDayOfMonth->toDateString();
 }
 
 @endphp
-  <div class="modal fade" id="create-report" tabindex="-1" role="dialog" aria-labelledby="create-report" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content" style="width: 526px !important;">
-            <div class="modal-header">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h5 class="modal-title" id="create-epic">Create Quarter/Sprint</h5>
-                    </div>
-                    <div class="col-md-12">
-                        <p>Fill out the form, submit and hit the save button.</p>
-                    </div>
-                      
+<div class="modal fade" id="create-report" tabindex="-1" role="dialog" aria-labelledby="add-team" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered mw-650px" role="document">
+        <div class="modal-content">
+            <!--begin::Modal header-->
+            <div class="modal-header pb-0 border-0 justify-content-end">
+                <!--begin::Close-->
+                <div class="btn btn-sm btn-icon btn-active-color-primary" data-dismiss="modal" aria-label="Close">
+                    <i class="ki-outline ki-cross fs-1"></i>
                 </div>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <img src="{{asset('public/assets/images/icons/minus.svg')}}">
-                </button>
+                <!--end::Close-->
             </div>
-            <div class="modal-body">
+            <div class="modal-body scroll-y mx-5 mx-xl-18 pt-0 pb-15">
+            
+                <div class="text-center mb-13">
+                  <h1 class="mb-3" id="end-quartr">Create Quarter/Sprint</h1>
+               </div>
                 <div class="row">
                     <div class="col-md-12">
                         <div id="success-sprint"  role="alert"></div>
@@ -433,33 +431,42 @@ $formattedDate = $lastDayOfMonth->toDateString();
             
                     <div class="row">
                         <div class="col-md-12 col-lg-12 col-xl-12">
-                            <div class="form-group mb-0">
-                                <input type="text" class="form-control" id="q_title" required>
-                                <label for="objective-name">Quarter Title</label>
+                            <div class="d-flex flex-column mb-7 fv-row">
+                                <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                    <span class="required">Quarter Title</span>
+                                </label>
+                                <input type="text" class="form-control form-control-solid" id="q_title" required>
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-6 col-xl-6">
-                            <div class="form-group mb-0">
-                                <input type="date" class="form-control" min="{{ date('Y-m-d') }}" id="q_start_date"  required>
-                                <label for="start-date" style="bottom:72px;">Start Date</label>
+                            <div class="d-flex flex-column mb-7 fv-row">
+                                <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                    <span class="required">Start Date</span>
+                                </label>
+                                <input type="date" class="form-control form-control-solid" min="{{ date('Y-m-d') }}" id="q_start_date"  required>
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-6 col-xl-6">
-                            <div class="form-group mb-0">
-                                <input type="date" class="form-control" @if($CurrentQuarter) value="{{$formattedDate}}" @endif id="q_end_date" required>
-                                <label for="end-date">End Date</label>
+                            <div class="d-flex flex-column mb-7 fv-row">
+                                <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                    <span class="required">End Date</span>
+                                </label>
+                                <input type="date" class="form-control form-control-solid" @if($CurrentQuarter) value="{{$formattedDate}}" @endif id="q_end_date" required>
                             </div>
-                        </div>
-                        
+                        </div>                        
                         <div class="col-md-12 col-lg-12 col-xl-12">
-                            <div class="form-group mb-0">
-                                <input type="text" class="form-control"  id="q_description" >
-                                <label for="small-description">Description</label>
+                            <div class="d-flex flex-column mb-7 fv-row">
+                                <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                    <span class="required">Description</span>
+                                </label>
+                                <textarea class="form-control form-control-solid" id="q_description" row="3"></textarea>
                             </div>
                         </div>
-
                         <div class="col-md-12">
-                            <button id="savequarterbutton" class="btn btn-primary btn-lg btn-theme btn-block ripple mt-3" onclick="saveQuarter();"  type="button">Start</button>
+                            <div class="text-center pt-15">
+                                 <button id="savequarterbutton" class="btn btn-primary" onclick="saveQuarter();"  type="button">Start</button>
+                             </div>
+                            
                         </div>
                     </div>
                 </form>

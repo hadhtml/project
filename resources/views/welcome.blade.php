@@ -47,7 +47,6 @@
         <div class="sidebar-area">
             <div class="sidebar-menu-top-area two">
                 <div class="sidebar-menu-logo">
-                    <a class="logo-dark" href="index.html"><img alt="image" class="img-fluid" src="{{asset('public/assetsindex/assets/img/black-logo.svg')}}" /></a>
                     <a class="logo-light" href="index.html"><img alt="image" class="img-fluid" src="{{asset('public/assetsindex/assets/img/white-logo.svg')}}" /></a>
                 </div>
                 <div class="nav-right d-flex jsutify-content-end align-items-center">

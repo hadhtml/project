@@ -979,6 +979,8 @@ $comments = DB::table('flag_comments')
                         ->where('epic_id', $data->id)
                         ->orderby('id', 'desc')
                         ->get();
+
+                        
                 @endphp
 
                 @if(count($kpiflag) > 0)
@@ -1000,6 +1002,21 @@ $comments = DB::table('flag_comments')
 
                                         <h4 class="mt-2 ml-1">{{ $flag->flag_title }}</h4>
                                     </div>
+
+                                    <div class="ml-40">
+                                    
+                                        @if($flag->flag_status == 'todoflag')
+                                        <div class="flagstatusbadge ml-30 w-50 todo-button-color">To Do</div>
+                                        @endif
+                                        @if($flag->flag_status == 'inprogress')
+                                        <div class="flagstatusbadge ml-35 w-50 inprogress-button-color">In Progress</div>
+                                        @endif
+                                        @if($flag->flag_status == 'doneflag')
+                                        <div class="flagstatusbadge ml-35 w-50 done-button-color">Done</div>
+                                        @endif
+                                    </div>
+                                        
+                                 
                                 </div>
                                 <div>
 
