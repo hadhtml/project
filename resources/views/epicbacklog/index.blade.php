@@ -24,7 +24,10 @@ $var_objective = 'TBaclog-' . $type;
 @endif
 @if ($type == 'org')
 <title>Org-Epic Backlog</title>
+@else
+<title>Epic Backlog</title>
 @endif
+
 @section('content')
 <div id="mainindexbacklog">
 @if (count($Backlog) > 0)
