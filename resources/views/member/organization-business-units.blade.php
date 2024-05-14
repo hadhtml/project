@@ -26,7 +26,7 @@ $var_objective = "Org-Unit";
             <div class="card border-hover-primary">
                 <div class="card-header border-0 pt-9">
                     <div class="card-title m-0">
-                        <div class="symbol symbol-50px w-50px bg-light">
+                        <div class="symbol symbol-100px w-100px">
                             <span class="module-icon material-symbols-outlined mr-2">domain</span>
                         </div>
                     </div>
@@ -46,7 +46,7 @@ $var_objective = "Org-Unit";
                 </div>
                 <div class="card-body p-9">
                     <a href="{{url('dashboard/organization/'.$unit->slug.'/dashboard/'.$unit->type)}}" class="fs-3 fw-bold text-gray-900">{{ \Illuminate\Support\Str::limit($unit->business_name,25, $end='...') }}</a>
-                    <p class="text-gray-500 fw-semibold fs-5 mt-1 mb-7">
+                    <p class="text-gray-500 fw-semibold fs-5 mb-3">
                         {{ \Illuminate\Support\Str::limit($unit->detail,30, $end='...') }}
                     </p>
                     <div class="d-flex flex-wrap mb-5">
