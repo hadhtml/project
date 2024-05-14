@@ -38,7 +38,7 @@
 <div class="row" >
     <div class="col-md-12">
         @if($activity->count() > 0)
-        <div id="kt_activity_today" class="card-body p-0 tab-pane fade active show" role="tabpanel" aria-labelledby="kt_activity_today_tab">
+        <div id="kt_activity_today" class="card-body p-0 tab-pane fade active show" style="height:500px;overflow: auto;" role="tabpanel" aria-labelledby="kt_activity_today_tab">
             <div class="timeline timeline-border-dashed">
                 @foreach($activity as $r)
                 @php
