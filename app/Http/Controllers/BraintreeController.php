@@ -308,23 +308,25 @@ public function CancalPlan(Request $request)
 
 }
 
+public function UpgradePlan(Request $request)
+{
+    $stripe = \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
 
-// public function UpgradePlan(Request $request)
-// {
-//     $stripe = \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
 
+    $user = Auth::user();
 
-//     $user = Auth::user();
+    $plan = DB::table('plan')->where('id',$request->plan_id)->first();
+    $userdata = $user->subscriptions()->first();
+    $data = $user->subscription($userdata->name)->noProrate()->swap($plan->plan_id);
 
-//     $plan = DB::table('plan')->where('id',$request->plan_id)->first();
-//     $data = $user->subscription($plan->plan_title)->noProrate()->swap($plan->plan_id);
+    DB::table('user_plan')->where('user_id',auth::id())->update([
+        'plan_id' => $plan->plan_id,
+    ]);
 
-//     DB::table('user_plan')->where('user_id',auth::id())->update([
-//         'plan_id' => $plan->plan_id,
-//     ]);
+   
     
 
-// }
+}
 
 public function UserInvoice($invoiceId)
 {
