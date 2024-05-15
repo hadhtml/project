@@ -689,7 +689,7 @@ $comments = DB::table('flag_comments')
                     <input type="hidden" value="{{ Auth::user()->id }}" name="user_id">
                     <input type="hidden" value="{{ $r->id }}" name="comment_id">
                     <input type="hidden" value="{{ $data->id }}" name="id">
-                    <div class="d-flex flex-column mt-3 d-none">
+                    <div class="d-flex flex-column mt-3">
                         <div>
                             <div class="form-group mb-0">
                                 <label for="objective-name">Write Reply</label>
