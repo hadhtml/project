@@ -308,6 +308,7 @@ public function CancalPlan(Request $request)
 
 }
 
+
 public function UpgradePlan(Request $request)
 {
     $stripe = \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
@@ -328,6 +329,16 @@ public function UpgradePlan(Request $request)
 
 }
 
+public function AllInvoice()
+{
+    $user = Auth::user();
+    \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+
+    $invoices = $user->invoicesIncludingPending();
+    
+    return view('settings.all-invoice',compact('invoices'));
+}
+
 public function UserInvoice($invoiceId)
 {
     $user = Auth::user();
@@ -338,5 +349,7 @@ public function UserInvoice($invoiceId)
     $alldata = DB::table('plan')->where('plan_id',$subscription->stripe_price)->first();
     return view('settings.invoice',compact('invoice','alldata'));
 }
+
+
 
 }
