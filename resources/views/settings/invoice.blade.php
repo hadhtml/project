@@ -21,11 +21,17 @@ $var_objective = 'invoice';
                                 <h4 class="fw-bolder text-gray-800 fs-2qx pe-5 pb-7">INVOICE</h4>
 
                                 <!--end::Logo-->
+                                @php
+                                $organization  = DB::table('organization')->where('user_id',Auth::id())->orWhere('user_id',Auth::user()->invitation_id)->first();
+                                @endphp
                                 <div class="text-sm-end">
                                     <!--begin::Logo-->
                                     <a href="#">
-                                        <img alt="Logo"
-                                            src="/metronic8/demo39/assets/media/svg/brand-logos/duolingo.svg">
+                                        @if($organization->logo)
+                                        <img src="{{asset('public/assets/images/'.$organization->logo)}}" class="h-25px theme-light-show">
+                                        @else
+                                        <img src="{{asset('public/assets/images/logo-placeholder-removebg-preview.png')}}" class="h-25px theme-light-show">
+                                        @endif
                                     </a>
                                     <!--end::Logo-->
 
@@ -59,7 +65,7 @@ $var_objective = 'invoice';
                                                 <thead>
                                                     <tr class="border-bottom fs-6 fw-bold text-muted text-uppercase">
                                                         <th class="min-w-175px pb-9">Description</th>
-                                                        <th class="min-w-100px pe-lg-6 pb-9 text-end">UNIT PRICE
+                                                        <th class="min-w-100px pe-lg-6 pb-9 text-end">Sub Total
                                                         </th>
                                                     </tr>
                                                 </thead>
