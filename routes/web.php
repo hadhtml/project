@@ -521,6 +521,7 @@ Route::get('/cancel', [App\Http\Controllers\BraintreeController::class,'cancel']
 Route::get('stripe/checkout/success', [App\Http\Controllers\BraintreeController::class,'stripeCheckoutSuccess'])->name('stripe.checkout.success');
 Route::post('cancal-plan', [App\Http\Controllers\BraintreeController::class,'CancalPlan']);
 Route::post('upgarde-plan', [App\Http\Controllers\BraintreeController::class,'UpgradePlan']);
+Route::get('user-invoice', [App\Http\Controllers\BraintreeController::class,'AllInvoice']);
 Route::get('user/invoice/{invoiceId}', [App\Http\Controllers\BraintreeController::class,'UserInvoice']);
 
 

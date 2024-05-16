@@ -22,6 +22,14 @@ $var_objective = 'TBaclog-' . $type;
 @if ($type == 'BU' || $type == 'VS' || $type == 'orgT')
 <title>Epic Backlog-{{ $organization->team_title }}</title>
 @endif
+@if ($type == 'unit')
+<title>Epic Backlog-{{ $organization->business_name }}</title>
+@endif
+
+@if ($type == 'stream')
+<title>Epic Backlog-{{ $organization->value_name }}</title>
+@endif
+
 @if ($type == 'org')
 <title>Org-Epic Backlog</title>
 @else

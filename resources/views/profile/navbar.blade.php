@@ -5,8 +5,6 @@ $invoices = array();
 if(Auth::user()->invitation_id == '')
 {
  $data = DB::table('user_plan')->where('user_id',Auth::id())->first();
- $user = Auth::user();
- $invoices = $user->invoicesIncludingPending();    
 }
 
 
@@ -79,54 +77,13 @@ if(Auth::user()->invitation_id == '')
 @endif
 
 @if(Auth::user()->invitation_id == '')
-<div data-kt-menu-trigger="click" class="menu-item here menu-accordion">
-    <!--begin:Menu link-->
-    <span class="menu-link">
-      <span class="menu-bullet">
-        <span class="material-symbols-outlined">
-            payments
-            </span>
-      </span>
-      <span class="menu-title">Invoice Manager</span>
-    
-    </span>
-    <!--end:Menu link-->
-    <!--begin:Menu sub-->
-    <div class="menu-sub menu-sub-accordion" kt-hidden-height="85" style="display: none; overflow: hidden;">
-      <!--begin:Menu item-->
-      <div data-kt-menu-trigger="click" class="menu-item here menu-accordion">
-        <!--begin:Menu link-->
-        <span class="menu-link">
-          <span class="menu-bullet">
-            <span class="bullet bullet-dot"></span>
-          </span>
-          <span class="menu-title">View Invoices</span>
-          <span class="menu-arrow"></span>
+
+<div class="menu-item">
+    <a href="{{url('user-invoice')}}"  class="menu-link @if (url()->current() == url('user-invoice'))  active @endif">
+        <span class="menu-icon">
+            <span class="material-symbols-outlined">payments</span>
         </span>
-   
-        <div class="menu-sub menu-sub-accordion menu-active-bg" kt-hidden-height="127" style="display: none; overflow: hidden;">
-        
-          @if(count($invoices) > 0)   
-          @foreach ($invoices as $key =>  $invoice)
-          <div class="menu-item">
-  
-            <a class="menu-link" href="{{url('user/invoice/'.$invoice->id)}}">
-              <span class="menu-bullet">
-                <span class="bullet bullet-dot"></span>
-              </span>
-              <span class="menu-title">Invoice {{$key + 1}}</span>
-            </a>
-          
-          </div>
-          @endforeach
-          @endif
-         
-        </div>
-   
-      </div>
-   
-    </div>
-
-  </div>
-
+        <span class="menu-title">Invoice Manager</span>
+    </a>
+</div>
   @endif
