@@ -432,7 +432,7 @@
                                                 <label for="flag_assignee">Participants <small
                                                         class="text-danger">*</small></label>
                                             </div>
-                                            <select required id="js-select2{{ $val->id }}" multiple="multiple"
+                                            <select class="form-control form-control-solid" required id="js-select2{{ $val->id }}" multiple="multiple"
                                                 name="participant[]">
                                                 <option value="">Select Assignee</option>
                                                 @foreach (DB::table('members')->where('org_user', Auth::id())->get() as $r)
