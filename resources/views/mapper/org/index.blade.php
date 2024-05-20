@@ -125,16 +125,14 @@ $var_objective = "mapper-org";
    function createlines() {
       @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $linekeyforslot =>  $line_t_l_c)
       line{{$linekeyforslot+1}} = new LeaderLine(connectedobjective{{ $line_t_l_c->linked_objective_id }}, slout_out_buisness_unit_key_result_{{ $line_t_l_c->bussiness_key_id }}, {
-      startPlug: "behind",
-      endPlug: "behind",
-      size: 4,
-      startPlugSize: 1,
-      endPlugSize: 1,
-      startSocket: "left",
-      endSocket: "right",
-      color: "#fb8c00"
-      // path: 'grid',
-      // dropShadow: {color: '#111', dx: 0, dy: 2, blur: 0.2}
+         startPlug: "behind",
+         endPlug: "behind",
+         size: 4,
+         startPlugSize: 1,
+         endPlugSize: 1,
+         startSocket: "left",
+         endSocket: "right",
+         color: "#fb8c00"
       });
       lines.push(line{{$linekeyforslot+1}});
       @endforeach
@@ -145,29 +143,23 @@ $var_objective = "mapper-org";
         lines.forEach(line => line.position());
     }
 
-   // Zoom in function
     function zoomIn() {
         zoomLevel += 0.1;
         container.style.zoom = zoomLevel;
-        console.log("Zoom In - Zoom Level:", zoomLevel);
         setTimeout(updateLines, 200);  // Update lines after the transition
     }
 
-    // Zoom out function
     function zoomOut() {
         if (zoomLevel > 0.1) {
             zoomLevel -= 0.1;
             container.style.zoom = zoomLevel;
-            console.log("Zoom Out - Zoom Level:", zoomLevel);
             setTimeout(updateLines, 200);  // Update lines after the transition
         }
     }
 
-    // Reset zoom function
     function resetZoom() {
         zoomLevel = 1;
         container.style.zoom = zoomLevel;
-        console.log("Reset Zoom - Zoom Level:", zoomLevel);
         setTimeout(updateLines, 200);  // Update lines after the transition
     }
 
