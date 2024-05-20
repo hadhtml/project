@@ -4,6 +4,11 @@ $var_objective = "mapper-org";
 @extends('components.main-layout')
 <title>ORG-OKR Mapper</title>
 @section('content')
+<style type="text/css">
+   .app-content{
+      background-color: transparent !important;
+   }
+</style>
 <div class="d-flex flex-row-reverse zoom-btn-section">
    <div>
       <button
@@ -39,7 +44,7 @@ $var_objective = "mapper-org";
    <div class="row">
 
    <div class="col-md-12">
-      <div style="width: 5000px; height: 5000px; padding: 50px;background-color: white;">
+      <div style="width: 5000px; height: 5000px; padding: 50px;">
          <!-- Node 1 -->
          <div id="node_1" class="node" style="transform: translate(-60px, -60px);">
             <div class="node-name slot-active drag-impo-grab">
@@ -98,7 +103,6 @@ $var_objective = "mapper-org";
    "use strict";
    
 
-   @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->get() as $t_l_c)
 
    @foreach(DB::table('team_link_child')->groupby('bussiness_key_id')->where('user_id' , Auth::id())->get() as $t_l_c)
 
@@ -234,7 +238,6 @@ $var_objective = "mapper-org";
          
          @endforeach
       @endforeach
-   @endforeach
    @endforeach
    });
 
