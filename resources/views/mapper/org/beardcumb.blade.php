@@ -16,7 +16,7 @@
         </ul>
     </div>
     <div class="d-flex align-items-center gap-2 gap-lg-3">
-        @if($_GET['view'] == 'horizontal')
+        @if(isset($_GET['view']) == 'horizontal')
         <a href="{{ url('dashboard/mapper') }}/{{ $data->slug }}/org" class="btn btn-flex btn-outline btn-color-gray-700 btn-active-color-primary bg-body h-40px fs-7 fw-bold" >Vertical View</a>
         @else
         <a href="{{ url('dashboard/mapper') }}/{{ $data->slug }}/org?view=horizontal" class="btn btn-flex btn-outline btn-color-gray-700 btn-active-color-primary bg-body h-40px fs-7 fw-bold" >Horizontal View</a>
