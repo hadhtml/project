@@ -48,7 +48,7 @@
                   <input type="hidden" value="{{ $data->id }}" name="value_id">
                     <label class="dropzonelabel">
                         Drop a file or click to select one
-                        <input accept=".doc,.docx,.jpg,.png,.txt,.pdf" onchange="submitform()" class="dropzoneinput" type="file" multiple name="file">
+                        <input accept=".png, .jpg, .jpeg, .doc, .docx, .xls, .xlsx, .pdf" onchange="submitform()" class="dropzoneinput" type="file" multiple name="file">
                     </label>
                 </form>
             </div>

@@ -4,10 +4,15 @@ $var_objective = "mapper-org";
 @extends('components.main-layout')
 <title>ORG-OKR Mapper</title>
 @section('content')
+<style type="text/css">
+   .app-content{
+      background-color: transparent !important;
+   }
+</style>
 <div class="d-flex flex-row-reverse zoom-btn-section">
    <div>
       <button
-         class="btn-circle btn-zoom-buttons zoom" onclick="zoom_in(280)" >
+         class="btn-circle btn-zoom-buttons zoom" onclick="zoomIn()" >
       <img width="20px"
          height="20px"
          src="{{asset('public/assets/images/icons/search-zoom-in.svg')}}"
@@ -17,7 +22,7 @@ $var_objective = "mapper-org";
    <div
       class="mr-2">
       <button
-         class="btn-circle btn-zoom-buttons zoom-out" onclick="zoom_out(280)">
+         class="btn-circle btn-zoom-buttons zoom-out" onclick="zoomOut()">
       <img width="20px"
          height="20px"
          src="{{asset('public/assets/images/icons/search-zoom-out.svg')}}"
@@ -27,7 +32,7 @@ $var_objective = "mapper-org";
    <div
       class="mr-2">
       <button
-         class="btn-circle btn-zoom-buttons zoom-init" onclick="zoom_init(280)">
+         class="btn-circle btn-zoom-buttons zoom-init" onclick="resetZoom()">
       <img width="20px"
          height="20px"
          src="{{asset('public/assets/images/icons/maximize.svg')}}"
@@ -39,7 +44,7 @@ $var_objective = "mapper-org";
    <div class="row">
 
    <div class="col-md-12">
-      <div style="width: 5000px; height: 5000px; padding: 50px;background-color: white;">
+      <div id="newzooomid" style="width: 5000px; height: 5000px; padding: 50px;">
          <!-- Node 1 -->
          <div id="node_1" class="node" style="transform: translate(-60px, -60px);">
             <div class="node-name slot-active drag-impo-grab">
@@ -94,11 +99,14 @@ $var_objective = "mapper-org";
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/plain-draggable@2.5.12/plain-draggable.min.js"></script>
 <script type="text/javascript">
    
-   window.addEventListener("load", function() {
-   "use strict";
+   $( document ).ready(function() {
    
+      createlines()
 
-   @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->get() as $t_l_c)
+    });
+   let zoomLevel = 1;
+   const container = document.getElementById('newzooomid');
+   const lines = [];
 
    @foreach(DB::table('team_link_child')->groupby('bussiness_key_id')->where('user_id' , Auth::id())->get() as $t_l_c)
 
@@ -114,21 +122,46 @@ $var_objective = "mapper-org";
    var line{{ $linedeclarekeyforslot+1 }};
    @endforeach
    
-   @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $linekeyforslot =>  $line_t_l_c)
-   line{{$linekeyforslot+1}} = new LeaderLine(connectedobjective{{ $line_t_l_c->linked_objective_id }}, slout_out_buisness_unit_key_result_{{ $line_t_l_c->bussiness_key_id }}, {
-   startPlug: "behind",
-   endPlug: "behind",
-   size: 4,
-   startPlugSize: 1,
-   endPlugSize: 1,
-   startSocket: "left",
-   endSocket: "right",
-   color: "#fb8c00"
-   // path: 'grid',
-   // dropShadow: {color: '#111', dx: 0, dy: 2, blur: 0.2}
-   });
-   @endforeach
+   function createlines() {
+      @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $linekeyforslot =>  $line_t_l_c)
+      line{{$linekeyforslot+1}} = new LeaderLine(connectedobjective{{ $line_t_l_c->linked_objective_id }}, slout_out_buisness_unit_key_result_{{ $line_t_l_c->bussiness_key_id }}, {
+         startPlug: "behind",
+         endPlug: "behind",
+         size: 4,
+         startPlugSize: 1,
+         endPlugSize: 1,
+         startSocket: "left",
+         endSocket: "right",
+         color: "#fb8c00"
+      });
+      lines.push(line{{$linekeyforslot+1}});
+      @endforeach
    
+   }
+
+   function updateLines() {
+        lines.forEach(line => line.position());
+    }
+
+    function zoomIn() {
+        zoomLevel += 0.1;
+        container.style.zoom = zoomLevel;
+        setTimeout(updateLines, 200);  // Update lines after the transition
+    }
+
+    function zoomOut() {
+        if (zoomLevel > 0.1) {
+            zoomLevel -= 0.1;
+            container.style.zoom = zoomLevel;
+            setTimeout(updateLines, 200);  // Update lines after the transition
+        }
+    }
+
+    function resetZoom() {
+        zoomLevel = 1;
+        container.style.zoom = zoomLevel;
+        setTimeout(updateLines, 200);  // Update lines after the transition
+    }
 
    
    new PlainDraggable(node_1, {
@@ -235,24 +268,10 @@ $var_objective = "mapper-org";
          @endforeach
       @endforeach
    @endforeach
-   @endforeach
-   });
+  
 
-   var zoom = 1;
-    function zoom_in(id) {
-        zoom += 0.1;
-        console.log(zoom);
-        $('.rotatex').css('zoom', '' + zoom + '');
-    }
-    function zoom_init(id) {
-        zoom = 1;
-        console.log(zoom);
-        $('.rotatex').css('zoom', '' + zoom + '');
-    }
-    function zoom_out(id) {
-        zoom -= 0.1;
-        $('.rotatex').css('zoom', '' + zoom + '');
-    }
+   
+   
 
 </script>
 <script>

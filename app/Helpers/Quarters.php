@@ -137,7 +137,7 @@ foreach ($quarters as $year => $yearQuarters) {
         curl_close($ch);
    }
 
-   public function abbreviate($number)
+   public static function abbreviate($number)
    {
        // Check if the number is greater than or equal to 1000
        if ($number >= 1000) {

@@ -417,123 +417,126 @@ $var_objective = 'Pagekpi-'.$type;
       
 
 
-            <div class="modal fade" id="edit-chart-kpi{{$chart_data->id}}" tabindex="-1" role="dialog" aria-labelledby="create-chart"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content" style="width: 526px !important;">
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div id="success-chart" role="alert"></div>
-                                <span id="chart-feild-error" class="ml-3 text-danger"></span>
-                                <span id="green-feild-error" class="ml-3 text-danger"></span>
+            <div class="modal fade" id="edit-chart-kpi{{$chart_data->id}}" tabindex="-1" role="dialog" aria-labelledby="add-team" aria-hidden="true">
+                <div class="modal-dialog mw-650px" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header pb-0 border-0 justify-content-end">
+                            <div class="btn btn-sm btn-icon btn-active-color-primary" data-dismiss="modal" aria-label="Close">
+                                <i class="ki-outline ki-cross fs-1"></i>
                             </div>
                         </div>
-                     
-                            <div class="d-flex flex-row">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <h5 class="modal-title" id="">Nesw KPI</h5>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <p>Add a Kpi CVC file</p>
-                                    </div>
+                        <div class="modal-body scroll-y mx-5 mx-xl-18 pt-0 pb-15">
+                            <div class="text-center mb-13">
+                              <h1 class="mb-3" id="end-quartr">Edit Basic Details</h1>
+                              <div class="text-muted fw-semibold fs-5">Add a Kpi CVC file</div>
+                           </div>
+                           <div class="row">
+                                <div class="col-md-12">
                                     <div id="success-chart" role="alert"></div>
                                     <span id="chart-feild-error" class="ml-3 text-danger"></span>
+                                    <span id="green-feild-error" class="ml-3 text-danger"></span>
                                 </div>
-                                <div class="ml-auto">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <img src="{{ asset('public/assets/images/icons/minus.svg') }}">
-                                    </button>
-                                </div>
-                            </div>
+                            </div>                
                             <form class="needs-validation" action="{{url('update-kpi-basic')}}"  method="POST">
                             @csrf
                             <input type="hidden" name="id" value="{{$chart_data->id}}">
                             <div class="row">
                                 <div class="col-md-12 col-lg-12 col-xl-12 mb-2">
-                                    <div class="form-group mb-0">
-                                        <input type="text" class="form-control" value="{{$chart_data->title}}" name="title" required id="title">
-                                        <label for="objective-name">Title</label>
+                                    <div class="d-flex flex-column mb-7 fv-row">
+                                        <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                            <span class="required">Title</span>
+                                        </label>
+                                        <input type="text" class="form-control form-control-solid" value="{{$chart_data->title}}" name="title" required id="title">
                                     </div>
                                 </div>
-                           
-                             
                             </div>
-    
-                     
                             <div class="row">
-                                    <div class="col-md-4 col-lg-4 col-xl-4">
-                                        <div class="form-group mb-0">
-                                            <input type="text" class="form-control" value="{{$chart_data->target_value}}" onkeypress="return onlyNumberKey(event)"
-                                                 name="t_value" id="t_value">
-    
-                                            <label for="objective-name">Target Value</label>
-                                        </div>
+                                <div class="col-md-4 col-lg-4 col-xl-4">
+                                    <div class="d-flex flex-column mb-7 fv-row">
+                                        <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                            <span class="required">Target Value</span>
+                                        </label>
+                                        <input type="text" class="form-control form-control-solid" value="{{$chart_data->target_value}}" onkeypress="return onlyNumberKey(event)"
+                                             name="t_value" id="t_value">
                                     </div>
-                        
-                                    
-                                    <div class="col-md-3 col-lg-3 col-xl-3">
-                                        <div class="form-group mb-0">
-                                            <input type="text" class="form-control"
-                                                name="symbol" id="symbol" value="{{$chart_data->symbol}}">
-                                            <label for="start-date" style="bottom:72px">Symbol</label>
-                                        </div>
-                                    </div>
-    
-                                      
-                                    <div class="col-md-5 col-lg-5 col-xl-5">
-                                        <div class="form-group mb-0">
-                                            <input type="date" class="form-control"  min="{{ date('Y-m-d') }}"
-                                                name="t_date"  value="{{$chart_data->target_date}}">
-                                            <label for="start-date" style="bottom:72px">Target Date</label>
-                                        </div>
-                                    </div>
-    
-                                
-    
-                                    <div class="col-md-12 col-lg-12 col-xl-12">
-                                        <div class="form-group mb-0">
-                                            <select class="form-control" name="lead_manager" id="lead_manager">
-                                                <?php foreach(DB::table('members')->where('org_user',Auth::id())->get() as $r){ ?>
-                                                  <option @if($chart_data->lead_id == $r->id) selected   @endif  value="{{ $r->id }}">{{ $r->name }} {{ $r->last_name }}</option>
-                                                <?php }  ?>
-                                            </select>
-                                            <label for="lead-manager">Lead</label>
-                                        </div>
-                                    </div>
-                                
-        
-                                    <div class="col-md-12 col-lg-12 col-xl-12">
-                                        <div class="form-group mb-0">
-                                            <textarea type="text" class="form-control"
-                                                value="" cols="5" name="summary" id="summary">{{$chart_data->summary}}</textarea>
-                                            <label for="objective-name">Summary</label>
-                                        </div>
-                                    </div>
-    
-                              
-                               
-                             
-    
                                 </div>
-    
-    
-                    </div>
-    
-                    <div class="modal-footer">
-                        <div class="d-flex align-items-end">
-                            <button type="submit"  class="btn btn-primary  btn-sm ml-4">Update</button>
-                        </div>
+                                <div class="col-md-3 col-lg-3 col-xl-3">
+                                    <div class="d-flex flex-column mb-7 fv-row">
+                                        <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                            <span class="required">Symbol</span>
+                                        </label>
+                                        <input type="text" class="form-control form-control-solid"
+                                            name="symbol" id="symbol" value="{{$chart_data->symbol}}">
+                                    </div>
+                                </div>   
+                                <div class="col-md-5 col-lg-5 col-xl-5">
+                                    <div class="d-flex flex-column mb-7 fv-row">
+                                        <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                            <span class="required">Target Date</span>
+                                        </label>
+                                        <input type="date" class="form-control form-control-solid"  min="{{ date('Y-m-d') }}"
+                                            name="t_date"  value="{{$chart_data->target_date}}">
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-lg-12 col-xl-12">
+                                    <div class="d-flex flex-column mb-7 fv-row">
+                                        <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                            <span class="required">Lead</span>
+                                        </label>
+                                        <select class="form-control form-control-solid" name="lead_manager" id="lead_manager">
+                                            <?php foreach(DB::table('members')->where('org_user',Auth::id())->get() as $r){ ?>
+                                              <option @if($chart_data->lead_id == $r->id) selected   @endif  value="{{ $r->id }}">{{ $r->name }} {{ $r->last_name }}</option>
+                                            <?php }  ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-lg-12 col-xl-12">
+                                    <div class="d-flex flex-column mb-7 fv-row">
+                                        <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                            <span class="required">Summary</span>
+                                        </label>
+                                        <textarea type="text" class="form-control form-control-solid"
+                                            value="" rows="3" name="summary" id="summary">{{$chart_data->summary}}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center pt-15">
+                                <button type="submit"  class="btn btn-primary">Update</button>
+                            </div>
                         </form>
-                       
                     </div>
-    
                 </div>
             </div>
         </div> 
         
-        
+        <div class="modal fade" id="delete{{ $chart_data->id }}" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header pb-0 border-0 justify-content-end">
+                        <div class="btn btn-sm btn-icon btn-active-color-primary" data-dismiss="modal">
+                            <i class="ki-outline ki-cross fs-1"></i>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-13 text-center">
+                            <h1 class="mb-3">Delete KPI</h1>
+                        </div>
+                        <form method="POST" action="{{ url('delete-kpi-chart') }}">
+                         @csrf
+                         <input type="hidden" name="delete_id" value="{{ $chart_data->id }}">
+                         <div class="text-center">
+                            Are you sure you want to delete this KPI?
+                         </div>
+                         <div class="text-center pt-15">
+                            <button type="submit" class="btn btn-primary">Confirm</button>
+                         </div>
+                      </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
         <div class="modal fade" id="delete{{ $chart_data->id }}" tabindex="-1"
             role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -568,10 +571,5 @@ $var_objective = 'Pagekpi-'.$type;
 
 </div>
 @endif
-
     @include('KPI.kpi_script')
-
-
-
-
 @endsection

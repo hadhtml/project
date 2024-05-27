@@ -66,12 +66,16 @@
             $now = now();
             $remainingDays = max(0, $now->diffInDays($endDate)); 
             if ($remainingDays > 0) {
-                echo '<div class="alert alert-danger  fade show" role="alert">
-                    Your free trial is expiring after <strong>'.$remainingDays.' days</strong>. Subscribe to keep using the system.
-                    <a href="'.url('boost-payment/'.$plan->slug).'" class="btn btn-dark">
-                        <span aria-hidden="true">Check Plans</span>
-                    </a>
-                </div>';
+                echo '<div class="notice d-flex bg-light-warning rounded border-warning border border-dashed mb-10 p-6">
+                        <i class="ki-outline ki-information fs-2tx text-warning me-4"></i>
+                        <div class="d-flex flex-stack flex-grow-1">
+                            <div class="fw-semibold">
+                                <h4 class="text-gray-900 fw-bold">Please Note!</h4>
+                                <div class="fs-6 text-gray-700">Your free trial is expiring after  <strong>'.$remainingDays.' days</strong>. Subscribe to keep using the system.
+                                <a href="'.url('boost-payment/'.$plan->slug).'">Check Plans</a></div>
+                            </div>
+                        </div>
+                    </div>';
             } else {
                 echo "Expired";
             }

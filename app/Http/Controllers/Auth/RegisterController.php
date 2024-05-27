@@ -119,14 +119,28 @@ class RegisterController extends Controller
               ]);
         }
 
+        $plan = DB::table('plan')->where('status','Active')->orderby('id','DESC')->first();
+
+
+        if($data['plan-id'] != null)
+        {
+         $planId = $data['plan-id'];
+         $max_user = $data['max-user'];
+        }else
+        {
+        $planId = $plan->plan_id;
+        $max_user = 0;
+        }
+
         $newDateTime = Carbon::now()->addDays(30);
+
         DB::table('user_plan')->insert([
-            'plan_id' => $data['plan-id'],
+            'plan_id' => $planId,
             'status' => 'active',
             'subscription_ends_at' => $newDateTime,
             'user_id' => $user->id,
             'payment_type' => 'trail',
-            'package_status' =>  $data['max-user'],
+            'package_status' =>  $max_user,
         ]);
 
      

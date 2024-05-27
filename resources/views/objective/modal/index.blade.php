@@ -74,7 +74,7 @@
                     <div class="col-md-6 col-lg-6 col-xl-6">
                         <div class="form-group mb-0">
                             <label for="end_date">End Date</label>
-                            <input id="end_date" type="date" class="form-control" value="{{ date('Y-m-d',strtotime($data->end_date)) }}" name="end_date" name="edit_epic_end_date" required>
+                            <input id="end_date" type="date" class="form-control" value="{{ date('Y-m-d',strtotime($data->end_date)) }}" name="end_date" required>
                             
                         </div>
                     </div>
@@ -97,6 +97,10 @@
     </div>
 </div>
 <script type="text/javascript">
+    var today = new Date();
+    var formattedToday = today.toISOString().split('T')[0];
+    document.getElementById("end_date").min = formattedToday;
+
     function changeepicstatus(status , id) {
         $.ajax({
             type: "POST",
@@ -107,7 +111,7 @@
             data: {
                 edit_epic_name: '{{ $data->epic_name }}',
                 edit_epic_start_date: '{{ $data->epic_start_date }}',
-                edit_epic_end_date: '{{ $data->epic_end_date }}',
+                edit_epic_end_date: '{{ $data->end_date }}',
                 edit_epic_description: '{{ $data->epic_detail }}',
                 edit_epic_id: id,
                 edit_epic_status: status,

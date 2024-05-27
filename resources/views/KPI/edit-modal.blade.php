@@ -169,29 +169,19 @@
                                     <input type="hidden" id="savenewvalue" name="savenewvalue" value="">
 
                                     <div class="row">
-                                        <div class="col-md-6 col-lg-6 col-xl-6">
-                                            <div class="form-group mb-0">
-
-                                                <label for="small-description">Value</label>
-                                                <div class="input-group mb-0">
-
-                                                    <input type="text" name="value"
-                                                        class="form-control" id="inputField"
-                                                        required>
-                                                    <div class="input-group-append">
-                                                        <span class="input-group-text">{{$data->symbol}}</span>
-                                                    </div>
-                                                </div>
+                                        <div class="col-md-6 fv-row">
+                                            <label class="required fs-6 fw-semibold mb-2">Value</label>
+                                            <div class="position-relative d-flex align-items-center">
+                                                <span style=" position: absolute; left: 15px; font-size: 20px; ">{{$data->symbol}}</span>
+                                                <input type="text" name="value" class="form-control form-control-solid ps-12" id="inputField" required>
                                             </div>
-                                        </div>
-
-                                      
-
-
+                                        </div>                          
                                         <div class="col-md-6 col-lg-6 col-xl-6">
-                                            <div class="form-group mb-0">
-                                                <label for="small-description">Date</label>
-                                                <input type="date" name="date" value="{{ date('Y-m-d') }}" class="form-control" required>
+                                            <div class="d-flex flex-column mb-7 fv-row">
+                                                <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                                    <span class="required">Date</span>
+                                                </label>
+                                                <input type="date" name="date" value="{{ date('Y-m-d') }}" class="form-control form-control-solid" required>
                                             </div>
                                         </div>
 
@@ -200,64 +190,58 @@
 
 
                                         <div class="col-md-12 col-lg-12 col-xl-12">
-                                            <div class="form-group mb-0" style="margin-bottom:-30px !important ">
-                                                <label for="flag_assignee">Participants <small
-                                                        class="text-danger">*</small></label>
+                                            <div class="d-flex flex-column mb-7 fv-row">
+                                                <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                                    <span class="required">Participants</span>
+                                                </label>
+                                                <select class="form-control form-control-solid" required id="js-select1" multiple="multiple" name="participant[]">
+                                                    @foreach (DB::table('members')->where('org_user', Auth::id())->get() as $r)
+                                                        <option value="{{ $r->id }}">{{ $r->name }}
+                                                            {{ $r->last_name }}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
-                                            <select required id="js-select1" multiple="multiple" name="participant[]">
-
-                                                @foreach (DB::table('members')->where('org_user', Auth::id())->get() as $r)
-                                                    <option value="{{ $r->id }}">{{ $r->name }}
-                                                        {{ $r->last_name }}</option>
-                                                @endforeach
-                                            </select>
-
                                         </div>
 
                                         <div class="col-md-12 col-lg-12 col-xl-12">
-                                            <label for="small-description"
-                                                style="font-size:12px;color:#A7A7A7 !important">Status</label>
-
-                                            <div class="form-group mb-0">
-                                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                                    <label
-                                                        class="btn btn-light mr-2">
-                                                        <input type="radio" name="status" required
-                                                        
-                                                            value="On Track" id="option1"
-                                                            autocomplete="off"> On Track 
-                                                    </label>
-                                                    <label
-                                                         class="btn btn-light mr-2">
-                                                        <input type="radio" name="status" required id="option2"
-                            
-                                                            value="At Risk" autocomplete="off"> At Risk
-                                                    </label>
-                                                    <label
-                                                          class="btn btn-light mr-2">
-                                                        <input type="radio" name="status"
+                                            <div class="d-flex flex-column mb-7 fv-row">
+                                                <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                                    <span class="required">Status</span>
+                                                </label>
+                                    
+                                                <div class="form-group mb-0">
+                                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                                        <label
+                                                            class="btn btn-light mr-2">
+                                                            <input type="radio" name="status" required
+                                                            
+                                                                value="On Track" id="option1"
+                                                                autocomplete="off"> On Track 
+                                                        </label>
+                                                        <label
+                                                             class="btn btn-light mr-2">
+                                                            <input type="radio" name="status" required id="option2"
                                 
-                                                            id="option3" value="Off Track"
-                                                            autocomplete="off"> Off Track
-                                                    </label>
+                                                                value="At Risk" autocomplete="off"> At Risk
+                                                        </label>
+                                                        <label
+                                                              class="btn btn-light mr-2">
+                                                            <input type="radio" name="status"
+                                    
+                                                                id="option3" value="Off Track"
+                                                                autocomplete="off"> Off Track
+                                                        </label>
+                                                    </div>
                                                 </div>
-
-                                                {{-- <div class="btn-group" role="group" aria-label="Basic example">
-                                                    <button type="button" onclick="getstatus('On Track');"
-                                                        class="btn btn-light mr-2">On Track</button>
-                                                    <button type="button" onclick="getstatus('At Risk');"
-                                                        class="btn btn-light mr-2">At Risk</button>
-                                                    <button type="button" onclick="getstatus('Off Track');"
-                                                        class="btn btn-light">Off Track</button>
-                                                </div> --}}
                                             </div>
                                         </div>
 
                                         <div class="col-md-12 col-lg-12 col-xl-12">
-                                            <div class="form-group mb-0">
-                                                <label for="small-description">Summary</label>
-                                                <textarea name="summary" class="form-control"></textarea>
-
+                                            <div class="d-flex flex-column mb-7 fv-row">
+                                                <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                                    <span class="required">Summary</span>
+                                                </label>
+                                                <textarea name="summary" class="form-control form-control-solid" rows="3"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -448,7 +432,7 @@
                                                 <label for="flag_assignee">Participants <small
                                                         class="text-danger">*</small></label>
                                             </div>
-                                            <select required id="js-select2{{ $val->id }}" multiple="multiple"
+                                            <select class="form-control form-control-solid" required id="js-select2{{ $val->id }}" multiple="multiple"
                                                 name="participant[]">
                                                 <option value="">Select Assignee</option>
                                                 @foreach (DB::table('members')->where('org_user', Auth::id())->get() as $r)
@@ -705,7 +689,7 @@ $comments = DB::table('flag_comments')
                     <input type="hidden" value="{{ Auth::user()->id }}" name="user_id">
                     <input type="hidden" value="{{ $r->id }}" name="comment_id">
                     <input type="hidden" value="{{ $data->id }}" name="id">
-                    <div class="d-flex flex-column mt-3 d-none">
+                    <div class="d-flex flex-column mt-3">
                         <div>
                             <div class="form-group mb-0">
                                 <label for="objective-name">Write Reply</label>

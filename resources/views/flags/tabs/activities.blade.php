@@ -38,53 +38,56 @@
 <div class="row" >
     <div class="col-md-12">
         @if($activity->count() > 0)
-        <div class="activity-feed">
-            @foreach($activity as $r)
-            @php
-            $substring = substr($r->activity, 0, 20);
-            @endphp
-
-            <div class="activity">
-              <div class="profile-image-container" @if($r->icon == 'image') style="padding:0px !important;" @endif>
-                @if($r->icon == 'image')
-                    @php
-                        $user = DB::table('users')->where('id' , $r->user_id)->first();
-                    @endphp
-
-                    @if($user->image)
-                    <img src="{{asset('public/assets/images/'.$user->image)}}">
-                    @else
-                    <img src="{{ Avatar::create($user->name.' '.$user->last_name)->toBase64() }}">
-                    @endif
-
-                @else
-                @if($data->board_type == 'stream')
-                <span style="font-size:18px;" class="material-symbols-outlined">layers</span>
-                @endif
-                @if($data->board_type == 'unit')
-                <span style="font-size:18px;" class="material-symbols-outlined">domain</span>
-                @endif
-                @if($data->board_type == 'org')
-                <span style="font-size:18px;" class="material-symbols-outlined">network_node</span>
-                @endif
-                @if($data->board_type == 'BU')
-                <span style="font-size:18px;" class="material-symbols-outlined">groups</span>
-                @endif
-                @if($data->board_type == 'VS')
-                <span style="font-size:18px;" class="material-symbols-outlined">groups</span>
-                @endif
-                @if($data->board_type == 'orgT')
-                <span style="font-size:18px;" class="material-symbols-outlined">groups</span>
-                @endif
-                @endif
-              </div>
-              <div class="dotted-line"></div>
-              <div class="activity-content">
-                <div class="activity-header">{{ DB::table('users')->where('id' , $r->user_id)->first()->name }} {{ DB::table('users')->where('id' , $r->user_id)->first()->last_name }}<span> {!! $r->activity !!}</span></div>
-                <div class="activity-time">{{ Cmf::create_time_ago($r->created_at) }}</div>
-              </div>
+        <div id="kt_activity_today" class="card-body p-0 tab-pane fade active show" style="height:500px;overflow: auto;" role="tabpanel" aria-labelledby="kt_activity_today_tab">
+            <div class="timeline timeline-border-dashed">
+                @foreach($activity as $r)
+                @php
+                $substring = substr($r->activity, 0, 20);
+                @endphp
+                <div class="timeline-item">
+                    <div class="timeline-line"></div>
+                    <div class="timeline-icon">
+                        @if($r->icon == 'image')
+                            @php
+                                $user = DB::table('users')->where('id' , $r->user_id)->first();
+                            @endphp
+                            @if($user->image)
+                            <img src="{{asset('public/assets/images/'.$user->image)}}">
+                            @else
+                            <img style="width:100%;" src="{{ Avatar::create($user->name.' '.$user->last_name)->toBase64() }}">
+                            @endif
+                        @else
+                        @if($data->board_type == 'stream')
+                        <span style="font-size:18px;" class="material-symbols-outlined">layers</span>
+                        @endif
+                        @if($data->board_type == 'unit')
+                        <span style="font-size:18px;" class="material-symbols-outlined">domain</span>
+                        @endif
+                        @if($data->board_type == 'org')
+                        <span style="font-size:18px;" class="material-symbols-outlined">network_node</span>
+                        @endif
+                        @if($data->board_type == 'BU')
+                        <span style="font-size:18px;" class="material-symbols-outlined">groups</span>
+                        @endif
+                        @if($data->board_type == 'VS')
+                        <span style="font-size:18px;" class="material-symbols-outlined">groups</span>
+                        @endif
+                        @if($data->board_type == 'orgT')
+                        <span style="font-size:18px;" class="material-symbols-outlined">groups</span>
+                        @endif
+                        @endif
+                    </div>
+                    <div class="timeline-content mt-n1">
+                        <div class="pe-3 mb-5">
+                            <div class="fs-5 fw-semibold mb-2">{!! $r->activity !!}</div>
+                            <div class="d-flex align-items-center mt-1 fs-6">
+                                <div class="text-muted me-2 fs-7">{{ Cmf::create_time_ago($r->created_at) }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
             </div>
-            @endforeach
         </div>
         @else
         <div class="nodatafound">

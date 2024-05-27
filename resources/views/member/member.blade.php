@@ -38,11 +38,11 @@ $var_objective = "Member";
             <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
                <th class="w-10px pe-2">
                   <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
-                     <input class="form-check-input checkAll" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_customers_table .form-check-input" value="1" />
+                     <input class="form-check-input checkAll" type="checkbox"/>
                   </div>
                </th>
-               <td class="min-w-125px">First Name</td>
-               <td class="min-w-125px">Last Name</td>
+               <td class="min-w-125px text-center">Image</td>
+               <td class="min-w-125px">Name</td>
                <td class="min-w-125px">Email</td>
                <td class="min-w-125px">Role</td>
                <td class="min-w-125px">Status</td>
@@ -57,11 +57,17 @@ $var_objective = "Member";
             <tr>
                <td>
                   <div class="form-check form-check-sm form-check-custom form-check-solid">
-                     <input value="{{$member->ID}}" class="form-check-input" type="checkbox" value="1" />
+                     <input value="{{$member->id}}" class="form-check-input checkbox" type="checkbox"/>
                   </div>
                </td>
-               <td class="text-gray-600 text-hover-primary mb-1">{{$member->name}}</td>
-               <td class="text-gray-600 text-hover-primary mb-1">{{$member->LastName}}</td>
+               <td class="text-gray-600 text-hover-primary mb-1 text-center">
+                  @if($member->image != NULL)
+                   <img style="width: 50px;" src="{{asset('public/assets/images/'.$member->image)}}" alt="lead">
+                   @else
+                   <img style="width: 50px;" src="{{ Avatar::create($member->name.' '.$member->LastName)->toBase64() }}" alt="lead">
+                   @endif
+               </td>
+               <td class="text-gray-600 text-hover-primary mb-1">{{$member->name}} {{$member->LastName}}</td>
                <td class="text-gray-600 text-hover-primary mb-1">{{$member->email}}</td>
                <td class="text-gray-600 text-hover-primary mb-1">{{$member->u_role}}</td>
                <td>
@@ -360,24 +366,32 @@ $var_objective = "Member";
        
        });
        
-   $(".checkAll").click(function () {
-   $('input:checkbox').not(this).prop('checked', this.checked);
-   
-      var selectedOptions = [];
-       $('.checkbox:checked').each(function() {
-        selectedOptions.push($(this).val());
-        
-   });
-   
-   // if(selectedOptions.length > 0){
-   // if(this.checked)
-   // {
-   //   $('#delete-button-user').show();  
-   // }else{
-   //   $('#delete-button-user').hide();  
-   // }
-   // }
-   });
+      $(".checkAll").click(function () {
+          $('input:checkbox').not(this).prop('checked', this.checked);
+          var selectedOptions = [];
+          $('input.checkbox:checked').each(function() {
+              selectedOptions.push($(this).val());
+          });
+          if (selectedOptions.length > 0) {
+              if (this.checked) {
+                  $('#delete-button-user').show();  
+              } else {
+                  $('#delete-button-user').hide();  
+              }
+          }
+      });
+
+
+
+      // $(".checkAll").click(function () {
+      //     var selectedOptions = $('input.checkbox:checked');
+      //     if (selectedOptions.length > 0) {
+      //         $('#delete-button-user').show();  
+      //     } else {
+      //         $('#delete-button-user').hide();  
+      //     }
+      // });
+
    
       function onlyNumberKey(evt) {
              
