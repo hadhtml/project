@@ -1,3 +1,42 @@
+
+<div class="sidebar-area">
+            <div class="sidebar-menu-top-area two">
+                <div class="sidebar-menu-logo">
+                    <a class="logo-light" href="index.html"><img alt="image" class="img-fluid" src="{{asset('public/assetsindex/assets/img/logo.png')}}" /></a>
+                </div>
+                <div class="nav-right d-flex jsutify-content-end align-items-center">
+                    <div class="sidebar-menu-close">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 18 18">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M18 0L11.1686 8.99601L18 18L9.0041 11.1605L0 18L6.83156 8.99601L0 0L9.0041 6.83156L18 0Z"></path>
+                        </svg>
+                    </div>
+                    <a href="#" class="header-btn btn-hover">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14">
+                            <path
+                                d="M1.82326 6.42493C4.49302 5.27479 6.44651 2.87535 6.98915 0C7.53178 2.87535 9.48527 5.27479 12.1767 6.42493C12.6977 6.64306 14 7 14 7C14 7 12.6977 7.35694 12.1767 7.57507C9.50698 8.74504 7.55349 11.1246 6.98915 14C6.44651 11.1445 4.49302 8.74504 1.82326 7.5949C1.30233 7.35694 0 7.01983 0 7.01983C0 7.01983 1.30233 6.66289 1.82326 6.42493Z"
+                            />
+                        </svg>
+                        Get in Touch
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row g-lg-4 gy-5">
+                    <div class="col-lg-8 order-lg-2 order-1">
+                        <div class="sidebar-menu-wrap">
+                            <ul class="main-menu">
+                                <li><a href="{{url('/')}}">Home</a></li>
+                                <li><a href="{{url('/faqs')}}" id="faq">FAQ’s</a></li>
+                                <li><a href="#solution-section" id="about" >About Us</a></li>
+                                <li><a href="#solution-section" id="about" >Book a Demo</a></li>
+                                <li><a href="{{url('contact-us')}}" id="contact">Contact Us</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 <header class="header-area style-6">
             <div class="container-lg container-fluid d-flex flex-nowrap align-items-center justify-content-between">
                 <div class="header-logo">
@@ -11,7 +50,7 @@
                     </div>
                     <ul class="menu-list">
                         <li><a href="{{url('/')}}">Home</a></li>
-                        <li><a href="#solution-section" id="faq">FAQ’s</a></li>
+                        <li><a href="{{url('/faqs')}}" id="faq">FAQ’s</a></li>
                         <li><a href="#solution-section" id="about" >About Us</a></li>
                         <li><a href="#solution-section" id="about" >Book a Demo</a></li>
                         <li><a href="{{url('contact-us')}}" id="contact">Contact Us</a></li>

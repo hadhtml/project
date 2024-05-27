@@ -113,7 +113,7 @@
                         </div>
                     </div>
                     <ul class="breadcrumb-list">
-                        <li><a href="https://demo-egenslab.b-cdn.net/">Home</a></li>
+                        <li><a href="{{url('/')}}">Home</a></li>
                         <li>Contact Us</li>
                     </ul>
                 </div>
