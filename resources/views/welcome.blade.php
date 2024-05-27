@@ -1010,7 +1010,10 @@
                             <div class="dash-and-paragraph">
                                 <div class="dash"></div>
                                 <div class="content-and-social">
-                                    <p>Start your journey towards success now by trying OutcomeMet today. Empower your team, delight your customers, and stay ahead of the competition. Don't delay, start optimising your product delivery right now!</p>
+                                    <p>
+                                        Start your journey towards success now by trying OutcomeMet today. Empower your team, delight your customers, and stay ahead of the competition. Don't delay, start optimising your product delivery
+                                        right now!
+                                    </p>
                                     <div class="social-area">
                                         <h6>Connect Us</h6>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="50" height="6" viewBox="0 0 50 6">
@@ -1037,11 +1040,11 @@
                     </div>
                     <div class="col-lg-4 d-lg-flex justify-content-end align-items-center">
                         <div class="btn_wrapper">
-                            <a class="circle-btn btn-hover two" href="#">
+                            <a class="circle-btn btn-hover two" href="{{url('/register')}}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12">
                                     <path d="M10.0035 3.40804L1.41153 12L0 10.5885L8.59097 1.99651H1.01922V0H12V10.9808H10.0035V3.40804Z"></path>
                                 </svg>
-                                Try for  <strong>Free</strong>
+                                Try for <strong>Free</strong>
                                 <span></span>
                             </a>
                         </div>
@@ -1051,10 +1054,8 @@
         </div>
 
         <!-- Footer -->
-    
-        @php
-          $contact = DB::table('header_section')->where('section','contact')->first();
-        @endphp
+
+        @php $contact = DB::table('header_section')->where('section','contact')->first(); @endphp
 
         <footer class="home6-footer">
             <div class="container-lg container-fluid">
@@ -1114,11 +1115,9 @@
                                             </a>
                                         </div>
                                         <div class="footer-content">
-                                            <p>@if($contact) {{$contact->sub_title}}  @endif</p>
+                                            <p>@if($contact) {{$contact->sub_title}} @endif</p>
                                         </div>
-                                        @php
-                                          $footer = DB::table('header_section')->where('section','footer')->first();
-                                          @endphp
+                                        @php $footer = DB::table('header_section')->where('section','footer')->first(); @endphp
                                         <ul class="social-area">
                                             <li>
                                                 <a href="@if($footer) {{$footer->facebook}} @endif" target="_blank">
@@ -1165,7 +1164,7 @@
                                                         </svg>
                                                     </a>
                                                 </li>
-                                                
+
                                                 <li>
                                                     <a href="#">
                                                         Blog & News
@@ -1186,32 +1185,16 @@
                                         <div class="menu-container">
                                             <ul>
                                                 <li>
-                                                    <a href="#">
-                                                        Sitemap
+                                                    <a href="{{url('privacy-and-policies')}}">
+                                                        Privacy & Policies
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
                                                             <path d="M8.33624 2.84003L1.17627 10L0 8.82373L7.15914 1.66376H0.849347V0H10V9.15065H8.33624V2.84003Z" />
                                                         </svg>
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a href="#">
-                                                        Link
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
-                                                            <path d="M8.33624 2.84003L1.17627 10L0 8.82373L7.15914 1.66376H0.849347V0H10V9.15065H8.33624V2.84003Z" />
-                                                        </svg>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">
-                                                        Link
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
-                                                            <path d="M8.33624 2.84003L1.17627 10L0 8.82373L7.15914 1.66376H0.849347V0H10V9.15065H8.33624V2.84003Z" />
-                                                        </svg>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">
-                                                        Link
+                                                    <a href="{{url('terms-and-conditions')}}">
+                                                        Terms & Conditions
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
                                                             <path d="M8.33624 2.84003L1.17627 10L0 8.82373L7.15914 1.66376H0.849347V0H10V9.15065H8.33624V2.84003Z" />
                                                         </svg>
@@ -1230,9 +1213,7 @@
                         <p>Copyright 2024 By Outcomemet</p>
                     </div>
                     <div class="terms-condition">
-                        <p>
-                            Our Business <a href="{{url('terms-and-conditions')}}">Policy, Terms & Condition</a>
-                        </p>
+                        <p>Our Business <a href="{{url('terms-and-conditions')}}">Policy, Terms & Condition</a></p>
                     </div>
                 </div>
             </div>

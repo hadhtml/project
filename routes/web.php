@@ -28,6 +28,10 @@ Route::get('terms-and-conditions', function () {
     return view('terms-and-conditions');
 });
 
+Route::get('privacy-and-policies', function () {
+    return view('privacy-policies');
+});
+
 Route::get('organization/dashboard', [HomeController::class, 'index'])->name('home');
 
 Route::middleware('auth')->group(function () {
