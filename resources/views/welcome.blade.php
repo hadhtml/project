@@ -1231,7 +1231,7 @@
                     </div>
                     <div class="terms-condition">
                         <p>
-                            Our Business <a href="#">Policy, Terms & Condition</a>
+                            Our Business <a href="{{url('terms-and-conditions')}}">Policy, Terms & Condition</a>
                         </p>
                     </div>
                 </div>

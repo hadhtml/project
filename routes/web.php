@@ -24,6 +24,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('terms-and-conditions', function () {
+    return view('terms-and-conditions');
+});
+
 Route::get('organization/dashboard', [HomeController::class, 'index'])->name('home');
 
 Route::middleware('auth')->group(function () {
