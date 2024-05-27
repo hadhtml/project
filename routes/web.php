@@ -32,6 +32,10 @@ Route::get('privacy-and-policies', function () {
     return view('privacy-policies');
 });
 
+Route::get('contact-us', function () {
+    return view('contact-us');
+});
+
 Route::get('organization/dashboard', [HomeController::class, 'index'])->name('home');
 
 Route::middleware('auth')->group(function () {

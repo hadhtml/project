@@ -1491,11 +1491,11 @@ body:not(.is-mobile) .tt-style-switch:hover {
 }
 
 .primary-btn3 {
-    color: #000;
+    color: #fff;
     font-family: var(--font-kanit);
     font-size: 15px;
     font-weight: 500;
-    background-color: var(--white-color);
+    background-color: #000;
     border-color: var(--white-color);
     border-radius: 50px;
     padding: 19px 36px;
@@ -1511,7 +1511,7 @@ body:not(.is-mobile) .tt-style-switch:hover {
 }
 
 .primary-btn3 svg {
-    fill: #000;
+    fill: #fff;
     transition: all .6s
 }
 
@@ -1688,7 +1688,7 @@ body:not(.is-mobile) .tt-style-switch:hover {
 }
 
 .form-inner input {
-    background: var(---dark-white-color);
+    background: white;
     color: var(--paragraph-color);
     font-family: var(--font-kanit);
     font-size: 14px;
@@ -1697,7 +1697,7 @@ body:not(.is-mobile) .tt-style-switch:hover {
     width: 100%;
     padding: 10px 20px;
     outline: none;
-    border: 1px solid var(---dark-white-color)
+    border: 1px solid #ededed
 }
 
 .form-inner input::-moz-placeholder {
@@ -22513,7 +22513,7 @@ footer.home6-footer .footer-btm .terms-condition p a:hover {
 
 .contact-page .contact-info-wrap .single-location {
     border: 1px solid var(--border-color2);
-    background-color: #faf8fb;
+    background-color: #06b0ef;
     border-radius: 10px;
     padding: 45px 40px
 }
@@ -22535,7 +22535,7 @@ footer.home6-footer .footer-btm .terms-condition p a:hover {
 }
 
 .contact-page .contact-info-wrap .single-location .title h4 {
-    color: var(--title-color);
+    color: white;
     font-family: var(--font-kanit);
     font-size: 22px;
     font-weight: 500;
@@ -22578,7 +22578,7 @@ footer.home6-footer .footer-btm .terms-condition p a:hover {
 
 .contact-page .contact-info-wrap .single-location ul li .icon svg {
     transition: .35s;
-    fill: var(--primary-color)
+    fill: white
 }
 
 .contact-page .contact-info-wrap .single-location ul li .info {
@@ -22586,7 +22586,7 @@ footer.home6-footer .footer-btm .terms-condition p a:hover {
 }
 
 .contact-page .contact-info-wrap .single-location ul li .info a {
-    color: var(--paragraph-color);
+    color: white;
     font-family: var(--font-kanit);
     font-size: 14px;
     font-weight: 500;
@@ -22595,7 +22595,7 @@ footer.home6-footer .footer-btm .terms-condition p a:hover {
 }
 
 .contact-page .contact-info-wrap .single-location ul li .info a:hover {
-    color: var(--primary-color)
+    color: white
 }
 
 .contact-page .contact-info-wrap .single-location ul li:hover .icon {
@@ -22607,8 +22607,9 @@ footer.home6-footer .footer-btm .terms-condition p a:hover {
 }
 
 .contact-page .contact-form-wrap {
-    background-color: #c5d1c3;
+    background-color: #f8f8f8;
     border-radius: 10px;
+    border:1px solid var(--border-color2) !important;
     padding: 60px 50px
 }
 
