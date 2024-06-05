@@ -572,7 +572,7 @@ class SiteController extends Controller
 
         $subject = $request->subject;
         Mail::send('email.contactus', array('request'=>$request), function($message) use ($request,$subject) {
-           $message->to('ahsinjavaid890@gmail.com')->subject($subject);
+           $message->to('info@outcomemet.co.uk')->subject($subject);
            $message->from('noreply@outcomemet.co.uk','OUTCOMEMET');
         });
         return back()->with('success', 'Your message has been sent.');
