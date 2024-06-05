@@ -16,7 +16,7 @@
                 @if($organization->logo)
                 <img src="{{asset('public/assets/images/'.$organization->logo)}}" class="h-25px theme-light-show">
                 @else
-                <img src="{{asset('public/assets/images/logo-placeholder-removebg-preview.png')}}" class="h-25px theme-light-show">
+                <img src="{{asset('public/assets/images/icons/logo-2.png')}}" class="h-25px theme-light-show">
                 @endif
                 {{-- <img alt="Logo" src="{{asset('public/assets/images/icons/logo-2.png')}}" class="h-25px theme-light-show" /> --}}
                 <img alt="Logo" src="{{asset('public/assets/images/icons/logo-2.png')}}" class="h-25px theme-dark-show" />

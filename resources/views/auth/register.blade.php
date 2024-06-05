@@ -108,7 +108,7 @@
                                          <div class="col-md-6">
                                             <a href="{{url('/auth/facebook')}}" class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100  cs-btn">
                                             <img alt="Logo" src="{{ url('public/assetsvone/media/svg/brand-logos/facebook-2.svg') }}" class="theme-light-show h-15px me-3" />
-                                            <img alt="Logo" src="assets/" class="theme-dark-show h-15px me-3" />Continue With Facebook</a>
+                                            Continue With Facebook</a>
                                          </div>
                                       </div>
                                       <div class="separator separator-content my-14">

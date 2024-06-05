@@ -327,6 +327,9 @@ Route::name('linking.')->namespace('App\Http\Controllers')->prefix('dashboard')-
     Route::POST('linking/saveteamlevellinking', 'MapperController@saveteamlevellinking');
     Route::POST('linking/checkkeyresultmapper', 'MapperController@checkkeyresultmapper');
     Route::POST('linking/getorganizationkeyresult', 'MapperController@getorganizationkeyresult');
+
+    Route::get('mapperapi', 'MapperController@mapperapi');
+    
     
 });
 

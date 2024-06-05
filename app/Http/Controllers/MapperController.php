@@ -75,6 +75,20 @@ class MapperController extends Controller
         $objective = DB::table('key_result')->where('obj_id',$request->id)->get();
         return $objective;
     }
+    public function mapperapi()
+    {
+        try
+        {
+            $allnodes = team_link_child::where('user_id' , Auth::user()->id)->get();
+            return response()->json($allnodes, 200);
+        } 
+        catch (\Exception $e)
+        {
+            return response()->json([
+                'errors' => ['code' => 'Error', 'message' => 'Data Not Found']
+            ], 404);
+        }
+    }
     public function mapperbytype($url , $type)
     {
         if($type == 'unit')

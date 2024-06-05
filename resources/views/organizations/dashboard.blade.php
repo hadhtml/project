@@ -760,20 +760,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
     <script>
         // Select the form element
-        var ctx = document.getElementById("myChart").getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                datasets: [{
-                    label: '',
-                    data: [12, 19, 3, 17, 28, 24, 7, 17, 67, 47, 27, 87],
-                    backgroundColor: "rgba(54,153,255,1)",
-                    borderWidth: 1,
-                    barThickness: 1
-                }]
-            }
-        });
+        // var ctx = document.getElementById("myChart").getContext('2d');
+        // var myChart = new Chart(ctx, {
+        //     type: 'bar',
+        //     data: {
+        //         labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        //         datasets: [{
+        //             label: '',
+        //             data: [12, 19, 3, 17, 28, 24, 7, 17, 67, 47, 27, 87],
+        //             backgroundColor: "rgba(54,153,255,1)",
+        //             borderWidth: 1,
+        //             barThickness: 1
+        //         }]
+        //     }
+        // });
 
         function saveOrganization() {
 
