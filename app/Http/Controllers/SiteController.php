@@ -4,14 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\Cookie;
+use Mail;
 
 class SiteController extends Controller
 {
 
     public function Indexpage()
     {
-     
-    return view('indexpage');
+        return view('indexpage');
     }
     public function AllFaq()
     {
@@ -553,5 +554,27 @@ class SiteController extends Controller
 
         return $filename;
 
+    }
+
+    public function submitcontactusform(Request $request)
+    {
+         $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+        ]);
+        if ($request->has('remember')) {
+            Cookie::queue('name', $request->name, 60 * 24 * 30); // 30 days
+            Cookie::queue('email', $request->email, 60 * 24 * 30); // 30 days
+        } else {
+            Cookie::queue(Cookie::forget('name'));
+            Cookie::queue(Cookie::forget('email'));
+        }
+
+        $subject = $request->subject;
+        Mail::send('email.contactus', array('request'=>$request), function($message) use ($request,$subject) {
+           $message->to('ahsinjavaid890@gmail.com')->subject($subject);
+           $message->from('noreply@outcomemet.co.uk','OUTCOMEMET');
+        });
+        return back()->with('success', 'Your message has been sent.');
     }
 }

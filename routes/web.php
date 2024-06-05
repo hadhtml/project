@@ -4,6 +4,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController; 
+use App\Http\Controllers\SiteController; 
 use App\Http\Controllers\Admin\Auth\LoginController;
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +36,10 @@ Route::get('privacy-and-policies', function () {
 Route::get('contact-us', function () {
     return view('contact-us');
 });
+
+Route::POST('submitcontactusform', [SiteController::class, 'submitcontactusform']);
+
+
 
 Route::get('faqs', function () {
     return view('faqs');

@@ -18,7 +18,7 @@
         <link href="{{asset('public/assetsindex/assets/css/boxicons.min.css" rel="stylesheet')}}" />
         <link rel="stylesheet" href="{{asset('public/assetsindex/assets/css/style.css')}}" />
 
-        <title>Privacy & Policies</title>
+        <title>Contact Us</title>
         <link rel="icon" href="{{asset('public/assetsindex/assets/img/logo2.png')}}" type="image/gif" sizes="20x20" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     </head>
@@ -141,8 +141,7 @@
                                                     </svg>
                                                 </div>
                                                 <div class="info">
-                                                    <a href="tel:0921772345432">+092-177-234 5432</a>
-                                                    <a href="tel:0921772344663">+092-177-234 4663</a>
+                                                    <a href="tel:+4402080582501">+4402080582501</a>
                                                 </div>
                                             </li>
                                             <li>
@@ -154,11 +153,8 @@
                                                     </svg>
                                                 </div>
                                                 <div class="info">
-                                                    <a href="https://demo-egenslab.b-cdn.net/cdn-cgi/l/email-protection#3851565e575d40595548545d785f55595154165b5755">
-                                                        <span class="__cf_email__" data-cfemail="96fff8f0f9f3eef7fbe6faf3d6f1fbf7fffab8f5f9fb">[email&#160;protected]</span>
-                                                    </a>
-                                                    <a href="https://demo-egenslab.b-cdn.net/cdn-cgi/l/email-protection#c5acaba3aaa0bda4a8b5a9a0f785a2a8a4aca9eba6aaa8">
-                                                        <span class="__cf_email__" data-cfemail="4f262129202a372e223f232a7d0f28222e2623612c2022">[email&#160;protected]</span>
+                                                    <a href="mailto:info@outcomemet.co.uk">
+                                                        <span>info@outcomemet.co.uk</span>
                                                     </a>
                                                 </div>
                                             </li>
@@ -174,7 +170,7 @@
                                                     </svg>
                                                 </div>
                                                 <div class="info">
-                                                    <a>Canada City, Office-02, Road-11, House-3B/B, Section-H</a>
+                                                    <a>128 City Road, London, United Kingdom, EC1V 2NX</a>
                                                 </div>
                                             </li>
                                         </ul>
@@ -183,43 +179,53 @@
                             </div>
                         </div>
                         <div class="col-xl-8">
+                            @if (session('success'))
+                              <div class="row">
+                                  <div class="col-md-12">
+                                      <div class="alert alert-success mt-1" role="alert">
+                                          {{ session('success') }}
+                                      </div>
+                                  </div>
+                              </div>
+                              @endif
                             <div class="contact-form-wrap">
-                                <form>
+                                <form method="POST" action="{{ url('submitcontactusform') }}">
+                                    @csrf
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-inner mb-30">
                                                 <label>Full Name*</label>
-                                                <input type="text" placeholder="Daniel Scoot" />
+                                                <input value="{{ old('name', request()->cookie('name')) }}" name="name" type="text" placeholder="Daniel Scoot" />
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-inner mb-30">
                                                 <label>Your Email*</label>
-                                                <input type="email" placeholder="example@gamil.com" />
+                                                <input value="{{ old('email', request()->cookie('email')) }}" type="email" name="email" placeholder="example@gamil.com" />
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-inner mb-30">
                                                 <label>Phone Number <span>(Optional)</span></label>
-                                                <input type="text" placeholder="+920- 5566 **** ****" />
+                                                <input type="text" name="phonenumber" placeholder="+920- 5566 **** ****" />
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-inner mb-30">
                                                 <label>Subject</label>
-                                                <input type="text" placeholder="Web Develop" />
+                                                <input type="text" name="subject" placeholder="Web Develop" />
                                             </div>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-inner mb-30">
                                                 <label>How can We Help You?</label>
-                                                <textarea placeholder="What’s on your mind"></textarea>
+                                                <textarea name="message" placeholder="What’s on your mind"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-12 mb-20">
                                             <div class="form-inner2">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value id="contactCheck" />
+                                                    <input name="remember" {{ request()->cookie('name') ? 'checked' : '' }} class="form-check-input" type="checkbox" value id="contactCheck" />
                                                     <label class="form-check-label" for="contactCheck">
                                                         Please save my name, email address for the next time I message.
                                                     </label>
