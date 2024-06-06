@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Facades\Cookie;
 use Mail;
+use App\Models\team_link_child;
 
 class SiteController extends Controller
 {
