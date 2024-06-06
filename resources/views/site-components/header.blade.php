@@ -29,7 +29,7 @@
                                 <li><a href="{{url('/')}}">Home</a></li>
                                 <li><a href="{{url('/faqs')}}" id="faq">FAQ’s</a></li>
                                 <li><a href="#solution-section" id="about" >About Us</a></li>
-                                <li><a href="#solution-section" id="about" >Book a Demo</a></li>
+                                <li><a href="https://calendly.com/support-fmth/30min" id="about" >Book a Demo</a></li>
                                 <li><a href="{{url('contact-us')}}" id="contact">Contact Us</a></li>
                             </ul>
                         </div>
