@@ -10,6 +10,20 @@ use Mail;
 class SiteController extends Controller
 {
 
+    public function mapperapi($id)
+    {
+        try
+        {
+            $allnodes = team_link_child::where('user_id' , $id)->get();
+            return response()->json($allnodes, 200);
+        } 
+        catch (\Exception $e)
+        {
+            return response()->json([
+                'errors' => ['code' => 'Error', 'message' => 'Data Not Found']
+            ], 404);
+        }
+    }
     public function Indexpage()
     {
         return view('indexpage');

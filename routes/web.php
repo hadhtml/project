@@ -37,7 +37,11 @@ Route::get('contact-us', function () {
     return view('contact-us');
 });
 
+
 Route::POST('submitcontactusform', [SiteController::class, 'submitcontactusform']);
+
+
+Route::get('mapperapi/{id}', [SiteController::class, 'mapperapi']);
 
 
 
