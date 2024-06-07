@@ -14,10 +14,10 @@ class SiteController extends Controller
     public function mapperapi($userId)
     {
 
-        $user = Auth::user();
-        if ($user->id != $userId) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
+        // $user = Auth::user();
+        // if ($user->id != $userId) {
+        //     return response()->json(['error' => 'Unauthorized'], 401);
+        // }
         
        // Select only the 'organization_name', 'slug' and 'id' columns
         $organization = DB::table('organization')
