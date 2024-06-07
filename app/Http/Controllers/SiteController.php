@@ -11,19 +11,198 @@ use App\Models\team_link_child;
 class SiteController extends Controller
 {
 
-    public function mapperapi($id)
+    public function mapperapi($userId)
     {
-        try
-        {
-            $allnodes = team_link_child::where('user_id' , $id)->get();
-            return response()->json($allnodes, 200);
-        } 
-        catch (\Exception $e)
-        {
-            return response()->json([
-                'errors' => ['code' => 'Error', 'message' => 'Data Not Found']
-            ], 404);
+       // Select only the 'organization_name', 'slug' and 'id' columns
+        $organization = DB::table('organization')
+            ->select('id', 'organization_name', 'slug')
+            ->where('user_id', $userId)
+            ->first();
+
+        if (!$organization) {
+            return response()->json(['message' => 'Organization not found'], 404);
         }
+
+        // Fetch objectives related to the organization
+        $objectives = DB::table('objectives')
+            ->select('objective_name', 'obj_prog', 'id as obj_id')
+            ->whereNull('trash')
+            ->where('unit_id', $organization->id)
+            ->where('type', 'org')
+            ->get();
+
+        // Fetch key results for each objective
+        foreach ($objectives as $objective) {
+            $keyResults = DB::table('key_result')
+                ->select('key_name', 'key_prog', 'obj_id', 'id as key_id')
+                ->whereNull('trash')
+                ->where('obj_id', $objective->obj_id)
+                ->get();
+
+            $objective->key_results = $keyResults;
+        }
+
+        // Add objectives to the organization data
+        $organization->objectives = $objectives;
+
+        // Fetch business units related to the organization
+        $businessUnits = DB::table('business_units')
+            ->select('id as bu_id', 'business_name', 'slug')
+            ->where('org_id', $organization->id)
+            ->orderBy('id', 'asc')
+            ->get();
+
+        // Fetch objectives and key results for each business unit
+        foreach ($businessUnits as $businessUnit) {
+            $unitObjectives = DB::table('objectives')
+                ->select('objective_name', 'obj_prog', 'id as obj_id')
+                ->whereNull('trash')
+                ->where('unit_id', $businessUnit->bu_id)
+                ->where('type', 'unit')
+                ->get();
+
+            foreach ($unitObjectives as $objective) {
+                $keyResults = DB::table('key_result')
+                    ->select('key_name', 'key_prog', 'obj_id', 'id as key_id')
+                    ->whereNull('trash')
+                    ->where('obj_id', $objective->obj_id)
+                    ->get();
+
+                $objective->key_results = $keyResults;
+            }
+
+            $businessUnit->objectives = $unitObjectives;
+
+            // Fetch business unit teams
+            $businessUnitTeams = DB::table('unit_team')
+                ->select('id as bu_team_id', 'team_title', 'slug')
+                ->where('org_id', $businessUnit->bu_id)
+                ->get();
+
+            // Fetch objectives for each business unit team
+            foreach ($businessUnitTeams as $businessUnitTeam) {
+                $teamObjectives = DB::table('objectives')
+                    ->select('objective_name', 'obj_prog', 'id as obj_id')
+                    ->whereNull('trash')
+                    ->where('unit_id', $businessUnitTeam->bu_team_id)
+                    ->where('type', 'BU')
+                    ->get();
+
+                foreach ($teamObjectives as $objective) {
+                    $keyResults = DB::table('key_result')
+                        ->select('key_name', 'key_prog', 'obj_id', 'id as key_id')
+                        ->whereNull('trash')
+                        ->where('obj_id', $objective->obj_id)
+                        ->get();
+
+                    $objective->key_results = $keyResults;
+                }
+
+                $businessUnitTeam->objectives = $teamObjectives;
+            }
+
+            // Add business unit teams to the business unit data
+            $businessUnit->unit_teams = $businessUnitTeams;
+        }
+
+        // Add business units to the organization data
+        $organization->business_units = $businessUnits;
+
+        // Fetch org teams related to the organization
+        $orgTeams = DB::table('org_team')
+            ->select('id as team_id', 'team_title', 'slug')
+            ->where('org_id', $organization->id)
+            ->get();
+
+        // Fetch objectives for each org team
+        foreach ($orgTeams as $orgTeam) {
+            $teamObjectives = DB::table('objectives')
+                ->select('objective_name', 'obj_prog', 'id as obj_id')
+                ->whereNull('trash')
+                ->where('unit_id', $orgTeam->team_id)
+                ->where('type', 'orgT')
+                ->get();
+
+            foreach ($teamObjectives as $objective) {
+                $keyResults = DB::table('key_result')
+                    ->select('key_name', 'key_prog', 'obj_id', 'id as key_id')
+                    ->whereNull('trash')
+                    ->where('obj_id', $objective->obj_id)
+                    ->get();
+
+                $objective->key_results = $keyResults;
+            }
+
+            $orgTeam->objectives = $teamObjectives;
+        }
+
+        // Add org teams to the organization data
+        $organization->org_teams = $orgTeams;
+
+        // Fetch value streams related to the organization
+        $valueStreams = DB::table('value_stream')
+            ->select('value_name', 'id as value_stream_id')
+            ->where('org_id', $organization->id)
+            ->orderBy('id', 'asc')
+            ->get();
+
+        // Fetch objectives and key results for each value stream
+        foreach ($valueStreams as $valueStream) {
+            $streamObjectives = DB::table('objectives')
+                ->select('objective_name', 'obj_prog', 'id as obj_id')
+                ->whereNull('trash')
+                ->where('unit_id', $valueStream->value_stream_id)
+                ->where('type', 'stream') // Adjusted to filter by type 'stream'
+                ->get();
+
+            foreach ($streamObjectives as $objective) {
+                $keyResults = DB::table('key_result')
+                    ->select('key_name', 'key_prog', 'obj_id', 'id as key_id')
+                    ->whereNull('trash')
+                    ->where('obj_id', $objective->obj_id)
+                    ->get();
+
+                $objective->key_results = $keyResults;
+            }
+
+            $valueStream->objectives = $streamObjectives;
+
+            // Fetch value stream teams
+            $valueStreamTeams = DB::table('value_team')
+                ->select('id as vs_team_id', 'team_title', 'slug')
+                ->where('org_id', $valueStream->value_stream_id)
+                ->get();
+
+            // Fetch objectives for each value stream team
+            foreach ($valueStreamTeams as $valueStreamTeam) {
+                $teamObjectives = DB::table('objectives')
+                    ->select('objective_name', 'obj_prog', 'id as obj_id')
+                    ->whereNull('trash')
+                    ->where('unit_id', $valueStreamTeam->vs_team_id)
+                    ->where('type', 'VS')
+                    ->get();
+
+                foreach ($teamObjectives as $objective) {
+                    $keyResults = DB::table('key_result')
+                        ->select('key_name', 'key_prog', 'obj_id', 'id as key_id')
+                        ->whereNull('trash')
+                    ->where('obj_id', $objective->obj_id)
+                    ->get();
+
+                    $objective->key_results = $keyResults;
+                }
+
+                $valueStreamTeam->objectives = $teamObjectives;
+            }
+
+            // Add value stream teams to the value stream data
+            $valueStream->value_stream_teams = $valueStreamTeams;
+        }
+
+        // Add value streams to the organization data
+        $organization->value_streams = $valueStreams;
+
+        return response()->json($organization, 200);
     }
     public function Indexpage()
     {
