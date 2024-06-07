@@ -129,7 +129,7 @@
                                 <div class="col-xl-12 col-md-6">
                                     <div class="single-location">
                                         <div class="title">
-                                            <h4>New York, USA</h4>
+                                            <h4>OutcomeMet London,UK</h4>
                                         </div>
                                         <ul>
                                             <li>
@@ -141,7 +141,7 @@
                                                     </svg>
                                                 </div>
                                                 <div class="info">
-                                                    <a href="tel:+4402080582501">+4402080582501</a>
+                                                    <a href="tel:+4402080582501">+44 (0)2080582501</a>
                                                 </div>
                                             </li>
                                             <li>
@@ -195,25 +195,25 @@
                                         <div class="col-md-6">
                                             <div class="form-inner mb-30">
                                                 <label>Full Name*</label>
-                                                <input value="{{ old('name', request()->cookie('name')) }}" name="name" type="text" placeholder="Daniel Scoot" />
+                                                <input value="{{ old('name', request()->cookie('name')) }}" name="name" type="text" placeholder="John Marshall" />
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-inner mb-30">
                                                 <label>Your Email*</label>
-                                                <input value="{{ old('email', request()->cookie('email')) }}" type="email" name="email" placeholder="example@gamil.com" />
+                                                <input value="{{ old('email', request()->cookie('email')) }}" type="email" name="email" placeholder="john@companyName.com." />
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-inner mb-30">
                                                 <label>Phone Number <span>(Optional)</span></label>
-                                                <input type="text" name="phonenumber" placeholder="+920- 5566 **** ****" />
+                                                <input type="text" name="phonenumber" placeholder="+44 078 **** ****" />
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-inner mb-30">
                                                 <label>Subject</label>
-                                                <input type="text" name="subject" placeholder="Web Develop" />
+                                                <input type="text" name="subject" placeholder="OutcomeMet Demo" />
                                             </div>
                                         </div>
                                         <div class="col-md-12">
