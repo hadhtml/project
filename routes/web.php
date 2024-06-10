@@ -41,7 +41,10 @@ Route::get('contact-us', function () {
 Route::POST('submitcontactusform', [SiteController::class, 'submitcontactusform']);
 
 
-Route::get('mapperapi/{id}', [SiteController::class, 'mapperapi']);
+
+Route::name('organization.')->middleware('corserror')->group(function () {
+    Route::get('mapperapi/{id}', [SiteController::class, 'mapperapi']);
+});
 
 
 
