@@ -215,7 +215,7 @@ class SiteController extends Controller
                     $objective->key_results = $keyResults;
                 }
 
-                $valueStreamTeam->objectives = $teamObjectives;
+                $valueStreamTeam->objectives = $teamObjectives; 
             }
 
             // Add value stream teams to the value stream data
