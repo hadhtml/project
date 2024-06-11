@@ -31,7 +31,7 @@ class SiteController extends Controller
 
         // Fetch objectives related to the organization
         $objectives = DB::table('objectives')
-            ->select('objective_name', 'obj_prog', 'id as obj_id')
+            ->select('objective_name', 'obj_prog', 'id as obj_id' , 'type as objective_level')
             ->whereNull('trash')
             ->where('unit_id', $organization->id)
             ->where('type', 'org')
@@ -61,7 +61,7 @@ class SiteController extends Controller
         // Fetch objectives and key results for each business unit
         foreach ($businessUnits as $businessUnit) {
             $unitObjectives = DB::table('objectives')
-                ->select('objective_name', 'obj_prog', 'id as obj_id')
+                ->select('objective_name', 'obj_prog', 'id as obj_id' , 'type as objective_level')
                 ->whereNull('trash')
                 ->where('unit_id', $businessUnit->bu_id)
                 ->where('type', 'unit')
@@ -88,7 +88,7 @@ class SiteController extends Controller
             // Fetch objectives for each business unit team
             foreach ($businessUnitTeams as $businessUnitTeam) {
                 $teamObjectives = DB::table('objectives')
-                    ->select('objective_name', 'obj_prog', 'id as obj_id')
+                    ->select('objective_name', 'obj_prog', 'id as obj_id' , 'type as objective_level')
                     ->whereNull('trash')
                     ->where('unit_id', $businessUnitTeam->bu_team_id)
                     ->where('type', 'BU')
@@ -123,7 +123,7 @@ class SiteController extends Controller
         // Fetch objectives for each org team
         foreach ($orgTeams as $orgTeam) {
             $teamObjectives = DB::table('objectives')
-                ->select('objective_name', 'obj_prog', 'id as obj_id')
+                ->select('objective_name', 'obj_prog', 'id as obj_id' , 'type as objective_level')
                 ->whereNull('trash')
                 ->where('unit_id', $orgTeam->team_id)
                 ->where('type', 'orgT')
@@ -155,7 +155,7 @@ class SiteController extends Controller
         // Fetch objectives and key results for each value stream
         foreach ($valueStreams as $valueStream) {
             $streamObjectives = DB::table('objectives')
-                ->select('objective_name', 'obj_prog', 'id as obj_id')
+                ->select('objective_name', 'obj_prog', 'id as obj_id' , 'type as objective_level')a  
                 ->whereNull('trash')
                 ->where('unit_id', $valueStream->value_stream_id)
                 ->where('type', 'stream') // Adjusted to filter by type 'stream'
@@ -182,7 +182,7 @@ class SiteController extends Controller
             // Fetch objectives for each value stream team
             foreach ($valueStreamTeams as $valueStreamTeam) {
                 $teamObjectives = DB::table('objectives')
-                    ->select('objective_name', 'obj_prog', 'id as obj_id')
+                    ->select('objective_name', 'obj_prog', 'id as obj_id' , 'type as objective_level')
                     ->whereNull('trash')
                     ->where('unit_id', $valueStreamTeam->vs_team_id)
                     ->where('type', 'VS')
