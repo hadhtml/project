@@ -20,8 +20,9 @@ class SiteController extends Controller
 
         // Perform the query
         $results = DB::table('team_link_child')
-            ->where('user_id', $userId)
-            ->select('linked_objective_id as objective_id', 'bussiness_key_id as key_result_id')
+            ->join('objectives', 'team_link_child.linked_objective_id', '=', 'objectives.id')
+            ->where('team_link_child.user_id', $userId)
+            ->select('objectives.type as objective_type', 'team_link_child.bussiness_key_id as key_result_id' , 'team_link_child.linked_objective_id as objective_id')
             ->get();
 
 
