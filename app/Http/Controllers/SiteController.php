@@ -172,7 +172,7 @@ class SiteController extends Controller
         // Fetch objectives and key results for each value stream
         foreach ($valueStreams as $valueStream) {
             $streamObjectives = DB::table('objectives')
-                ->select('objective_name', 'obj_prog', 'id as obj_id' , 'type as objective_level')a  
+                ->select('objective_name', 'obj_prog', 'id as obj_id' , 'type as objective_level')  
                 ->whereNull('trash')
                 ->where('unit_id', $valueStream->value_stream_id)
                 ->where('type', 'stream') // Adjusted to filter by type 'stream'
