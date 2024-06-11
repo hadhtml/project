@@ -6,11 +6,28 @@ use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Facades\Cookie;
 use Mail;
+use Auth;
 use App\Models\team_link_child;
 
 class SiteController extends Controller
 {
+    public function mapperlinkingapi($userId)
+    {
+        // Ensure the user is authenticated
+        // if (!Auth::check()) {
+        //     return response()->json(['error' => 'Unauthorized'], 401);
+        // }
 
+        // Perform the query
+        $results = DB::table('team_link_child')
+            ->where('user_id', $userId)
+            ->select('linked_objective_id as objective_id', 'bussiness_key_id as key_result_id')
+            ->get();
+
+
+        // Return the results as JSON
+        return response()->json($results);
+    }
     public function mapperapi($userId)
     {
 
