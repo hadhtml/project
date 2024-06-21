@@ -293,6 +293,7 @@ Route::name('objectives.')->namespace('App\Http\Controllers')->prefix('dashboard
     Route::POST('addnewobjective', 'ObjectiveController@addnewobjective');
     Route::POST('deleteobjective', 'ObjectiveController@deleteobjective');
     Route::POST('changeobjectivestatus', 'ObjectiveController@changeobjectivestatus');
+    Route::POST('updatetarget', 'ObjectiveController@updatetarget');
     
 });
 
@@ -590,9 +591,13 @@ Route::post('admin/save-software-section', [App\Http\Controllers\SiteController:
 Route::post('admin/update-software-section', [App\Http\Controllers\SiteController::class,'UpdateSoftwareSection']);
 Route::get('admin/delete-section-highlight/{id}', [App\Http\Controllers\SiteController::class,'DeleteHighlightSection']);
 
-
-
-
+Route::post('add-new-quarter-value-obj', [App\Http\Controllers\OrganizationController::class, 'AddnewQvalueObj']);
+Route::post('update-new-quarter-value-obj', [App\Http\Controllers\OrganizationController::class, 'UpdateQvalueObj']);
+Route::post('objresult-savecomment', [App\Http\Controllers\OrganizationController::class,'savecommentobj']);
+Route::post('updatecomment-obj', [App\Http\Controllers\OrganizationController::class,'updatecommentobj']);
+Route::post('deletecheck-obj', [App\Http\Controllers\ObjectiveController::class,'deletequartervalueobj']);
+Route::post('updatecomment-obj', [App\Http\Controllers\OrganizationController::class,'updatecommentobj']);
+Route::post('deletecomment-obj', [App\Http\Controllers\OrganizationController::class,'Deletecommentobj']);
 
 
 
