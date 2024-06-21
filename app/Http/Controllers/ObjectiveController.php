@@ -130,6 +130,7 @@ class ObjectiveController extends Controller
     }
     public function showtabobjective(Request $request)
     {
+      
         if ($request->tab == 'general') {
             $data = objectives::find($request->id);
             $html = view('objective.modal.tabs.general', compact('data'))->render();
@@ -147,6 +148,35 @@ class ObjectiveController extends Controller
             $html = view('objective.modal.tabs.okrmapper', compact('data', 'linking'))->render();
             return $html;
         }
+        
+        if ($request->tab == 'target') {
+            $data = objectives::find($request->id);
+            $html = view('objective.modal.tabs.target', compact('data'))->render();
+            return $html;
+        }
+        
+         if($request->tab == 'values')
+        {
+            $data = objectives::find($request->id);
+            $report = DB::table('sprint')->where('user_id',Auth::id())->where('status',NULL)->where('value_unit_id',$data->unit_id)->first();
+            if($report)
+            {
+                $KEYChart =  DB::table('obj_chart')->where('obj_id',$request->id)->where('IndexCount',$report->IndexCount)->first();
+                if(!$KEYChart)
+                {
+
+                }
+                $key = objectives::find($request->id);
+                $keyQAll = DB::table('obj_chart')->where('obj_id',$request->id)->get();    
+                $html = view('objective.modal.tabs.value',compact('data','KEYChart','key','report','keyQAll'));
+            }else{
+                $noreport = 'no';
+                $html = view('objective.modal.tabs.value',compact('data','noreport'));
+            }  
+            return $html;
+        }
+        
+       
     }
     public function addnewobjective(Request $request)
     {
@@ -4301,6 +4331,62 @@ class ObjectiveController extends Controller
             "objective.all-key-weight",
             compact("keyid", 'count')
         );
+    }
+    
+       public function updatetarget(Request $request)
+    {
+        $update = objectives::find($request->id);
+        $update->obj_result_type = $request->key_result_type;
+        $update->obj_unit = $request->key_unit;
+        $update->init_value = $request->init_value;
+        $update->target_number = $request->target_number;
+        $update->save();
+        if($request->IndexCount)
+        {
+            foreach ($request->IndexCount as $indkey => $r) {
+                
+                $keychart = DB::table('obj_chart')->where('obj_id' , $request->id)->where('IndexCount' , $r)->first();
+                DB::table('obj_chart')->where('id',$keychart->id)->update(['quarter_value' => $request->Target[$indkey]]);
+                // $updatekeychart->quarter_value = $request->Target[$indkey];
+                // $updatekeychart->save();
+            }
+        }
+        $objective = DB::Table('objectives')->where('id' , $request->id)->first();
+        $check = DB::table('obj_chart')->where('obj_id' , $request->id)->count();
+        if($check > 0)
+        {
+            $counter = $check;    
+        }else{
+            $counter = 0;    
+        }
+        if($request->has("newtarget")) {
+            foreach ($request->newtarget as $key => $value) {
+                $counter++;
+                DB::table("obj_chart")->insert([
+                    "quarter_value" => $request->newtarget[$key],
+                    "obj_id" => $request->id,
+                    "buisness_unit_id" => $objective->unit_id,
+                    "IndexCount" => $counter,
+                ]);
+            }
+        }
+        $data = objectives::find($request->id);
+       $html = view('objective.modal.tabs.target', compact('data'))->render();
+        return $html;
+    }
+    
+      public function deletequartervalueobj(Request $request)
+    { 
+        $key_quarter_value = DB::table('obj_quarter_value')->where('id',$request->id)->first();
+        $data = objectives::find($key_quarter_value->obj_id);
+        $report = DB::table('sprint')->where('user_id',Auth::id())->where('status',NULL)->where('value_unit_id',$data->unit_id)->first();
+        $KEYChart =  DB::table('obj_chart')->where('obj_id',$key_quarter_value->obj_id)->where('IndexCount',$report->IndexCount)->first();
+        $key = objectives::find($key_quarter_value->obj_id);
+        $keyQAll = DB::table('obj_chart')->where('obj_id',$key_quarter_value->obj_id)->get();
+        DB::table('obj_quarter_value')->where('id',$request->id)->delete(); 
+        DB::table('flag_comments')->where('flag_id',$request->id)->delete();
+        $html = view('objective.modal.tabs.value',compact('data','KEYChart','key','report','keyQAll'));
+        return $html;
     }
 
     public function getMonthEndDate($monthName)

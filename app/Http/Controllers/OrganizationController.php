@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\flag_members;
 use App\Models\flag_comments;
 use App\Models\key_result;
+use App\Models\objectives;
 
 class OrganizationController extends Controller
 {
@@ -1566,6 +1567,110 @@ public function updatecommentkey(Request $request)
         return view('settings.subscription',compact('data'));
 
     }
+    
+    public function AddnewQvalueObj(Request $request)
+    {
+    
+        DB::table('obj_quarter_value')->insert([
+          'obj_chart_id' => $request->key_chart_id,
+          'obj_id' => $request->id,
+          'sprint_id' => $request->sprint_id,
+          'value' => $request->value,
+          'status' => $request->status,
+          'summary' => $request->summary,
+          'participant' => implode(',',$request->participant),
+        
+        ]);
+
+
+        $data = objectives::find($request->id);
+        $report = DB::table('sprint')->where('user_id',Auth::id())->where('status',NULL)->where('value_unit_id',$data->unit_id)->where('type',$data->type)->first();
+        $KEYChart =  DB::table('obj_chart')->where('obj_id',$request->id)->where('IndexCount',$report->IndexCount)->first();
+        $key = objectives::find($request->id);
+        $keyQAll = DB::table('obj_chart')->where('obj_id',$request->id)->get();    
+        $html = view('objective.modal.tabs.value',compact('data','KEYChart','key','report','keyQAll'));
+        return $html;
+
+
+    }
+    
+     public function UpdateQvalueObj(Request $request)
+    {
+        DB::table('obj_quarter_value')->where('id',$request->flag_id)->update([
+          'value' => $request->value,
+          'status' => $request->status,
+          'summary' => $request->summary,
+          'participant' => implode(',',$request->participant),
+        
+        ]);
+
+
+        $data = objectives::find($request->id);
+        $report = DB::table('sprint')->where('user_id',Auth::id())->where('status',NULL)->where('value_unit_id',$data->unit_id)->where('type',$data->type)->first();
+        $KEYChart =  DB::table('obj_chart')->where('obj_id',$request->id)->where('IndexCount',$report->IndexCount)->first();
+        $key = objectives::find($request->id);
+        $keyQAll = DB::table('obj_chart')->where('obj_id',$request->id)->get();    
+        $html = view('objective.modal.tabs.value',compact('data','KEYChart','key','report','keyQAll'));
+        return $html;
+
+        // $key = DB::table('key_quarter_value')->where('id',$request->id)->first();
+        // $keychart = DB::table('key_quarter_value')->where('key_chart_id',$key->key_chart_id)->orderby('id','DESC')->first();
+
+        // return $keychart;
+
+    }
+    
+        public function savecommentobj(Request $request)
+    {
+        $addcomment = new flag_comments();
+        $addcomment->flag_id = $request->flag_id;
+        $addcomment->user_id = $request->user_id;
+        $addcomment->comment = $request->comment;
+        $addcomment->type = 'comment';
+        $addcomment->comment_type = 'obj';
+        $addcomment->save();
+    
+        $data = objectives::find($request->id);
+            $report = DB::table('sprint')->where('user_id',Auth::id())->where('status',NULL)->where('value_unit_id',$data->unit_id)->where('type',$data->type)->first();
+            $KEYChart =  DB::table('obj_chart')->where('obj_id',$request->id)->where('IndexCount',$report->IndexCount)->first();
+            $key = objectives::find($request->id);
+            $keyQAll = DB::table('obj_chart')->where('obj_id',$request->id)->get();    
+                    $html = view('objective.modal.tabs.value',compact('data','KEYChart','key','report','keyQAll'));
+    
+            return $html;
+      
+    }
+
+            public function updatecommentobj(Request $request)
+                {
+                    $addcomment = flag_comments::find($request->comment_id);
+                    $addcomment->comment = $request->comment;
+                    $addcomment->save();
+            
+                    $data = objectives::find($request->id);
+                    $report = DB::table('sprint')->where('user_id',Auth::id())->where('status',NULL)->where('value_unit_id',$data->unit_id)->where('type',$data->type)->first();
+                    $KEYChart =  DB::table('obj_chart')->where('obj_id',$request->id)->where('IndexCount',$report->IndexCount)->first();
+                    $key = objectives::find($request->id);
+                    $keyQAll = DB::table('obj_chart')->where('obj_id',$request->id)->get();    
+                    $html = view('objective.modal.tabs.value',compact('data','KEYChart','key','report','keyQAll'));
+                    return $html;
+                }
+
+        public function Deletecommentobj(Request $request)
+        {
+          
+          flag_comments::where('id',$request->id)->delete();
+          $data = objectives::find($request->key);
+          $report = DB::table('sprint')->where('user_id',Auth::id())->where('status',NULL)->where('value_unit_id',$data->unit_id)->where('type',$data->type)->first();
+          $KEYChart =  DB::table('obj_chart')->where('obj_id',$request->key)->where('IndexCount',$report->IndexCount)->first();
+          $key = objectives::find($request->key);
+          $keyQAll = DB::table('obj_chart')->where('obj_id',$request->key)->get();    
+          $html = view('objective.modal.tabs.value',compact('data','KEYChart','key','report','keyQAll'));
+          return $html;
+        
+          
+          
+        }
 
 
 }
