@@ -20,6 +20,15 @@
                        <span class="material-symbols-outlined">link</span> OKR Mapper
                     </li>
                     @endif
+                    
+                    <li id="activites"@if($data->objective_name)  onclick="showtabobjective({{$data->id}} , 'target')" @else data-toggle="tooltip" title="" data-original-title="Please Fill General Details" @endif class="tabsclass">
+                       <span class="material-symbols-outlined">target </span>Targets
+                    </li>
+                    
+                    <li id="activites"@if($data->objective_name)  onclick="showtabobjective({{$data->id}} , 'values')" @else data-toggle="tooltip" title="" data-original-title="Please Fill General Details" @endif class="tabsclass">
+                       <span class="material-symbols-outlined">task_alt  </span> Check-in
+                    </li>
+                    
                 </ul>
                 <h4>Action</h4>
                 <ul class="positionrelative">

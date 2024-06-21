@@ -103,7 +103,10 @@
     .day-circle.checked {
         background-color: #3498db;/ Blue color when checked / color: #fff;/ White text when checked /
     }
+    
 </style>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
 @if (!isset($noreport))
     @if ($KEYChart)
         @php
@@ -187,9 +190,60 @@
 
                         <span onclick="uploadattachment()" class="btn btn-default btn-sm">New Check-In</span>
                     </div>
+                    
+                    
                 </div>
             </div>
+            
+            
         </div>
+        
+    
+                   @php
+                    
+                    $progress = 0;
+                    $OverAllprogress = 0;
+                    if($keyqfirst)
+                    {
+                    $progress = ($keyqfirst->value / $KEYChart->quarter_value * 100);
+                    $OverAllprogress = ($keyqfirst->value / $key->target_number * 100);
+                    }
+                    @endphp
+                    
+                    
+    
+                   <div class="row">
+                    <div class="col-md-6">
+                         <div class="d-flex bd-highlight">
+                        <div class="p-2 flex-grow-1 bd-highlight">Quarter Progress</div>
+                        <div class="p-2 bd-highlight">{{round($progress,1)}}%</div>
+                      </div>
+                 
+                                   <div class="w3-light-grey w3-round">
+                                    <div class="w3-container w3-blue w3-round" style="width:{{round($progress,1)}}%">{{round($progress,1)}}%</div>
+                                  </div>
+                    </div>   
+                   
+   
+                       <div class="col-md-6">
+                         <div class="d-flex bd-highlight">
+                        <div class="p-2 flex-grow-1 bd-highlight">OverAllProgress</div>
+                        <div class="p-2 bd-highlight">{{round($OverAllprogress,1)}}%</div>
+                      </div>
+                 
+
+                        <div class="w3-light-grey w3-round">
+                                    <div class="w3-container w3-blue w3-round" style="width:{{round($OverAllprogress,1)}}%">{{round($OverAllprogress,1)}}%</div>
+                        </div>
+                  
+                    </div>
+                      </div>
+                      
+                      
+                    
+                  
+    
+          
 
         <div class="row uploadfrequency displaynone mb-1">
             <div class="col-md-12">
