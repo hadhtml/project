@@ -219,7 +219,7 @@ $var_objective = "Org-Unit";
                         <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                             <span class="required">{{ Cmf::getmodulename("level_one") }} Title</span>
                         </label>
-                        <input  type="text" class="form-control form-control-solid" placeholder="Enter {{ Cmf::getmodulename('level_one') }} Title" name="unit_name" required />
+                        <input  type="text" class="form-control form-control-solid level_3" placeholder="Enter {{ Cmf::getmodulename('level_one') }} Title" name="unit_name" required />
                     </div>
                     @php
                     $memberCount = DB::table('members')->where('org_user',Auth::id())->orWhere('org_user',Auth::user()->invitation_id)->count();
@@ -228,7 +228,7 @@ $var_objective = "Org-Unit";
                         <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                             <span class="required">Select Lead</span>
                         </label>
-                        <select class="form-control" name="lead_manager" required>
+                        <select class="form-control level_3_lead" name="lead_manager" required>
                             <option value="">Select Lead </option>
                             <?php foreach(DB::table('members')->where('org_user',Auth::id())->orWhere('org_user',Auth::user()->invitation_id)->get() as $r){ ?>
                               <option value="{{ $r->id }}">{{ $r->name }} {{ $r->last_name }}</option>
@@ -244,7 +244,7 @@ $var_objective = "Org-Unit";
                         <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                             <span class="required">Short Description</span>
                         </label>
-                        <textarea class="form-control form-control-solid" rows="3" name="unit_detail" placeholder="Type {{ Cmf::getmodulename('level_one') }} Details"></textarea>
+                        <textarea class="form-control form-control-solid level_3" rows="3" name="unit_detail" placeholder="Type {{ Cmf::getmodulename('level_one') }} Details"></textarea>
                     </div>
                     <div class="text-center">
                         <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
@@ -317,6 +317,11 @@ $var_objective = "Org-Unit";
 
         }
 
-
+function emptyform()
+        {
+          
+         $('.level_3').val('');
+        $('.level_3_lead').val('');
+        }
 </script>  
 @endsection

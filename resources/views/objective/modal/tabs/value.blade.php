@@ -196,11 +196,19 @@
                     <div class="col-md-6">
                          <div class="d-flex bd-highlight">
                         <div class="p-2 flex-grow-1 bd-highlight">Quarter Progress</div>
+                        @if($progress >= 100)
+                        <div class="p-2 bd-highlight">100%</div>
+                        @else
                         <div class="p-2 bd-highlight">{{round($progress,1)}}%</div>
+                        @endif
                       </div>
                  
                                    <div class="w3-light-grey w3-round">
-                                    <div class="w3-container w3-blue w3-round" style="width:{{round($progress,1)}}%">{{round($progress,1)}}%</div>
+                                        @if($progress >= 100)
+                                    <div class="w3-container w3-blue w3-round" style="width:100%">100%</div>
+                                    @else
+                                     <div class="w3-container w3-blue w3-round" style="width:{{round($progress,1)}}%">{{round($progress,1)}}%</div>
+                                    @endif
                                   </div>
                     </div>   
                    
@@ -242,6 +250,8 @@
                             <input type="hidden" value="{{ $key->id }}" name="id">
                             <input type="hidden" value="{{ $KEYChart->id }}" name="key_chart_id">
                             <input type="hidden" value="{{ $report->id }}" name="sprint_id">
+                            <input type="hidden" value="{{ $KEYChart->quarter_value}}" id="q_value">
+                            
 
 
                             <div class="row">
@@ -249,8 +259,9 @@
                                     <div class="form-group mb-0">
                                         <label for="small-description">Value</label>
                                         <input type="text" name="value" onkeypress="return onlyNumberKey(event)"
-                                            class="form-control" id="new-chart-value{{ $key->id }}" required>
+                                            class="form-control new-chart-value" id="new-chart-value{{ $key->id }}" required>
                                     </div>
+                                     <div id="error-check-in"></div>
                                 </div>
                                 <div class="col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group mb-0">
@@ -571,7 +582,7 @@
                     </div>
                 </div>
                 <p>Do you want to delete your comment ? You won’t be able to undo this action.</p>
-                <button onclick="deletecomment({{ $r->id }},'{{ $key->id }}')"
+                <button onclick="deletecomment({{ $r->id }},'{{ $key->id }}','{{$r->flag_id}}')"
                     class="btn btn-danger btn-block">Delete</button>
             </div>
             <div class="commentedit" id="commentedit{{ $r->id }}">
@@ -663,13 +674,13 @@
 
                     <div class="replycard{{ $r->id }}" style="display: none;">
                         <form id="savereply{{ $r->id }}" method="POST"
-                            action="{{ url('savereply-key') }}">
+                            action="{{ url('savereply-obj') }}">
                             @csrf
                             <input type="hidden" value="{{ $r->flag_id }}" name="flag_id">
                             <input type="hidden" value="{{ Auth::user()->id }}" name="user_id">
                             <input type="hidden" value="{{ $r->id }}" name="comment_id">
                             <input type="hidden" value="{{ $key->id }}" name="id">
-                            <div class="d-flex flex-column mt-3 d-none">
+                            <div class="d-flex flex-column mt-3">
                                 <div>
                                     <div class="form-group mb-0">
                                         <label for="objective-name">Write Reply</label>
@@ -984,12 +995,29 @@
         });
 
     }
+    
+   
 
     $('.savekeychartnewform').on('submit', (function(e) {
-        $('.saveepicflagbuttonasdsadsad').html('<i class="fa fa-spin fa-spinner"></i>');
-        e.preventDefault();
-        var formData = new FormData(this);
+                
 
+        e.preventDefault();
+        
+        var Qval = $('#q_value').val();
+  
+
+            var newchart = parseFloat($('.new-chart-value').val());
+       
+        if(newchart > Qval)
+        {
+            $('#error-check-in').html(
+            '<span> Check-in Value Should be less then  Quarter Value.</span>'
+                );
+         return false;
+        }else
+        {
+        $('.saveepicflagbuttonasdsadsad').html('<i class="fa fa-spin fa-spinner"></i>'); 
+             var formData = new FormData(this);
         $.ajax({
             type: 'POST',
             url: $(this).attr('action'),
@@ -1008,14 +1036,21 @@
                 }, 2000);
 
             }
-        });
+        });  
+           
+        }
+         
+        
+       
+
+       
     }));
 
     function deletecommentshow(id) {
         $('#commentdelete' + id).slideToggle();
     }
 
-    function deletecomment(id, key) {
+    function deletecomment(id, key,flag) {
         $.ajax({
             type: "POST",
             url: "{{ url('deletecomment-obj') }}",
@@ -1028,8 +1063,9 @@
             },
             success: function(data) {
                 $('#commentdeletekey' + id).remove();
-                // $('.secondportion').html(data);
+                  $('.secondportion').html(data);
                 // $('#commentdelete' + id).slideToggle();
+                //   $('.show-comment' + flag).remove();
            
             },
             error: function(error) {

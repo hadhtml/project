@@ -125,7 +125,7 @@ $var_objective = "V-Stream";
                             <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                                 <span class="required">{{ Cmf::getmodulename("level_two") }} Title</span>
                             </label>
-                            <input type="text" class="form-control form-control-solid" name="value_name" value="{{$stream->value_name}}" required>
+                            <input type="text" class="form-control  form-control-solid" name="value_name" value="{{$stream->value_name}}" required>
                         </div>
                         <div class="d-flex flex-column mb-8 fv-row">
                             <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
@@ -151,7 +151,7 @@ $var_objective = "V-Stream";
                             <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                                 <span>Small Description</span>
                             </label>
-                            <textarea class="form-control form-control-solid" name="detail" rows="3" placeholder="Type Detail">{{$stream->DETAIL}}</textarea>
+                            <textarea class="form-control form-control-solid " name="detail" rows="3" placeholder="Type Detail">{{$stream->DETAIL}}</textarea>
                         </div>
                         <div class="text-center">
                             <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
@@ -174,7 +174,7 @@ $var_objective = "V-Stream";
 <div style="position:absolute;right:27%;top:40%;" class="text-center">
 <img src="{{asset('public/business-unit.svg')}}"  width="120" height="120">
 <div><h6 class="text-center">No Records Found</h6></div>
-<div><p class="text-center">You may create a {{ Cmf::getmodulename("level_one") }} by clicking the button below.</p></div>
+<div><p class="text-center">You may create a {{ Cmf::getmodulename("level_two") }} by clicking the button below.</p></div>
 <button class="btn btn-flex btn-primary h-40px fs-7 fw-bold"  type="button" data-toggle="modal" data-target="#add-business-value">
     Add {{ Cmf::getmodulename("level_two") }}
 </button>
@@ -188,7 +188,7 @@ $var_objective = "V-Stream";
             <!--begin::Modal header-->
             <div class="modal-header pb-0 border-0 justify-content-end">
                 <!--begin::Close-->
-                <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                <div class="btn btn-sm btn-icon btn-active-color-primary"  data-dismiss="modal">
                     <i class="ki-outline ki-cross fs-1"></i>
                 </div>
                 <!--end::Close-->
@@ -209,7 +209,7 @@ $var_objective = "V-Stream";
                             <span class="required">Enter {{ Cmf::getmodulename('level_two') }} Title</span>
                         </label>
                         <!--end::Label-->
-                        <input type="text" class="form-control form-control-solid" placeholder="Enter {{ Cmf::getmodulename('level_two') }} Title" name="value_name" id="{{ Cmf::getmodulename('level_one') }}" required>
+                        <input type="text" class="form-control form-control-solid level_3" placeholder="Enter {{ Cmf::getmodulename('level_two') }} Title" name="value_name" id="{{ Cmf::getmodulename('level_one') }}" required>
                     </div>
                     @php
                     $BCount = DB::table('business_units')->where('user_id',Auth::id())->orWhere('user_id',Auth::user()->invitation_id)->count();
@@ -224,8 +224,8 @@ $var_objective = "V-Stream";
                             <span class="required">Lead</span>
                         </label>
                         <!--end::Label-->
-                        <select class="form-control form-control-solid" name="lead_manager" required>
-                            <option value="NULL" selected>Select Lead</option>
+                        <select class="form-control form-control-solid level_3_lead" name="lead_manager" required>
+                            <option value="" selected>Select Lead</option>
                             <?php foreach(DB::table('members')->where('org_user',Auth::id())->orWhere('org_user',Auth::user()->invitation_id)->get() as $r){ ?>
                               <option value="{{ $r->id }}">{{ $r->name }} {{$r->last_name}}</option>
                             <?php }  ?>
@@ -240,7 +240,7 @@ $var_objective = "V-Stream";
                         <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                             <span>Small Description</span>
                         </label>
-                        <textarea class="form-control form-control-solid" name="detail" rows="3" placeholder="Type Detail"></textarea>
+                        <textarea class="form-control form-control-solid level_3" name="detail" rows="3" placeholder="Type Detail"></textarea>
                     </div>
                     <div class="text-center">
                         <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
@@ -326,6 +326,13 @@ function DeleteValue(delete_id)
         }
         });
 
+        }
+        
+        function emptyform()
+        {
+          
+         $('.level_3').val('');
+        $('.level_3_lead').val('');
         }
 </script>
 @endsection
