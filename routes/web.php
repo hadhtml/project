@@ -598,6 +598,7 @@ Route::post('updatecomment-obj', [App\Http\Controllers\OrganizationController::c
 Route::post('deletecheck-obj', [App\Http\Controllers\ObjectiveController::class,'deletequartervalueobj']);
 Route::post('updatecomment-obj', [App\Http\Controllers\OrganizationController::class,'updatecommentobj']);
 Route::post('deletecomment-obj', [App\Http\Controllers\OrganizationController::class,'Deletecommentobj']);
+Route::post('savereply-obj', [App\Http\Controllers\OrganizationController::class,'savereplyobj']);
 
 
 
