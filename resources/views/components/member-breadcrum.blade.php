@@ -20,6 +20,6 @@
     </div>
     <div class="d-flex align-items-center gap-2 gap-lg-3">
         <a href="javascript:void(0)" class="btn btn-flex btn-outline btn-color-gray-700 btn-active-color-primary bg-body h-40px fs-7 fw-bold" data-toggle="modal" data-target="#create-member">Add User</a>
-        <a href="javascript:void(0)" style="display:none;" id="delete-button-user" onclick="delete_record_user();" class="btn btn-primary h-40px">Delete All</a>
+        <a href="javascript:void(0)" style="display:none;" id="delete-button-user" onclick="delete_record_user();" class="btn btn-danger h-40px">Delete Selected</a>
     </div>
 </div>

@@ -22,9 +22,9 @@
                     <li id="activites"@if($data->epic_name)  onclick="showtab({{$data->id}} , 'activites')" @else data-toggle="tooltip" title="" data-original-title="Please Fill General Details" @endif class="tabsclass">
                        <span class="material-symbols-outlined">browse_activity</span> Activities
                     </li>
-                    <li id="checkins" onclick="showtab({{$data->id}} , 'checkins')" class="tabsclass">
-                        <span class="material-symbols-outlined">checklist</span> Dependency
-                    </li> 
+                    <!--<li id="checkins" onclick="showtab({{$data->id}} , 'checkins')" class="tabsclass">-->
+                    <!--    <span class="material-symbols-outlined">checklist</span> Dependency-->
+                    <!--</li> -->
                     <li id="attachment" @if($data->epic_name)  onclick="showtab({{$data->id}} , 'attachment')" @else data-toggle="tooltip" title="" data-original-title="Please Fill General Details" @endif class="tabsclass">
                         <span class="material-symbols-outlined"> attachment </span> Attachments</li>
                     <li id="flags" @if($data->epic_name)  onclick="showtab({{$data->id}} , 'flags')" @else data-toggle="tooltip" title="" data-original-title="Please Fill General Details" @endif class="tabsclass">
