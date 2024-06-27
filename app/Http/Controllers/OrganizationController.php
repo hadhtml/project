@@ -332,9 +332,158 @@ class OrganizationController extends Controller
     {
 
      
-     
+     if($request->has('report'))
+     {
+       $s = DB::table('sprint')->where('user_id',Auth::id())->where('status',NULL)->where('value_unit_id',$request->unit_id)->where('type',$request->type)->first();
+  
+        
+     $masterepic = array();
+     $tempepic = array();  
+     $epic = DB::table('epics')->whereBetween('epic_end_date', [$s->start_data, $s->end_date])
+     ->where('user_id',Auth::id())
+     ->where('buisness_unit_id',$s->value_unit_id)
+     ->where('epic_type',$request->type)
+     ->where('trash',NULL)->get();
 
-     $s = DB::table('sprint')->where('user_id',Auth::id())->where('status',NULL)->where('value_unit_id',$request->unit_id)->where('type',$request->type)->first();
+     $Removedepic = DB::table('epics')->whereBetween('old_date', [$s->start_data, $s->end_date])
+     ->where('user_id',Auth::id())
+     ->where('buisness_unit_id',$s->value_unit_id)
+     ->where('epic_type',$request->type)
+     ->where('trash',NULL)->get();
+
+     foreach($Removedepic as $e)
+     {
+
+      
+       DB::table('sprint_report')
+      ->insert([
+        'epic_id' => $e->id,
+        'epic_init_id' => $e->initiative_id,
+        'epic_name' => $e->epic_name,
+        'epic_prog' => $e->epic_progress,
+        'epic_date' => Carbon::parse($e->epic_end_date)->format('M d,Y'),
+        'epic_trash' => $e->created_at,
+        'q_id' =>  $s->id,
+        'epic_done' => $e->updated_at,
+        'epic_status' => $e->epic_status,
+        'epic_remove' => 'remove',
+ 
+      ]);
+     }
+
+    
+    foreach($epic as $ep)
+     {
+      $masterepic[] = $ep->obj_id;  
+     }
+
+     foreach($epic as $e)
+     {
+
+      
+       DB::table('sprint_report')
+      ->insert([
+        'epic_id' => $e->id,
+        'epic_init_id' => $e->initiative_id,
+        'epic_name' => $e->epic_name,
+        'epic_prog' => $e->epic_progress,
+        'epic_date' => Carbon::parse($e->epic_end_date)->format('M d,Y'),
+        'epic_trash' => $e->created_at,
+        'q_id' =>  $s->id,
+        'epic_done' => $e->updated_at,
+        'epic_status' => $e->epic_status,
+        'epic_remove' => 'Added',
+ 
+      ]);
+     }
+
+      $master = array();
+      $temp = array();
+      $objid = array();
+      $objective = DB::table('objectives')->whereIn('id',$masterepic)->where('user_id',Auth::id())->where('unit_id',$s->value_unit_id)
+       ->where('type',$request->type)->where('trash',NULL)->get();
+     
+             foreach($objective as $obj)
+             {
+             $objid[] = $obj->id;  
+             }
+             foreach($objective as $obj)
+             {
+              $temp['id'] = $obj->id;
+              $temp['objective_name'] = $obj->objective_name;
+              $temp['objective_date'] = Carbon::parse($obj->start_date)->format('M d,Y').' - '.Carbon::parse($obj->end_date)->format('M d,Y');
+              $temp['objective_status'] = $obj->status;
+              $temp['objective_prog'] = $obj->obj_prog;
+              array_push($master,$temp);     
+             }
+             
+              DB::table('sprint_report')
+              ->insert([
+                'objective' => json_encode($master),
+                'q_id' => $s->id,
+                'user_id' => Auth::id(),
+         
+              ]);
+               
+             $masterkey = array();
+             $tempkey = array(); 
+             $keyid = []; 
+             $key = DB::table('key_result')->whereIn('obj_id',$objid)->where('key_name','!=',NULL)->get();
+             foreach($key as $kk)
+             {
+             $keyid[] = $kk->id;  
+             }
+
+             foreach($key as $k)
+             {
+                 
+            $epicCount = DB::table('epics')->where('key_id',$k->id)->where('trash',NULL)->whereBetween('epic_end_date', [$s->start_data, $s->end_date])->count();
+              $epicComp =  DB::table('epics')->where('key_id',$k->id)->where('trash',NULL)->whereBetween('epic_end_date', [$s->start_data, $s->end_date])->where('epic_progress','=',100)->count();
+              $epicincomp = DB::table('epics')->where('key_id',$k->id)->where('trash',NULL)->whereBetween('epic_end_date', [$s->start_data, $s->end_date])->where('epic_progress','!=',100)->count();
+              
+              $tempkey['id'] = $k->id;
+              $tempkey['obj_id'] = $k->obj_id;
+              $tempkey['key_name'] = $k->key_name;
+              $tempkey['key_date'] = Carbon::parse($k->key_start_date)->format('M d,Y').' - '.Carbon::parse($k->key_end_date)->format('M d,Y');
+              $tempkey['key_status'] = $k->key_status;
+              $tempkey['key_prog'] = $k->key_prog;
+              $tempkey['key_epic_count'] = $epicCount;
+              $tempkey['key_epic_comp'] = $epicComp;
+              $tempkey['key_epic_incopm'] = $epicincomp;
+              array_push($masterkey,$tempkey);     
+             }
+             
+             DB::table('sprint_report')
+              ->where('q_id', $s->id)
+              ->update([
+                'key_result' => json_encode($masterkey),
+         
+               ]);
+               
+             $masterinit = array();
+             $tempinit = array();  
+             $init = DB::table('initiative')->whereIn('key_id',$keyid)->where('user_id',Auth::id())->get();
+
+             foreach($init as $i_id)
+             {
+              $tempinit[] = $i_id->id;  
+             }
+             foreach($init as $i)
+             {
+            
+               DB::table('sprint_report')
+              ->insert([
+                'initiative_id' => $i->id,
+                'initiative_key_id' => $i->key_id,
+                'initiative_name' => $i->initiative_name,
+                'q_id' => $s->id,
+         
+              ]);
+             }
+       DB::table('sprint')->where('user_id',Auth::id())->where('value_unit_id',$request->unit_id)->where('status',NULL)->update(['status'=> 1]);         
+     }else
+     {
+       $s = DB::table('sprint')->where('user_id',Auth::id())->where('status',NULL)->where('value_unit_id',$request->unit_id)->where('type',$request->type)->first();
   
         
      $masterepic = array();
@@ -618,7 +767,10 @@ class OrganizationController extends Controller
     }
    
     
-      return view("objective.objective-render",compact("organization", "objective"));
+      return view("objective.objective-render",compact("organization", "objective"));  
+     }
+
+     
 
     }
     
@@ -1140,7 +1292,7 @@ class OrganizationController extends Controller
     else
     {
 
-     return redirect()->back()->with('message','Old password does not match');
+     return redirect()->back()->with('error','Old password does not match');
     }
 }
 
@@ -1660,6 +1812,7 @@ public function updatecommentkey(Request $request)
         {
           
           flag_comments::where('id',$request->id)->delete();
+          flag_comments::where('comment_id',$request->id)->delete();
           $data = objectives::find($request->key);
           $report = DB::table('sprint')->where('user_id',Auth::id())->where('status',NULL)->where('value_unit_id',$data->unit_id)->where('type',$data->type)->first();
           $KEYChart =  DB::table('obj_chart')->where('obj_id',$request->key)->where('IndexCount',$report->IndexCount)->first();
@@ -1671,6 +1824,27 @@ public function updatecommentkey(Request $request)
           
           
         }
+        
+          public function savereplyobj(Request $request)
+    {
+        $addcomment = new flag_comments();
+        $addcomment->flag_id = $request->flag_id;
+        $addcomment->user_id = $request->user_id;
+        $addcomment->comment = $request->comment;
+        $addcomment->type = 'reply';
+        $addcomment->comment_type = 'obj';
+        $addcomment->comment_id = $request->comment_id;
+        $addcomment->save();
+
+        $data = objectives::find($request->id);
+        $report = DB::table('sprint')->where('user_id',Auth::id())->where('status',NULL)->where('value_unit_id',$data->unit_id)->where('type',$data->type)->first();
+        $KEYChart =  DB::table('obj_chart')->where('obj_id',$request->id)->where('IndexCount',$report->IndexCount)->first();
+        $key = objectives::find($request->id);
+        $keyQAll = DB::table('obj_chart')->where('obj_id',$request->id)->get();    
+        $html = view('objective.modal.tabs.value',compact('data','KEYChart','key','report','keyQAll'));
+        return $html;
+       
+    }
 
 
 }

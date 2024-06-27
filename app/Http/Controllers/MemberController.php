@@ -332,7 +332,7 @@ class MemberController extends Controller
         $addbuisnessunit->business_name = $request->unit_name;
         $addbuisnessunit->lead_id = $request->lead_manager;
         $addbuisnessunit->org_id = $request->org_unit_id;
-        $addbuisnessunit->detail = $request->detail;
+        $addbuisnessunit->detail = $request->unit_detail;
         $addbuisnessunit->user_id = $id;
         $addbuisnessunit->slug = Str::slug($request->unit_name.'-'.rand(10, 99));
         $addbuisnessunit->save();    
@@ -344,7 +344,7 @@ class MemberController extends Controller
         $updatebuisnessunit->business_name = $request->unit_name;
         $updatebuisnessunit->lead_id = $request->lead_manager;
         $updatebuisnessunit->org_id = $request->org_id;
-        $updatebuisnessunit->detail = $request->detail;
+        $updatebuisnessunit->detail = $request->unit_detail;
         $updatebuisnessunit->slug = Str::slug($request->unit_name.'-'.rand(10, 99));
         $updatebuisnessunit->save(); 
         return redirect()->back()->with('message', 'Business Units Updated Successfully');
