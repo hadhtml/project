@@ -65,14 +65,14 @@ if(Auth::user()->invitation_id == '')
 </div>
 @if($data)
 @if($data->transaction_id != '')
-<div class="menu-item">
-    <a href="{{route('settings.subscription')}}"  class="menu-link @if (url()->current() == route('settings.subscription'))  active @endif">
-        <span class="menu-icon">
-            <span class="material-symbols-outlined">subscriptions</span>
-        </span>
-        <span class="menu-title">Subscription</span>
-    </a>
-</div>
+<!--<div class="menu-item">-->
+<!--    <a href="{{route('settings.subscription')}}"  class="menu-link @if (url()->current() == route('settings.subscription'))  active @endif">-->
+<!--        <span class="menu-icon">-->
+<!--            <span class="material-symbols-outlined">subscriptions</span>-->
+<!--        </span>-->
+<!--        <span class="menu-title">Subscription</span>-->
+<!--    </a>-->
+<!--</div>-->
 @endif
 @endif
 

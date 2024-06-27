@@ -8,6 +8,12 @@ $var_objective = "Jira";
    <div class="col-md-12">
       <div class="card">
          <div class="card-body p-10">
+             
+             @if (session('message'))
+            <div class="alert alert-success mt-1" role="alert">
+               {{ session('message') }}
+            </div>
+            @endif
             <form class="needs-validation pt-2" method="POST" action="{{ route('settings.updatemodulenames') }}">
                  @csrf
                 <div class="d-flex flex-column mb-7 fv-row">

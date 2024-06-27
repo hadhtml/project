@@ -230,9 +230,11 @@ $var_objective = 'Report-'.$type;
                                           </button>
                                         </div>
                                       
-                                
-                                    
+                                         
+                                         
                                         <div class="modal-body">
+                                            
+                                        <div id="success-sprint-end"></div>    
                                           
                                         Are you sure you want to End this Quarter?
                                 
@@ -483,7 +485,8 @@ $formattedDate = $lastDayOfMonth->toDateString();
        {
    
         var unit_id = "{{ $organization->id }}";
-        var type = "{{ $type}}";    
+        var type = "{{ $type}}";
+        var report = "report";    
         $.ajax({
         type: "POST",
         url: "{{ url('end-sprint') }}",
@@ -492,11 +495,19 @@ $formattedDate = $lastDayOfMonth->toDateString();
         },
         data: {
         unit_id:unit_id,
-        type:type
+        type:type,
+        report:report
         },
         success: function(res) {
           
-        location.reload();
+          
+          $('#success-sprint-end').html(
+            '<div class="alert alert-success" role="alert">Sprint Ended successfully</div>'
+        );
+        setTimeout(function() {
+          location.reload();
+        }, 2000);
+       
 
 
         }

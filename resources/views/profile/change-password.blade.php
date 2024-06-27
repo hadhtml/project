@@ -13,6 +13,12 @@ $var_objective = "security";
                {{ session('message') }}
             </div>
             @endif
+            
+             @if (session('error'))
+            <div class="alert alert-danger mt-1" role="alert">
+               {{ session('error') }}
+            </div>
+            @endif
             <form method="POST" action="{{url('update-password')}}">
                @csrf
                <div class="d-flex flex-column mb-7 fv-row">
