@@ -8,6 +8,15 @@ $var_objective = "mapper-org";
    .app-content{
       background-color: transparent !important;
    }
+   #newzooomid {
+    transform-origin: top left; /* Ensure scaling origin is correct */
+    overflow: visible; /* Ensure child elements are not clipped */
+}
+
+.node, .slot-label, .badge-done, .badge-todo, .badge-inprogress {
+    transform-origin: top left; /* Adjust origin if necessary */
+}
+
 </style>
 <div class="d-flex flex-row-reverse zoom-btn-section">
    <div>
@@ -136,45 +145,40 @@ $var_objective = "mapper-org";
       });
       lines.push(line{{$linekeyforslot+1}});
       @endforeach
-   
    }
 
    function updateLines() {
-        lines.forEach(line => line.position());
-    }
+    lines.forEach(line => line.position());
+}
 
-    function zoomIn() {
-        zoomLevel += 0.1;
-        container.style.zoom = zoomLevel;
-        setTimeout(updateLines, 200);  // Update lines after the transition
-    }
+function zoomIn() {
+    zoomLevel += 0.1;
+    container.style.transform = `scale(${zoomLevel})`;
+    updateLines();
+}
 
-    function zoomOut() {
-        if (zoomLevel > 0.1) {
-            zoomLevel -= 0.1;
-            container.style.zoom = zoomLevel;
-            setTimeout(updateLines, 200);  // Update lines after the transition
-        }
+function zoomOut() {
+    if (zoomLevel > 0.1) {
+        zoomLevel -= 0.1;
+        container.style.transform = `scale(${zoomLevel})`;
+        updateLines();
     }
+}
 
-    function resetZoom() {
-        zoomLevel = 1;
-        container.style.zoom = zoomLevel;
-        setTimeout(updateLines, 200);  // Update lines after the transition
-    }
+function resetZoom() {
+    zoomLevel = 1;
+    container.style.transform = `scale(${zoomLevel})`;
+    updateLines();
+}
 
    
    new PlainDraggable(node_1, {
    onMove: function() {
-   @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $draglinekey =>  $drag)
-   line{{ $draglinekey+1 }}.position();
-   @endforeach
+      updateLines();
    },
    // onMoveStart: function() { line.dash = {animation: true}; },
    onDragEnd: function() {
-      @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $draglinekey =>  $drag)
-         line{{ $draglinekey+1 }}.dash = false;
-         @endforeach
+      updateLines(); 
    },
    autoScroll:true,
    });
@@ -268,13 +272,7 @@ $var_objective = "mapper-org";
          @endforeach
       @endforeach
    @endforeach
-  
 
-   
-   
-
-</script>
-<script>
  document.addEventListener('DOMContentLoaded', function() {
    let cumulativeHeight = -60;
    const boxes = document.querySelectorAll('.buisnessunits');
