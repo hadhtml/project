@@ -109,7 +109,22 @@
         
         if(count($keyqvalue) <= 1 )
         {
-        $value[] = ['Label1','Label2'];
+        // $value[] = ['Label1','Label2'];
+        foreach ($keyqvalue as $chart) {
+        $value[] = $chart->value;
+        if($chart->status == 'On Track')
+        {
+        $color[] = '#539884';
+        }elseif($chart->status == 'At Risk')
+        {
+        $color[] = '#f7cd55';
+        }else
+        {
+        $color[] = '#f35a47';
+        }
+       
+        $maxlinebar = max($value);
+        }
       
         }else
         {
@@ -306,7 +321,9 @@ var lineChart = new Chart(ctxLine, {
         },
         {
             label: 'Quarter (Target) Line (' + formattedDate + ')',
-            data: extraLineDataS,
+            data: Array.from({
+            length: @json($value).length
+            }, () => extraLineData),
             borderColor: 'gray', 
             fill: false,
             borderDash: [5, 5],
@@ -327,7 +344,7 @@ var lineChart = new Chart(ctxLine, {
             y: {
                 beginAtZero: true,
                 stepSize:20,
-                max: calculatedMaxbarNew,
+                max: extraLineData + 50,
             },
         },
     }

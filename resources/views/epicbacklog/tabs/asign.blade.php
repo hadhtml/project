@@ -16,6 +16,8 @@
    @csrf
    <input type="hidden" name="backlog_id" value="{{ $data->id }}">
    <input type="hidden" name="team_type" value="{{ $data->type }}">
+   <input type="hidden" name="team_slug" value="{{ $data->unit_id }}">
+   
    <div class="row">
       @if ($data->type == 'BU')
 

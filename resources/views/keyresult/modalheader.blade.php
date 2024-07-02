@@ -1,10 +1,8 @@
 <div class="row positionrelative">
-    <div class="col-md-12 mb-5">
-        <h5 class="modal-title newmodaltittle epic-tittle-header marginleftthirty" id="create-epic">
+    <div class="col-md-10">
+        <h5 class="modal-title newmodaltittle epic-tittle-header marginleftthirty pb-5" id="create-epic">
             <img src="{{ url('public/assets/svg/keyresult.svg') }}">@if($data->key_name) {{ $data->key_name }} @else Enter Key Result Tittle @endif
         </h5>
-    </div>
-    <div class="col-md-12 displayflex">
         <div class="btn-group epicheaderborderleft">
             <button type="button" class="btn btn-default statuschangebutton @if($data->key_status == 'To Do') todo-button-color @endif @if($data->key_status == 'In progress') inprogress-button-color @endif @if($data->key_status == 'Done') done-button-color @endif" id="showboardbutton">
                 @if($data->key_status == 'To Do')
@@ -36,21 +34,24 @@
                 @endif
             </div>
         </div>
+    </div>
+    <div class="col-md-2 text-right">
+        <div class="action ml-0">
+            <button onclick="maximizemodal()" id="open_in_full" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
+                <span class="material-symbols-outlined">open_in_full</span>
+            </button>
+            <button onclick="maximizemodal()" id="close_fullscreen" class="d-none btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
+                <span class="material-symbols-outlined">close_fullscreen</span>
+            </button>
+            <button data-bs-dismiss="modal" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>    
+        <br>
         @if($data->key_name)
-        <div class="moverightside">
-            <h1 class="epic-percentage">{{ $data->key_prog }} % Completed</h1>
-        </div>
+        <h1 class="epic-percentage">{{ $data->key_prog }} % Completed</h1>
         @endif
     </div>
-</div>
-<div class="rightside" >
-    <span onclick="maximizemodal()" id="open_in_full">
-        <span class="material-symbols-outlined">open_in_full</span>
-    </span>
-    <span onclick="maximizemodal()" class="d-none" id="close_fullscreen">
-        <span class="material-symbols-outlined">close_fullscreen</span>
-    </span>
-    <img data-dismiss="modal" class="closeimage" aria-label="Close" src="{{url('public/assets/svg/cross.svg')}}">
 </div>
 <script type="text/javascript">
     function rasiseflag() {

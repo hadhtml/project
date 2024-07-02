@@ -168,12 +168,9 @@ $team  = DB::table('organization')->where('id',$organization->org_id)->first();
         </ul>
     </div>
     <div class="d-flex align-items-center gap-2 gap-lg-3">
+        <a href="#" class="btn btn-flex btn-primary h-40px fs-7 fw-bold" id="backlog-assign" onclick="get_epic();" style="display:none" data-toggle="modal"  data-target="#">Asign Epic</a>
         <a href="#" class="btn btn-flex btn-outline btn-color-gray-700 btn-active-color-primary bg-body h-40px fs-7 fw-bold" data-toggle="modal"  data-target="#create-jira-epic">Connect Jira</a>
-
-        <a href="#" class="btn btn-flex btn-primary h-40px fs-7 fw-bold" id="backlog-assign" onclick="get_epic();" style="display:none" data-toggle="modal"  data-target="#">Assign Backlog</a>
-
         <a href="javascript:void(0)" class="btn btn-flex btn-outline btn-color-gray-700 btn-active-color-primary bg-body h-40px fs-7 fw-bold" onclick="addnewbacklogepic()">Add New</a>
-
          <a href="#" class="btn btn-primary ps-7" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">Filter 
          <i class="ki-outline ki-down fs-2 me-0"></i></a>
          <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold py-4 w-250px fs-6" data-kt-menu="true">

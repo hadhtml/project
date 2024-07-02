@@ -32,8 +32,7 @@
                     @endif
                 </div>
 
-                <div class="epic_id d-flex align-items-center mr-2" data-toggle="tooltip"
-                            data-placement="top" data-original-title="Owner">
+                <div class="epic_id d-flex align-items-center mr-2" data-toggle="tooltip" data-placement="top" data-original-title="Owner">
                     @if($r->board_type == 'VS')
                         <span style="font-size:18px" class="material-symbols-outlined mr-1">groups</span> {{ DB::table('value_team')->where('id' , $r->business_units)->first()->team_title }}
                     @endif
@@ -56,19 +55,19 @@
 
                 @php
                 $check_escalate = DB::table('escalate_cards')->where('flag_id' , $r->id)
-                    @endphp
-                    @if($check_escalate->count() > 0)
-                        @if(DB::table('flags')->where('escalate' , $check_escalate->first()->id)->first())
-                        @if(DB::table('flags')->where('escalate' , $check_escalate->first()->id)->first()->flag_status == 'doneflag')
-                            <div class="epic_id">
-                                <span class="material-symbols-outlined mr-1">check_circle</span>
-                                Unblocked
-                            </div>
-                        @endif
-                        @else
-                            
-                        @endif
+                @endphp
+                @if($check_escalate->count() > 0)
+                    @if(DB::table('flags')->where('escalate' , $check_escalate->first()->id)->first())
+                    @if(DB::table('flags')->where('escalate' , $check_escalate->first()->id)->first()->flag_status == 'doneflag')
+                        <div class="epic_id">
+                            <span class="material-symbols-outlined mr-1">check_circle</span>
+                            Unblocked
+                        </div>
                     @endif
+                    @else
+                        
+                    @endif
+                @endif
             </div>
             
         </div>

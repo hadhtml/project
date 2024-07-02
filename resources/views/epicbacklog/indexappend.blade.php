@@ -11,28 +11,26 @@
             <table class="table data-table example" id="olddata">
                <thead>
                   <tr>
-                     <td>
-                        <label class="form-checkbox">
-                        <input type="checkbox" id="checkAll">
-                        <span class="checkbox-label"></span>
-                        </label>
+                     <td class="w-10px pe-2">
+                        <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
+                           <input class="form-check-input" type="checkbox" id="checkAll" />
+                        </div>
                      </td>
-                     <td>ID</td>
-                     <td>Title</td>
-                     <td>Start/End Date</td>
-                     <td>Status</td>
-                     <td>Progress</td>
-                     <td>Action</td>
+                     <td class="min-w-125px">ID</td>
+                     <td class="min-w-125px">Title</td>
+                     <td class="min-w-125px">Start/End Date</td>
+                     <td class="min-w-125px">Status</td>
+                     <td class="min-w-125px">Progress</td>
+                     <td class="text-end min-w-70px">Action</td>
                   </tr>
                </thead>
                <tbody class="boards" id="backlog-board">
                   @foreach ($Backlog as $backlog)
                   <tr id="backlog-{{ $backlog->id }}">
                      <td>
-                        <label class="form-checkbox">
-                        <input type="checkbox" class="checkbox check" value="{{ $backlog->id }}">
-                        <span class="checkbox-label"></span>
-                        </label>
+                        <div class="form-check form-check-sm form-check-custom form-check-solid">
+                           <input type="checkbox" class="form-check-input checkbox check" value="{{ $backlog->id }}">
+                        </div>
                      </td>
                      <td class="draggable">
                         <div class="epic_id mr-3 mt-1" style="display: flex;">
@@ -43,12 +41,6 @@
                      <td class="draggable">
                         {{ $backlog->epic_title }}
                      </td>
-                     <!-- <td>
-                        @if ($backlog->assign_status == null)
-                        Assign
-                        <img src="{{ url('public/assets/svg/asignteam.svg') }}" data-toggle="modal"  data-target="#assign-unitbacklog-epic{{ $backlog->id }}">
-                        @endif
-                     </td> -->
                      <div class="modal fade" id="assign-unitbacklog-epic{{ $backlog->id }}"
                         tabindex="-1" role="dialog" aria-labelledby="create-epic" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -252,22 +244,25 @@
                            </div>
                         </div>
                      </td>
-                     <td>
-                        <button class="btn-circle btn-tolbar" onclick="editbacklogepic({{ $backlog->id }} , 'team_backlog')">
-                           <span class="material-symbols-outlined" data-toggle="tooltip" data-placement="top" data-original-title="Edit" style="font-size: 18px;"> edit </span>
-                        </button>
-                        <button class="btn-circle btn-tolbar" data-toggle="modal" data-target="#delete{{ $backlog->id }}">
-                           <span class="material-symbols-outlined" data-toggle="tooltip" data-placement="top" data-original-title="Delete" style="font-size: 18px;"> delete </span>
-                        </button>
-                        @if ($backlog->backlog_id == NULL)
-                        <button class="btn-circle btn-tolbar">
-                           <a href="{{url('dashboard/epicbacklog/clone/'.$backlog->id.'/'.$organization->type)}}" class="material-symbols-outlined" data-toggle="tooltip" data-placement="top" data-original-title="Clone" style="font-size: 18px;text-decoration: none;color: #3e413e;"> cyclone </a>
-                        </button>
-                        @else
-                        <button class="btn-circle btn-tolbar">
-                           <a href="{{url('dashboard/epicbacklog/clone/'.$backlog->backlog_id.'/'.$organization->type)}}" class="material-symbols-outlined" data-toggle="tooltip" data-placement="top" data-original-title="Clone" style="font-size: 18px;text-decoration: none;color: #3e413e;"> cyclone </a>
-                        </button>
-                        @endif   
+                     <td class="text-end">
+
+                        <div class="action ml-0">
+                           @if ($backlog->backlog_id == NULL)
+                           <a href="{{url('dashboard/epicbacklog/clone/'.$backlog->id.'/'.$organization->type)}}" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
+                               <i class="ki-outline ki-copy fs-1 text-gray-500 me-n1"></i>
+                           </a>
+                           @else
+                           <a href="{{url('dashboard/epicbacklog/clone/'.$backlog->backlog_id.'/'.$organization->type)}}" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
+                               <i class="ki-outline ki-copy fs-1 text-gray-500 me-n1"></i>
+                           </a>
+                           @endif
+                           <button onclick="editbacklogepic({{ $backlog->id }} , 'team_backlog')" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
+                               <i class="ki-outline ki-pencil fs-1 text-gray-500 me-n1"></i>
+                           </button>
+                           <button data-toggle="modal" data-target="#delete{{ $backlog->id }}" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
+                               <i class="ki-outline ki-trash fs-1 text-gray-500 me-n1"></i>
+                           </button>
+                        </div>   
                      </td>
                   </tr>
                   <div class="modal fade" id="delete{{ $backlog->id }}" tabindex="-1"
@@ -389,7 +384,7 @@
    <div>
       <p class="text-center">You may create your first Epic by clicking the bellow button</p>
    </div>
-   <button class="btn btn-primary btn-lg btn-theme btn-block ripple ml-25" onclick="addnewbacklogepic()" style="width:50%">
+   <button class="btn btn-primary btn-lg btn-theme btn-block ripple" onclick="addnewbacklogepic()">
    Add an Epic
    </button>
 </div>

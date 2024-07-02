@@ -103,7 +103,10 @@
     .day-circle.checked {
         background-color: #3498db;/ Blue color when checked / color: #fff;/ White text when checked /
     }
+    
 </style>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
 @if (!isset($noreport))
     @if ($KEYChart)
         @php
@@ -187,9 +190,60 @@
 
                         <span onclick="uploadattachment()" class="btn btn-default btn-sm">New Check-In</span>
                     </div>
+                    
+                    
                 </div>
             </div>
+            
+            
         </div>
+        
+    
+                   @php
+                    
+                    $progress = 0;
+                    $OverAllprogress = 0;
+                    if($keyqfirst)
+                    {
+                    $progress = ($keyqfirst->value / $KEYChart->quarter_value * 100);
+                    $OverAllprogress = ($keyqfirst->value / $key->target_number * 100);
+                    }
+                    @endphp
+                    
+                    
+    
+                   <div class="row">
+                    <div class="col-md-6">
+                         <div class="d-flex bd-highlight">
+                        <div class="p-2 flex-grow-1 bd-highlight">Quarter Progress</div>
+                        <div class="p-2 bd-highlight">{{round($progress,1)}}%</div>
+                      </div>
+                 
+                                   <div class="w3-light-grey w3-round">
+                                    <div class="w3-container w3-blue w3-round" style="width:{{round($progress,1)}}%">{{round($progress,1)}}%</div>
+                                  </div>
+                    </div>   
+                   
+   
+                       <div class="col-md-6">
+                         <div class="d-flex bd-highlight">
+                        <div class="p-2 flex-grow-1 bd-highlight">OverAllProgress</div>
+                        <div class="p-2 bd-highlight">{{round($OverAllprogress,1)}}%</div>
+                      </div>
+                 
+
+                        <div class="w3-light-grey w3-round">
+                                    <div class="w3-container w3-blue w3-round" style="width:{{round($OverAllprogress,1)}}%">{{round($OverAllprogress,1)}}%</div>
+                        </div>
+                  
+                    </div>
+                      </div>
+                      
+                      
+                    
+                  
+    
+          
 
         <div class="row uploadfrequency displaynone mb-1">
             <div class="col-md-12">
@@ -353,8 +407,7 @@
                                         <label for="flag_assignee">Participants <small
                                                 class="text-danger">*</small></label>
                                     </div>
-                                    <select required id="js-select1" multiple="multiple" name="participant[]">
-                                    
+                                    <select required id="js-select1" multiple="multiple" class="form-control" name="participant[]">
                                         @foreach (DB::table('members')->where('org_user', Auth::id())->get() as $r)
                                             <option value="{{ $r->id }}">{{ $r->name }}
                                                 {{ $r->last_name }}</option>
@@ -549,7 +602,7 @@
                             <div class="form-group mb-0" style="margin-bottom:-30px !important ">
                                 <label for="flag_assignee">Participants <small class="text-danger">*</small></label>
                             </div>
-                            <select required id="js-select2{{ $val->id }}" multiple="multiple"
+                            <select required id="js-select2{{ $val->id }}" class="form-control" multiple="multiple"
                                 name="participant[]">
                                 <option value="">Select Assignee</option>
                                 @foreach (DB::table('members')->where('org_user', Auth::id())->get() as $r)
@@ -754,7 +807,7 @@
                             <input type="hidden" value="{{ Auth::user()->id }}" name="user_id">
                             <input type="hidden" value="{{ $r->id }}" name="comment_id">
                             <input type="hidden" value="{{ $key->id }}" name="id">
-                            <div class="d-flex flex-column mt-3 d-none">
+                            <div class="d-flex flex-column mt-3">
                                 <div>
                                     <div class="form-group mb-0">
                                         <label for="objective-name">Write Reply</label>

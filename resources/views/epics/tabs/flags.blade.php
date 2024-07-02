@@ -397,6 +397,7 @@ function deleteflag(id) {
         },
         success: function(data) {
             showtabwithoutloader('{{$data->id}}' , 'flags');
+                        showheader('{{$data->id}}');
             showepicincard();
         },
         error: function(error) {
