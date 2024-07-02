@@ -272,10 +272,10 @@ class EpicBacklogController extends Controller
             if($data->epic_title)
             {
                 $rand = rand(123456789 , 987654321);
-                $activity = 'has updated Title Field <a href="javascript:void(0)" onclick="showdetailsofactivity('.$rand.')">See Details</a> <div class="activitydetalbox deletecomment" id="activitydetalbox'.$rand.'"><div class="row"> <div class="col-md-10"> <h4>Title Update</h4> </div> <div class="col-md-2"> <img onclick="showdetailsofactivity('.$rand.')" src="'.url("public/assets/svg/crossdelete.svg").'"> </div> </div><p style="margin-bottom:0px;">'.$data->epic_title.'</p><div class="text-center mt-2 mb-2"><span class="material-symbols-outlined"> arrow_downward </span></div><p>'.$request->epic_name.'</p></div>';
+                $activity = 'updated Title <a href="javascript:void(0)" onclick="showdetailsofactivity('.$rand.')">See Details</a> <div class="activitydetalbox deletecomment" id="activitydetalbox'.$rand.'"><div class="row"> <div class="col-md-10"> <h4>Title Update</h4> </div> <div class="col-md-2"> <img onclick="showdetailsofactivity('.$rand.')" src="'.url("public/assets/svg/crossdelete.svg").'"> </div> </div><p style="margin-bottom:0px;">'.$data->epic_title.'</p><div class="text-center mt-2 mb-2"><span class="material-symbols-outlined"> arrow_downward </span></div><p>'.$request->epic_name.'</p></div>';
                 Cmf::save_activity(Auth::id() , $activity,'epicbacklog',$request->epic_id, 'edit');
             }else{
-                $activity = 'Added a Epic Tittle';
+                $activity = 'updated Epic Tittle';
                 Cmf::save_activity(Auth::id() , $activity,'epicbacklog',$request->epic_id, 'edit');
             }
         }
@@ -284,22 +284,22 @@ class EpicBacklogController extends Controller
             if($data->epic_detail)
             {
                 $rand = rand(123456781239 , 987651234321);
-                $activity = 'has updated Description Field <a href="javascript:void(0)" onclick="showdetailsofactivity('.$rand.')">See Details</a> <div class="activitydetalbox deletecomment" id="activitydetalbox'.$rand.'"><div class="row"> <div class="col-md-10"> <h4>Description Update</h4> </div> <div class="col-md-2"> <img onclick="showdetailsofactivity('.$rand.')" src="'.url("public/assets/svg/crossdelete.svg").'"> </div> </div><p style="margin-bottom:0px;">'.$data->epic_detail.'</p><div class="text-center mt-2 mb-2"><span class="material-symbols-outlined"> arrow_downward </span></div><p>'.$request->epic_detail.'</p></div>';
+                $activity = ' updated Description Field <a href="javascript:void(0)" onclick="showdetailsofactivity('.$rand.')">See Details</a> <div class="activitydetalbox deletecomment" id="activitydetalbox'.$rand.'"><div class="row"> <div class="col-md-10"> <h4>Description Update</h4> </div> <div class="col-md-2"> <img onclick="showdetailsofactivity('.$rand.')" src="'.url("public/assets/svg/crossdelete.svg").'"> </div> </div><p style="margin-bottom:0px;">'.$data->epic_detail.'</p><div class="text-center mt-2 mb-2"><span class="material-symbols-outlined"> arrow_downward </span></div><p>'.$request->epic_detail.'</p></div>';
                 Cmf::save_activity(Auth::id() , $activity,'epicbacklog',$request->epic_id, 'edit');
             }else{
-                $activity = 'Added a Description';
+                $activity = 'updated Description';
                 Cmf::save_activity(Auth::id() , $activity,'epicbacklog',$request->epic_id, 'edit');
             }
         }
 
         if($data->epic_start_date != $request->epic_start_date)
         {
-            $activity = 'has updated Start Date From '.Cmf::date_format_new($data->epic_start_date).' To '.Cmf::date_format_new($request->epic_start_date).' ';
+            $activity = 'updated Start Date From '.Cmf::date_format_new($data->epic_start_date).' To '.Cmf::date_format_new($request->epic_start_date).' ';
             Cmf::save_activity(Auth::id() , $activity,'epicbacklog',$request->epic_id, 'edit');
         }
         if($data->epic_end_date != $request->epic_end_date)
         {
-            $activity = 'has updated End Date From '.Cmf::date_format_new($data->epic_end_date).' To '.Cmf::date_format_new($request->epic_end_date).' ';
+            $activity = 'updated End Date From '.Cmf::date_format_new($data->epic_end_date).' To '.Cmf::date_format_new($request->epic_end_date).' ';
             Cmf::save_activity(Auth::id() , $activity,'epicbacklog',$request->epic_id, 'edit');
         }
         $data->epic_title = $request->epic_name;
@@ -610,7 +610,7 @@ class EpicBacklogController extends Controller
         $update->epic_end_date = $date;
         $update->save();
 
-        $activity = 'Created the Epic on '.Cmf::date_format_new($update->created_at).' at '.Cmf::date_format_time($update->created_at);
+        $activity = 'Created  Epic on '.Cmf::date_format_new($update->created_at).' at '.Cmf::date_format_time($update->created_at);
         Cmf::save_activity(Auth::id() , $activity,'epicbacklog',$update->id , 'image');
         return $add->id;
     }

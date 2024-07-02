@@ -29,6 +29,10 @@ use App\Models\quarter_month;
 use App\Models\Epic;
 use Illuminate\Support\Str;
 use DB;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
+
+
 class AdminController extends Controller
 {
     public function dashboard()
@@ -677,8 +681,38 @@ class AdminController extends Controller
                 }
             }
         }
-
         
+         $users = DB::table('users')->where('invitation_id', $from)->get();
+        
+
+            foreach ($users as $u) 
+            {
+                $token = random_int(1000, 9999);
+                DB::table('users')->insert([
+                    'name' => 'clone-'.$u->name,
+                    'email' => 'clone-' . $token . '-' . $u->email,
+                    'last_name' => 'clone-'.$u->last_name,
+                    'invitation_id' => $to,
+                    'email_verified_at' => Carbon::now(),
+                    'password' => Hash::make('11223344'),
+                    'role' => 'demo',
+                ]); 
+            }
+            
+            $member = DB::table('users')->where('invitation_id', $to)->get();
+            
+             foreach ($member as $m) 
+            {
+            
+                DB::table('members')->insert([
+                    'name' => $m->name,
+                    'email' => $m->email,
+                    'user_id' => $m->id,
+                    'org_user' => $to,
+                    'last_name' => $m->last_name,
+                    
+                ]); 
+            }
 
     }
     public function addPlanModule()

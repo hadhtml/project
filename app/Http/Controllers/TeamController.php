@@ -209,7 +209,49 @@ class TeamController extends Controller
     DB::table('objectives')->where('id',$request->locstate)->update(['q_obj_prog' => $QuartertotalObj]);
 
 
-    return redirect()->back()->with('message', 'Backlog Assign Successfully');
+    if($request->team_type == 'org')
+      {
+       $org =  DB::table('organization')->where('id',$request->team_slug)->first();
+        return redirect()->to(url('dashboard/epicbacklog/' . $org->slug . '/'.$request->team_type))->with('message', 'Backlog Assign Successfully');
+
+      }
+
+      if($request->team_type == 'unit')
+      {
+       $org =  DB::table('business_units')->where('id',$request->team_slug)->first();
+        return redirect()->to(url('dashboard/epicbacklog/' . $org->slug . '/'.$request->team_type))->with('message', 'Backlog Assign Successfully');
+
+      }
+
+      if($request->team_type == 'stream')
+      {
+       $org =  DB::table('value_stream')->where('id',$request->team_slug)->first();
+        return redirect()->to(url('dashboard/epicbacklog/' . $org->slug . '/'.$request->team_type))->with('message', 'Backlog Assign Successfully');
+
+      }
+
+      if($request->team_type == 'orgT')
+      {
+       $org =  DB::table('org_team')->where('id',$request->team_slug)->first();
+        return redirect()->to(url('dashboard/epicbacklog/' . $org->slug . '/'.$request->team_type))->with('message', 'Backlog Assign Successfully');
+
+      }
+
+      
+      if($request->team_type == 'VS')
+      {
+       $org =  DB::table('value_team')->where('id',$request->team_slug)->first();
+        return redirect()->to(url('dashboard/epicbacklog/' . $org->slug . '/'.$request->team_type))->with('message', 'Backlog Assign Successfully');
+
+      }
+
+      
+      if($request->team_type == 'BU')
+      {
+       $org =  DB::table('unit_team')->where('id',$request->team_slug)->first();
+        return redirect()->to(url('dashboard/epicbacklog/' . $org->slug . '/'.$request->team_type))->with('message', 'Backlog Assign Successfully');
+
+      }
 
     }
 

@@ -75,38 +75,54 @@ class MapperController extends Controller
         $objective = DB::table('key_result')->where('obj_id',$request->id)->get();
         return $objective;
     }
+    
     public function mapperbytype($url , $type)
     {
         if($type == 'unit')
         {
-            $organization = DB::table('business_units')->where('slug'  , $url)->first();
-            $data = DB::table('business_units')->where('slug'  , $url)->first();
+            $organization = DB::table('business_units')->where('slug'  , $url)->where('user_id',Auth::id())->first();
+            $data = DB::table('business_units')->where('slug'  , $url)->where('user_id',Auth::id())->first();
+            if($data)
+            {
             $valuestream = DB::table('value_stream')->where('unit_id'  , $data->id)->orderby('id' , 'asc')->get();
             $buteam = DB::table('unit_team')->where('org_id'  , $data->id)->get();
-            return view('mapper.unit.index',compact('data','valuestream','buteam','organization')); 
+            return view('mapper.unit.index',compact('data','valuestream','buteam','organization'));
+            }else
+            {
+            return redirect()->back();    
+            }
+             
         }
 
         if($type == 'stream')
         {
-            $organization = DB::table('value_stream')->where('slug'  , $url)->first();
-            $data = DB::table('value_stream')->where('slug'  , $url)->first();
+            $organization = DB::table('value_stream')->where('slug'  , $url)->where('user_id',Auth::id())->first();
+            $data = DB::table('value_stream')->where('slug'  , $url)->where('user_id',Auth::id())->first();
             $valueteam = DB::table('value_team')->where('org_id'  , $data->id)->get();
             return view('mapper.stream.index',compact('data','valueteam','organization')); 
         }
 
         if($type == 'org')
         {
-            $organization = DB::table('organization')->where('slug'  , $url)->first();
-            $data = DB::table('organization')->where('slug'  , $url)->first();
-            $business_units = DB::table('business_units')->where('org_id'  , $data->id)->orderby('id' , 'asc')->get();
-            $valuestream = DB::table('value_stream')->where('org_id'  , $data->id)->orderby('id' , 'asc')->get();
-
-            if(isset($_GET['view']))
+            $organization = DB::table('organization')->where('slug'  , $url)->where('user_id',Auth::id())->first();
+            $data = DB::table('organization')->where('slug'  , $url)->where('user_id',Auth::id())->first();
+            if($data)
+            {
+             $business_units = DB::table('business_units')->where('org_id'  , $data->id)->orderby('id' , 'asc')->get();
+            $valuestream = DB::table('value_stream')->where('org_id'  , $data->id)->orderby('id' , 'asc')->where('user_id',Auth::id())->get();
+             if(isset($_GET['view']))
             {
                 return view('mapper.org.horizontal.index',compact('data','business_units','organization','valuestream'));
             }else{
                 return view('mapper.org.index',compact('data','business_units','organization','valuestream'));   
             }
+            }else
+            {
+                return redirect()->back();
+            }
+            
+
+           
              
         }
     }

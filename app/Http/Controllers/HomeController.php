@@ -62,17 +62,32 @@ class HomeController extends Controller
           return view('organizations.asignnames');
         }
     }
-    public function createmodulenames(Request $request)
+     public function createmodulenames(Request $request)
     {
-        $cretemodulenames = new modulenames;
-        $cretemodulenames->user_id = Auth::id();
-        $cretemodulenames->level_one = $request->level_one;
-        $cretemodulenames->slug_one = Cmf::shorten_url($request->level_one);
-        $cretemodulenames->level_two = $request->level_two;
-        $cretemodulenames->slug_two = Cmf::shorten_url($request->level_two);
-        $cretemodulenames->level_three = $request->level_three;
-        $cretemodulenames->slug_three = Cmf::shorten_url($request->level_three);
-        $cretemodulenames->save();
+        $data = modulenames::where('user_id',auth::id())->first();
+        if($data)
+        {
+         DB::table()->where('user_id',auth::id())->update([
+         'level_one' => $request->level_one,
+         'slug_one' => Cmf::shorten_url($request->level_one),
+         'level_two' => $request->level_two,
+         'slug_one' => Cmf::shorten_url($request->level_two),
+         'level_three' => $request->level_three,
+         'slug_one' => Cmf::shorten_url($request->level_three),
+         ]);
+        }else
+        {
+          $cretemodulenames = new modulenames;
+          $cretemodulenames->user_id = Auth::id();
+          $cretemodulenames->level_one = $request->level_one;
+          $cretemodulenames->slug_one = Cmf::shorten_url($request->level_one);
+          $cretemodulenames->level_two = $request->level_two;
+          $cretemodulenames->slug_two = Cmf::shorten_url($request->level_two);
+          $cretemodulenames->level_three = $request->level_three;
+          $cretemodulenames->slug_three = Cmf::shorten_url($request->level_three);
+          $cretemodulenames->save();
+        }
+        
     }
     public function updatemodulenames(Request $request)
     {
@@ -87,6 +102,6 @@ class HomeController extends Controller
         $updatemodulenames->level_three = $request->level_three;
         $updatemodulenames->slug_three = Cmf::shorten_url($request->level_three);
         $updatemodulenames->save();
-        return redirect()->back()->with('message', 'Website Change Successfully');
+        return redirect()->back()->with('message', 'Asign Names  Change Successfully');
     }
 }

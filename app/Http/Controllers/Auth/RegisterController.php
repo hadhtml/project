@@ -86,39 +86,7 @@ class RegisterController extends Controller
         $organization->type =  'org';
         $organization->save();
 
-        $cretemodulenames = new modulenames;
-        $cretemodulenames->user_id = $user->id;
-        $cretemodulenames->level_one = $data['level_one'];
-        $cretemodulenames->slug_one = Cmf::shorten_url($data['level_one']);
-        $cretemodulenames->level_two = $data['level_two'];
-        $cretemodulenames->slug_two = Cmf::shorten_url($data['level_two']);
-        $cretemodulenames->level_three = $data['level_three'];
-        $cretemodulenames->slug_three = Cmf::shorten_url($data['level_three']);
-        $cretemodulenames->save();
-
-        if($data['month'])
-        {
-        DB::table('settings')
-        ->insert([
-        'month' => $data['month'],
-        'user_id' => $user->id,  
-        ]);
-        }
-
-        if($data['business_type'] == 'yes')
-        {
-            DB::table('jira_setting')
-            ->insert([
-              'user_name' => $data['user_name'], 
-              'token' => $data['token'],
-              'jira_url' => $data['jira_url'], 
-              'jira_name' => $data['jira_name'],
-              'user_id' => $user->id,  
-      
-      
-              ]);
-        }
-
+    
         $plan = DB::table('plan')->where('status','Active')->orderby('id','DESC')->first();
 
 
@@ -143,7 +111,8 @@ class RegisterController extends Controller
             'package_status' =>  $max_user,
         ]);
 
-     
+        session()->put('user', $user->email);
         return $user;
     }
 }
+
