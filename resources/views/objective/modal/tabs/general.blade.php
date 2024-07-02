@@ -32,7 +32,7 @@
         <div class="col-md-6 col-lg-6 col-xl-6">
             <div class="form-group mb-0">
                 <label for="end_date">End Date</label>
-                <input id="end_date" type="date" class="form-control" value="{{ date('Y-m-d',strtotime($data->end_date)) }}" name="end_date" name="edit_epic_end_date" required>
+                <input id="end_date" type="date" class="form-control" value="{{ date('Y-m-d',strtotime($data->end_date)) }}" name="end_date" required>
                 
             </div>
         </div>
@@ -52,6 +52,9 @@
     </div>
 </form>
 <script type="text/javascript">
+    var today = new Date();
+    var formattedToday = today.toISOString().split('T')[0];
+    document.getElementById("end_date").min = formattedToday;
     $('.editor{{ $data->id }}').summernote({
         height: 180,
         toolbar: [

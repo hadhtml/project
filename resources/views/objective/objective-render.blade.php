@@ -24,35 +24,33 @@ $Currentsprint = DB::table('sprint')->where('user_id',Auth::id())->where('value_
 @if($sprint > 0)
 <div id="sprint-end">
     {{$sprintValue->title}} {{$sprintValue->quarter_name}} {{$sprintValue->quarter_year}}
-    <button class="btn btn-warning mb-2 text-white" type="button" disabled  style="height: 35px">In progress</button>
-    <button class="btn btn-primary mr-1 mb-2" style="height: 35px" id="endquarterbutton" data-toggle="modal" data-target="#" onclick="Finishquarter('{{$sprintValue->quarter_name}}','{{$sprintValue->quarter_year}}')">Finish Quarter</button>
+    <button class="btn btn-warning mb-2 text-white" type="button" disabled>In progress</button>
+    <button class="btn btn-primary mr-1 mb-2" id="endquarterbutton" data-toggle="modal" data-target="#" onclick="Finishquarter('{{$sprintValue->quarter_name}}','{{$sprintValue->quarter_year}}')">Finish Quarter</button>
 </div>
 @else
- <div id="sprint-end">
-  @if($Currentsprint) 
-  @if($currentDate < $Currentsprint->end_date)
-  @if($Currentsprint->quarter_name == 'Q1')
-  Q2 {{$CurrentQuarter->year}}
-  @endif
-  @if($Currentsprint->quarter_name == 'Q2')
-  Q3 {{$CurrentQuarter->year}}
-  @endif
-  @if($Currentsprint->quarter_name == 'Q3')
-  Q4 {{$CurrentQuarter->year}}
-  @endif
-  @if($Currentsprint->quarter_name == 'Q4')
-  Q1 {{$CurrentQuarter->year}}
-  @endif
-
-  <button class="btn btn-secondary mb-2" type="button" disabled  style="height: 35px">Not Started</button>
-  {{-- <button class="btn btn-primary mb-2"  style="height: 35px"  onclick="Restartquarter({{$Currentsprint->id}})">Reopen {{$Currentsprint->quarter_name}} {{$Currentsprint->quarter_year}} </button> --}}
-  <button class="btn btn-primary mb-2" disabled style="height: 35px"  type="button">Start Quarter</button>
-  @endif
-  @else
-  @if($CurrentQuarter) {{$CurrentQuarter->quarter_name}} {{$CurrentQuarter->year}}  @endif 
-  <button class="btn btn-secondary mb-2" type="button" disabled  style="height: 35px">Not Started</button>
-    <button class="btn btn-primary mb-2"  style="height: 35px"  onclick="startquarter()">Start Quarter</button>
-  @endif
+<div id="sprint-end">
+@if($Currentsprint) 
+@if($currentDate < $Currentsprint->end_date)
+@if($Currentsprint->quarter_name == 'Q1')
+Q2 {{$CurrentQuarter->year}}
+@endif
+@if($Currentsprint->quarter_name == 'Q2')
+Q3 {{$CurrentQuarter->year}}
+@endif
+@if($Currentsprint->quarter_name == 'Q3')
+Q4 {{$CurrentQuarter->year}}
+@endif
+@if($Currentsprint->quarter_name == 'Q4')
+Q1 {{$CurrentQuarter->year}}
+@endif
+<button class="btn btn-secondary mb-2" type="button" disabled>Not Started</button>
+<button class="btn btn-primary mb-2" disabled type="button">Start Quarter</button>
+@endif
+@else
+@if($CurrentQuarter) {{$CurrentQuarter->quarter_name}} {{$CurrentQuarter->year}}  @endif 
+<button class="btn btn-secondary mb-2" type="button" disabled>Not Started</button>
+ <button class="btn btn-primary mb-2"  onclick="startquarter()">Start Quarter</button>
+@endif
 
 
 </div>
@@ -137,11 +135,11 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
          $trimmedStringobj = trim($objedit);
          @endphp
          <div class="action ml-0">
-            <button class="btn btn-icon btn-circle btn-tolbar ml-auto " onclick="editobjective(event , {{$obj->id}} , '{{$organization->slug}}')">
-            <span class="material-symbols-outlined">edit</span>
+            <button onclick="editobjective(event , {{$obj->id}} , '{{$organization->slug}}')" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
+                <i class="ki-outline ki-pencil fs-1 text-gray-500 me-n1"></i>
             </button>
-            <button class="btn btn-icon btn-circle btn-tolbar delete-obj mr-2" onclick="deleteobj(event ,{{$obj->id}})">
-            <span class="material-symbols-outlined">delete</span>
+            <button onclick="deleteobj(event ,{{$obj->id}})" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
+                <i class="ki-outline ki-trash fs-1 text-gray-500 me-n1"></i>
             </button>
          </div>
       </div>
@@ -233,11 +231,11 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
                            $trimmedStringkey = trim($keyedit);
                            @endphp
                            <div class="action ml-0">
-                              <button class="btn btn-icon btn-circle bg-white btn-tolbar ml-auto" onclick="editobjectivekey(event,{{$key->id}})">
-                              <span class="material-symbols-outlined">edit</span>
+                              <button onclick="editobjectivekey(event,{{$key->id}})" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
+                                  <i class="ki-outline ki-pencil fs-1 text-gray-500 me-n1"></i>
                               </button>
-                              <button class="btn btn-icon btn-circle bg-white btn-tolbar"  onclick="deleteobjkey(event,{{$key->id}},'{{$obj->id}}')" data-toggle="modal" data-target="#delete-objective-key">
-                              <span class="material-symbols-outlined">delete</span>
+                              <button data-toggle="modal" data-target="#delete-objective-key" onclick="deleteobjkey(event,{{$key->id}},'{{$obj->id}}')" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
+                                  <i class="ki-outline ki-trash fs-1 text-gray-500 me-n1"></i>
                               </button>
                            </div>
                         </div>
@@ -330,13 +328,11 @@ $keyweightcounte = DB::table('key_result')->wherenull('trash')->where('obj_id',$
                                              $trimmedStringinit = trim($initedit);
                                              @endphp
                                              <div class="action ml-0">
-                                                <button
-                                                   class="btn btn-icon btn-circle bg-white btn-tolbar ml-auto" onclick="editinitiative({{$initiative->id}},'{{$initiative->initiative_name}}','{{$initiative->initiative_start_date}}','{{$initiative->initiative_end_date}}','{{$trimmedStringinit}}','{{$initiative->initiative_weight}}','{{$key->id}}','{{$obj->id}}','{{$key->key_end_date}}')" data-toggle="modal" data-target="#edit-initiative">
-                                                <span class="material-symbols-outlined">edit</span>
+                                                <button onclick="editinitiative({{$initiative->id}},'{{$initiative->initiative_name}}','{{$initiative->initiative_start_date}}','{{$initiative->initiative_end_date}}','{{$trimmedStringinit}}','{{$initiative->initiative_weight}}','{{$key->id}}','{{$obj->id}}','{{$key->key_end_date}}')" data-toggle="modal" data-target="#edit-initiative" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
+                                                    <i class="ki-outline ki-pencil fs-1 text-gray-500 me-n1"></i>
                                                 </button>
-                                                <button
-                                                   class="btn btn-icon btn-circle bg-white btn-tolbar" onclick="deletekeyinitiative({{$initiative->id}},'{{$key->id}}','{{$obj->id}}')" data-toggle="modal" data-target="#delete-initiative-key">
-                                                <span class="material-symbols-outlined">delete</span>
+                                                <button onclick="deletekeyinitiative({{$initiative->id}},'{{$key->id}}','{{$obj->id}}')" data-toggle="modal" data-target="#delete-initiative-key" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
+                                                    <i class="ki-outline ki-trash fs-1 text-gray-500 me-n1"></i>
                                                 </button>
                                              </div>
                                           </div>
@@ -588,45 +584,47 @@ $formattedDates = $firstDayOfMonths->toDateString();
 }
 
 @endphp
-  <div class="modal fade" id="create-report" tabindex="-1" role="dialog" aria-labelledby="create-report" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content" style="width: 526px !important;">
-            <div class="modal-header">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h5 class="modal-title" id="create-epic">Start @if($CurrentQuarter) {{$CurrentQuarter->quarter_name}} {{$CurrentQuarter->year}}  @endif</h5>
-                    </div>
-                    <div class="col-md-12">
-                        <p>Provide title, description and confirm details.By startting, a baseline will be created in order to track progress.</p>
-                    </div>
-                      
+<div class="modal fade" id="create-report" tabindex="-1" role="dialog" aria-labelledby="add-team" aria-hidden="true">
+    <div class="modal-dialog mw-650px" role="document">
+        <div class="modal-content">
+            <!--begin::Modal header-->
+            <div class="modal-header pb-0 border-0 justify-content-end">
+                <!--begin::Close-->
+                <div class="btn btn-sm btn-icon btn-active-color-primary" data-dismiss="modal" aria-label="Close">
+                    <i class="ki-outline ki-cross fs-1"></i>
                 </div>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <img src="{{asset('public/assets/images/icons/minus.svg')}}">
-                </button>
+                <!--end::Close-->
             </div>
-            <div class="modal-body">
+            <div class="modal-body scroll-y mx-5 mx-xl-18 pt-0 pb-15">
+               <div class="text-center mb-13">
+                  <h1 class="mb-3">Start @if($CurrentQuarter) {{$CurrentQuarter->quarter_name}} {{$CurrentQuarter->year}}  @endif</h1>
+               </div>
+               <div class="text-muted fw-semibold fs-5 text-center">Provide title, description and confirm details.By startting, a baseline will be created in order to track progress.</div>
                 <div class="row">
                     <div class="col-md-12">
                         <div id="success-sprint"  role="alert"></div>
                         <span id="sprint-error" class="text-danger"></span>
                     </div>
                 </div>
-                <form class="needs-validation" action="#" method="POST" novalidate>
+                <form class="needs-validation mt-5" action="#" method="POST" novalidate>
                 @csrf
             
                     <div class="row">
                         <div class="col-md-12 col-lg-12 col-xl-12">
-                            <div class="form-group mb-0">
-                                <input type="text" class="form-control" id="q_title" required>
-                                <label for="objective-name">Title*</label>
-                            </div>
+                           <div class="d-flex flex-column mb-7 fv-row">
+                              <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                  <span class="required">Title</span>
+                              </label>
+                              <input type="text" class="form-control form-control-solid" id="q_title" required>
+                           </div>
                         </div>
 
                         <div class="col-md-12 col-lg-12 col-xl-12">
-                           <div class="form-group mb-0">
-                               <input type="text" class="form-control"  id="q_description" >
-                               <label for="small-description">Description</label>
+                           <div class="d-flex flex-column mb-7 fv-row">
+                              <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                  <span>Description</span>
+                              </label>
+                              <textarea class="form-control form-control-solid" rows="3" id="q_description"></textarea>
                            </div>
                        </div>
 
@@ -660,7 +658,7 @@ $formattedDates = $firstDayOfMonths->toDateString();
 
                        @if($organization->type == 'unit')
                        <div class="col-md-12 col-lg-12 col-xl-12">
-                       <h6>{{ Cmf::getmodulename("level_one") }}</h6>
+                       <h6> {{ Cmf::getmodulename("level_one") }}</h6>
                        <div class="d-flex align-items-center">
                         <div>
                             <span style="font-size:17px" class="material-symbols-outlined">domain</span>
@@ -729,15 +727,18 @@ $formattedDates = $firstDayOfMonths->toDateString();
                         <input type="hidden"  @if($CurrentQuarter) value="{{$formattedDate}}" @endif id="q_end_date" required>
                         <input type="hidden"  @if($CurrentQuarter) value="{{$CurrentQuarter->quarter_name}}" @endif id="q_name" required>
                         <input type="hidden"  @if($CurrentQuarter) value="{{$CurrentQuarter->year}}" @endif id="q_year" required>
-
-                        
-                        
                         @if($CurrentQuarter)
                         <div class="col-md-12">
-                            <button id="savequarterbutton" class="btn btn-primary btn-lg btn-theme btn-block ripple mt-3" onclick="saveQuarter();"  type="button">Start  @if($CurrentQuarter) {{$CurrentQuarter->quarter_name}} {{$CurrentQuarter->year}} @endif</button>
+                           <div class="text-center pt-15">
+                              <button id="savequarterbutton" class="btn btn-primary" onclick="saveQuarter();"  type="button">Start  @if($CurrentQuarter) {{$CurrentQuarter->quarter_name}} {{$CurrentQuarter->year}} @endif</button>
+                           </div>
                         </div>
-                        @else 
-                        <span class="ml-2 text-danger">Create Initiative to track progress </span>
+                        @else
+                        <div class="col-md-12">
+                           <div class="text-center pt-15">
+                              <span class="ml-2 text-danger">Create Initiative to track progress </span>
+                           </div>
+                        </div>
                         @endif
                     </div>
                 </form>

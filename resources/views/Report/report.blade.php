@@ -75,7 +75,7 @@ $var_objective = 'Report-'.$type;
                                                 </clipPath>
                                               </defs>
                                             </svg>
-                                            <span class="ml-2"><a href="{{url('dashboard/organization/report-2/'.$k->id.'/'.$report->id.'/'.$type)}}"> {{ $id}}.{{$k->key_name}}</span></a>
+                                            <span class="ml-2"><a href="{{url('dashboard/organization/report-2/'.$k->id.'/'.$report->id.'/'.$type)}}"> {{ $id}}. {{$k->key_name}}</span></a>
                                         </td>
                                         <td class="center">{{$k->key_epic_comp}}</td>
                                         <td class="center">{{$k->key_epic_incopm}}</td>

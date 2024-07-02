@@ -1,46 +1,26 @@
-<div class="subheader subheader-solid breadcrums" id="kt_subheader">
-    <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
-        <!--begin::Info-->
-        <div class="d-flex align-items-start flex-column flex-wrap mr-2">
-            <!--begin::Page Title-->
-            <div class="d-flex flex-row align-items-center">
-                <div>
-                    <span style="font-size:22px" class="material-symbols-outlined">link</span>
-                </div>
-                <div>
-                    <h5 class="text-dark font-weight-bold ml-2">
-                        OKR Mapper
-                    </h5>
-                </div>
-            </div>
-            <div class="d-flex flex-row page-sub-titles align-items-center">
-                <div class="mr-2">
-                    <div class="d-flex align-items-center">
-                        <div>
-                            <span style="font-size:17px" class="material-symbols-outlined">home</span>
-                        </div>
-                        <div>
-                            <a href="{{route('organization.dashboard')}}" style="text-decoration: none;" >Dashboard</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="mr-2">
-                    <div class="d-flex align-items-center">
-                        <div>
-                            <span style="font-size:17px" class="material-symbols-outlined">link</span>
-                        </div>
-                        <div>
-                            <p>OKR Mapper</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<div class="app-toolbar-wrapper d-flex flex-stack flex-wrap gap-4 w-100">
+    <div class="page-title d-flex flex-column justify-content-center gap-1 me-3">
+        <div class="d-flex">
+            <span class="material-symbols-outlined">link</span>
+            <h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bold fs-3 m-0">OKR Mapper
+            </h1>
         </div>
-        <div class="d-flex align-items-center toolbar">
-         <div class="d-flex align-items-center">
-            <a class="button" href="{{ url('dashboard/mapper') }}/{{ $data->slug }}/org?view=horizontal">Horizontal View</a>
-         </div>
-      </div>
+        <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0">
+            <li class="breadcrumb-item text-muted">
+                <a href="{{url('organization/dashboard')}}" class="text-muted text-hover-primary">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item">
+                <span class="bullet bg-gray-500 w-5px h-2px"></span>
+            </li>
+            <li class="breadcrumb-item text-muted">OKR Mapper</li>
+        </ul>
+    </div>
+    <div class="d-flex align-items-center gap-2 gap-lg-3">
+        @if(isset($_GET['view']) == 'horizontal')
+        <a href="{{ url('dashboard/mapper') }}/{{ $data->slug }}/org" class="btn btn-flex btn-outline btn-color-gray-700 btn-active-color-primary bg-body h-40px fs-7 fw-bold" >Vertical View</a>
+        @else
+        <a href="{{ url('dashboard/mapper') }}/{{ $data->slug }}/org?view=horizontal" class="btn btn-flex btn-outline btn-color-gray-700 btn-active-color-primary bg-body h-40px fs-7 fw-bold" >Horizontal View</a>
+        @endif
     </div>
 </div>
 <style type="text/css">

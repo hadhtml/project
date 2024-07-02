@@ -737,17 +737,17 @@ $Currentsprint = DB::table('sprint')->where('user_id',Auth::id())->where('value_
          </div>
          @endforeach
          @else
-         <div style="position:absolute;right:30%;top:100%;" class="text-center">
-            <img src="{{ asset('public/epic-backlog.svg') }}" width="120" height="120">
-            <div>
-               <h6 class="text-center">No Records Found</h6>
+         <div class="card">
+            <div class="card-body">
+               <div class="text-center">
+                  <img src="{{ asset('public/epic-backlog.svg') }}" alt="" width="120" height="120" class="mw-100">
+               </div>
+               <div class="card-px text-center  pt-15 pb-15">
+                  <h2 class="fs-2x fw-bold mb-0">OKR Planner</h2>
+                  <p class="text-gray-500 fs-4 fw-semibold py-7">click on the button below and create your first objective.</p>
+                  <a onclick="addnewobjective({{$organization->id}} , '{{ $organization->type }}', '{{ $organization->slug }}')" href="javascript:void(0)" class="btn btn-primary er fs-6 px-8 py-4">New Objective</a>
+               </div>
             </div>
-            <div>
-               <p class="text-center">click on the button bellow and create your first objective. </p>
-            </div>
-            <button class="btn btn-primary btn-lg btn-theme btn-block ripple ml-25" onclick="addnewobjective({{$organization->id}} , '{{ $organization->type }}', '{{ $organization->slug }}')" style="width:50%">
-             New Objective
-            </button>
          </div>
          @endif
       </div>

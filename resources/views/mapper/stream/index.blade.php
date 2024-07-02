@@ -5,26 +5,13 @@ $var_objective = "mapper-stream";
 <title>{{ $data->value_name }} OKR Mapper</title>
 @section('content')
 <style type="text/css">
-   body{
-      overflow: auto !important;
-   }
-   .subheader-solid{
-      width: 81%;
-      position: fixed;
-      top: -3%;
-      left: 300px;
-      z-index: 999999;
-   }
-   .body-inner-content{
-      overflow: auto;
-      min-height: 1600px;
-      min-width: 4500px;
-      padding-left: 25px !important;
+   .app-content{
+      background-color: transparent !important;
    }
 </style>
 <div class="row">
     <div class="col-md-12">
-        <div style="width: 100%; height: 5000px; padding: 50px;margin-top: 150px;">
+        <div style="width: 5000px; height: 5000px; padding: 50px;">
             
         <!-- Node 1 -->
           <div id="node_1" class="node" style="transform: translate(-60px, -60px);">

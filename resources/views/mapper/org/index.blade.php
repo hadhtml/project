@@ -4,13 +4,24 @@ $var_objective = "mapper-org";
 @extends('components.main-layout')
 <title>ORG-OKR Mapper</title>
 @section('content')
+<style type="text/css">
+   .app-content{
+      background-color: transparent !important;
+   }
+   #newzooomid {
+    transform-origin: top left; /* Ensure scaling origin is correct */
+    overflow: visible; /* Ensure child elements are not clipped */
+}
 
-<div class="row rotatex">
-=======
+.node, .slot-label, .badge-done, .badge-todo, .badge-inprogress {
+    transform-origin: top left; /* Adjust origin if necessary */
+}
+
+</style>
 <div class="d-flex flex-row-reverse zoom-btn-section">
    <div>
       <button
-         class="btn-circle btn-zoom-buttons zoom" onclick="zoom_in(280)" >
+         class="btn-circle btn-zoom-buttons zoom" onclick="zoomIn()" >
       <img width="20px"
          height="20px"
          src="{{asset('public/assets/images/icons/search-zoom-in.svg')}}"
@@ -20,7 +31,7 @@ $var_objective = "mapper-org";
    <div
       class="mr-2">
       <button
-         class="btn-circle btn-zoom-buttons zoom-out" onclick="zoom_out(280)">
+         class="btn-circle btn-zoom-buttons zoom-out" onclick="zoomOut()">
       <img width="20px"
          height="20px"
          src="{{asset('public/assets/images/icons/search-zoom-out.svg')}}"
@@ -30,7 +41,7 @@ $var_objective = "mapper-org";
    <div
       class="mr-2">
       <button
-         class="btn-circle btn-zoom-buttons zoom-init" onclick="zoom_init(280)">
+         class="btn-circle btn-zoom-buttons zoom-init" onclick="resetZoom()">
       <img width="20px"
          height="20px"
          src="{{asset('public/assets/images/icons/maximize.svg')}}"
@@ -42,7 +53,7 @@ $var_objective = "mapper-org";
    <div class="row">
 
    <div class="col-md-12">
-      <div style="width: 100%; height: 5000px; padding: 50px;margin-top: 150px;">
+      <div id="newzooomid" style="width: 5000px; height: 5000px; padding: 50px;">
          <!-- Node 1 -->
          <div id="node_1" class="node" style="transform: translate(-60px, -60px);">
             <div class="node-name slot-active drag-impo-grab">
@@ -93,15 +104,18 @@ $var_objective = "mapper-org";
 
 @endsection
 @section('scripts')
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/leader-line@1.0.5/leader-line.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/plain-draggable@2.5.12/plain-draggable.min.js"></script>
+<script type="text/javascript" src="{{ url('public/assets/js/leader-line.min.js') }}"></script>
+<script type="text/javascript" src="{{ url('public/assets/js/plain-draggable.min.js') }}"></script>
 <script type="text/javascript">
    
-   window.addEventListener("load", function() {
-   "use strict";
+   $( document ).ready(function() {
    
+      createlines()
 
-   @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->get() as $t_l_c)
+    });
+   let zoomLevel = 1;
+   const container = document.getElementById('newzooomid');
+   const lines = [];
 
    @foreach(DB::table('team_link_child')->groupby('bussiness_key_id')->where('user_id' , Auth::id())->get() as $t_l_c)
 
@@ -117,147 +131,47 @@ $var_objective = "mapper-org";
    var line{{ $linedeclarekeyforslot+1 }};
    @endforeach
    
-   @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $linekeyforslot =>  $line_t_l_c)
-   line{{$linekeyforslot+1}} = new LeaderLine(connectedobjective{{ $line_t_l_c->linked_objective_id }}, slout_out_buisness_unit_key_result_{{ $line_t_l_c->bussiness_key_id }}, {
-   startPlug: "behind",
-   endPlug: "behind",
-   size: 4,
-   startPlugSize: 1,
-   endPlugSize: 1,
-   startSocket: "left",
-   endSocket: "right",
-   color: "#fb8c00"
-   // path: 'grid',
-   // dropShadow: {color: '#111', dx: 0, dy: 2, blur: 0.2}
-   });
-   @endforeach
-   
+   function createlines() {
+      @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $linekeyforslot =>  $line_t_l_c)
+      line{{$linekeyforslot+1}} = new LeaderLine(connectedobjective{{ $line_t_l_c->linked_objective_id }}, slout_out_buisness_unit_key_result_{{ $line_t_l_c->bussiness_key_id }}, {
+         startPlug: "behind",
+         endPlug: "behind",
+         size: 4,
+         startPlugSize: 1,
+         endPlugSize: 1,
+         startSocket: "left",
+         endSocket: "right",
+         color: "#fb8c00"
+      });
+      lines.push(line{{$linekeyforslot+1}});
+      @endforeach
+   }
 
-   
-   new PlainDraggable(node_1, {
-   onMove: function() {
-   @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $draglinekey =>  $drag)
-   line{{ $draglinekey+1 }}.position();
-   @endforeach
-   },
-   // onMoveStart: function() { line.dash = {animation: true}; },
-   onDragEnd: function() {
-      @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $draglinekey =>  $drag)
-         line{{ $draglinekey+1 }}.dash = false;
-         @endforeach
-   },
-   autoScroll:true,
-   });
-   
+   function updateLines() {
+    lines.forEach(line => line.position());
+}
 
-   @foreach(DB::table('org_team')->where('org_id'  , $data->id)->get() as $o_t)
+function zoomIn() {
+    zoomLevel += 0.1;
+    container.style.transform = `scale(${zoomLevel})`;
+    updateLines();
+}
 
-   new PlainDraggable(orgteam{{ $o_t->id }}, {
-   onMove: function() {
-   @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $draglinekey =>  $drag)
-   line{{ $draglinekey+1 }}.position();
-   @endforeach
-   },
-   // onMoveStart: function() { line.dash = {animation: true}; },
-   onDragEnd: function() {
-   @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $draglinekey =>  $drag)
-         line{{ $draglinekey+1 }}.dash = false;
-         @endforeach
-   },
-   autoScroll:true,
-   });
-
-   @endforeach
-
-   
-   @foreach($business_units as $key_calue_stream => $b)
-   
-   @foreach(DB::table('unit_team')->where('org_id'  , $b->id)->get() as $b_t)
-   new PlainDraggable(buisnessunitteam{{ $b_t->id }}, {
-   onMove: function() {
-   @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $draglinekey =>  $drag)
-   line{{ $draglinekey+1 }}.position();
-   @endforeach
-   },
-   // onMoveStart: function() { line.dash = {animation: true}; },
-   onDragEnd: function() {
-   @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $draglinekey =>  $drag)
-         line{{ $draglinekey+1 }}.dash = false;
-         @endforeach
-   },
-   autoScroll:true,
-   });
-   @endforeach
-   new PlainDraggable(buisnessunit{{ $b->id }}, {
-   onMove: function() {
-   @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $draglinekey =>  $drag)
-   line{{ $draglinekey+1 }}.position();
-   @endforeach
-   },
-   // onMoveStart: function() { line.dash = {animation: true}; },
-   onDragEnd: function() {
-   @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $draglinekey =>  $drag)
-         line{{ $draglinekey+1 }}.dash = false;
-         @endforeach
-   },
-   autoScroll:true,
-   });
-   @foreach($valuestream as $v)
-   new PlainDraggable(valuestream{{ $v->id }}, {
-   onMove: function() {
-   @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $draglinekey =>  $drag)
-   line{{ $draglinekey+1 }}.position();
-   @endforeach
-   },
-   // onMoveStart: function() { line.dash = {animation: true}; },
-   onDragEnd: function() {
-   @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $draglinekey =>  $drag)
-         line{{ $draglinekey+1 }}.dash = false;
-         @endforeach
-   },
-   autoScroll:true,
-   });
-   
-   @foreach(DB::table('value_team')->where('org_id'  , $v->id)->get() as $key_value_stream_team => $v_t)
-   
-    new PlainDraggable(valuestreamteam{{ $v_t->id }}, {
-       onMove: function() {
-         @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $draglinekey =>  $drag)
-         line{{ $draglinekey+1 }}.position();
-         @endforeach
-       },
-       // onMoveStart: function() { line.dash = {animation: true}; },
-       onDragEnd: function() {
-         @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $draglinekey =>  $drag)
-         line{{ $draglinekey+1 }}.dash = false;
-         @endforeach
-       },
-       autoScroll:true,
-     });
-   
-   @endforeach
-   @endforeach
-   @endforeach
-   });
-
-   var zoom = 1;
-    function zoom_in(id) {
-        zoom += 0.1;
-        console.log(zoom);
-        $('.rotatex').css('zoom', '' + zoom + '');
+function zoomOut() {
+    if (zoomLevel > 0.1) {
+        zoomLevel -= 0.1;
+        container.style.transform = `scale(${zoomLevel})`;
+        updateLines();
     }
-    function zoom_init(id) {
-        zoom = 1;
-        console.log(zoom);
-        $('.rotatex').css('zoom', '' + zoom + '');
-    }
-    function zoom_out(id) {
-        zoom -= 0.1;
-        $('.rotatex').css('zoom', '' + zoom + '');
-    }
+}
 
-</script>
-<script>
+function resetZoom() {
+    zoomLevel = 1;
+    container.style.transform = `scale(${zoomLevel})`;
+    updateLines();
+}
+   
+
  document.addEventListener('DOMContentLoaded', function() {
    let cumulativeHeight = -60;
    const boxes = document.querySelectorAll('.buisnessunits');
@@ -296,12 +210,6 @@ $var_objective = "mapper-org";
      boxorgteambox.style.transform = `translate(1850px , ${orgteamboxcumulativeHeight}px)`;
      orgteamboxcumulativeHeight += boxorgteambox.offsetHeight + 10;
    });
-
-
-
-   
-
-   
  });
 </script>
 @endsection

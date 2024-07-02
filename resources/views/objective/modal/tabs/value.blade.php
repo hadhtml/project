@@ -1,0 +1,1173 @@
+
+
+<style>
+    .select2-container {
+        min-width: 480px;
+    }
+
+    .select2-results__option {
+        padding-right: 20px;
+        vertical-align: middle;
+    }
+
+    .select2-results__option:before {
+        content: "";
+        display: inline-block;
+        position: relative;
+        height: 20px;
+        width: 20px;
+        border: 2px solid #e9e9e9;
+        border-radius: 4px;
+        background-color: #fff;
+        margin-right: 20px;
+        vertical-align: middle;
+    }
+
+    .select2-results__option[aria-selected=true]:before {
+        font-family: fontAwesome;
+        content: "\f00c";
+        color: #fff;
+        background-color: blue;
+        border: 0;
+        display: inline-block;
+        padding-left: 3px;
+    }
+
+    .select2-container--default .select2-results__option[aria-selected=true] {
+        background-color: #fff;
+    }
+
+    .select2-container--default .select2-results__option--highlighted[aria-selected] {
+        background-color: #eaeaeb;
+        color: #272727;
+    }
+
+    .select2-container--default .select2-selection--multiple {
+        margin-bottom: 10px;
+    }
+
+    .select2-container--default.select2-container--open.select2-container--below .select2-selection--multiple {
+        border-radius: 4px;
+    }
+
+    .select2-container--default.select2-container--focus .select2-selection--multiple {
+        /* border-color: #f77750; */
+        border-width: 2px;
+    }
+
+    .select2-container--default .select2-selection--multiple {
+        border-width: 2px;
+    }
+
+    .select2-container--open .select2-dropdown--below {
+
+        border-radius: 6px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+    }
+
+    .select2-selection .select2-selection--multiple:after {
+        content: 'hhghgh';
+    }
+
+    /* select with icons badges single*/
+    .select-icon .select2-selection__placeholder .badge {
+        display: block;
+    }
+
+    .select-icon .placeholder {
+        display: none;
+    }
+
+    .select-icon .select2-results__option:before,
+    .select-icon .select2-results__option[aria-selected=true]:before {
+        display: none !important;
+        /* content: "" !important; */
+    }
+
+    .select-icon .select2-search--dropdown {
+        display: none;
+    }
+
+    .day-circle {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #eee;
+        text-align: center;
+        line-height: 40px;
+        cursor: pointer;
+        font-size: 13px;
+        margin: 2px;
+    }
+
+    .day-circle.checked {
+        background-color: #3498db;/ Blue color when checked / color: #fff;/ White text when checked /
+    }
+    
+</style>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+@if (!isset($noreport))
+    @if ($KEYChart)
+        @php
+            $keyqvalue = '';
+            $keyqfirst = DB::table('obj_quarter_value')
+                ->where('obj_chart_id', $KEYChart->id)
+                ->orderby('id','DESC')
+                ->first();
+            if ($keyqfirst) {
+                $keyqvalue = $keyqfirst->value;
+            }else
+            {
+            $keyqvalue = $key->init_value;  
+            }
+        @endphp
+    @endif
+
+    <div class="row">
+        <div class="col-md-12 col-lg-12 col-xl-12">
+            <div class="d-flex flex-row align-items-center justify-content-between block-header">
+                <div class="d-flex flex-row align-items-center">
+                    <div class="mr-2">
+                        <span class="material-symbols-outlined">database</span>
+                    </div>
+                    <div>
+                        <h4>Current Value : @if ($KEYChart)
+                                <span id="q-value{{ $KEYChart->id }}">{{ $keyqvalue }}</span>
+                                @endif @if ($KEYChart)
+                                    <span class="valueheading">{{ $key->obj_result_type }} {{ $KEYChart->quarter_value }}
+                                @endif
+                                </span></h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @if ($report && $KEYChart)
+  <div class="row">
+            <div class="col-md-12 col-lg-12 col-xl-12">
+                <div class="d-flex flex-row align-items-center justify-content-between block-header">
+                    <div class="d-flex flex-row align-items-center">
+                        <div class="mr-2">
+                            <span class="material-symbols-outlined">
+                                checklist
+                            </span>
+                        </div>
+                        <div>
+                            <h4 style="font-size: 12px">Check-in</h4>
+                        </div>
+                    </div>
+                  
+                    <div class="displayflex">
+
+                        <span onclick="uploadattachment()" class="btn btn-default btn-sm">New Check-In</span>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+       
+
+    
+                   @php
+                    
+
+                    $progress = 0;
+                    $OverAllprogress = 0;
+                    
+                    if($keyqfirst)
+                    {
+                    $progress = ($keyqfirst->value / $KEYChart->quarter_value * 100);
+                    $OverAllprogress = ($keyqfirst->value / $key->target_number * 100);
+                    }
+                  
+                    @endphp
+                    
+                
+
+                    
+    
+                   <div class="row">
+                    <div class="col-md-6">
+                         <div class="d-flex bd-highlight">
+                        <div class="p-2 flex-grow-1 bd-highlight">Quarter Progress</div>
+                        @if($progress >= 100)
+                        <div class="p-2 bd-highlight">100%</div>
+                        @else
+                        <div class="p-2 bd-highlight">{{round($progress,1)}}%</div>
+                        @endif
+                      </div>
+                 
+                                   <div class="w3-light-grey w3-round">
+                                        @if($progress >= 100)
+                                    <div class="w3-container w3-blue w3-round" style="width:100%">100%</div>
+                                    @else
+                                     <div class="w3-container w3-blue w3-round" style="width:{{round($progress,1)}}%">{{round($progress,1)}}%</div>
+                                    @endif
+                                  </div>
+                    </div>   
+                   
+   
+                       <div class="col-md-6">
+                         <div class="d-flex bd-highlight">
+                        <div class="p-2 flex-grow-1 bd-highlight">OverAllProgress</div>
+                        <div class="p-2 bd-highlight">{{round($OverAllprogress,1)}}%</div>
+                      </div>
+                 
+
+                        <div class="w3-light-grey w3-round">
+                                    <div class="w3-container w3-blue w3-round" style="width:{{round($OverAllprogress,1)}}%">{{round($OverAllprogress,1)}}%</div>
+                        </div>
+                  
+                    </div>
+                      </div>
+                      
+                      
+                    
+                  
+    
+          
+
+
+
+        
+
+        <div class="row uploadattachment">
+
+            <div class="col-md-12">
+
+                <div class="card comment-card storyaddcard">
+                    <div class="card-body">
+                        <div id="success-check-in"></div>
+                        <form class="needs-validation savekeychartnewform"
+                            action="{{ url('add-new-quarter-value-obj') }}" method="POST">
+                            @csrf
+                            <input type="hidden" value="{{ $key->id }}" name="id">
+                            <input type="hidden" value="{{ $KEYChart->id }}" name="key_chart_id">
+                            <input type="hidden" value="{{ $report->id }}" name="sprint_id">
+                            <input type="hidden" value="{{ $KEYChart->quarter_value}}" id="q_value">
+                            
+
+
+                            <div class="row">
+                                <div class="col-md-6 col-lg-6 col-xl-6">
+                                    <div class="form-group mb-0">
+                                        <label for="small-description">Value</label>
+                                        <input type="text" name="value" onkeypress="return onlyNumberKey(event)"
+                                            class="form-control new-chart-value" id="new-chart-value{{ $key->id }}" required>
+                                    </div>
+                                     <div id="error-check-in"></div>
+                                </div>
+                                <div class="col-md-6 col-lg-6 col-xl-6">
+                                    <div class="form-group mb-0">
+                                        <label for="flag_type">Status<small class="text-danger">*</small></label>
+                                        <select required class="form-control" name="status" id="flag_type">
+                                            <option value="">Select Status</option>
+                                            <option value="On Track">On Track</option>
+                                            <option value="At Risk">At Risk</option>
+                                            <option value="Off Track">Off Track</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-lg-12 col-xl-12">
+                                    <div class="form-group mb-0" style="margin-bottom:-30px !important ">
+                                        <label for="flag_assignee">Participants <small
+                                                class="text-danger">*</small></label>
+                                    </div>
+                                    <select required id="js-select1" multiple="multiple" class="form-control" name="participant[]">
+                                        @foreach (DB::table('members')->where('org_user', Auth::id())->get() as $r)
+                                            <option value="{{ $r->id }}">{{ $r->name }}
+                                                {{ $r->last_name }}</option>
+                                        @endforeach
+                                    </select>
+
+                                </div>
+
+                                <div class="col-md-12 col-lg-12 col-xl-12">
+                                    <div class="form-group mb-0">
+                                        <label for="small-description">Summary</label>
+                                        <textarea name="summary" class="form-control"></textarea>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <span onclick="uploadattachment()" class="btn btn-default btn-sm">Cancel</span>
+                                    <button type="submit"
+                                        class="saveepicflagbuttonasdsadsad btn btn-primary btn-sm">Save</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- <div class="row">
+                <div class="col-md-12 col-lg-12 col-xl-12">
+                    <div class="form-group mb-0">
+                        <label for="small-description">New Value</label>
+                        <input type="text" onkeypress="return onlyNumberKey(event)" class="form-control"
+                            id="new-chart-value{{ $key->id }}" required>
+                    </div>
+                </div>
+            </div> --}}
+    @else
+        <div class="ml-2 text-danger mt-2" role="alert">
+            Define Quarterly Target for Current Quarter
+        </div>
+    @endif
+
+    <div class="row">
+        
+        <div class="col-md-12">
+            @if ($KEYChart)
+
+                @php
+                    $keyqvalue = DB::table('obj_quarter_value')
+                        ->where('obj_chart_id', $KEYChart->id)
+                        ->orderby('id', 'DESC')
+                        ->get();
+                @endphp
+
+                @foreach ($keyqvalue as $val)
+                    @php
+                        $dataArray = explode(',', $val->participant);
+                        $dataCount = count($dataArray);
+                        $firstTwoIds = array_slice($dataArray, 0, 2);
+                        $remainingIds = array_slice($dataArray, 2);
+                        $remainingCount = count($remainingIds);
+
+                   
+
+                        $commentscount = DB::table('flag_comments')
+                            ->where('flag_id', $val->id)
+                            ->where('type', 'comment')
+                            ->where('comment_type', 'obj')
+                            ->count();
+
+                    @endphp
+
+
+
+        </div>
+    </div>
+
+    <div class="card check-in-card">
+        <div class="card-body">
+            <div class="d-flex flex-row align-items-center justify-content-between check-in-header">
+                <div class="d-flex flex-row align-items-center">
+                    <div class="lable">
+                        <small> <span></span>{{ $val->status }}</small>
+                    </div>
+                    <div class="d-flex flex-row align-items-center value ml-3">
+                        <div><small>Value: </small></div>
+                        <h4 class="mt-2 ml-1">{{ $val->value }}</h4>
+                    </div>
+                </div>
+                <div>
+                    <div class="symbol-group symbol-hover">
+
+                        @foreach ($firstTwoIds as $member)
+                            @foreach (DB::table('members')->get() as $r)
+                                @if ($r->id == $member)
+                                    @php
+                                        $name = $r->name . ' ' . $r->last_name;
+                                    @endphp
+
+                                    <div class="symbol symbol-30 symbol-circle" data-toggle="tooltip" title=""
+                                        data-original-title="{{ $name }}">
+                                        @if ($r->image != null)
+                                            <img src="{{ asset('public/assets/images/' . $r->image) }}"
+                                                alt="Example Image">
+                                        @else
+                                            <img src="{{ Avatar::create($name)->toBase64() }}" alt="Example Image">
+                                        @endif
+                                    </div>
+                                @endif
+                            @endforeach
+                        @endforeach
+                        @if ($dataCount > 3)
+                            <div style="width:42px; height:42px; padding: 10px; font-size: 12px;"
+                                class="symbol symbol-30  symbol-circle symbol-light" data-toggle="tooltip"
+                                title="" data-original-title="More users">
+                                <span class="symbol-label">{{ $remainingCount }}+</span>
+                            </div>
+                        @endif
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="check-in-content">
+                <p>{{ $val->summary }}</p>
+            </div>
+            <div class="d-flex flex-row justify-content-between mt-1">
+                <div class="d-flex flex-row">
+                    <button class="btn btn-default btn-sm" onclick="showcomment({{ $val->id }})">Comments
+                        ({{ $commentscount }})</button>
+                </div>
+                <div>
+                    <div class="dropdown d-flex">
+
+                        <span class="mt-1">{{ \Carbon\Carbon::parse($val->created_at)->format('d M Y, h:i A')}}</span>
+                        <button class="btn btn-circle dropdown-toggle btn-tolbar bg-transparent"
+                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            <img src="http://dev.agileprolific.com/public/assets/svg/dropdowndots.svg">
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" data-toggle="modal"
+                                onclick="showupdatecard({{ $val->id }})" data-target="#edit22">Edit</a>
+                            <a class="dropdown-item" data-toggle="modal"
+                                onclick="deletequartervalueobj({{ $val->id }})" data-target="#delete22">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+    <div class="uploadattachment{{ $val->id }} displaynone">
+        <div class="card comment-card storyaddcard">
+            <div class="card-body">
+                <form class="needs-validation updatekeychart{{ $val->id }}"
+                    action="{{ url('update-new-quarter-value-obj') }}" method="POST" novalidate>
+                    @csrf
+
+                    <input type="hidden" value="{{ $val->id }}" name="flag_id">
+                    <input type="hidden" value="{{ $key->id }}" name="id">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6 col-xl-6">
+                            <div class="form-group mb-0">
+                                <label for="small-description">Value</label>
+                                <input type="text" name="value" value="{{ $val->value }}"
+                                    onkeypress="return onlyNumberKey(event)" class="form-control"
+                                    id="new-chart-value{{ $key->id }}" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-xl-6">
+                            <div class="form-group mb-0">
+                                <label for="flag_type">Status<small class="text-danger">*</small></label>
+                                <select required class="form-control" name="status" id="flag_type">
+
+                                    <option @if ($val->status == 'On Track') selected @endif value="On Track">On
+                                        Track</option>
+                                    <option @if ($val->status == 'At Risk') selected @endif value="At Risk">At Risk
+                                    </option>
+                                    <option @if ($val->status == 'Off Track') selected @endif value="Off Track">Off
+                                        Track</option>
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            <div class="form-group mb-0" style="margin-bottom:-30px !important ">
+                                <label for="flag_assignee">Participants <small class="text-danger">*</small></label>
+                            </div>
+                            <select required id="js-select3{{ $val->id }}" class="form-control" multiple="multiple"
+                                name="participant[]">
+                                <option value="">Select Assignee</option>
+                                @foreach (DB::table('members')->where('org_user', Auth::id())->get() as $r)
+                                    <option
+                                        @foreach ($dataArray as $member) @if ($r->id == $member) selected  @endif @endforeach
+                                        value="{{ $r->id }}">{{ $r->name }}
+                                        {{ $r->last_name }}</option>
+                                @endforeach
+                            </select>
+
+                        </div>
+
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            <div class="form-group mb-0">
+                                <label for="small-description">Summary</label>
+                                <textarea name="summary" class="form-control">{{ $val->summary }}</textarea>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <span onclick="showupdatecard({{ $val->id }})"
+                                class="btn btn-default btn-sm">Cancel</span>
+                            <button type="submit"
+                                class="btn btn-primary btn-sm updateflagmodalbuton{{ $r->id }}">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $('.updatekeychart{{ $val->id }}').on('submit', (function(e) {
+            $('.updateflagmodalbuton{{ $r->id }}').html('<i class="fa fa-spin fa-spinner"></i>');
+            e.preventDefault();
+            var formData = new FormData(this);
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    $('.secondportion').html(data);
+                }
+            });
+        }));
+    </script>
+
+
+
+
+    <div class="mr-auto p-2 displaynone show-comment{{ $val->id }}">comments
+
+        <div class="p-2 btn btn-default btn-sm ml-40" onclick="writecomment({{ $val->id }})">Add Comments</div>
+
+    </div>
+
+
+
+
+    <div class="col-md-12 col-lg-12 col-xl-12 displaynone writecomment{{ $val->id }}">
+        <div class="d-flex flex-column">
+            <form method="POST" id="savecommentobj{{ $val->id }}"
+                action="{{ url('objresult-savecomment') }}">
+                @csrf
+                <input type="hidden" value="{{ $val->id }}" name="flag_id">
+                <input type="hidden" value="{{ Auth::user()->id }}" name="user_id">
+                <input type="hidden" value="{{ $key->id }}" name="id">
+                <div class="form-group mb-8">
+                    <label for="objective-name">Write Comment</label>
+                    <textarea id="textarea" style="height:100% !important;" class="form-control mention" name="comment"
+                        rows="5"></textarea>
+                </div>
+                <span onclick="writecomment()" class="btn btn-default btn-sm">Cancel</span>
+                <button type="submit" id="savecommentbutton{{ $val->id }}"
+                    class="btn btn-primary btn-sm">Save</button>
+            </form>
+        </div>
+    </div>
+    @php
+        $comments = DB::table('flag_comments')
+            ->where('flag_id', $val->id)
+            ->where('type', 'comment')
+            ->where('comment_type', 'obj')
+            ->get();
+    @endphp
+    @foreach ($comments as $r)
+        @php
+            $user = DB::table('users')
+                ->where('id', $r->user_id)
+                ->first();
+        @endphp
+        <div class="card comment-card-new displaynone show-comment{{ $r->flag_id }}"
+            id="commentdeletekey{{ $r->id }}">
+            <div class="deletecomment" id="commentdelete{{ $r->id }}">
+                <div class="row">
+                    <div class="col-md-10">
+                        <h4>Delete Comment</h4>
+                    </div>
+                    <div class="col-md-2">
+                        <img onclick="deletecommentshow({{ $r->id }})"
+                            src="{{ url('public/assets/svg/crossdelete.svg') }}">
+                    </div>
+                </div>
+                <p>Do you want to delete your comment ? You won’t be able to undo this action.</p>
+                <button onclick="deletecomment({{ $r->id }},'{{ $key->id }}','{{$r->flag_id}}')"
+                    class="btn btn-danger btn-block">Delete</button>
+            </div>
+            <div class="commentedit" id="commentedit{{ $r->id }}">
+                <form method="POST" id="updatecomment{{ $r->id }}" action="{{ url('updatecomment-obj') }}">
+                    @csrf
+                    <input type="hidden" value="{{ $r->id }}" name="comment_id">
+                    <input type="hidden" value="{{ $key->id }}" name="id">
+                    <div class="row mt-3">
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            <div class="d-flex flex-column">
+                                <div>
+                                    <div class="form-group mb-0">
+                                        <textarea required class="form-control" name="comment">{{ $r->comment }}</textarea>
+                                    </div>
+                                </div>
+                                <div>
+                                    <span onclick="editcommenthide({{ $r->id }})"
+                                        class="btn btn-default btn-sm">Cancel</span>
+                                    <button type="submit" id="updatecommentbutton{{ $r->id }}"
+                                        class="btn btn-primary btn-sm">Update</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-body ">
+                <div class="d-flex flex-column">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <div class="d-flex flex-row align-items-center">
+                            <div class="d-flex">
+                                <div class="mr-2">
+                                    @if ($user->image != null)
+                                        <img height="40" width="40" style="border-radius: 50%;"
+                                            src="{{ asset('public/assets/images/' . $user->image) }}"
+                                            alt="{{ $user->name }} {{ $user->last_name }}">
+                                    @else
+                                        <img height="40" width="40"
+                                            src="{{ Avatar::create($user->name . ' ' . $user->last_name)->toBase64() }}"
+                                            alt="Example Image">
+                                    @endif
+                                </div>
+                                <div>
+                                    <h5>{{ $user->name }} {{ $user->last_name }}</h5>
+                                    <small>{{ Cmf::date_format($r->created_at) }}</small>
+                                    @if ($r->created_at != $r->updated_at)
+                                        <small>Updated</small>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-row align-items-center">
+                            <div class="pr-2">
+                                <span onclick="editcommentshow({{ $r->id }})" class="commenticon">
+                                    <img src="{{ url('public/assets/svg/editcommentsvg.svg') }}">
+                                </span>
+                            </div>
+                            <div>
+                                <span onclick="deletecommentshow({{ $r->id }})" class="commenticon">
+                                    <img src="{{ url('public/assets/svg/deletecomment.svg') }}">
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    @php
+                        $str = strlen($r->comment);
+                    @endphp
+                    <div>
+                        <p class="load-more" id="load-more{{ $r->id }}">
+                            {{ \Illuminate\Support\Str::limit($r->comment, 220, $end = '') }}
+                            @if ($str > 220)
+                                <a href="javascript:void(0);" onclick="loadmore({{ $r->id }});"
+                                    id="toggle-button{{ $r->id }}" class=""
+                                    style="font-size:10px;">More</a>
+                            @endif
+                        </p>
+
+                        <p id="more-content{{ $r->id }}" style="line-height:15px;display:none">
+                            {{ $r->comment }}
+                            <a href="javascript:void(0);" onclick="seeless({{ $r->id }});"
+                                id="toggle-button-less{{ $r->id }}" class=""
+                                style="font-size:10px;">Less</a>
+                        </p>
+                    </div>
+                    <div>
+                        <button onclick="replycomment({{ $r->id }})"
+                            class="btn btn-default btn-sm">Reply</button>
+                    </div>
+
+                    <div class="replycard{{ $r->id }}" style="display: none;">
+                        <form id="savereply{{ $r->id }}" method="POST"
+                            action="{{ url('savereply-obj') }}">
+                            @csrf
+                            <input type="hidden" value="{{ $r->flag_id }}" name="flag_id">
+                            <input type="hidden" value="{{ Auth::user()->id }}" name="user_id">
+                            <input type="hidden" value="{{ $r->id }}" name="comment_id">
+                            <input type="hidden" value="{{ $key->id }}" name="id">
+                            <div class="d-flex flex-column mt-3">
+                                <div>
+                                    <div class="form-group mb-0">
+                                        <label for="objective-name">Write Reply</label>
+                                        <textarea required class="form-control" name="comment"></textarea>
+                                    </div>
+                                </div>
+                                <div>
+                                    <span onclick="replycomment({{ $r->id }})"
+                                        class="btn btn-default btn-sm">Cancel</span>
+                                    <button type="submit" id="savereplybutton{{ $r->id }}"
+                                        class="btn btn-primary btn-sm">Save</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <script type="text/javascript">
+                        $('#savereply{{ $r->id }}').on('submit', (function(e) {
+                            $('#savereplybutton{{ $r->id }}').html('<i class="fa fa-spin fa-spinner"></i>');
+                            e.preventDefault();
+                            var formData = new FormData(this);
+                            $.ajax({
+                                type: 'POST',
+                                url: $(this).attr('action'),
+                                data: formData,
+                                cache: false,
+                                contentType: false,
+                                processData: false,
+                                success: function(data) {
+                                    $('#savereplybutton{{ $r->id }}').html('Save');
+                                    $('.secondportion').html(data);
+                                    $('.show-comment{{ $val->id }}').slideToggle();
+                                }
+                            });
+                        }));
+                    </script>
+                </div>
+            </div>
+        </div>
+
+        @foreach (DB::table('flag_comments')->where('type', 'reply')->where('comment_id', $r->id)->orderby('id', 'desc')->get() as $p)
+            @php
+                $puser = DB::table('users')
+                    ->where('id', $p->user_id)
+                    ->first();
+            @endphp
+            <div class="card comment-card-new reply-card">
+                <div class="deletecomment" id="commentdelete{{ $p->id }}">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <h4>Delete Comment</h4>
+                        </div>
+                        <div class="col-md-2">
+                            <img onclick="deletecomment
+                                show({{ $p->id }})"
+                                src="{{ url('public/assets/svg/crossdelete.svg') }}">
+                        </div>
+                    </div>
+                    <p>Do you want to delete your comment ? You won’t be able to undo this action.</p>
+                    <button onclick="deletecomment({{ $p->id }})"
+                        class="btn btn-danger btn-block">Delete</button>
+                </div>
+                <div class="commentedit" id="commentedit{{ $p->id }}">
+                    <form method="POST" id="updatecomment{{ $p->id }}"
+                        action="{{ url('updatecomment-obj') }}">
+                        @csrf
+                        <input type="hidden" value="{{ $p->id }}" name="comment_id">
+                        <input type="hidden" value="{{ $key->id }}" name="id">
+                        <div class="row mt-3">
+                            <div class="col-md-12 col-lg-12 col-xl-12">
+                                <div class="d-flex flex-column">
+                                    <div>
+                                        <div class="form-group mb-0">
+                                            <textarea required class="form-control" name="comment">{{ $p->comment }}</textarea>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <span onclick="editcommenthide({{ $p->id }})"
+                                            class="btn btn-default btn-sm">Cancel</span>
+                                        <button type="submit" id="updatecommentbutton{{ $p->id }}"
+                                            class="btn btn-primary btn-sm">Update</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-body displaynone show-comment{{ $r->flag_id }}">
+                    <div class="d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div class="d-flex flex-row align-items-center">
+                                <div class="d-flex">
+                                    <div class="mr-2">
+                                        @if ($puser->image != null)
+                                            <img height="40" width="40" style="border-radius: 50%;"
+                                                src="{{ asset('public/assets/images/' . $puser->image) }}"
+                                                alt="{{ $puser->name }} {{ $puser->last_name }}">
+                                        @else
+                                            <img height="40" width="40"
+                                                src="{{ Avatar::create($puser->name . ' ' . $puser->last_name)->toBase64() }}"
+                                                alt="Example Image">
+                                        @endif
+                                    </div>
+                                    <div>
+                                        <h5>{{ $user->name }} {{ $user->last_name }}</h5>
+                                        <small>{{ Cmf::date_format($p->created_at) }}</small>
+                                        @if ($p->created_at != $p->updated_at)
+                                            <small>Updated</small>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-row align-items-center">
+                                <div class="pr-2">
+                                    <span onclick="editcommentshow({{ $p->id }})" class="commenticon">
+                                        <img src="{{ url('public/assets/svg/editcommentsvg.svg') }}">
+                                    </span>
+                                </div>
+                                <div>
+                                    <span onclick="deletecommentshow({{ $p->id }})" class="commenticon">
+                                        <img src="{{ url('public/assets/svg/deletecomment.svg') }}">
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <p>{{ $p->comment }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+                $('#updatecomment{{ $p->id }}').on('submit', (function(e) {
+                    $('#updatecommentbutton{{ $p->id }}').html('<i class="fa fa-spin fa-spinner"></i>');
+                    e.preventDefault();
+                    var formData = new FormData(this);
+                    $.ajax({
+                        type: 'POST',
+                        url: $(this).attr('action'),
+                        data: formData,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: function(data) {
+                            $('#updatecommentbutton{{ $p->id }}').html('Save');
+                            $('.secondportion').html(data);
+                            $('.show-comment{{ $val->id }}').slideToggle();
+
+                        }
+                    });
+                }));
+            </script>
+        @endforeach
+
+        <script type="text/javascript">
+            $('#updatecomment{{ $r->id }}').on('submit', (function(e) {
+                $('#updatecommentbutton{{ $r->id }}').html('<i class="fa fa-spin fa-spinner"></i>');
+                e.preventDefault();
+                var formData = new FormData(this);
+                $.ajax({
+                    type: 'POST',
+                    url: $(this).attr('action'),
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function(data) {
+                        $('#updatecommentbutton{{ $r->id }}').html('Save');
+                        $('.secondportion').html(data);
+                        $('.show-comment{{ $val->id }}').slideToggle();
+
+                    }
+                });
+            }));
+        </script>
+    @endforeach
+
+    <script type="text/javascript">
+        $("#textarea").keypress(function(e) {
+            if (e.which === 13 && !e.shiftKey) {
+                e.preventDefault();
+                $(this).closest("form").submit();
+            }
+        });
+
+        $('#savecommentobj{{ $val->id }}').on('submit', (function(e) {
+            $('#savecommentbutton{{ $val->id }}').html('<i class="fa fa-spin fa-spinner"></i>');
+            e.preventDefault();
+            var formData = new FormData(this);
+
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    $('#savecommentbutton{{ $val->id }}').html('Save');
+                    $('.secondportion').html(data);
+                    $('.show-comment{{ $val->id }}').slideToggle();
+
+                }
+            });
+        }));
+    </script>
+@endforeach
+{{-- <div @if ($keyqvalue->count() > 4) class="activity-feed" @endif>
+                        <table class="table value-table">
+                            <thead>
+                                <tr>
+                                    <th>Updated On</th>
+                                    <th class="text-center">Value</th>
+                                    <th class="text-right">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+    
+                                @foreach ($keyqvalue as $val)
+                                    <tr>
+                                        <td>{{ \Carbon\Carbon::parse($val->created_at)->format('d M Y') }}</td>
+                                        <td class="text-center" id="edit-val{{ $val->id }}">{{ $val->value }}</td>
+                                        <td class="text-right" id="edit-button-val{{ $val->id }}">
+                                            <button class="btn-circle btn-tolbar" type="button"
+                                                onclick="editquartervalue({{ $val->id }},'{{ $val->value }}')">
+                                                <span class="material-symbols-outlined">edit</span>
+                                            </button>
+                                            <button class="btn-circle btn-tolbar" type="button"
+                                                onclick="deletequartervalueobj({{ $val->id }})">
+                                                <span class="material-symbols-outlined">delete</span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+    
+                            </tbody>
+                        </table>
+                    </div> --}}
+@endif
+
+<div class="row margintopfourtypixel">
+    <div class="col-md-12 text-right">
+        {{-- <button class="btn btn-primary"
+                    @if ($KEYChart) onclick="addnewquartervalue({{ $key->id }},'{{ $KEYChart->id }}','{{ $report->id }}')" @else disabled @endif
+                    type="button">Add</button> --}}
+    </div>
+</div>
+@else
+<div class="row">
+    <div class="col-md-12 col-lg-12 col-xl-12">
+        <div class="d-flex flex-row align-items-center justify-content-between block-header">
+            <div class="d-flex flex-row align-items-center">
+                <div class="mr-2">
+                    <span class="material-symbols-outlined">checklist</span>
+                </div>
+                <div>
+                    <h4>Check-in</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="activity-feed">
+        <div class="col-md-12 col-lg-12 col-xl-12" style="position: relative;">
+            <div class="nodatafound">
+                <h4>Please Start Quarter First for Add Values in Key Result</h4>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
+
+
+
+
+
+
+ <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />-->
+    
+ <!--     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+     
+ <!--     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<script>
+    function uploadattachment() {
+        $('.uploadattachment').slideToggle();
+        $('.nodatafound').slideToggle();
+    }
+
+    function showupdatecard(id) {
+        $('.uploadattachment' + id).slideToggle();
+    }
+
+    function writecomment(id) {
+        $('.writecomment' + id).slideToggle();
+    }
+
+    function uploadfrequency() {
+        $('.uploadfrequency').slideToggle();
+    }
+
+    function showupdatecard(id) {
+        $('.uploadattachment' + id).slideToggle();
+        $("#js-select3" + id).select2({
+            closeOnSelect: false,
+            placeholder: "Select Assignee",
+            allowHtml: true,
+            allowClear: true,
+            tags: true // создает новые опции на лету
+        });
+
+    }
+    
+   
+
+    $('.savekeychartnewform').on('submit', (function(e) {
+                
+
+        e.preventDefault();
+        
+        var Qval = $('#q_value').val();
+  
+
+            var newchart = parseFloat($('.new-chart-value').val());
+       
+        if(newchart > Qval)
+        {
+            $('#error-check-in').html(
+            '<span> Check-in Value Should be less then  Quarter Value.</span>'
+                );
+         return false;
+        }else
+        {
+        $('.saveepicflagbuttonasdsadsad').html('<i class="fa fa-spin fa-spinner"></i>'); 
+             var formData = new FormData(this);
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+
+                $('#success-check-in').html(
+                    '<div class="alert alert-success" role="alert"> Check-in Value Added Successfully</div>'
+                );
+
+                setTimeout(function() {
+                    $('.secondportion').html(data);
+                }, 2000);
+
+            }
+        });  
+           
+        }
+         
+        
+       
+
+       
+    }));
+
+    function deletecommentshow(id) {
+        $('#commentdelete' + id).slideToggle();
+    }
+
+    function deletecomment(id, key,flag) {
+        $.ajax({
+            type: "POST",
+            url: "{{ url('deletecomment-obj') }}",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                id: id,
+                key: key,
+            },
+            success: function(data) {
+                $('#commentdeletekey' + id).remove();
+                  $('.secondportion').html(data);
+                // $('#commentdelete' + id).slideToggle();
+                //   $('.show-comment' + flag).remove();
+           
+            },
+            error: function(error) {
+                console.log('Error updating card position:', error);
+            }
+        });
+    }
+    
+    function deletequartervalueobj(id) {
+        $.ajax({
+            type: "POST",
+            url: "{{ url('deletecheck-obj') }}",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                id: id,
+            },
+            success: function(data) {
+                $('.secondportion').html(data);
+           
+            },
+            error: function(error) {
+                console.log('Error updating card position:', error);
+            }
+        });
+    }
+
+    function editcommentshow(id) {
+        $('#commentedit' + id).show();
+    }
+
+    function editcommenthide(id) {
+        $('#commentedit' + id).hide();
+    }
+
+    function replycomment(id) {
+        $('.replycard' + id).slideToggle();
+    }
+    // $(function() {
+
+    //  $('.key-chart').multiselect({
+    //    includeSelectAllOption:true,
+    //    numberDisplayed: 0
+    //  });
+
+    // });
+
+    $("#js-select1").select2({
+        closeOnSelect: false,
+        placeholder: "Select Assignee",
+        // allowHtml: true,
+        allowClear: true,
+        tags: false // создает новые опции на лету
+        
+    });
+
+    function toggleDay(element) {
+        element.classList.toggle("checked");
+        updateCheckedDays();
+    }
+
+    function updateCheckedDays() {
+        let checkedDays = [];
+        document.querySelectorAll('.day-circle.checked').forEach(function(day) {
+            checkedDays.push(day.getAttribute('data-day'));
+        });
+        document.getElementById('checkedDays').value = JSON.stringify(checkedDays);
+    }
+
+    $('.savefrequencyform').on('submit', (function(e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        console.log($('#datepicker').val());
+
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+                $('.secondportion').html(data);
+
+            }
+        });
+    }));
+
+  
+
+    function getcust(val) {
+        if (val == 'Custom') {
+            $('.Custom').show();
+        } else {
+            $('.Custom').hide();
+
+        }
+    }
+
+    function showcomment(id) {
+        $('.show-comment' + id).slideToggle();
+    }
+</script>
+

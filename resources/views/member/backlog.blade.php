@@ -268,19 +268,19 @@ $var_objective = 'Backlog';
    </div>
 </div>
 @else
-<div style="position:absolute;right:30%;top:40%;" class="text-center">
-   <img src="{{ asset('public/epic-backlog.svg') }}" width="120" height="120">
-   <div>
-      <h6 class="text-center">No Records Found</h6>
-   </div>
-   <div>
-      <p class="text-center">You may create your first Epic by clicking the bellow button</p>
-   </div>
-   <button class="btn btn-primary btn-lg btn-theme btn-block ripple ml-25" style="width:50%" data-toggle="modal"
-      data-target="#create-backlog-epic">
-   Add an Epic
-   </button>
-</div>
+<div class="card">
+    <div class="card-body">
+       <div class="text-center">
+          <img src="{{ asset('public/epic-backlog.svg') }}" alt="" width="120" height="120" class="mw-100">
+       </div>
+       <div class="card-px text-center  pt-15 pb-15">
+          <h2 class="fs-2x fw-bold mb-0">No Records Found</h2>
+          <p class="text-gray-500 fs-4 fw-semibold py-7">You may create your first Epic by clicking the bellow button</p>
+          <a  data-toggle="modal"
+      data-target="#create-backlog-epic" href="#" class="btn btn-primary er fs-6 px-8 py-4">Add an Epic</a>
+       </div>
+    </div>
+ </div>
 @endif
 <div class="modal fade" id="create-backlog-epic" tabindex="-1" role="dialog" aria-labelledby="create-epic"
    aria-hidden="true">

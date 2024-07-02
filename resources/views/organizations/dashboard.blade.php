@@ -66,12 +66,16 @@
             $now = now();
             $remainingDays = max(0, $now->diffInDays($endDate)); 
             if ($remainingDays > 0) {
-                echo '<div class="alert alert-danger  fade show" role="alert">
-                    Your free trial is expiring after <strong>'.$remainingDays.' days</strong>. Subscribe to keep using the system.
-                    <a href="'.url('boost-payment/'.$plan->slug).'" class="btn btn-dark">
-                        <span aria-hidden="true">Check Plans</span>
-                    </a>
-                </div>';
+                echo '<div class="notice d-flex bg-light-warning rounded border-warning border border-dashed mb-10 p-6">
+                        <i class="ki-outline ki-information fs-2tx text-warning me-4"></i>
+                        <div class="d-flex flex-stack flex-grow-1">
+                            <div class="fw-semibold">
+                                <h4 class="text-gray-900 fw-bold">Please Note!</h4>
+                                <div class="fs-6 text-gray-700">Your free trial is expiring after  <strong>'.$remainingDays.' days</strong>. Subscribe to keep using the system.
+                                <a href="'.url('boost-payment/'.$plan->slug).'">Check Plans</a></div>
+                            </div>
+                        </div>
+                    </div>';
             } else {
                 echo "Expired";
             }
@@ -128,21 +132,21 @@
                 @foreach(explode(',',$per->module) as $info) 
                 @if($info == 'kpi')
 
-                <div class="col-md-3 mb-4 col-6">
-                    <div class="dashboard-card">
-                        <div class="card-svg">
-                            <a href="{{ url('dashboard/organization/' . $organization->slug . '/kpi/' . $organization->type) }}">
-                                <span class="material-symbols-outlined team_dashboard">team_dashboard</span>
-                            </a>
-                        </div>
-                        <div class="dashboard-card-tittle">
-                            <h4>Performance Dashboard</h4>
-                        </div>
-                        <div class="dashboard-card-number">
-                            <h3>{{ $Performance }} <small>@if($Performance > 1) KPI(s) @else KPI @endif</small></h3>
-                        </div>
-                    </div>
-                </div>
+                <!--<div class="col-md-3 mb-4 col-6">-->
+                <!--    <div class="dashboard-card">-->
+                <!--        <div class="card-svg">-->
+                <!--            <a href="{{ url('dashboard/organization/' . $organization->slug . '/kpi/' . $organization->type) }}">-->
+                <!--                <span class="material-symbols-outlined team_dashboard">team_dashboard</span>-->
+                <!--            </a>-->
+                <!--        </div>-->
+                <!--        <div class="dashboard-card-tittle">-->
+                <!--            <h4>Performance Dashboard</h4>-->
+                <!--        </div>-->
+                <!--        <div class="dashboard-card-number">-->
+                <!--            <h3>{{ $Performance }} <small>@if($Performance > 1) KPI(s) @else KPI @endif</small></h3>-->
+                <!--        </div>-->
+                <!--    </div>-->
+                <!--</div>-->
 
                 @endif
                 @endforeach
@@ -756,20 +760,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
     <script>
         // Select the form element
-        var ctx = document.getElementById("myChart").getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                datasets: [{
-                    label: '',
-                    data: [12, 19, 3, 17, 28, 24, 7, 17, 67, 47, 27, 87],
-                    backgroundColor: "rgba(54,153,255,1)",
-                    borderWidth: 1,
-                    barThickness: 1
-                }]
-            }
-        });
+        // var ctx = document.getElementById("myChart").getContext('2d');
+        // var myChart = new Chart(ctx, {
+        //     type: 'bar',
+        //     data: {
+        //         labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        //         datasets: [{
+        //             label: '',
+        //             data: [12, 19, 3, 17, 28, 24, 7, 17, 67, 47, 27, 87],
+        //             backgroundColor: "rgba(54,153,255,1)",
+        //             borderWidth: 1,
+        //             barThickness: 1
+        //         }]
+        //     }
+        // });
 
         function saveOrganization() {
 

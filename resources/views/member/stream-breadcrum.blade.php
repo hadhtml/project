@@ -19,7 +19,7 @@ $team  = DB::table('business_units')->where('id',$organization->unit_id)->first(
             @endif
             <li class="breadcrumb-item text-muted">
                 <span class="material-symbols-outlined">domain</span>
-                <a href="{{url('dashboard/organization/'.$organization->slug.'/dashboard/'.$organization->type)}}"  class="text-muted text-hover-primary">{{$team->business_name}}</a>
+                <a href="{{url('dashboard/organization/'.$team->slug.'/dashboard/'.$team->type)}}"  class="text-muted text-hover-primary">{{$team->business_name}}</a>
             </li>
             <li class="breadcrumb-item">
                 <span class="bullet bg-gray-500 w-5px h-2px"></span>

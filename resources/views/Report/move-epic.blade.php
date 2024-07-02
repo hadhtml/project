@@ -5,12 +5,13 @@
 <input type="hidden" class="init_id" value="{{$Q->initiative_id}}">
 <input type="hidden" class="month_id" value="{{$Q->id}}">
 @endforeach
-
-<label for="small-description">Move incomplete epic to next quarter?</label>
-<div class="form-group mb-0">
-    <select class="form-control" id="move_epic" >
+<div class="d-flex flex-column mb-7 fv-row">
+  <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+      <span class="required">Move incomplete epic to next quarter?</span>
+  </label>
+  <select class="form-control form-control-solid" id="move_epic" >
     <option value="">Select</option>
     <option value="yes">yes</option>
-</select>
+  </select>
 </div>
 @endif

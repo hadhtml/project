@@ -22,27 +22,39 @@ $var_objective = "Member";
       <div class="card-toolbar">
          <!--begin::Toolbar-->
          <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
-         <div class="d-flex justify-content-end align-items-center d-none" data-kt-customer-table-toolbar="selected">
-            <div class="fw-bold me-5">
-            <span class="me-2" data-kt-customer-table-select="selected_count"></span>Selected</div>
-            <button type="button" class="btn btn-danger" data-kt-customer-table-select="delete_selected">Delete Selected</button>
-         </div>
+         <!--<div class="d-flex justify-content-end align-items-center d-none" data-kt-customer-table-toolbar="selected">-->
+         <!--   <div class="fw-bold me-5">-->
+         <!--   <span class="me-2" data-kt-customer-table-select="selected_count"></span>Selected</div>-->
+         <!--   <button type="button" class="btn btn-danger" data-kt-customer-table-select="delete_selected">Delete Selected</button>-->
+         <!--</div>-->
       </div>
    </div>
    <!--end::Card header-->
    <!--begin::Card body-->
+   
+ 
    <div class="card-body pt-0">
+       
+   @if (session('message'))
+  <div class="row">
+      <div class="col-md-12">
+          <div class="alert alert-success mt-1" role="alert">
+              {{ session('message') }}
+          </div>
+      </div>
+  </div>
+  @endif
       <!--begin::Table-->
       <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_customers_table">
          <thead>
             <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
                <th class="w-10px pe-2">
                   <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
-                     <input class="form-check-input checkAll" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_customers_table .form-check-input" value="1" />
+                     <input class="form-check-input checkAll" type="checkbox"/>
                   </div>
                </th>
-               <td class="min-w-125px">First Name</td>
-               <td class="min-w-125px">Last Name</td>
+               <td class="min-w-125px text-center">Image</td>
+               <td class="min-w-125px">Name</td>
                <td class="min-w-125px">Email</td>
                <td class="min-w-125px">Role</td>
                <td class="min-w-125px">Status</td>
@@ -57,11 +69,17 @@ $var_objective = "Member";
             <tr>
                <td>
                   <div class="form-check form-check-sm form-check-custom form-check-solid">
-                     <input value="{{$member->ID}}" class="form-check-input" type="checkbox" value="1" />
+                     <input value="{{$member->id}}" class="form-check-input checkbox" type="checkbox"/>
                   </div>
                </td>
-               <td class="text-gray-600 text-hover-primary mb-1">{{$member->name}}</td>
-               <td class="text-gray-600 text-hover-primary mb-1">{{$member->LastName}}</td>
+               <td class="text-gray-600 text-hover-primary mb-1 text-center">
+                  @if($member->image != NULL)
+                   <img style="width: 50px;" src="{{asset('public/assets/images/'.$member->image)}}" alt="lead">
+                   @else
+                   <img style="width: 50px;" src="{{ Avatar::create($member->name.' '.$member->LastName)->toBase64() }}" alt="lead">
+                   @endif
+               </td>
+               <td class="text-gray-600 text-hover-primary mb-1">{{$member->name}} {{$member->LastName}}</td>
                <td class="text-gray-600 text-hover-primary mb-1">{{$member->email}}</td>
                <td class="text-gray-600 text-hover-primary mb-1">{{$member->u_role}}</td>
                <td>
@@ -266,12 +284,37 @@ $var_objective = "Member";
             </div>
             <div class="modal-footer">
                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-               <button type="button" onclick="DeleteMember();" class="btn btn-danger">Confirm</button>
+               <button type="button" onclick="DeleteMember();"  class="btn btn-danger">Confirm</button>
             </div>
          </form>
       </div>
    </div>
 </div>
+
+<div class="modal fade" id="delete-member-bulk" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Delete Users</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div id="success-member-delete"  role="alert"></div>
+         <form method="POST" action="">
+            @csrf   
+            <div class="modal-body">
+               Are you sure you want to delete selected Users?
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <button type="button" onclick="delete_record_user();"  class="btn btn-danger">Confirm</button>
+            </div>
+         </form>
+      </div>
+   </div>
+</div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
    //   function SaveMember(){
@@ -360,24 +403,32 @@ $var_objective = "Member";
        
        });
        
-   $(".checkAll").click(function () {
-   $('input:checkbox').not(this).prop('checked', this.checked);
-   
-      var selectedOptions = [];
-       $('.checkbox:checked').each(function() {
-        selectedOptions.push($(this).val());
-        
-   });
-   
-   // if(selectedOptions.length > 0){
-   // if(this.checked)
-   // {
-   //   $('#delete-button-user').show();  
-   // }else{
-   //   $('#delete-button-user').hide();  
-   // }
-   // }
-   });
+      $(".checkAll").click(function () {
+          $('input:checkbox').not(this).prop('checked', this.checked);
+          var selectedOptions = [];
+          $('input.checkbox:checked').each(function() {
+              selectedOptions.push($(this).val());
+          });
+          if (selectedOptions.length > 0) {
+              if (this.checked) {
+                  $('#delete-button-user').show();  
+              } else {
+                  $('#delete-button-user').hide();  
+              }
+          }
+      });
+
+
+
+      // $(".checkAll").click(function () {
+      //     var selectedOptions = $('input.checkbox:checked');
+      //     if (selectedOptions.length > 0) {
+      //         $('#delete-button-user').show();  
+      //     } else {
+      //         $('#delete-button-user').hide();  
+      //     }
+      // });
+
    
       function onlyNumberKey(evt) {
              
@@ -470,11 +521,16 @@ $var_objective = "Member";
         
    });
    
+ 
+   
      if(selectedOptions.length > 0){
      $.ajax({
                type: "POST",
-               url:"{{url('delete-mutiple-user')}}", 
-                data:{selectedOptions:selectedOptions,_token:'{{ csrf_token() }}'},
+               url:"{{url('delete-mutiple-user')}}",
+                 headers: {
+               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+           },
+                data:{selectedOptions:selectedOptions},
                success: function(res) {
                    
                 location.reload();
