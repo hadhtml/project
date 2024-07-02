@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>{{ __('Reset Password') }}</title>
+        <title>Reset Password</title>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta property="og:locale" content="en_US" />
@@ -18,41 +18,31 @@
                 <div class="d-flex flex-column flex-lg-row-fluid w-lg-50 p-10 order-2 order-lg-1">
                     <div class="d-flex flex-center flex-column flex-lg-row-fluid">
                         <div class="w-lg-500px p-10">
-                            @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                             @endif
-                            <form class="form w-100" novalidate="novalidate" id="kt_password_reset_form"  action="{{ route('password.email') }}">
+                            <form method="POST" class="needs-validation pt-7" action="{{ route('password.email') }}">
                             @csrf
-                                <div class="mb-11">
-                                    <h1 class="text-gray-900 fw-bolder mb-3 sign">{{ __('Reset Password') }}</h1>
-                                    
-                                </div>
-                                <div class="row g-3 mb-9">
-                                    <!--begin::Col-->
-                                   
-                                </div>
-                             
-                              
-                                <div class="fv-row mb-3">
-                                    <input id="email" type="email" class="form-control bg-transparent @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Email">
-                                    @error('email')
-                                   <span class="invalid-feedback mb-3 ml-5 mt-0" style="display:block !important" role="alert">
+    
+                            <div class="mb-11">
+                                <h1 class="text-gray-900 fw-bolder mb-3 sign">Reset Password</h1>
+                                <div class="text-gray-500 fw-semibold fs-6">Reset Your Password</div>
+                            </div>
+                            <div class="fv-row mb-8">
+                                <input id="email" type="email" class="form-control bg-transparent @error('email') is-invalid @enderror" name="email" placeholder="Enter Your Email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                @error('email')
+                                <span class="invalid-feedback mb-3 ml-5 mt-0" style="display:block !important" role="alert">
                                     <strong>{{ $message }}</strong>
-                                   </span>
-                                    @enderror
-                                    </div>
-                             
-                                <div class="d-grid mb-10">
-                                    <button type="submit" id="kt_password_reset_submit" class="btn btn-primary cs-btn">
-                                        <span class="indicator-label">{{ __('Send Password Reset Link') }}</span>
-                                        <span class="indicator-progress">Please wait... 
-                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                                    </button>
-                                </div>
-                               
-                            </form>
+                                </span>
+                               @enderror
+                            </div>
+                            <div class="d-grid mb-10">
+                                <button type="submit" id="kt_sign_in_submit" class="btn btn-primary cs-btn">
+                                    <span class="indicator-label">Send Password Reset Link</span>
+                                    <span class="indicator-progress">Please wait... 
+                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                </button>
+                            </div> 
+                            <div class="text-gray-500 text-center fw-semibold fs-6">Password Remembered? <a href="{{ url('login') }}" class="link-primary">Sign In</a></div>          
+                         
+                        </form>
                         </div>
                     </div>
                 </div>
@@ -76,6 +66,5 @@
         <script src="{{ url('public/assetsvone/plugins/global/plugins.bundle.js') }}"></script>
         <script src="{{ url('public/assetsvone/js/scripts.bundle.js') }}"></script>
         <script src="{{ url('public/assetsvone/js/custom/authentication/sign-in/general.js') }}"></script>
-        <script src="{{ url('public/assetsvone/js/custom/authentication/reset-password/reset-password.js') }}"></script>
     </body>
 </html>

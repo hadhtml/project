@@ -1,7 +1,9 @@
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://unpkg.com/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/js/bootstrap.bundle.min.js" ></script>
+
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+<!-- <script src="https://unpkg.com/jquery@3.3.1/dist/jquery.min.js"></script> -->
 <script src="https://unpkg.com/bootstrap-multiselect@0.9.13/dist/js/bootstrap-multiselect.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> -->
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script> -->
 <!-- <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script> -->
   <!-- <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script> -->
@@ -14,65 +16,64 @@
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.0.1"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.13.0/Sortable.min.js"></script>
 <script src="{{ asset('public/assets/js/custom.js') }}"></script>
-<link rel="stylesheet" href="{{ url('public/assets/flowchart/jquery.flowchart.css') }}">
-<script src="{{ url('public/assets/flowchart/jquery.flowchart.js') }}"></script>
+<!-- <link rel="stylesheet" href="{{ url('public/assets/flowchart/jquery.flowchart.css') }}"> -->
+<!-- <script src="{{ url('public/assets/flowchart/jquery.flowchart.js') }}"></script> -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
 <!-- Zoom -->
 @yield('linking')
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const panelLink = document.querySelector('.nav-link[href="#panel"]');
-    const sidePanel = document.getElementById('panel');
-    const closeBtn = document.getElementById('closeBtn');
+// document.addEventListener('DOMContentLoaded', function() {
+//     const panelLink = document.querySelector('.nav-link[href="#panel"]');
+//     const sidePanel = document.getElementById('panel');
+//     const closeBtn = document.getElementById('closeBtn');
 
-    panelLink.addEventListener('click', function(event) {
-        event.preventDefault();
-        sidePanel.classList.add('open');
-    });
+//     panelLink.addEventListener('click', function(event) {
+//         event.preventDefault();
+//         sidePanel.classList.add('open');
+//     });
 
-    closeBtn.addEventListener('click', function(event) {
-        event.preventDefault();
-        sidePanel.classList.remove('open');
-    });
-});
+//     closeBtn.addEventListener('click', function(event) {
+//         event.preventDefault();
+//         sidePanel.classList.remove('open');
+//     });
+// });
 
-document.addEventListener('DOMContentLoaded', function() {
-    const panelLink = document.querySelector('.nav-link[href="#panel-new"]');
-    const sidePanel = document.getElementById('panel-new');
-    const closeBtn = document.getElementById('closeBtn');
+// document.addEventListener('DOMContentLoaded', function() {
+//     const panelLink = document.querySelector('.nav-link[href="#panel-new"]');
+//     const sidePanel = document.getElementById('panel-new');
+//     const closeBtn = document.getElementById('closeBtn');
 
-    panelLink.addEventListener('click', function(event) {
-        event.preventDefault();
-        sidePanel.classList.add('open');
-    });
+//     panelLink.addEventListener('click', function(event) {
+//         event.preventDefault();
+//         sidePanel.classList.add('open');
+//     });
 
-    closeBtn.addEventListener('click', function(event) {
-        event.preventDefault();
-        sidePanel.classList.remove('open');
-    });
-});
+//     closeBtn.addEventListener('click', function(event) {
+//         event.preventDefault();
+//         sidePanel.classList.remove('open');
+//     });
+// });
 
-document.addEventListener('DOMContentLoaded', function() {
-    const panelLink = document.querySelector('.nav-link[href="#panel-unit"]');
-    const sidePanel = document.getElementById('panel-unit');
-    const closeBtn = document.getElementById('closeBtn');
+// document.addEventListener('DOMContentLoaded', function() {
+//     const panelLink = document.querySelector('.nav-link[href="#panel-unit"]');
+//     const sidePanel = document.getElementById('panel-unit');
+//     const closeBtn = document.getElementById('closeBtn');
 
-    panelLink.addEventListener('click', function(event) {
-        event.preventDefault();
-        sidePanel.classList.add('open');
-    });
+//     panelLink.addEventListener('click', function(event) {
+//         event.preventDefault();
+//         sidePanel.classList.add('open');
+//     });
 
-    closeBtn.addEventListener('click', function(event) {
-        event.preventDefault();
-        sidePanel.classList.remove('open');
-    });
-});
+//     closeBtn.addEventListener('click', function(event) {
+//         event.preventDefault();
+//         sidePanel.classList.remove('open');
+//     });
+// });
 </script>
 
 <script type="text/javascript">
@@ -474,21 +475,21 @@ drake.on('drop', function(el, target, source, sibling) {
 
 
   <script type="text/javascript">
-      document.addEventListener('DOMContentLoaded', function() {
-        const panelLink = document.querySelector('.buttonClick');
-        const sidePanel = document.getElementById('panel');
-        const closeBtn = document.getElementById('closeBtn');
+    //   document.addEventListener('DOMContentLoaded', function() {
+    //     const panelLink = document.querySelector('.buttonClick');
+    //     const sidePanel = document.getElementById('panel');
+    //     const closeBtn = document.getElementById('closeBtn');
 
-        panelLink.addEventListener('click', function(event) {
-            event.preventDefault();
-            sidePanel.classList.add('open');
-        });
+    //     panelLink.addEventListener('click', function(event) {
+    //         event.preventDefault();
+    //         sidePanel.classList.add('open');
+    //     });
 
-        closeBtn.addEventListener('click', function(event) {
-            event.preventDefault();
-            sidePanel.classList.remove('open');
-        });
-    });
+    //     closeBtn.addEventListener('click', function(event) {
+    //         event.preventDefault();
+    //         sidePanel.classList.remove('open');
+    //     });
+    // });
 
   </script>
   

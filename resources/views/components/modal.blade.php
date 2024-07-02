@@ -216,80 +216,69 @@
         </div>
     </div>
 </div>
+ 
 
-<div class="modal fade" id="delete-objective" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Delete Objective</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div id="success-obj-delete"  role="alert"></div>
-
-        <form method="POST" action="">
-         @csrf   
-         <input type="hidden" name="obj_delete_id" id="obj_delete_id">
-        <div class="modal-body">
-          
-        Are you sure you want to delete this Objective?
-
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" id="deleteobjectivebutton" onclick="deleteobjectivemain();" class="btn btn-danger">Confirm</button>
-        </div>
-        </form>
-      </div>
-    </div>
-  </div>
-<!-- Create Initiative -->
-<div class="modal fade" id="create-initiative" tabindex="-1" role="dialog" aria-labelledby="create-initiative" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content" style="width: 526px !important;">
-            <div class="modal-header">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h5 class="modal-title" id="create-initiative">Create Initiative</h5>
-                    </div>
-                    <div class="col-md-12">
-                        <p class="mb-0">Fill out the form, submit and hit the save button.</p>
-                    </div>
+<div class="modal fade" id="delete-objective" tabindex="-1" role="dialog" aria-labelledby="add-team" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <!--begin::Modal header-->
+            <div class="modal-header pb-0 border-0 justify-content-end">
+                <!--begin::Close-->
+                <div class="btn btn-sm btn-icon btn-active-color-primary" data-dismiss="modal" aria-label="Close">
+                    <i class="ki-outline ki-cross fs-1"></i>
                 </div>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <img src="{{asset('public/assets/images/icons/minus.svg')}}">
-                </button>
+                <!--end::Close-->
             </div>
+            <div class="modal-body scroll-y mx-5 mx-xl-18 pt-0 pb-15">
+               <div id="success-obj-delete"  role="alert"></div>
+                <form method="POST" action="">
+                    @csrf   
+                    <input type="hidden" name="obj_delete_id" id="obj_delete_id">
+                    <div class="modal-body">
+                        <div class="text-center mb-13">
+                          <h1 class="mb-3" id="end-quartr">Delete Objective</h1>
+                          <p>Are you sure you want to delete this Objective?</p>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="button" id="deleteobjectivebutton" onclick="deleteobjectivemain();" class="btn btn-primary">Confirm</button>
+                    </div>
+                </form>
+           </div>
+        </div>
+    </div>
+</div>
+
+<!-- Create Initiative -->
+<div class="modal fade" id="create-initiative" tabindex="-1" role="dialog" aria-labelledby="add-team" aria-hidden="true">
+    <div class="modal-dialog mw-650px" role="document">
+        <div class="modal-content">
+            <!--begin::Modal header-->
+            <div class="modal-header pb-0 border-0 justify-content-end">
+                <!--begin::Close-->
+                <div class="btn btn-sm btn-icon btn-active-color-primary" data-dismiss="modal" aria-label="Close">
+                    <i class="ki-outline ki-cross fs-1"></i>
+                </div>
+                <!--end::Close-->
+            </div>
+            <div class="modal-body scroll-y mx-5 mx-xl-18 pt-0 pb-15">
             
-              <div id="wieght-error-initiative"></div>
+                <div class="text-center mb-13">
+                  <h1 class="mb-3">Create Initiative</h1>
+               </div>
+                <div id="wieght-error-initiative"></div>
             <div class="row" id="weight-initiative">
               
              </div>
-                
-            <div class="modal-body pb-0">
                 <div class="row">
                     <div class="col-md-12">
                         <div id="success-initiative"  role="alert"></div>
                         <span id="initiative-feild-error" class="text-danger"></span>
                     </div>
                 </div>
-                {{-- <div class="row">
-                    <div class="col-md-12">
-                        <label class="checkbox checkbox-lg mb-3 ml-4">
-
-                        <input class="checkweight" type="checkbox" />
-
-                        <span class="mr-3"></span>
-
-                        Add Weight
-
-                        </label>
-                    </div>
-                </div> --}}
                 <div class="row">
                     <div class="col-md-12">
-                        <form class="needs-validation" method="POST" action="#" novalidate>
+                    <form class="needs-validation" method="POST" action="#" novalidate>
                     @csrf
                     <input type="hidden" id="key_id_initiative">
                     <input type="hidden" id="obj_id_initiative">
@@ -297,42 +286,54 @@
                     <div class="row">
                         <small id="initiative-name-error" class="mb-5 ml-5"></small>
                         <div class="col-md-12 col-lg-12 col-xl-12">
-                            <div class="form-group mb-0">
-                                <input type="text" class="form-control" id="initiative_name" required>
-                                <label for="objective-name">Initiative Name</label>
-                            </div>
+                            <div class="d-flex flex-column mb-7 fv-row">
+                              <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                  <span class="required">Initiative Name</span>
+                              </label>
+                              <input type="text" class="form-control form-control-solid" id="initiative_name" required>
+                           </div>
                         </div>
                         <div class="col-md-6 col-lg-6 col-xl-6">
-                            <div class="form-group mb-0">
-                                <input type="date" class="form-control" value="{{date('Y-m-d')}}"  id="initiative_start_date" onchange="get_date(this.value,'initiative_end_date')"  >
-                                <label for="start-date">Start Date</label>
-                            </div>
+                            <div class="d-flex flex-column mb-7 fv-row">
+                              <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                  <span class="required">Start Date</span>
+                              </label>
+                              <input type="date" class="form-control form-control-solid" value="{{date('Y-m-d')}}"  id="initiative_start_date" onchange="get_date(this.value,'initiative_end_date')"  >
+                           </div>
                         </div>
                         <div class="col-md-6 col-lg-6 col-xl-6">
-                            <div class="form-group mb-0">
-                                <input type="date" class="form-control"  id="initiative_end_date" >
-                                <label for="end-date">End Date</label>
-                            </div>
+                            <div class="d-flex flex-column mb-7 fv-row">
+                              <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                  <span class="required">End Date</span>
+                              </label>
+                              <input type="date" class="form-control form-control-solid"  id="initiative_end_date" >
+                           </div>
                         </div>
                          <div class="col-md-12 col-lg-12 col-xl-12">
-                            <div class="form-group mb-0">
-                               <select class="form-control" id="init_status" >
-                                <option value="To Do">To Do</option>
-                                  <option value="In progress">In Progress</option>
-                                   <option value="Done">Done</option>
-
+                            <div class="d-flex flex-column mb-7 fv-row">
+                              <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                  <span class="required">Select Status</span>
+                              </label>
+                              <select class="form-control form-control-solid" id="init_status" >
+                                    <option value="To Do">To Do</option>
+                                    <option value="In progress">In Progress</option>
+                                    <option value="Done">Done</option>
                                </select>
-                                <label for="small-description">Status</label>
-                            </div>
+                           </div>
                         </div>
                         <div class="col-md-12 col-lg-12 col-xl-12">
-                            <div class="form-group mb-0">
-                                <input type="text" class="form-control" id="initiative_detail" required>
-                                <label for="small-description">Small Description</label>
-                            </div>
+                            <div class="d-flex flex-column mb-7 fv-row">
+                              <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                  <span>Description</span>
+                              </label>
+                              <textarea class="form-control form-control-solid" id="initiative_detail" rows="3"></textarea>
+                           </div>
                         </div>
                         <div class="col-md-12">
-                            <button type="button" id="saveinitiativebutton" onclick="saveKeyinitiative();" class="btn btn-primary btn-lg btn-theme btn-block ripple">Save Initiative</button>
+                            <div class="text-center pt-15">
+                                 <button type="button" id="saveinitiativebutton" onclick="saveKeyinitiative();" class="btn btn-primary">Save Initiative</button>
+                             </div>
+                            
                         </div>
                     </div>
                 </form>
@@ -343,120 +344,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="edit-initiative" tabindex="-1" role="dialog" aria-labelledby="edit-initiative" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content" style="width: 526px !important;">
-            <div class="modal-header">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h5 class="modal-title" id="create-initiative">Update Initiative</h5>
-                    </div>
-                    <div class="col-md-12">
-                        <p>Fill out the form, submit and hit the save button.</p>
-                    </div>
-                    
-                </div>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <img src="{{asset('public/assets/images/icons/minus.svg')}}">
-                </button>
-            </div>
-            
-            {{-- <div id="wieght-error-edit-init"></div>
-            <div class="row mt-3 mb-2" id="initiative-edit-weight"></div> --}}
-                 
-            <div class="modal-body">
-               <div class="row">
-                    <div class="col-md-12">
-                        <div id="success-initiative-edit"  role="alert"></div>
-                        <span id="initiative-feild-error-edit" class="ml-3 text-danger"></span>
-                        <span  id="initiative-date-error" class="ml-3 text-danger"></span>
-                    </div>
-                </div>
-                <form class="needs-validation" method="POST" action="#" novalidate>
-                    @csrf
-                    <input type="hidden" id="edit_id_initiative">
-                    <input type="hidden" id="edit_id_initiative_key">
-                    <input type="hidden" id="edit_id_initiative_obj">
-                    <div class="row">
-                        <small id="initiative-name-error-edit" class="mb-5 ml-5"></small>
-                        <div class="col-md-12 col-lg-12 col-xl-12">
-                            <div class="form-group mb-0">
-                                <input type="text" class="form-control" id="edit_initiative_name" required>
-                                <label for="objective-name">Initiative Name</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-6 col-xl-6">
-                            <div class="form-group mb-0">
-                                <input type="date" class="form-control edit_initiative_start_date" id="edit_initiative_start_date" required>
-                                <label for="start-date">Start Date</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-6 col-xl-6">
-                            <div class="form-group mb-0">
-                                <input type="date" class="form-control" id="edit_initiative_end_date"  required>
-                                <label for="end-date">End Date</label>
-                            </div>
-                        </div>
-                        
-                           <div class="col-md-12 col-lg-12 col-xl-12">
-                            <div class="form-group mb-0">
-                               <select class="form-control" id="edit_initiative_status" >
-                                <option value="To Do">To Do</option>
-                                  <option value="In progress">In Progress</option>
-                                   <option value="Done">Done</option>
 
-                               </select>
-                                <label for="small-description">Status</label>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-12 col-lg-12 col-xl-12">
-                            <div class="form-group mb-0">
-                                <input type="text" class="form-control" id="edit_initiative_detail" required>
-                                <label for="small-description">Small Description</label>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <button type="button" id="updateinitiativebutton" onclick="UpdateKeyinitiative();" class="btn btn-primary btn-lg btn-theme btn-block ripple">Update Initiative</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="modal fade" id="delete-initiative-key" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Delete Initiative</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div id="success-initiative-delete"  role="alert"></div>
-
-        <form method="POST" action="">
-         @csrf   
-         <input type="hidden" name="" id="initiative_delete_id">
-         <input type="hidden" name="" id="initiative_delete_obj_id">
-         <input type="hidden" name="" id="initiative_delete_key_id">
-
-        <div class="modal-body">
-          
-        Are you sure you want to delete this Initiative?
-
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" onclick="Deletekeyinitiative();" class="btn btn-danger">Confirm</button>
-        </div>
-        </form>
-      </div>
-    </div>
-  </div>
 
 
 
@@ -783,23 +671,24 @@
 </div>
 
 
-<div class="modal fade" id="end-report" tabindex="-1" role="dialog" aria-labelledby="end-report" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content" style="width: 526px !important;">
-            <div class="modal-header">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h5 class="modal-title" id="create-epic"></h5>
-                    </div>
-               
-                      
+<div class="modal fade" id="end-report" tabindex="-1" role="dialog" aria-labelledby="add-team" aria-hidden="true">
+    <div class="modal-dialog mw-650px" role="document">
+        <div class="modal-content">
+            <!--begin::Modal header-->
+            <div class="modal-header pb-0 border-0 justify-content-end">
+                <!--begin::Close-->
+                <div class="btn btn-sm btn-icon btn-active-color-primary" data-dismiss="modal" aria-label="Close">
+                    <i class="ki-outline ki-cross fs-1"></i>
                 </div>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <img src="{{asset('public/assets/images/icons/minus.svg')}}">
-                </button>
+                <!--end::Close-->
             </div>
-            <div class="modal-body">
-                <div class="row">
+            <div class="modal-body scroll-y mx-5 mx-xl-18 pt-0 pb-15">
+            
+                <div class="text-center mb-13">
+                  <h1 class="mb-3" id="end-quartr">End Quarter</h1>
+               </div>
+
+               <div class="row">
                     <div class="col-md-12">
                         <div id="success-sprint"  role="alert"></div>
                         <span id="sprint-error" class="text-danger"></span>
@@ -807,36 +696,149 @@
                 </div>
                 <form class="needs-validation" action="#" method="POST" novalidate>
                 @csrf
-            
                     <div class="row">
-                 
-
- 
- 
-                       <div class="col-md-12 col-lg-12 col-xl-12" id="end-quartr">
-                       
-                       </div>
                        <div class="col-md-12 col-lg-12 col-xl-12 mt-3" id="move-epic">
                        
                        </div>
- 
-                    
-               
- 
-                      
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                       <div class="text-center pt-15">
                             <button  class="btn btn-primary " onclick="endquarter();"  type="button">Finish Quarter </button>
-
-                          </div>
+                        </div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
  </div>
+<div class="modal fade" id="edit-initiative" tabindex="-1" role="dialog" aria-labelledby="add-team" aria-hidden="true">
+    <div class="modal-dialog mw-650px" role="document">
+        <div class="modal-content">
+            <!--begin::Modal header-->
+            <div class="modal-header pb-0 border-0 justify-content-end">
+                <!--begin::Close-->
+                <div class="btn btn-sm btn-icon btn-active-color-primary" data-dismiss="modal" aria-label="Close">
+                    <i class="ki-outline ki-cross fs-1"></i>
+                </div>
+                <!--end::Close-->
+            </div>
+            <div class="modal-body scroll-y mx-5 mx-xl-18 pt-0 pb-15">
+            
+                <div class="text-center mb-13">
+                  <h1 class="mb-3" id="end-quartr">Create Initiative</h1>
+               </div>
+               <div class="row">
+                    <div class="col-md-12">
+                        <div id="success-initiative-edit"  role="alert"></div>
+                        <span id="initiative-feild-error-edit" class="ml-3 text-danger"></span>
+                        <span  id="initiative-date-error" class="ml-3 text-danger"></span>
+                    </div>
+                </div>
+                <form class="needs-validation" method="POST" action="#" novalidate>
+                    @csrf
+                    <input type="hidden" id="edit_id_initiative">
+                    <input type="hidden" id="edit_id_initiative_key">
+                    <input type="hidden" id="edit_id_initiative_obj">
+                    <div class="row">
+                        <small id="initiative-name-error-edit" class="mb-5 ml-5"></small>
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            <div class="d-flex flex-column mb-7 fv-row">
+                              <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                  <span class="required">Initiative Name</span>
+                              </label>
+                              <input type="text" class="form-control form-control-solid" id="edit_initiative_name" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-xl-6">
+                            <div class="d-flex flex-column mb-7 fv-row">
+                              <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                  <span class="required">Start Date</span>
+                              </label>
+                              <input type="date" class="form-control edit_initiative_start_date form-control-solid" id="edit_initiative_start_date" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-xl-6">
+                           
+                            <div class="d-flex flex-column mb-7 fv-row">
+                              <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                  <span class="required">End Date</span>
+                              </label>
+                              <input type="date" class="form-control form-control-solid" id="edit_initiative_end_date"  required>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            <div class="d-flex flex-column mb-7 fv-row">
+                              <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                  <span class="required">Status</span>
+                              </label>
+                              <select class="form-control form-control-solid" id="edit_initiative_status" >
+                                <option value="To Do">To Do</option>
+                                  <option value="In progress">In Progress</option>
+                                   <option value="Done">Done</option>
+
+                               </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            
+                            <div class="d-flex flex-column mb-7 fv-row">
+                              <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                  <span class="required">Status</span>
+                              </label>
+                              <textarea class="form-control form-control-solid" rows="3" id="edit_initiative_detail"></textarea>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button type="button" id="updateinitiativebutton" onclick="UpdateKeyinitiative();" class="btn btn-primary btn-lg btn-theme btn-block ripple">Update Initiative</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 
+<div class="modal fade" id="delete-initiative-key" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Delete Initiative</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div id="success-initiative-delete"  role="alert"></div>
 
+        <form method="POST" action="">
+         @csrf   
+         <input type="hidden" name="" id="initiative_delete_id">
+         <input type="hidden" name="" id="initiative_delete_obj_id">
+         <input type="hidden" name="" id="initiative_delete_key_id">
 
+        <div class="modal-body">
+          
+        Are you sure you want to delete this Initiative?
 
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" onclick="Deletekeyinitiative();" class="btn btn-danger">Confirm</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+<script type="text/javascript">
+    // Get today's date in YYYY-MM-DD format
+var today = new Date();
+var dd = String(today.getDate()).padStart(2, '0');
+var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+var yyyy = today.getFullYear();
+
+today = yyyy + '-' + mm + '-' + dd;
+
+// Set the minimum date allowed in the date picker to today
+document.getElementById("initiative_end_date").min = today;
+</script>

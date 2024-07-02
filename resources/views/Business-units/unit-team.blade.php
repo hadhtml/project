@@ -297,11 +297,26 @@ $var_objective = "Org-Unit-team";
                             Add users before assigning <a href="{{route('settings.users')}}" class="alert-link">Click here</a>.
                         </div>
                     @endif
+                    
+                       <div class="d-flex flex-column mb-7 fv-row">
+                        <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                            <span class="required">Search User By Name</span>
+                        </label>
+                        <input id="myInput" type="search" class="form-control form-control-solid"  placeholder="Search User By Name" name="">
+                    </div> 
                     <div class="mb-10">
+                          
+                      
                         <div class="fs-6 fw-semibold mb-2">Please Select User From User List</div>
-                        <div class="mh-300px scroll-y me-n7 pe-7" id="myTable">
-                            @foreach(DB::table('members')->where('org_user',Auth::id())->orWhere('org_user',Auth::user()->invitation_id)->get() as $r)                      
+                        <div class="mh-300px scroll-y me-n7 pe-7">
+                            <table id="myTable" >
+                              <thead>
+                              
+                            @foreach(DB::table('members')->where('org_user',Auth::id())->orWhere('org_user',Auth::user()->invitation_id)->get() as $r)
+                            <tr>
+                            <td >    
                             <div class="d-flex flex-stack py-4 border-bottom border-gray-300 border-bottom-dashed searchuser">
+                                
                                 <div class="d-flex align-items-center">
                                     <div class="symbol symbol-35px symbol-circle">
                                         @if ($r->image != null)
@@ -316,11 +331,16 @@ $var_objective = "Org-Unit-team";
                                         <div class="fw-semibold text-muted">{{ $r->email }}</div>
                                     </div>
                                 </div>
-                                <div class="ms-2">
-                                    <input type="checkbox" value="{{$r->id}}" name="member[]">
+                                <div class="ms-20">
+                                    <input type="checkbox" class="ms-20" value="{{$r->id}}" name="member[]">
                                 </div>
                             </div>
+                            </td>
+                            </tr>
                             @endforeach
+                              
+                          </tbody>
+                        </table>
                         </div>
                     </div>
                     <div class="text-center pt-15">

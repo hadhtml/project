@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -35,37 +36,13 @@
                                     </div>
                                     <div class="stepper-line h-40px"></div>
                                 </div>
-                                <div class="stepper-item" data-kt-stepper-element="nav">
-                                    <div class="stepper-wrapper">
-                                        <div class="stepper-icon rounded-3">
-                                            <i class="ki-outline ki-check fs-2 stepper-check"></i>
-                                            <span class="stepper-number">2</span>
-                                        </div>
-                                        <div class="stepper-label">
-                                            <h3 class="stepper-title fs-2">Organization Structure </h3>
-                                            <div class="stepper-desc fw-normal">Check out the orginization structure.</div>
-                                        </div>
-                                    </div>
-                                    <div class="stepper-line h-40px"></div>
-                                </div>
-                                <div class="stepper-item" data-kt-stepper-element="nav">
-                                    <div class="stepper-wrapper">
-                                        <div class="stepper-icon">
-                                            <i class="ki-outline ki-check fs-2 stepper-check"></i>
-                                            <span class="stepper-number">3</span>
-                                        </div>
-                                        <div class="stepper-label">
-                                            <h3 class="stepper-title fs-2">Setup Workflow</h3>
-                                            <div class="stepper-desc fw-normal">Setup your flow work</div>
-                                        </div>
-                                    </div>
-                                    <div class="stepper-line h-40px"></div>
-                                </div>
+                             
+                                
                                 <div class="stepper-item">
                                     <div class="stepper-wrapper">
                                         <div class="stepper-icon">
                                             <i class="ki-outline ki-check fs-2 stepper-check"></i>
-                                            <span class="stepper-number">4</span>
+                                            <span class="stepper-number">2</span>
                                         </div>
                                         <div class="stepper-label">
                                             <h3 class="stepper-title fs-2">Verification</h3>
@@ -108,7 +85,7 @@
                                          <div class="col-md-6">
                                             <a href="{{url('/auth/facebook')}}" class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100  cs-btn">
                                             <img alt="Logo" src="{{ url('public/assetsvone/media/svg/brand-logos/facebook-2.svg') }}" class="theme-light-show h-15px me-3" />
-                                            <img alt="Logo" src="assets/" class="theme-dark-show h-15px me-3" />Continue With Facebook</a>
+                                            Continue With Facebook</a>
                                          </div>
                                       </div>
                                       <div class="separator separator-content my-14">
@@ -161,174 +138,7 @@
                                       </div>
                                    </div>
                                 </div>
-                                <div class="" data-kt-stepper-element="content">
-                                    <div class="w-100">
-                                        <div class="pb-10 pb-lg-15">
-                                            <h2 class="fw-bold text-gray-900">Organizational Structure</h2>
-                                        </div>
-                                        <div class="mb-10 fv-row">
-                                            <input type="text" class="form-control form-control-lg form-control-solid @error('level_one') is-invalid @enderror" placeholder="Level One" name="level_one" value="{{ old('level_one') }}"  id="level_one" required>
-                                        </div>
-                                        <div class="mb-10 fv-row">
-                                            <input type="text" class="form-control form-control-lg form-control-solid @error('level_two') is-invalid @enderror" placeholder="Level Two" name="level_two" value="{{ old('level_two') }}"  id="level_two" required>
-                                        </div>
-                                        <div class="mb-10 fv-row">
-                                            <input type="text" class="form-control form-control-lg form-control-solid @error('level_three') is-invalid @enderror" placeholder="Level Three" name="level_three" value="{{ old('level_three') }}"  id="level_three" required>
-                                        </div>
-                                        <p>Continue With Default Settings <a onclick="defaultsettings()" href="javascript:void(0)">Click Here</a> </p>
-                                    </div>
-                                </div>
-                                <div class="" data-kt-stepper-element="content">
-                                    <div class="w-100">
-                                        <div class="pb-10 pb-lg-12">
-                                            <h2 class="fw-bold text-gray-900">Setup Workflow</h2>
-                                        </div>
-                                        @php
-                                        $month = DB::table('settings')->where('user_id',Auth::id())->first();
-                                        $monthNumber = 0;
-                                        if($month)
-                                        {
-                                        $monthNumber = $month->month;
-                                        }
-                                        $carbonDate = \Carbon\Carbon::create(null, $monthNumber + 1, 1);
-                                        $monthName = $carbonDate->format('F');
-                                        @endphp
-                                        <div class="fv-row mb-10">
-                                            <label class="form-label required">Select Financial Year</label>
-                                             <select name="month" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="Select..." data-allow-clear="true" data-hide-search="true">
-                                                <option @if($month) @if($month->month == 0) selected @endif @endif value='0'>January</option>
-                                                <option @if($month) @if($month->month == 1) selected @endif @endif value='1'>February</option>
-                                                <option @if($month) @if($month->month == 2) selected @endif @endif value='2'>March</option>
-                                                <option @if($month) @if($month->month == 3) selected @endif @endif value='3'>April</option>
-                                                <option @if($month) @if($month->month == 4) selected @endif @endif value='4'>May</option>
-                                                <option @if($month) @if($month->month == 5) selected @endif @endif value='5'>June</option>
-                                                <option @if($month) @if($month->month == 6) selected @endif @endif value='6'>July</option>
-                                                <option @if($month) @if($month->month == 7) selected @endif @endif value='7'>August</option>
-                                                <option @if($month) @if($month->month == 8) selected @endif @endif value='8'>September</option>
-                                                <option @if($month) @if($month->month == 9) selected @endif @endif value='9'>October</option>
-                                                <option @if($month) @if($month->month == 10) selected @endif @endif value='10'>November</option>
-                                                <option @if($month) @if($month->month == 11) selected @endif @endif value='11'>December</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="fv-row mb-10">
-                                            <label class="form-label required">Connect your Jira account</label>
-                                             <select onchange="jirraaccount(this.value)" name="business_type" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="Select..." data-allow-clear="true" data-hide-search="true">
-                                                <option value="">Select</option>
-                                                <option value='yes'>Yes</option>
-                                                <option selected value='no'>No</option>
-                                            </select>
-                                        </div>
-                                        <div class="row" id="jiraaccount" style="display: none">
-                                            <div class="col-md-12 col-lg-12 col-xl-12">
-                                                <div class="fv-row mb-8">
-                                                    <label class="form-label required">Jira Connect Name</label>
-                                                    <input type="text" name="jira_name" autocomplete="off" class="form-control form-control-lg form-control-solid" />
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12 col-lg-12 col-xl-12">
-                                               <div class="fv-row mb-8">
-                                                  <label class="form-label required">Jira Url</label>
-                                                  <input type="url" class="form-control form-control-lg form-control-solid" name="jira_url"  id="team-title" >
-                                               </div>
-                                            </div>
-                                            <div class="col-md-12 col-lg-12 col-xl-12">
-                                               <div class="fv-row mb-8">
-                                                <label class="form-label required">Jira User Name</label>
-                                                  <input type="text" class="form-control form-control-lg form-control-solid" name="user_name"  id="team-title" >
-                                               </div>
-                                            </div>
-                                            <div class="col-md-12 col-lg-12 col-xl-12">
-                                               <div class="fv-row mb-8">
-                                                <label class="form-label required">Jira Token</label>
-                                                  <input type="text" class="form-control form-control-lg form-control-solid" name="token"  id="team-title" >
-                                               </div>
-                                            </div>
-                                        </div>
-
-                                        @php
-                                            $plan = DB::table('plan')->where('status','Active')->get();
-                                            @endphp
-                                            @foreach($plan as $p)
-                                            @php
-                                            $dataArray = explode(',', $p->module);
-                                            @endphp
-
-                  
-
-                                        <div class="row mb-10">
-                                        <div class="col-md-12">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <div>
-                                                        <div class="d-flex flex-row justify-content-between">
-                                                            <div>
-                                                                <h1 class="text-gray-900 mb-5 fw-bolder">{{$p->plan_title}}</h1>
-                                                                <div class="text-gray-600 fw-semibold mb-5">
-                                                                    Optimal for 10+ team size<br> and new startup                                                 
-                                                                </div>
-                                                                <div class="w-100 mb-10">  
-                                                                    <!--begin::Item-->
-                                                                    @foreach($dataArray as $arr)                                               
-                                                                    <div class="d-flex align-items-center mb-5">
-                                                                               
-                                                                    <span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">
-                                                                        {{$arr}}                                                
-                                                                    </span> 
-                                                                        <i class="ki-outline ki-check-circle fs-1 text-success"></i>                                                                                                                                                      
-                                                                    </div>
-                                                                    @endforeach
-                                                                    <!--end::Item--> 
-                                                                                                    
-                                                                                                        
-                                                                        
-                                                            </div>
-                                                            </div>
-                                                            <div>
-                                                                <div class="min-w-200px bg-primary text-center card-rounded py-12">                               
-
-                                                                    <div class="fs-5x text-white d-flex justify-content-center align-items-start">
-                                                                        <span class="fs-2 mt-3">£</span>
-                                                                        
-                                                                        <span class="lh-sm fw-semibold" data-kt-plan-price-month="99" data-kt-plan-price-annual="399">
-                                                                            {{$p->base_price}}
-                                                                        </span>                                    
-                                                                    </div>
-
-                                                                    <div class="text-white fw-bold mb-7"> User / {{$p->billing_method}} </div>
-
-                                                                    <button type="button"  onclick="GetPlan({{$p->id}},'{{$p->base_price}}','{{$p->plan_id}}')" class="btn bg-white bg-opacity-20 bg-hover-white text-hover-primary text-white fw-bold mx-auto">Start Free Trial</button>                                 
-                                                                </div>
-                                                            </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="row" id="plan">
-                                                        <div class="col-md-6" id="user-{{$p->id}}">
-                                                          
-                                                        </div>
-
-                                                        <div class="col-md-6" id="price-{{$p->id}}">
-                                                          
-                                                        </div>
-                                                         </div>
-                                                       
-
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                            
-                                        </div>
-                                     
-
-                                        @endforeach
-
-                                   
-                                    </div>
-
-                                    <!--end::Wrapper-->
-                                </div>
+                            
 
 
                                 
@@ -339,14 +149,13 @@
                                         <i class="ki-outline ki-arrow-left fs-4 me-1"></i>Previous</button>
                                     </div>
                                     <div>
-                                        <button type="button" class="btn btn-lg btn-primary" data-kt-stepper-action="submit">
+                                        <button type="submit" class="btn btn-lg btn-primary" data-kt-stepper-action="">
                                             <span class="indicator-label">Submit 
                                             <i class="ki-outline ki-arrow-right fs-4 ms-2"></i></span>
                                             <span class="indicator-progress">Please wait... 
                                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                         </button>
-                                        <button type="button" class="btn btn-lg btn-primary" data-kt-stepper-action="next">Continue 
-                                        <i class="ki-outline ki-arrow-right fs-4 ms-1"></i></button>
+                                       
                                     </div>
                                 </div>
                                 <div class="text-gray-500 text-center fw-semibold fs-6">Already Member yet 
@@ -454,4 +263,5 @@ function getprice(value, price, id) {
 }
         </script>
     </body>
+
 </html>

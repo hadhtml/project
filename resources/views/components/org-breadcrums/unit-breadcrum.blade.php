@@ -48,7 +48,7 @@
     </div>
     <div class="d-flex align-items-center gap-2 gap-lg-3">
         @if(!isset($organization))
-        <a href="javascript:void(0)" class="btn btn-flex btn-outline btn-color-gray-700 btn-active-color-primary bg-body h-40px fs-7 fw-bold" data-toggle="modal" data-target="#add-business-unit">Add {{ Cmf::getmodulename('level_one') }}</a>
+        <a href="javascript:void(0)" class="btn btn-flex btn-outline btn-color-gray-700 btn-active-color-primary bg-body h-40px fs-7 fw-bold" onclick="emptyform();" data-toggle="modal" data-target="#add-business-unit">Add {{ Cmf::getmodulename('level_one') }}</a>
         @endif
     </div>
 </div>

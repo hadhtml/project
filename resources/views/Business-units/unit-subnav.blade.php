@@ -155,14 +155,14 @@ if($subscription)
 @if($per)
 @foreach(explode(',',$per->module) as $info) 
 @if($info == 'kpi')
-<div class="menu-item">
-    <a href="{{url('dashboard/organization/'.$organization->slug.'/kpi/'.$organization->type)}}"  class="menu-link @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/kpi/'.$organization->type)) active @endif">
-        <span class="menu-icon">
-            <span class="material-symbols-outlined">team_dashboard</span>
-        </span>
-        <span class="menu-title">KPI</span>
-    </a>
-</div>
+<!--<div class="menu-item">-->
+<!--    <a href="{{url('dashboard/organization/'.$organization->slug.'/kpi/'.$organization->type)}}"  class="menu-link @if (url()->current() == url('dashboard/organization/'.$organization->slug.'/kpi/'.$organization->type)) active @endif">-->
+<!--        <span class="menu-icon">-->
+<!--            <span class="material-symbols-outlined">team_dashboard</span>-->
+<!--        </span>-->
+<!--        <span class="menu-title">KPI</span>-->
+<!--    </a>-->
+<!--</div>-->
 @endif
 @endforeach
 @endif

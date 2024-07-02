@@ -24,7 +24,7 @@
         </ul>
     </div>
     <div class="d-flex align-items-center gap-2 gap-lg-3">
-        <button class="btn btn-flex btn-primary h-40px fs-7 fw-bold" type="button" data-toggle="modal" data-target="#add-business-value">
+        <button class="btn btn-flex btn-primary h-40px fs-7 fw-bold" type="button" data-toggle="modal" onclick="emptyform();" data-target="#add-business-value">
             Add {{ Cmf::getmodulename("level_two") }}
         </button>
     </div>

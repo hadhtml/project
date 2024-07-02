@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -35,37 +36,13 @@
                                     </div>
                                     <div class="stepper-line h-40px"></div>
                                 </div>
-                                <div class="stepper-item" data-kt-stepper-element="nav">
-                                    <div class="stepper-wrapper">
-                                        <div class="stepper-icon rounded-3">
-                                            <i class="ki-outline ki-check fs-2 stepper-check"></i>
-                                            <span class="stepper-number">2</span>
-                                        </div>
-                                        <div class="stepper-label">
-                                            <h3 class="stepper-title fs-2">Organization Structure </h3>
-                                            <div class="stepper-desc fw-normal">Check out the orginization structure.</div>
-                                        </div>
-                                    </div>
-                                    <div class="stepper-line h-40px"></div>
-                                </div>
-                                <div class="stepper-item" data-kt-stepper-element="nav">
-                                    <div class="stepper-wrapper">
-                                        <div class="stepper-icon">
-                                            <i class="ki-outline ki-check fs-2 stepper-check"></i>
-                                            <span class="stepper-number">3</span>
-                                        </div>
-                                        <div class="stepper-label">
-                                            <h3 class="stepper-title fs-2">Setup Workflow</h3>
-                                            <div class="stepper-desc fw-normal">Setup your flow work</div>
-                                        </div>
-                                    </div>
-                                    <div class="stepper-line h-40px"></div>
-                                </div>
+                           
+                           
                                 <div class="stepper-item current">
                                     <div class="stepper-wrapper">
                                         <div class="stepper-icon">
                                             <i class="ki-outline ki-check fs-2 stepper-check"></i>
-                                            <span class="stepper-number">4</span>
+                                            <span class="stepper-number">2</span>
                                         </div>
                                         <div class="stepper-label">
                                             <h3 class="stepper-title fs-2">Verification</h3>
@@ -94,8 +71,8 @@
                             <div class="w-100">
                                   <div class=" mb-11">
                                      <h1 class="text-gray-900 fw-bolder mb-3 sign">Verification</h1>
-                                     <div class="text-gray-500 fw-semibold fs-6">Before proceeding, please check your email for a verification link.</div>
-                                     <div class="text-gray-500 fw-semibold fs-6">If you did not receive the email</div>
+                                     <div class="text-gray-500 fw-semibold fs-6">We've sent you an email to verify your address. </div>
+                                     <div class="text-gray-500 fw-semibold fs-6">Please check your inbox at  @if(session()->has('user')) <u style="color:blue">{{session()->get('user')}}</u>  @endif to complete your registration.</div>
                                   </div>
                                   <div class="input-fields-area py-lg-10">
                                     @if (session('resent'))
@@ -130,4 +107,5 @@
         <script src="{{ url('public/assetsvone/js/scripts.bundle.js') }}"></script>
         <script src="{{ url('public/assetsvone/js/custom/utilities/modals/create-account.js') }}"></script>
     </body>
+
 </html>

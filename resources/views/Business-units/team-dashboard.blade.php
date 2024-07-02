@@ -103,21 +103,21 @@ if($subscription)
             @if($per)
             @foreach(explode(',',$per->module) as $info) 
             @if($info == 'kpi')
-            <div class="col-md-3 mb-4">
-                <div class="dashboard-card">
-                    <div class="card-svg">
-                        <a href="{{url('dashboard/organization/'.$organization->slug.'/kpi/'.$organization->type)}}"> 
-                            <span class="material-symbols-outlined team_dashboard">team_dashboard</span>
-                        </a> 
-                    </div>
-                    <div class="dashboard-card-tittle">
-                        <h4>Performance Dashboard</h4>
-                    </div>
-                    <div class="dashboard-card-number">
-                        <h3>{{$Performance}} <small>@if($Performance > 1) KPI(s) @else KPI @endif</small></h3>
-                    </div>
-                </div>
-            </div>
+            <!--<div class="col-md-3 mb-4">-->
+            <!--    <div class="dashboard-card">-->
+            <!--        <div class="card-svg">-->
+            <!--            <a href="{{url('dashboard/organization/'.$organization->slug.'/kpi/'.$organization->type)}}"> -->
+            <!--                <span class="material-symbols-outlined team_dashboard">team_dashboard</span>-->
+            <!--            </a> -->
+            <!--        </div>-->
+            <!--        <div class="dashboard-card-tittle">-->
+            <!--            <h4>Performance Dashboard</h4>-->
+            <!--        </div>-->
+            <!--        <div class="dashboard-card-number">-->
+            <!--            <h3>{{$Performance}} <small>@if($Performance > 1) KPI(s) @else KPI @endif</small></h3>-->
+            <!--        </div>-->
+            <!--    </div>-->
+            <!--</div>-->
             @endif
             @endforeach
             @endif

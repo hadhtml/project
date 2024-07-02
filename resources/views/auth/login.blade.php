@@ -31,15 +31,14 @@
                                     </div>
                                     <div class="col-md-6">
                                         <a href="{{url('/auth/facebook')}}" class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100  cs-btn">
-                                        <img alt="Logo" src="{{ url('public/assetsvone/media/svg/brand-logos/facebook-2.svg') }}" class="theme-light-show h-15px me-3" />
-                                        <img alt="Logo" src="assets/" class="theme-dark-show h-15px me-3" />Facebook</a>
+                                        <img alt="Logo" src="{{ url('public/assetsvone/media/svg/brand-logos/facebook-2.svg') }}" class="theme-light-show h-15px me-3" />Facebook</a>
                                     </div>
                                 </div>
                                 <div class="separator separator-content my-14">
                                     <span class="w-125px text-gray-500 fw-semibold fs-7">Or with email</span>
                                 </div>
                                 <div class="fv-row mb-8">
-                                    <input type="email" class="form-control bg-transparent @error('email') is-invalid @enderror" class="form-control " name="email" value="{{ old('email') }}"  id="email" required>
+                                    <input type="email" placeholder="Enter Your Email" class="form-control bg-transparent @error('email') is-invalid @enderror" class="form-control " name="email" value="{{ old('email') }}"  id="email" required>
                                     @error('email')
                                     <span class="invalid-feedback mb-3 ml-5 mt-0" style="display:block !important" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -47,7 +46,7 @@
                                     @enderror
                                 </div>
                                 <div class="fv-row mb-3">
-                                    <input type="password" class="form-control bg-transparent @error('password') is-invalid @enderror" class="form-control " name="password" id="Password" required>
+                                    <input type="password" class="form-control bg-transparent @error('password') is-invalid @enderror" class="form-control" placeholder="Password" name="password" id="Password" required>
                                 </div>
                                 <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
                                     <div></div>
