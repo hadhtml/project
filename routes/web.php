@@ -4,6 +4,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController; 
+use App\Http\Controllers\SiteController; 
 use App\Http\Controllers\Admin\Auth\LoginController;
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,34 @@ Auth::routes(['verify' => true]);
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('terms-and-conditions', function () {
+    return view('terms-and-conditions');
+});
+
+Route::get('privacy-and-policies', function () {
+    return view('privacy-policies');
+});
+
+Route::get('contact-us', function () {
+    return view('contact-us');
+});
+
+
+Route::POST('submitcontactusform', [SiteController::class, 'submitcontactusform']);
+
+
+
+Route::name('organization.')->middleware('corserror')->group(function () {
+    Route::get('mapperapi/{id}', [SiteController::class, 'mapperapi']);
+    Route::get('mapperlinkingapi/{id}', [SiteController::class, 'mapperlinkingapi']);
+});
+
+
+
+Route::get('faqs', function () {
+    return view('faqs');
 });
 
 Route::get('organization/dashboard', [HomeController::class, 'index'])->name('home');
@@ -264,6 +293,7 @@ Route::name('objectives.')->namespace('App\Http\Controllers')->prefix('dashboard
     Route::POST('addnewobjective', 'ObjectiveController@addnewobjective');
     Route::POST('deleteobjective', 'ObjectiveController@deleteobjective');
     Route::POST('changeobjectivestatus', 'ObjectiveController@changeobjectivestatus');
+    Route::POST('updatetarget', 'ObjectiveController@updatetarget');
     
 });
 
@@ -311,6 +341,9 @@ Route::name('linking.')->namespace('App\Http\Controllers')->prefix('dashboard')-
     Route::POST('linking/saveteamlevellinking', 'MapperController@saveteamlevellinking');
     Route::POST('linking/checkkeyresultmapper', 'MapperController@checkkeyresultmapper');
     Route::POST('linking/getorganizationkeyresult', 'MapperController@getorganizationkeyresult');
+
+    Route::get('mapperapi', 'MapperController@mapperapi');
+    
     
 });
 
@@ -558,9 +591,14 @@ Route::post('admin/save-software-section', [App\Http\Controllers\SiteController:
 Route::post('admin/update-software-section', [App\Http\Controllers\SiteController::class,'UpdateSoftwareSection']);
 Route::get('admin/delete-section-highlight/{id}', [App\Http\Controllers\SiteController::class,'DeleteHighlightSection']);
 
-
-
-
+Route::post('add-new-quarter-value-obj', [App\Http\Controllers\OrganizationController::class, 'AddnewQvalueObj']);
+Route::post('update-new-quarter-value-obj', [App\Http\Controllers\OrganizationController::class, 'UpdateQvalueObj']);
+Route::post('objresult-savecomment', [App\Http\Controllers\OrganizationController::class,'savecommentobj']);
+Route::post('updatecomment-obj', [App\Http\Controllers\OrganizationController::class,'updatecommentobj']);
+Route::post('deletecheck-obj', [App\Http\Controllers\ObjectiveController::class,'deletequartervalueobj']);
+Route::post('updatecomment-obj', [App\Http\Controllers\OrganizationController::class,'updatecommentobj']);
+Route::post('deletecomment-obj', [App\Http\Controllers\OrganizationController::class,'Deletecommentobj']);
+Route::post('savereply-obj', [App\Http\Controllers\OrganizationController::class,'savereplyobj']);
 
 
 
