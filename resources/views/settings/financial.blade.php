@@ -32,7 +32,7 @@ $var_objective = "Jira";
                   <div class="col-md-12 col-lg-12 col-xl-12">
                      <div class="d-flex flex-column mb-7 fv-row">
                         <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
-                            <span class="required">Select Month</span>
+                            <span class="required">When does your first planning quarter (Q1) start Month</span>
                         </label>
                         <select class="form-control form-control-solid" name="month">
                         <option @if($month) @if($month->month == 0) selected @endif @endif value='0'>January</option>

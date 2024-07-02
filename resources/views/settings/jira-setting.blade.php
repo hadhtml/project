@@ -47,75 +47,81 @@ $var_objective = "Jira";
                         <!--end::Menu-->
                      </td>
                   </tr>
-                  <div class="modal fade" id="delete{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                     <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                           <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">Delete Account</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                              </button>
+                  <div class="modal fade" id="delete{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="add-team" aria-hidden="true">
+                   <div class="modal-dialog" role="document">
+                       <div class="modal-content">
+                           <div class="modal-header pb-0 border-0 justify-content-end">
+                               <div class="btn btn-sm btn-icon btn-active-color-primary" data-dismiss="modal" aria-label="Close">
+                                   <i class="ki-outline ki-cross fs-1"></i>
+                               </div>
                            </div>
-                           <form method="POST" action="{{url('delete-jira-account')}}">
-                              @csrf   
-                              <input type="hidden" name="delete_id" value="{{$data->id}}">
-                              <div class="modal-body">
-                                 Are you sure you want to delete this Jira Account?
+                           <div class="modal-body scroll-y mx-5 mx-xl-18 pt-0 pb-15">
+                               <div class="text-center mb-13">
+                                 <h1 class="mb-3" id="end-quartr">Delete Account</h1>
                               </div>
-                              <div class="modal-footer">
-                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                 <button type="submit" class="btn btn-danger">Confirm</button>
-                              </div>
-                           </form>
+                              <form method="POST" action="{{url('delete-jira-account')}}">
+                                 @csrf   
+                                 <input type="hidden" name="delete_id" value="{{$data->id}}">
+                                 <div class="text-center pb-15">
+                                    Are you sure you want to delete this Jira Account?
+                                 </div>
+                                 <div class="text-center">
+                                    <button type="submit" class="btn btn-danger">Confirm</button>
+                                 </div>
+                              </form>
+                           </div>
                         </div>
                      </div>
                   </div>
                   <div class="modal fade" id="create{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="add-team" aria-hidden="true">
-                     <div class="modal-dialog" role="document">
-                        <div class="modal-content" style="width: 526px !important;">
-                           <div class="modal-header">
-                              <div class="row">
-                                 <div class="col-md-12">
-                                    <h5 class="modal-title" id="create-epic">Update your Jira account</h5>
-                                 </div>
-                                 <div class="col-md-12">
-                                    <p>Enter your Jira email and token</p>
-                                 </div>
-                              </div>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <img src="{{asset('public/assets/images/icons/minus.svg')}}">
-                              </button>
+                   <div class="modal-dialog mw-650px" role="document">
+                       <div class="modal-content">
+                           <div class="modal-header pb-0 border-0 justify-content-end">
+                               <div class="btn btn-sm btn-icon btn-active-color-primary" data-dismiss="modal" aria-label="Close">
+                                   <i class="ki-outline ki-cross fs-1"></i>
+                               </div>
                            </div>
-                           <div class="modal-body">
+                           <div class="modal-body scroll-y mx-5 mx-xl-18 pt-0 pb-15">
+                               <div class="text-center mb-13">
+                                 <h1 class="mb-3" id="end-quartr">Update your Jira account</h1>
+                              </div>
                               <form class="needs-validation" action="{{url('update-jira-setting')}}" method="POST">
                                  @csrf
                                  <input type="hidden" name="jira_id" value="{{$data->id}}">
                                  <div class="row">
                                     <div class="col-md-12 col-lg-12 col-xl-12">
-                                       <div class="form-group mb-0">
-                                          <input type="text" class="form-control" value="{{$data->jira_name}}" name="jira_name"  id="team-title" required>
-                                          <label for="team-title">Jira Connect Name</label>
+                                       <div class="d-flex flex-column mb-7 fv-row">
+                                          <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                              <span class="required">Jira Connect Name</span>
+                                          </label>
+                                          <input type="text" class="form-control form-control-solid" value="{{$data->jira_name}}" name="jira_name"  id="team-title" required>
                                        </div>
                                     </div>
                                     <div class="col-md-12 col-lg-12 col-xl-12">
-                                       <div class="form-group mb-0">
-                                          <input type="url" class="form-control" value="{{$data->jira_url}}" name="jira_url"  id="team-title" required>
-                                          <label for="team-title">Jira Url</label>
+                                       <div class="d-flex flex-column mb-7 fv-row">
+                                          <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                              <span class="required">Jira Url</span>
+                                          </label>
+                                          <input type="url" class="form-control form-control-solid" value="{{$data->jira_url}}" name="jira_url"  id="team-title" required>
                                        </div>
                                     </div>
                                     <div class="col-md-12 col-lg-12 col-xl-12">
-                                       <div class="form-group mb-0">
-                                          <input type="text" class="form-control" value="{{$data->user_name}}" name="user_name"  id="team-title" required>
-                                          <label for="team-title">Jira User Name</label>
+                                       <div class="d-flex flex-column mb-7 fv-row">
+                                          <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                              <span class="required">Jira User Name</span>
+                                          </label>
+                                          <input type="text" class="form-control form-control-solid" value="{{$data->user_name}}" name="user_name"  id="team-title" required>
                                        </div>
                                     </div>
                                     <div class="col-md-12 col-lg-12 col-xl-12">
-                                       <div class="form-group mb-0">
-                                          <input type="text" class="form-control" value="{{$data->token}}" name="token"  id="team-title" required>
-                                          <label for="team-title">Jira Token</label>
+                                       <div class="d-flex flex-column mb-7 fv-row">
+                                          <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                              <span class="required">Jira Token</span>
+                                          </label>
+                                          <input type="text" class="form-control form-control-solid" value="{{$data->token}}" name="token"  id="team-title" required>
                                        </div>
                                     </div>
-                                    <div class="col-md-12">
+                                    <div class="text-center pt-15">
                                        <button class="btn btn-primary btn-lg btn-theme btn-block ripple" type="submit">Connect</button>
                                     </div>
                                  </div>
@@ -134,50 +140,53 @@ $var_objective = "Jira";
 <!-- Create Business Unit -->
 <!-- Create Business Unit -->
 <div class="modal fade" id="create-jira" tabindex="-1" role="dialog" aria-labelledby="add-team" aria-hidden="true">
-   <div class="modal-dialog" role="document">
-      <div class="modal-content" style="width: 526px !important;">
-         <div class="modal-header">
-            <div class="row">
-               <div class="col-md-12">
-                  <h5 class="modal-title" id="create-epic">Connect your Jira account</h5>
-               </div>
-               <div class="col-md-12">
-                  <p>Enter your Jira email and token</p>
-               </div>
-            </div>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <img src="{{asset('public/assets/images/icons/minus.svg')}}">
-            </button>
+ <div class="modal-dialog mw-650px" role="document">
+     <div class="modal-content">
+         <div class="modal-header pb-0 border-0 justify-content-end">
+             <div class="btn btn-sm btn-icon btn-active-color-primary" data-dismiss="modal" aria-label="Close">
+                 <i class="ki-outline ki-cross fs-1"></i>
+             </div>
          </div>
-         <div class="modal-body">
+         <div class="modal-body scroll-y mx-5 mx-xl-18 pt-0 pb-15">
+             <div class="text-center mb-13">
+               <h1 class="mb-3" id="end-quartr">Connect your Jira account</h1>
+            </div>
             <form class="needs-validation" action="{{url('add-jira-setting')}}" method="POST">
                @csrf
                <div class="row">
                   <div class="col-md-12 col-lg-12 col-xl-12">
-                     <div class="form-group mb-0">
-                        <input type="text" class="form-control" name="jira_name"  id="team-title" required>
-                        <label for="team-title">Jira Connect Name</label>
-                     </div>
+                     <div class="d-flex flex-column mb-7 fv-row">
+                        <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                            <span class="required">Jira Connect Name</span>
+                        </label>
+                        <input type="text" class="form-control form-control-solid" name="jira_name"  id="team-title" required>
+                      </div>
                   </div>
                   <div class="col-md-12 col-lg-12 col-xl-12">
-                     <div class="form-group mb-0">
-                        <input type="url" class="form-control" name="jira_url"  id="team-title" required>
-                        <label for="team-title">Jira Url</label>
-                     </div>
+                     <div class="d-flex flex-column mb-7 fv-row">
+                        <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                            <span class="required">Jira Url</span>
+                        </label>
+                        <input type="url" class="form-control form-control-solid" name="jira_url"  id="team-title" required>
+                      </div>
                   </div>
                   <div class="col-md-12 col-lg-12 col-xl-12">
-                     <div class="form-group mb-0">
-                        <input type="text" class="form-control" name="user_name"  id="team-title" required>
-                        <label for="team-title">Jira User Name</label>
-                     </div>
+                     <div class="d-flex flex-column mb-7 fv-row">
+                        <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                            <span class="required">Jira User Name</span>
+                        </label>
+                        <input type="text" class="form-control form-control-solid" name="user_name"  id="team-title" required>
+                      </div>
                   </div>
                   <div class="col-md-12 col-lg-12 col-xl-12">
-                     <div class="form-group mb-0">
-                        <input type="text" class="form-control" name="token"  id="team-title" required>
-                        <label for="team-title">Jira Token</label>
-                     </div>
+                     <div class="d-flex flex-column mb-7 fv-row">
+                        <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                            <span class="required">Jira Token</span>
+                        </label>
+                        <input type="text" class="form-control form-control-solid" name="token"  id="team-title" required>
+                      </div>
                   </div>
-                  <div class="col-md-12">
+                  <div class="text-center pt-15">
                      <button class="btn btn-primary btn-lg btn-theme btn-block ripple" type="submit">Connect</button>
                   </div>
                </div>
