@@ -104,8 +104,8 @@ $var_objective = "mapper-org";
 
 @endsection
 @section('scripts')
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/leader-line@1.0.5/leader-line.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/plain-draggable@2.5.12/plain-draggable.min.js"></script>
+<script type="text/javascript" src="{{ url('public/assets/js/leader-line.min.js') }}"></script>
+<script type="text/javascript" src="{{ url('public/assets/js/plain-draggable.min.js') }}"></script>
 <script type="text/javascript">
    
    $( document ).ready(function() {
@@ -170,108 +170,7 @@ function resetZoom() {
     container.style.transform = `scale(${zoomLevel})`;
     updateLines();
 }
-
    
-   new PlainDraggable(node_1, {
-   onMove: function() {
-      updateLines();
-   },
-   // onMoveStart: function() { line.dash = {animation: true}; },
-   onDragEnd: function() {
-      updateLines(); 
-   },
-   autoScroll:true,
-   });
-   
-
-   @foreach(DB::table('org_team')->where('org_id'  , $data->id)->get() as $o_t)
-
-   new PlainDraggable(orgteam{{ $o_t->id }}, {
-   onMove: function() {
-   @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $draglinekey =>  $drag)
-   line{{ $draglinekey+1 }}.position();
-   @endforeach
-   },
-   // onMoveStart: function() { line.dash = {animation: true}; },
-   onDragEnd: function() {
-   @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $draglinekey =>  $drag)
-         line{{ $draglinekey+1 }}.dash = false;
-         @endforeach
-   },
-   autoScroll:true,
-   });
-
-   @endforeach
-
-   
-   @foreach($business_units as $key_calue_stream => $b)
-   
-   @foreach(DB::table('unit_team')->where('org_id'  , $b->id)->get() as $b_t)
-   new PlainDraggable(buisnessunitteam{{ $b_t->id }}, {
-   onMove: function() {
-         @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $draglinekey =>  $drag)
-         line{{ $draglinekey+1 }}.position();
-         @endforeach
-   },
-   // onMoveStart: function() { line.dash = {animation: true}; },
-   onDragEnd: function() {
-         @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $draglinekey =>  $drag)
-         line{{ $draglinekey+1 }}.dash = false;
-         @endforeach
-   },
-   autoScroll:true,
-   });
-   @endforeach
-   new PlainDraggable(buisnessunit{{ $b->id }}, {
-   onMove: function() {
-         @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $draglinekey =>  $drag)
-         line{{ $draglinekey+1 }}.position();
-         @endforeach
-   },
-   // onMoveStart: function() { line.dash = {animation: true}; },
-   onDragEnd: function() {
-         @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $draglinekey =>  $drag)
-         line{{ $draglinekey+1 }}.dash = false;
-         @endforeach
-   },
-   autoScroll:true,
-   });
-      @foreach($valuestream as $v)
-         new PlainDraggable(valuestream{{ $v->id }}, {
-         onMove: function() {
-               @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $draglinekey =>  $drag)
-               line{{ $draglinekey+1 }}.position();
-               @endforeach
-         },
-         // onMoveStart: function() { line.dash = {animation: true}; },
-         onDragEnd: function() {
-               @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $draglinekey =>  $drag)
-               line{{ $draglinekey+1 }}.dash = false;
-               @endforeach
-         },
-         autoScroll:true,
-         });
-      
-         @foreach(DB::table('value_team')->where('org_id'  , $v->id)->get() as $key_value_stream_team => $v_t)
-         
-          new PlainDraggable(valuestreamteam{{ $v_t->id }}, {
-             onMove: function() {
-               @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $draglinekey =>  $drag)
-               line{{ $draglinekey+1 }}.position();
-               @endforeach
-             },
-             // onMoveStart: function() { line.dash = {animation: true}; },
-             onDragEnd: function() {
-               @foreach(DB::table('team_link_child')->where('user_id' , Auth::id())->orWhere('user_id', Auth::user()->invitation_id)->get() as $draglinekey =>  $drag)
-               line{{ $draglinekey+1 }}.dash = false;
-               @endforeach
-             },
-             autoScroll:true,
-           });
-         
-         @endforeach
-      @endforeach
-   @endforeach
 
  document.addEventListener('DOMContentLoaded', function() {
    let cumulativeHeight = -60;
